@@ -94,6 +94,19 @@ export function GET(): Response {
   lines.push(`Universal search: ${absoluteUrl(ROUTES.search)}`);
   lines.push("");
 
+  lines.push("## Community (architecture preview)");
+  lines.push(
+    "Knowledge-first community architecture — no accounts, profiles, posts, feeds, or user data yet. User contributions will attach to graph entities; the graph stays the source of truth.",
+  );
+  lines.push(`- [Community](${absoluteUrl(ROUTES.community)})`);
+  lines.push(`- [Observations](${absoluteUrl("/community/observations")})`);
+  lines.push(`- [Astrophotography](${absoluteUrl("/community/astrophotography")})`);
+  lines.push(`- [Collections](${absoluteUrl("/community/collections")})`);
+  lines.push(`- [Contributors](${absoluteUrl("/community/contributors")})`);
+  lines.push(`- [Learn Together](${absoluteUrl("/community/learning")})`);
+  lines.push(`- [Explore Together](${absoluteUrl("/community/explore-together")})`);
+  lines.push("");
+
   lines.push("## Policies");
   lines.push(`- [About](${absoluteUrl(ROUTES.about)})`);
   lines.push(`- [Editorial Policy](${absoluteUrl(ROUTES.editorialPolicy)})`);

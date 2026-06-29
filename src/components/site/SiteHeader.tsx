@@ -15,6 +15,7 @@ export function SiteHeader() {
     ...getAllSections().map((s) => ({ name: s.name, href: sectionPath(s) })),
     { name: "Compare", href: ROUTES.compare },
     { name: "Learn", href: ROUTES.learn },
+    { name: "Community", href: ROUTES.community },
   ];
   const utility = [
     { name: "Search", href: ROUTES.search },
