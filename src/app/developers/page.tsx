@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { CitationDemo } from "@/components/authority/CitationDemo";
 import { COMMUNITY_API_VERSION } from "@/lib/community";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/jsonld";
@@ -95,6 +96,17 @@ export default function DevelopersPage() {
               </li>
             ))}
           </ul>
+        </section>
+
+        <section aria-labelledby="citation-heading">
+          <h2 id="citation-heading" className="font-display text-2xl font-bold">Citation engine</h2>
+          <p className="mt-2 max-w-2xl text-muted">
+            Reusable citation formatting generated from structured metadata — never
+            fabricated. One real reference, every supported style:
+          </p>
+          <div className="mt-5">
+            <CitationDemo />
+          </div>
         </section>
 
         <section aria-labelledby="portal-heading">

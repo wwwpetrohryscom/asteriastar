@@ -10,6 +10,7 @@ import { GraphConnections } from "@/components/graph/GraphConnections";
 import { EntityCard } from "@/components/graph/EntityCard";
 import { EntityRecommendations } from "@/components/graph/EntityRecommendations";
 import { EntityDataPanel } from "@/components/graph/EntityDataPanel";
+import { EntityQualityPanel } from "@/components/authority/EntityQualityPanel";
 import {
   ENTITY_TYPE_LABELS,
   getConnections,
@@ -105,8 +106,9 @@ export default async function GraphEntityPage({
       </HeroSection>
 
       <Container className="mt-8 mb-12 space-y-12">
-        <div className="max-w-md">
+        <div className="grid gap-6 lg:grid-cols-2">
           <EntityDataPanel entity={entity} />
+          <EntityQualityPanel entity={entity} />
         </div>
 
         {hasConnections && (

@@ -14,6 +14,7 @@ import { EntryNavigation } from "@/components/entry/EntryNavigation";
 import { KnowledgeConnections } from "@/components/entry/KnowledgeConnections";
 import { EntityRecommendations } from "@/components/graph/EntityRecommendations";
 import { EntityDataPanel } from "@/components/graph/EntityDataPanel";
+import { EntityQualityPanel } from "@/components/authority/EntityQualityPanel";
 import { EntryGallery } from "@/components/entry/EntryGallery";
 import { EntryTimeline } from "@/components/entry/EntryTimeline";
 import { EntryRelatedMissions } from "@/components/entry/EntryRelatedMissions";
@@ -142,6 +143,7 @@ export default async function EntryPage({
             <EntryFacts facts={entry.facts} />
             <EntryKeyPoints points={entry.keyPoints} />
             {graphEntity && <EntityDataPanel entity={graphEntity} />}
+            {graphEntity && <EntityQualityPanel entity={graphEntity} />}
             <EntrySourceList keys={entry.sources} />
           </aside>
         </div>
