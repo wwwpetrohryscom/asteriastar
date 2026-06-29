@@ -28,6 +28,8 @@ export const ROUTES = {
   datasets: "/datasets",
   registry: "/registry",
   developers: "/developers",
+  platform: "/platform",
+  observatory: "/observatory",
 } as const;
 
 export function datasetPath(slug: string): string {
