@@ -66,6 +66,31 @@ async function main() {
     process.exit(1);
   }
 
+  // Open data: graph version, dataset integrity, citations.
+  const openIssues: string[] = [];
+  const v = graph.GRAPH_VERSION_INFO;
+  for (const key of ["graphVersion", "schemaVersion", "datasetVersion"] as const) {
+    if (!v[key]) openIssues.push(`graph version metadata missing: ${key}`);
+  }
+  const datasets = await import("../src/lib/datasets");
+  const seenSlugs = new Set<string>();
+  for (const d of datasets.DATASETS) {
+    if (seenSlugs.has(d.slug)) openIssues.push(`duplicate dataset slug: ${d.slug}`);
+    seenSlugs.add(d.slug);
+    // Dataset integrity: declared count must match a fresh recomputation.
+    const recomputed = datasets.getDatasetEntities(d).length;
+    if (recomputed !== d.entityCount) {
+      openIssues.push(`dataset ${d.slug}: entityCount ${d.entityCount} != recomputed ${recomputed}`);
+    }
+  }
+  const citations = await import("../src/lib/citations");
+  openIssues.push(...citations.validateCitations());
+  if (openIssues.length > 0) {
+    console.error(`\n✗ ${openIssues.length} open-data issue(s):`);
+    for (const i of openIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+
   const { validateEntries, getAllEntries, ENTRY_STATS } = reg;
 
   const issues = validateEntries();

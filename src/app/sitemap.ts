@@ -6,6 +6,7 @@ import { TOPICS, RELATIONSHIP_PAGES } from "@/lib/discovery";
 import { COMPARISONS } from "@/lib/compare";
 import { LEARNING_PATHS } from "@/lib/learn";
 import { TIMELINES } from "@/lib/timelines";
+import { DATASETS } from "@/lib/datasets";
 import {
   absoluteUrl,
   categoryPath,
@@ -15,6 +16,7 @@ import {
   comparePath,
   learnPath,
   timelinePath,
+  datasetPath,
   ROUTES,
 } from "@/lib/routes";
 
@@ -38,6 +40,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl(ROUTES.timelines), changeFrequency: "weekly", priority: 0.6 },
     { url: absoluteUrl(ROUTES.search), changeFrequency: "monthly", priority: 0.5 },
     { url: absoluteUrl(ROUTES.community), changeFrequency: "weekly", priority: 0.6 },
+    { url: absoluteUrl(ROUTES.openData), changeFrequency: "weekly", priority: 0.7 },
+    { url: absoluteUrl(ROUTES.datasets), changeFrequency: "weekly", priority: 0.6 },
+    { url: absoluteUrl(ROUTES.registry), changeFrequency: "weekly", priority: 0.6 },
+    { url: absoluteUrl(ROUTES.developers), changeFrequency: "weekly", priority: 0.6 },
+    ...DATASETS.map((d) => ({ url: absoluteUrl(datasetPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
     ...[
       "observations",
       "astrophotography",

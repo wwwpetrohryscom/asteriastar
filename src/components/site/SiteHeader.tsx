@@ -20,6 +20,10 @@ export function SiteHeader() {
   const utility = [
     { name: "Search", href: ROUTES.search },
     { name: "Timelines", href: ROUTES.timelines },
+    { name: "Open Data", href: ROUTES.openData },
+    { name: "Datasets", href: ROUTES.datasets },
+    { name: "Registry", href: ROUTES.registry },
+    { name: "Developers", href: ROUTES.developers },
     { name: "Entity Index", href: ROUTES.entityIndex },
     { name: "About", href: ROUTES.about },
     { name: "Editorial Policy", href: ROUTES.editorialPolicy },
