@@ -6,6 +6,7 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { DisclaimerBox } from "@/components/ui/DisclaimerBox";
 import { SourceList } from "@/components/ui/SourceList";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
+import { SectionGrid } from "@/components/sections/SectionGrid";
 import { Badge } from "@/components/ui/Badge";
 import { JsonLd } from "@/components/seo/JsonLd";
 import {
@@ -13,6 +14,7 @@ import {
   getCategory,
   getSiblingCategories,
 } from "@/lib/content/registry";
+import { getEntriesByCategory } from "@/content/entries";
 import { buildMetadata } from "@/lib/seo/metadata";
 import {
   breadcrumbSchema,
@@ -57,6 +59,15 @@ export default async function CategoryPage({
   const interpretive = section.kind === "interpretive" || Boolean(category.interpretive);
   const disclaimerMessage = category.disclaimer ?? ASTROLOGY_DISCLAIMER;
   const url = categoryPath(section, category);
+
+  const entries = getEntriesByCategory(section.slug, category.slug);
+  const hasEntries = entries.length > 0;
+  const entryItems = entries.map((entry) => ({
+    title: entry.title,
+    description: entry.excerpt,
+    href: entry.path,
+    accent: section.accent,
+  }));
 
   const crumbs: Crumb[] = [
     { name: "Home", url: "/" },
@@ -123,6 +134,24 @@ export default async function CategoryPage({
           <div className="space-y-10 lg:col-span-2">
             {interpretive && <DisclaimerBox message={category.disclaimer} />}
 
+            {hasEntries && (
+              <section aria-labelledby="entries-heading">
+                <div className="flex items-center gap-3">
+                  <h2
+                    id="entries-heading"
+                    className="font-display text-xl font-semibold text-fg"
+                  >
+                    Explore {category.name}
+                  </h2>
+                  <Badge tone="accent">{entries.length} entries</Badge>
+                </div>
+                <p className="mt-2 text-sm text-faint">
+                  In-depth, individual pages in this category.
+                </p>
+                <SectionGrid items={entryItems} columns={2} className="mt-4" />
+              </section>
+            )}
+
             <section aria-labelledby="overview-heading">
               <h2
                 id="overview-heading"
@@ -141,16 +170,18 @@ export default async function CategoryPage({
                   id="planned-heading"
                   className="font-display text-xl font-semibold text-fg"
                 >
-                  What this topic will cover
+                  {hasEntries ? "Also planned" : "What this topic will cover"}
                 </h2>
                 <Badge tone="tradition">In progress</Badge>
               </div>
               <p className="mt-2 text-sm text-faint">
-                This is a foundation page. We are expanding it with structured,
-                {section.kind === "science" || section.kind === "reference"
-                  ? " sourced"
-                  : " carefully labeled"}{" "}
-                content. Planned material includes:
+                {hasEntries
+                  ? "We continue to expand this category. Upcoming material includes:"
+                  : "This is a foundation page. We are expanding it with structured, " +
+                    (section.kind === "science" || section.kind === "reference"
+                      ? "sourced"
+                      : "carefully labeled") +
+                    " content. Planned material includes:"}
               </p>
               <ul className="mt-4 grid gap-3 sm:grid-cols-2">
                 {category.plannedTopics.map((topic) => (
