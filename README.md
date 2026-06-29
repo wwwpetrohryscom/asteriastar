@@ -24,9 +24,10 @@ tools, galleries, and (eventually) a community product.
 
 ```bash
 npm install
-npm run dev      # http://localhost:3000
-npm run build    # production build (statically prerenders all routes)
-npm run lint     # ESLint
+npm run dev       # http://localhost:3000
+npm run build     # production build (statically prerenders all routes)
+npm run lint      # ESLint
+npm run validate  # validate the entry registry (boundary, sources, links)
 ```
 
 Set the canonical origin for metadata/sitemap in production:
@@ -42,13 +43,20 @@ Seven knowledge hubs — Astronomy, Sky Guide, Astrology, Calculators,
 Encyclopedia, Observatory, and Guides — each with many topic categories, all
 driven by the content registry in [`src/lib/content/`](src/lib/content).
 
-Adding a section or category is a data-only change: navigation, hub and
-category pages, `sitemap.xml`, and `llms.txt` all update automatically.
+A third level, **entries** (`/[section]/[category]/[entry]`), holds individual
+pages — stars, planets, missions, zodiac signs, glossary terms, and more —
+typed and validated in [`src/content/entries/`](src/content/entries). See
+[docs/PHASE_2_ENTRY_LAYER.md](docs/PHASE_2_ENTRY_LAYER.md).
+
+Adding a section, category, or entry is a data-only change: navigation, hub,
+category and entry pages, `sitemap.xml`, and `llms.txt` all update
+automatically.
 
 ## Documentation
 
 - [Architecture](docs/ARCHITECTURE.md)
 - [Content Model](docs/CONTENT_MODEL.md)
+- [Phase 2 — Entry Layer](docs/PHASE_2_ENTRY_LAYER.md)
 - [SEO Strategy](docs/SEO_STRATEGY.md)
 - [Future Social Network](docs/FUTURE_SOCIAL_NETWORK.md)
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
