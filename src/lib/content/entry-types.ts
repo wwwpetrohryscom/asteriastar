@@ -36,6 +36,14 @@ export interface EntrySection {
   list?: string[];
 }
 
+/** A single dated event for an entry's timeline. */
+export interface EntryTimelineItem {
+  /** A date or year label, e.g. "1969" or "July 20, 1969". */
+  date: string;
+  title: string;
+  description?: string;
+}
+
 /** Reference to another entry, by [section, category, entry] slugs. */
 export type EntryRef = readonly [section: string, category: string, entry: string];
 /** Reference to a category, by [section, category] slugs. */
@@ -59,6 +67,8 @@ export interface EntryInput {
   keyPoints?: string[];
   /** The main body — at least three meaningful sections (enforced). */
   body: EntrySection[];
+  /** Optional dated timeline (only well-documented events). */
+  timeline?: EntryTimelineItem[];
   sources?: SourceKey[];
   relatedEntries?: EntryRef[];
   relatedCategories?: CategoryRef[];
@@ -100,6 +110,7 @@ export interface Entry {
   facts: EntryFact[];
   keyPoints: string[];
   body: EntrySection[];
+  timeline: EntryTimelineItem[];
   sources: SourceKey[];
   relatedEntries: EntryRef[];
   relatedCategories: CategoryRef[];
@@ -156,6 +167,7 @@ export function resolveEntry(input: EntryInput): Entry {
     facts: input.facts ?? [],
     keyPoints: input.keyPoints ?? [],
     body: input.body,
+    timeline: input.timeline ?? [],
     sources: input.sources ?? [],
     relatedEntries: input.relatedEntries ?? [],
     relatedCategories: input.relatedCategories ?? [],

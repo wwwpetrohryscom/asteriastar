@@ -32,6 +32,11 @@ export const astronomySpaceMissions = defineEntries([
       "Neil Armstrong and Buzz Aldrin walked on the surface while Michael Collins orbited above.",
       "A defining moment of the 20th-century space age.",
     ],
+    timeline: [
+      { date: "July 16, 1969", title: "Launch", description: "Apollo 11 lifts off atop a Saturn V rocket from Kennedy Space Center." },
+      { date: "July 20, 1969", title: "Lunar landing", description: "The lunar module Eagle lands; Armstrong and Aldrin become the first humans to walk on the Moon." },
+      { date: "July 24, 1969", title: "Return to Earth", description: "The crew splashes down safely in the Pacific Ocean." },
+    ],
     body: [
       {
         heading: "The first Moon landing",
@@ -183,6 +188,11 @@ export const astronomySpaceMissions = defineEntries([
       "Launched in December 2021 as an international partnership.",
       "Operates far from Earth, near the L2 point, to stay cold for infrared work.",
       "The observatory itself is described under Space Telescopes.",
+    ],
+    timeline: [
+      { date: "December 25, 2021", title: "Launch", description: "Webb launches on an Ariane 5 rocket from French Guiana." },
+      { date: "January 2022", title: "Arrival at L2", description: "Webb reaches its orbit near the Sun–Earth L2 point and unfolds its mirror and sunshield." },
+      { date: "July 2022", title: "First images", description: "The first full-color science images and spectra are released." },
     ],
     body: [
       {

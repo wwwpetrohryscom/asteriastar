@@ -12,10 +12,14 @@ import { EntryRelatedGrid } from "@/components/entry/EntryRelatedGrid";
 import { EntryDisclaimer } from "@/components/entry/EntryDisclaimer";
 import { EntryNavigation } from "@/components/entry/EntryNavigation";
 import { KnowledgeConnections } from "@/components/entry/KnowledgeConnections";
+import { EntryGallery } from "@/components/entry/EntryGallery";
+import { EntryTimeline } from "@/components/entry/EntryTimeline";
+import { EntryRelatedMissions } from "@/components/entry/EntryRelatedMissions";
 import {
   getAllEntryParams,
   getEntriesByCategory,
   getEntry,
+  getEntityForEntry,
   getRelatedEntries,
 } from "@/content/entries";
 import { getCategory } from "@/lib/content/registry";
@@ -89,6 +93,7 @@ export default async function EntryPage({
   const next = index >= 0 && index < siblings.length - 1 ? siblings[index + 1] : undefined;
 
   const related = getRelatedEntries(entry);
+  const graphEntity = getEntityForEntry(entry);
 
   return (
     <div style={accentVars(section.accent)}>
@@ -112,11 +117,14 @@ export default async function EntryPage({
             <EntryDisclaimer entry={entry} />
             <EntryBody sections={entry.body} />
             <KnowledgeConnections entry={entry} />
+            {section.slug === "astronomy" && <EntryGallery name={entry.title} />}
+            <EntryTimeline items={entry.timeline} />
             <EntryRelatedGrid
               entries={related}
               accent={section.accent}
               eyebrow={section.name}
             />
+            {graphEntity && <EntryRelatedMissions entityId={graphEntity.id} />}
             <EntryNavigation
               previous={previous}
               next={next}
