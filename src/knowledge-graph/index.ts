@@ -21,3 +21,4 @@ export { entities, relations };
 export { validateGraph };
 export * from "@/knowledge-graph/schema";
 export * from "@/knowledge-graph/helpers";
+export * from "@/knowledge-graph/version";

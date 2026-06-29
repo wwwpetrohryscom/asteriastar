@@ -73,7 +73,7 @@ automatically.
 - [Architecture](docs/ARCHITECTURE.md)
 - [Content Model](docs/CONTENT_MODEL.md)
 - [Phase 2 — Entry Layer](docs/PHASE_2_ENTRY_LAYER.md)
-- [Knowledge Graph](docs/KNOWLEDGE_GRAPH.md)
+- [Knowledge Graph](docs/KNOWLEDGE_GRAPH.md) · [Schema](docs/KNOWLEDGE_GRAPH_SCHEMA.md)
 - [Intelligence Layer](docs/INTELLIGENCE.md)
 - [Community Architecture](docs/COMMUNITY_ARCHITECTURE.md)
 - [Image Platform](docs/IMAGE_PLATFORM.md)
@@ -81,6 +81,17 @@ automatically.
 - [Future Social Network](docs/FUTURE_SOCIAL_NETWORK.md)
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
+
+**Open Celestial Data Platform (Phase 7)**
+
+- [Open Data](docs/OPEN_DATA.md)
+- [API Overview](docs/API_OVERVIEW.md)
+- [Dataset Catalog](docs/DATASET_CATALOG.md)
+- [Entity Identifiers](docs/ENTITY_IDENTIFIERS.md)
+- [Versioning Strategy](docs/VERSIONING_STRATEGY.md)
+- [Scientific Sources](docs/SCIENTIFIC_SOURCES.md)
+- [Licensing Policy](docs/LICENSING_POLICY.md)
+- [Contribution Standards](docs/CONTRIBUTION_STANDARDS.md)
 
 ## Principles
 

@@ -24,7 +24,15 @@ export const ROUTES = {
   timelines: "/timelines",
   search: "/search",
   community: "/community",
+  openData: "/open-data",
+  datasets: "/datasets",
+  registry: "/registry",
+  developers: "/developers",
 } as const;
+
+export function datasetPath(slug: string): string {
+  return `/datasets/${slug}`;
+}
 
 export function comparePath(slug: string): string {
   return `/compare/${slug}`;

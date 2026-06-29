@@ -9,6 +9,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { GraphConnections } from "@/components/graph/GraphConnections";
 import { EntityCard } from "@/components/graph/EntityCard";
 import { EntityRecommendations } from "@/components/graph/EntityRecommendations";
+import { EntityDataPanel } from "@/components/graph/EntityDataPanel";
 import {
   ENTITY_TYPE_LABELS,
   getConnections,
@@ -102,6 +103,10 @@ export default async function GraphEntityPage({
       </HeroSection>
 
       <Container className="mt-8 mb-12 space-y-12">
+        <div className="max-w-md">
+          <EntityDataPanel entity={entity} />
+        </div>
+
         {hasConnections && (
           <section aria-labelledby="connections-heading">
             <h2 id="connections-heading" className="font-display text-xl font-semibold text-fg">

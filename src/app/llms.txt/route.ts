@@ -1,7 +1,8 @@
 import { getAllSections } from "@/lib/content/registry";
 import { getEntriesByCategory, ENTRY_STATS } from "@/content/entries";
-import { GRAPH_STATS } from "@/knowledge-graph";
+import { GRAPH_STATS, GRAPH_VERSION_INFO } from "@/knowledge-graph";
 import { TOPICS, RELATIONSHIP_PAGES } from "@/lib/discovery";
+import { DATASETS } from "@/lib/datasets";
 import { COMPARISONS } from "@/lib/compare";
 import { LEARNING_PATHS } from "@/lib/learn";
 import { TIMELINES } from "@/lib/timelines";
@@ -14,6 +15,7 @@ import {
   comparePath,
   learnPath,
   timelinePath,
+  datasetPath,
   ROUTES,
 } from "@/lib/routes";
 import { SITE } from "@/lib/site";
@@ -105,6 +107,21 @@ export function GET(): Response {
   lines.push(`- [Contributors](${absoluteUrl("/community/contributors")})`);
   lines.push(`- [Learn Together](${absoluteUrl("/community/learning")})`);
   lines.push(`- [Explore Together](${absoluteUrl("/community/explore-together")})`);
+  lines.push("");
+
+  lines.push("## Open data");
+  lines.push(
+    `Asteria Star is open infrastructure for structured celestial knowledge: a versioned (graph ${GRAPH_VERSION_INFO.graphVersion}, schema ${GRAPH_VERSION_INFO.schemaVersion}), machine-readable knowledge graph of ${GRAPH_VERSION_INFO.entityCount} entities. Stable ids are permanent (type:slug). License: ${GRAPH_VERSION_INFO.license}.`,
+  );
+  lines.push(`- [Open Data](${absoluteUrl(ROUTES.openData)})`);
+  lines.push(`- [Datasets](${absoluteUrl(ROUTES.datasets)})`);
+  lines.push(`- [Knowledge Registry](${absoluteUrl(ROUTES.registry)})`);
+  lines.push(`- [Developers / API contracts](${absoluteUrl(ROUTES.developers)})`);
+  lines.push(`- Graph export (JSON): ${absoluteUrl("/data/graph.json")}`);
+  lines.push(`- Graph export (JSON-LD): ${absoluteUrl("/data/graph.jsonld")}`);
+  for (const d of DATASETS) {
+    lines.push(`- [${d.title} Dataset](${absoluteUrl(datasetPath(d.slug))}): ${d.entityCount} entities · JSON ${absoluteUrl(`/datasets/${d.slug}/json`)} · CSV ${absoluteUrl(`/datasets/${d.slug}/csv`)}`);
+  }
   lines.push("");
 
   lines.push("## Policies");
