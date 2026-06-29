@@ -8,6 +8,7 @@ import { SourceList } from "@/components/ui/SourceList";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { GraphConnections } from "@/components/graph/GraphConnections";
 import { EntityCard } from "@/components/graph/EntityCard";
+import { EntityRecommendations } from "@/components/graph/EntityRecommendations";
 import {
   ENTITY_TYPE_LABELS,
   getConnections,
@@ -152,6 +153,8 @@ export default async function GraphEntityPage({
             </ul>
           </section>
         )}
+
+        <EntityRecommendations entityId={entity.id} />
 
         {entity.sources && entity.sources.length > 0 && (
           <SourceList keys={entity.sources} />

@@ -103,6 +103,17 @@ export interface GraphEntity {
   entryPath?: string;
   aliases?: string[];
   sources?: SourceKey[];
+
+  /* --- Optional intelligence fields. Left empty when a value is unknown;
+     never invented. --- */
+  /** Formal scientific designation (e.g. "Alpha Canis Majoris"). */
+  scientificName?: string;
+  /** Catalog designations (e.g. ["M31", "NGC 224"]). */
+  catalogNumbers?: string[];
+  /** Cross-reference ids/links to external identifiers. */
+  crossReferences?: string[];
+  /** Editorial significance hint (1–5) for ordering; optional, never fabricated science. */
+  importance?: number;
 }
 
 export interface GraphRelation {

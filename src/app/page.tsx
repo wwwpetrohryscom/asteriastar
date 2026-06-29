@@ -171,6 +171,32 @@ export default function HomePage() {
         <SectionGrid items={featured} columns={3} />
       </Container>
 
+      {/* Ways to explore — the intelligent layer. */}
+      <Container className="mt-20">
+        <h2 className="font-display text-2xl font-bold sm:text-3xl">Ways to explore</h2>
+        <p className="mt-2 max-w-2xl text-muted">
+          The knowledge graph powers more than articles — explore, compare, learn,
+          and trace the history of the universe.
+        </p>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {[
+            { href: ROUTES.explore, title: "Explore", desc: "Navigate the graph by topic and connection." },
+            { href: ROUTES.compare, title: "Compare", desc: "Objects and ideas, side by side." },
+            { href: ROUTES.learn, title: "Learn", desc: "Guided paths from beginner to advanced." },
+            { href: ROUTES.timelines, title: "Timelines", desc: "The history of astronomy and spaceflight." },
+          ].map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:border-white/25 hover:bg-white/[0.04]"
+            >
+              <h3 className="font-display text-lg font-semibold text-fg">{item.title}</h3>
+              <p className="mt-1 text-sm text-muted">{item.desc}</p>
+            </Link>
+          ))}
+        </div>
+      </Container>
+
       <CTASection
         title="Knowledge first. Built to grow."
         description="Asteria Star starts as a rigorous encyclopedia of the sky and is architected to grow into tools, galleries, and — in time — a community."

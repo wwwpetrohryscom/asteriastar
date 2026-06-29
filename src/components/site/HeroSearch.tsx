@@ -17,7 +17,7 @@ export function HeroSearch() {
       onSubmit={(e) => {
         e.preventDefault();
         const term = q.trim();
-        router.push(`/entity-index${term ? `?q=${encodeURIComponent(term)}` : ""}`);
+        router.push(`/search${term ? `?q=${encodeURIComponent(term)}` : ""}`);
       }}
       className="flex w-full max-w-xl items-center gap-2 rounded-2xl border border-white/15 bg-white/[0.04] p-1.5 backdrop-blur-md focus-within:border-white/35"
     >

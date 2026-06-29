@@ -237,6 +237,12 @@ export function getEntryPath(entry: Entry): string {
   return entry.path;
 }
 
+/** Look up a published entry by its canonical path. */
+export function getEntryByPath(path: string): Entry | undefined {
+  const found = BY_PATH.get(path);
+  return found && found.status === "published" ? found : undefined;
+}
+
 /* ----------------------------------------------- entry ↔ graph bridge */
 
 /** The graph entity an entry represents (explicit id, else matched by path). */

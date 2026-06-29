@@ -35,6 +35,10 @@ src/
     explore/entity/[type]/[slug]/   Standalone graph-entity pages (Phase 3)
     connections/[slug]/     Graph-driven relationship pages (Phase 3)
     entity-index/ topic-index/ discover/   Discovery indexes (Phase 3)
+    compare/ compare/[pair]/        Entity comparison engine (Phase 5)
+    learn/ learn/[path]/            Learning paths (Phase 5)
+    timelines/ timelines/[slug]/    Timeline engine (Phase 5)
+    search/                         Universal search (Phase 5)
     about/ editorial-policy/ sources-policy/   Editorial pages
     (product)/              RESERVED future authenticated area (empty route group)
     loading.tsx             Global loading state
@@ -65,6 +69,7 @@ src/
       jsonld.ts             Schema.org builders
     discovery.ts            Topics + graph-driven relationship pages (Phase 3)
     media/                  ImageAsset model + registry (Phase 4 image platform)
+    compare.ts learn.ts timelines.ts search.ts   Intelligence layer (Phase 5)
   content/
     entries/                Entry data modules + validating registry (Phase 2)
   knowledge-graph/          Entity/relation graph + helpers + validation
@@ -150,6 +155,12 @@ isolated nodes**. Entries link to graph entities by canonical path (or an
 explicit `graphEntityId`); entity pages render connections grouped into
 never-mixed facets (Scientific / Observational / Mission / Discovery / Related /
 Cultural / Astrology). See [KNOWLEDGE_GRAPH.md](./KNOWLEDGE_GRAPH.md).
+
+## Intelligence layer
+
+The graph is the operating system: recommendations, comparisons, learning paths,
+timelines, and universal search are all graph-/content-derived (no random
+suggestions, no fabricated values). See [INTELLIGENCE.md](./INTELLIGENCE.md).
 
 ## Observatory & image platform
 
