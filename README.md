@@ -63,6 +63,14 @@ and universal search (`/search`), all graph-derived with no fabricated data. See
 [docs/INTELLIGENCE.md](docs/INTELLIGENCE.md) and
 [docs/KNOWLEDGE_GRAPH.md](docs/KNOWLEDGE_GRAPH.md).
 
+Underneath sits **Asteria Platform Core** ([`src/platform/`](src/platform)): a
+layered, registry-driven foundation where the website is just one client. Seven
+acyclic layers (enforced by `npm run check:arch`), an **entity runtime**
+(`resolveEntity`), a **universal registry** of registries, generated metadata,
+localization, extension points, and a reusable component family — all browsable
+at [`/platform`](src/app/platform/page.tsx). See
+[docs/PLATFORM_ARCHITECTURE.md](docs/PLATFORM_ARCHITECTURE.md).
+
 Adding a section, category, or entry is a data-only change: navigation, hub,
 category and entry pages, `sitemap.xml`, and `llms.txt` all update
 automatically.
@@ -81,6 +89,12 @@ automatically.
 - [Future Social Network](docs/FUTURE_SOCIAL_NETWORK.md)
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
+
+**Platform Core (Phase 8)**
+
+- [Platform Architecture](docs/PLATFORM_ARCHITECTURE.md) — layers, entity runtime, registries, metadata
+- [Localization](docs/LOCALIZATION.md)
+- [Extensions](docs/EXTENSIONS.md)
 
 **Open Celestial Data Platform (Phase 7)**
 
