@@ -7,7 +7,7 @@ import { REGISTRY_STATS } from "@/lib/content/registry";
 
 const PATH = ROUTES.about;
 const DESCRIPTION =
-  "About Asteria Star: our mission to build a trusted, beautiful knowledge platform for astronomy and the night sky, with astrology kept clearly separate as cultural tradition.";
+  "About Asteria Star: a knowledge platform for everything above Earth — astronomy, space, the night sky, mythology, and astrology as a clearly separate cultural tradition.";
 
 export const metadata: Metadata = buildMetadata({
   title: "About",
@@ -19,18 +19,19 @@ export default function AboutPage() {
   return (
     <EditorialPage
       title="About Asteria Star"
-      lead="A serious knowledge platform for the sky — scientifically credible, beautifully made, and built to last."
+      lead="Everything Above Earth — a serious, global knowledge platform for the sky: scientifically credible, beautifully made, and built to last."
       path={PATH}
       description={DESCRIPTION}
       updated="2026-06-29"
     >
       <h2>Our mission</h2>
       <p>
-        Asteria Star exists to help people study the real universe — stars,
-        galaxies, planets, and the events of the night sky — and to explore the
-        long human tradition of finding meaning in the heavens. We want to be a
-        trusted, global home for celestial knowledge, not another low-quality
-        horoscope site.
+        Asteria Star is a knowledge platform for <strong>everything above
+        Earth</strong> — astronomy, space exploration, the night sky, celestial
+        phenomena, mythology, observation, astrophotography, telescopes, and
+        astrology as a separate cultural tradition. We want to be a trusted,
+        global home for celestial knowledge, not another low-quality horoscope
+        site.
       </p>
 
       <h2>Science and tradition, kept apart</h2>
@@ -59,10 +60,13 @@ export default function AboutPage() {
       <h2>What&apos;s coming</h2>
       <p>
         We are building outward from this base: location-aware sky tools,
-        interactive calculators, curated galleries of openly licensed imagery,
-        and structured entries for individual objects. In time, Asteria Star is
-        architected to support community features — profiles, saved charts, and
-        sharing — without compromising the integrity of the reference content.
+        interactive calculators, and curated galleries of openly licensed
+        imagery. Underpinning it all is a{" "}
+        <strong>knowledge graph</strong> that links every star, planet, mission,
+        myth, and symbol — keeping scientific, cultural, and astrological
+        connections clearly separated. In time, Asteria Star is architected to
+        support community features — saved entities, collections, and learning
+        paths — without compromising the integrity of the reference content.
       </p>
 
       <h2>How we work</h2>

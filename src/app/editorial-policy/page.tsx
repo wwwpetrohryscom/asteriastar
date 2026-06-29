@@ -24,6 +24,15 @@ export default function EditorialPolicyPage() {
       description={DESCRIPTION}
       updated="2026-06-29"
     >
+      <h2>0. Our scope</h2>
+      <p>
+        Asteria Star covers <strong>everything above Earth</strong>: astronomy,
+        space exploration, the night sky, celestial events, observation and
+        astrophotography, the history and mythology of the sky, and astrology as
+        a separate cultural tradition. The standards below apply across all of
+        it.
+      </p>
+
       <h2>1. Accuracy before everything</h2>
       <p>
         We publish what is well established and clearly mark what is uncertain or

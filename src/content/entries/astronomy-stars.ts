@@ -20,6 +20,9 @@ export const astronomyStars = defineEntries([
     kind: "science",
     difficulty: "beginner",
     tags: ["bright stars", "binary star", "Canis Major", "winter sky"],
+    graphEntityId: "star:sirius",
+    entityType: "star",
+    entityDomain: "science",
     facts: [
       { label: "Constellation", value: "Canis Major" },
       { label: "Apparent brightness", value: "Brightest star in the night sky" },

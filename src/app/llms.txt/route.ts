@@ -1,6 +1,15 @@
 import { getAllSections } from "@/lib/content/registry";
 import { getEntriesByCategory, ENTRY_STATS } from "@/content/entries";
-import { absoluteUrl, categoryPath, sectionPath, ROUTES } from "@/lib/routes";
+import { GRAPH_STATS } from "@/knowledge-graph";
+import { TOPICS, RELATIONSHIP_PAGES } from "@/lib/discovery";
+import {
+  absoluteUrl,
+  categoryPath,
+  sectionPath,
+  topicPath,
+  connectionPath,
+  ROUTES,
+} from "@/lib/routes";
 import { SITE } from "@/lib/site";
 
 /**
@@ -15,7 +24,7 @@ export function GET(): Response {
 
   lines.push(`# ${SITE.name}`);
   lines.push("");
-  lines.push(`> ${SITE.description}`);
+  lines.push(`> ${SITE.tagline} ${SITE.positioning}`);
   lines.push("");
   lines.push(SITE.principle);
   lines.push("");
@@ -42,6 +51,22 @@ export function GET(): Response {
     }
     lines.push("");
   }
+
+  lines.push("## Explore (knowledge graph)");
+  lines.push(
+    `A knowledge graph of ${GRAPH_STATS.entityCount} entities and ${GRAPH_STATS.relationCount} relations powers static discovery pages. Scientific, cultural, and astrological connections are kept separate.`,
+  );
+  lines.push(`- [Explore](${absoluteUrl(ROUTES.explore)})`);
+  lines.push(`- [Entity index](${absoluteUrl(ROUTES.entityIndex)})`);
+  lines.push(`- [Topic index](${absoluteUrl(ROUTES.topicIndex)})`);
+  lines.push(`- [Discover](${absoluteUrl(ROUTES.discover)})`);
+  for (const topic of TOPICS) {
+    lines.push(`- [${topic.title}](${absoluteUrl(topicPath(topic.slug))}): ${topic.description}`);
+  }
+  for (const page of RELATIONSHIP_PAGES) {
+    lines.push(`- [${page.title}](${absoluteUrl(connectionPath(page.slug))}): ${page.description}`);
+  }
+  lines.push("");
 
   lines.push("## Policies");
   lines.push(`- [About](${absoluteUrl(ROUTES.about)})`);

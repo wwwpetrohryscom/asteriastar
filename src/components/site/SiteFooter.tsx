@@ -53,7 +53,7 @@ export function SiteFooter() {
 
         <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-faint sm:flex-row sm:items-center sm:justify-between">
           <p>
-            © {SITE.founded} {SITE.name}. Astronomy and astrology, kept clearly apart.
+            © {SITE.founded} {SITE.name}. Everything above Earth — science and tradition, kept clearly apart.
           </p>
           <nav aria-label="Policies" className="flex flex-wrap gap-x-5 gap-y-2">
             <Link href={ROUTES.about} className="transition hover:text-fg">

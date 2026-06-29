@@ -17,7 +17,7 @@ export function formatTitle(title?: string): string {
   return `${title} · ${SITE.name}`;
 }
 
-export const defaultTitle = `${SITE.name} — Astronomy, Night Sky & Astrology`;
+export const defaultTitle = `${SITE.name} — Everything Above Earth`;
 
 interface BuildMetadataInput {
   /** Page-specific title, without the site suffix (the template adds it). */

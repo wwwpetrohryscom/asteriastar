@@ -53,6 +53,12 @@ Key fields:
   numerology calculators) as interpretive and optionally override the
   disclaimer wording.
 
+Entries additionally carry optional **knowledge-graph links** (`graphEntityId`,
+`relatedGraphEntityIds`, `relationIds`, `entityType`, `entityDomain`). Most
+entries link to their graph entity implicitly by canonical path; the explicit
+fields are available for authoring and are validated to resolve. See
+[KNOWLEDGE_GRAPH.md](./KNOWLEDGE_GRAPH.md).
+
 ## Where the data lives
 
 One file per hub in [`src/lib/content/sections/`](../src/lib/content/sections/),

@@ -15,7 +15,19 @@ export const ROUTES = {
   about: "/about",
   editorialPolicy: "/editorial-policy",
   sourcesPolicy: "/sources-policy",
+  explore: "/explore",
+  entityIndex: "/entity-index",
+  topicIndex: "/topic-index",
+  discover: "/discover",
 } as const;
+
+export function topicPath(slug: string): string {
+  return `/explore/${slug}`;
+}
+
+export function connectionPath(slug: string): string {
+  return `/connections/${slug}`;
+}
 
 export function sectionPath(section: Pick<Section, "slug">): string {
   return `/${section.slug}`;

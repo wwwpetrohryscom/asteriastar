@@ -4,8 +4,21 @@ import { SectionGrid } from "@/components/sections/SectionGrid";
 import { CTASection } from "@/components/sections/CTASection";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
+import { HeroSearch } from "@/components/site/HeroSearch";
+import { KnowledgeGraphPreview } from "@/components/graph/KnowledgeGraphPreview";
 import { getAllSections, REGISTRY_STATS } from "@/lib/content/registry";
-import { sectionPath, categoryPath, ROUTES } from "@/lib/routes";
+import { ENTRY_STATS } from "@/content/entries";
+import { GRAPH_STATS } from "@/knowledge-graph";
+import { sectionPath, categoryPath, topicPath, ROUTES } from "@/lib/routes";
+
+const POPULAR_TOPICS = [
+  ["stars", "Stars"],
+  ["planets", "Planets"],
+  ["galaxies", "Galaxies"],
+  ["missions", "Missions"],
+  ["telescopes", "Telescopes"],
+  ["constellations", "Constellations"],
+] as const;
 
 export default function HomePage() {
   const sections = getAllSections();
@@ -42,25 +55,37 @@ export default function HomePage() {
     <>
       <HeroSection
         accent="nebula"
-        eyebrow={<span>Astronomy · Night Sky · Astrology</span>}
+        eyebrow={<span>A global knowledge platform for the sky</span>}
         title={
           <>
-            Study the real sky — and the{" "}
-            <span className="accent-text">stories we tell</span> about it.
+            Everything <span className="accent-text">Above Earth</span>.
           </>
         }
-        lead="Asteria Star is a serious, source-ready knowledge platform for astronomy and the night sky, alongside the cultural tradition of astrology. Science and symbolism, kept clearly apart."
-        actions={
-          <>
-            <Button href="/astronomy">Explore Astronomy</Button>
-            <Button href="/sky-guide" variant="secondary">
-              Tonight&apos;s Sky
-            </Button>
-          </>
-        }
+        lead="Explore stars, planets, galaxies, missions, telescopes, night-sky events, mythology, and the symbolic traditions humans built around the sky."
       >
+        <div className="mt-8">
+          <HeroSearch />
+        </div>
+        <div className="mt-4 flex flex-wrap items-center gap-2 text-sm">
+          <span className="text-faint">Popular:</span>
+          {POPULAR_TOPICS.map(([slug, label]) => (
+            <Link
+              key={slug}
+              href={topicPath(slug)}
+              className="rounded-full border border-white/12 bg-white/[0.02] px-3 py-1 text-muted transition hover:border-white/25 hover:text-fg"
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
+        <div className="mt-6 flex flex-wrap gap-3">
+          <Button href={ROUTES.explore}>Explore the universe</Button>
+          <Button href="/astronomy" variant="secondary">
+            Browse Astronomy
+          </Button>
+        </div>
         <p className="mt-6 text-sm text-faint">
-          {REGISTRY_STATS.sectionCount} knowledge hubs · {REGISTRY_STATS.categoryCount} topic areas · built to scale
+          {REGISTRY_STATS.categoryCount} topic areas · {ENTRY_STATS.total} entries · {GRAPH_STATS.entityCount} graph entities · {GRAPH_STATS.relationCount} connections
         </p>
       </HeroSection>
 
@@ -100,6 +125,34 @@ export default function HomePage() {
           </p>
         </div>
         <SectionGrid items={hubCards} columns={3} />
+      </Container>
+
+      {/* Knowledge graph preview. */}
+      <Container className="mt-20">
+        <div className="mb-6 flex items-end justify-between gap-4">
+          <div>
+            <h2 className="font-display text-2xl font-bold sm:text-3xl">
+              The knowledge graph
+            </h2>
+            <p className="mt-2 max-w-2xl text-muted">
+              Every object, mission, and myth is connected — with scientific,
+              cultural, and astrological links kept clearly separate.
+            </p>
+          </div>
+          <Link
+            href={ROUTES.explore}
+            className="hidden shrink-0 text-sm text-muted transition hover:text-fg sm:block"
+          >
+            Explore all →
+          </Link>
+        </div>
+        <KnowledgeGraphPreview
+          ids={[
+            "star:sirius",
+            "constellation:orion",
+            "space_telescope:james-webb-space-telescope",
+          ]}
+        />
       </Container>
 
       {/* Featured topics — internal linking across hubs. */}

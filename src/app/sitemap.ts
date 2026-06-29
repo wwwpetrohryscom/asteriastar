@@ -1,7 +1,16 @@
 import type { MetadataRoute } from "next";
 import { getAllCategories, getAllSections } from "@/lib/content/registry";
 import { getAllEntries } from "@/content/entries";
-import { absoluteUrl, categoryPath, sectionPath, ROUTES } from "@/lib/routes";
+import { getStandaloneEntities, entityGraphPath } from "@/knowledge-graph";
+import { TOPICS, RELATIONSHIP_PAGES } from "@/lib/discovery";
+import {
+  absoluteUrl,
+  categoryPath,
+  sectionPath,
+  topicPath,
+  connectionPath,
+  ROUTES,
+} from "@/lib/routes";
 
 /**
  * Generates sitemap.xml from the content registry, so every public route is
@@ -14,9 +23,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.home), changeFrequency: "weekly", priority: 1 },
+    { url: absoluteUrl(ROUTES.explore), changeFrequency: "weekly", priority: 0.8 },
+    { url: absoluteUrl(ROUTES.discover), changeFrequency: "weekly", priority: 0.6 },
+    { url: absoluteUrl(ROUTES.entityIndex), changeFrequency: "weekly", priority: 0.6 },
+    { url: absoluteUrl(ROUTES.topicIndex), changeFrequency: "weekly", priority: 0.6 },
     { url: absoluteUrl(ROUTES.about), changeFrequency: "monthly", priority: 0.5 },
     { url: absoluteUrl(ROUTES.editorialPolicy), changeFrequency: "yearly", priority: 0.3 },
     { url: absoluteUrl(ROUTES.sourcesPolicy), changeFrequency: "yearly", priority: 0.3 },
+  ];
+
+  // Discovery: topic indexes, relationship pages, standalone graph entities.
+  const discoveryRoutes: MetadataRoute.Sitemap = [
+    ...TOPICS.map((t) => ({ url: absoluteUrl(topicPath(t.slug)), changeFrequency: "weekly" as const, priority: 0.6 })),
+    ...RELATIONSHIP_PAGES.map((p) => ({ url: absoluteUrl(connectionPath(p.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...getStandaloneEntities().map((e) => ({ url: absoluteUrl(entityGraphPath(e)), changeFrequency: "monthly" as const, priority: 0.4 })),
   ];
 
   const sectionRoutes: MetadataRoute.Sitemap = getAllSections().map((section) => ({
@@ -45,6 +65,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...sectionRoutes,
     ...categoryRoutes,
     ...entryRoutes,
+    ...discoveryRoutes,
   ].map((entry) => ({
     lastModified: now,
     ...entry,

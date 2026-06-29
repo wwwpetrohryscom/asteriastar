@@ -1,5 +1,6 @@
 import type { SourceKey } from "@/lib/sources";
 import type { SectionSlug } from "@/lib/content/types";
+import type { EntityDomain, EntityType } from "@/knowledge-graph/schema";
 import { absoluteUrl, entryPath } from "@/lib/routes";
 
 /**
@@ -35,6 +36,14 @@ export interface EntrySection {
   list?: string[];
 }
 
+/** A single dated event for an entry's timeline. */
+export interface EntryTimelineItem {
+  /** A date or year label, e.g. "1969" or "July 20, 1969". */
+  date: string;
+  title: string;
+  description?: string;
+}
+
 /** Reference to another entry, by [section, category, entry] slugs. */
 export type EntryRef = readonly [section: string, category: string, entry: string];
 /** Reference to a category, by [section, category] slugs. */
@@ -58,6 +67,8 @@ export interface EntryInput {
   keyPoints?: string[];
   /** The main body — at least three meaningful sections (enforced). */
   body: EntrySection[];
+  /** Optional dated timeline (only well-documented events). */
+  timeline?: EntryTimelineItem[];
   sources?: SourceKey[];
   relatedEntries?: EntryRef[];
   relatedCategories?: CategoryRef[];
@@ -68,6 +79,18 @@ export interface EntryInput {
   disclaimer?: string;
   /** Force/suppress the disclaimer; defaults to derived from `kind`. */
   disclaimerRequired?: boolean;
+
+  /* --- Knowledge graph links (optional; see src/knowledge-graph) --- */
+  /** Explicit graph entity this entry represents. If omitted, the entry is
+   *  matched to an entity by its canonical path (entity.entryPath). */
+  graphEntityId?: string;
+  /** Additional graph entities this entry references. */
+  relatedGraphEntityIds?: string[];
+  /** Specific graph relation ids this entry highlights. */
+  relationIds?: string[];
+  /** The entity type/domain this entry represents (mirrors the graph entity). */
+  entityType?: EntityType;
+  entityDomain?: EntityDomain;
 }
 
 /** Fully-resolved entry consumed by pages and helpers. */
@@ -87,6 +110,7 @@ export interface Entry {
   facts: EntryFact[];
   keyPoints: string[];
   body: EntrySection[];
+  timeline: EntryTimelineItem[];
   sources: SourceKey[];
   relatedEntries: EntryRef[];
   relatedCategories: CategoryRef[];
@@ -97,6 +121,11 @@ export interface Entry {
   disclaimerRequired: boolean;
   path: string;
   canonicalUrl: string;
+  graphEntityId?: string;
+  relatedGraphEntityIds: string[];
+  relationIds: string[];
+  entityType?: EntityType;
+  entityDomain?: EntityDomain;
 }
 
 /** Identity helper for typed data modules: `defineEntries([...])`. */
@@ -138,6 +167,7 @@ export function resolveEntry(input: EntryInput): Entry {
     facts: input.facts ?? [],
     keyPoints: input.keyPoints ?? [],
     body: input.body,
+    timeline: input.timeline ?? [],
     sources: input.sources ?? [],
     relatedEntries: input.relatedEntries ?? [],
     relatedCategories: input.relatedCategories ?? [],
@@ -148,5 +178,10 @@ export function resolveEntry(input: EntryInput): Entry {
     disclaimerRequired,
     path,
     canonicalUrl: absoluteUrl(path),
+    graphEntityId: input.graphEntityId,
+    relatedGraphEntityIds: input.relatedGraphEntityIds ?? [],
+    relationIds: input.relationIds ?? [],
+    entityType: input.entityType,
+    entityDomain: input.entityDomain,
   };
 }

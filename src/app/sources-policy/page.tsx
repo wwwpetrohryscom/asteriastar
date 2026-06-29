@@ -57,10 +57,12 @@ export default function SourcesPolicyPage() {
         <div className="prose-cosmos">
           <h2>Our approach</h2>
           <p>
-            Asteria Star is <strong>source-ready by design</strong>. Scientific
-            astronomy content is built to be cited from authoritative primary and
+            Asteria Star covers everything above Earth, and it is{" "}
+            <strong>source-ready by design</strong>. Scientific astronomy and
+            space content is built to be cited from authoritative primary and
             reference sources rather than asserted on our own authority. Every
-            topic page declares the source slots it draws on.
+            topic page — and every knowledge-graph relation marked as science —
+            declares the sources it draws on.
           </p>
 
           <h2>What we will and won&apos;t do</h2>

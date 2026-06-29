@@ -76,6 +76,16 @@ without changing structure.
 - Entry pages enrich internal linking: each links sibling entries, related
   entries across categories, and back to its category, while category pages list
   their entries — deepening the link graph as the seed grows.
+- The **knowledge graph** adds a second, semantic layer of internal links:
+  entry pages surface "Knowledge connections" to related entities (e.g. Sirius →
+  Canis Major), grouped by domain. As the graph grows, these become a rich,
+  topically-relevant internal link network — strong for both readers and crawlers.
+- **Static discovery** (Phase 3) multiplies internal links and indexable
+  surface area: `/explore` + per-topic A–Z indexes, `/entity-index`,
+  `/topic-index`, `/discover`, graph-driven `/connections/[slug]` pages, and a
+  standalone page per graph entity. All are statically generated and included in
+  the sitemap and `llms.txt`. Every page is non-thin (real content + curated
+  links); empty/orphan states are avoided by showing sibling entities.
 - `sitemap.ts` can be split with `generateSitemaps()` once it approaches
   Google's 50,000-URL limit — without changing the data source.
 
