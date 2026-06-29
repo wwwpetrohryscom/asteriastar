@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Asteria Star
 
-## Getting Started
+A serious, source-ready knowledge platform for **astronomy and the night sky**,
+alongside the cultural tradition of **astrology** — with science and symbolism
+kept clearly apart.
 
-First, run the development server:
+> Astronomy is presented as scientific, evidence-based, and sourced. Astrology
+> is presented as cultural, symbolic, and interpretive — never as proven
+> science.
+
+This repository contains the **foundation** of the platform: a static-first,
+SEO-first Next.js site with a typed content registry, a cosmic design system,
+full SEO/structured-data infrastructure, and an architecture ready to grow into
+tools, galleries, and (eventually) a community product.
+
+## Stack
+
+- [Next.js 16](https://nextjs.org) (App Router, React Server Components)
+- TypeScript (strict)
+- Tailwind CSS v4
+- Static generation — no database, no auth, no client data fetching (yet)
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev      # http://localhost:3000
+npm run build    # production build (statically prerenders all routes)
+npm run lint     # ESLint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Set the canonical origin for metadata/sitemap in production:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# .env (optional; defaults to https://asteriastar.com)
+NEXT_PUBLIC_SITE_URL=https://asteriastar.com
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Structure
 
-## Learn More
+Seven knowledge hubs — Astronomy, Sky Guide, Astrology, Calculators,
+Encyclopedia, Observatory, and Guides — each with many topic categories, all
+driven by the content registry in [`src/lib/content/`](src/lib/content).
 
-To learn more about Next.js, take a look at the following resources:
+Adding a section or category is a data-only change: navigation, hub and
+category pages, `sitemap.xml`, and `llms.txt` all update automatically.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Documentation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Architecture](docs/ARCHITECTURE.md)
+- [Content Model](docs/CONTENT_MODEL.md)
+- [SEO Strategy](docs/SEO_STRATEGY.md)
+- [Future Social Network](docs/FUTURE_SOCIAL_NETWORK.md)
+- [Editorial Policy](docs/EDITORIAL_POLICY.md)
+- [Sources Policy](docs/SOURCES_POLICY.md)
 
-## Deploy on Vercel
+## Principles
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+No fabricated facts, statistics, or astronomical data. Astrology content is
+always labeled as interpretive tradition and never mixed with scientific
+astronomy. See the [editorial policy](docs/EDITORIAL_POLICY.md).
