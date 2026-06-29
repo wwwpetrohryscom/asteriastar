@@ -1,0 +1,49 @@
+import { getAllSections } from "@/lib/content/registry";
+import { absoluteUrl, categoryPath, sectionPath, ROUTES } from "@/lib/routes";
+import { SITE } from "@/lib/site";
+
+/**
+ * Serves /llms.txt — an LLM-friendly map of the site, generated from the
+ * content registry (see https://llmstxt.org). Kept in sync with the sitemap
+ * automatically. Statically rendered at build time.
+ */
+export const dynamic = "force-static";
+
+export function GET(): Response {
+  const lines: string[] = [];
+
+  lines.push(`# ${SITE.name}`);
+  lines.push("");
+  lines.push(`> ${SITE.description}`);
+  lines.push("");
+  lines.push(SITE.principle);
+  lines.push("");
+  lines.push(
+    "Astronomy and the Sky Guide are scientific and source-backed. Astrology is presented as cultural and interpretive tradition, never as proven science.",
+  );
+  lines.push("");
+
+  for (const section of getAllSections()) {
+    lines.push(`## ${section.name} — ${section.tagline}`);
+    lines.push(`${absoluteUrl(sectionPath(section))}`);
+    lines.push("");
+    for (const category of section.categories) {
+      lines.push(
+        `- [${category.name}](${absoluteUrl(categoryPath(section, category))}): ${category.summary}`,
+      );
+    }
+    lines.push("");
+  }
+
+  lines.push("## Policies");
+  lines.push(`- [About](${absoluteUrl(ROUTES.about)})`);
+  lines.push(`- [Editorial Policy](${absoluteUrl(ROUTES.editorialPolicy)})`);
+  lines.push(`- [Sources Policy](${absoluteUrl(ROUTES.sourcesPolicy)})`);
+  lines.push("");
+
+  return new Response(lines.join("\n"), {
+    headers: {
+      "Content-Type": "text/plain; charset=utf-8",
+    },
+  });
+}
