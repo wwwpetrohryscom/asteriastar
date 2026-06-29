@@ -3,13 +3,15 @@ import { validateLocalization } from "@/platform/localization";
 import { validateExtensions } from "@/platform/extensions";
 import { validateComponents } from "@/platform/component-registry";
 import { validateSearchCore } from "@/platform/search-core";
+import { validateAuthority } from "@/platform/authority/validate-authority";
 import { LAYERS, classifyModule } from "@/platform/layers";
 
 /**
  * Platform-level validation: registries, localization readiness, extensions,
- * components, search core, and the layer model's internal consistency. The
- * static dependency/cycle check over real source imports lives in
- * scripts/check-architecture.ts (it needs filesystem access).
+ * components, search core, the authority layer (evidence/provenance/review/
+ * version/source/citation integrity), and the layer model's internal
+ * consistency. The static dependency/cycle check over real source imports lives
+ * in scripts/check-architecture.ts (it needs filesystem access).
  */
 export function validatePlatform(): string[] {
   const issues: string[] = [];
@@ -18,6 +20,7 @@ export function validatePlatform(): string[] {
   issues.push(...validateExtensions());
   issues.push(...validateComponents());
   issues.push(...validateSearchCore());
+  issues.push(...validateAuthority());
 
   // Layer model sanity: unique ids/levels, and the dependency allowlist is a DAG
   // (no layer may depend on a shallower-or-equal layer that also depends back).

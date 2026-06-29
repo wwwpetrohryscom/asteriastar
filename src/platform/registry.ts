@@ -13,6 +13,10 @@ import { SOURCES } from "@/lib/sources";
 import { LOCALES } from "@/platform/localization";
 import { EXTENSION_STATS } from "@/platform/extensions";
 import { COMPONENT_STATS } from "@/platform/component-registry";
+import { EVIDENCE_LEVELS } from "@/platform/authority/evidence";
+import { REVIEW_STATS } from "@/platform/authority/review";
+import { PROVENANCE_STATS } from "@/platform/authority/provenance";
+import { VERSION_STATS } from "@/platform/authority/versioning";
 import type { LayerId } from "@/platform/layers";
 
 /**
@@ -48,6 +52,10 @@ export const REGISTRIES: PlatformRegistry[] = [
   { id: "component", name: "Component Registry", description: "Reusable platform presentation modules.", layer: "presentation", count: COMPONENT_STATS.total, href: "/platform" },
   { id: "locale", name: "Locale Registry", description: "Supported and planned languages.", layer: "registry", count: LOCALES.length, href: "/platform" },
   { id: "extension", name: "Extension Registry", description: "Registered platform extensions.", layer: "registry", count: EXTENSION_STATS.registered, href: "/platform" },
+  { id: "evidence", name: "Evidence Registry", description: "Standardized evidence levels.", layer: "registry", count: EVIDENCE_LEVELS.length, href: "/transparency/evidence-framework" },
+  { id: "review", name: "Review Registry", description: "Scientific review records (architecture).", layer: "registry", count: REVIEW_STATS.total, href: "/authority" },
+  { id: "provenance", name: "Provenance Registry", description: "Sourced scientific fact records (architecture).", layer: "registry", count: PROVENANCE_STATS.records, href: "/transparency/data-provenance" },
+  { id: "version", name: "Version Registry", description: "Object-level version history (architecture).", layer: "registry", count: VERSION_STATS.records, href: "/transparency/version-policy" },
 ];
 
 const BY_ID = new Map(REGISTRIES.map((r) => [r.id, r]));

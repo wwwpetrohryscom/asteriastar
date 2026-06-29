@@ -14,4 +14,5 @@ export * from "@/platform/registry";
 export * from "@/platform/metadata";
 export * from "@/platform/search-core";
 export * from "@/platform/component-registry";
+export * from "@/platform/authority";
 export { validatePlatform } from "@/platform/validate";
