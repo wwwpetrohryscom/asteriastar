@@ -2,12 +2,18 @@ import { getAllSections } from "@/lib/content/registry";
 import { getEntriesByCategory, ENTRY_STATS } from "@/content/entries";
 import { GRAPH_STATS } from "@/knowledge-graph";
 import { TOPICS, RELATIONSHIP_PAGES } from "@/lib/discovery";
+import { COMPARISONS } from "@/lib/compare";
+import { LEARNING_PATHS } from "@/lib/learn";
+import { TIMELINES } from "@/lib/timelines";
 import {
   absoluteUrl,
   categoryPath,
   sectionPath,
   topicPath,
   connectionPath,
+  comparePath,
+  learnPath,
+  timelinePath,
   ROUTES,
 } from "@/lib/routes";
 import { SITE } from "@/lib/site";
@@ -66,6 +72,26 @@ export function GET(): Response {
   for (const page of RELATIONSHIP_PAGES) {
     lines.push(`- [${page.title}](${absoluteUrl(connectionPath(page.slug))}): ${page.description}`);
   }
+  lines.push("");
+
+  lines.push("## Learn (learning paths)");
+  for (const p of LEARNING_PATHS) {
+    lines.push(`- [${p.title}](${absoluteUrl(learnPath(p.slug))}): ${p.description}`);
+  }
+  lines.push("");
+
+  lines.push("## Compare");
+  for (const c of COMPARISONS) {
+    lines.push(`- [${c.title}](${absoluteUrl(comparePath(c.slug))}): ${c.description}`);
+  }
+  lines.push("");
+
+  lines.push("## Timelines");
+  for (const t of TIMELINES) {
+    lines.push(`- [${t.title}](${absoluteUrl(timelinePath(t.slug))}): ${t.description}`);
+  }
+  lines.push("");
+  lines.push(`Universal search: ${absoluteUrl(ROUTES.search)}`);
   lines.push("");
 
   lines.push("## Policies");

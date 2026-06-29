@@ -13,8 +13,12 @@ export function SiteHeader() {
   const navLinks = [
     { name: "Explore", href: ROUTES.explore },
     ...getAllSections().map((s) => ({ name: s.name, href: sectionPath(s) })),
+    { name: "Compare", href: ROUTES.compare },
+    { name: "Learn", href: ROUTES.learn },
   ];
   const utility = [
+    { name: "Search", href: ROUTES.search },
+    { name: "Timelines", href: ROUTES.timelines },
     { name: "Entity Index", href: ROUTES.entityIndex },
     { name: "About", href: ROUTES.about },
     { name: "Editorial Policy", href: ROUTES.editorialPolicy },
@@ -45,7 +49,7 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-1">
           <Link
-            href={ROUTES.entityIndex}
+            href={ROUTES.search}
             aria-label="Search the knowledge graph"
             className="inline-flex h-10 w-10 items-center justify-center rounded-lg text-muted transition hover:bg-white/5 hover:text-fg"
           >
