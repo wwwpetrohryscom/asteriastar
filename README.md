@@ -56,7 +56,12 @@ a static **discovery** layer at `/explore`, `/entity-index`, `/discover`, and
 graph-driven `/connections/*` pages. The **Observatory** (`/observatory`) is a
 Celestial Data Platform hub with an honest, provenance-first
 [image architecture](docs/IMAGE_PLATFORM.md) (no bundled or fabricated imagery).
-See [docs/KNOWLEDGE_GRAPH.md](docs/KNOWLEDGE_GRAPH.md).
+
+The graph is also the platform's **intelligence layer** — recommendations,
+comparisons (`/compare`), learning paths (`/learn`), timelines (`/timelines`),
+and universal search (`/search`), all graph-derived with no fabricated data. See
+[docs/INTELLIGENCE.md](docs/INTELLIGENCE.md) and
+[docs/KNOWLEDGE_GRAPH.md](docs/KNOWLEDGE_GRAPH.md).
 
 Adding a section, category, or entry is a data-only change: navigation, hub,
 category and entry pages, `sitemap.xml`, and `llms.txt` all update
@@ -69,6 +74,7 @@ automatically.
 - [Content Model](docs/CONTENT_MODEL.md)
 - [Phase 2 — Entry Layer](docs/PHASE_2_ENTRY_LAYER.md)
 - [Knowledge Graph](docs/KNOWLEDGE_GRAPH.md)
+- [Intelligence Layer](docs/INTELLIGENCE.md)
 - [Image Platform](docs/IMAGE_PLATFORM.md)
 - [SEO Strategy](docs/SEO_STRATEGY.md)
 - [Future Social Network](docs/FUTURE_SOCIAL_NETWORK.md)
