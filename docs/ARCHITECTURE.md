@@ -31,16 +31,24 @@ src/
     [section]/page.tsx                Hub pages (7, registry-driven)
     [section]/[category]/page.tsx     Category pages (registry-driven)
     [section]/[category]/[entry]/page.tsx   Entry pages (Phase 2, registry-driven)
+    explore/                Discovery hub, A–Z topic indexes (Phase 3)
+    explore/entity/[type]/[slug]/   Standalone graph-entity pages (Phase 3)
+    connections/[slug]/     Graph-driven relationship pages (Phase 3)
+    entity-index/ topic-index/ discover/   Discovery indexes (Phase 3)
     about/ editorial-policy/ sources-policy/   Editorial pages
     (product)/              RESERVED future authenticated area (empty route group)
+    loading.tsx             Global loading state
   components/
-    site/                   SiteHeader, SiteFooter, Logo, MobileNav
+    site/                   SiteHeader, SiteFooter, Logo, MobileNav, HeroSearch
     sections/               HeroSection, SectionGrid, CTASection, EditorialPage
     ui/                     TopicCard, Breadcrumbs, DisclaimerBox, SourceList,
                             RelatedLinks, Button, Badge, Container
     entry/                  EntryHeader, EntryFacts, EntryBody, EntryKeyPoints,
                             EntrySourceList, EntryRelatedGrid, EntryMetaBadges,
-                            EntryDisclaimer, EntryNavigation, KnowledgeConnections
+                            EntryDisclaimer, EntryNavigation, KnowledgeConnections,
+                            EntryGallery, EntryTimeline, EntryRelatedMissions
+    graph/                  GraphConnections, EntityCard, EntityBrowser,
+                            KnowledgeGraphPreview (Phase 3)
     seo/                    JsonLd
   lib/
     site.ts                 Site identity + the astrology disclaimer
@@ -55,9 +63,11 @@ src/
     seo/
       metadata.ts           buildMetadata() — title, canonical, OG, Twitter
       jsonld.ts             Schema.org builders
+    discovery.ts            Topics + graph-driven relationship pages (Phase 3)
   content/
     entries/                Entry data modules + validating registry (Phase 2)
-  knowledge-graph/          Entity/relation graph + helpers + validation (Phase 2.5)
+  knowledge-graph/          Entity/relation graph + helpers + validation
+    data/                   Per-area graph data modules (Phase 3)
 scripts/
   validate-entries.ts       Entry + graph quality gate (npm run validate)
 docs/                       This documentation

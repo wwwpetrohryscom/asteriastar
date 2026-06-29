@@ -9,13 +9,18 @@ science/culture/astrology boundary built into the data**.
 It lives in [`src/knowledge-graph/`](../src/knowledge-graph):
 
 ```
-schema.ts     entity/relation types, domains, confidence, label maps, rules
-entities.ts   seed entities
-relations.ts  seed relations
-helpers.ts    query helpers (build maps once, no entry dependency)
+schema.ts     entity/relation types, domains, confidence, label maps, rules, rel()
+entities.ts   aggregates the core seed + data modules
+relations.ts  aggregates the core seed + data modules
+data/         per-area modules (solar-system, stars-constellations, deep-sky,
+              missions-telescopes, sky-events-mythology, cross-links)
+helpers.ts    query/listing helpers (build maps once, no entry dependency)
 validate.ts   validateGraph() — the boundary rules
 index.ts      aggregates + validates at import (hard gate) + re-exports
 ```
+
+Data is split into per-area modules under `data/` so the graph can grow (and
+be authored) in cohesive chunks; `entities.ts`/`relations.ts` simply spread them.
 
 ## Why a graph is core
 
@@ -81,11 +86,24 @@ Examples (from the seed):
 | `constellation:orion` | mythologically_linked_to | `mythology_figure:orion` | culture | confirmed |
 | `astrology_sign:leo` | astrologically_associated_with | `astrology_planet:sun` | astrology | interpretive |
 
-## The seed
+## Size
 
-A conservative seed built from existing Phase 2 entries: **50 entities**
-(22 science, 6 culture, 22 astrology) and **33 relations** (13 science,
-5 culture, 15 astrology).
+As of Phase 3 the graph holds **157 entities** (120 science, 15 culture,
+22 astrology) and **126 relations** (98 science, 13 culture, 15 astrology) —
+the Solar System, stars and constellations, deep-sky objects, missions,
+telescopes, observatories, organizations, astronomers, meteor showers, comets,
+and sky mythology. Every fact is well-established; uncertain details are
+omitted rather than asserted.
+
+## Discovery & standalone pages
+
+The graph powers a static discovery layer (see [ARCHITECTURE.md](./ARCHITECTURE.md)):
+`/explore` and per-topic A–Z indexes, `/entity-index`, `/topic-index`,
+`/discover`, and graph-driven `/connections/[slug]` relationship pages. Every
+entity is browsable: those with a content entry link to it; those without get a
+non-thin standalone page at `/explore/entity/[type]/[slug]` (connections +
+sibling entities). Connection labels are **direction-aware**
+(`relationLabel(type, outgoing)`), so incoming relations read correctly.
 
 ## Entry ↔ graph linkage
 

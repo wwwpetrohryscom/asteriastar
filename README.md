@@ -49,6 +49,12 @@ pages — stars, planets, missions, zodiac signs, glossary terms, and more —
 typed and validated in [`src/content/entries/`](src/content/entries). See
 [docs/PHASE_2_ENTRY_LAYER.md](docs/PHASE_2_ENTRY_LAYER.md).
 
+A **knowledge graph** ([`src/knowledge-graph/`](src/knowledge-graph)) of 157
+entities and 126 relations connects everything — with scientific, cultural, and
+astrological links kept strictly separate — and powers a static **discovery**
+layer at `/explore`, `/entity-index`, `/discover`, and graph-driven
+`/connections/*` pages. See [docs/KNOWLEDGE_GRAPH.md](docs/KNOWLEDGE_GRAPH.md).
+
 Adding a section, category, or entry is a data-only change: navigation, hub,
 category and entry pages, `sitemap.xml`, and `llms.txt` all update
 automatically.
