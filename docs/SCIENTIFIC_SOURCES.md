@@ -9,11 +9,14 @@ organizations and, in time, peer-reviewed publications. The source registry is
 
 ## Source organizations
 
-NASA, NASA JPL, ESA, IAU, IAU Minor Planet Center (MPC), US Naval Observatory,
-International Meteor Organization (IMO), **NSF NOIRLab**, **ESO**, **SIMBAD
-(CDS)**, **NASA/IPAC NED**, Encyclopaedia Britannica, and Wikimedia Commons (for
-openly-licensed imagery). Each has a stable `SourceKey`, organization name,
-canonical URL, and the scope we rely on it for.
+NASA, NASA JPL, ESA, **CSA**, **JAXA**, **Roscosmos**, **ISRO**, IAU, IAU Minor
+Planet Center (MPC), US Naval Observatory, International Meteor Organization
+(IMO), NSF NOIRLab, ESO, SIMBAD (CDS), NASA/IPAC NED, **NASA ADS**, Encyclopaedia
+Britannica, and Wikimedia Commons (for openly-licensed imagery) — 18 sources in
+all. Each exposes a stable `SourceKey`, organization name, canonical URL, scope,
+**country**, **authority type** (space-agency, observatory, database, union,
+literature, reference, media), and a **reliability** note; `validateSources()`
+enforces the required fields.
 
 ## Citation model
 

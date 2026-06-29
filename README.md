@@ -71,6 +71,16 @@ localization, extension points, and a reusable component family — all browsabl
 at [`/platform`](src/app/platform/page.tsx). See
 [docs/PLATFORM_ARCHITECTURE.md](docs/PLATFORM_ARCHITECTURE.md).
 
+On top of that, a **scientific authority layer**
+([`src/platform/authority/`](src/platform/authority)) makes trust a product
+feature: a typed provenance model, a standardized evidence framework, review and
+versioning architecture, a citation engine (APA/Chicago/MLA/Harvard/BibTeX/RIS),
+and data-quality indicators derived from real data — surfaced on the
+[authority dashboard](src/app/authority/page.tsx) and the
+[transparency pages](src/app/transparency/page.tsx). Provenance and review
+registries ship empty; nothing fabricates certainty. See
+[docs/SCIENTIFIC_AUTHORITY.md](docs/SCIENTIFIC_AUTHORITY.md).
+
 Adding a section, category, or entry is a data-only change: navigation, hub,
 category and entry pages, `sitemap.xml`, and `llms.txt` all update
 automatically.
@@ -89,6 +99,13 @@ automatically.
 - [Future Social Network](docs/FUTURE_SOCIAL_NETWORK.md)
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
+
+**Scientific Authority (Phase 9)**
+
+- [Scientific Authority](docs/SCIENTIFIC_AUTHORITY.md) — provenance, evidence, review, quality, transparency
+- [Evidence Framework](docs/EVIDENCE_FRAMEWORK.md) · [Provenance Model](docs/PROVENANCE_MODEL.md)
+- [Editorial Process](docs/EDITORIAL_PROCESS.md) · [Citation Engine](docs/CITATION_ENGINE.md)
+- [Versioning (object-level)](docs/VERSIONING.md) · [Data Quality](docs/DATA_QUALITY.md) · [Transparency](docs/TRANSPARENCY.md)
 
 **Platform Core (Phase 8)**
 

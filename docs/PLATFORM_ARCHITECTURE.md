@@ -101,8 +101,17 @@ driven by [`src/lib/navigation.ts`](../src/lib/navigation.ts)) keeps the header
 uncluttered: a few group triggers each reveal a multi-column panel on hover or
 keyboard focus — pure CSS, no hydration.
 
+## Authority layer
+
+Within the Registry layer, [`src/platform/authority/`](../src/platform/authority)
+adds the scientific-trust surface: evidence framework, provenance, review,
+object-level versioning, editorial status, and data-quality indicators, plus the
+derived authority snapshot. `validateAuthority()` runs inside `validatePlatform()`.
+See [SCIENTIFIC_AUTHORITY.md](./SCIENTIFIC_AUTHORITY.md).
+
 ## See also
 
 - [Entity Identifiers](./ENTITY_IDENTIFIERS.md) · [Knowledge Graph Schema](./KNOWLEDGE_GRAPH_SCHEMA.md)
 - [Localization](./LOCALIZATION.md) · [Extensions](./EXTENSIONS.md)
+- [Scientific Authority](./SCIENTIFIC_AUTHORITY.md) · [Evidence Framework](./EVIDENCE_FRAMEWORK.md) · [Provenance Model](./PROVENANCE_MODEL.md)
 - [Open Data](./OPEN_DATA.md) · [API Overview](./API_OVERVIEW.md) · [Versioning](./VERSIONING_STRATEGY.md)
