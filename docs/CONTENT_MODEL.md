@@ -4,20 +4,23 @@ The content model is the backbone of Asteria Star. It is intentionally simple
 so it can scale from this foundation to hundreds of thousands of pages without
 structural change.
 
-## Two levels now, three later
+## Three levels
 
 ```
 Section  (hub)          e.g. Astronomy
   └─ Category (topic)    e.g. Stars
-       └─ Entry          e.g. Sirius        ← future, not built yet
+       └─ Entry          e.g. Sirius        ← implemented in Phase 2
 ```
 
 - **Sections** are the seven top-level hubs. Fixed, ordered, curated.
 - **Categories** are topic areas within a hub (e.g. Stars, Black Holes).
-- **Entries** — individual objects, people, missions, signs — are the future
-  third level. They will live *under* a category (`/[section]/[category]/[entry]`)
-  and are where the page count scales into the thousands and beyond. The
-  section/category taxonomy does **not** change when entries are added.
+- **Entries** — individual objects, people, missions, signs, terms — are the
+  third level, added in Phase 2. They live *under* a category
+  (`/[section]/[category]/[entry]`) and are where the page count scales into the
+  thousands and beyond. The section/category taxonomy does **not** change when
+  entries are added. The entry model, registry, and validation are documented in
+  [PHASE_2_ENTRY_LAYER.md](./PHASE_2_ENTRY_LAYER.md); types are in
+  `src/lib/content/entry-types.ts` and data in `src/content/entries/`.
 
 ## Types
 

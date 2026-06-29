@@ -1,4 +1,5 @@
 import { getAllSections } from "@/lib/content/registry";
+import { getEntriesByCategory, ENTRY_STATS } from "@/content/entries";
 import { absoluteUrl, categoryPath, sectionPath, ROUTES } from "@/lib/routes";
 import { SITE } from "@/lib/site";
 
@@ -22,6 +23,10 @@ export function GET(): Response {
     "Astronomy and the Sky Guide are scientific and source-backed. Astrology is presented as cultural and interpretive tradition, never as proven science.",
   );
   lines.push("");
+  lines.push(
+    `Content is organized in three levels: sections (hubs) → categories (topics) → entries (individual pages, e.g. a specific star, planet, mission, or zodiac sign). There are currently ${ENTRY_STATS.total} published entries at /[section]/[category]/[entry]. Entries are listed under their category below.`,
+  );
+  lines.push("");
 
   for (const section of getAllSections()) {
     lines.push(`## ${section.name} — ${section.tagline}`);
@@ -31,6 +36,9 @@ export function GET(): Response {
       lines.push(
         `- [${category.name}](${absoluteUrl(categoryPath(section, category))}): ${category.summary}`,
       );
+      for (const entry of getEntriesByCategory(section.slug, category.slug)) {
+        lines.push(`  - [${entry.title}](${entry.canonicalUrl}): ${entry.excerpt}`);
+      }
     }
     lines.push("");
   }

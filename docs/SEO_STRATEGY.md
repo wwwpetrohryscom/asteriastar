@@ -20,12 +20,15 @@ data, and an internal link graph that scales.
   - `CollectionPage` — hubs and categories.
   - `FAQPage` — category pages (the FAQs are also rendered visibly, as Google
     requires).
-  - `Article` — editorial pages (about, policies).
+  - `Article` — editorial pages (about, policies) and **entry pages** (Phase 2).
+    Entries may instead use `CollectionPage` via their `jsonLdType` field.
 - **sitemap.xml** — generated from the registry (`sitemap.ts`); includes the
-  homepage, all hubs, all categories, and editorial pages.
+  homepage, all hubs, all categories, **all published entries**, and editorial
+  pages.
 - **robots.txt** — crawlable everywhere except the reserved `/app/` and `/api/`
   namespaces; points to the sitemap.
-- **llms.txt** — an LLM-friendly map of the site, generated from the registry.
+- **llms.txt** — an LLM-friendly map of the site, generated from the registry,
+  now listing published entries nested under their category.
 - **Breadcrumbs** — visible on every deep page, matching the JSON-LD.
 
 ## Internal linking
@@ -66,8 +69,13 @@ without changing structure.
 
 ## Scaling to many pages
 
-- The registry-driven dynamic routes generate one static page per entry; the
-  pattern extends directly to the future third level (`/[section]/[category]/[entry]`).
+- The registry-driven dynamic routes generate one static page per item. The
+  third level (`/[section]/[category]/[entry]`) is now implemented (Phase 2) and
+  is where page count scales into the thousands; the same pattern extends to a
+  future fourth level if ever needed.
+- Entry pages enrich internal linking: each links sibling entries, related
+  entries across categories, and back to its category, while category pages list
+  their entries — deepening the link graph as the seed grows.
 - `sitemap.ts` can be split with `generateSitemaps()` once it approaches
   Google's 50,000-URL limit — without changing the data source.
 

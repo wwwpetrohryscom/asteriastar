@@ -28,6 +28,7 @@ src/
     icon.svg                Favicon
     [section]/page.tsx                Hub pages (7, registry-driven)
     [section]/[category]/page.tsx     Category pages (registry-driven)
+    [section]/[category]/[entry]/page.tsx   Entry pages (Phase 2, registry-driven)
     about/ editorial-policy/ sources-policy/   Editorial pages
     (product)/              RESERVED future authenticated area (empty route group)
   components/
@@ -35,6 +36,9 @@ src/
     sections/               HeroSection, SectionGrid, CTASection, EditorialPage
     ui/                     TopicCard, Breadcrumbs, DisclaimerBox, SourceList,
                             RelatedLinks, Button, Badge, Container
+    entry/                  EntryHeader, EntryFacts, EntryBody, EntryKeyPoints,
+                            EntrySourceList, EntryRelatedGrid, EntryMetaBadges,
+                            EntryDisclaimer, EntryNavigation
     seo/                    JsonLd
   lib/
     site.ts                 Site identity + the astrology disclaimer
@@ -43,27 +47,35 @@ src/
     theme.ts                Accent palette + CSS-var helpers
     content/
       types.ts              Section / Category types
+      entry-types.ts        Entry types + resolveEntry() (Phase 2)
       sections/*.ts         One file per hub (the actual content)
       registry.ts           Aggregates sections + lookup/query helpers
     seo/
       metadata.ts           buildMetadata() — title, canonical, OG, Twitter
       jsonld.ts             Schema.org builders
+  content/
+    entries/                Entry data modules + validating registry (Phase 2)
+scripts/
+  validate-entries.ts       Entry quality gate (npm run validate)
 docs/                       This documentation
 ```
 
 ## Routing model
 
-Routing is **registry-driven**. Two dynamic segments cover the whole knowledge
-site:
+Routing is **registry-driven**. Three dynamic segments cover the whole
+knowledge site:
 
 - `/[section]` — the seven hubs.
 - `/[section]/[category]` — every topic area.
+- `/[section]/[category]/[entry]` — individual entries (Phase 2; see
+  [PHASE_2_ENTRY_LAYER.md](./PHASE_2_ENTRY_LAYER.md)).
 
-Both export `generateStaticParams()` (so all pages are statically generated at
-build time) and `export const dynamicParams = false` (so any slug not in the
+All three export `generateStaticParams()` (so all pages are statically generated
+at build time) and `export const dynamicParams = false` (so any slug not in the
 registry returns the custom 404 — there are no broken or thin auto-generated
-routes). Static routes (`/about`, `/editorial-policy`, …) take precedence over
-the dynamic `[section]` segment, so there is no collision.
+routes, and `planned` entries get no page). Static routes (`/about`,
+`/editorial-policy`, …) take precedence over the dynamic `[section]` segment, so
+there is no collision.
 
 This means adding a section or category is a **data-only** change in
 `src/lib/content/` — navigation, hubs, category pages, the sitemap, and

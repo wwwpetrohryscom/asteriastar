@@ -42,9 +42,19 @@ Use only public-domain or openly licensed media. For every image record:
 
 No image ships without this provenance recorded.
 
+## Sources are enforced for factual entries
+
+From Phase 2, the entry registry **fails the build** if any factual entry
+(`kind: "science" | "historical" | "tool"`) does not declare at least one
+source slot (see `validateEntries()` in `src/content/entries/index.ts` and
+`npm run validate`). Interpretive (astrology) and cultural (mythology) entries
+are not required to carry science sources and are never cited as scientific
+evidence.
+
 ## Adding a source
 
 1. Add an entry to `SOURCES` in `src/lib/sources.ts` (extend the `SourceKey`
    union).
-2. Reference its key from the relevant categories.
-3. It appears in `SourceList` and on `/sources-policy` automatically.
+2. Reference its key from the relevant categories and entries (`sources: [...]`).
+3. It appears in `SourceList` / `EntrySourceList` and on `/sources-policy`
+   automatically.

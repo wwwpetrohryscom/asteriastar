@@ -136,64 +136,14 @@ export const calculators: Section = {
       keywords: ["solar return chart", "birthday chart calculator"],
     },
     {
-      slug: "age-on-mercury",
-      name: "Age on Mercury",
-      summary: "Your age counted in Mercury's short years.",
+      slug: "physics",
+      name: "Physics & Fun Calculators",
+      summary: "Science-based calculators: your age and weight on other worlds.",
       overview:
-        "Because Mercury orbits the Sun far faster than Earth, far more Mercury-years pass in a lifetime. This planned tool converts your age into the number of Mercury orbits since your birth.",
-      plannedTopics: ["How the conversion works", "Mercury's orbital year", "Your age on Mercury", "Compare planets"],
+        "A group of physics-based tools that recast everyday questions — how old you are, how much you weigh — using real planetary data. Each tool is grounded in published orbital periods and surface gravities. These are science, not astrology. Individual explainers live under this category as entries.",
+      plannedTopics: ["Age on other planets", "Weight on other worlds", "The science behind each", "Interactive versions"],
       sources: ["nasa", "jpl"],
-      keywords: ["age on mercury", "mercury years"],
-    },
-    {
-      slug: "age-on-venus",
-      name: "Age on Venus",
-      summary: "Your age counted in Venusian years.",
-      overview:
-        "Venus completes an orbit of the Sun more quickly than Earth, so your age in Venus-years differs from your Earth age. This planned tool makes the conversion.",
-      plannedTopics: ["How the conversion works", "Venus's orbital year", "Your age on Venus", "Compare planets"],
-      sources: ["nasa", "jpl"],
-      keywords: ["age on venus", "venus years"],
-    },
-    {
-      slug: "age-on-mars",
-      name: "Age on Mars",
-      summary: "Your age counted in Martian years.",
-      overview:
-        "Mars takes longer than Earth to orbit the Sun, so fewer Mars-years have passed in your lifetime. This planned tool converts your Earth age into Mars-years.",
-      plannedTopics: ["How the conversion works", "The Martian year", "Your age on Mars", "Compare planets"],
-      sources: ["nasa", "jpl"],
-      keywords: ["age on mars", "mars years", "martian age"],
-    },
-    {
-      slug: "age-on-jupiter",
-      name: "Age on Jupiter",
-      summary: "Your age counted in Jupiter's long years.",
-      overview:
-        "Jupiter's orbit around the Sun is far longer than Earth's, so a lifetime spans only a fraction of a Jupiter-year. This planned tool makes the conversion.",
-      plannedTopics: ["How the conversion works", "Jupiter's orbital year", "Your age on Jupiter", "Compare planets"],
-      sources: ["nasa", "jpl"],
-      keywords: ["age on jupiter", "jupiter years"],
-    },
-    {
-      slug: "weight-on-moon",
-      name: "Weight on Moon",
-      summary: "How much you'd weigh under the Moon's gravity.",
-      overview:
-        "Surface gravity on the Moon is weaker than on Earth, so you would weigh less there while your mass stays the same. This planned tool scales your weight by the Moon's surface gravity.",
-      plannedTopics: ["Weight vs. mass", "The Moon's gravity", "Your weight on the Moon", "Compare worlds"],
-      sources: ["nasa"],
-      keywords: ["weight on the moon", "lunar gravity"],
-    },
-    {
-      slug: "weight-on-mars",
-      name: "Weight on Mars",
-      summary: "How much you'd weigh under Martian gravity.",
-      overview:
-        "Mars has weaker surface gravity than Earth, so you would weigh less on Mars while your mass is unchanged. This planned tool scales your weight by Martian surface gravity.",
-      plannedTopics: ["Weight vs. mass", "Mars's gravity", "Your weight on Mars", "Compare worlds"],
-      sources: ["nasa", "jpl"],
-      keywords: ["weight on mars", "martian gravity"],
+      keywords: ["age on other planets", "weight on other planets", "space calculators"],
     },
   ],
 };

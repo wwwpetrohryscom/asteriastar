@@ -79,14 +79,25 @@ interpretive even inside the product, per the editorial policy.
 
 ## What keeps the path open today
 
-- **Clean routing.** Public content uses `/[section]/[category]`; the product
-  has its own reserved group. No URL collisions.
+- **Clean routing.** Public content uses `/[section]/[category]` and
+  `/[section]/[category]/[entry]`; the product has its own reserved group. No
+  URL collisions.
 - **No premature coupling.** The static site has zero dependency on a user
   session, database, or client data layer.
 - **Typed content layer.** Calculators and charts will produce typed results
   that can be persisted later without reshaping the public content model.
-- **Stable identifiers.** Section/category slugs are stable, so saved items and
-  shared links remain valid as the site grows.
+- **Stable identifiers.** Section/category/**entry** slugs and each entry's
+  `canonicalUrl` are stable, so a future "save this entry", "add to collection",
+  or "share" feature has a durable reference from day one.
+
+## How the Phase 2 entry layer feeds this
+
+The entry layer (see [PHASE_2_ENTRY_LAYER.md](./PHASE_2_ENTRY_LAYER.md)) is the
+unit users will eventually save, collect, and discuss. A future
+`charts_saved` / `collection_items` table would reference an entry by its
+stable path — no schema dependency on the public site exists yet, and none is
+built in this phase. Astrology-derived entries remain clearly labeled as
+interpretive wherever they appear, including inside any future product surface.
 
 ## Explicitly out of scope for now
 

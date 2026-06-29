@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getAllCategories, getAllSections } from "@/lib/content/registry";
+import { getAllEntries } from "@/content/entries";
 import { absoluteUrl, categoryPath, sectionPath, ROUTES } from "@/lib/routes";
 
 /**
@@ -32,7 +33,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   );
 
-  return [...staticRoutes, ...sectionRoutes, ...categoryRoutes].map((entry) => ({
+  // Published entries (the third taxonomy level).
+  const entryRoutes: MetadataRoute.Sitemap = getAllEntries().map((entry) => ({
+    url: entry.canonicalUrl,
+    changeFrequency: "monthly",
+    priority: 0.5,
+  }));
+
+  return [
+    ...staticRoutes,
+    ...sectionRoutes,
+    ...categoryRoutes,
+    ...entryRoutes,
+  ].map((entry) => ({
     lastModified: now,
     ...entry,
   }));
