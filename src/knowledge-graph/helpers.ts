@@ -1,6 +1,11 @@
 import { entities } from "@/knowledge-graph/entities";
 import { relations } from "@/knowledge-graph/relations";
-import type { GraphEntity, GraphRelation } from "@/knowledge-graph/schema";
+import type {
+  EntityDomain,
+  EntityType,
+  GraphEntity,
+  GraphRelation,
+} from "@/knowledge-graph/schema";
 
 /**
  * Query helpers over the knowledge graph. Maps are built once at module load.
@@ -89,6 +94,57 @@ export function getConnectionsByDomain(id: string): {
     culture: all.filter((c) => c.relation.domain === "culture"),
     astrology: all.filter((c) => c.relation.domain === "astrology"),
   };
+}
+
+/* -------------------------------------------------- listing & discovery */
+
+export function getAllGraphEntities(): GraphEntity[] {
+  return entities;
+}
+
+export function getGraphEntitiesByType(type: EntityType): GraphEntity[] {
+  return entities.filter((e) => e.type === type);
+}
+
+export function getGraphEntitiesByDomain(domain: EntityDomain): GraphEntity[] {
+  return entities.filter((e) => e.domain === domain);
+}
+
+/** Distinct entity types present in the graph, with counts. */
+export function getEntityTypeCounts(): { type: EntityType; count: number }[] {
+  const counts = new Map<EntityType, number>();
+  for (const e of entities) counts.set(e.type, (counts.get(e.type) ?? 0) + 1);
+  return [...counts.entries()].map(([type, count]) => ({ type, count }));
+}
+
+/** Look up an entity by its split id segments (`type:slug`). */
+export function getGraphEntityByTypeSlug(
+  type: string,
+  slug: string,
+): GraphEntity | undefined {
+  return ENTITY_BY_ID.get(`${type}:${slug}`);
+}
+
+/**
+ * The browsable URL for an entity: its content entry if it has one, otherwise a
+ * standalone graph page under /explore/entity/[type]/[slug].
+ */
+export function entityGraphPath(entity: GraphEntity): string {
+  if (entity.entryPath) return entity.entryPath;
+  const sep = entity.id.indexOf(":");
+  const type = entity.id.slice(0, sep);
+  const slug = entity.id.slice(sep + 1);
+  return `/explore/entity/${type}/${slug}`;
+}
+
+/**
+ * Entity-less entities that have at least one connection — these get a
+ * standalone graph page (and avoid thin pages: no connections, no page).
+ */
+export function getStandaloneEntities(): GraphEntity[] {
+  return entities.filter(
+    (e) => !e.entryPath && getRelationsForEntity(e.id).length > 0,
+  );
 }
 
 export const GRAPH_STATS = {

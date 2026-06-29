@@ -1,33 +1,21 @@
-import {
-  makeRelationId,
-  type Confidence,
-  type Domain,
-  type GraphRelation,
-  type RelationType,
-} from "@/knowledge-graph/schema";
-import type { SourceKey } from "@/lib/sources";
-
-/** Concise relation builder; the id is derived from (from, type, to). */
-function rel(
-  from: string,
-  type: RelationType,
-  to: string,
-  confidence: Confidence,
-  domain: Domain,
-  extra: { sources?: SourceKey[]; note?: string } = {},
-): GraphRelation {
-  return { id: makeRelationId(from, type, to), from, to, type, confidence, domain, ...extra };
-}
+import { rel, type GraphRelation } from "@/knowledge-graph/schema";
+import { relations as solarSystem } from "@/knowledge-graph/data/solar-system";
+import { relations as starsConstellations } from "@/knowledge-graph/data/stars-constellations";
+import { relations as deepSky } from "@/knowledge-graph/data/deep-sky";
+import { relations as missionsTelescopes } from "@/knowledge-graph/data/missions-telescopes";
+import { relations as skyEventsMythology } from "@/knowledge-graph/data/sky-events-mythology";
+import { relations as crossLinks } from "@/knowledge-graph/data/cross-links";
 
 /**
- * Seed knowledge-graph relations.
+ * Knowledge-graph relations.
  *
- * Each is typed by domain (science | culture | astrology) and confidence.
- * Astrology relations are always domain "astrology" + confidence
- * "interpretive"; science relations are never interpretive — the validator
- * enforces both, so the boundary cannot be blurred.
+ * `coreRelations` (below) is the original seed; the `data/` modules add the
+ * Phase 3 expansion. Each relation is typed by domain (science | culture |
+ * astrology) and confidence. Astrology relations are always domain "astrology"
+ * + confidence "interpretive"; science relations are never interpretive — the
+ * validator enforces both, so the boundary cannot be blurred.
  */
-export const relations: GraphRelation[] = [
+const coreRelations: GraphRelation[] = [
   /* ----------------------------------------------------------- science */
   rel("star:sirius", "belongs_to", "constellation:canis-major", "confirmed", "science", { sources: ["iau"] }),
   rel("star:betelgeuse", "belongs_to", "constellation:orion", "confirmed", "science", { sources: ["iau"] }),
@@ -74,4 +62,14 @@ export const relations: GraphRelation[] = [
   rel("astrology_sign:aquarius", "astrologically_associated_with", "astrology_planet:uranus", "interpretive", "astrology", { note: "Modern ruler." }),
   rel("astrology_sign:pisces", "astrologically_associated_with", "astrology_planet:jupiter", "interpretive", "astrology", { note: "Traditional ruler." }),
   rel("astrology_sign:pisces", "astrologically_associated_with", "astrology_planet:neptune", "interpretive", "astrology", { note: "Modern ruler." }),
+];
+
+export const relations: GraphRelation[] = [
+  ...coreRelations,
+  ...solarSystem,
+  ...starsConstellations,
+  ...deepSky,
+  ...missionsTelescopes,
+  ...skyEventsMythology,
+  ...crossLinks,
 ];

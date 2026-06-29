@@ -20,6 +20,7 @@ export const ENTITY_TYPES = [
   "galaxy",
   "nebula",
   "constellation",
+  "star_cluster",
   "black_hole",
   "asteroid",
   "comet",
@@ -146,6 +147,18 @@ export function makeRelationId(
   to: string,
 ): string {
   return `${from}|${type}|${to}`;
+}
+
+/** Concise relation builder used by the graph data modules. */
+export function rel(
+  from: string,
+  type: RelationType,
+  to: string,
+  confidence: Confidence,
+  domain: Domain,
+  extra: { sources?: SourceKey[]; note?: string } = {},
+): GraphRelation {
+  return { id: makeRelationId(from, type, to), from, to, type, confidence, domain, ...extra };
 }
 
 /* ------------------------------------------------------- display labels */

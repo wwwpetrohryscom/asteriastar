@@ -1,15 +1,22 @@
 import type { GraphEntity } from "@/knowledge-graph/schema";
+import { entities as solarSystem } from "@/knowledge-graph/data/solar-system";
+import { entities as starsConstellations } from "@/knowledge-graph/data/stars-constellations";
+import { entities as deepSky } from "@/knowledge-graph/data/deep-sky";
+import { entities as missionsTelescopes } from "@/knowledge-graph/data/missions-telescopes";
+import { entities as skyEventsMythology } from "@/knowledge-graph/data/sky-events-mythology";
+import { entities as crossLinks } from "@/knowledge-graph/data/cross-links";
 
 /**
- * Seed knowledge-graph entities.
+ * Knowledge-graph entities.
  *
- * Conservative and entry-linked: every entity that has a published content
- * entry carries its `entryPath`, which is the single source of truth for
+ * The original seed lives in `coreEntities` (below); the per-area data modules
+ * in `data/` add the Phase 3 expansion. Every entity that has a published
+ * content entry carries its `entryPath`, the single source of truth for
  * entity ↔ entry linkage. Astronomy planets and astrology "planets" are
  * deliberately SEPARATE entities (e.g. `planet:mars` vs `astrology_planet:mars`)
  * so the science/astrology boundary holds at the data level.
  */
-export const entities: GraphEntity[] = [
+const coreEntities: GraphEntity[] = [
   /* ----------------------------------------------------- science: stars */
   {
     id: "star:sirius",
@@ -200,4 +207,14 @@ export const entities: GraphEntity[] = [
   { id: "astrology_planet:uranus", type: "astrology_planet", name: "Uranus (in astrology)", domain: "astrology", entryPath: "/astrology/planet-meanings/uranus-in-astrology" },
   { id: "astrology_planet:neptune", type: "astrology_planet", name: "Neptune (in astrology)", domain: "astrology", entryPath: "/astrology/planet-meanings/neptune-in-astrology" },
   { id: "astrology_planet:pluto", type: "astrology_planet", name: "Pluto (in astrology)", domain: "astrology", entryPath: "/astrology/planet-meanings/pluto-in-astrology" },
+];
+
+export const entities: GraphEntity[] = [
+  ...coreEntities,
+  ...solarSystem,
+  ...starsConstellations,
+  ...deepSky,
+  ...missionsTelescopes,
+  ...skyEventsMythology,
+  ...crossLinks,
 ];
