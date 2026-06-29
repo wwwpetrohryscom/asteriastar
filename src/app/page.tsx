@@ -1,65 +1,131 @@
-import Image from "next/image";
+import Link from "next/link";
+import { HeroSection } from "@/components/sections/HeroSection";
+import { SectionGrid } from "@/components/sections/SectionGrid";
+import { CTASection } from "@/components/sections/CTASection";
+import { Container } from "@/components/ui/Container";
+import { Button } from "@/components/ui/Button";
+import { getAllSections, REGISTRY_STATS } from "@/lib/content/registry";
+import { sectionPath, categoryPath, ROUTES } from "@/lib/routes";
 
-export default function Home() {
+export default function HomePage() {
+  const sections = getAllSections();
+
+  const hubCards = sections.map((section) => ({
+    title: section.name,
+    description: section.tagline,
+    href: sectionPath(section),
+    accent: section.accent,
+    eyebrow: `${section.categories.length} topics`,
+  }));
+
+  // A small, honest sampling of featured topics across hubs for internal links.
+  const featured = [
+    ["astronomy", "black-holes"],
+    ["sky-guide", "meteor-showers"],
+    ["astronomy", "exoplanets"],
+    ["observatory", "james-webb"],
+    ["guides", "how-stars-form"],
+    ["encyclopedia", "greek-mythology"],
+  ].map(([s, c]) => {
+    const section = sections.find((x) => x.slug === s)!;
+    const category = section.categories.find((x) => x.slug === c)!;
+    return {
+      title: category.name,
+      description: category.summary,
+      href: categoryPath(section, category),
+      accent: section.accent,
+      eyebrow: section.name,
+    };
+  });
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <>
+      <HeroSection
+        accent="nebula"
+        eyebrow={<span>Astronomy · Night Sky · Astrology</span>}
+        title={
+          <>
+            Study the real sky — and the{" "}
+            <span className="accent-text">stories we tell</span> about it.
+          </>
+        }
+        lead="Asteria Star is a serious, source-ready knowledge platform for astronomy and the night sky, alongside the cultural tradition of astrology. Science and symbolism, kept clearly apart."
+        actions={
+          <>
+            <Button href="/astronomy">Explore Astronomy</Button>
+            <Button href="/sky-guide" variant="secondary">
+              Tonight&apos;s Sky
+            </Button>
+          </>
+        }
+      >
+        <p className="mt-6 text-sm text-faint">
+          {REGISTRY_STATS.sectionCount} knowledge hubs · {REGISTRY_STATS.categoryCount} topic areas · built to scale
+        </p>
+      </HeroSection>
+
+      {/* The defining principle: science vs. tradition, side by side. */}
+      <Container className="mt-6">
+        <div className="grid gap-4 md:grid-cols-2">
+          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+            <p className="text-xs font-semibold uppercase tracking-wider text-nebula">
+              Astronomy — Science
+            </p>
+            <p className="mt-3 leading-relaxed text-muted">
+              Evidence-based and sourced. We describe what is well established,
+              cite authoritative references, and never invent figures or facts.
+            </p>
+          </div>
+          <div className="rounded-2xl border border-gold/20 bg-gold/[0.04] p-6">
+            <p className="text-xs font-semibold uppercase tracking-wider text-gold">
+              Astrology — Tradition
+            </p>
+            <p className="mt-3 leading-relaxed text-muted">
+              Cultural, symbolic, and interpretive heritage — clearly labeled as
+              such. Presented as tradition and history, never as proven science.
+            </p>
+          </div>
+        </div>
+      </Container>
+
+      {/* The seven hubs. */}
+      <Container className="mt-20">
+        <div className="mb-6">
+          <h2 className="font-display text-2xl font-bold sm:text-3xl">
+            Explore the platform
+          </h2>
+          <p className="mt-2 max-w-2xl text-muted">
+            Seven hubs organize everything from stars and spacecraft to sky
+            events, calculators, and the history behind it all.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+        <SectionGrid items={hubCards} columns={3} />
+      </Container>
+
+      {/* Featured topics — internal linking across hubs. */}
+      <Container className="mt-20">
+        <div className="mb-6 flex items-end justify-between gap-4">
+          <h2 className="font-display text-2xl font-bold sm:text-3xl">
+            Start exploring
+          </h2>
+          <Link
+            href={ROUTES.about}
+            className="hidden text-sm text-muted transition hover:text-fg sm:block"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+            Why we built this →
+          </Link>
         </div>
-      </main>
-    </div>
+        <SectionGrid items={featured} columns={3} />
+      </Container>
+
+      <CTASection
+        title="Knowledge first. Built to grow."
+        description="Asteria Star starts as a rigorous encyclopedia of the sky and is architected to grow into tools, galleries, and — in time — a community."
+        actions={[
+          { label: "Read our editorial policy", href: ROUTES.editorialPolicy },
+          { label: "See our sources", href: ROUTES.sourcesPolicy, variant: "secondary" },
+        ]}
+      />
+    </>
   );
 }
