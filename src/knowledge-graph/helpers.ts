@@ -69,15 +69,18 @@ export function getRelatedEntities(id: string): GraphEntity[] {
 export interface Connection {
   relation: GraphRelation;
   other: GraphEntity;
+  /** True when `id` is the relation's `from` (the relation reads forward). */
+  outgoing: boolean;
 }
 
 /** All connections for an entity, resolved to the entity on the other end. */
 export function getConnections(id: string): Connection[] {
   const out: Connection[] = [];
   for (const relation of getRelationsForEntity(id)) {
-    const otherId = relation.from === id ? relation.to : relation.from;
+    const outgoing = relation.from === id;
+    const otherId = outgoing ? relation.to : relation.from;
     const other = ENTITY_BY_ID.get(otherId);
-    if (other) out.push({ relation, other });
+    if (other) out.push({ relation, other, outgoing });
   }
   return out;
 }
@@ -138,13 +141,23 @@ export function entityGraphPath(entity: GraphEntity): string {
 }
 
 /**
- * Entity-less entities that have at least one connection — these get a
- * standalone graph page (and avoid thin pages: no connections, no page).
+ * Entity-less entities (no content entry of their own) — these get a standalone
+ * graph page under /explore/entity/[type]/[slug]. Pages stay non-thin by always
+ * showing connections (when present) and sibling entities of the same type.
  */
 export function getStandaloneEntities(): GraphEntity[] {
-  return entities.filter(
-    (e) => !e.entryPath && getRelationsForEntity(e.id).length > 0,
-  );
+  return entities.filter((e) => !e.entryPath);
+}
+
+/** Other entities of the same type (for "More …" sections). Excludes `id`. */
+export function getSiblingEntities(
+  entity: GraphEntity,
+  limit = 6,
+): GraphEntity[] {
+  return entities
+    .filter((e) => e.type === entity.type && e.id !== entity.id)
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .slice(0, limit);
 }
 
 export const GRAPH_STATS = {

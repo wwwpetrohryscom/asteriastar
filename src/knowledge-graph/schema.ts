@@ -189,9 +189,77 @@ export const RELATION_LABELS: Record<RelationType, string> = {
   child_of: "Child of",
 };
 
+/** Labels for when the current entity is the *target* (incoming relation). */
+export const INVERSE_RELATION_LABELS: Record<RelationType, string> = {
+  belongs_to: "Includes",
+  part_of: "Contains",
+  located_in: "Contains",
+  visible_from: "Visible location for",
+  observed_by: "Observes",
+  discovered_by: "Discovered",
+  named_after: "Namesake of",
+  associated_with: "Associated with",
+  mythologically_linked_to: "Linked in myth to",
+  astrologically_associated_with: "Associated with (astrology)",
+  scientifically_related_to: "Scientifically related to",
+  mission_target: "Target of",
+  operated_by: "Operates",
+  launched_by: "Launched",
+  studies: "Studied by",
+  explains: "Explained by",
+  references: "Referenced by",
+  has_calculator: "Calculator for",
+  has_gallery: "Gallery for",
+  has_timeline: "Timeline for",
+  related_to: "Related to",
+  parent_of: "Child of",
+  child_of: "Parent of",
+};
+
+/** Pick the readable label for a relation given the viewing direction. */
+export function relationLabel(type: RelationType, outgoing: boolean): string {
+  return outgoing ? RELATION_LABELS[type] : INVERSE_RELATION_LABELS[type];
+}
+
 export const DOMAIN_LABELS: Record<Domain, string> = {
   science: "Scientific connections",
   culture: "Cultural & mythological connections",
   astrology: "Astrology / symbolic connections",
   editorial: "Editorial links",
+};
+
+/** Singular human-readable label per entity type. */
+export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
+  star: "Star",
+  planet: "Planet",
+  dwarf_planet: "Dwarf planet",
+  moon: "Moon",
+  galaxy: "Galaxy",
+  nebula: "Nebula",
+  constellation: "Constellation",
+  star_cluster: "Star cluster",
+  black_hole: "Black hole",
+  asteroid: "Asteroid",
+  comet: "Comet",
+  meteor_shower: "Meteor shower",
+  eclipse: "Eclipse",
+  space_mission: "Space mission",
+  spacecraft: "Spacecraft",
+  space_telescope: "Space telescope",
+  observatory: "Observatory",
+  astronomer: "Astronomer",
+  mythology_figure: "Mythological figure",
+  mythology_story: "Mythological story",
+  astrology_sign: "Zodiac sign",
+  astrology_planet: "Astrological planet",
+  astrology_house: "Astrological house",
+  astrology_aspect: "Astrological aspect",
+  calculator: "Calculator",
+  glossary_term: "Glossary term",
+  guide: "Guide",
+  article: "Article",
+  image_asset: "Image",
+  observation_event: "Observation",
+  location: "Location",
+  organization: "Organization",
 };
