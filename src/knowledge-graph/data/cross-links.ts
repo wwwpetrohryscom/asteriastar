@@ -54,4 +54,27 @@ export const relations: GraphRelation[] = [
   rel("galaxy:andromeda-galaxy", "scientifically_related_to", "galaxy:milky-way", "confirmed", "science", {
     note: "The nearest large galaxy to the Milky Way.",
   }),
+
+  // --- Phase 4: connect remaining objects with well-established facts ---
+  rel("galaxy:triangulum-galaxy", "scientifically_related_to", "galaxy:milky-way", "confirmed", "science", { note: "A member of the Local Group with the Milky Way." }),
+  rel("galaxy:large-magellanic-cloud", "scientifically_related_to", "galaxy:milky-way", "confirmed", "science", { note: "A satellite galaxy of the Milky Way." }),
+  rel("galaxy:small-magellanic-cloud", "scientifically_related_to", "galaxy:milky-way", "confirmed", "science", { note: "A satellite galaxy of the Milky Way." }),
+  rel("space_telescope:hubble-space-telescope", "studies", "galaxy:whirlpool-galaxy", "confirmed", "science"),
+  rel("space_telescope:hubble-space-telescope", "studies", "galaxy:sombrero-galaxy", "confirmed", "science"),
+  rel("space_telescope:hubble-space-telescope", "studies", "nebula:lagoon-nebula", "confirmed", "science"),
+  rel("black_hole:m87-star", "scientifically_related_to", "black_hole:sagittarius-a-star", "confirmed", "science", { note: "Both supermassive black holes imaged by the Event Horizon Telescope." }),
+  rel("star_cluster:omega-centauri", "part_of", "galaxy:milky-way", "confirmed", "science", { note: "A globular cluster orbiting the Milky Way." }),
+  rel("observatory:keck-observatory", "part_of", "observatory:mauna-kea-observatories", "confirmed", "science", { note: "The Keck telescopes sit atop Mauna Kea." }),
+  rel("observatory:very-large-array", "studies", "galaxy:milky-way", "confirmed", "science", { note: "Radio surveys of the galaxy." }),
+  rel("observatory:alma", "studies", "black_hole:m87-star", "confirmed", "science", { note: "ALMA contributed to the Event Horizon Telescope image of M87*." }),
+  rel("observatory:palomar-observatory", "studies", "galaxy:andromeda-galaxy", "confirmed", "science", { note: "Imaged by the 200-inch Hale Telescope." }),
+  rel("space_mission:voyager-1", "operated_by", "organization:jpl", "confirmed", "science", { note: "Managed by NASA's Jet Propulsion Laboratory." }),
+  rel("space_mission:cassini-huygens", "operated_by", "organization:jpl", "confirmed", "science"),
+  rel("space_mission:mars-science-laboratory", "operated_by", "organization:jpl", "confirmed", "science"),
+  rel("astronomer:nicolaus-copernicus", "studies", "galaxy:milky-way", "likely", "science", { note: "Proposed the heliocentric model of the Solar System." }),
+  rel("meteor_shower:geminids", "associated_with", "constellation:gemini", "confirmed", "science", { note: "Radiant in Gemini." }),
+  rel("meteor_shower:leonids", "associated_with", "constellation:leo", "confirmed", "science", { note: "Radiant in Leo." }),
+  rel("meteor_shower:quadrantids", "associated_with", "constellation:bootes", "confirmed", "science", { note: "Radiant in northern Boötes." }),
+  rel("comet:comet-neowise", "part_of", "location:solar-system", "confirmed", "science"),
+  rel("mythology_figure:zeus", "mythologically_linked_to", "mythology_figure:leto", "confirmed", "culture", { note: "In myth, Zeus is the father of Leto's children, Apollo and Artemis." }),
 ];
