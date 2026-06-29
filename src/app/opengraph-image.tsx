@@ -6,7 +6,7 @@ import { SITE } from "@/lib/site";
  * every route that doesn't define its own. Self-contained (no remote fonts) so
  * builds stay deterministic.
  */
-export const alt = `${SITE.name} — Astronomy, Night Sky & Astrology`;
+export const alt = `${SITE.name} — Everything Above Earth`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -50,10 +50,10 @@ export default function OpengraphImage() {
               maxWidth: "900px",
             }}
           >
-            Astronomy, the night sky &amp; the stories we tell.
+            Everything Above Earth.
           </div>
           <div style={{ marginTop: "28px", fontSize: "30px", color: "#a6abce", maxWidth: "920px" }}>
-            A serious knowledge platform — science and astrology, kept clearly apart.
+            Astronomy, space, the night sky, mythology — and astrology as a separate cultural tradition.
           </div>
         </div>
 

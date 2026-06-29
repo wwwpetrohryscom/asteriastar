@@ -15,7 +15,7 @@ export function GET(): Response {
 
   lines.push(`# ${SITE.name}`);
   lines.push("");
-  lines.push(`> ${SITE.description}`);
+  lines.push(`> ${SITE.tagline} ${SITE.positioning}`);
   lines.push("");
   lines.push(SITE.principle);
   lines.push("");

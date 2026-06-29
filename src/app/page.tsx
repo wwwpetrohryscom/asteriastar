@@ -5,6 +5,7 @@ import { CTASection } from "@/components/sections/CTASection";
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { getAllSections, REGISTRY_STATS } from "@/lib/content/registry";
+import { ENTRY_STATS } from "@/content/entries";
 import { sectionPath, categoryPath, ROUTES } from "@/lib/routes";
 
 export default function HomePage() {
@@ -42,14 +43,13 @@ export default function HomePage() {
     <>
       <HeroSection
         accent="nebula"
-        eyebrow={<span>Astronomy · Night Sky · Astrology</span>}
+        eyebrow={<span>A global knowledge platform for the sky</span>}
         title={
           <>
-            Study the real sky — and the{" "}
-            <span className="accent-text">stories we tell</span> about it.
+            Everything <span className="accent-text">Above Earth</span>.
           </>
         }
-        lead="Asteria Star is a serious, source-ready knowledge platform for astronomy and the night sky, alongside the cultural tradition of astrology. Science and symbolism, kept clearly apart."
+        lead="Explore stars, planets, galaxies, missions, telescopes, night-sky events, mythology, and the symbolic traditions humans built around the sky."
         actions={
           <>
             <Button href="/astronomy">Explore Astronomy</Button>
@@ -60,7 +60,7 @@ export default function HomePage() {
         }
       >
         <p className="mt-6 text-sm text-faint">
-          {REGISTRY_STATS.sectionCount} knowledge hubs · {REGISTRY_STATS.categoryCount} topic areas · built to scale
+          {REGISTRY_STATS.sectionCount} knowledge hubs · {REGISTRY_STATS.categoryCount} topic areas · {ENTRY_STATS.total} entries · built to scale
         </p>
       </HeroSection>
 

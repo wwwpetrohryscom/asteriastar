@@ -21,8 +21,14 @@ export const SITE = {
   locale: "en_US",
   /** One-line positioning used as the default meta description. */
   description:
-    "Asteria Star is a serious knowledge platform for astronomy, the night sky, and the cultural traditions of astrology — with science and symbolism kept clearly apart.",
-  tagline: "Astronomy, the night sky, and the human story of the stars.",
+    "A knowledge platform for everything above Earth — astronomy, space, the night sky, celestial events, mythology, and astrology as a clearly separate cultural tradition.",
+  tagline: "Everything Above Earth.",
+  /**
+   * The full positioning statement. Used on the about page and anywhere the
+   * brand concept is stated in long form.
+   */
+  positioning:
+    "Asteria Star is a knowledge platform for everything above Earth — astronomy, space exploration, the night sky, celestial phenomena, mythology, observation, astrophotography, telescopes, and astrology as a separate cultural tradition.",
   /**
    * The core editorial principle that defines the platform. Surfaced in the
    * footer and the editorial policy so the science/tradition boundary is never
