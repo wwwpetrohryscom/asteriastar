@@ -7,6 +7,12 @@ import {
   type EntryRef,
 } from "@/lib/content/entry-types";
 import { getCategory, getSection } from "@/lib/content/registry";
+import {
+  getEntityById,
+  getEntityForPath,
+  relations as graphRelations,
+  type GraphEntity,
+} from "@/knowledge-graph";
 
 import { astronomyStars } from "./astronomy-stars";
 import { astronomyPlanets } from "./astronomy-planets";
@@ -49,6 +55,7 @@ function refToPath([section, category, entry]: EntryRef): string {
 }
 
 const LOREM = /lorem ipsum/i;
+const GRAPH_RELATION_IDS = new Set(graphRelations.map((r) => r.id));
 
 /**
  * Validate the entire registry. Returns a list of human-readable issues
@@ -136,6 +143,17 @@ export function validateEntries(): string[] {
       ...e.body.flatMap((b) => [b.heading, ...(b.paragraphs ?? []), ...(b.list ?? [])]),
     ].join(" ");
     if (LOREM.test(text)) issues.push(`${id}: contains placeholder lorem ipsum text`);
+
+    // 9. Knowledge-graph links must resolve to existing entities/relations.
+    if (e.graphEntityId && !getEntityById(e.graphEntityId)) {
+      issues.push(`${id}: graphEntityId not found → ${e.graphEntityId}`);
+    }
+    for (const gid of e.relatedGraphEntityIds) {
+      if (!getEntityById(gid)) issues.push(`${id}: relatedGraphEntityId not found → ${gid}`);
+    }
+    for (const rid of e.relationIds) {
+      if (!GRAPH_RELATION_IDS.has(rid)) issues.push(`${id}: relationId not found → ${rid}`);
+    }
   }
 
   for (const [path, count] of seenPaths) {
@@ -217,6 +235,38 @@ export function getRelatedEntries(entry: Entry, limit = 4): Entry[] {
 
 export function getEntryPath(entry: Entry): string {
   return entry.path;
+}
+
+/* ----------------------------------------------- entry ↔ graph bridge */
+
+/** The graph entity an entry represents (explicit id, else matched by path). */
+export function getEntityForEntry(entry: Entry): GraphEntity | undefined {
+  if (entry.graphEntityId) {
+    const explicit = getEntityById(entry.graphEntityId);
+    if (explicit) return explicit;
+  }
+  return getEntityForPath(entry.path);
+}
+
+/** Published entries that represent a given graph entity (by path or explicit id). */
+export function getEntriesForEntity(entityId: string): Entry[] {
+  const out: Entry[] = [];
+  const seen = new Set<string>();
+  const entity = getEntityById(entityId);
+  if (entity?.entryPath) {
+    const byPath = BY_PATH.get(entity.entryPath);
+    if (byPath && byPath.status === "published") {
+      out.push(byPath);
+      seen.add(byPath.path);
+    }
+  }
+  for (const e of getAllEntries()) {
+    if (e.graphEntityId === entityId && !seen.has(e.path)) {
+      out.push(e);
+      seen.add(e.path);
+    }
+  }
+  return out;
 }
 
 /** Params for generateStaticParams on the entry route (published only). */

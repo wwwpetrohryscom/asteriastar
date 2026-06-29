@@ -11,6 +11,7 @@ import { EntrySourceList } from "@/components/entry/EntrySourceList";
 import { EntryRelatedGrid } from "@/components/entry/EntryRelatedGrid";
 import { EntryDisclaimer } from "@/components/entry/EntryDisclaimer";
 import { EntryNavigation } from "@/components/entry/EntryNavigation";
+import { KnowledgeConnections } from "@/components/entry/KnowledgeConnections";
 import {
   getAllEntryParams,
   getEntriesByCategory,
@@ -110,6 +111,7 @@ export default async function EntryPage({
           <div className="space-y-10 lg:col-span-2">
             <EntryDisclaimer entry={entry} />
             <EntryBody sections={entry.body} />
+            <KnowledgeConnections entry={entry} />
             <EntryRelatedGrid
               entries={related}
               accent={section.accent}
