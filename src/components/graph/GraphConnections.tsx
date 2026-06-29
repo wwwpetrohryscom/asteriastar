@@ -1,10 +1,13 @@
 import Link from "next/link";
 import {
-  DOMAIN_LABELS,
+  FACET_LABELS,
+  FACET_ORDER,
   entityGraphPath,
-  getConnectionsByDomain,
+  getConnections,
+  relationFacet,
   relationLabel,
   type Connection,
+  type ConnectionFacet,
 } from "@/knowledge-graph";
 
 function ConnectionItem({ connection }: { connection: Connection }) {
@@ -26,55 +29,66 @@ function ConnectionItem({ connection }: { connection: Connection }) {
 }
 
 function Group({
-  title,
+  facet,
   connections,
-  variant,
-  note,
 }: {
-  title: string;
+  facet: ConnectionFacet;
   connections: Connection[];
-  variant: "science" | "culture" | "astrology";
-  note?: string;
 }) {
   if (connections.length === 0) return null;
-  const styles = {
-    science: { box: "border-white/10 bg-white/[0.02]", head: "text-halo" },
-    culture: { box: "border-white/10 bg-white/[0.02]", head: "text-comet" },
-    astrology: { box: "border-gold/25 bg-gold/[0.05]", head: "text-gold" },
-  }[variant];
+  const astrology = facet === "astrology";
+  const head =
+    astrology ? "text-gold" : facet === "cultural" ? "text-comet" : "text-halo";
+  const box = astrology
+    ? "border-gold/25 bg-gold/[0.05]"
+    : "border-white/10 bg-white/[0.02]";
+  // Show at most a generous number per group to keep pages readable.
+  const shown = connections.slice(0, 24);
   return (
-    <div className={`rounded-2xl border p-5 ${styles.box}`}>
-      <h3 className={`font-display text-sm font-semibold ${styles.head}`}>{title}</h3>
-      {note && <p className="mt-1 text-xs leading-relaxed text-muted">{note}</p>}
+    <div className={`rounded-2xl border p-5 ${box}`}>
+      <h3 className={`font-display text-sm font-semibold ${head}`}>{FACET_LABELS[facet]}</h3>
+      {astrology && (
+        <p className="mt-1 text-xs leading-relaxed text-muted">
+          Astrological associations are symbolic, interpretive tradition — not
+          scientific claims.
+        </p>
+      )}
       <ul className="mt-3 space-y-3">
-        {connections.map((c) => (
+        {shown.map((c) => (
           <ConnectionItem key={`${c.relation.id}-${c.outgoing}`} connection={c} />
         ))}
       </ul>
+      {connections.length > shown.length && (
+        <p className="mt-3 text-xs text-faint">
+          +{connections.length - shown.length} more
+        </p>
+      )}
     </div>
   );
 }
 
 /**
- * Renders a graph entity's connections in three strictly-separate, labeled
- * groups (Scientific / Cultural & mythological / Astrology). Direction-aware
- * labels keep incoming relations readable. Returns null if there are none.
+ * Renders an entity's connections in strictly-separate, labeled facet groups
+ * (Scientific / Observational / Mission / Discovery / Related / Cultural /
+ * Astrology) — direction-aware, never mixing science with interpretive links.
+ * Returns null when there are no connections.
  */
 export function GraphConnections({ entityId }: { entityId: string }) {
-  const { science, culture, astrology } = getConnectionsByDomain(entityId);
-  if (science.length === 0 && culture.length === 0 && astrology.length === 0) {
-    return null;
+  const connections = getConnections(entityId);
+  if (connections.length === 0) return null;
+
+  const byFacet = new Map<ConnectionFacet, Connection[]>();
+  for (const c of connections) {
+    const facet = relationFacet(c.relation.domain, c.relation.type);
+    if (!byFacet.has(facet)) byFacet.set(facet, []);
+    byFacet.get(facet)!.push(c);
   }
+
   return (
     <div className="grid gap-4 sm:grid-cols-2">
-      <Group title={DOMAIN_LABELS.science} connections={science} variant="science" />
-      <Group title={DOMAIN_LABELS.culture} connections={culture} variant="culture" />
-      <Group
-        title={DOMAIN_LABELS.astrology}
-        connections={astrology}
-        variant="astrology"
-        note="Astrological associations are symbolic, interpretive tradition — not scientific claims."
-      />
+      {FACET_ORDER.map((facet) => (
+        <Group key={facet} facet={facet} connections={byFacet.get(facet) ?? []} />
+      ))}
     </div>
   );
 }

@@ -118,5 +118,27 @@ export const skyGuide: Section = {
       sources: ["nasa", "usno"],
       keywords: ["conjunction", "opposition", "solstice"],
     },
+    {
+      slug: "space-weather",
+      name: "Space Weather",
+      summary: "Solar storms, the solar wind, and their effects near Earth.",
+      overview:
+        "Space weather describes conditions driven by the Sun — solar flares, coronal mass ejections, and the solar wind — that affect Earth's magnetosphere, satellites, and aurorae. A live space-weather dashboard is planned, drawing on official forecasts.",
+      plannedTopics: ["Solar flares & CMEs", "Geomagnetic storms", "Aurora forecasts", "Live conditions"],
+      sources: ["nasa"],
+      dataModule: true,
+      keywords: ["space weather", "solar storm", "aurora forecast"],
+    },
+    {
+      slug: "sun-activity",
+      name: "Sun Activity",
+      summary: "The Sun's changing activity — sunspots, flares, and the solar cycle.",
+      overview:
+        "The Sun's activity rises and falls over an roughly 11-year cycle, tracked through sunspots, flares, and the solar wind. A live solar-activity view is planned, drawing on official observatories.",
+      plannedTopics: ["Sunspots", "The solar cycle", "Flares & prominences", "Live solar imagery"],
+      sources: ["nasa"],
+      dataModule: true,
+      keywords: ["sun activity", "sunspots", "solar cycle"],
+    },
   ],
 };

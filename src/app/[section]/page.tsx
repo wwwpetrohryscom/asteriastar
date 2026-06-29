@@ -6,6 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { DisclaimerBox } from "@/components/ui/DisclaimerBox";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
+import { ObservatoryHub } from "@/components/sections/ObservatoryHub";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getAllSections, getOtherSections, getSection } from "@/lib/content/registry";
 import { buildMetadata } from "@/lib/seo/metadata";
@@ -84,13 +85,17 @@ export default async function SectionPage({ params }: PageProps<"/[section]">) {
         lead={section.intro}
       />
 
-      <Container className="mt-8 space-y-12">
-        {section.kind === "interpretive" && <DisclaimerBox />}
+      {section.slug === "observatory" ? (
+        <ObservatoryHub />
+      ) : (
+        <Container className="mt-8 space-y-12">
+          {section.kind === "interpretive" && <DisclaimerBox />}
 
-        <SectionGrid items={categoryCards} columns={3} />
+          <SectionGrid items={categoryCards} columns={3} />
 
-        <RelatedLinks title="Explore other hubs" items={otherHubs} columns={3} />
-      </Container>
+          <RelatedLinks title="Explore other hubs" items={otherHubs} columns={3} />
+        </Container>
+      )}
     </>
   );
 }

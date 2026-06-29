@@ -41,7 +41,12 @@ export const TOPICS: Topic[] = [
   { slug: "telescopes", title: "Space Telescopes", description: "Observatories in orbit, above the atmosphere.", types: ["space_telescope"], accent: "halo" },
   { slug: "observatories", title: "Observatories", description: "Ground-based facilities that study the sky.", types: ["observatory"], accent: "halo" },
   { slug: "astronomers", title: "Astronomers", description: "The people who changed how we see the cosmos.", types: ["astronomer"], accent: "stone" },
-  { slug: "organizations", title: "Organizations", description: "The agencies and institutions of spaceflight and astronomy.", types: ["organization"], accent: "stone" },
+  { slug: "space-agencies", title: "Space Agencies", description: "The agencies and institutions of spaceflight and astronomy.", types: ["organization"], accent: "stone" },
+  { slug: "launch-vehicles", title: "Launch Vehicles", description: "The rockets that carry missions beyond Earth.", types: ["launch_vehicle"], accent: "halo" },
+  { slug: "satellites", title: "Satellites & Stations", description: "Spacecraft and stations in orbit around Earth.", types: ["satellite"], accent: "halo" },
+  { slug: "exoplanets", title: "Exoplanets", description: "Worlds orbiting other stars, and the systems that host them.", types: ["exoplanet"], accent: "nebula" },
+  { slug: "deep-sky", title: "Deep Sky", description: "Galaxies, nebulae, clusters, and black holes beyond the Solar System.", types: ["galaxy", "nebula", "star_cluster", "black_hole"], accent: "nebula" },
+  { slug: "catalogs", title: "Catalogs", description: "The great catalogues of the sky — Messier, NGC, and more.", types: ["catalog"], accent: "stone" },
   { slug: "mythology", title: "Sky Mythology", description: "The myths and figures behind the names in the sky.", types: ["mythology_figure", "mythology_story"], accent: "ember" },
   { slug: "night-sky", title: "Night Sky", description: "Events and objects to watch for overhead — showers, comets, and bright constellations.", types: ["meteor_shower", "comet", "constellation"], accent: "aurora" },
 ];
@@ -150,6 +155,30 @@ export const RELATIONSHIP_PAGES: RelationshipPage[] = [
       getAllGraphEntities()
         .filter((e) => ["galaxy", "nebula", "star_cluster", "black_hole"].includes(e.type))
         .sort((a, b) => a.name.localeCompare(b.name)),
+  },
+  {
+    slug: "messier-objects",
+    title: "Messier Objects",
+    description: "The deep-sky objects of Charles Messier's catalogue.",
+    resolve: () => connected("catalog:messier", "part_of", "in"),
+  },
+  {
+    slug: "ngc-objects",
+    title: "NGC Objects",
+    description: "Selected objects from the New General Catalogue.",
+    resolve: () => connected("catalog:ngc", "part_of", "in"),
+  },
+  {
+    slug: "moons-of-uranus",
+    title: "Moons of Uranus",
+    description: "The major moons of Uranus, named for literary characters.",
+    resolve: () => connected("planet:uranus", "child_of", "in"),
+  },
+  {
+    slug: "launch-vehicles",
+    title: "Launch Vehicles",
+    description: "Rockets that carry missions to orbit and beyond.",
+    resolve: () => getGraphEntitiesByType("launch_vehicle").sort((a, b) => a.name.localeCompare(b.name)),
   },
 ];
 

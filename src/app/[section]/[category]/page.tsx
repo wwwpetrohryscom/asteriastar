@@ -134,6 +134,25 @@ export default async function CategoryPage({
           <div className="space-y-10 lg:col-span-2">
             {interpretive && <DisclaimerBox message={category.disclaimer} />}
 
+            {category.dataModule && (
+              <aside className="flex gap-3 rounded-xl border border-halo/25 bg-halo/[0.05] p-4">
+                <span aria-hidden className="mt-0.5 text-halo">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 3v4M12 17v4M3 12h4M17 12h4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+                    <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="1.6" />
+                  </svg>
+                </span>
+                <div>
+                  <p className="text-sm font-semibold text-halo">Live data module</p>
+                  <p className="mt-1 text-sm leading-relaxed text-muted">
+                    Prepared for official integration. Live data will appear here —
+                    we never fake live feeds or invent data. Explore the related
+                    structured knowledge below in the meantime.
+                  </p>
+                </div>
+              </aside>
+            )}
+
             {hasEntries && (
               <section aria-labelledby="entries-heading">
                 <div className="flex items-center gap-3">

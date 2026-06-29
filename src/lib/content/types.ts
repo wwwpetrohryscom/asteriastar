@@ -65,6 +65,11 @@ export interface Category {
    * standard astrology disclaimer when omitted.
    */
   disclaimer?: string;
+  /**
+   * Marks a category as a live-data module (Observatory / Sky Guide). The page
+   * shows an honest "prepared for integration — no fake live data" notice.
+   */
+  dataModule?: boolean;
   /** Extra SEO keywords beyond the obvious name. */
   keywords?: string[];
 }
