@@ -91,6 +91,19 @@ async function main() {
     process.exit(1);
   }
 
+  // Platform core: registries, localization readiness, extensions, components,
+  // search core, and layer-model consistency.
+  const platform = await import("../src/platform");
+  const platformIssues = platform.validatePlatform();
+  if (platformIssues.length > 0) {
+    console.error(`\n✗ ${platformIssues.length} platform issue(s):`);
+    for (const i of platformIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Platform core valid — ${platform.LAYERS.length} layers, ${platform.REGISTRIES.length} registries, ${platform.LOCALES.length} locales, ${platform.COMPONENT_STATS.total} components`,
+  );
+
   const { validateEntries, getAllEntries, ENTRY_STATS } = reg;
 
   const issues = validateEntries();

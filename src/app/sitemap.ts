@@ -44,6 +44,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl(ROUTES.datasets), changeFrequency: "weekly", priority: 0.6 },
     { url: absoluteUrl(ROUTES.registry), changeFrequency: "weekly", priority: 0.6 },
     { url: absoluteUrl(ROUTES.developers), changeFrequency: "weekly", priority: 0.6 },
+    { url: absoluteUrl(ROUTES.platform), changeFrequency: "weekly", priority: 0.7 },
     ...DATASETS.map((d) => ({ url: absoluteUrl(datasetPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
     ...[
       "observations",
