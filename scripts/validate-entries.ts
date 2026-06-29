@@ -48,6 +48,15 @@ async function main() {
     process.exit(1);
   }
 
+  // Image registry (Observatory image platform).
+  const media = await import("../src/lib/media/registry");
+  const imageIssues = media.validateImages();
+  if (imageIssues.length > 0) {
+    console.error(`\n✗ ${imageIssues.length} image issue(s):`);
+    for (const i of imageIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+
   const { validateEntries, getAllEntries, ENTRY_STATS } = reg;
 
   const issues = validateEntries();

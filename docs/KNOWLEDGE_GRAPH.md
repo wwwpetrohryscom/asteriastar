@@ -88,12 +88,20 @@ Examples (from the seed):
 
 ## Size
 
-As of Phase 3 the graph holds **157 entities** (120 science, 15 culture,
-22 astrology) and **126 relations** (98 science, 13 culture, 15 astrology) —
-the Solar System, stars and constellations, deep-sky objects, missions,
-telescopes, observatories, organizations, astronomers, meteor showers, comets,
-and sky mythology. Every fact is well-established; uncertain details are
-omitted rather than asserted.
+As of Phase 4 the graph holds **400 entities** (363 science, 15 culture,
+22 astrology) and **424 relations** (395 science, 14 culture, 15 astrology) —
+the Solar System (planets, moons, dwarf planets, asteroids, comets), stars and
+constellations, exoplanet systems, the Messier and NGC catalogues, galaxies,
+nebulae, clusters, black holes, missions, launch vehicles, satellites,
+telescopes, observatories, space agencies, astronomers, meteor showers, and sky
+mythology. Every fact is well-established; uncertain details are omitted rather
+than asserted. A validator rejects **isolated nodes** — every entity has at
+least one relationship.
+
+Entity types include star, planet, dwarf_planet, exoplanet, moon, galaxy,
+nebula, constellation, star_cluster, black_hole, asteroid, comet, meteor_shower,
+catalog, space_mission, launch_vehicle, satellite, space_telescope, observatory,
+astronomer, organization, mythology_figure, and the astrology_* types.
 
 ## Discovery & standalone pages
 
@@ -104,6 +112,12 @@ entity is browsable: those with a content entry link to it; those without get a
 non-thin standalone page at `/explore/entity/[type]/[slug]` (connections +
 sibling entities). Connection labels are **direction-aware**
 (`relationLabel(type, outgoing)`), so incoming relations read correctly.
+
+Connections are grouped into **facets** (`relationFacet`): Scientific,
+Observational, Mission, Discovery, Related, Cultural & mythological, and
+Astrology — rendered as strictly-separate, labeled sections (the astrology
+facet always carries its interpretive note). This lets entity pages read as
+graph navigation while keeping science and tradition apart.
 
 ## Entry ↔ graph linkage
 
