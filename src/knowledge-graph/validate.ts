@@ -24,10 +24,14 @@ export function validateGraph(
 ): string[] {
   const issues: string[] = [];
 
+  // Stable identifier format: every id must be `type:slug` (lowercase,
+  // kebab-case slug). Stable ids are permanent public identifiers.
+  const ID_PATTERN = /^[a-z_]+:[a-z0-9-]+$/;
   const entityIds = new Set<string>();
   for (const e of entities) {
     if (entityIds.has(e.id)) issues.push(`duplicate entity id: ${e.id}`);
     entityIds.add(e.id);
+    if (!ID_PATTERN.test(e.id)) issues.push(`${e.id}: invalid stable id format (expected type:slug)`);
     if (!ENTITY_TYPES.includes(e.type)) issues.push(`${e.id}: invalid entity type "${e.type}"`);
     if (!ENTITY_DOMAINS.includes(e.domain)) issues.push(`${e.id}: invalid entity domain "${e.domain}"`);
     if (!e.name?.trim()) issues.push(`${e.id}: missing name`);

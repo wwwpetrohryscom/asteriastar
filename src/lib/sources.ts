@@ -18,6 +18,10 @@ export type SourceKey =
   | "mpc"
   | "usno"
   | "imo"
+  | "noirlab"
+  | "eso"
+  | "simbad"
+  | "ned"
   | "britannica"
   | "wikimedia";
 
@@ -89,6 +93,34 @@ export const SOURCES: Record<SourceKey, Source> = {
     organization: "International Meteor Organization",
     url: "https://www.imo.net",
     scope: "Meteor shower activity, radiants, and peak forecasts.",
+  },
+  noirlab: {
+    key: "noirlab",
+    name: "NSF NOIRLab",
+    organization: "NSF National Optical-Infrared Astronomy Research Laboratory",
+    url: "https://noirlab.edu",
+    scope: "Ground-based optical/infrared observatory data and imagery.",
+  },
+  eso: {
+    key: "eso",
+    name: "ESO",
+    organization: "European Southern Observatory",
+    url: "https://www.eso.org",
+    scope: "Southern-hemisphere observatory data and imagery (VLT, ALMA partner).",
+  },
+  simbad: {
+    key: "simbad",
+    name: "SIMBAD",
+    organization: "Centre de données astronomiques de Strasbourg (CDS)",
+    url: "https://simbad.cds.unistra.fr",
+    scope: "Reference database of astronomical objects, identifiers, and measurements.",
+  },
+  ned: {
+    key: "ned",
+    name: "NED",
+    organization: "NASA/IPAC Extragalactic Database",
+    url: "https://ned.ipac.caltech.edu",
+    scope: "Reference database for extragalactic objects (galaxies, quasars).",
   },
   britannica: {
     key: "britannica",
