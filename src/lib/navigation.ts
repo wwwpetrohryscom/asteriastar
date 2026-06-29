@@ -116,13 +116,15 @@ export function getNavGroups(): NavGroup[] {
           title: "Platform",
           links: [
             { name: "Platform Core", href: ROUTES.platform, description: "Architecture & registries" },
+            { name: "Authority", href: ROUTES.authority, description: "Coverage & quality" },
+            { name: "Transparency", href: ROUTES.transparency, description: "How it works" },
             { name: "Observatory", href: ROUTES.observatory, description: "Celestial data platform" },
-            { name: "Community", href: ROUTES.community, description: "Knowledge-first" },
           ],
         },
         {
           title: "About",
           links: [
+            { name: "Community", href: ROUTES.community },
             { name: "About", href: ROUTES.about },
             { name: "Editorial Policy", href: ROUTES.editorialPolicy },
             { name: "Sources", href: ROUTES.sourcesPolicy },

@@ -7,6 +7,7 @@ import { COMPARISONS } from "@/lib/compare";
 import { LEARNING_PATHS } from "@/lib/learn";
 import { TIMELINES } from "@/lib/timelines";
 import { DATASETS } from "@/lib/datasets";
+import { TRANSPARENCY_PAGES } from "@/app/transparency/content";
 import {
   absoluteUrl,
   categoryPath,
@@ -17,6 +18,7 @@ import {
   learnPath,
   timelinePath,
   datasetPath,
+  transparencyPath,
   ROUTES,
 } from "@/lib/routes";
 
@@ -45,6 +47,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl(ROUTES.registry), changeFrequency: "weekly", priority: 0.6 },
     { url: absoluteUrl(ROUTES.developers), changeFrequency: "weekly", priority: 0.6 },
     { url: absoluteUrl(ROUTES.platform), changeFrequency: "weekly", priority: 0.7 },
+    { url: absoluteUrl(ROUTES.authority), changeFrequency: "weekly", priority: 0.7 },
+    { url: absoluteUrl(ROUTES.transparency), changeFrequency: "weekly", priority: 0.7 },
+    ...TRANSPARENCY_PAGES.map((p) => ({ url: absoluteUrl(transparencyPath(p.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
     ...DATASETS.map((d) => ({ url: absoluteUrl(datasetPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
     ...[
       "observations",

@@ -114,6 +114,8 @@ export function GET(): Response {
     `Asteria Star is open infrastructure for structured celestial knowledge: a versioned (graph ${GRAPH_VERSION_INFO.graphVersion}, schema ${GRAPH_VERSION_INFO.schemaVersion}), machine-readable knowledge graph of ${GRAPH_VERSION_INFO.entityCount} entities. Stable ids are permanent (type:slug). License: ${GRAPH_VERSION_INFO.license}.`,
   );
   lines.push(`- [Platform Core](${absoluteUrl(ROUTES.platform)}) — layers, runtime, registries, extension points`);
+  lines.push(`- [Authority Dashboard](${absoluteUrl(ROUTES.authority)}) — derived coverage & quality; no fabricated statistics`);
+  lines.push(`- [Transparency](${absoluteUrl(ROUTES.transparency)}) — methodology, evidence framework, review process, provenance, scope`);
   lines.push(`- [Open Data](${absoluteUrl(ROUTES.openData)})`);
   lines.push(`- [Datasets](${absoluteUrl(ROUTES.datasets)})`);
   lines.push(`- [Knowledge Registry](${absoluteUrl(ROUTES.registry)})`);
