@@ -1,8 +1,9 @@
 # Asteria Star
 
-A serious, source-ready knowledge platform for **astronomy and the night sky**,
-alongside the cultural tradition of **astrology** — with science and symbolism
-kept clearly apart.
+**Everything Above Earth.** A serious, source-ready knowledge platform for
+everything above our planet — astronomy, space exploration, the night sky,
+celestial events, mythology, and **astrology as a clearly separate cultural
+tradition** — with science and symbolism kept clearly apart.
 
 > Astronomy is presented as scientific, evidence-based, and sourced. Astrology
 > is presented as cultural, symbolic, and interpretive — never as proven
@@ -54,9 +55,11 @@ automatically.
 
 ## Documentation
 
+- [Positioning — Everything Above Earth](docs/POSITIONING_EVERYTHING_ABOVE_EARTH.md)
 - [Architecture](docs/ARCHITECTURE.md)
 - [Content Model](docs/CONTENT_MODEL.md)
 - [Phase 2 — Entry Layer](docs/PHASE_2_ENTRY_LAYER.md)
+- [Knowledge Graph](docs/KNOWLEDGE_GRAPH.md)
 - [SEO Strategy](docs/SEO_STRATEGY.md)
 - [Future Social Network](docs/FUTURE_SOCIAL_NETWORK.md)
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)

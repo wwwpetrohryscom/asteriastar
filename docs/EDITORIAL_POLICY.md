@@ -4,6 +4,12 @@ The public-facing version lives at [`/editorial-policy`](../src/app/editorial-po
 This is the contributor-facing companion: how to apply the policy when writing
 content for the registry.
 
+**Scope.** Asteria Star covers *everything above Earth* — astronomy, space, the
+night sky, observation, the history and mythology of the sky, and astrology as
+a separate cultural tradition (see
+[POSITIONING_EVERYTHING_ABOVE_EARTH.md](./POSITIONING_EVERYTHING_ABOVE_EARTH.md)).
+Broad scope, strict boundary.
+
 ## The non-negotiables
 
 1. **No fabrication.** Never invent statistics, ratings, counts, distances,

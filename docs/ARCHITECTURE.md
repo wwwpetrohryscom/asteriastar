@@ -1,8 +1,10 @@
 # Architecture
 
-Asteria Star is a static-first, SEO-first knowledge platform built on the
-Next.js App Router. This document explains how the codebase is organized and
-the decisions behind it.
+Asteria Star is a static-first, SEO-first knowledge platform for **everything
+above Earth** (see
+[POSITIONING_EVERYTHING_ABOVE_EARTH.md](./POSITIONING_EVERYTHING_ABOVE_EARTH.md)),
+built on the Next.js App Router. This document explains how the codebase is
+organized and the decisions behind it.
 
 ## Stack
 
@@ -38,7 +40,7 @@ src/
                             RelatedLinks, Button, Badge, Container
     entry/                  EntryHeader, EntryFacts, EntryBody, EntryKeyPoints,
                             EntrySourceList, EntryRelatedGrid, EntryMetaBadges,
-                            EntryDisclaimer, EntryNavigation
+                            EntryDisclaimer, EntryNavigation, KnowledgeConnections
     seo/                    JsonLd
   lib/
     site.ts                 Site identity + the astrology disclaimer
@@ -55,8 +57,9 @@ src/
       jsonld.ts             Schema.org builders
   content/
     entries/                Entry data modules + validating registry (Phase 2)
+  knowledge-graph/          Entity/relation graph + helpers + validation (Phase 2.5)
 scripts/
-  validate-entries.ts       Entry quality gate (npm run validate)
+  validate-entries.ts       Entry + graph quality gate (npm run validate)
 docs/                       This documentation
 ```
 
@@ -123,8 +126,20 @@ A first-class architectural constraint, not a content guideline:
   `DisclaimerBox`. Astronomy content never carries astrology framing, and vice
   versa. See [EDITORIAL_POLICY.md](./EDITORIAL_POLICY.md).
 
+## Knowledge graph
+
+`src/knowledge-graph/` models entities (stars, planets, missions, myths,
+symbols…) and typed relations between them. It is core infrastructure: the
+science/culture/astrology boundary is encoded in each relation's `domain` and
+`confidence`, and `validateGraph()` (run at import and via `npm run validate`)
+refuses to let astrology or interpretive links pose as confirmed science.
+Entries link to graph entities by canonical path (or an explicit
+`graphEntityId`), and entry pages render grouped, never-mixed "Knowledge
+connections". See [KNOWLEDGE_GRAPH.md](./KNOWLEDGE_GRAPH.md).
+
 ## Future-readiness
 
 The `(product)` route group reserves the authenticated product namespace
-without implementing anything. See
+without implementing anything. The knowledge graph gives future social features
+(saved entities, collections, learning paths) stable things to reference. See
 [FUTURE_SOCIAL_NETWORK.md](./FUTURE_SOCIAL_NETWORK.md).
