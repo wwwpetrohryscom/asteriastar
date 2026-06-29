@@ -117,7 +117,9 @@ export default async function EntryPage({
             <EntryDisclaimer entry={entry} />
             <EntryBody sections={entry.body} />
             <KnowledgeConnections entry={entry} />
-            {section.slug === "astronomy" && <EntryGallery name={entry.title} />}
+            {section.slug === "astronomy" && (
+              <EntryGallery name={entry.title} entryPath={entry.path} />
+            )}
             <EntryTimeline items={entry.timeline} />
             <EntryRelatedGrid
               entries={related}

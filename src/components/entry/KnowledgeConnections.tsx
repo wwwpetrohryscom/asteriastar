@@ -1,5 +1,5 @@
 import { getEntityForEntry } from "@/content/entries";
-import { getConnectionsByDomain } from "@/knowledge-graph";
+import { getConnections } from "@/knowledge-graph";
 import { GraphConnections } from "@/components/graph/GraphConnections";
 import type { Entry } from "@/lib/content/entry-types";
 
@@ -12,11 +12,7 @@ import type { Entry } from "@/lib/content/entry-types";
 export function KnowledgeConnections({ entry }: { entry: Entry }) {
   const entity = getEntityForEntry(entry);
   if (!entity) return null;
-
-  const { science, culture, astrology } = getConnectionsByDomain(entity.id);
-  if (science.length === 0 && culture.length === 0 && astrology.length === 0) {
-    return null;
-  }
+  if (getConnections(entity.id).length === 0) return null;
 
   return (
     <section aria-labelledby="kg-heading">

@@ -64,5 +64,15 @@ export function validateGraph(
     }
   }
 
+  // No isolated nodes: every entity must participate in at least one relation.
+  const connected = new Set<string>();
+  for (const r of relations) {
+    connected.add(r.from);
+    connected.add(r.to);
+  }
+  for (const e of entities) {
+    if (!connected.has(e.id)) issues.push(`${e.id}: isolated node (no relations)`);
+  }
+
   return issues;
 }

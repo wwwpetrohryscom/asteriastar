@@ -16,6 +16,7 @@ export const ENTITY_TYPES = [
   "star",
   "planet",
   "dwarf_planet",
+  "exoplanet",
   "moon",
   "galaxy",
   "nebula",
@@ -26,8 +27,11 @@ export const ENTITY_TYPES = [
   "comet",
   "meteor_shower",
   "eclipse",
+  "catalog",
   "space_mission",
   "spacecraft",
+  "launch_vehicle",
+  "satellite",
   "space_telescope",
   "observatory",
   "astronomer",
@@ -221,6 +225,53 @@ export function relationLabel(type: RelationType, outgoing: boolean): string {
   return outgoing ? RELATION_LABELS[type] : INVERSE_RELATION_LABELS[type];
 }
 
+/**
+ * Connection facets — finer grouping than domain, so entity pages can show
+ * Scientific / Observational / Mission / Discovery / Related groups (science)
+ * plus Cultural and Astrology, never mixed.
+ */
+export type ConnectionFacet =
+  | "scientific"
+  | "observational"
+  | "mission"
+  | "discovery"
+  | "related"
+  | "cultural"
+  | "astrology";
+
+export const FACET_LABELS: Record<ConnectionFacet, string> = {
+  scientific: "Scientific connections",
+  observational: "Observational connections",
+  mission: "Mission connections",
+  discovery: "Discovery connections",
+  related: "Related",
+  cultural: "Cultural & mythological connections",
+  astrology: "Astrology / symbolic connections",
+};
+
+/** Ordered facets for rendering. */
+export const FACET_ORDER: ConnectionFacet[] = [
+  "scientific",
+  "observational",
+  "mission",
+  "discovery",
+  "related",
+  "cultural",
+  "astrology",
+];
+
+/** Classify a relation into a connection facet. */
+export function relationFacet(domain: Domain, type: RelationType): ConnectionFacet {
+  if (domain === "astrology") return "astrology";
+  if (domain === "culture") return "cultural";
+  // science / editorial
+  if (["observed_by", "studies", "visible_from"].includes(type)) return "observational";
+  if (["mission_target", "operated_by", "launched_by"].includes(type)) return "mission";
+  if (["discovered_by", "named_after"].includes(type)) return "discovery";
+  if (["scientifically_related_to", "related_to", "references"].includes(type)) return "related";
+  return "scientific";
+}
+
 export const DOMAIN_LABELS: Record<Domain, string> = {
   science: "Scientific connections",
   culture: "Cultural & mythological connections",
@@ -233,6 +284,7 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   star: "Star",
   planet: "Planet",
   dwarf_planet: "Dwarf planet",
+  exoplanet: "Exoplanet",
   moon: "Moon",
   galaxy: "Galaxy",
   nebula: "Nebula",
@@ -243,8 +295,11 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   comet: "Comet",
   meteor_shower: "Meteor shower",
   eclipse: "Eclipse",
+  catalog: "Catalog",
   space_mission: "Space mission",
   spacecraft: "Spacecraft",
+  launch_vehicle: "Launch vehicle",
+  satellite: "Satellite",
   space_telescope: "Space telescope",
   observatory: "Observatory",
   astronomer: "Astronomer",

@@ -4,6 +4,14 @@ import { relations as starsConstellations } from "@/knowledge-graph/data/stars-c
 import { relations as deepSky } from "@/knowledge-graph/data/deep-sky";
 import { relations as missionsTelescopes } from "@/knowledge-graph/data/missions-telescopes";
 import { relations as skyEventsMythology } from "@/knowledge-graph/data/sky-events-mythology";
+import { relations as messier } from "@/knowledge-graph/data/messier";
+import { relations as moonsExtra } from "@/knowledge-graph/data/moons-extra";
+import { relations as agenciesVehicles } from "@/knowledge-graph/data/agencies-vehicles";
+import { relations as observatoriesAstronomers } from "@/knowledge-graph/data/observatories-astronomers";
+import { relations as deepSkyExtra } from "@/knowledge-graph/data/deep-sky-extra";
+import { relations as starsExtra } from "@/knowledge-graph/data/stars-extra";
+import { relations as exoplanetsSystems } from "@/knowledge-graph/data/exoplanets-systems";
+import { relations as notableObjects } from "@/knowledge-graph/data/notable-objects";
 import { relations as crossLinks } from "@/knowledge-graph/data/cross-links";
 
 /**
@@ -71,5 +79,13 @@ export const relations: GraphRelation[] = [
   ...deepSky,
   ...missionsTelescopes,
   ...skyEventsMythology,
+  ...messier,
+  ...moonsExtra,
+  ...agenciesVehicles,
+  ...observatoriesAstronomers,
+  ...deepSkyExtra,
+  ...starsExtra,
+  ...exoplanetsSystems,
+  ...notableObjects,
   ...crossLinks,
 ];

@@ -49,11 +49,14 @@ pages — stars, planets, missions, zodiac signs, glossary terms, and more —
 typed and validated in [`src/content/entries/`](src/content/entries). See
 [docs/PHASE_2_ENTRY_LAYER.md](docs/PHASE_2_ENTRY_LAYER.md).
 
-A **knowledge graph** ([`src/knowledge-graph/`](src/knowledge-graph)) of 157
-entities and 126 relations connects everything — with scientific, cultural, and
-astrological links kept strictly separate — and powers a static **discovery**
-layer at `/explore`, `/entity-index`, `/discover`, and graph-driven
-`/connections/*` pages. See [docs/KNOWLEDGE_GRAPH.md](docs/KNOWLEDGE_GRAPH.md).
+A **knowledge graph** ([`src/knowledge-graph/`](src/knowledge-graph)) of **400
+entities and 424 relations** connects everything — with scientific, cultural,
+and astrological links kept strictly separate and no isolated nodes — and powers
+a static **discovery** layer at `/explore`, `/entity-index`, `/discover`, and
+graph-driven `/connections/*` pages. The **Observatory** (`/observatory`) is a
+Celestial Data Platform hub with an honest, provenance-first
+[image architecture](docs/IMAGE_PLATFORM.md) (no bundled or fabricated imagery).
+See [docs/KNOWLEDGE_GRAPH.md](docs/KNOWLEDGE_GRAPH.md).
 
 Adding a section, category, or entry is a data-only change: navigation, hub,
 category and entry pages, `sitemap.xml`, and `llms.txt` all update
@@ -66,6 +69,7 @@ automatically.
 - [Content Model](docs/CONTENT_MODEL.md)
 - [Phase 2 — Entry Layer](docs/PHASE_2_ENTRY_LAYER.md)
 - [Knowledge Graph](docs/KNOWLEDGE_GRAPH.md)
+- [Image Platform](docs/IMAGE_PLATFORM.md)
 - [SEO Strategy](docs/SEO_STRATEGY.md)
 - [Future Social Network](docs/FUTURE_SOCIAL_NETWORK.md)
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)

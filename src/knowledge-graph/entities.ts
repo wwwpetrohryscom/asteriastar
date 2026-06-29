@@ -4,6 +4,14 @@ import { entities as starsConstellations } from "@/knowledge-graph/data/stars-co
 import { entities as deepSky } from "@/knowledge-graph/data/deep-sky";
 import { entities as missionsTelescopes } from "@/knowledge-graph/data/missions-telescopes";
 import { entities as skyEventsMythology } from "@/knowledge-graph/data/sky-events-mythology";
+import { entities as messier } from "@/knowledge-graph/data/messier";
+import { entities as moonsExtra } from "@/knowledge-graph/data/moons-extra";
+import { entities as agenciesVehicles } from "@/knowledge-graph/data/agencies-vehicles";
+import { entities as observatoriesAstronomers } from "@/knowledge-graph/data/observatories-astronomers";
+import { entities as deepSkyExtra } from "@/knowledge-graph/data/deep-sky-extra";
+import { entities as starsExtra } from "@/knowledge-graph/data/stars-extra";
+import { entities as exoplanetsSystems } from "@/knowledge-graph/data/exoplanets-systems";
+import { entities as notableObjects } from "@/knowledge-graph/data/notable-objects";
 import { entities as crossLinks } from "@/knowledge-graph/data/cross-links";
 
 /**
@@ -216,5 +224,13 @@ export const entities: GraphEntity[] = [
   ...deepSky,
   ...missionsTelescopes,
   ...skyEventsMythology,
+  ...messier,
+  ...moonsExtra,
+  ...agenciesVehicles,
+  ...observatoriesAstronomers,
+  ...deepSkyExtra,
+  ...starsExtra,
+  ...exoplanetsSystems,
+  ...notableObjects,
   ...crossLinks,
 ];

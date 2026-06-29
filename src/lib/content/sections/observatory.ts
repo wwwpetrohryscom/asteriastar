@@ -109,5 +109,38 @@ export const observatory: Section = {
       sources: ["iau", "nasa"],
       keywords: ["printable star chart", "star atlas"],
     },
+    {
+      slug: "nasa-image-archive",
+      name: "NASA Image Archive",
+      summary: "A future window onto NASA's openly licensed imagery.",
+      overview:
+        "A planned archive surfacing NASA's largely public-domain imagery with full credit, license, and source for every item. Prepared for official NASA integration — no images are bundled or fabricated.",
+      plannedTopics: ["Mission imagery", "Planetary photography", "Credits & licenses", "Source links"],
+      sources: ["nasa"],
+      dataModule: true,
+      keywords: ["nasa images", "nasa image archive"],
+    },
+    {
+      slug: "esa-image-archive",
+      name: "ESA Image Archive",
+      summary: "A future window onto ESA's openly licensed imagery.",
+      overview:
+        "A planned archive surfacing European Space Agency imagery with credit and license details and links back to ESA's originals. Prepared for official ESA integration — no images are bundled or fabricated.",
+      plannedTopics: ["ESA missions", "Space science imagery", "Credits & licenses", "Source links"],
+      sources: ["esa"],
+      dataModule: true,
+      keywords: ["esa images", "esa image archive"],
+    },
+    {
+      slug: "launches",
+      name: "Launches",
+      summary: "A future calendar of rocket launches and their vehicles.",
+      overview:
+        "A planned launch calendar tracking upcoming and historic launches by vehicle and agency. Prepared for integration with official launch schedules — no fake live data. Explore launch vehicles and agencies in the Knowledge Graph today.",
+      plannedTopics: ["Upcoming launches", "By launch vehicle", "By agency", "Live schedule"],
+      sources: ["nasa", "esa"],
+      dataModule: true,
+      keywords: ["rocket launches", "launch schedule", "launch calendar"],
+    },
   ],
 };

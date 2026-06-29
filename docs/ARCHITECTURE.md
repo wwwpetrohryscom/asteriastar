@@ -64,10 +64,12 @@ src/
       metadata.ts           buildMetadata() — title, canonical, OG, Twitter
       jsonld.ts             Schema.org builders
     discovery.ts            Topics + graph-driven relationship pages (Phase 3)
+    media/                  ImageAsset model + registry (Phase 4 image platform)
   content/
     entries/                Entry data modules + validating registry (Phase 2)
   knowledge-graph/          Entity/relation graph + helpers + validation
-    data/                   Per-area graph data modules (Phase 3)
+    data/                   Per-area graph data modules (Phase 3–4; 400 entities)
+  components/media/         ImageFigure, MediaGallery (Phase 4)
 scripts/
   validate-entries.ts       Entry + graph quality gate (npm run validate)
 docs/                       This documentation
@@ -139,13 +141,25 @@ A first-class architectural constraint, not a content guideline:
 ## Knowledge graph
 
 `src/knowledge-graph/` models entities (stars, planets, missions, myths,
-symbols…) and typed relations between them. It is core infrastructure: the
-science/culture/astrology boundary is encoded in each relation's `domain` and
-`confidence`, and `validateGraph()` (run at import and via `npm run validate`)
-refuses to let astrology or interpretive links pose as confirmed science.
-Entries link to graph entities by canonical path (or an explicit
-`graphEntityId`), and entry pages render grouped, never-mixed "Knowledge
-connections". See [KNOWLEDGE_GRAPH.md](./KNOWLEDGE_GRAPH.md).
+symbols…) and typed relations between them. It is the core of the platform:
+**400 entities / 424 relations** as of Phase 4, with the science/culture/
+astrology boundary encoded in each relation's `domain` and `confidence`.
+`validateGraph()` (run at import and via `npm run validate`) refuses to let
+astrology or interpretive links pose as confirmed science **and rejects
+isolated nodes**. Entries link to graph entities by canonical path (or an
+explicit `graphEntityId`); entity pages render connections grouped into
+never-mixed facets (Scientific / Observational / Mission / Discovery / Related /
+Cultural / Astrology). See [KNOWLEDGE_GRAPH.md](./KNOWLEDGE_GRAPH.md).
+
+## Observatory & image platform
+
+`/observatory` is a curated "Celestial Data Platform" hub (Night Sky, Deep Sky,
+Image Archives, Explore-the-Graph). Live-data modules (Space Weather, Sun
+Activity, NASA/ESA Image Archive, Launches) are **honest placeholders** —
+prepared for official integration, never fake live feeds. The image platform
+(`src/lib/media`, `components/media`) is a typed `ImageAsset` model that renders
+only verified, openly-licensed assets with full provenance; it ships empty. See
+[IMAGE_PLATFORM.md](./IMAGE_PLATFORM.md).
 
 ## Future-readiness
 
