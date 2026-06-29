@@ -70,6 +70,7 @@ src/
     discovery.ts            Topics + graph-driven relationship pages (Phase 3)
     media/                  ImageAsset model + registry (Phase 4 image platform)
     compare.ts learn.ts timelines.ts search.ts   Intelligence layer (Phase 5)
+    community/              Community models — architecture only (Phase 6)
   content/
     entries/                Entry data modules + validating registry (Phase 2)
   knowledge-graph/          Entity/relation graph + helpers + validation

@@ -75,6 +75,7 @@ automatically.
 - [Phase 2 — Entry Layer](docs/PHASE_2_ENTRY_LAYER.md)
 - [Knowledge Graph](docs/KNOWLEDGE_GRAPH.md)
 - [Intelligence Layer](docs/INTELLIGENCE.md)
+- [Community Architecture](docs/COMMUNITY_ARCHITECTURE.md)
 - [Image Platform](docs/IMAGE_PLATFORM.md)
 - [SEO Strategy](docs/SEO_STRATEGY.md)
 - [Future Social Network](docs/FUTURE_SOCIAL_NETWORK.md)

@@ -1,8 +1,10 @@
 # Future Social Network — Architecture Notes
 
-> **Status: planning only.** None of this is built. There is no database, no
-> auth, no posting, and no feed in the current codebase. This document records
-> the intended direction so today's decisions don't block it.
+> **Status: architecture modeled (Phase 6), not implemented.** There is still no
+> database, auth, posting, feed, or user data. Phase 6 added typed community
+> models and landing pages — see [COMMUNITY_ARCHITECTURE.md](./COMMUNITY_ARCHITECTURE.md).
+> This document records the broader intended direction so today's decisions
+> don't block it.
 
 Asteria Star should be able to grow from a static encyclopedia into a social
 platform — profiles, saved charts, posts, follows, and more — without a rewrite.

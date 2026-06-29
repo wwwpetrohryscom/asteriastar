@@ -57,6 +57,15 @@ async function main() {
     process.exit(1);
   }
 
+  // Community architecture (reference integrity; no user data exists yet).
+  const community = await import("../src/lib/community");
+  const communityIssues = community.validateCommunity(community.COMMUNITY_DATA);
+  if (communityIssues.length > 0) {
+    console.error(`\n✗ ${communityIssues.length} community issue(s):`);
+    for (const i of communityIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+
   const { validateEntries, getAllEntries, ENTRY_STATS } = reg;
 
   const issues = validateEntries();

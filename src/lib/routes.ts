@@ -23,6 +23,7 @@ export const ROUTES = {
   learn: "/learn",
   timelines: "/timelines",
   search: "/search",
+  community: "/community",
 } as const;
 
 export function comparePath(slug: string): string {
