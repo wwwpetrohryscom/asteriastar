@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+/*
+ * Asteria Star design system
+ * --------------------------
+ * A deep-space, premium dark theme. Tokens are declared here and exposed to
+ * Tailwind v4 via @theme, so utilities like `bg-bg`, `text-fg`, `text-muted`,
+ * and `font-display` are available throughout the app.
+ */
+
+@theme {
+  /* Surfaces */
+  --color-bg: #05060f;
+  --color-bg-elevated: #0a0d20;
+  --color-surface: #10142e;
+
+  /* Text */
+  --color-fg: #e9ebf8;
+  --color-muted: #a6abce;
+  --color-faint: #767ca3;
+
+  /* Brand */
+  --color-gold: #ffd27d;
+  --color-nebula: #a78bfa;
+  --color-aurora: #34d3d3;
+  --color-ember: #fb9a4b;
+  --color-plasma: #d06bf2;
+  --color-stone: #9aa6c0;
+  --color-halo: #56b6f6;
+  --color-comet: #36cfb0;
+
+  /* Typography */
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", "Roboto Mono", monospace;
+
+  /* Layout */
+  --radius-card: 1rem;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  /* Visible, on-brand focus state for keyboard users. */
+  :focus-visible {
+    outline: 2px solid var(--color-halo);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background-color: color-mix(in oklab, var(--color-nebula) 40%, transparent);
+    color: #fff;
+  }
+}
+
+@layer components {
+  /*
+   * The cosmic backdrop: two soft nebula glows over the base color, plus a
+   * sparse, deterministic starfield. Pure CSS — no images, no hydration risk.
+   */
+  .cosmos {
+    background-color: var(--color-bg);
+    background-image:
+      radial-gradient(
+        60rem 60rem at 78% -10%,
+        color-mix(in oklab, var(--color-nebula) 22%, transparent),
+        transparent 60%
+      ),
+      radial-gradient(
+        55rem 55rem at 8% 8%,
+        color-mix(in oklab, var(--color-halo) 16%, transparent),
+        transparent 55%
+      ),
+      radial-gradient(
+        50rem 40rem at 50% 120%,
+        color-mix(in oklab, var(--color-aurora) 12%, transparent),
+        transparent 60%
+      );
+    background-attachment: fixed;
+  }
+
+  .starfield {
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, rgba(255, 255, 255, 0.7), transparent),
+      radial-gradient(1px 1px at 75% 16%, rgba(255, 255, 255, 0.6), transparent),
+      radial-gradient(1.5px 1.5px at 46% 62%, rgba(255, 255, 255, 0.55), transparent),
+      radial-gradient(1px 1px at 88% 70%, rgba(255, 255, 255, 0.5), transparent),
+      radial-gradient(1px 1px at 12% 82%, rgba(255, 255, 255, 0.55), transparent),
+      radial-gradient(1.5px 1.5px at 62% 38%, rgba(255, 255, 255, 0.45), transparent),
+      radial-gradient(1px 1px at 33% 12%, rgba(255, 255, 255, 0.5), transparent),
+      radial-gradient(1px 1px at 92% 44%, rgba(255, 255, 255, 0.4), transparent);
+    background-repeat: repeat;
+    background-size: 320px 320px;
+  }
+
+  /* Frosted card surface with a subtle top-down sheen. */
+  .panel {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.05),
+        rgba(255, 255, 255, 0.015)
+      );
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+  }
+
+  /* Long-form editorial content (policy/about pages). */
+  .prose-cosmos {
+    color: var(--color-muted);
+    line-height: 1.75;
+  }
+  .prose-cosmos > p {
+    margin-bottom: 1rem;
+  }
+  .prose-cosmos h2 {
+    color: var(--color-fg);
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+  .prose-cosmos h3 {
+    color: var(--color-fg);
+    font-weight: 600;
+    margin-top: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+  .prose-cosmos ul {
+    margin: 0.5rem 0 1.25rem;
+    padding-left: 1.25rem;
+    list-style: disc;
+  }
+  .prose-cosmos li {
+    margin-bottom: 0.4rem;
+  }
+  .prose-cosmos li::marker {
+    color: var(--color-faint);
+  }
+  .prose-cosmos a {
+    color: var(--color-halo);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .prose-cosmos a:hover {
+    color: var(--color-fg);
+  }
+  .prose-cosmos strong {
+    color: var(--color-fg);
+    font-weight: 600;
+  }
+
+  /* Text rendered with the active accent gradient. */
+  .accent-text {
+    background-image: linear-gradient(
+      120deg,
+      var(--accent-from, var(--color-nebula)),
+      var(--accent-to, var(--color-halo))
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

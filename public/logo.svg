@@ -1,0 +1,14 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Asteria Star">
+  <defs>
+    <linearGradient id="asteria-grad" x1="64" y1="64" x2="448" y2="448" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#a78bfa" />
+      <stop offset="0.55" stop-color="#56b6f6" />
+      <stop offset="1" stop-color="#34d3d3" />
+    </linearGradient>
+  </defs>
+  <path
+    d="M256 40 C274 156 356 238 472 256 C356 274 274 356 256 472 C238 356 156 274 40 256 C156 238 238 156 256 40 Z"
+    fill="url(#asteria-grad)" />
+  <circle cx="392" cy="132" r="10" fill="#ffd27d" />
+  <circle cx="120" cy="372" r="7" fill="#e9ebf8" />
+</svg>
