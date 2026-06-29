@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 export interface BrowserItem {
   id: string;
@@ -35,7 +36,8 @@ export function EntityBrowser({
   items: BrowserItem[];
   typeFilters: { value: string; label: string; count: number }[];
 }) {
-  const [query, setQuery] = useState("");
+  const searchParams = useSearchParams();
+  const [query, setQuery] = useState(searchParams.get("q") ?? "");
   const [type, setType] = useState("all");
 
   const filtered = useMemo(() => {

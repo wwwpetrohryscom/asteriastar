@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -62,7 +63,9 @@ export default function EntityIndexPage() {
         lead="Every entity in the knowledge graph, searchable and grouped A–Z."
       />
       <Container className="mt-8 mb-12">
-        <EntityBrowser items={items} typeFilters={typeFilters} />
+        <Suspense fallback={<p className="text-muted">Loading index…</p>}>
+          <EntityBrowser items={items} typeFilters={typeFilters} />
+        </Suspense>
       </Container>
     </>
   );
