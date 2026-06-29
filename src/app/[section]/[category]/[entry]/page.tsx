@@ -12,6 +12,7 @@ import { EntryRelatedGrid } from "@/components/entry/EntryRelatedGrid";
 import { EntryDisclaimer } from "@/components/entry/EntryDisclaimer";
 import { EntryNavigation } from "@/components/entry/EntryNavigation";
 import { KnowledgeConnections } from "@/components/entry/KnowledgeConnections";
+import { EntityRecommendations } from "@/components/graph/EntityRecommendations";
 import { EntryGallery } from "@/components/entry/EntryGallery";
 import { EntryTimeline } from "@/components/entry/EntryTimeline";
 import { EntryRelatedMissions } from "@/components/entry/EntryRelatedMissions";
@@ -127,6 +128,7 @@ export default async function EntryPage({
               eyebrow={section.name}
             />
             {graphEntity && <EntryRelatedMissions entityId={graphEntity.id} />}
+            {graphEntity && <EntityRecommendations entityId={graphEntity.id} />}
             <EntryNavigation
               previous={previous}
               next={next}

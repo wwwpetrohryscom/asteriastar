@@ -19,7 +19,23 @@ export const ROUTES = {
   entityIndex: "/entity-index",
   topicIndex: "/topic-index",
   discover: "/discover",
+  compare: "/compare",
+  learn: "/learn",
+  timelines: "/timelines",
+  search: "/search",
 } as const;
+
+export function comparePath(slug: string): string {
+  return `/compare/${slug}`;
+}
+
+export function learnPath(slug: string): string {
+  return `/learn/${slug}`;
+}
+
+export function timelinePath(slug: string): string {
+  return `/timelines/${slug}`;
+}
 
 export function topicPath(slug: string): string {
   return `/explore/${slug}`;

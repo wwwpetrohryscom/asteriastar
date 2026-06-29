@@ -160,6 +160,60 @@ export function getSiblingEntities(
     .slice(0, limit);
 }
 
+/* ------------------------------------------------ recommendations / discovery */
+
+export interface Recommendation {
+  entity: GraphEntity;
+  /** Human-readable, graph-derived reason this is recommended. */
+  reason: string;
+  score: number;
+}
+
+/**
+ * Graph-driven recommendations for an entity: candidates are scored by shared
+ * connections (distance-2 neighbors) and shared type. Every recommendation has
+ * an honest, graph-derived reason — nothing random or fabricated.
+ */
+export function getRecommendations(id: string, limit = 6): Recommendation[] {
+  const entity = ENTITY_BY_ID.get(id);
+  if (!entity) return [];
+
+  const neighbors = getConnections(id).map((c) => c.other.id);
+  const direct = new Set<string>([id, ...neighbors]);
+  const scores = new Map<string, { score: number; reasons: string[] }>();
+
+  const bump = (candId: string, points: number, reason: string) => {
+    if (direct.has(candId)) return;
+    const s = scores.get(candId) ?? { score: 0, reasons: [] };
+    s.score += points;
+    if (!s.reasons.includes(reason)) s.reasons.push(reason);
+    scores.set(candId, s);
+  };
+
+  // Distance-2: entities that share a neighbor with this entity.
+  for (const nId of neighbors) {
+    const neighbor = ENTITY_BY_ID.get(nId);
+    if (!neighbor) continue;
+    for (const c of getConnections(nId)) {
+      bump(c.other.id, 3, `Linked through ${neighbor.name}`);
+    }
+  }
+
+  // Shared type.
+  for (const cand of entities) {
+    if (cand.type === entity.type) bump(cand.id, 1, `Also a ${entity.type.replace(/_/g, " ")}`);
+  }
+
+  return [...scores.entries()]
+    .map(([candId, s]) => {
+      const e = ENTITY_BY_ID.get(candId);
+      return e ? { entity: e, reason: s.reasons[0], score: s.score } : null;
+    })
+    .filter((r): r is Recommendation => r !== null)
+    .sort((a, b) => b.score - a.score || a.entity.name.localeCompare(b.entity.name))
+    .slice(0, limit);
+}
+
 export const GRAPH_STATS = {
   entityCount: entities.length,
   relationCount: relations.length,
