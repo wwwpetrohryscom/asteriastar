@@ -28,6 +28,15 @@ export function categoryPath(
   return `/${section.slug}/${category.slug}`;
 }
 
+/** Build an entry path from raw slugs (used by the entry registry). */
+export function entryPath(
+  section: string,
+  category: string,
+  entry: string,
+): string {
+  return `/${section}/${category}/${entry}`;
+}
+
 /** Build an absolute, canonical URL from a site-relative path. */
 export function absoluteUrl(path: string): string {
   if (path.startsWith("http")) return path;
