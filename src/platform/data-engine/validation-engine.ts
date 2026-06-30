@@ -8,6 +8,7 @@ import { validateStarCatalog } from "@/knowledge-graph/data/star-catalog";
 import { validateSolarSystem } from "@/knowledge-graph/data/solar-system-catalog";
 import { validateDeepSky } from "@/knowledge-graph/data/deep-sky-catalog";
 import { validateExploration } from "@/knowledge-graph/data/exploration-catalog";
+import { validateHumanSpaceflight } from "@/knowledge-graph/data/human-spaceflight-catalog";
 import { validatePlatform } from "@/platform/validate";
 import { QUERIES, UNSUPPORTED_QUERIES } from "@/platform/data-engine/query-engine";
 import { traversalEngine } from "@/platform/data-engine/traversal-engine";
@@ -90,6 +91,7 @@ export const validationEngine = {
   solar: (): string[] => validateSolarSystem(),
   deepSky: (): string[] => validateDeepSky(),
   exploration: (): string[] => validateExploration(),
+  humanSpaceflight: (): string[] => validateHumanSpaceflight(),
   platform: (): string[] => validatePlatform(),
   engine: engineSelfCheck,
 
@@ -106,6 +108,7 @@ export const validationEngine = {
       { category: "solar", issues: this.solar() },
       { category: "deepSky", issues: this.deepSky() },
       { category: "exploration", issues: this.exploration() },
+      { category: "humanSpaceflight", issues: this.humanSpaceflight() },
       { category: "platform", issues: this.platform() },
       { category: "engine", issues: this.engine() },
     ];
