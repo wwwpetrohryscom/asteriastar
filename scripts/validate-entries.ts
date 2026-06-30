@@ -140,6 +140,17 @@ async function main() {
     `✓ Solar System valid — ${solarCatalog.SOLAR_SYSTEM_STATS.bodies} bodies, ${solarCatalog.SOLAR_SYSTEM_STATS.newEntities} new entities, ${solarCatalog.SOLAR_SYSTEM_STATS.relations} relations`,
   );
 
+  const deepSky = await import("../src/knowledge-graph/data/deep-sky-catalog");
+  const dsIssues = deepSky.validateDeepSky();
+  if (dsIssues.length > 0) {
+    console.error(`\n✗ ${dsIssues.length} deep-sky issue(s):`);
+    for (const i of dsIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Deep Sky valid — ${deepSky.DEEP_SKY_STATS.objects} objects, ${deepSky.DEEP_SKY_STATS.newEntities} new entities, ${deepSky.DEEP_SKY_STATS.messier} Messier, ${deepSky.DEEP_SKY_STATS.caldwell} Caldwell`,
+  );
+
   const { validateEntries, getAllEntries, ENTRY_STATS } = reg;
 
   const issues = validateEntries();

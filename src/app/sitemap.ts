@@ -11,6 +11,7 @@ import { TRANSPARENCY_PAGES } from "@/app/transparency/content";
 import { engine } from "@/platform/data-engine";
 import { STAR_DISCOVERIES } from "@/app/stars/discovery";
 import { SOLAR_DISCOVERIES } from "@/app/solar-system/discovery";
+import { DEEP_SKY_DISCOVERIES } from "@/app/deep-sky/discovery";
 import { bodySlug } from "@/knowledge-graph/data/solar-system-catalog";
 import { CONSTELLATIONS } from "@/knowledge-graph/data/star-catalog/constellations";
 import {
@@ -30,6 +31,8 @@ import {
   starCategoryPath,
   solarBodyPath,
   solarDiscoveryPath,
+  deepSkyPath,
+  deepSkyDiscoveryPath,
   ROUTES,
 } from "@/lib/routes";
 
@@ -101,6 +104,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...SOLAR_DISCOVERIES.map((d) => ({ url: absoluteUrl(solarDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const deepSkyRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...DEEP_SKY_DISCOVERIES.map((d) => ({ url: absoluteUrl(deepSkyDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const sectionRoutes: MetadataRoute.Sitemap = getAllSections().map((section) => ({
     url: absoluteUrl(sectionPath(section)),
     changeFrequency: "weekly",
@@ -130,6 +139,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...discoveryRoutes,
     ...starRoutes,
     ...solarRoutes,
+    ...deepSkyRoutes,
   ].map((entry) => ({
     lastModified: now,
     ...entry,

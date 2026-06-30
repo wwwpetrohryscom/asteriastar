@@ -30,6 +30,42 @@ export interface LearningPath {
 
 export const LEARNING_PATHS: LearningPath[] = [
   {
+    slug: "deep-sky-and-galaxies",
+    title: "Deep Sky & Galaxies",
+    description: "A guided tour beyond the Solar System — galaxies, nebulae, and star clusters from the Messier, Caldwell, and NGC/IC catalogues, with practical guidance on observing each one. Built on real OpenNGC catalogue data.",
+    accent: "plasma",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "What are deep-sky objects?", href: "/deep-sky", blurb: "Galaxies, nebulae, and clusters beyond the Solar System." },
+          { title: "The Messier catalogue", href: "/deep-sky/discover/messier-objects", blurb: "The classic list of bright deep-sky objects." },
+          { title: "Bright objects to start with", href: "/deep-sky/discover/bright-deep-sky", blurb: "The easiest targets, magnitude 7 and brighter." },
+          { title: "Beginner targets", href: "/deep-sky/discover/beginner-targets", blurb: "Naked-eye, binocular, and small-telescope objects." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Types of galaxies", href: "/deep-sky/discover/all-galaxies", blurb: "Spiral, barred, elliptical, and lenticular galaxies." },
+          { title: "Nebulae", href: "/deep-sky/discover/all-nebulae", blurb: "Emission, reflection, and planetary nebulae." },
+          { title: "Open clusters", href: "/deep-sky/discover/open-clusters", blurb: "Loose groups of young stars in the galactic disc." },
+          { title: "Globular clusters", href: "/deep-sky/discover/globular-clusters", blurb: "Ancient spherical swarms of hundreds of thousands of stars." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "The Caldwell catalogue", href: "/deep-sky/discover/caldwell-objects", blurb: "Bright objects Messier left out." },
+          { title: "Planetary nebulae", href: "/deep-sky/discover/planetary-nebulae", blurb: "Shells cast off by dying Sun-like stars." },
+          { title: "Supernova remnants", href: "/deep-sky/discover/supernova-remnants", blurb: "The expanding debris of exploded stars." },
+          { title: "Advanced targets", href: "/deep-sky/discover/advanced-targets", blurb: "Faint objects for larger telescopes and dark skies." },
+        ],
+      },
+    ],
+    next: ["learn-galaxies", "understanding-stars"],
+  },
+  {
     slug: "the-solar-system",
     title: "The Solar System",
     description: "A guided tour of the Sun and the worlds that orbit it — planets, moons, small bodies, and the missions that explore them, all built on real NASA data.",
