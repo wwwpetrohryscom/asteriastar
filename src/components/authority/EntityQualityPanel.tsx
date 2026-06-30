@@ -1,11 +1,6 @@
 import Link from "next/link";
-import {
-  computeEntityQuality,
-  QUALITY_DIMENSION_LABELS,
-  reviewStatusFor,
-  type QualityDimension,
-} from "@/platform";
-import { GRAPH_VERSION_INFO, type GraphEntity } from "@/knowledge-graph";
+import { QUALITY_DIMENSION_LABELS, type QualityDimension } from "@/platform";
+import type { ResolvedEntity } from "@/platform/data-engine";
 import {
   CoverageBadge,
   ReviewBadge,
@@ -15,14 +10,14 @@ import {
 
 /**
  * "Scientific quality" — exposes an entity's structured completeness: review
- * status, source coverage, and a per-dimension breakdown. Quality is derived
- * from real data (never invented); honest gaps stay visible.
+ * status, source coverage, and a per-dimension breakdown. Driven by the
+ * Scientific Data Engine's resolved entity (quality is derived from real data,
+ * never invented); honest gaps stay visible.
  */
-export function EntityQualityPanel({ entity }: { entity: GraphEntity }) {
-  const q = computeEntityQuality(entity);
-  const status = reviewStatusFor(entity.id);
+export function EntityQualityPanel({ resolved }: { resolved: ResolvedEntity }) {
+  const q = resolved.quality;
   const dims = Object.keys(q.indicators) as QualityDimension[];
-  const interpretive = entity.domain !== "science";
+  const interpretive = resolved.domain !== "science";
 
   return (
     <section
@@ -37,12 +32,11 @@ export function EntityQualityPanel({ entity }: { entity: GraphEntity }) {
       </div>
 
       <div className="mt-3 flex flex-wrap gap-2">
-        <ReviewBadge status={status} />
-        <SourceIndicator count={entity.sources?.length ?? 0} />
-        <VersionLabel version={GRAPH_VERSION_INFO.graphVersion} />
+        <ReviewBadge status={resolved.reviewStatus} />
+        <SourceIndicator count={resolved.sources.length} />
+        <VersionLabel version={resolved.version.graphVersion} />
       </div>
 
-      {/* Completeness bar (derived, not an invented score). */}
       <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
         <div className="h-full rounded-full bg-halo/70" style={{ width: `${q.completenessPercent}%` }} />
       </div>

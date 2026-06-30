@@ -16,7 +16,7 @@ import {
   getComparisonSources,
   type ResolvedSide,
 } from "@/lib/compare";
-import { getRecommendations } from "@/knowledge-graph";
+import { engine } from "@/platform/data-engine";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES, comparePath } from "@/lib/routes";
@@ -78,8 +78,8 @@ export default async function ComparePage({ params }: PageProps<"/compare/[pair]
   const sources = getComparisonSources(left, right);
 
   const recs = [
-    ...(left.entityId ? getRecommendations(left.entityId, 3) : []),
-    ...(right.entityId ? getRecommendations(right.entityId, 3) : []),
+    ...(left.entityId ? engine.recommendation.for(left.entityId, 3) : []),
+    ...(right.entityId ? engine.recommendation.for(right.entityId, 3) : []),
   ];
   const seen = new Set([left.entityId, right.entityId]);
   const related = recs
