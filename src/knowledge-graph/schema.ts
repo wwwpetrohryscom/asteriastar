@@ -92,6 +92,11 @@ export const RELATION_TYPES = [
   "visited_by",
   "landed_on",
   "located_on",
+  "located_in_constellation",
+  "member_of_group",
+  "neighbor_of",
+  "photographed_by",
+  "related_survey",
 ] as const;
 export type RelationType = (typeof RELATION_TYPES)[number];
 
@@ -171,6 +176,11 @@ export const SCIENCE_ONLY_RELATIONS: ReadonlySet<RelationType> = new Set([
   "visited_by",
   "landed_on",
   "located_on",
+  "located_in_constellation",
+  "member_of_group",
+  "neighbor_of",
+  "photographed_by",
+  "related_survey",
 ]);
 
 /** Relation types that may ONLY be used in the astrology domain. */
@@ -243,6 +253,11 @@ export const RELATION_LABELS: Record<RelationType, string> = {
   visited_by: "Visited by",
   landed_on: "Landed on",
   located_on: "Located on",
+  located_in_constellation: "In constellation",
+  member_of_group: "Member of group",
+  neighbor_of: "Neighbour of",
+  photographed_by: "Photographed by",
+  related_survey: "Related survey",
 };
 
 /** Labels for when the current entity is the *target* (incoming relation). */
@@ -283,6 +298,11 @@ export const INVERSE_RELATION_LABELS: Record<RelationType, string> = {
   visited_by: "Visited",
   landed_on: "Landing site of",
   located_on: "Has feature",
+  located_in_constellation: "Contains object",
+  member_of_group: "Group includes",
+  neighbor_of: "Neighbour of",
+  photographed_by: "Photographed",
+  related_survey: "Survey of",
 };
 
 /** Pick the readable label for a relation given the viewing direction. */
@@ -330,10 +350,10 @@ export function relationFacet(domain: Domain, type: RelationType): ConnectionFac
   if (domain === "astrology") return "astrology";
   if (domain === "culture") return "cultural";
   // science / editorial
-  if (["observed_by", "studies", "visible_from"].includes(type)) return "observational";
+  if (["observed_by", "studies", "visible_from", "photographed_by", "related_survey"].includes(type)) return "observational";
   if (["mission_target", "operated_by", "launched_by", "target_of_mission", "part_of_mission", "visited_by", "landed_on"].includes(type)) return "mission";
   if (["discovered_by", "named_after", "catalogued_in"].includes(type)) return "discovery";
-  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on"].includes(type)) return "related";
+  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of"].includes(type)) return "related";
   return "scientific";
 }
 
