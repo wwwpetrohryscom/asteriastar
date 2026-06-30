@@ -128,6 +128,15 @@ export function GET(): Response {
   lines.push(`- Every body resolves through the Scientific Data Engine; pages at /solar-system/{slug}.`);
   lines.push("");
 
+  lines.push("## Deep Sky & Galaxy Encyclopedia");
+  lines.push(
+    `An encyclopedia of ${engine.deepSky.count} real deep-sky objects — galaxies, nebulae, and star clusters — as first-class entities, built on the open OpenNGC database (NGC/IC, Messier, and Caldwell catalogues; CC BY-SA 4.0). The Messier and Caldwell catalogues are complete. No fabricated objects, identifiers, or measurements.`,
+  );
+  lines.push(`- [Deep Sky Encyclopedia](${absoluteUrl("/deep-sky")})`);
+  lines.push(`- Galaxies: ${absoluteUrl("/deep-sky/discover/all-galaxies")} · Nebulae: ${absoluteUrl("/deep-sky/discover/all-nebulae")} · Messier: ${absoluteUrl("/deep-sky/discover/messier-objects")} · Caldwell: ${absoluteUrl("/deep-sky/discover/caldwell-objects")}`);
+  lines.push(`- Every object resolves through the Scientific Data Engine; pages at /deep-sky/{slug}.`);
+  lines.push("");
+
   lines.push("## Open data");
   lines.push(
     `Asteria Star is open infrastructure for structured celestial knowledge: a versioned (graph ${GRAPH_VERSION_INFO.graphVersion}, schema ${GRAPH_VERSION_INFO.schemaVersion}), machine-readable knowledge graph of ${GRAPH_VERSION_INFO.entityCount} entities. Stable ids are permanent (type:slug). License: ${GRAPH_VERSION_INFO.license}.`,

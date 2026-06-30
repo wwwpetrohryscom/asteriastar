@@ -53,6 +53,7 @@ export function getNavGroups(): NavGroup[] {
           links: [
             { name: "Star Encyclopedia", href: ROUTES.stars, description: "Thousands of real stars" },
             { name: "Solar System", href: ROUTES.solarSystem, description: "Planets, moons, missions" },
+            { name: "Deep Sky", href: ROUTES.deepSky, description: "Galaxies, nebulae, clusters" },
             { name: "Explore", href: ROUTES.explore, description: "Topics, entities, and connections" },
             { name: "Discover", href: ROUTES.discover, description: "Curated entry points" },
             { name: "Entity Index", href: ROUTES.entityIndex, description: "Every entity, A–Z" },

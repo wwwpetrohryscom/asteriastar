@@ -15,6 +15,7 @@ import { entities as notableObjects } from "@/knowledge-graph/data/notable-objec
 import { entities as crossLinks } from "@/knowledge-graph/data/cross-links";
 import { entities as starCatalog } from "@/knowledge-graph/data/star-catalog";
 import { entities as solarSystemCatalog } from "@/knowledge-graph/data/solar-system-catalog";
+import { entities as deepSkyCatalog } from "@/knowledge-graph/data/deep-sky-catalog";
 
 /**
  * Knowledge-graph entities.
@@ -237,4 +238,5 @@ export const entities: GraphEntity[] = [
   ...crossLinks,
   ...starCatalog,
   ...solarSystemCatalog,
+  ...deepSkyCatalog,
 ];

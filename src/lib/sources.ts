@@ -30,6 +30,7 @@ export type SourceKey =
   | "hipparcos"
   | "gaia"
   | "hyg"
+  | "openngc"
   | "britannica"
   | "wikimedia";
 
@@ -260,6 +261,16 @@ export const SOURCES: Record<SourceKey, Source> = {
     country: "International",
     authorityType: "database",
     reliability: "A compilation of primary catalogues (Hipparcos/Yale/Gliese); CC BY-SA 4.0. The underlying surveys are the primary evidence.",
+  },
+  openngc: {
+    key: "openngc",
+    name: "OpenNGC",
+    organization: "OpenNGC (M. Verga) — NGC/IC, Messier, and Caldwell catalogue data",
+    url: "https://github.com/mattiaverga/OpenNGC",
+    scope: "Openly-licensed deep-sky catalogue: object types, positions, magnitudes, sizes, morphology, and cross-identifiers.",
+    country: "International",
+    authorityType: "database",
+    reliability: "A curated compilation of the NGC/IC, Messier, and Caldwell catalogues (CC BY-SA 4.0); underlying surveys (NED, HyperLEDA, SIMBAD) are the primary evidence.",
   },
   britannica: {
     key: "britannica",

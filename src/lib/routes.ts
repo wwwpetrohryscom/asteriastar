@@ -34,7 +34,16 @@ export const ROUTES = {
   transparency: "/transparency",
   stars: "/stars",
   solarSystem: "/solar-system",
+  deepSky: "/deep-sky",
 } as const;
+
+export function deepSkyPath(slug: string): string {
+  return `/deep-sky/${slug}`;
+}
+
+export function deepSkyDiscoveryPath(slug: string): string {
+  return `/deep-sky/discover/${slug}`;
+}
 
 export function solarBodyPath(slug: string): string {
   return `/solar-system/${slug}`;

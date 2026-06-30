@@ -6,6 +6,7 @@ import { DATASETS, getDatasetEntities } from "@/lib/datasets";
 import { validateCommunity, COMMUNITY_DATA } from "@/lib/community";
 import { validateStarCatalog } from "@/knowledge-graph/data/star-catalog";
 import { validateSolarSystem } from "@/knowledge-graph/data/solar-system-catalog";
+import { validateDeepSky } from "@/knowledge-graph/data/deep-sky-catalog";
 import { validatePlatform } from "@/platform/validate";
 import { QUERIES, UNSUPPORTED_QUERIES } from "@/platform/data-engine/query-engine";
 import { traversalEngine } from "@/platform/data-engine/traversal-engine";
@@ -86,6 +87,7 @@ export const validationEngine = {
   community: (): string[] => validateCommunity(COMMUNITY_DATA),
   stars: (): string[] => validateStarCatalog(),
   solar: (): string[] => validateSolarSystem(),
+  deepSky: (): string[] => validateDeepSky(),
   platform: (): string[] => validatePlatform(),
   engine: engineSelfCheck,
 
@@ -100,6 +102,7 @@ export const validationEngine = {
       { category: "community", issues: this.community() },
       { category: "stars", issues: this.stars() },
       { category: "solar", issues: this.solar() },
+      { category: "deepSky", issues: this.deepSky() },
       { category: "platform", issues: this.platform() },
       { category: "engine", issues: this.engine() },
     ];
