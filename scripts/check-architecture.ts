@@ -49,10 +49,22 @@ for (const file of walk(SRC)) {
   const fromRel = srcRel(file);
   const fromLayer = classifyModule(fromRel);
   if (!fromLayer) continue;
+  // The Scientific Data Engine must be framework-independent (future CLI/API):
+  // no React, no Next.js, no UI imports.
+  const isEngine = fromRel === "platform/data-engine" || fromRel.startsWith("platform/data-engine/");
   const src = readFileSync(file, "utf8");
   let m: RegExpExecArray | null;
   while ((m = IMPORT_RE.exec(src))) {
-    const target = resolveSpec(fromRel, m[1]);
+    const spec = m[1];
+    if (isEngine) {
+      if (/^(react|react-dom|next)(\/|$)/.test(spec)) {
+        violations.push(`${fromRel}: data engine must be framework-independent — forbidden import "${spec}"`);
+      }
+      if (spec.startsWith("@/components") || spec.startsWith("@/app")) {
+        violations.push(`${fromRel}: data engine must not import UI — forbidden import "${spec}"`);
+      }
+    }
+    const target = resolveSpec(fromRel, spec);
     if (!target) continue;
     const toLayer = classifyModule(target);
     if (!toLayer || toLayer === fromLayer) continue;

@@ -104,6 +104,18 @@ async function main() {
     `✓ Platform core valid — ${platform.LAYERS.length} layers, ${platform.REGISTRIES.length} registries, ${platform.LOCALES.length} locales, ${platform.COMPONENT_STATS.total} components`,
   );
 
+  // Scientific Data Engine: query/traversal/entity-resolver self-checks.
+  const dataEngine = await import("../src/platform/data-engine");
+  const engineIssues = dataEngine.engine.validation.engine();
+  if (engineIssues.length > 0) {
+    console.error(`\n✗ ${engineIssues.length} data-engine issue(s):`);
+    for (const i of engineIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Data engine valid — ${dataEngine.ENGINE_MODULES.length} modules, ${dataEngine.QUERIES.length} queries`,
+  );
+
   const { validateEntries, getAllEntries, ENTRY_STATS } = reg;
 
   const issues = validateEntries();
