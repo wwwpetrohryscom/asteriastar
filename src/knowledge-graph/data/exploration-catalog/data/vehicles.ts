@@ -1,0 +1,32 @@
+import type { ExplorationRecord } from "@/knowledge-graph/data/exploration-catalog/types";
+
+/** Launch vehicles. Existing entities are enriched; cross-refs by operator slug. */
+type V = { slug: string; name: string; existing?: boolean; operatorSlug?: string; country: string; firstFlight?: string; status: string; payloadLeoKg?: number; description: string; sources?: ExplorationRecord["sources"]; alt?: string[] };
+const mk = (v: V): ExplorationRecord => ({
+  id: `launch_vehicle:${v.slug}`, slug: v.slug, name: v.name, kind: "vehicle", existing: v.existing,
+  operatorSlug: v.operatorSlug, country: v.country, firstFlight: v.firstFlight, status: v.status,
+  payloadLeoKg: v.payloadLeoKg, description: v.description, sources: v.sources ?? ["nasa"], altNames: v.alt,
+});
+
+export const vehicles: ExplorationRecord[] = [
+  mk({ slug: "saturn-v", name: "Saturn V", existing: true, operatorSlug: "nasa", country: "United States", firstFlight: "1967", status: "Retired", payloadLeoKg: 140000, description: "A NASA super heavy-lift launch vehicle that carried every crewed Apollo mission to the Moon and launched the Skylab station." }),
+  mk({ slug: "saturn-ib", name: "Saturn IB", operatorSlug: "nasa", country: "United States", firstFlight: "1966", status: "Retired", description: "A NASA medium-lift launch vehicle used for early Apollo Earth-orbit tests, the Skylab crews, and the Apollo–Soyuz Test Project." }),
+  mk({ slug: "space-launch-system", name: "Space Launch System (SLS)", existing: true, operatorSlug: "nasa", country: "United States", firstFlight: "2022", status: "Active", payloadLeoKg: 95000, description: "NASA's super heavy-lift rocket for the Artemis program, which launched the uncrewed Artemis I around the Moon in 2022.", alt: ["SLS"] }),
+  mk({ slug: "falcon-9", name: "Falcon 9", existing: true, operatorSlug: "spacex", country: "United States", firstFlight: "2010", status: "Active", payloadLeoKg: 22800, description: "A partially reusable two-stage orbital rocket by SpaceX, the most-flown vehicle in the world with a reusable first stage." }),
+  mk({ slug: "falcon-heavy", name: "Falcon Heavy", existing: true, operatorSlug: "spacex", country: "United States", firstFlight: "2018", status: "Active", payloadLeoKg: 63800, description: "A heavy-lift rocket by SpaceX built from three Falcon 9 cores, with reusable side boosters." }),
+  mk({ slug: "starship", name: "Starship", existing: true, operatorSlug: "spacex", country: "United States", firstFlight: "2023", status: "In development", description: "A fully reusable super heavy-lift launch system by SpaceX intended for crewed and cargo flights to orbit, the Moon, and Mars." }),
+  mk({ slug: "atlas-v", name: "Atlas V", existing: true, operatorSlug: "ula", country: "United States", firstFlight: "2002", status: "Active", description: "An expendable launch vehicle by United Launch Alliance that has flown many NASA science and planetary missions." }),
+  mk({ slug: "delta-iv-heavy", name: "Delta IV Heavy", operatorSlug: "ula", country: "United States", firstFlight: "2004", status: "Retired", payloadLeoKg: 28800, description: "A heavy-lift expendable rocket by United Launch Alliance, retired in 2024, used for national-security and high-energy science launches such as Parker Solar Probe." }),
+  mk({ slug: "vulcan-centaur", name: "Vulcan Centaur", operatorSlug: "ula", country: "United States", firstFlight: "2024", status: "Active", description: "United Launch Alliance's successor to the Atlas V and Delta IV families.", alt: ["Vulcan"] }),
+  mk({ slug: "new-glenn", name: "New Glenn", operatorSlug: "blue-origin", country: "United States", firstFlight: "2025", status: "Active", description: "A heavy-lift, partially reusable rocket developed by Blue Origin." }),
+  mk({ slug: "electron", name: "Electron", operatorSlug: "rocket-lab", country: "United States / New Zealand", firstFlight: "2017", status: "Active", description: "A small-lift orbital rocket by Rocket Lab for dedicated small-satellite launches." }),
+  mk({ slug: "ariane-5", name: "Ariane 5", existing: true, operatorSlug: "arianespace", country: "Europe", firstFlight: "1996", status: "Retired", description: "A European heavy-lift rocket operated by Arianespace, which launched the James Webb Space Telescope in 2021 before retiring in 2023." }),
+  mk({ slug: "ariane-6", name: "Ariane 6", operatorSlug: "arianespace", country: "Europe", firstFlight: "2024", status: "Active", description: "Europe's successor to Ariane 5, designed for greater flexibility and lower cost." }),
+  mk({ slug: "soyuz", name: "Soyuz", existing: true, operatorSlug: "roscosmos", country: "Russia", firstFlight: "1966", status: "Active", description: "A long-serving family of Russian expendable rockets that has carried crews and cargo to orbit for over five decades." }),
+  mk({ slug: "proton", name: "Proton", operatorSlug: "roscosmos", country: "Russia", firstFlight: "1965", status: "Active", payloadLeoKg: 23000, description: "A Russian heavy-lift rocket used to launch interplanetary probes, large satellites, and space-station modules.", alt: ["Proton-M"] }),
+  mk({ slug: "long-march-5", name: "Long March 5", existing: true, operatorSlug: "cnsa", country: "China", firstFlight: "2016", status: "Active", payloadLeoKg: 25000, description: "China's heavy-lift rocket, used to launch the Tianwen-1 Mars mission, Chang'e lunar missions, and Tiangong station modules." }),
+  mk({ slug: "long-march-3b", name: "Long March 3B", operatorSlug: "cnsa", country: "China", firstFlight: "1996", status: "Active", description: "A Chinese launch vehicle widely used for geostationary satellites and several Chang'e lunar missions." }),
+  mk({ slug: "h-iia", name: "H-IIA", operatorSlug: "jaxa", country: "Japan", firstFlight: "2001", status: "Retired", description: "A Japanese launch vehicle that flew JAXA science missions including Hayabusa2 and the Akatsuki Venus orbiter." }),
+  mk({ slug: "pslv", name: "PSLV (Polar Satellite Launch Vehicle)", existing: true, operatorSlug: "isro", country: "India", firstFlight: "1993", status: "Active", payloadLeoKg: 3800, description: "ISRO's reliable workhorse rocket, which launched Chandrayaan-1 and the Mars Orbiter Mission (Mangalyaan).", alt: ["PSLV"] }),
+  mk({ slug: "gslv", name: "GSLV (Geosynchronous Satellite Launch Vehicle)", operatorSlug: "isro", country: "India", firstFlight: "2001", status: "Active", description: "ISRO's launcher for heavier payloads to geostationary transfer orbit, used for Chandrayaan-2.", alt: ["GSLV"] }),
+];
