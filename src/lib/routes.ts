@@ -33,7 +33,16 @@ export const ROUTES = {
   authority: "/authority",
   transparency: "/transparency",
   stars: "/stars",
+  solarSystem: "/solar-system",
 } as const;
+
+export function solarBodyPath(slug: string): string {
+  return `/solar-system/${slug}`;
+}
+
+export function solarDiscoveryPath(slug: string): string {
+  return `/solar-system/discover/${slug}`;
+}
 
 export function transparencyPath(slug: string): string {
   return `/transparency/${slug}`;

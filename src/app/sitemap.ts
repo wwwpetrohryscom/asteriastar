@@ -10,6 +10,8 @@ import { DATASETS } from "@/lib/datasets";
 import { TRANSPARENCY_PAGES } from "@/app/transparency/content";
 import { engine } from "@/platform/data-engine";
 import { STAR_DISCOVERIES } from "@/app/stars/discovery";
+import { SOLAR_DISCOVERIES } from "@/app/solar-system/discovery";
+import { bodySlug } from "@/knowledge-graph/data/solar-system-catalog";
 import { CONSTELLATIONS } from "@/knowledge-graph/data/star-catalog/constellations";
 import {
   absoluteUrl,
@@ -26,6 +28,8 @@ import {
   starDiscoveryPath,
   constellationStarsPath,
   starCategoryPath,
+  solarBodyPath,
+  solarDiscoveryPath,
   ROUTES,
 } from "@/lib/routes";
 
@@ -90,6 +94,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...engine.star.categories().map((c) => ({ url: absoluteUrl(starCategoryPath(c.category)), changeFrequency: "monthly" as const, priority: 0.5 })),
   ];
 
+  // Solar System encyclopedia: hub, every body, and discovery pages.
+  const solarRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.solarSystem), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.solar.all().map((b) => ({ url: absoluteUrl(solarBodyPath(bodySlug(b.id))), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...SOLAR_DISCOVERIES.map((d) => ({ url: absoluteUrl(solarDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const sectionRoutes: MetadataRoute.Sitemap = getAllSections().map((section) => ({
     url: absoluteUrl(sectionPath(section)),
     changeFrequency: "weekly",
@@ -118,6 +129,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...entryRoutes,
     ...discoveryRoutes,
     ...starRoutes,
+    ...solarRoutes,
   ].map((entry) => ({
     lastModified: now,
     ...entry,

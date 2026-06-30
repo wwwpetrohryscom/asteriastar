@@ -48,6 +48,8 @@ export const ENTITY_TYPES = [
   "image_asset",
   "observation_event",
   "location",
+  "surface_feature",
+  "ring_system",
   "organization",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
@@ -83,6 +85,13 @@ export const RELATION_TYPES = [
   "member_of_cluster",
   "hosts_exoplanet",
   "catalogued_in",
+  "orbits",
+  "belongs_to_planet",
+  "target_of_mission",
+  "part_of_mission",
+  "visited_by",
+  "landed_on",
+  "located_on",
 ] as const;
 export type RelationType = (typeof RELATION_TYPES)[number];
 
@@ -155,6 +164,13 @@ export const SCIENCE_ONLY_RELATIONS: ReadonlySet<RelationType> = new Set([
   "member_of_cluster",
   "hosts_exoplanet",
   "catalogued_in",
+  "orbits",
+  "belongs_to_planet",
+  "target_of_mission",
+  "part_of_mission",
+  "visited_by",
+  "landed_on",
+  "located_on",
 ]);
 
 /** Relation types that may ONLY be used in the astrology domain. */
@@ -220,6 +236,13 @@ export const RELATION_LABELS: Record<RelationType, string> = {
   member_of_cluster: "Member of cluster",
   hosts_exoplanet: "Hosts exoplanet",
   catalogued_in: "Catalogued in",
+  orbits: "Orbits",
+  belongs_to_planet: "Orbits",
+  target_of_mission: "Target of",
+  part_of_mission: "Part of mission",
+  visited_by: "Visited by",
+  landed_on: "Landed on",
+  located_on: "Located on",
 };
 
 /** Labels for when the current entity is the *target* (incoming relation). */
@@ -253,6 +276,13 @@ export const INVERSE_RELATION_LABELS: Record<RelationType, string> = {
   member_of_cluster: "Cluster includes",
   hosts_exoplanet: "Orbits",
   catalogued_in: "Catalogues",
+  orbits: "Orbited by",
+  belongs_to_planet: "Moon of",
+  target_of_mission: "Targets",
+  part_of_mission: "Mission includes",
+  visited_by: "Visited",
+  landed_on: "Landing site of",
+  located_on: "Has feature",
 };
 
 /** Pick the readable label for a relation given the viewing direction. */
@@ -301,9 +331,9 @@ export function relationFacet(domain: Domain, type: RelationType): ConnectionFac
   if (domain === "culture") return "cultural";
   // science / editorial
   if (["observed_by", "studies", "visible_from"].includes(type)) return "observational";
-  if (["mission_target", "operated_by", "launched_by"].includes(type)) return "mission";
+  if (["mission_target", "operated_by", "launched_by", "target_of_mission", "part_of_mission", "visited_by", "landed_on"].includes(type)) return "mission";
   if (["discovered_by", "named_after", "catalogued_in"].includes(type)) return "discovery";
-  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet"].includes(type)) return "related";
+  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on"].includes(type)) return "related";
   return "scientific";
 }
 
@@ -351,5 +381,7 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   image_asset: "Image",
   observation_event: "Observation",
   location: "Location",
+  surface_feature: "Surface feature",
+  ring_system: "Ring system",
   organization: "Organization",
 };
