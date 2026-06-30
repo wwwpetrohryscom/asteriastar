@@ -1,0 +1,260 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { HeroSection } from "@/components/sections/HeroSection";
+import { Container } from "@/components/ui/Container";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { Badge } from "@/components/ui/Badge";
+import { SourceList } from "@/components/ui/SourceList";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { ReviewBadge, CoverageBadge } from "@/components/authority/TrustBadges";
+import { engine } from "@/platform/data-engine";
+import { QUALITY_DIMENSION_LABELS, type QualityDimension } from "@/platform";
+import { bodySlug } from "@/knowledge-graph/data/solar-system-catalog";
+import { buildMetadata } from "@/lib/seo/metadata";
+import { breadcrumbSchema, type Crumb } from "@/lib/seo/jsonld";
+import { absoluteUrl, ROUTES, solarBodyPath } from "@/lib/routes";
+
+export const dynamicParams = false;
+
+export function generateStaticParams() {
+  return engine.solar.all().map((b) => ({ slug: bodySlug(b.id) }));
+}
+
+export async function generateMetadata({ params }: PageProps<"/solar-system/[slug]">): Promise<Metadata> {
+  const { slug } = await params;
+  const b = engine.solar.resolve(slug);
+  if (!b) return {};
+  return buildMetadata({
+    title: `${b.record.name} — ${b.kindLabel}`,
+    description: `${b.record.name}: ${b.record.classification ?? b.kindLabel}. Real data — physical characteristics, orbit, moons, and exploration — with sources and knowledge-graph connections.`,
+    path: solarBodyPath(slug),
+  });
+}
+
+type Row = { label: string; value: string };
+const n = (v: number | undefined) => (v == null ? undefined : v.toLocaleString());
+
+function Table({ id, title, rows }: { id: string; title: string; rows: Row[] }) {
+  if (rows.length === 0) return null;
+  return (
+    <section aria-labelledby={id}>
+      <h2 id={id} className="font-display text-2xl font-bold">{title}</h2>
+      <div className="mt-4 overflow-hidden rounded-2xl border border-white/10">
+        <table className="w-full text-left text-sm">
+          <tbody className="divide-y divide-white/5">
+            {rows.map((r) => (
+              <tr key={r.label} className="transition hover:bg-white/[0.02]">
+                <td className="px-4 py-2.5 text-faint">{r.label}</td>
+                <td className="px-4 py-2.5 text-right font-medium text-fg">{r.value}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
+export default async function SolarBodyPage({ params }: PageProps<"/solar-system/[slug]">) {
+  const { slug } = await params;
+  const b = engine.solar.resolve(slug);
+  if (!b) notFound();
+  const r = b.record;
+  const url = solarBodyPath(slug);
+  const isCraft = r.kind === "mission" || r.kind === "spacecraft";
+
+  const crumbs: Crumb[] = [
+    { name: "Home", url: "/" },
+    { name: "Solar System", url: ROUTES.solarSystem },
+    { name: r.name, url },
+  ];
+
+  const physical: Row[] = [
+    r.mass1e24Kg != null ? { label: "Mass", value: `${n(r.mass1e24Kg)} ×10²⁴ kg` } : null,
+    r.diameterKm != null ? { label: "Diameter", value: `${n(r.diameterKm)} km` } : null,
+    r.radiusKm != null ? { label: "Radius", value: `${n(r.radiusKm)} km` } : null,
+    r.densityGCm3 != null ? { label: "Density", value: `${r.densityGCm3} g/cm³` } : null,
+    r.gravityMs2 != null ? { label: "Surface gravity", value: `${r.gravityMs2} m/s²` } : null,
+    r.escapeVelocityKms != null ? { label: "Escape velocity", value: `${r.escapeVelocityKms} km/s` } : null,
+    r.rotationPeriodHours != null ? { label: "Rotation period", value: `${n(Math.abs(r.rotationPeriodHours))} h${r.rotationPeriodHours < 0 ? " (retrograde)" : ""}` } : null,
+    r.meanTemperatureC != null ? { label: "Mean temperature", value: `${r.meanTemperatureC} °C` } : null,
+    r.albedo != null ? { label: "Albedo", value: `${r.albedo}` } : null,
+    r.magnitude != null ? { label: "Magnitude", value: `${r.magnitude}` } : null,
+  ].filter(Boolean) as Row[];
+
+  const orbit: Row[] = [
+    r.distanceFromSun1e6Km != null ? { label: "Distance from Sun", value: `${n(r.distanceFromSun1e6Km)} million km${r.semiMajorAxisAu != null ? ` (${r.semiMajorAxisAu} AU)` : ""}` } : null,
+    r.orbitalPeriodYears != null ? { label: "Orbital period", value: `${r.orbitalPeriodYears} years` } : r.orbitalPeriodDays != null ? { label: "Orbital period", value: `${n(r.orbitalPeriodDays)} days` } : null,
+    r.perihelion1e6Km != null ? { label: "Perihelion", value: `${n(r.perihelion1e6Km)} million km` } : null,
+    r.aphelion1e6Km != null ? { label: "Aphelion", value: `${n(r.aphelion1e6Km)} million km` } : null,
+    r.eccentricity != null ? { label: "Eccentricity", value: `${r.eccentricity}` } : null,
+    r.inclinationDeg != null ? { label: "Orbital inclination", value: `${r.inclinationDeg}°` } : null,
+    r.obliquityDeg != null ? { label: "Axial tilt", value: `${r.obliquityDeg}°` } : null,
+    r.orbitalVelocityKms != null ? { label: "Orbital velocity", value: `${r.orbitalVelocityKms} km/s` } : null,
+  ].filter(Boolean) as Row[];
+
+  const mission: Row[] = [
+    r.agency ? { label: "Agency", value: r.agency } : null,
+    r.launchYear ? { label: "Launched", value: r.launchYear } : null,
+    r.missionType ? { label: "Type", value: r.missionType } : null,
+    r.status ? { label: "Status", value: r.status } : null,
+  ].filter(Boolean) as Row[];
+
+  const quick: Row[] = [
+    { label: "Type", value: r.classification ?? b.kindLabel },
+    b.parent ? { label: r.kind === "moon" ? "Orbits" : "System", value: b.parent.name } : null,
+    r.discoveryYear ? { label: "Discovered", value: `${r.discoveryYear}${r.discoveredBy ? ` · ${r.discoveredBy}` : ""}` } : null,
+    r.moonCount != null ? { label: "Moons", value: String(r.moonCount) } : null,
+    r.hasRingSystem ? { label: "Ring system", value: "Yes" } : null,
+  ].filter(Boolean) as Row[];
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Thing",
+    name: r.name,
+    ...(r.designation ? { alternateName: r.designation } : {}),
+    description: `${r.classification ?? b.kindLabel}.`,
+    url: absoluteUrl(url),
+    identifier: r.id,
+  };
+
+  return (
+    <>
+      <JsonLd data={[breadcrumbSchema(crumbs), jsonLd]} />
+      <Container className="pt-8"><Breadcrumbs crumbs={crumbs} /></Container>
+      <HeroSection
+        compact
+        accent={isCraft ? "ember" : "halo"}
+        eyebrow={<span>{b.kindLabel}{r.classification ? ` · ${r.classification}` : ""}</span>}
+        title={r.name}
+        lead={r.designation && r.designation !== r.name ? r.designation : undefined}
+      >
+        <div className="mt-4"><Badge tone="accent">Solar System</Badge></div>
+      </HeroSection>
+
+      <Container className="mt-8 mb-14">
+        <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
+          <div className="space-y-10">
+            <section aria-labelledby="overview">
+              <h2 id="overview" className="font-display text-2xl font-bold">Scientific overview</h2>
+              <p className="mt-3 leading-relaxed text-muted">
+                {r.name} is {r.classification ? `a ${r.classification.toLowerCase()}` : `a ${b.kindLabel.toLowerCase()}`}
+                {b.parent && r.kind === "moon" ? ` orbiting ${b.parent.name}` : b.parent && r.kind !== "star" && !isCraft ? ` in orbit around ${b.parent.name}` : ""}
+                {r.distanceFromSun1e6Km != null ? `, at a mean distance of ${n(r.distanceFromSun1e6Km)} million km from the Sun` : ""}
+                {r.agency ? `, operated by ${r.agency}` : ""}
+                {r.launchYear ? `, launched in ${r.launchYear}` : ""}.
+              </p>
+            </section>
+
+            {isCraft ? <Table id="mission" title="Mission" rows={mission} /> : null}
+            {!isCraft ? <Table id="physical" title="Physical characteristics" rows={physical} /> : null}
+            {!isCraft ? <Table id="orbit" title="Orbit" rows={orbit} /> : null}
+
+            {/* Targets (missions/spacecraft) */}
+            {isCraft && (r.targets?.length || r.landedOn?.length || r.partOfMission) ? (
+              <section aria-labelledby="targets">
+                <h2 id="targets" className="font-display text-2xl font-bold">Targets &amp; destinations</h2>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {[...(r.targets ?? []), ...(r.landedOn ?? []), ...(r.partOfMission ? [r.partOfMission] : [])].map((tid) => {
+                    const t = engine.solar.get(tid);
+                    return t ? (
+                      <li key={tid}>
+                        <Link href={solarBodyPath(bodySlug(tid))} className="rounded-full border border-white/10 bg-white/[0.02] px-3.5 py-1.5 text-sm text-muted transition hover:border-white/25 hover:text-fg">{t.name}</Link>
+                      </li>
+                    ) : null;
+                  })}
+                </ul>
+              </section>
+            ) : null}
+
+            {/* Moons */}
+            {b.moons.length > 0 && (
+              <section aria-labelledby="moons">
+                <h2 id="moons" className="font-display text-2xl font-bold">Moons ({b.moons.length})</h2>
+                <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {b.moons.map((m) => (
+                    <li key={m.id}>
+                      <Link href={solarBodyPath(bodySlug(m.id))} className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-2.5 transition hover:border-white/25 hover:bg-white/[0.04]">
+                        <span className="font-medium text-fg">{m.name}</span>
+                        <span className="text-xs text-faint">{m.radiusKm != null ? `${n(m.radiusKm)} km` : ""}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Surface features */}
+            {b.features.length > 0 && (
+              <section aria-labelledby="features">
+                <h2 id="features" className="font-display text-2xl font-bold">Notable surface features</h2>
+                <ul className="mt-4 flex flex-wrap gap-2">
+                  {b.features.map((f) => (
+                    <li key={f.id}><Link href={solarBodyPath(bodySlug(f.id))} className="rounded-full border border-white/10 bg-white/[0.02] px-3.5 py-1.5 text-sm text-muted transition hover:border-white/25 hover:text-fg">{f.name}</Link></li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            {/* Exploration */}
+            {(b.missions.length > 0 || b.spacecraft.length > 0) && (
+              <section aria-labelledby="exploration">
+                <h2 id="exploration" className="font-display text-2xl font-bold">Exploration</h2>
+                <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                  {[...b.missions, ...b.spacecraft].map((mc) => (
+                    <li key={mc.id}>
+                      <Link href={solarBodyPath(bodySlug(mc.id))} className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-2.5 transition hover:border-white/25 hover:bg-white/[0.04]">
+                        <span className="font-medium text-fg">{mc.name}</span>
+                        <span className="text-xs text-faint">{mc.launchYear ?? ""}</span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
+
+            <SourceList keys={r.sources} title="Sources" />
+          </div>
+
+          {/* Sidebar */}
+          <aside className="space-y-6">
+            <section aria-labelledby="quick" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <h2 id="quick" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
+              <dl className="mt-3 divide-y divide-white/5">
+                {quick.map((f) => (
+                  <div key={f.label} className="flex justify-between gap-3 py-2 text-sm">
+                    <dt className="text-faint">{f.label}</dt>
+                    <dd className="text-right font-medium text-fg">{f.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </section>
+
+            {b.quality && (
+              <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+                <div className="flex items-center justify-between gap-2">
+                  <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
+                  <span className="text-xs text-faint">{b.quality.completenessPercent}%</span>
+                </div>
+                <div className="mt-3"><ReviewBadge status={b.reviewStatus} /></div>
+                <dl className="mt-3 grid grid-cols-1 gap-y-1.5">
+                  {(Object.keys(b.quality.indicators) as QualityDimension[]).slice(0, 6).map((d) => (
+                    <div key={d} className="flex items-center justify-between gap-2 text-sm">
+                      <dt className="text-muted">{QUALITY_DIMENSION_LABELS[d]}</dt>
+                      <dd><CoverageBadge level={b.quality!.indicators[d]} /></dd>
+                    </div>
+                  ))}
+                </dl>
+                <p className="mt-3 text-xs leading-relaxed text-faint">
+                  Data from the NASA Planetary Fact Sheet & JPL (public domain). See{" "}
+                  <Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link>.
+                </p>
+              </section>
+            )}
+          </aside>
+        </div>
+      </Container>
+    </>
+  );
+}

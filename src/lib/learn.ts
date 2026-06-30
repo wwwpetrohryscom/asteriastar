@@ -30,6 +30,42 @@ export interface LearningPath {
 
 export const LEARNING_PATHS: LearningPath[] = [
   {
+    slug: "the-solar-system",
+    title: "The Solar System",
+    description: "A guided tour of the Sun and the worlds that orbit it — planets, moons, small bodies, and the missions that explore them, all built on real NASA data.",
+    accent: "halo",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "What is the Solar System?", href: "/solar-system", blurb: "The Sun and everything gravitationally bound to it." },
+          { title: "The eight planets", href: "/solar-system/discover/all-planets", blurb: "From Mercury to Neptune, in order from the Sun." },
+          { title: "The inner, rocky planets", href: "/solar-system/discover/inner-planets", blurb: "Mercury, Venus, Earth, and Mars." },
+          { title: "Earth's Moon", href: "/solar-system/the-moon", blurb: "Our nearest neighbour in space." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Gas giants", href: "/solar-system/discover/gas-giants", blurb: "Jupiter and Saturn — the largest planets." },
+          { title: "Ice giants", href: "/solar-system/discover/ice-giants", blurb: "Uranus and Neptune." },
+          { title: "Moons of the planets", href: "/solar-system/discover/natural-satellites", blurb: "From tiny Phobos to giant Ganymede." },
+          { title: "Dwarf planets", href: "/solar-system/discover/dwarf-planets", blurb: "Pluto, Ceres, Eris, Haumea, and Makemake." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Asteroids", href: "/solar-system/discover/asteroids", blurb: "Rocky remnants of the early Solar System." },
+          { title: "Comets", href: "/solar-system/discover/comets", blurb: "Icy visitors from the outer Solar System." },
+          { title: "Planetary missions", href: "/solar-system/discover/planetary-missions", blurb: "How we explore other worlds." },
+          { title: "Mars — a world explored", href: "/solar-system/mars", blurb: "The most-visited planet beyond Earth." },
+        ],
+      },
+    ],
+    next: ["understanding-stars"],
+  },
+  {
     slug: "understanding-stars",
     title: "Understanding Stars",
     description: "From what a star is to how stars live and die — a guided path through the star encyclopedia, built on real catalogue data.",
