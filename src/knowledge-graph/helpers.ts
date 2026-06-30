@@ -32,9 +32,19 @@ export function getEntityCanonicalPath(id: string): string | undefined {
   return ENTITY_BY_ID.get(id)?.entryPath;
 }
 
+// Index relations by the entities they touch, so per-entity lookups are
+// O(degree) rather than O(all relations) — essential at catalogue scale.
+const RELATIONS_BY_ENTITY = new Map<string, GraphRelation[]>();
+for (const r of relations) {
+  (RELATIONS_BY_ENTITY.get(r.from) ?? RELATIONS_BY_ENTITY.set(r.from, []).get(r.from)!).push(r);
+  if (r.to !== r.from) {
+    (RELATIONS_BY_ENTITY.get(r.to) ?? RELATIONS_BY_ENTITY.set(r.to, []).get(r.to)!).push(r);
+  }
+}
+
 /** All relations touching an entity (incoming or outgoing). */
 export function getRelationsForEntity(id: string): GraphRelation[] {
-  return relations.filter((r) => r.from === id || r.to === id);
+  return RELATIONS_BY_ENTITY.get(id) ?? [];
 }
 
 export function getScienceRelations(id: string): GraphRelation[] {
