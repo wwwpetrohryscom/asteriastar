@@ -164,6 +164,15 @@ export function GET(): Response {
   lines.push(`- Every observatory, telescope, instrument, survey, and band resolves through the Scientific Data Engine; pages at /observatories/{slug}.`);
   lines.push("");
 
+  lines.push("## Exoplanets Encyclopedia");
+  lines.push(
+    `An encyclopedia of ${engine.exoplanets.planetCount} confirmed exoplanets across ${engine.exoplanets.systemCount} multi-planet systems — with host stars, detection methods, planetary classes, and discovery missions — as first-class entities, built on the NASA Exoplanet Archive (Planetary Systems Composite Parameters). Host stars already in the Star Encyclopedia are reused, not duplicated. Every value is real archive data; nothing is inferred, and habitability is never asserted as certainty.`,
+  );
+  lines.push(`- [Exoplanets Encyclopedia](${absoluteUrl("/exoplanets")})`);
+  lines.push(`- All: ${absoluteUrl("/exoplanets/discover/all-exoplanets")} · Nearby: ${absoluteUrl("/exoplanets/discover/nearby-exoplanets")} · Potentially habitable: ${absoluteUrl("/exoplanets/discover/potentially-habitable")} · Multi-planet systems: ${absoluteUrl("/exoplanets/discover/multi-planet-systems")}`);
+  lines.push(`- Every planet, host star, system, detection method, and class resolves through the Scientific Data Engine; pages at /exoplanets/{slug}.`);
+  lines.push("");
+
   lines.push("## Open data");
   lines.push(
     `Asteria Star is open infrastructure for structured celestial knowledge: a versioned (graph ${GRAPH_VERSION_INFO.graphVersion}, schema ${GRAPH_VERSION_INFO.schemaVersion}), machine-readable knowledge graph of ${GRAPH_VERSION_INFO.entityCount} entities. Stable ids are permanent (type:slug). License: ${GRAPH_VERSION_INFO.license}.`,
