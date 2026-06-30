@@ -30,6 +30,42 @@ export interface LearningPath {
 
 export const LEARNING_PATHS: LearningPath[] = [
   {
+    slug: "exoplanets",
+    title: "Exoplanets",
+    description: "Worlds beyond the Sun — how we find them, what kinds there are, and how scientists weigh whether any could be habitable. Built on real planets and systems from the NASA Exoplanet Archive.",
+    accent: "ember",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "What is an exoplanet?", href: "/exoplanets", blurb: "Planets orbiting other stars, as a knowledge graph." },
+          { title: "How exoplanets are found", href: "/exoplanets/discover/all-exoplanets", blurb: "The detection methods behind every discovery." },
+          { title: "The transit method", href: "/exoplanets/transit", blurb: "Finding planets by the dip in starlight." },
+          { title: "Radial velocity", href: "/exoplanets/radial-velocity", blurb: "Weighing planets by their star's wobble." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Direct imaging", href: "/exoplanets/direct-imaging", blurb: "Taking an actual picture of a planet." },
+          { title: "Planetary systems", href: "/exoplanets/discover/multi-planet-systems", blurb: "Stars with families of worlds." },
+          { title: "Super-Earths and mini-Neptunes", href: "/exoplanets/super-earth", blurb: "The most common kinds of planet." },
+          { title: "Hot Jupiters", href: "/exoplanets/hot-jupiter", blurb: "Giant planets in scorching orbits." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Habitability and the habitable zone", href: "/exoplanets/discover/potentially-habitable", blurb: "What 'habitable zone' does and doesn't mean." },
+          { title: "Atmospheres", href: "/exoplanets/k2-18-b", blurb: "Reading the air of distant worlds." },
+          { title: "Exoplanet missions", href: "/exoplanets/discover/kepler-exoplanets", blurb: "The telescopes behind the discoveries." },
+          { title: "The search for life", href: "/exoplanets/proxima-centauri-b", blurb: "The nearest potentially habitable world." },
+        ],
+      },
+    ],
+    next: ["observatories-and-telescopes", "understanding-stars"],
+  },
+  {
     slug: "observatories-and-telescopes",
     title: "Observatories & Telescopes",
     description: "How astronomers observe the universe — across every band of light and beyond, from mountaintop optical giants to space telescopes, radio arrays, and gravitational-wave detectors. Built on real observatories, telescopes, and surveys.",
