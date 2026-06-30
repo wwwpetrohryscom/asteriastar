@@ -37,7 +37,16 @@ export const ROUTES = {
   deepSky: "/deep-sky",
   exploration: "/exploration",
   humanSpaceflight: "/human-spaceflight",
+  observatories: "/observatories",
 } as const;
+
+export function observatoryPath(slug: string): string {
+  return `/observatories/${slug}`;
+}
+
+export function observatoryDiscoveryPath(slug: string): string {
+  return `/observatories/discover/${slug}`;
+}
 
 export function explorationPath(slug: string): string {
   return `/exploration/${slug}`;

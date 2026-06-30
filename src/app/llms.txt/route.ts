@@ -155,6 +155,15 @@ export function GET(): Response {
   lines.push(`- Every station, spacecraft, expedition, and person resolves through the Scientific Data Engine; pages at /human-spaceflight/{slug}.`);
   lines.push("");
 
+  lines.push("## Observatories & Telescopes");
+  lines.push(
+    `The instruments and places humans use to observe the universe: ground observatories, ground and space telescopes, instruments, sky surveys, observing bands, and observing sites — ${engine.observatories.count} interconnected entities across every band of the electromagnetic spectrum and beyond (gravitational waves, neutrinos, multi-messenger). Curated from NASA, ESA, ESO, NOIRLab, NSF, NRAO, NAOJ, and STScI sources. No fabricated apertures, first-light dates, operators, or instruments; future facilities are clearly marked.`,
+  );
+  lines.push(`- [Observatories & Telescopes](${absoluteUrl("/observatories")})`);
+  lines.push(`- Observatories: ${absoluteUrl("/observatories/discover/all-observatories")} · Space telescopes: ${absoluteUrl("/observatories/discover/space-telescopes")} · Largest: ${absoluteUrl("/observatories/discover/largest-telescopes")} · Surveys: ${absoluteUrl("/observatories/discover/sky-surveys")}`);
+  lines.push(`- Every observatory, telescope, instrument, survey, and band resolves through the Scientific Data Engine; pages at /observatories/{slug}.`);
+  lines.push("");
+
   lines.push("## Open data");
   lines.push(
     `Asteria Star is open infrastructure for structured celestial knowledge: a versioned (graph ${GRAPH_VERSION_INFO.graphVersion}, schema ${GRAPH_VERSION_INFO.schemaVersion}), machine-readable knowledge graph of ${GRAPH_VERSION_INFO.entityCount} entities. Stable ids are permanent (type:slug). License: ${GRAPH_VERSION_INFO.license}.`,
