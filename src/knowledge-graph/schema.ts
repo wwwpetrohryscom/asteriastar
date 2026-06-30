@@ -51,6 +51,10 @@ export const ENTITY_TYPES = [
   "surface_feature",
   "ring_system",
   "organization",
+  "mission_program",
+  "launch_site",
+  "astronaut",
+  "scientific_instrument",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -97,6 +101,19 @@ export const RELATION_TYPES = [
   "neighbor_of",
   "photographed_by",
   "related_survey",
+  "part_of_program",
+  "launched_from",
+  "carried_by",
+  "orbited",
+  "visited",
+  "returned_samples_from",
+  "captured_image_of",
+  "contains_instrument",
+  "used_instrument",
+  "performed_experiment",
+  "supports_science",
+  "preceded_by",
+  "followed_by",
 ] as const;
 export type RelationType = (typeof RELATION_TYPES)[number];
 
@@ -181,6 +198,19 @@ export const SCIENCE_ONLY_RELATIONS: ReadonlySet<RelationType> = new Set([
   "neighbor_of",
   "photographed_by",
   "related_survey",
+  "part_of_program",
+  "launched_from",
+  "carried_by",
+  "orbited",
+  "visited",
+  "returned_samples_from",
+  "captured_image_of",
+  "contains_instrument",
+  "used_instrument",
+  "performed_experiment",
+  "supports_science",
+  "preceded_by",
+  "followed_by",
 ]);
 
 /** Relation types that may ONLY be used in the astrology domain. */
@@ -258,6 +288,19 @@ export const RELATION_LABELS: Record<RelationType, string> = {
   neighbor_of: "Neighbour of",
   photographed_by: "Photographed by",
   related_survey: "Related survey",
+  part_of_program: "Part of program",
+  launched_from: "Launched from",
+  carried_by: "Carried by",
+  orbited: "Orbited",
+  visited: "Visited",
+  returned_samples_from: "Returned samples from",
+  captured_image_of: "Captured image of",
+  contains_instrument: "Carries instrument",
+  used_instrument: "Used instrument",
+  performed_experiment: "Performed experiment",
+  supports_science: "Supports science",
+  preceded_by: "Preceded by",
+  followed_by: "Followed by",
 };
 
 /** Labels for when the current entity is the *target* (incoming relation). */
@@ -303,6 +346,19 @@ export const INVERSE_RELATION_LABELS: Record<RelationType, string> = {
   neighbor_of: "Neighbour of",
   photographed_by: "Photographed",
   related_survey: "Survey of",
+  part_of_program: "Program includes",
+  launched_from: "Launch site for",
+  carried_by: "Carried",
+  orbited: "Orbited by",
+  visited: "Visited by",
+  returned_samples_from: "Samples returned by",
+  captured_image_of: "Imaged by",
+  contains_instrument: "Instrument on",
+  used_instrument: "Instrument used by",
+  performed_experiment: "Experiment performed by",
+  supports_science: "Science supported by",
+  preceded_by: "Followed by",
+  followed_by: "Preceded by",
 };
 
 /** Pick the readable label for a relation given the viewing direction. */
@@ -351,9 +407,9 @@ export function relationFacet(domain: Domain, type: RelationType): ConnectionFac
   if (domain === "culture") return "cultural";
   // science / editorial
   if (["observed_by", "studies", "visible_from", "photographed_by", "related_survey"].includes(type)) return "observational";
-  if (["mission_target", "operated_by", "launched_by", "target_of_mission", "part_of_mission", "visited_by", "landed_on"].includes(type)) return "mission";
+  if (["mission_target", "operated_by", "launched_by", "target_of_mission", "part_of_mission", "visited_by", "landed_on", "part_of_program", "launched_from", "carried_by", "orbited", "visited", "returned_samples_from", "captured_image_of"].includes(type)) return "mission";
   if (["discovered_by", "named_after", "catalogued_in"].includes(type)) return "discovery";
-  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of"].includes(type)) return "related";
+  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of", "contains_instrument", "used_instrument", "performed_experiment", "supports_science", "preceded_by", "followed_by"].includes(type)) return "related";
   return "scientific";
 }
 
@@ -404,4 +460,8 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   surface_feature: "Surface feature",
   ring_system: "Ring system",
   organization: "Organization",
+  mission_program: "Mission program",
+  launch_site: "Launch site",
+  astronaut: "Astronaut",
+  scientific_instrument: "Scientific instrument",
 };
