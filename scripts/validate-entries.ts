@@ -162,6 +162,17 @@ async function main() {
     `✓ Exploration valid — ${exploration.EXPLORATION_STATS.records} records, ${exploration.EXPLORATION_STATS.newEntities} new entities, ${exploration.EXPLORATION_STATS.missions} missions`,
   );
 
+  const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
+  const hsfIssues = hsf.validateHumanSpaceflight();
+  if (hsfIssues.length > 0) {
+    console.error(`\n✗ ${hsfIssues.length} human-spaceflight issue(s):`);
+    for (const i of hsfIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Human Spaceflight valid — ${hsf.HSF_STATS.records} records, ${hsf.HSF_STATS.newEntities} new entities, ${hsf.HSF_STATS.stations} stations`,
+  );
+
   const { validateEntries, getAllEntries, ENTRY_STATS } = reg;
 
   const issues = validateEntries();

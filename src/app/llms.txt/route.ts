@@ -146,6 +146,15 @@ export function GET(): Response {
   lines.push(`- Every mission, spacecraft, and agency resolves through the Scientific Data Engine; pages at /exploration/{slug}.`);
   lines.push("");
 
+  lines.push("## Space Stations & Human Spaceflight");
+  lines.push(
+    `How humans live and work in space: ${engine.humanSpaceflight.byKind("station").length} space stations (ISS, Mir, Skylab, Salyut, Tiangong, and planned stations) plus crewed and cargo spacecraft, ISS modules, expeditions, spacewalks, programs, and astronauts — ${engine.humanSpaceflight.count} interconnected entities. Curated from NASA, ESA, Roscosmos, JAXA, CSA, and Smithsonian sources. No fabricated crew, dates, EVAs, or modules; planned stations are clearly marked.`,
+  );
+  lines.push(`- [Space Stations & Human Spaceflight](${absoluteUrl("/human-spaceflight")})`);
+  lines.push(`- Stations: ${absoluteUrl("/human-spaceflight/discover/all-space-stations")} · ISS modules: ${absoluteUrl("/human-spaceflight/discover/iss-modules")} · Crewed spacecraft: ${absoluteUrl("/human-spaceflight/discover/crewed-spacecraft")} · Expeditions: ${absoluteUrl("/human-spaceflight/discover/iss-expeditions")}`);
+  lines.push(`- Every station, spacecraft, expedition, and person resolves through the Scientific Data Engine; pages at /human-spaceflight/{slug}.`);
+  lines.push("");
+
   lines.push("## Open data");
   lines.push(
     `Asteria Star is open infrastructure for structured celestial knowledge: a versioned (graph ${GRAPH_VERSION_INFO.graphVersion}, schema ${GRAPH_VERSION_INFO.schemaVersion}), machine-readable knowledge graph of ${GRAPH_VERSION_INFO.entityCount} entities. Stable ids are permanent (type:slug). License: ${GRAPH_VERSION_INFO.license}.`,

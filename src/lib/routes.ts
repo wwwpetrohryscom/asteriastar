@@ -36,6 +36,7 @@ export const ROUTES = {
   solarSystem: "/solar-system",
   deepSky: "/deep-sky",
   exploration: "/exploration",
+  humanSpaceflight: "/human-spaceflight",
 } as const;
 
 export function explorationPath(slug: string): string {
@@ -44,6 +45,14 @@ export function explorationPath(slug: string): string {
 
 export function explorationDiscoveryPath(slug: string): string {
   return `/exploration/discover/${slug}`;
+}
+
+export function humanSpaceflightPath(slug: string): string {
+  return `/human-spaceflight/${slug}`;
+}
+
+export function humanSpaceflightDiscoveryPath(slug: string): string {
+  return `/human-spaceflight/discover/${slug}`;
 }
 
 export function deepSkyPath(slug: string): string {
