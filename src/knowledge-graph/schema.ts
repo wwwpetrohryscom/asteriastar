@@ -66,6 +66,10 @@ export const ENTITY_TYPES = [
   "life_support_system",
   "space_experiment",
   "space_medicine_topic",
+  "telescope",
+  "sky_survey",
+  "wavelength_band",
+  "observing_site",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -140,6 +144,19 @@ export const RELATION_TYPES = [
   "supported_by",
   "replaced_by",
   "built_by",
+  "located_at",
+  "part_of_observatory",
+  "hosts_telescope",
+  "uses_instrument",
+  "has_instrument",
+  "observes_band",
+  "observed_object",
+  "conducts_survey",
+  "part_of_survey",
+  "surveyed_by",
+  "related_discovery",
+  "predecessor_of",
+  "successor_of",
 ] as const;
 export type RelationType = (typeof RELATION_TYPES)[number];
 
@@ -252,6 +269,19 @@ export const SCIENCE_ONLY_RELATIONS: ReadonlySet<RelationType> = new Set([
   "supported_by",
   "replaced_by",
   "built_by",
+  "located_at",
+  "part_of_observatory",
+  "hosts_telescope",
+  "uses_instrument",
+  "has_instrument",
+  "observes_band",
+  "observed_object",
+  "conducts_survey",
+  "part_of_survey",
+  "surveyed_by",
+  "related_discovery",
+  "predecessor_of",
+  "successor_of",
 ]);
 
 /** Relation types that may ONLY be used in the astrology domain. */
@@ -357,6 +387,19 @@ export const RELATION_LABELS: Record<RelationType, string> = {
   supported_by: "Supported by",
   replaced_by: "Replaced by",
   built_by: "Built by",
+  located_at: "Located at",
+  part_of_observatory: "Part of",
+  hosts_telescope: "Hosts",
+  uses_instrument: "Uses instrument",
+  has_instrument: "Has instrument",
+  observes_band: "Observes",
+  observed_object: "Observed",
+  conducts_survey: "Conducts survey",
+  part_of_survey: "Part of survey",
+  surveyed_by: "Surveyed by",
+  related_discovery: "Related discovery",
+  predecessor_of: "Predecessor of",
+  successor_of: "Successor of",
 };
 
 /** Labels for when the current entity is the *target* (incoming relation). */
@@ -430,6 +473,19 @@ export const INVERSE_RELATION_LABELS: Record<RelationType, string> = {
   supported_by: "Supports",
   replaced_by: "Replaced",
   built_by: "Built",
+  located_at: "Location of",
+  part_of_observatory: "Includes",
+  hosts_telescope: "Hosted at",
+  uses_instrument: "Used by",
+  has_instrument: "Instrument of",
+  observes_band: "Observed by",
+  observed_object: "Observed by",
+  conducts_survey: "Conducted by",
+  part_of_survey: "Includes",
+  surveyed_by: "Surveyed",
+  related_discovery: "Discovered via",
+  predecessor_of: "Successor of",
+  successor_of: "Predecessor of",
 };
 
 /** Pick the readable label for a relation given the viewing direction. */
@@ -477,10 +533,10 @@ export function relationFacet(domain: Domain, type: RelationType): ConnectionFac
   if (domain === "astrology") return "astrology";
   if (domain === "culture") return "cultural";
   // science / editorial
-  if (["observed_by", "studies", "visible_from", "photographed_by", "related_survey"].includes(type)) return "observational";
+  if (["observed_by", "studies", "visible_from", "photographed_by", "related_survey", "observes_band", "observed_object", "conducts_survey", "part_of_survey", "surveyed_by", "uses_instrument", "has_instrument"].includes(type)) return "observational";
   if (["mission_target", "operated_by", "launched_by", "target_of_mission", "part_of_mission", "visited_by", "landed_on", "part_of_program", "launched_from", "carried_by", "orbited", "visited", "returned_samples_from", "captured_image_of", "part_of_station", "attached_to", "docked_with", "visited_station", "served_on_expedition", "commanded_expedition", "performed_eva", "launched_aboard", "returned_aboard", "crewed_by", "carried_crew", "carried_cargo"].includes(type)) return "mission";
   if (["discovered_by", "named_after", "catalogued_in"].includes(type)) return "discovery";
-  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of", "contains_instrument", "used_instrument", "performed_experiment", "supports_science", "preceded_by", "followed_by", "supported_by", "replaced_by", "built_by"].includes(type)) return "related";
+  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of", "contains_instrument", "used_instrument", "performed_experiment", "supports_science", "preceded_by", "followed_by", "supported_by", "replaced_by", "built_by", "located_at", "part_of_observatory", "hosts_telescope", "related_discovery", "predecessor_of", "successor_of"].includes(type)) return "related";
   return "scientific";
 }
 
@@ -546,4 +602,8 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   life_support_system: "Life-support system",
   space_experiment: "Space experiment",
   space_medicine_topic: "Space medicine",
+  telescope: "Telescope",
+  sky_survey: "Sky survey",
+  wavelength_band: "Observing band",
+  observing_site: "Observing site",
 };
