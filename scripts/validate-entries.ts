@@ -116,6 +116,18 @@ async function main() {
     `✓ Data engine valid — ${dataEngine.ENGINE_MODULES.length} modules, ${dataEngine.QUERIES.length} queries`,
   );
 
+  // Star catalogue: real catalogue data integrity.
+  const starCatalog = await import("../src/knowledge-graph/data/star-catalog");
+  const starIssues = starCatalog.validateStarCatalog();
+  if (starIssues.length > 0) {
+    console.error(`\n✗ ${starIssues.length} star-catalog issue(s):`);
+    for (const i of starIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Star catalogue valid — ${starCatalog.STAR_STATS.stars} stars, ${starCatalog.STAR_STATS.constellationsCreated} new constellations, ${starCatalog.STAR_STATS.relations} relations`,
+  );
+
   const { validateEntries, getAllEntries, ENTRY_STATS } = reg;
 
   const issues = validateEntries();
