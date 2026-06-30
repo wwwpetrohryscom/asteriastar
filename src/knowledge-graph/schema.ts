@@ -77,6 +77,12 @@ export const RELATION_TYPES = [
   "related_to",
   "parent_of",
   "child_of",
+  "belongs_to_constellation",
+  "part_of_star_system",
+  "binary_with",
+  "member_of_cluster",
+  "hosts_exoplanet",
+  "catalogued_in",
 ] as const;
 export type RelationType = (typeof RELATION_TYPES)[number];
 
@@ -143,6 +149,12 @@ export const SCIENCE_ONLY_RELATIONS: ReadonlySet<RelationType> = new Set([
   "launched_by",
   "studies",
   "scientifically_related_to",
+  "belongs_to_constellation",
+  "part_of_star_system",
+  "binary_with",
+  "member_of_cluster",
+  "hosts_exoplanet",
+  "catalogued_in",
 ]);
 
 /** Relation types that may ONLY be used in the astrology domain. */
@@ -202,6 +214,12 @@ export const RELATION_LABELS: Record<RelationType, string> = {
   related_to: "Related to",
   parent_of: "Parent of",
   child_of: "Child of",
+  belongs_to_constellation: "In constellation",
+  part_of_star_system: "Part of system",
+  binary_with: "Binary with",
+  member_of_cluster: "Member of cluster",
+  hosts_exoplanet: "Hosts exoplanet",
+  catalogued_in: "Catalogued in",
 };
 
 /** Labels for when the current entity is the *target* (incoming relation). */
@@ -229,6 +247,12 @@ export const INVERSE_RELATION_LABELS: Record<RelationType, string> = {
   related_to: "Related to",
   parent_of: "Child of",
   child_of: "Parent of",
+  belongs_to_constellation: "Constellation of",
+  part_of_star_system: "System includes",
+  binary_with: "Binary with",
+  member_of_cluster: "Cluster includes",
+  hosts_exoplanet: "Orbits",
+  catalogued_in: "Catalogues",
 };
 
 /** Pick the readable label for a relation given the viewing direction. */
@@ -278,8 +302,8 @@ export function relationFacet(domain: Domain, type: RelationType): ConnectionFac
   // science / editorial
   if (["observed_by", "studies", "visible_from"].includes(type)) return "observational";
   if (["mission_target", "operated_by", "launched_by"].includes(type)) return "mission";
-  if (["discovered_by", "named_after"].includes(type)) return "discovery";
-  if (["scientifically_related_to", "related_to", "references"].includes(type)) return "related";
+  if (["discovered_by", "named_after", "catalogued_in"].includes(type)) return "discovery";
+  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet"].includes(type)) return "related";
   return "scientific";
 }
 

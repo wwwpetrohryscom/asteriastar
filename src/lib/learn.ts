@@ -30,6 +30,42 @@ export interface LearningPath {
 
 export const LEARNING_PATHS: LearningPath[] = [
   {
+    slug: "understanding-stars",
+    title: "Understanding Stars",
+    description: "From what a star is to how stars live and die — a guided path through the star encyclopedia, built on real catalogue data.",
+    accent: "nebula",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "What is a star?", href: "/stars", blurb: "Meet the star encyclopedia: thousands of real stars, each a first-class entity." },
+          { title: "Spectral classes & colour", href: "/stars/type/main-sequence", blurb: "Why stars range from blue to red, and what their spectra reveal." },
+          { title: "Brightness & magnitude", href: "/stars/discover/brightest", blurb: "Apparent vs absolute magnitude, and the brightest stars in our sky." },
+          { title: "Distance & the nearest stars", href: "/stars/discover/nearest", blurb: "How we measure stellar distances — and our closest neighbours." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Yellow dwarfs like the Sun", href: "/stars/type/yellow-dwarf", blurb: "Main-sequence G stars and how the Sun fits in." },
+          { title: "Red dwarfs", href: "/stars/type/red-dwarf", blurb: "The galaxy's most common and longest-lived stars." },
+          { title: "Binary & multiple systems", href: "/stars/discover/multiple", blurb: "Most stars are not alone — how systems form and orbit." },
+          { title: "Variable stars", href: "/stars/discover/variable", blurb: "Stars whose brightness changes, and why." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Giants & subgiants", href: "/stars/type/red-giant", blurb: "What happens when a star leaves the main sequence." },
+          { title: "Supergiants & the largest stars", href: "/stars/type/red-supergiant", blurb: "Colossal evolved stars and the precursors of supernovae." },
+          { title: "Blue supergiants & Wolf-Rayet stars", href: "/stars/type/blue-supergiant", blurb: "The hottest, most massive, most luminous stars." },
+          { title: "White dwarfs — stellar remnants", href: "/stars/type/white-dwarf", blurb: "The dense cores left when Sun-like stars die." },
+        ],
+      },
+    ],
+    next: ["learn-astronomy"],
+  },
+  {
     slug: "learn-astronomy",
     title: "Learn Astronomy",
     description: "A guided journey from looking up to understanding the universe.",

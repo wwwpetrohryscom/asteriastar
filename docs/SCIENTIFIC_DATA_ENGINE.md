@@ -41,7 +41,12 @@ const moons = engine.query.run("moons-of-jupiter");
 | `dataset` | Dataset views & exports | slug → JSON / CSV |
 | `authority` | Evidence/review/quality/version/provenance | id → authority data |
 | `localization` | Localized text (id never localized) | id + locale → `LocalizedEntity` |
+| `star` | Star encyclopedia resolver & queries | slug → `ResolvedStar`; brightest / nearest / by-constellation / by-type / visibility |
 | `validation` | The single validator | () → `ValidationReport[]` |
+
+The `star` engine powers the [Star Encyclopedia](./STAR_ENCYCLOPEDIA.md) — it
+resolves stars from the typed catalogue with lightweight, index-driven lookups so
+it scales across thousands of pages.
 
 ## Dependency graph
 

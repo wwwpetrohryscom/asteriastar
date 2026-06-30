@@ -32,10 +32,27 @@ export const ROUTES = {
   observatory: "/observatory",
   authority: "/authority",
   transparency: "/transparency",
+  stars: "/stars",
 } as const;
 
 export function transparencyPath(slug: string): string {
   return `/transparency/${slug}`;
+}
+
+export function starPath(slug: string): string {
+  return `/stars/${slug}`;
+}
+
+export function constellationStarsPath(slug: string): string {
+  return `/stars/constellations/${slug}`;
+}
+
+export function starCategoryPath(slug: string): string {
+  return `/stars/type/${slug}`;
+}
+
+export function starDiscoveryPath(slug: string): string {
+  return `/stars/discover/${slug}`;
 }
 
 export function datasetPath(slug: string): string {

@@ -8,6 +8,9 @@ import { LEARNING_PATHS } from "@/lib/learn";
 import { TIMELINES } from "@/lib/timelines";
 import { DATASETS } from "@/lib/datasets";
 import { TRANSPARENCY_PAGES } from "@/app/transparency/content";
+import { engine } from "@/platform/data-engine";
+import { STAR_DISCOVERIES } from "@/app/stars/discovery";
+import { CONSTELLATIONS } from "@/knowledge-graph/data/star-catalog/constellations";
 import {
   absoluteUrl,
   categoryPath,
@@ -19,6 +22,10 @@ import {
   timelinePath,
   datasetPath,
   transparencyPath,
+  starPath,
+  starDiscoveryPath,
+  constellationStarsPath,
+  starCategoryPath,
   ROUTES,
 } from "@/lib/routes";
 
@@ -74,6 +81,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...getStandaloneEntities().map((e) => ({ url: absoluteUrl(entityGraphPath(e)), changeFrequency: "monthly" as const, priority: 0.4 })),
   ];
 
+  // Star encyclopedia: hub, every star, discovery, constellation, and type pages.
+  const starRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.stars), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.star.all().map((s) => ({ url: absoluteUrl(starPath(s.slug)), changeFrequency: "yearly" as const, priority: 0.5 })),
+    ...STAR_DISCOVERIES.map((d) => ({ url: absoluteUrl(starDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...CONSTELLATIONS.map((c) => ({ url: absoluteUrl(constellationStarsPath(c.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...engine.star.categories().map((c) => ({ url: absoluteUrl(starCategoryPath(c.category)), changeFrequency: "monthly" as const, priority: 0.5 })),
+  ];
+
   const sectionRoutes: MetadataRoute.Sitemap = getAllSections().map((section) => ({
     url: absoluteUrl(sectionPath(section)),
     changeFrequency: "weekly",
@@ -101,6 +117,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...categoryRoutes,
     ...entryRoutes,
     ...discoveryRoutes,
+    ...starRoutes,
   ].map((entry) => ({
     lastModified: now,
     ...entry,

@@ -4,6 +4,7 @@ import { validateImages } from "@/lib/media/registry";
 import { validateCitations } from "@/lib/citations";
 import { DATASETS, getDatasetEntities } from "@/lib/datasets";
 import { validateCommunity, COMMUNITY_DATA } from "@/lib/community";
+import { validateStarCatalog } from "@/knowledge-graph/data/star-catalog";
 import { validatePlatform } from "@/platform/validate";
 import { QUERIES, UNSUPPORTED_QUERIES } from "@/platform/data-engine/query-engine";
 import { traversalEngine } from "@/platform/data-engine/traversal-engine";
@@ -82,6 +83,7 @@ export const validationEngine = {
   citations: (): string[] => validateCitations(),
   datasets: datasetIntegrity,
   community: (): string[] => validateCommunity(COMMUNITY_DATA),
+  stars: (): string[] => validateStarCatalog(),
   platform: (): string[] => validatePlatform(),
   engine: engineSelfCheck,
 
@@ -94,6 +96,7 @@ export const validationEngine = {
       { category: "citations", issues: this.citations() },
       { category: "datasets", issues: this.datasets() },
       { category: "community", issues: this.community() },
+      { category: "stars", issues: this.stars() },
       { category: "platform", issues: this.platform() },
       { category: "engine", issues: this.engine() },
     ];
