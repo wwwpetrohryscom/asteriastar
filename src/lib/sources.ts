@@ -27,6 +27,9 @@ export type SourceKey =
   | "simbad"
   | "ned"
   | "ads"
+  | "hipparcos"
+  | "gaia"
+  | "hyg"
   | "britannica"
   | "wikimedia";
 
@@ -227,6 +230,36 @@ export const SOURCES: Record<SourceKey, Source> = {
     country: "United States",
     authorityType: "literature",
     reliability: "Index of peer-reviewed literature; the underlying papers are the primary evidence.",
+  },
+  hipparcos: {
+    key: "hipparcos",
+    name: "Hipparcos",
+    organization: "ESA Hipparcos space astrometry mission",
+    url: "https://www.cosmos.esa.int/web/hipparcos",
+    scope: "High-precision parallax, magnitude, and position for ~118,000 stars.",
+    country: "Europe",
+    authorityType: "space-agency",
+    reliability: "Primary astrometric catalogue; the basis for stellar distances and magnitudes.",
+  },
+  gaia: {
+    key: "gaia",
+    name: "Gaia",
+    organization: "ESA Gaia astrometric survey",
+    url: "https://www.cosmos.esa.int/web/gaia",
+    scope: "Billion-star astrometry, photometry, and distances (future identifier support).",
+    country: "Europe",
+    authorityType: "space-agency",
+    reliability: "The most precise modern astrometric survey.",
+  },
+  hyg: {
+    key: "hyg",
+    name: "HYG Database",
+    organization: "HYG Database (Hipparcos + Yale Bright Star + Gliese), by D. Nash / astronexus",
+    url: "https://www.astronexus.com/hyg",
+    scope: "Aggregated, openly-licensed star catalogue combining Hipparcos, the Yale Bright Star Catalogue, and the Gliese Catalogue of Nearby Stars.",
+    country: "International",
+    authorityType: "database",
+    reliability: "A compilation of primary catalogues (Hipparcos/Yale/Gliese); CC BY-SA 4.0. The underlying surveys are the primary evidence.",
   },
   britannica: {
     key: "britannica",
