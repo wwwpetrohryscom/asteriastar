@@ -71,6 +71,14 @@ localization, extension points, and a reusable component family — all browsabl
 at [`/platform`](src/app/platform/page.tsx). See
 [docs/PLATFORM_ARCHITECTURE.md](docs/PLATFORM_ARCHITECTURE.md).
 
+All of this is reached through the **Scientific Data Engine**
+([`src/platform/data-engine/`](src/platform/data-engine)) — 16 pure,
+framework-independent modules (entity resolver, relationship resolver, graph
+traversal, scientific query, recommendation, comparison, timeline, learning,
+discovery, metadata, source, citation, dataset, authority, localization, and a
+single validation engine). Every consumer resolves reality through `engine.*`;
+nothing reads the graph directly. See [docs/SCIENTIFIC_DATA_ENGINE.md](docs/SCIENTIFIC_DATA_ENGINE.md).
+
 On top of that, a **scientific authority layer**
 ([`src/platform/authority/`](src/platform/authority)) makes trust a product
 feature: a typed provenance model, a standardized evidence framework, review and
@@ -99,6 +107,10 @@ automatically.
 - [Future Social Network](docs/FUTURE_SOCIAL_NETWORK.md)
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
+
+**Scientific Data Engine (Phase 10)**
+
+- [Scientific Data Engine](docs/SCIENTIFIC_DATA_ENGINE.md) — the 16-module execution layer every consumer reads through
 
 **Scientific Authority (Phase 9)**
 
