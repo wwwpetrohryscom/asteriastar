@@ -14,6 +14,8 @@ import { EntryNavigation } from "@/components/entry/EntryNavigation";
 import { KnowledgeConnections } from "@/components/entry/KnowledgeConnections";
 import { EntityRecommendations } from "@/components/graph/EntityRecommendations";
 import { EntityDataPanel } from "@/components/graph/EntityDataPanel";
+import { EntityQualityPanel } from "@/components/authority/EntityQualityPanel";
+import { engine } from "@/platform/data-engine";
 import { EntryGallery } from "@/components/entry/EntryGallery";
 import { EntryTimeline } from "@/components/entry/EntryTimeline";
 import { EntryRelatedMissions } from "@/components/entry/EntryRelatedMissions";
@@ -96,6 +98,8 @@ export default async function EntryPage({
 
   const related = getRelatedEntries(entry);
   const graphEntity = getEntityForEntry(entry);
+  // Resolve the entity through the data engine for the data/quality panels.
+  const resolvedEntity = graphEntity ? engine.entity.resolve(graphEntity.id) : null;
 
   return (
     <div style={accentVars(section.accent)}>
@@ -141,7 +145,8 @@ export default async function EntryPage({
           <aside className="space-y-6">
             <EntryFacts facts={entry.facts} />
             <EntryKeyPoints points={entry.keyPoints} />
-            {graphEntity && <EntityDataPanel entity={graphEntity} />}
+            {resolvedEntity && <EntityDataPanel resolved={resolvedEntity} />}
+            {resolvedEntity && <EntityQualityPanel resolved={resolvedEntity} />}
             <EntrySourceList keys={entry.sources} />
           </aside>
         </div>

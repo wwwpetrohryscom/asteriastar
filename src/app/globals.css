@@ -82,22 +82,26 @@
    * The cosmic backdrop: two soft nebula glows over the base color, plus a
    * sparse, deterministic starfield. Pure CSS — no images, no hydration risk.
    */
+  /*
+   * The cosmic backdrop — deliberately restrained for a scientific-institution
+   * feel: faint, cool glows over the base color rather than vivid gradients.
+   */
   .cosmos {
     background-color: var(--color-bg);
     background-image:
       radial-gradient(
-        60rem 60rem at 78% -10%,
-        color-mix(in oklab, var(--color-nebula) 22%, transparent),
+        62rem 62rem at 80% -12%,
+        color-mix(in oklab, var(--color-nebula) 13%, transparent),
         transparent 60%
       ),
       radial-gradient(
-        55rem 55rem at 8% 8%,
-        color-mix(in oklab, var(--color-halo) 16%, transparent),
+        56rem 56rem at 6% 6%,
+        color-mix(in oklab, var(--color-halo) 9%, transparent),
         transparent 55%
       ),
       radial-gradient(
-        50rem 40rem at 50% 120%,
-        color-mix(in oklab, var(--color-aurora) 12%, transparent),
+        52rem 42rem at 50% 122%,
+        color-mix(in oklab, var(--color-aurora) 7%, transparent),
         transparent 60%
       );
     background-attachment: fixed;
@@ -192,5 +196,13 @@
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+  /* Minimal animations: honor reduced-motion across the platform. */
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }

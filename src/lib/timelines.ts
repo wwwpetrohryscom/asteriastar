@@ -1,4 +1,3 @@
-import type { TimelineEvent } from "@/components/timeline/TimelineList";
 import type { SourceKey } from "@/lib/sources";
 import type { AccentToken } from "@/lib/content/types";
 
@@ -6,7 +5,18 @@ import type { AccentToken } from "@/lib/content/types";
  * Timeline Engine — curated, well-documented chronologies. Every date is a
  * established historical fact; events link into the knowledge graph where an
  * entity/entry exists. No fabricated dates.
+ *
+ * TimelineEvent lives here (the Knowledge layer), and the presentation
+ * component imports it — never the reverse.
  */
+export interface TimelineEvent {
+  date: string;
+  title: string;
+  description?: string;
+  /** Optional link to an entity/entry page. */
+  href?: string;
+}
+
 export interface Timeline {
   slug: string;
   title: string;

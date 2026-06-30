@@ -1,12 +1,7 @@
 import Link from "next/link";
+import type { TimelineEvent } from "@/lib/timelines";
 
-export interface TimelineEvent {
-  date: string;
-  title: string;
-  description?: string;
-  /** Optional link to an entity/entry page. */
-  href?: string;
-}
+export type { TimelineEvent };
 
 /** Reusable vertical timeline. Used by entry pages and the Timeline Engine. */
 export function TimelineList({ events }: { events: TimelineEvent[] }) {

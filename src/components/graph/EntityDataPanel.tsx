@@ -1,31 +1,22 @@
 import Link from "next/link";
-import {
-  ENTITY_TYPE_LABELS,
-  GRAPH_VERSION_INFO,
-  getRelationsForEntity,
-  type GraphEntity,
-} from "@/knowledge-graph";
-import { DATASETS } from "@/lib/datasets";
+import type { ResolvedEntity } from "@/platform/data-engine";
 import { datasetPath } from "@/lib/routes";
 
 /**
  * "Data & provenance" — exposes an entity's machine-readable metadata: its
  * stable id, type/domain, relationship count, dataset membership, and the
- * (planned) API/download endpoints. Makes every entity self-documenting for
- * search engines, LLMs, researchers, and developers.
+ * (planned) API/download endpoints. Driven entirely by the Scientific Data
+ * Engine's resolved entity — no manual assembly, no graph internals.
  */
-export function EntityDataPanel({ entity }: { entity: GraphEntity }) {
-  const relationCount = getRelationsForEntity(entity.id).length;
-  const datasets = DATASETS.filter((d) => d.entityTypes.includes(entity.type));
-
+export function EntityDataPanel({ resolved }: { resolved: ResolvedEntity }) {
   const rows: { label: string; value: React.ReactNode }[] = [
-    { label: "Stable ID", value: <code className="text-fg">{entity.id}</code> },
-    { label: "Type", value: ENTITY_TYPE_LABELS[entity.type] },
-    { label: "Domain", value: entity.domain },
-    { label: "Relationships", value: relationCount },
-    ...(entity.scientificName ? [{ label: "Scientific name", value: entity.scientificName }] : []),
-    ...(entity.catalogNumbers?.length ? [{ label: "Catalog", value: entity.catalogNumbers.join(", ") }] : []),
-    { label: "Graph version", value: GRAPH_VERSION_INFO.graphVersion },
+    { label: "Stable ID", value: <code className="text-fg">{resolved.id}</code> },
+    { label: "Type", value: resolved.typeLabel },
+    { label: "Domain", value: resolved.domainLabel },
+    { label: "Relationships", value: resolved.relationCount },
+    ...(resolved.scientificName ? [{ label: "Scientific name", value: resolved.scientificName }] : []),
+    ...(resolved.catalogNumbers.length ? [{ label: "Catalog", value: resolved.catalogNumbers.join(", ") }] : []),
+    { label: "Graph version", value: resolved.version.graphVersion },
   ];
 
   return (
@@ -45,11 +36,11 @@ export function EntityDataPanel({ entity }: { entity: GraphEntity }) {
         ))}
       </dl>
 
-      {datasets.length > 0 && (
+      {resolved.datasets.length > 0 && (
         <div className="mt-4 border-t border-white/10 pt-3">
           <p className="text-xs uppercase tracking-wider text-faint">Dataset membership</p>
           <ul className="mt-2 flex flex-wrap gap-2">
-            {datasets.map((d) => (
+            {resolved.datasets.map((d) => (
               <li key={d.slug}>
                 <Link href={datasetPath(d.slug)} className="text-sm text-muted underline-offset-4 transition hover:text-fg hover:underline">
                   {d.title}
@@ -69,7 +60,7 @@ export function EntityDataPanel({ entity }: { entity: GraphEntity }) {
           <a href="/data/graph.jsonld" className="text-nebula underline-offset-4 hover:underline">graph.jsonld</a>
         </p>
         <p className="mt-1.5 text-xs text-faint">
-          Planned API: <code>GET /api/v0/entities/{entity.id}</code>
+          Planned API: <code>GET /api/v0/entities/{resolved.id}</code>
         </p>
       </div>
     </section>

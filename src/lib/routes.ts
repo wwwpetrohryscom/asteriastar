@@ -28,7 +28,15 @@ export const ROUTES = {
   datasets: "/datasets",
   registry: "/registry",
   developers: "/developers",
+  platform: "/platform",
+  observatory: "/observatory",
+  authority: "/authority",
+  transparency: "/transparency",
 } as const;
+
+export function transparencyPath(slug: string): string {
+  return `/transparency/${slug}`;
+}
 
 export function datasetPath(slug: string): string {
   return `/datasets/${slug}`;
