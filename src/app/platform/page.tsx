@@ -4,6 +4,7 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { EngineShowcase } from "@/components/platform/EngineShowcase";
 import {
   LAYERS,
   REGISTRIES,
@@ -174,6 +175,9 @@ export default function PlatformPage() {
             </div>
           )}
         </section>
+
+        {/* Scientific Data Engine */}
+        <EngineShowcase />
 
         {/* Components */}
         <section aria-labelledby="components-heading">
