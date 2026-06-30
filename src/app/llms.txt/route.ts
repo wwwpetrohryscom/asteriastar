@@ -1,6 +1,7 @@
 import { getAllSections } from "@/lib/content/registry";
 import { getEntriesByCategory, ENTRY_STATS } from "@/content/entries";
 import { GRAPH_STATS, GRAPH_VERSION_INFO } from "@/knowledge-graph";
+import { engine } from "@/platform/data-engine";
 import { TOPICS, RELATIONSHIP_PAGES } from "@/lib/discovery";
 import { DATASETS } from "@/lib/datasets";
 import { COMPARISONS } from "@/lib/compare";
@@ -107,6 +108,15 @@ export function GET(): Response {
   lines.push(`- [Contributors](${absoluteUrl("/community/contributors")})`);
   lines.push(`- [Learn Together](${absoluteUrl("/community/learning")})`);
   lines.push(`- [Explore Together](${absoluteUrl("/community/explore-together")})`);
+  lines.push("");
+
+  lines.push("## Star Encyclopedia");
+  lines.push(
+    `An open encyclopedia of ${engine.star.count.toLocaleString()} real stars across all 88 constellations, generated from the open HYG database (Hipparcos + Yale Bright Star + Gliese), CC BY-SA 4.0. No fabricated stars, measurements, or catalog identifiers.`,
+  );
+  lines.push(`- [Star Encyclopedia](${absoluteUrl("/stars")})`);
+  lines.push(`- Brightest: ${absoluteUrl("/stars/discover/brightest")} · Nearest: ${absoluteUrl("/stars/discover/nearest")} · Variable: ${absoluteUrl("/stars/discover/variable")}`);
+  lines.push(`- Every star resolves through the Scientific Data Engine; pages at /stars/{slug}, /stars/constellations/{slug}, /stars/type/{slug}.`);
   lines.push("");
 
   lines.push("## Open data");
