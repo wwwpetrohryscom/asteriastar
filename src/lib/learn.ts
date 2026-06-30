@@ -30,6 +30,42 @@ export interface LearningPath {
 
 export const LEARNING_PATHS: LearningPath[] = [
   {
+    slug: "observatories-and-telescopes",
+    title: "Observatories & Telescopes",
+    description: "How astronomers observe the universe — across every band of light and beyond, from mountaintop optical giants to space telescopes, radio arrays, and gravitational-wave detectors. Built on real observatories, telescopes, and surveys.",
+    accent: "halo",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Why telescopes matter", href: "/observatories", blurb: "How instruments extend human vision into the cosmos." },
+          { title: "Light and the electromagnetic spectrum", href: "/observatories/visible-light", blurb: "The bands of light astronomers observe." },
+          { title: "Optical telescopes", href: "/observatories/discover/optical-telescopes", blurb: "Gathering visible light with mirrors." },
+          { title: "Radio astronomy", href: "/observatories/discover/radio-telescopes", blurb: "Listening to the radio universe." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Space telescopes", href: "/observatories/discover/space-telescopes", blurb: "Observing from above the atmosphere." },
+          { title: "Infrared astronomy", href: "/observatories/discover/infrared-telescopes", blurb: "Seeing heat and the hidden universe." },
+          { title: "X-ray and gamma-ray astronomy", href: "/observatories/discover/x-ray-telescopes", blurb: "The high-energy cosmos." },
+          { title: "Survey astronomy", href: "/observatories/discover/sky-surveys", blurb: "Mapping the whole sky." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Interferometry", href: "/observatories/alma", blurb: "Combining telescopes for sharper vision." },
+          { title: "Detectors and instruments", href: "/observatories/discover/astronomical-instruments", blurb: "The cameras and spectrographs behind the science." },
+          { title: "Gravitational-wave astronomy", href: "/observatories/discover/gravitational-wave-observatories", blurb: "Sensing ripples in spacetime." },
+          { title: "Multi-messenger astronomy", href: "/observatories/discover/multi-messenger-astronomy", blurb: "Combining light, waves, and particles." },
+        ],
+      },
+    ],
+    next: ["human-spaceflight", "history-of-space-exploration"],
+  },
+  {
     slug: "human-spaceflight",
     title: "Human Spaceflight",
     description: "How humans travel, live, and work in space — from the first orbits to space stations, spacewalks, and the road back to the Moon. Built on real missions, stations, spacecraft, and astronauts.",
