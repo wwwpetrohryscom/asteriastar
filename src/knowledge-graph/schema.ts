@@ -55,6 +55,17 @@ export const ENTITY_TYPES = [
   "launch_site",
   "astronaut",
   "scientific_instrument",
+  "space_station",
+  "station_module",
+  "human_spaceflight_program",
+  "crew_vehicle",
+  "cargo_vehicle",
+  "expedition",
+  "eva",
+  "docking_system",
+  "life_support_system",
+  "space_experiment",
+  "space_medicine_topic",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -114,6 +125,21 @@ export const RELATION_TYPES = [
   "supports_science",
   "preceded_by",
   "followed_by",
+  "part_of_station",
+  "attached_to",
+  "docked_with",
+  "visited_station",
+  "served_on_expedition",
+  "commanded_expedition",
+  "performed_eva",
+  "launched_aboard",
+  "returned_aboard",
+  "crewed_by",
+  "carried_crew",
+  "carried_cargo",
+  "supported_by",
+  "replaced_by",
+  "built_by",
 ] as const;
 export type RelationType = (typeof RELATION_TYPES)[number];
 
@@ -211,6 +237,21 @@ export const SCIENCE_ONLY_RELATIONS: ReadonlySet<RelationType> = new Set([
   "supports_science",
   "preceded_by",
   "followed_by",
+  "part_of_station",
+  "attached_to",
+  "docked_with",
+  "visited_station",
+  "served_on_expedition",
+  "commanded_expedition",
+  "performed_eva",
+  "launched_aboard",
+  "returned_aboard",
+  "crewed_by",
+  "carried_crew",
+  "carried_cargo",
+  "supported_by",
+  "replaced_by",
+  "built_by",
 ]);
 
 /** Relation types that may ONLY be used in the astrology domain. */
@@ -301,6 +342,21 @@ export const RELATION_LABELS: Record<RelationType, string> = {
   supports_science: "Supports science",
   preceded_by: "Preceded by",
   followed_by: "Followed by",
+  part_of_station: "Part of station",
+  attached_to: "Attached to",
+  docked_with: "Docked with",
+  visited_station: "Visited",
+  served_on_expedition: "Served on",
+  commanded_expedition: "Commanded",
+  performed_eva: "Performed",
+  launched_aboard: "Launched aboard",
+  returned_aboard: "Returned aboard",
+  crewed_by: "Crewed by",
+  carried_crew: "Carried crew",
+  carried_cargo: "Carried cargo",
+  supported_by: "Supported by",
+  replaced_by: "Replaced by",
+  built_by: "Built by",
 };
 
 /** Labels for when the current entity is the *target* (incoming relation). */
@@ -359,6 +415,21 @@ export const INVERSE_RELATION_LABELS: Record<RelationType, string> = {
   supports_science: "Science supported by",
   preceded_by: "Followed by",
   followed_by: "Preceded by",
+  part_of_station: "Station component",
+  attached_to: "Has attached",
+  docked_with: "Docked with",
+  visited_station: "Visited by",
+  served_on_expedition: "Crew member",
+  commanded_expedition: "Commanded by",
+  performed_eva: "Performed by",
+  launched_aboard: "Launch crew",
+  returned_aboard: "Return crew",
+  crewed_by: "Crew of",
+  carried_crew: "Carried by",
+  carried_cargo: "Cargo carried by",
+  supported_by: "Supports",
+  replaced_by: "Replaced",
+  built_by: "Built",
 };
 
 /** Pick the readable label for a relation given the viewing direction. */
@@ -407,9 +478,9 @@ export function relationFacet(domain: Domain, type: RelationType): ConnectionFac
   if (domain === "culture") return "cultural";
   // science / editorial
   if (["observed_by", "studies", "visible_from", "photographed_by", "related_survey"].includes(type)) return "observational";
-  if (["mission_target", "operated_by", "launched_by", "target_of_mission", "part_of_mission", "visited_by", "landed_on", "part_of_program", "launched_from", "carried_by", "orbited", "visited", "returned_samples_from", "captured_image_of"].includes(type)) return "mission";
+  if (["mission_target", "operated_by", "launched_by", "target_of_mission", "part_of_mission", "visited_by", "landed_on", "part_of_program", "launched_from", "carried_by", "orbited", "visited", "returned_samples_from", "captured_image_of", "part_of_station", "attached_to", "docked_with", "visited_station", "served_on_expedition", "commanded_expedition", "performed_eva", "launched_aboard", "returned_aboard", "crewed_by", "carried_crew", "carried_cargo"].includes(type)) return "mission";
   if (["discovered_by", "named_after", "catalogued_in"].includes(type)) return "discovery";
-  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of", "contains_instrument", "used_instrument", "performed_experiment", "supports_science", "preceded_by", "followed_by"].includes(type)) return "related";
+  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of", "contains_instrument", "used_instrument", "performed_experiment", "supports_science", "preceded_by", "followed_by", "supported_by", "replaced_by", "built_by"].includes(type)) return "related";
   return "scientific";
 }
 
@@ -464,4 +535,15 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   launch_site: "Launch site",
   astronaut: "Astronaut",
   scientific_instrument: "Scientific instrument",
+  space_station: "Space station",
+  station_module: "Station module",
+  human_spaceflight_program: "Human spaceflight program",
+  crew_vehicle: "Crewed spacecraft",
+  cargo_vehicle: "Cargo spacecraft",
+  expedition: "Expedition",
+  eva: "Spacewalk (EVA)",
+  docking_system: "Docking system",
+  life_support_system: "Life-support system",
+  space_experiment: "Space experiment",
+  space_medicine_topic: "Space medicine",
 };
