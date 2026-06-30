@@ -35,7 +35,16 @@ export const ROUTES = {
   stars: "/stars",
   solarSystem: "/solar-system",
   deepSky: "/deep-sky",
+  exploration: "/exploration",
 } as const;
+
+export function explorationPath(slug: string): string {
+  return `/exploration/${slug}`;
+}
+
+export function explorationDiscoveryPath(slug: string): string {
+  return `/exploration/discover/${slug}`;
+}
 
 export function deepSkyPath(slug: string): string {
   return `/deep-sky/${slug}`;
