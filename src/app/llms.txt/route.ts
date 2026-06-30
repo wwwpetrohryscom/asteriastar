@@ -119,6 +119,15 @@ export function GET(): Response {
   lines.push(`- Every star resolves through the Scientific Data Engine; pages at /stars/{slug}, /stars/constellations/{slug}, /stars/type/{slug}.`);
   lines.push("");
 
+  lines.push("## Solar System Encyclopedia");
+  lines.push(
+    `A reference encyclopedia of the Solar System — ${engine.solar.count} bodies (the Sun, 8 planets, dwarf planets, moons, asteroids, comets, missions, spacecraft, and surface features) as first-class entities, built on real NASA Planetary Fact Sheet + JPL data (public domain). No fabricated bodies or measurements.`,
+  );
+  lines.push(`- [Solar System Encyclopedia](${absoluteUrl("/solar-system")})`);
+  lines.push(`- Planets: ${absoluteUrl("/solar-system/discover/all-planets")} · Moons: ${absoluteUrl("/solar-system/discover/natural-satellites")} · Missions: ${absoluteUrl("/solar-system/discover/planetary-missions")}`);
+  lines.push(`- Every body resolves through the Scientific Data Engine; pages at /solar-system/{slug}.`);
+  lines.push("");
+
   lines.push("## Open data");
   lines.push(
     `Asteria Star is open infrastructure for structured celestial knowledge: a versioned (graph ${GRAPH_VERSION_INFO.graphVersion}, schema ${GRAPH_VERSION_INFO.schemaVersion}), machine-readable knowledge graph of ${GRAPH_VERSION_INFO.entityCount} entities. Stable ids are permanent (type:slug). License: ${GRAPH_VERSION_INFO.license}.`,

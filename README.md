@@ -72,10 +72,10 @@ at [`/platform`](src/app/platform/page.tsx). See
 [docs/PLATFORM_ARCHITECTURE.md](docs/PLATFORM_ARCHITECTURE.md).
 
 All of this is reached through the **Scientific Data Engine**
-([`src/platform/data-engine/`](src/platform/data-engine)) — 17 pure,
+([`src/platform/data-engine/`](src/platform/data-engine)) — 18 pure,
 framework-independent modules (entity resolver, relationship resolver, graph
 traversal, scientific query, recommendation, comparison, timeline, learning,
-discovery, metadata, source, citation, dataset, authority, localization, **star**,
+discovery, metadata, source, citation, dataset, authority, localization, **star**, **solar**,
 and a single validation engine). Every consumer resolves reality through `engine.*`;
 nothing reads the graph directly. See [docs/SCIENTIFIC_DATA_ENGINE.md](docs/SCIENTIFIC_DATA_ENGINE.md).
 
@@ -108,13 +108,17 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Solar System Encyclopedia (Program B)**
+
+- [Solar System](docs/SOLAR_SYSTEM.md) — the Sun, planets, moons, asteroids, comets, missions, and spacecraft from real NASA/JPL data
+
 **Star Encyclopedia (Program A)**
 
 - [Star Encyclopedia](docs/STAR_ENCYCLOPEDIA.md) — 2,944 real stars from the open HYG database (CC BY-SA 4.0), as first-class graph entities
 
 **Scientific Data Engine (Phase 10)**
 
-- [Scientific Data Engine](docs/SCIENTIFIC_DATA_ENGINE.md) — the 17-module execution layer every consumer reads through
+- [Scientific Data Engine](docs/SCIENTIFIC_DATA_ENGINE.md) — the 18-module execution layer every consumer reads through
 
 **Scientific Authority (Phase 9)**
 
