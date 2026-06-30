@@ -128,6 +128,18 @@ async function main() {
     `✓ Star catalogue valid — ${starCatalog.STAR_STATS.stars} stars, ${starCatalog.STAR_STATS.constellationsCreated} new constellations, ${starCatalog.STAR_STATS.relations} relations`,
   );
 
+  // Solar System catalogue.
+  const solarCatalog = await import("../src/knowledge-graph/data/solar-system-catalog");
+  const solarIssues = solarCatalog.validateSolarSystem();
+  if (solarIssues.length > 0) {
+    console.error(`\n✗ ${solarIssues.length} solar-system issue(s):`);
+    for (const i of solarIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Solar System valid — ${solarCatalog.SOLAR_SYSTEM_STATS.bodies} bodies, ${solarCatalog.SOLAR_SYSTEM_STATS.newEntities} new entities, ${solarCatalog.SOLAR_SYSTEM_STATS.relations} relations`,
+  );
+
   const { validateEntries, getAllEntries, ENTRY_STATS } = reg;
 
   const issues = validateEntries();
