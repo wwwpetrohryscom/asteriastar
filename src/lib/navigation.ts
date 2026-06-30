@@ -55,6 +55,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Solar System", href: ROUTES.solarSystem, description: "Planets, moons, missions" },
             { name: "Deep Sky", href: ROUTES.deepSky, description: "Galaxies, nebulae, clusters" },
             { name: "Exploration", href: ROUTES.exploration, description: "Missions, spacecraft, agencies" },
+            { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Explore", href: ROUTES.explore, description: "Topics, entities, and connections" },
             { name: "Discover", href: ROUTES.discover, description: "Curated entry points" },
             { name: "Entity Index", href: ROUTES.entityIndex, description: "Every entity, A–Z" },
