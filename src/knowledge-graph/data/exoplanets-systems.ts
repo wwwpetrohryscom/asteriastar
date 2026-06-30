@@ -60,15 +60,6 @@ export const entities: GraphEntity[] = [
     sources: ["nasa", "esa"],
   },
   {
-    id: "star:51-pegasi",
-    type: "star",
-    name: "51 Pegasi",
-    domain: "science",
-    description:
-      "A Sun-like star in Pegasus, the first main-sequence star found to host an exoplanet.",
-    sources: ["nasa", "esa"],
-  },
-  {
     id: "star:kepler-22",
     type: "star",
     name: "Kepler-22",
@@ -96,30 +87,12 @@ export const entities: GraphEntity[] = [
     sources: ["nasa", "esa"],
   },
   {
-    id: "star:55-cancri",
-    type: "star",
-    name: "55 Cancri",
-    domain: "science",
-    description:
-      "A binary star system in Cancer whose primary hosts at least five known planets.",
-    sources: ["nasa"],
-  },
-  {
     id: "star:gliese-581",
     type: "star",
     name: "Gliese 581",
     domain: "science",
     description:
       "A red dwarf star in Libra hosting a system of confirmed super-Earth and Neptune-mass planets.",
-    sources: ["nasa", "esa"],
-  },
-  {
-    id: "star:tau-ceti",
-    type: "star",
-    name: "Tau Ceti",
-    domain: "science",
-    description:
-      "A nearby Sun-like star in Cetus, about 12 light-years away, long studied as a target in the search for planets.",
     sources: ["nasa", "esa"],
   },
   {
@@ -264,13 +237,10 @@ export const entities: GraphEntity[] = [
 export const relations: GraphRelation[] = [
   /* host stars → constellations */
   rel("star:trappist-1", "belongs_to", "constellation:aquarius", "confirmed", "science"),
-  rel("star:51-pegasi", "belongs_to", "constellation:pegasus", "confirmed", "science"),
   rel("star:kepler-22", "belongs_to", "constellation:cygnus", "confirmed", "science"),
   rel("star:kepler-186", "belongs_to", "constellation:cygnus", "confirmed", "science"),
   rel("star:hd-209458", "belongs_to", "constellation:pegasus", "confirmed", "science"),
-  rel("star:55-cancri", "belongs_to", "constellation:cancer", "confirmed", "science"),
   rel("star:gliese-581", "belongs_to", "constellation:libra", "confirmed", "science"),
-  rel("star:tau-ceti", "belongs_to", "constellation:cetus-constellation", "confirmed", "science"),
   rel("star:tabby-s-star", "belongs_to", "constellation:cygnus", "confirmed", "science"),
 
   /* exoplanets → host stars */
@@ -284,12 +254,12 @@ export const relations: GraphRelation[] = [
   rel("exoplanet:trappist-1-f", "child_of", "star:trappist-1", "confirmed", "science"),
   rel("exoplanet:trappist-1-g", "child_of", "star:trappist-1", "confirmed", "science"),
   rel("exoplanet:trappist-1-h", "child_of", "star:trappist-1", "confirmed", "science"),
-  rel("exoplanet:51-pegasi-b", "child_of", "star:51-pegasi", "confirmed", "science", {
+  rel("exoplanet:51-pegasi-b", "child_of", "star:helvetios", "confirmed", "science", {
     note: "First exoplanet found around a Sun-like star.",
   }),
   rel("exoplanet:kepler-22b", "child_of", "star:kepler-22", "confirmed", "science"),
   rel("exoplanet:kepler-186f", "child_of", "star:kepler-186", "confirmed", "science"),
   rel("exoplanet:hd-209458-b", "child_of", "star:hd-209458", "confirmed", "science"),
-  rel("exoplanet:55-cancri-e", "child_of", "star:55-cancri", "confirmed", "science"),
+  rel("exoplanet:55-cancri-e", "child_of", "star:copernicus", "confirmed", "science"),
   rel("exoplanet:gliese-581c", "child_of", "star:gliese-581", "confirmed", "science"),
 ];

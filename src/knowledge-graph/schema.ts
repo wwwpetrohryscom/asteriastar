@@ -70,6 +70,13 @@ export const ENTITY_TYPES = [
   "sky_survey",
   "wavelength_band",
   "observing_site",
+  "planetary_system",
+  "host_star",
+  "exoplanet_detection_method",
+  "exoplanet_survey",
+  "exoplanet_catalogue",
+  "habitable_zone_candidate",
+  "planetary_class",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -157,6 +164,15 @@ export const RELATION_TYPES = [
   "related_discovery",
   "predecessor_of",
   "successor_of",
+  "orbits_star",
+  "member_of_planetary_system",
+  "discovered_by_method",
+  "discovered_by_facility",
+  "discovered_by_mission",
+  "studied_by",
+  "similar_to",
+  "candidate_for_habitable_zone",
+  "part_of_catalogue",
 ] as const;
 export type RelationType = (typeof RELATION_TYPES)[number];
 
@@ -282,6 +298,15 @@ export const SCIENCE_ONLY_RELATIONS: ReadonlySet<RelationType> = new Set([
   "related_discovery",
   "predecessor_of",
   "successor_of",
+  "orbits_star",
+  "member_of_planetary_system",
+  "discovered_by_method",
+  "discovered_by_facility",
+  "discovered_by_mission",
+  "studied_by",
+  "similar_to",
+  "candidate_for_habitable_zone",
+  "part_of_catalogue",
 ]);
 
 /** Relation types that may ONLY be used in the astrology domain. */
@@ -400,6 +425,15 @@ export const RELATION_LABELS: Record<RelationType, string> = {
   related_discovery: "Related discovery",
   predecessor_of: "Predecessor of",
   successor_of: "Successor of",
+  orbits_star: "Orbits",
+  member_of_planetary_system: "Member of system",
+  discovered_by_method: "Discovered by method",
+  discovered_by_facility: "Discovered at",
+  discovered_by_mission: "Discovered by mission",
+  studied_by: "Studied by",
+  similar_to: "Similar to",
+  candidate_for_habitable_zone: "Habitable-zone candidate",
+  part_of_catalogue: "Catalogued in",
 };
 
 /** Labels for when the current entity is the *target* (incoming relation). */
@@ -486,6 +520,15 @@ export const INVERSE_RELATION_LABELS: Record<RelationType, string> = {
   related_discovery: "Discovered via",
   predecessor_of: "Successor of",
   successor_of: "Predecessor of",
+  orbits_star: "Orbited by",
+  member_of_planetary_system: "System includes",
+  discovered_by_method: "Method for",
+  discovered_by_facility: "Discovery facility for",
+  discovered_by_mission: "Discovered",
+  studied_by: "Studies",
+  similar_to: "Similar to",
+  candidate_for_habitable_zone: "Habitable-zone candidate of",
+  part_of_catalogue: "Catalogue includes",
 };
 
 /** Pick the readable label for a relation given the viewing direction. */
@@ -535,8 +578,8 @@ export function relationFacet(domain: Domain, type: RelationType): ConnectionFac
   // science / editorial
   if (["observed_by", "studies", "visible_from", "photographed_by", "related_survey", "observes_band", "observed_object", "conducts_survey", "part_of_survey", "surveyed_by", "uses_instrument", "has_instrument"].includes(type)) return "observational";
   if (["mission_target", "operated_by", "launched_by", "target_of_mission", "part_of_mission", "visited_by", "landed_on", "part_of_program", "launched_from", "carried_by", "orbited", "visited", "returned_samples_from", "captured_image_of", "part_of_station", "attached_to", "docked_with", "visited_station", "served_on_expedition", "commanded_expedition", "performed_eva", "launched_aboard", "returned_aboard", "crewed_by", "carried_crew", "carried_cargo"].includes(type)) return "mission";
-  if (["discovered_by", "named_after", "catalogued_in"].includes(type)) return "discovery";
-  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of", "contains_instrument", "used_instrument", "performed_experiment", "supports_science", "preceded_by", "followed_by", "supported_by", "replaced_by", "built_by", "located_at", "part_of_observatory", "hosts_telescope", "related_discovery", "predecessor_of", "successor_of"].includes(type)) return "related";
+  if (["discovered_by", "named_after", "catalogued_in", "discovered_by_method", "discovered_by_facility", "discovered_by_mission", "part_of_catalogue"].includes(type)) return "discovery";
+  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of", "contains_instrument", "used_instrument", "performed_experiment", "supports_science", "preceded_by", "followed_by", "supported_by", "replaced_by", "built_by", "located_at", "part_of_observatory", "hosts_telescope", "related_discovery", "predecessor_of", "successor_of", "orbits_star", "member_of_planetary_system", "similar_to", "candidate_for_habitable_zone"].includes(type)) return "related";
   return "scientific";
 }
 
@@ -606,4 +649,11 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   sky_survey: "Sky survey",
   wavelength_band: "Observing band",
   observing_site: "Observing site",
+  planetary_system: "Planetary system",
+  host_star: "Host star",
+  exoplanet_detection_method: "Detection method",
+  exoplanet_survey: "Exoplanet survey",
+  exoplanet_catalogue: "Exoplanet catalogue",
+  habitable_zone_candidate: "Habitable-zone candidate",
+  planetary_class: "Planetary class",
 };

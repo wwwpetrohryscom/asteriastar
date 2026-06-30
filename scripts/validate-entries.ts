@@ -184,6 +184,17 @@ async function main() {
     `✓ Observatories valid — ${obs.OBS_STATS.records} records, ${obs.OBS_STATS.newEntities} new entities, ${obs.OBS_STATS.observatories} observatories/telescopes`,
   );
 
+  const exo = await import("../src/knowledge-graph/data/exoplanet-catalog");
+  const exoIssues = exo.validateExoplanets();
+  if (exoIssues.length > 0) {
+    console.error(`\n✗ ${exoIssues.length} exoplanet issue(s):`);
+    for (const i of exoIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Exoplanets valid — ${exo.EXO_STATS.planets} planets, ${exo.EXO_STATS.newPlanets} new, ${exo.EXO_STATS.systems} systems, ${exo.EXO_STATS.reusedHosts} reused + ${exo.EXO_STATS.newHosts} new hosts`,
+  );
+
   const { validateEntries, getAllEntries, ENTRY_STATS } = reg;
 
   const issues = validateEntries();

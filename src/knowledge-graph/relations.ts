@@ -19,6 +19,7 @@ import { relations as deepSkyCatalog } from "@/knowledge-graph/data/deep-sky-cat
 import { relations as explorationCatalog } from "@/knowledge-graph/data/exploration-catalog";
 import { relations as humanSpaceflightCatalog } from "@/knowledge-graph/data/human-spaceflight-catalog";
 import { relations as observatoryCatalog } from "@/knowledge-graph/data/observatory-catalog";
+import { relations as exoplanetCatalog } from "@/knowledge-graph/data/exoplanet-catalog";
 import { coreRelations } from "@/knowledge-graph/data/core-relations";
 
 /**
@@ -52,4 +53,5 @@ export const relations: GraphRelation[] = [
   ...explorationCatalog,
   ...humanSpaceflightCatalog,
   ...observatoryCatalog,
+  ...exoplanetCatalog,
 ];
