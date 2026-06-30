@@ -15,6 +15,7 @@ import { relations as notableObjects } from "@/knowledge-graph/data/notable-obje
 import { relations as crossLinks } from "@/knowledge-graph/data/cross-links";
 import { relations as starCatalog } from "@/knowledge-graph/data/star-catalog";
 import { relations as solarSystemCatalog } from "@/knowledge-graph/data/solar-system-catalog";
+import { relations as deepSkyCatalog } from "@/knowledge-graph/data/deep-sky-catalog";
 
 /**
  * Knowledge-graph relations.
@@ -92,4 +93,5 @@ export const relations: GraphRelation[] = [
   ...crossLinks,
   ...starCatalog,
   ...solarSystemCatalog,
+  ...deepSkyCatalog,
 ];
