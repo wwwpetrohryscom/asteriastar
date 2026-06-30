@@ -30,6 +30,42 @@ export interface LearningPath {
 
 export const LEARNING_PATHS: LearningPath[] = [
   {
+    slug: "human-spaceflight",
+    title: "Human Spaceflight",
+    description: "How humans travel, live, and work in space — from the first orbits to space stations, spacewalks, and the road back to the Moon. Built on real missions, stations, spacecraft, and astronauts.",
+    accent: "aurora",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "What is human spaceflight?", href: "/human-spaceflight", blurb: "Stations, spacecraft, crews, and spacewalks as a knowledge graph." },
+          { title: "First humans in space", href: "/exploration/vostok-1", blurb: "Yuri Gagarin and the first orbit of the Earth." },
+          { title: "Spacecraft for humans", href: "/human-spaceflight/discover/crewed-spacecraft", blurb: "The vehicles built to carry people." },
+          { title: "Space stations", href: "/human-spaceflight/discover/all-space-stations", blurb: "From Salyut to the ISS and Tiangong." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Living in orbit", href: "/human-spaceflight/international-space-station", blurb: "Life aboard the International Space Station." },
+          { title: "Spacewalks", href: "/human-spaceflight/discover/evas-and-spacewalks", blurb: "Working outside the spacecraft." },
+          { title: "Docking and resupply", href: "/human-spaceflight/discover/cargo-spacecraft", blurb: "Keeping a station stocked and crewed." },
+          { title: "Space medicine", href: "/human-spaceflight/discover/space-station-science", blurb: "How the body adapts to weightlessness." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Scientific research in orbit", href: "/human-spaceflight/nasa-twins-study", blurb: "What we learn from microgravity laboratories." },
+          { title: "Commercial crew", href: "/human-spaceflight/discover/commercial-crew", blurb: "Crew Dragon, Starliner, and a new era of access." },
+          { title: "Lunar human spaceflight", href: "/human-spaceflight/discover/lunar-human-spaceflight", blurb: "Apollo, Artemis, and the Lunar Gateway." },
+          { title: "Future human exploration", href: "/human-spaceflight/lunar-gateway", blurb: "Stations and crews beyond low Earth orbit." },
+        ],
+      },
+    ],
+    next: ["history-of-space-exploration", "the-solar-system"],
+  },
+  {
     slug: "history-of-space-exploration",
     title: "History of Space Exploration",
     description: "From Sputnik to Mars rovers and the James Webb Space Telescope — how humanity learned to reach into space, told through real missions, spacecraft, agencies, and the people who flew. Built on authoritative public sources.",
