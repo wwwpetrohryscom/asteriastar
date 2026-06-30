@@ -1,0 +1,105 @@
+import { entities, relations, validateGraph } from "@/knowledge-graph";
+import { validateEntries } from "@/content/entries";
+import { validateImages } from "@/lib/media/registry";
+import { validateCitations } from "@/lib/citations";
+import { DATASETS, getDatasetEntities } from "@/lib/datasets";
+import { validateCommunity, COMMUNITY_DATA } from "@/lib/community";
+import { validatePlatform } from "@/platform/validate";
+import { QUERIES, UNSUPPORTED_QUERIES } from "@/platform/data-engine/query-engine";
+import { traversalEngine } from "@/platform/data-engine/traversal-engine";
+import { entityEngine } from "@/platform/data-engine/entity-engine";
+
+/**
+ * Validation Engine — the single validator. Every integrity check (graph,
+ * entities, images, datasets, citations, platform/authority, and the engine
+ * itself) runs through one interface, so callers never assemble validation by
+ * hand. Pure: returns issue lists, never throws for data problems.
+ */
+
+export interface ValidationReport {
+  category: string;
+  issues: string[];
+}
+
+function datasetIntegrity(): string[] {
+  const issues: string[] = [];
+  const slugs = new Set<string>();
+  for (const d of DATASETS) {
+    if (slugs.has(d.slug)) issues.push(`duplicate dataset slug: ${d.slug}`);
+    slugs.add(d.slug);
+    const recomputed = getDatasetEntities(d).length;
+    if (recomputed !== d.entityCount) {
+      issues.push(`dataset ${d.slug}: entityCount ${d.entityCount} != recomputed ${recomputed}`);
+    }
+  }
+  return issues;
+}
+
+function engineSelfCheck(): string[] {
+  const issues: string[] = [];
+
+  // Query ids unique, runnable, and disjoint from the unsupported list.
+  const seen = new Set<string>();
+  for (const q of QUERIES) {
+    if (seen.has(q.id)) issues.push(`duplicate query id: ${q.id}`);
+    seen.add(q.id);
+    try {
+      const r = q.run();
+      if (!Array.isArray(r)) issues.push(`query ${q.id}: run() did not return an array`);
+    } catch (e) {
+      issues.push(`query ${q.id}: run() threw (${(e as Error).message})`);
+    }
+  }
+  for (const u of UNSUPPORTED_QUERIES) {
+    if (seen.has(u.id)) issues.push(`unsupported query ${u.id} collides with an implemented query`);
+  }
+
+  // Traversal: known start resolves, unknown start returns null, cycle-safe.
+  const sample = entities[0]?.id;
+  if (sample) {
+    const t = traversalEngine.traverse(sample, { maxDepth: 2 });
+    if (!t) issues.push(`traversal: failed to traverse known entity ${sample}`);
+    else if (t.nodes[0]?.entity.id !== sample) issues.push("traversal: start node is not at distance 0");
+  }
+  if (traversalEngine.traverse("does-not-exist:nope") !== null) {
+    issues.push("traversal: unknown start should return null");
+  }
+
+  // Entity engine resolves a known entity with an attached quality block.
+  if (sample) {
+    const resolved = entityEngine.resolve(sample);
+    if (!resolved) issues.push(`entity engine: failed to resolve known entity ${sample}`);
+    else if (!resolved.quality) issues.push(`entity engine: resolved ${sample} without a quality block`);
+  }
+
+  return issues;
+}
+
+export const validationEngine = {
+  graph: (): string[] => validateGraph(entities, relations),
+  entries: (): string[] => validateEntries(),
+  images: (): string[] => validateImages(),
+  citations: (): string[] => validateCitations(),
+  datasets: datasetIntegrity,
+  community: (): string[] => validateCommunity(COMMUNITY_DATA),
+  platform: (): string[] => validatePlatform(),
+  engine: engineSelfCheck,
+
+  /** Every category, in dependency order. */
+  all(): ValidationReport[] {
+    return [
+      { category: "graph", issues: this.graph() },
+      { category: "entries", issues: this.entries() },
+      { category: "images", issues: this.images() },
+      { category: "citations", issues: this.citations() },
+      { category: "datasets", issues: this.datasets() },
+      { category: "community", issues: this.community() },
+      { category: "platform", issues: this.platform() },
+      { category: "engine", issues: this.engine() },
+    ];
+  },
+
+  isValid(): boolean {
+    return this.all().every((r) => r.issues.length === 0);
+  },
+};
