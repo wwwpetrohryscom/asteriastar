@@ -173,6 +173,17 @@ async function main() {
     `✓ Human Spaceflight valid — ${hsf.HSF_STATS.records} records, ${hsf.HSF_STATS.newEntities} new entities, ${hsf.HSF_STATS.stations} stations`,
   );
 
+  const obs = await import("../src/knowledge-graph/data/observatory-catalog");
+  const obsIssues = obs.validateObservatories();
+  if (obsIssues.length > 0) {
+    console.error(`\n✗ ${obsIssues.length} observatory issue(s):`);
+    for (const i of obsIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Observatories valid — ${obs.OBS_STATS.records} records, ${obs.OBS_STATS.newEntities} new entities, ${obs.OBS_STATS.observatories} observatories/telescopes`,
+  );
+
   const { validateEntries, getAllEntries, ENTRY_STATS } = reg;
 
   const issues = validateEntries();
