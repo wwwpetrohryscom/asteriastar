@@ -104,7 +104,7 @@ keyboard focus — pure CSS, no hydration.
 ## Scientific Data Engine
 
 The [`src/platform/data-engine/`](../src/platform/data-engine) (Registry layer)
-is the execution layer: 19 pure, framework-independent modules that every
+is the execution layer: 20 pure, framework-independent modules that every
 consumer reads through. It delegates to the runtime, metadata, authority,
 localization, and `lib/*` subsystems (no duplicated logic) and adds the new graph
 traversal and scientific query engines. Enforced framework-independence (no

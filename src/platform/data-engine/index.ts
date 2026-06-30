@@ -30,9 +30,10 @@ import { localizationEngine } from "@/platform/data-engine/localization-engine";
 import { starEngine } from "@/platform/data-engine/star-engine";
 import { solarEngine } from "@/platform/data-engine/solar-engine";
 import { deepSkyEngine } from "@/platform/data-engine/deepsky-engine";
+import { explorationEngine } from "@/platform/data-engine/exploration-engine";
 import { validationEngine } from "@/platform/data-engine/validation-engine";
 
-/** The unified engine surface — the nineteen modules of the data engine. */
+/** The unified engine surface — the twenty modules of the data engine. */
 export const engine = {
   entity: entityEngine,
   relationship: relationshipEngine,
@@ -52,6 +53,7 @@ export const engine = {
   star: starEngine,
   solar: solarEngine,
   deepSky: deepSkyEngine,
+  exploration: explorationEngine,
   validation: validationEngine,
 } as const;
 
@@ -62,10 +64,11 @@ export const ENGINE_MODULES = Object.keys(engine) as (keyof typeof engine)[];
 export { entityEngine, relationshipEngine, traversalEngine, queryEngine };
 export { recommendationEngine, timelineEngine, comparisonEngine, learningEngine };
 export { discoveryEngine, metadataEngine, sourceEngine, citationEngine };
-export { datasetEngine, authorityEngine, localizationEngine, starEngine, solarEngine, deepSkyEngine, validationEngine };
+export { datasetEngine, authorityEngine, localizationEngine, starEngine, solarEngine, deepSkyEngine, explorationEngine, validationEngine };
 export type { ResolvedStar } from "@/platform/data-engine/star-engine";
 export type { ResolvedBody } from "@/platform/data-engine/solar-engine";
 export type { ResolvedDeepSky } from "@/platform/data-engine/deepsky-engine";
+export type { ResolvedExploration } from "@/platform/data-engine/exploration-engine";
 
 export type { ResolvedEntity } from "@/platform/data-engine/entity-engine";
 export type {

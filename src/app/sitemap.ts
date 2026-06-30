@@ -12,6 +12,7 @@ import { engine } from "@/platform/data-engine";
 import { STAR_DISCOVERIES } from "@/app/stars/discovery";
 import { SOLAR_DISCOVERIES } from "@/app/solar-system/discovery";
 import { DEEP_SKY_DISCOVERIES } from "@/app/deep-sky/discovery";
+import { EXPLORATION_DISCOVERIES } from "@/app/exploration/discovery";
 import { bodySlug } from "@/knowledge-graph/data/solar-system-catalog";
 import { CONSTELLATIONS } from "@/knowledge-graph/data/star-catalog/constellations";
 import {
@@ -33,6 +34,8 @@ import {
   solarDiscoveryPath,
   deepSkyPath,
   deepSkyDiscoveryPath,
+  explorationPath,
+  explorationDiscoveryPath,
   ROUTES,
 } from "@/lib/routes";
 
@@ -104,6 +107,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...SOLAR_DISCOVERIES.map((d) => ({ url: absoluteUrl(solarDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const explorationRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.exploration), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.exploration.all().map((r) => ({ url: absoluteUrl(explorationPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...EXPLORATION_DISCOVERIES.map((d) => ({ url: absoluteUrl(explorationDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const deepSkyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
     ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -140,6 +149,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...starRoutes,
     ...solarRoutes,
     ...deepSkyRoutes,
+    ...explorationRoutes,
   ].map((entry) => ({
     lastModified: now,
     ...entry,

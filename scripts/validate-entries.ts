@@ -151,6 +151,17 @@ async function main() {
     `✓ Deep Sky valid — ${deepSky.DEEP_SKY_STATS.objects} objects, ${deepSky.DEEP_SKY_STATS.newEntities} new entities, ${deepSky.DEEP_SKY_STATS.messier} Messier, ${deepSky.DEEP_SKY_STATS.caldwell} Caldwell`,
   );
 
+  const exploration = await import("../src/knowledge-graph/data/exploration-catalog");
+  const expIssues = exploration.validateExploration();
+  if (expIssues.length > 0) {
+    console.error(`\n✗ ${expIssues.length} exploration issue(s):`);
+    for (const i of expIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Exploration valid — ${exploration.EXPLORATION_STATS.records} records, ${exploration.EXPLORATION_STATS.newEntities} new entities, ${exploration.EXPLORATION_STATS.missions} missions`,
+  );
+
   const { validateEntries, getAllEntries, ENTRY_STATS } = reg;
 
   const issues = validateEntries();

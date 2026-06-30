@@ -137,6 +137,15 @@ export function GET(): Response {
   lines.push(`- Every object resolves through the Scientific Data Engine; pages at /deep-sky/{slug}.`);
   lines.push("");
 
+  lines.push("## Space Exploration Encyclopedia");
+  lines.push(
+    `The history of human space exploration as a knowledge graph: ${engine.exploration.missionCount} missions plus space agencies, mission programs, launch vehicles, launch sites, spacecraft, astronauts, and scientific instruments — ${engine.exploration.count} interconnected entities. Curated from authoritative public sources (NASA, ESA, JPL, national agencies). No fabricated missions, launch dates, or discoveries.`,
+  );
+  lines.push(`- [Space Exploration Encyclopedia](${absoluteUrl("/exploration")})`);
+  lines.push(`- Missions: ${absoluteUrl("/exploration/discover/all-missions")} · Human spaceflight: ${absoluteUrl("/exploration/discover/human-spaceflight")} · Launch vehicles: ${absoluteUrl("/exploration/discover/launch-vehicles")} · Agencies: ${absoluteUrl("/exploration/discover/space-agencies")}`);
+  lines.push(`- Every mission, spacecraft, and agency resolves through the Scientific Data Engine; pages at /exploration/{slug}.`);
+  lines.push("");
+
   lines.push("## Open data");
   lines.push(
     `Asteria Star is open infrastructure for structured celestial knowledge: a versioned (graph ${GRAPH_VERSION_INFO.graphVersion}, schema ${GRAPH_VERSION_INFO.schemaVersion}), machine-readable knowledge graph of ${GRAPH_VERSION_INFO.entityCount} entities. Stable ids are permanent (type:slug). License: ${GRAPH_VERSION_INFO.license}.`,

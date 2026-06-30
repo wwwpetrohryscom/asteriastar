@@ -1,0 +1,26 @@
+import type { ExplorationRecord } from "@/knowledge-graph/data/exploration-catalog/types";
+
+/** Launch sites. New entities; cross-refs by operator slug where one exists. */
+type S = { slug: string; name: string; country: string; location: string; operatorSlug?: string; firstFlight?: string; description: string; sources?: ExplorationRecord["sources"]; alt?: string[] };
+const mk = (s: S): ExplorationRecord => ({
+  id: `launch_site:${s.slug}`, slug: s.slug, name: s.name, kind: "site", country: s.country, location: s.location,
+  operatorSlug: s.operatorSlug, firstFlight: s.firstFlight, description: s.description, sources: s.sources ?? ["nasa"], altNames: s.alt,
+});
+
+export const sites: ExplorationRecord[] = [
+  mk({ slug: "kennedy-space-center", name: "Kennedy Space Center", country: "United States", location: "Merritt Island, Florida", operatorSlug: "nasa", firstFlight: "1967", description: "NASA's primary launch centre, home of Launch Complex 39 from which the Apollo Saturn V and the Space Shuttle flew, and now Artemis and commercial crew missions.", alt: ["KSC"] }),
+  mk({ slug: "cape-canaveral", name: "Cape Canaveral Space Force Station", country: "United States", location: "Cape Canaveral, Florida", firstFlight: "1950", description: "The United States' historic eastern launch range adjacent to Kennedy Space Center, used since 1950 for crewed and robotic missions.", alt: ["Cape Canaveral SFS", "CCSFS"] }),
+  mk({ slug: "vandenberg", name: "Vandenberg Space Force Base", country: "United States", location: "California", firstFlight: "1958", description: "A United States launch site on the Pacific coast used primarily for polar and Sun-synchronous orbits.", alt: ["Vandenberg SFB"] }),
+  mk({ slug: "baikonur", name: "Baikonur Cosmodrome", country: "Kazakhstan (leased by Russia)", location: "Kazakhstan", operatorSlug: "roscosmos", firstFlight: "1957", description: "The world's first and largest spaceport, from which Sputnik 1 and Yuri Gagarin were launched and Soyuz crews still depart for the ISS.", sources: ["roscosmos"] }),
+  mk({ slug: "guiana-space-centre", name: "Guiana Space Centre", country: "France (French Guiana)", location: "Kourou, French Guiana", operatorSlug: "cnes", firstFlight: "1968", description: "Europe's spaceport near the equator, operated by CNES, ESA, and Arianespace, from which Ariane rockets and the James Webb Space Telescope launched.", sources: ["esa"], alt: ["Centre Spatial Guyanais", "Kourou"] }),
+  mk({ slug: "tanegashima", name: "Tanegashima Space Center", country: "Japan", location: "Tanegashima, Japan", operatorSlug: "jaxa", firstFlight: "1975", description: "JAXA's largest launch complex, used for the H-IIA, H-IIB, and H3 rockets.", sources: ["jaxa"] }),
+  mk({ slug: "satish-dhawan", name: "Satish Dhawan Space Centre", country: "India", location: "Sriharikota, India", operatorSlug: "isro", firstFlight: "1979", description: "ISRO's primary orbital launch site, from which the PSLV and GSLV rockets, Chandrayaan, and Mangalyaan have flown.", sources: ["isro"], alt: ["Sriharikota", "SDSC"] }),
+  mk({ slug: "jiuquan", name: "Jiuquan Satellite Launch Center", country: "China", location: "Gobi Desert, China", operatorSlug: "cnsa", firstFlight: "1970", description: "China's oldest launch site and the home of its crewed Shenzhou spaceflights." }),
+  mk({ slug: "taiyuan", name: "Taiyuan Satellite Launch Center", country: "China", location: "Shanxi, China", operatorSlug: "cnsa", firstFlight: "1988", description: "A Chinese launch site used mainly for polar and Sun-synchronous orbit missions." }),
+  mk({ slug: "xichang", name: "Xichang Satellite Launch Center", country: "China", location: "Sichuan, China", operatorSlug: "cnsa", firstFlight: "1984", description: "A Chinese launch site used for geostationary satellites and several Chang'e lunar missions." }),
+  mk({ slug: "wenchang", name: "Wenchang Space Launch Site", country: "China", location: "Hainan, China", operatorSlug: "cnsa", firstFlight: "2016", description: "China's coastal, low-latitude launch site for the heavy-lift Long March 5 and crewed and lunar missions." }),
+  mk({ slug: "starbase", name: "Starbase", country: "United States", location: "Boca Chica, Texas", operatorSlug: "spacex", firstFlight: "2023", description: "SpaceX's development and launch site in South Texas for the Starship super heavy-lift system.", alt: ["Boca Chica"] }),
+  mk({ slug: "wallops", name: "Wallops Flight Facility", country: "United States", location: "Virginia", operatorSlug: "nasa", firstFlight: "1945", description: "A NASA range on the Virginia coast used for suborbital research and small orbital launches." }),
+  mk({ slug: "plesetsk", name: "Plesetsk Cosmodrome", country: "Russia", location: "Arkhangelsk Oblast, Russia", operatorSlug: "roscosmos", firstFlight: "1966", description: "A northern Russian launch site used heavily for polar-orbit and military launches.", sources: ["roscosmos"] }),
+  mk({ slug: "alcantara", name: "Alcântara Launch Center", country: "Brazil", location: "Maranhão, Brazil", operatorSlug: "aeb", description: "Brazil's equatorial launch site, operated by the Brazilian Space Agency and Air Force.", alt: ["Centro de Lançamento de Alcântara"] }),
+];

@@ -30,6 +30,42 @@ export interface LearningPath {
 
 export const LEARNING_PATHS: LearningPath[] = [
   {
+    slug: "history-of-space-exploration",
+    title: "History of Space Exploration",
+    description: "From Sputnik to Mars rovers and the James Webb Space Telescope — how humanity learned to reach into space, told through real missions, spacecraft, agencies, and the people who flew. Built on authoritative public sources.",
+    accent: "comet",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "What is space exploration?", href: "/exploration", blurb: "Missions, spacecraft, agencies, and astronauts as a knowledge graph." },
+          { title: "Historic missions", href: "/exploration/discover/historic-missions", blurb: "The pioneering missions of the early Space Age." },
+          { title: "Human spaceflight", href: "/exploration/discover/human-spaceflight", blurb: "From Gagarin to the Moon landings." },
+          { title: "Space agencies", href: "/exploration/discover/space-agencies", blurb: "Who explores space, and how." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Planetary exploration: the Moon", href: "/exploration/discover/moon-missions", blurb: "Every mission to Earth's Moon." },
+          { title: "Planetary exploration: Mars", href: "/exploration/discover/mars-missions", blurb: "Orbiters, landers, and rovers at Mars." },
+          { title: "Launch vehicles", href: "/exploration/discover/launch-vehicles", blurb: "The rockets that make it all possible." },
+          { title: "Spacecraft", href: "/exploration/discover/spacecraft", blurb: "Rovers, landers, and probes." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Deep space missions", href: "/exploration/discover/deep-space-missions", blurb: "To the outer planets and interstellar space." },
+          { title: "Sample return missions", href: "/exploration/discover/sample-return-missions", blurb: "Bringing other worlds back to Earth." },
+          { title: "Scientific instruments", href: "/exploration/discover/scientific-instruments", blurb: "The cameras and spectrometers that gather the data." },
+          { title: "Mission programs", href: "/exploration/discover/mission-programs", blurb: "Apollo, Voyager, Artemis, and more." },
+        ],
+      },
+    ],
+    next: ["learn-space-exploration", "the-solar-system"],
+  },
+  {
     slug: "deep-sky-and-galaxies",
     title: "Deep Sky & Galaxies",
     description: "A guided tour beyond the Solar System — galaxies, nebulae, and star clusters from the Messier, Caldwell, and NGC/IC catalogues, with practical guidance on observing each one. Built on real OpenNGC catalogue data.",
