@@ -195,6 +195,17 @@ async function main() {
     `✓ Exoplanets valid — ${exo.EXO_STATS.planets} planets, ${exo.EXO_STATS.newPlanets} new, ${exo.EXO_STATS.systems} systems, ${exo.EXO_STATS.reusedHosts} reused + ${exo.EXO_STATS.newHosts} new hosts`,
   );
 
+  const hist = await import("../src/knowledge-graph/data/history-catalog");
+  const histIssues = hist.validateHistory();
+  if (histIssues.length > 0) {
+    console.error(`\n✗ ${histIssues.length} history issue(s):`);
+    for (const i of histIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ History valid — ${hist.HISTORY_STATS.astronomers} astronomers (${hist.HISTORY_STATS.reusedAstronomers} reused + ${hist.HISTORY_STATS.newAstronomers} new), ${hist.HISTORY_STATS.discoveries} discoveries, ${hist.HISTORY_STATS.publications} publications, ${hist.HISTORY_STATS.theories} theories, ${hist.HISTORY_STATS.catalogues} catalogues, ${hist.HISTORY_STATS.eras} eras — ${hist.HISTORY_STATS.newEntities} new entities, ${hist.HISTORY_STATS.relations} relations`,
+  );
+
   const { validateEntries, getAllEntries, ENTRY_STATS } = reg;
 
   const issues = validateEntries();
