@@ -72,6 +72,7 @@ export const entities: GraphEntity[] = [
   // --------------------------------------------------------------- astronomers
   {
     id: "astronomer:tycho-brahe",
+    entryPath: "/history/tycho-brahe",
     type: "astronomer",
     name: "Tycho Brahe",
     domain: "science",
@@ -81,6 +82,7 @@ export const entities: GraphEntity[] = [
   },
   {
     id: "astronomer:ptolemy",
+    entryPath: "/history/ptolemy",
     type: "astronomer",
     name: "Ptolemy",
     domain: "science",
@@ -90,6 +92,7 @@ export const entities: GraphEntity[] = [
   },
   {
     id: "astronomer:hipparchus",
+    entryPath: "/history/hipparchus",
     type: "astronomer",
     name: "Hipparchus",
     domain: "science",
@@ -99,6 +102,7 @@ export const entities: GraphEntity[] = [
   },
   {
     id: "astronomer:caroline-herschel",
+    entryPath: "/history/caroline-herschel",
     type: "astronomer",
     name: "Caroline Herschel",
     domain: "science",
@@ -108,6 +112,7 @@ export const entities: GraphEntity[] = [
   },
   {
     id: "astronomer:henrietta-leavitt",
+    entryPath: "/history/henrietta-leavitt",
     type: "astronomer",
     name: "Henrietta Swan Leavitt",
     domain: "science",
@@ -117,6 +122,7 @@ export const entities: GraphEntity[] = [
   },
   {
     id: "astronomer:annie-jump-cannon",
+    entryPath: "/history/annie-jump-cannon",
     type: "astronomer",
     name: "Annie Jump Cannon",
     domain: "science",
@@ -126,6 +132,7 @@ export const entities: GraphEntity[] = [
   },
   {
     id: "astronomer:vera-rubin",
+    entryPath: "/history/vera-rubin",
     type: "astronomer",
     name: "Vera Rubin",
     domain: "science",
@@ -135,6 +142,7 @@ export const entities: GraphEntity[] = [
   },
   {
     id: "astronomer:carl-sagan",
+    entryPath: "/history/carl-sagan",
     type: "astronomer",
     name: "Carl Sagan",
     domain: "science",
@@ -144,6 +152,7 @@ export const entities: GraphEntity[] = [
   },
   {
     id: "astronomer:nancy-grace-roman",
+    entryPath: "/history/nancy-grace-roman",
     type: "astronomer",
     name: "Nancy Grace Roman",
     domain: "science",

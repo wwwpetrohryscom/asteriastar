@@ -214,6 +214,7 @@ export const entities: GraphEntity[] = [
   // ------------------------------------------------------------ astronomers
   {
     id: "astronomer:galileo-galilei",
+    entryPath: "/history/galileo-galilei",
     type: "astronomer",
     name: "Galileo Galilei",
     domain: "science",
@@ -223,6 +224,7 @@ export const entities: GraphEntity[] = [
   },
   {
     id: "astronomer:edwin-hubble",
+    entryPath: "/history/edwin-hubble",
     type: "astronomer",
     name: "Edwin Hubble",
     domain: "science",
@@ -232,6 +234,7 @@ export const entities: GraphEntity[] = [
   },
   {
     id: "astronomer:nicolaus-copernicus",
+    entryPath: "/history/nicolaus-copernicus",
     type: "astronomer",
     name: "Nicolaus Copernicus",
     domain: "science",
@@ -241,6 +244,7 @@ export const entities: GraphEntity[] = [
   },
   {
     id: "astronomer:johannes-kepler",
+    entryPath: "/history/johannes-kepler",
     type: "astronomer",
     name: "Johannes Kepler",
     domain: "science",
@@ -250,6 +254,7 @@ export const entities: GraphEntity[] = [
   },
   {
     id: "astronomer:william-herschel",
+    entryPath: "/history/william-herschel",
     type: "astronomer",
     name: "William Herschel",
     domain: "science",
@@ -259,6 +264,7 @@ export const entities: GraphEntity[] = [
   },
   {
     id: "astronomer:edmond-halley",
+    entryPath: "/history/edmond-halley",
     type: "astronomer",
     name: "Edmond Halley",
     domain: "science",
@@ -268,6 +274,7 @@ export const entities: GraphEntity[] = [
   },
   {
     id: "astronomer:subrahmanyan-chandrasekhar",
+    entryPath: "/history/subrahmanyan-chandrasekhar",
     type: "astronomer",
     name: "Subrahmanyan Chandrasekhar",
     domain: "science",
