@@ -77,6 +77,12 @@ export const ENTITY_TYPES = [
   "exoplanet_catalogue",
   "habitable_zone_candidate",
   "planetary_class",
+  "historical_discovery",
+  "publication",
+  "astronomical_theory",
+  "astronomy_era",
+  "historical_event",
+  "scientific_award",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -173,6 +179,22 @@ export const RELATION_TYPES = [
   "similar_to",
   "candidate_for_habitable_zone",
   "part_of_catalogue",
+  "discovered",
+  "predicted",
+  "published",
+  "developed",
+  "observed",
+  "worked_at",
+  "collaborated_with",
+  "influenced",
+  "student_of",
+  "teacher_of",
+  "received_award",
+  "introduced",
+  "invented",
+  "first_observed",
+  "confirmed",
+  "refuted",
 ] as const;
 export type RelationType = (typeof RELATION_TYPES)[number];
 
@@ -307,6 +329,22 @@ export const SCIENCE_ONLY_RELATIONS: ReadonlySet<RelationType> = new Set([
   "similar_to",
   "candidate_for_habitable_zone",
   "part_of_catalogue",
+  "discovered",
+  "predicted",
+  "published",
+  "developed",
+  "observed",
+  "worked_at",
+  "collaborated_with",
+  "influenced",
+  "student_of",
+  "teacher_of",
+  "received_award",
+  "introduced",
+  "invented",
+  "first_observed",
+  "confirmed",
+  "refuted",
 ]);
 
 /** Relation types that may ONLY be used in the astrology domain. */
@@ -434,6 +472,22 @@ export const RELATION_LABELS: Record<RelationType, string> = {
   similar_to: "Similar to",
   candidate_for_habitable_zone: "Habitable-zone candidate",
   part_of_catalogue: "Catalogued in",
+  discovered: "Discovered",
+  predicted: "Predicted",
+  published: "Published",
+  developed: "Developed",
+  observed: "Observed",
+  worked_at: "Worked at",
+  collaborated_with: "Collaborated with",
+  influenced: "Influenced",
+  student_of: "Student of",
+  teacher_of: "Teacher of",
+  received_award: "Received",
+  introduced: "Introduced",
+  invented: "Invented",
+  first_observed: "First observed",
+  confirmed: "Confirmed",
+  refuted: "Refuted",
 };
 
 /** Labels for when the current entity is the *target* (incoming relation). */
@@ -529,6 +583,22 @@ export const INVERSE_RELATION_LABELS: Record<RelationType, string> = {
   similar_to: "Similar to",
   candidate_for_habitable_zone: "Habitable-zone candidate of",
   part_of_catalogue: "Catalogue includes",
+  discovered: "Discovered by",
+  predicted: "Predicted by",
+  published: "Published by",
+  developed: "Developed by",
+  observed: "Observed by",
+  worked_at: "Workplace of",
+  collaborated_with: "Collaborated with",
+  influenced: "Influenced by",
+  student_of: "Teacher of",
+  teacher_of: "Student of",
+  received_award: "Awarded to",
+  introduced: "Introduced by",
+  invented: "Invented by",
+  first_observed: "First observed by",
+  confirmed: "Confirmed by",
+  refuted: "Refuted by",
 };
 
 /** Pick the readable label for a relation given the viewing direction. */
@@ -576,9 +646,9 @@ export function relationFacet(domain: Domain, type: RelationType): ConnectionFac
   if (domain === "astrology") return "astrology";
   if (domain === "culture") return "cultural";
   // science / editorial
-  if (["observed_by", "studies", "visible_from", "photographed_by", "related_survey", "observes_band", "observed_object", "conducts_survey", "part_of_survey", "surveyed_by", "uses_instrument", "has_instrument"].includes(type)) return "observational";
+  if (["observed_by", "studies", "visible_from", "photographed_by", "related_survey", "observes_band", "observed_object", "conducts_survey", "part_of_survey", "surveyed_by", "uses_instrument", "has_instrument", "observed", "first_observed"].includes(type)) return "observational";
   if (["mission_target", "operated_by", "launched_by", "target_of_mission", "part_of_mission", "visited_by", "landed_on", "part_of_program", "launched_from", "carried_by", "orbited", "visited", "returned_samples_from", "captured_image_of", "part_of_station", "attached_to", "docked_with", "visited_station", "served_on_expedition", "commanded_expedition", "performed_eva", "launched_aboard", "returned_aboard", "crewed_by", "carried_crew", "carried_cargo"].includes(type)) return "mission";
-  if (["discovered_by", "named_after", "catalogued_in", "discovered_by_method", "discovered_by_facility", "discovered_by_mission", "part_of_catalogue"].includes(type)) return "discovery";
+  if (["discovered_by", "named_after", "catalogued_in", "discovered_by_method", "discovered_by_facility", "discovered_by_mission", "part_of_catalogue", "discovered", "predicted", "confirmed", "refuted", "introduced", "invented", "developed", "published"].includes(type)) return "discovery";
   if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of", "contains_instrument", "used_instrument", "performed_experiment", "supports_science", "preceded_by", "followed_by", "supported_by", "replaced_by", "built_by", "located_at", "part_of_observatory", "hosts_telescope", "related_discovery", "predecessor_of", "successor_of", "orbits_star", "member_of_planetary_system", "similar_to", "candidate_for_habitable_zone"].includes(type)) return "related";
   return "scientific";
 }
@@ -656,4 +726,10 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   exoplanet_catalogue: "Exoplanet catalogue",
   habitable_zone_candidate: "Habitable-zone candidate",
   planetary_class: "Planetary class",
+  historical_discovery: "Discovery",
+  publication: "Publication",
+  astronomical_theory: "Theory",
+  astronomy_era: "Era",
+  historical_event: "Historical event",
+  scientific_award: "Award",
 };

@@ -173,6 +173,15 @@ export function GET(): Response {
   lines.push(`- Every planet, host star, system, detection method, and class resolves through the Scientific Data Engine; pages at /exoplanets/{slug}.`);
   lines.push("");
 
+  lines.push("## History of Astronomy Encyclopedia");
+  lines.push(
+    `The history of humanity discovering the universe: ${engine.history.astronomerCount} astronomers, ${engine.history.discoveryCount} landmark discoveries, ${engine.history.publicationCount} historic publications, plus theories, catalogues, awards, and ${engine.history.eraCount} eras — all first-class knowledge-graph entities connected to observatories, telescopes, missions, and objects. Curated from authoritative sources (IAU, NASA, ESA, ESO, ADS, the Nobel Foundation, Britannica). Astronomers already in the graph are reused, not duplicated; nothing is fabricated.`,
+  );
+  lines.push(`- [History of Astronomy Encyclopedia](${absoluteUrl("/history")})`);
+  lines.push(`- Timeline: ${absoluteUrl("/timelines/history-of-astronomy")} · Astronomers A–Z: ${absoluteUrl("/history/discover/astronomers-a-z")} · Discoveries: ${absoluteUrl("/history/discover/scientific-discoveries")} · Publications: ${absoluteUrl("/history/discover/historic-publications")} · Cosmology: ${absoluteUrl("/history/discover/history-of-cosmology")}`);
+  lines.push(`- Every astronomer, discovery, publication, theory, catalogue, era, event, and award resolves through the Scientific Data Engine; pages at /history/{slug}.`);
+  lines.push("");
+
   lines.push("## Open data");
   lines.push(
     `Asteria Star is open infrastructure for structured celestial knowledge: a versioned (graph ${GRAPH_VERSION_INFO.graphVersion}, schema ${GRAPH_VERSION_INFO.schemaVersion}), machine-readable knowledge graph of ${GRAPH_VERSION_INFO.entityCount} entities. Stable ids are permanent (type:slug). License: ${GRAPH_VERSION_INFO.license}.`,

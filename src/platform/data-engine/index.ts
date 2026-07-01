@@ -34,9 +34,10 @@ import { explorationEngine } from "@/platform/data-engine/exploration-engine";
 import { humanSpaceflightEngine } from "@/platform/data-engine/human-spaceflight-engine";
 import { observatoryEngine } from "@/platform/data-engine/observatory-engine";
 import { exoplanetEngine } from "@/platform/data-engine/exoplanet-engine";
+import { historyEngine } from "@/platform/data-engine/history-engine";
 import { validationEngine } from "@/platform/data-engine/validation-engine";
 
-/** The unified engine surface — the twenty-three modules of the data engine. */
+/** The unified engine surface — the twenty-four modules of the data engine. */
 export const engine = {
   entity: entityEngine,
   relationship: relationshipEngine,
@@ -60,6 +61,7 @@ export const engine = {
   humanSpaceflight: humanSpaceflightEngine,
   observatories: observatoryEngine,
   exoplanets: exoplanetEngine,
+  history: historyEngine,
   validation: validationEngine,
 } as const;
 
@@ -70,7 +72,7 @@ export const ENGINE_MODULES = Object.keys(engine) as (keyof typeof engine)[];
 export { entityEngine, relationshipEngine, traversalEngine, queryEngine };
 export { recommendationEngine, timelineEngine, comparisonEngine, learningEngine };
 export { discoveryEngine, metadataEngine, sourceEngine, citationEngine };
-export { datasetEngine, authorityEngine, localizationEngine, starEngine, solarEngine, deepSkyEngine, explorationEngine, humanSpaceflightEngine, observatoryEngine, exoplanetEngine, validationEngine };
+export { datasetEngine, authorityEngine, localizationEngine, starEngine, solarEngine, deepSkyEngine, explorationEngine, humanSpaceflightEngine, observatoryEngine, exoplanetEngine, historyEngine, validationEngine };
 export type { ResolvedStar } from "@/platform/data-engine/star-engine";
 export type { ResolvedBody } from "@/platform/data-engine/solar-engine";
 export type { ResolvedDeepSky } from "@/platform/data-engine/deepsky-engine";
@@ -78,6 +80,7 @@ export type { ResolvedExploration } from "@/platform/data-engine/exploration-eng
 export type { ResolvedHsf } from "@/platform/data-engine/human-spaceflight-engine";
 export type { ResolvedObs } from "@/platform/data-engine/observatory-engine";
 export type { ResolvedExo } from "@/platform/data-engine/exoplanet-engine";
+export type { ResolvedHistory } from "@/platform/data-engine/history-engine";
 
 export type { ResolvedEntity } from "@/platform/data-engine/entity-engine";
 export type {

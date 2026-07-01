@@ -30,6 +30,43 @@ export interface LearningPath {
 
 export const LEARNING_PATHS: LearningPath[] = [
   {
+    slug: "history-of-astronomy",
+    title: "History of Astronomy",
+    description: "How humanity came to understand the universe — from the first sky-watchers to the age of gravitational waves. Each lesson connects to real astronomers, discoveries, and eras in the knowledge graph.",
+    accent: "stone",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Origins", href: "/history/ancient-astronomy", blurb: "Why the first civilizations watched the sky." },
+          { title: "Ancient civilizations", href: "/history/discover/ancient-astronomy", blurb: "Babylon, Egypt, China, India, and the Maya." },
+          { title: "Greek astronomy", href: "/history/greek-astronomy", blurb: "Making astronomy a geometric science." },
+          { title: "The Islamic Golden Age", href: "/history/islamic-golden-age", blurb: "Preserving and transforming the science." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "The Renaissance", href: "/history/renaissance-astronomy", blurb: "Copernicus moves the Earth from the centre." },
+          { title: "The Scientific Revolution", href: "/history/scientific-revolution", blurb: "The telescope, Kepler's laws, and Newton." },
+          { title: "Modern astronomy", href: "/history/modern-astronomy", blurb: "Spectroscopy reveals what stars are made of." },
+          { title: "Galaxies", href: "/history/expansion-of-the-universe", blurb: "Discovering galaxies and the expanding universe." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Cosmology", href: "/history/big-bang-theory", blurb: "The Big Bang and the cosmic microwave background." },
+          { title: "The Space Age", href: "/history/space-age-astronomy", blurb: "Astronomy leaves the atmosphere behind." },
+          { title: "Exoplanets", href: "/history/first-exoplanet-sunlike-star", blurb: "The first worlds found around other stars." },
+          { title: "The future of astronomy", href: "/history/contemporary-astronomy", blurb: "Gravitational waves, black-hole images, and JWST." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["astronomer:galileo-galilei", "astronomer:edwin-hubble", "historical_discovery:gravitational-waves", "astronomy_era:scientific-revolution"],
+    next: ["exoplanets", "observatories-and-telescopes"],
+  },
+  {
     slug: "exoplanets",
     title: "Exoplanets",
     description: "Worlds beyond the Sun — how we find them, what kinds there are, and how scientists weigh whether any could be habitable. Built on real planets and systems from the NASA Exoplanet Archive.",
