@@ -32,6 +32,7 @@ export type SourceKey =
   | "hyg"
   | "openngc"
   | "britannica"
+  | "nobel"
   | "wikimedia";
 
 /** The kind of authority a source carries — used for evidence weighting. */
@@ -281,6 +282,17 @@ export const SOURCES: Record<SourceKey, Source> = {
     country: "United States",
     authorityType: "reference",
     reliability: "Edited reference work; suitable for historical and biographical context, not primary data.",
+  },
+  nobel: {
+    key: "nobel",
+    name: "The Nobel Prize",
+    organization: "The Nobel Foundation",
+    url: "https://www.nobelprize.org",
+    scope: "Official record of Nobel laureates, prize motivations, and award years.",
+    country: "Sweden",
+    authorityType: "reference",
+    reliability: "Definitive primary source for Nobel Prize laureates, citations, and years.",
+    citationFormat: "The Nobel Foundation. (Year). Title. https://www.nobelprize.org",
   },
   wikimedia: {
     key: "wikimedia",
