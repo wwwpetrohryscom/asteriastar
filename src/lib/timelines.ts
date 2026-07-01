@@ -1,5 +1,6 @@
 import type { SourceKey } from "@/lib/sources";
 import type { AccentToken } from "@/lib/content/types";
+import { HISTORY_TIMELINE_EVENTS } from "@/knowledge-graph/data/history-catalog";
 
 /**
  * Timeline Engine — curated, well-documented chronologies. Every date is a
@@ -74,19 +75,10 @@ export const TIMELINES: Timeline[] = [
   {
     slug: "history-of-astronomy",
     title: "History of Astronomy",
-    description: "Milestones from ancient sky-watching to the space age.",
+    description: "Milestones in humanity's understanding of the universe, from ancient sky-watching to the age of gravitational waves — generated from the History of Astronomy knowledge graph.",
     accent: "stone",
-    sources: ["britannica", "nasa"],
-    events: [
-      { date: "c. 150 CE", title: "Ptolemy's Almagest", description: "A comprehensive geocentric model that endured for centuries." },
-      { date: "1543", title: "Copernicus proposes heliocentrism", description: "Placing the Sun, not Earth, at the center." },
-      { date: "1609–1610", title: "Galileo turns a telescope to the sky", description: "Discovers Jupiter's four large moons and more." },
-      { date: "1687", title: "Newton's Principia", description: "Universal gravitation explains planetary motion." },
-      { date: "1929", title: "The expanding universe", description: "Observations show galaxies receding — evidence for cosmic expansion." },
-      { date: "1957", title: "The space age begins", description: "The first artificial satellite reaches orbit." },
-      { date: "1990", title: "Hubble Space Telescope launched", description: "A new era of space-based observation.", href: "/astronomy/space-telescopes/hubble-space-telescope" },
-      { date: "2021", title: "James Webb Space Telescope launched", description: "Infrared views of the early universe.", href: "/astronomy/space-telescopes/james-webb-space-telescope" },
-    ],
+    sources: ["britannica", "nasa", "iau"],
+    events: HISTORY_TIMELINE_EVENTS,
   },
 ];
 
