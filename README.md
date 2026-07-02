@@ -72,7 +72,7 @@ at [`/platform`](src/app/platform/page.tsx). See
 [docs/PLATFORM_ARCHITECTURE.md](docs/PLATFORM_ARCHITECTURE.md).
 
 All of this is reached through the **Scientific Data Engine**
-([`src/platform/data-engine/`](src/platform/data-engine)) — 24 pure,
+([`src/platform/data-engine/`](src/platform/data-engine)) — 25 pure,
 framework-independent modules (entity resolver, relationship resolver, graph
 traversal, scientific query, recommendation, comparison, timeline, learning,
 discovery, metadata, source, citation, dataset, authority, localization, **star**, **solar**,

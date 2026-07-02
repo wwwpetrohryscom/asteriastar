@@ -182,6 +182,15 @@ export function GET(): Response {
   lines.push(`- Every astronomer, discovery, publication, theory, catalogue, era, event, and award resolves through the Scientific Data Engine; pages at /history/{slug}.`);
   lines.push("");
 
+  lines.push("## Cosmology & Universe Encyclopedia");
+  lines.push(
+    `The scientific model of the Universe: ${engine.cosmology.conceptCount} cosmological and physical concepts, ${engine.cosmology.modelCount} models, and ${engine.cosmology.objectCount} classes of astrophysical object — all first-class knowledge-graph entities. Every topic carries an EXPLICIT consensus classification (Established Science, Strong Evidence, Active Research, Scientific Debate, or Speculative Hypothesis); these are never conflated. Curated from authoritative sources (Planck Collaboration, NASA, ESA, ESO, LIGO, the Event Horizon Telescope, DESI, SDSS). Theories, discoveries, scientists, and observatories already in the graph are reused, not duplicated; nothing is fabricated.`,
+  );
+  lines.push(`- [Cosmology & Universe Encyclopedia](${absoluteUrl("/cosmology")})`);
+  lines.push(`- Universe timeline: ${absoluteUrl("/timelines/universe-timeline")} · Big Bang: ${absoluteUrl("/cosmology/discover/big-bang")} · Dark matter: ${absoluteUrl("/cosmology/discover/dark-matter")} · Black holes: ${absoluteUrl("/cosmology/discover/black-holes")} · Scientific debates: ${absoluteUrl("/cosmology/discover/scientific-debates")} · Open questions: ${absoluteUrl("/cosmology/discover/open-questions")}`);
+  lines.push(`- Every concept, model, object class, observational program, and physicist resolves through the Scientific Data Engine; pages at /cosmology/{slug}.`);
+  lines.push("");
+
   lines.push("## Open data");
   lines.push(
     `Asteria Star is open infrastructure for structured celestial knowledge: a versioned (graph ${GRAPH_VERSION_INFO.graphVersion}, schema ${GRAPH_VERSION_INFO.schemaVersion}), machine-readable knowledge graph of ${GRAPH_VERSION_INFO.entityCount} entities. Stable ids are permanent (type:slug). License: ${GRAPH_VERSION_INFO.license}.`,
