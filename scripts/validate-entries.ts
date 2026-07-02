@@ -218,6 +218,17 @@ async function main() {
     `✓ Cosmology valid — ${cosmo.COSMOLOGY_STATS.concepts} concepts, ${cosmo.COSMOLOGY_STATS.models} models, ${cosmo.COSMOLOGY_STATS.objectClasses} object classes, ${cosmo.COSMOLOGY_STATS.programs} programs — ${cosmo.COSMOLOGY_STATS.newEntities} new entities, ${cosmo.COSMOLOGY_STATS.relations} relations · consensus: ${cb.established} established / ${cb["strong-evidence"]} strong / ${cb["active-research"]} active / ${cb.debate} debate / ${cb.speculative} speculative`,
   );
 
+  const sky = await import("../src/platform/live-sky");
+  const skyIssues = sky.validateLiveSky();
+  if (skyIssues.length > 0) {
+    console.error(`\n✗ ${skyIssues.length} live-sky issue(s):`);
+    for (const i of skyIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Live Sky valid — ${sky.LIVE_SKY_STATS.meteorShowers} meteor showers, ${sky.LIVE_SKY_STATS.providers} providers, ${sky.LIVE_SKY_STATS.totalSkyPaths} pages, ${sky.LIVE_SKY_STATS.linkedEntities} graph links · ${sky.LIVE_SKY_STATS.connectedProviders} live providers connected (no fabricated data)`,
+  );
+
   const { validateEntries, getAllEntries, ENTRY_STATS } = reg;
 
   const issues = validateEntries();
