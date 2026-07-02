@@ -28,7 +28,11 @@ deliberately, **no connected live providers yet**. Data is one of:
   sunrise, sunset, solar noon, and civil/nautical/astronomical twilight for an
   explicit latitude/longitude/date — on a privacy-first location model that never
   guesses, geolocates, or stores a location (see
-  [SUN_AND_TWILIGHT.md](./SUN_AND_TWILIGHT.md)).
+  [SUN_AND_TWILIGHT.md](./SUN_AND_TWILIGHT.md)). Program R adds location-aware
+  **moonrise, moonset, transit, and the Moon's position** (altitude, azimuth,
+  distance), reusing that location model and extending the Moon endpoint without
+  breaking its phase-only behaviour (see
+  [MOONRISE_MOONSET_LUNAR_POSITION.md](./MOONRISE_MOONSET_LUNAR_POSITION.md)).
 
 The `live` status still describes **no datum** — no live provider is connected.
 `computed` readings are stale-aware: the current Moon reading flips to `stale`
