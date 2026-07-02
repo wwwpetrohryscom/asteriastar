@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "check:arch": "tsx scripts/check-architecture.ts",
+    "exports:generate": "tsx scripts/generate-open-data-exports.ts",
     "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts"
   },
   "dependencies": {

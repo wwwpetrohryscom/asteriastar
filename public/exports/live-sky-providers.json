@@ -1,0 +1,137 @@
+{
+  "generatedAt": "2026-06-29T00:00:00Z",
+  "dataVersion": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "source": "Asteria Star — Scientific Data Engine & Knowledge Graph",
+  "license": "cc-by-sa-4.0",
+  "count": 9,
+  "providers": [
+    {
+      "id": "celestrak",
+      "name": "CelesTrak",
+      "organization": "CelesTrak (Dr. T.S. Kelso)",
+      "url": "https://celestrak.org/",
+      "status": "planned",
+      "access": "public-data-files",
+      "license": "Public TLE data; attribution expected.",
+      "dataKinds": [
+        "ISS orbital elements (TLE)",
+        "Satellite passes (via propagation)"
+      ]
+    },
+    {
+      "id": "eclipse-catalogue",
+      "name": "Eclipse Catalogue",
+      "organization": "NASA GSFC eclipse data (five-millennium canon)",
+      "url": "https://eclipse.gsfc.nasa.gov/",
+      "status": "planned",
+      "access": "public-data-files",
+      "license": "Public NASA eclipse predictions.",
+      "dataKinds": [
+        "Solar & lunar eclipse circumstances",
+        "Paths of totality"
+      ]
+    },
+    {
+      "id": "imo",
+      "name": "International Meteor Organization",
+      "organization": "IMO",
+      "url": "https://www.imo.net/",
+      "status": "planned",
+      "access": "public-data-files",
+      "license": "IMO working list; cited, not redistributed.",
+      "dataKinds": [
+        "Annual meteor shower calendar",
+        "Peak dates",
+        "ZHR"
+      ]
+    },
+    {
+      "id": "jpl-horizons",
+      "name": "JPL Horizons",
+      "organization": "NASA Jet Propulsion Laboratory",
+      "url": "https://ssd.jpl.nasa.gov/horizons/",
+      "status": "planned",
+      "access": "public-api",
+      "license": "Public NASA/JPL data.",
+      "dataKinds": [
+        "Planet ephemerides",
+        "Moon position",
+        "Rise/set",
+        "Comet & asteroid ephemerides"
+      ]
+    },
+    {
+      "id": "minor-planet-center",
+      "name": "Minor Planet Center",
+      "organization": "IAU Minor Planet Center",
+      "url": "https://www.minorplanetcenter.net/",
+      "status": "planned",
+      "access": "public-data-files",
+      "license": "Public MPC data.",
+      "dataKinds": [
+        "Asteroid & comet designations and orbits",
+        "Close-approach data"
+      ]
+    },
+    {
+      "id": "nasa-apis",
+      "name": "NASA Open APIs",
+      "organization": "NASA",
+      "url": "https://api.nasa.gov/",
+      "status": "planned",
+      "access": "public-api",
+      "license": "Public NASA data (API key).",
+      "dataKinds": [
+        "Astronomy imagery",
+        "Near-Earth objects (NeoWs)",
+        "General mission data"
+      ]
+    },
+    {
+      "id": "nasa-donki",
+      "name": "NASA DONKI",
+      "organization": "NASA / CCMC",
+      "url": "https://ccmc.gsfc.nasa.gov/tools/DONKI/",
+      "status": "planned",
+      "access": "public-api",
+      "license": "Public NASA data (open API).",
+      "dataKinds": [
+        "Solar flares",
+        "CMEs",
+        "Geomagnetic storms",
+        "Space weather notifications"
+      ]
+    },
+    {
+      "id": "noaa-swpc",
+      "name": "NOAA SWPC",
+      "organization": "NOAA Space Weather Prediction Center",
+      "url": "https://www.swpc.noaa.gov/",
+      "status": "planned",
+      "access": "public-data-files",
+      "license": "Public US government data.",
+      "dataKinds": [
+        "Aurora forecast (OVATION)",
+        "Kp index",
+        "Geomagnetic storm scale (G1–G5)",
+        "Alerts"
+      ]
+    },
+    {
+      "id": "usno",
+      "name": "US Naval Observatory Almanac",
+      "organization": "United States Naval Observatory",
+      "url": "https://aa.usno.navy.mil/",
+      "status": "planned",
+      "access": "public-api",
+      "license": "Public almanac data.",
+      "dataKinds": [
+        "Sunrise/sunset",
+        "Moonrise/moonset",
+        "Moon phases",
+        "Twilight"
+      ]
+    }
+  ]
+}

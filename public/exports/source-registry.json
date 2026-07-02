@@ -1,0 +1,325 @@
+{
+  "generatedAt": "2026-06-29T00:00:00Z",
+  "dataVersion": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "source": "Asteria Star — Scientific Data Engine & Knowledge Graph",
+  "license": "cc-by-sa-4.0",
+  "count": 35,
+  "sources": [
+    {
+      "id": "ads",
+      "name": "NASA ADS",
+      "organization": "NASA Astrophysics Data System",
+      "url": "https://ui.adsabs.harvard.edu",
+      "country": "United States",
+      "authorityType": "literature",
+      "scope": "Bibliographic index of peer-reviewed astronomy and astrophysics literature."
+    },
+    {
+      "id": "britannica",
+      "name": "Britannica",
+      "organization": "Encyclopaedia Britannica",
+      "url": "https://www.britannica.com",
+      "country": "United States",
+      "authorityType": "reference",
+      "scope": "General reference for the history of astronomy, biographies, and cultural context."
+    },
+    {
+      "id": "celestrak",
+      "name": "CelesTrak",
+      "organization": "CelesTrak (Dr. T. S. Kelso)",
+      "url": "https://celestrak.org",
+      "country": "United States",
+      "authorityType": "database",
+      "scope": "Two-line orbital elements (TLEs) for satellites including the ISS, used with a propagator to predict passes."
+    },
+    {
+      "id": "csa",
+      "name": "CSA",
+      "organization": "Canadian Space Agency",
+      "url": "https://www.asc-csa.gc.ca",
+      "country": "Canada",
+      "authorityType": "space-agency",
+      "scope": "Canadian missions, instruments, and contributions to international programs."
+    },
+    {
+      "id": "desi",
+      "name": "DESI",
+      "organization": "Dark Energy Spectroscopic Instrument",
+      "url": "https://www.desi.lbl.gov",
+      "country": "International",
+      "authorityType": "observatory",
+      "scope": "Spectroscopic redshift survey measuring baryon acoustic oscillations and dark energy."
+    },
+    {
+      "id": "donki",
+      "name": "NASA DONKI",
+      "organization": "NASA Community Coordinated Modeling Center",
+      "url": "https://ccmc.gsfc.nasa.gov/tools/DONKI/",
+      "country": "United States",
+      "authorityType": "database",
+      "scope": "The Space Weather Database Of Notifications, Knowledge, Information: solar flares, CMEs, and geomagnetic storms."
+    },
+    {
+      "id": "eht",
+      "name": "Event Horizon Telescope",
+      "organization": "Event Horizon Telescope Collaboration",
+      "url": "https://eventhorizontelescope.org",
+      "country": "International",
+      "authorityType": "observatory",
+      "scope": "Horizon-scale images of supermassive black holes (M87*, Sagittarius A*)."
+    },
+    {
+      "id": "esa",
+      "name": "ESA",
+      "organization": "European Space Agency",
+      "url": "https://www.esa.int",
+      "country": "Europe",
+      "authorityType": "space-agency",
+      "scope": "European missions, observatories, and space science imagery."
+    },
+    {
+      "id": "esa-hubble",
+      "name": "ESA/Hubble",
+      "organization": "ESA/Hubble (European Space Agency)",
+      "url": "https://esahubble.org",
+      "country": "Europe",
+      "authorityType": "observatory",
+      "scope": "The European Hubble image archive and press releases."
+    },
+    {
+      "id": "esa-webb",
+      "name": "ESA/Webb",
+      "organization": "ESA/Webb (European Space Agency)",
+      "url": "https://esawebb.org",
+      "country": "Europe",
+      "authorityType": "observatory",
+      "scope": "The European James Webb Space Telescope image archive and press releases."
+    },
+    {
+      "id": "eso",
+      "name": "ESO",
+      "organization": "European Southern Observatory",
+      "url": "https://www.eso.org",
+      "country": "Europe",
+      "authorityType": "observatory",
+      "scope": "Southern-hemisphere observatory data and imagery (VLT, ALMA partner)."
+    },
+    {
+      "id": "euclid",
+      "name": "ESA Euclid",
+      "organization": "ESA Euclid mission",
+      "url": "https://www.esa.int/Science_Exploration/Space_Science/Euclid",
+      "country": "Europe",
+      "authorityType": "space-agency",
+      "scope": "Wide-field mapping of dark matter and dark energy via weak lensing and galaxy clustering."
+    },
+    {
+      "id": "gaia",
+      "name": "Gaia",
+      "organization": "ESA Gaia astrometric survey",
+      "url": "https://www.cosmos.esa.int/web/gaia",
+      "country": "Europe",
+      "authorityType": "space-agency",
+      "scope": "Billion-star astrometry, photometry, and distances (future identifier support)."
+    },
+    {
+      "id": "hipparcos",
+      "name": "Hipparcos",
+      "organization": "ESA Hipparcos space astrometry mission",
+      "url": "https://www.cosmos.esa.int/web/hipparcos",
+      "country": "Europe",
+      "authorityType": "space-agency",
+      "scope": "High-precision parallax, magnitude, and position for ~118,000 stars."
+    },
+    {
+      "id": "hyg",
+      "name": "HYG Database",
+      "organization": "HYG Database (Hipparcos + Yale Bright Star + Gliese), by D. Nash / astronexus",
+      "url": "https://www.astronexus.com/hyg",
+      "country": "International",
+      "authorityType": "database",
+      "scope": "Aggregated, openly-licensed star catalogue combining Hipparcos, the Yale Bright Star Catalogue, and the Gliese Catalogue of Nearby Stars."
+    },
+    {
+      "id": "iau",
+      "name": "IAU",
+      "organization": "International Astronomical Union",
+      "url": "https://www.iau.org",
+      "country": "International",
+      "authorityType": "union",
+      "scope": "Official naming, definitions, constellation boundaries, and astronomical nomenclature."
+    },
+    {
+      "id": "imo",
+      "name": "IMO",
+      "organization": "International Meteor Organization",
+      "url": "https://www.imo.net",
+      "country": "International",
+      "authorityType": "union",
+      "scope": "Meteor shower activity, radiants, and peak forecasts."
+    },
+    {
+      "id": "isro",
+      "name": "ISRO",
+      "organization": "Indian Space Research Organisation",
+      "url": "https://www.isro.gov.in",
+      "country": "India",
+      "authorityType": "space-agency",
+      "scope": "Indian missions (Chandrayaan, Mangalyaan) and launch vehicles."
+    },
+    {
+      "id": "jaxa",
+      "name": "JAXA",
+      "organization": "Japan Aerospace Exploration Agency",
+      "url": "https://global.jaxa.jp",
+      "country": "Japan",
+      "authorityType": "space-agency",
+      "scope": "Japanese missions (Hayabusa, Akatsuki) and space science."
+    },
+    {
+      "id": "jpl",
+      "name": "NASA JPL",
+      "organization": "Jet Propulsion Laboratory / Solar System Dynamics",
+      "url": "https://www.jpl.nasa.gov",
+      "country": "United States",
+      "authorityType": "space-agency",
+      "scope": "Orbital data, ephemerides, and small-body parameters for planets, asteroids, and comets."
+    },
+    {
+      "id": "ligo",
+      "name": "LIGO Scientific Collaboration",
+      "organization": "LIGO Scientific Collaboration & Virgo Collaboration",
+      "url": "https://www.ligo.org",
+      "country": "International",
+      "authorityType": "observatory",
+      "scope": "Direct detections of gravitational waves from compact-object mergers."
+    },
+    {
+      "id": "mpc",
+      "name": "Minor Planet Center",
+      "organization": "IAU Minor Planet Center",
+      "url": "https://www.minorplanetcenter.net",
+      "country": "International",
+      "authorityType": "database",
+      "scope": "Designations and orbits of asteroids, comets, and minor bodies."
+    },
+    {
+      "id": "nasa",
+      "name": "NASA",
+      "organization": "National Aeronautics and Space Administration",
+      "url": "https://www.nasa.gov",
+      "country": "United States",
+      "authorityType": "space-agency",
+      "scope": "Mission data, planetary science, space telescopes, and public-domain imagery."
+    },
+    {
+      "id": "ned",
+      "name": "NED",
+      "organization": "NASA/IPAC Extragalactic Database",
+      "url": "https://ned.ipac.caltech.edu",
+      "country": "United States",
+      "authorityType": "database",
+      "scope": "Reference database for extragalactic objects (galaxies, quasars)."
+    },
+    {
+      "id": "nobel",
+      "name": "The Nobel Prize",
+      "organization": "The Nobel Foundation",
+      "url": "https://www.nobelprize.org",
+      "country": "Sweden",
+      "authorityType": "reference",
+      "scope": "Official record of Nobel laureates, prize motivations, and award years."
+    },
+    {
+      "id": "noirlab",
+      "name": "NSF NOIRLab",
+      "organization": "NSF National Optical-Infrared Astronomy Research Laboratory",
+      "url": "https://noirlab.edu",
+      "country": "United States",
+      "authorityType": "observatory",
+      "scope": "Ground-based optical/infrared observatory data and imagery."
+    },
+    {
+      "id": "openngc",
+      "name": "OpenNGC",
+      "organization": "OpenNGC (M. Verga) — NGC/IC, Messier, and Caldwell catalogue data",
+      "url": "https://github.com/mattiaverga/OpenNGC",
+      "country": "International",
+      "authorityType": "database",
+      "scope": "Openly-licensed deep-sky catalogue: object types, positions, magnitudes, sizes, morphology, and cross-identifiers."
+    },
+    {
+      "id": "planck",
+      "name": "Planck Collaboration",
+      "organization": "ESA Planck mission / Planck Collaboration",
+      "url": "https://www.cosmos.esa.int/web/planck",
+      "country": "Europe",
+      "authorityType": "space-agency",
+      "scope": "Cosmic microwave background maps and the cosmological parameters of the ΛCDM model."
+    },
+    {
+      "id": "roscosmos",
+      "name": "Roscosmos",
+      "organization": "State Space Corporation Roscosmos",
+      "url": "https://www.roscosmos.ru",
+      "country": "Russia",
+      "authorityType": "space-agency",
+      "scope": "Russian crewed and robotic spaceflight history and programs."
+    },
+    {
+      "id": "sdss",
+      "name": "SDSS",
+      "organization": "Sloan Digital Sky Survey",
+      "url": "https://www.sdss.org",
+      "country": "International",
+      "authorityType": "database",
+      "scope": "Multi-wavelength survey of galaxies, quasars, and large-scale structure."
+    },
+    {
+      "id": "simbad",
+      "name": "SIMBAD",
+      "organization": "Centre de données astronomiques de Strasbourg (CDS)",
+      "url": "https://simbad.cds.unistra.fr",
+      "country": "France",
+      "authorityType": "database",
+      "scope": "Reference database of astronomical objects, identifiers, and measurements."
+    },
+    {
+      "id": "stsci",
+      "name": "STScI",
+      "organization": "Space Telescope Science Institute",
+      "url": "https://www.stsci.edu",
+      "country": "United States",
+      "authorityType": "observatory",
+      "scope": "Science operations and public image archives for the Hubble and James Webb space telescopes (MAST, HubbleSite, webbtelescope.org)."
+    },
+    {
+      "id": "swpc",
+      "name": "NOAA SWPC",
+      "organization": "NOAA Space Weather Prediction Center",
+      "url": "https://www.swpc.noaa.gov",
+      "country": "United States",
+      "authorityType": "observatory",
+      "scope": "Space-weather forecasts and alerts: aurora (OVATION), the Kp index, and the G1–G5 geomagnetic storm scale."
+    },
+    {
+      "id": "usno",
+      "name": "US Naval Observatory",
+      "organization": "United States Naval Observatory",
+      "url": "https://www.usno.navy.mil",
+      "country": "United States",
+      "authorityType": "observatory",
+      "scope": "Precise time, almanac data, Sun/Moon rise-set, and phases."
+    },
+    {
+      "id": "wikimedia",
+      "name": "Wikimedia Commons",
+      "organization": "Wikimedia Foundation",
+      "url": "https://commons.wikimedia.org",
+      "country": "International",
+      "authorityType": "media",
+      "scope": "Openly licensed and public-domain space imagery."
+    }
+  ]
+}
