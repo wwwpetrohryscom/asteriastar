@@ -36,27 +36,30 @@ export interface ApiMeta {
   stale?: boolean;
 }
 
-export function apiMeta(opts: { provenance: string; license?: string; docs?: string } ): ApiMeta {
+export function apiMeta(opts: { provenance: string; license?: string; docs?: string; generatedAt?: string; source?: string; stale?: boolean } ): ApiMeta {
   return {
     apiVersion: API_VERSION,
     schemaVersion: GRAPH_VERSION_INFO.schemaVersion,
     dataVersion: GRAPH_VERSION_INFO.graphVersion,
-    generatedAt: DATA_GENERATED_AT,
-    source: API_SOURCE,
+    // Static graph data uses the fixed release date; dynamic endpoints (e.g. the
+    // computed Moon) pass their real computation time.
+    generatedAt: opts.generatedAt ?? DATA_GENERATED_AT,
+    source: opts.source ?? API_SOURCE,
     license: opts.license ?? API_LICENSE,
     attribution: API_ATTRIBUTION,
     provenance: opts.provenance,
     docs: `${SITE_URL}/developers/api`,
+    ...(opts.stale != null ? { stale: opts.stale } : {}),
   };
 }
 
-/** A JSON response with the provenance envelope and a long cache (data is versioned & deterministic). */
-export function apiResponse<T>(data: T, opts: { provenance: string; license?: string; count?: number }): Response {
+/** A JSON response with the provenance envelope. Static data caches long; dynamic endpoints pass a shorter cacheControl. */
+export function apiResponse<T>(data: T, opts: { provenance: string; license?: string; count?: number; generatedAt?: string; source?: string; stale?: boolean; cacheControl?: string }): Response {
   const body = { meta: apiMeta(opts), ...(opts.count != null ? { count: opts.count } : {}), data };
   return new Response(JSON.stringify(body, null, 2), {
     headers: {
       "Content-Type": "application/json; charset=utf-8",
-      "Cache-Control": "public, max-age=3600, stale-while-revalidate=86400",
+      "Cache-Control": opts.cacheControl ?? "public, max-age=3600, stale-while-revalidate=86400",
       "X-Api-Version": API_VERSION,
     },
   });
