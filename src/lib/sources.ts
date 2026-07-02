@@ -42,6 +42,9 @@ export type SourceKey =
   | "swpc"
   | "donki"
   | "celestrak"
+  | "stsci"
+  | "esa-hubble"
+  | "esa-webb"
   | "wikimedia";
 
 /** The kind of authority a source carries — used for evidence weighting. */
@@ -394,6 +397,39 @@ export const SOURCES: Record<SourceKey, Source> = {
     country: "United States",
     authorityType: "database",
     reliability: "Long-standing public source of orbital elements; attribution expected.",
+  },
+  stsci: {
+    key: "stsci",
+    name: "STScI",
+    organization: "Space Telescope Science Institute",
+    url: "https://www.stsci.edu",
+    scope: "Science operations and public image archives for the Hubble and James Webb space telescopes (MAST, HubbleSite, webbtelescope.org).",
+    country: "United States",
+    authorityType: "observatory",
+    reliability: "Primary US image archive for Hubble and Webb; most releases are free to use with credit.",
+    usage: "Hubble/Webb images released by NASA/STScI are generally free to use with a credit line; each item's terms are checked before use.",
+  },
+  "esa-hubble": {
+    key: "esa-hubble",
+    name: "ESA/Hubble",
+    organization: "ESA/Hubble (European Space Agency)",
+    url: "https://esahubble.org",
+    scope: "The European Hubble image archive and press releases.",
+    country: "Europe",
+    authorityType: "observatory",
+    reliability: "Primary European Hubble image archive; most images are released under CC BY 4.0.",
+    usage: "ESA/Hubble images are generally licensed CC BY 4.0; attribution is required.",
+  },
+  "esa-webb": {
+    key: "esa-webb",
+    name: "ESA/Webb",
+    organization: "ESA/Webb (European Space Agency)",
+    url: "https://esawebb.org",
+    scope: "The European James Webb Space Telescope image archive and press releases.",
+    country: "Europe",
+    authorityType: "observatory",
+    reliability: "Primary European Webb image archive; most images are released under CC BY 4.0.",
+    usage: "ESA/Webb images are generally licensed CC BY 4.0; attribution is required.",
   },
   wikimedia: {
     key: "wikimedia",
