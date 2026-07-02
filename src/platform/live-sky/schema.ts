@@ -20,12 +20,14 @@ import type { SourceKey } from "@/lib/sources";
 export type DataStatus =
   | "reference"  // timeless, source-backed facts (e.g. the annual Perseids parameters)
   | "prepared"   // architecture ready for a named provider; NO current values shown
+  | "computed"   // a deterministic, source-backed calculation valid within its window (NOT a live provider feed)
   | "live"       // real data from a connected provider within its validity window
-  | "stale";     // live data now past its validUntil — must be flagged, never shown as current
+  | "stale";     // live/computed data now past its validUntil — must be flagged, never shown as current
 
 export const DATA_STATUS_LABEL: Record<DataStatus, string> = {
   reference: "Reference data",
   prepared: "Prepared for live data",
+  computed: "Computed (source-backed calculation)",
   live: "Live",
   stale: "Stale — awaiting refresh",
 };
@@ -123,13 +125,44 @@ export function preparedEnvelope(opts: {
 }
 
 /**
- * Compute staleness for a (future) live datum given the current time. Pure and
- * deterministic. If `status` is not "live", staleness does not apply and the
- * envelope is returned unchanged. Included now so the architecture is
- * stale-aware from day one, even though no live data exists yet.
+ * Build an envelope for a deterministic, source-backed calculation (e.g. the
+ * computed Moon phase). It is NOT a live provider feed — `provider` is omitted
+ * and the caller records the calculation basis in `provenance`/`licenseNotes`.
+ * `generatedAt` is the real computation time; `validUntil` is a conservative
+ * cache/validity horizon.
+ */
+export function computedEnvelope(opts: {
+  source: SourceKey[];
+  generatedAt: string;
+  validFrom: string;
+  validUntil: string;
+  confidence?: Confidence;
+  stale?: boolean;
+  provenance: string;
+  licenseNotes: string;
+}): SkyEnvelope {
+  return {
+    status: opts.stale ? "stale" : "computed",
+    source: opts.source,
+    generatedAt: opts.generatedAt,
+    validFrom: opts.validFrom,
+    validUntil: opts.validUntil,
+    confidence: opts.confidence ?? "modeled",
+    stale: opts.stale ?? false,
+    provenance: opts.provenance,
+    licenseNotes: opts.licenseNotes,
+  };
+}
+
+/**
+ * Compute staleness for a live OR computed datum given the current time. Pure
+ * and deterministic. If the status is not time-bounded (reference/prepared), or
+ * there is no `validUntil`, staleness does not apply and the envelope is
+ * returned unchanged. Past `validUntil`, the status flips to "stale" and
+ * `stale` is true — such data must never be shown as current.
  */
 export function withStaleness(env: SkyEnvelope, nowIso: string): SkyEnvelope {
-  if (env.status !== "live" || !env.validUntil) return env;
+  if ((env.status !== "live" && env.status !== "computed") || !env.validUntil) return env;
   const stale = nowIso > env.validUntil;
-  return { ...env, status: stale ? "stale" : "live", stale };
+  return { ...env, status: stale ? "stale" : env.status, stale };
 }
