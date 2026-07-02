@@ -12,13 +12,13 @@ import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/js
 import { ROUTES, skyPath, meteorShowerPath } from "@/lib/routes";
 
 const s = engine.liveSky;
-const DESCRIPTION = "The Night Sky Platform — architecture for a daily-use observing dashboard. Meteor-shower guides and reference data are source-backed; live, location-aware sky data (Moon, planets, ISS, aurora, space weather) is prepared for integration. Nothing here fabricates current conditions.";
+const DESCRIPTION = "The Night Sky Platform — architecture for a daily-use observing dashboard. Meteor-shower guides and reference data are source-backed; the current Moon phase is computed and timestamped; other live, location-aware sky data (planets, ISS, aurora, space weather) is prepared for integration. Nothing here fabricates current conditions.";
 
 export const metadata: Metadata = buildMetadata({ title: "Night Sky Platform", description: DESCRIPTION, path: ROUTES.sky });
 
 const SECTIONS: { title: string; href: string; blurb: string }[] = [
   { title: "The Night Sky Tonight", href: skyPath("night-sky-tonight"), blurb: "A location-aware view of what's up — prepared for integration." },
-  { title: "Moon Phase", href: skyPath("moon"), blurb: "The lunar cycle as reference; current phase prepared." },
+  { title: "Moon Phase", href: skyPath("moon"), blurb: "Current phase & illumination — computed and timestamped." },
   { title: "Planet Visibility", href: skyPath("planet-visibility"), blurb: "How the naked-eye planets appear through the year." },
   { title: "Meteor Showers", href: skyPath("meteor-showers"), blurb: "Guides to the eight major annual showers." },
   { title: "Eclipses", href: skyPath("eclipses"), blurb: "Solar and lunar eclipse types and safety." },
@@ -48,6 +48,7 @@ export default function SkyHub() {
         <div className="mt-5 flex flex-wrap items-center gap-2">
           <Badge tone="accent">Night Sky</Badge>
           <DataStatusBadge status="reference" />
+          <DataStatusBadge status="computed" />
           <DataStatusBadge status="prepared" />
         </div>
       </HeroSection>
@@ -56,7 +57,7 @@ export default function SkyHub() {
         <aside role="note" className="rounded-2xl border border-amber-400/25 bg-amber-400/[0.06] p-5">
           <p className="text-sm font-semibold text-amber-200">No fabricated live data</p>
           <p className="mt-1.5 text-sm leading-relaxed text-muted">
-            This platform never invents current sky conditions, positions, forecasts, ISS locations, solar activity, or eclipse dates. Data is either <strong className="text-fg">reference</strong> (timeless, source-backed facts) or <strong className="text-fg">prepared</strong> (architecture ready for a named provider, with no values shown). Every datum is clearly labelled with its status and source.
+            This platform never invents current sky conditions, positions, forecasts, ISS locations, solar activity, or eclipse dates. Data is <strong className="text-fg">reference</strong> (timeless, source-backed facts), <strong className="text-fg">computed</strong> (a deterministic, source-backed calculation, timestamped — currently the Moon phase), or <strong className="text-fg">prepared</strong> (architecture ready for a named provider, with no values shown). Every datum is clearly labelled with its status and source.
           </p>
         </aside>
 

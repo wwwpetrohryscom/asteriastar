@@ -153,6 +153,14 @@ export const ENDPOINTS: EndpointDef[] = [
     returns: "{ count, connected, providers: Provider[] }",
   },
   {
+    id: "live-sky-moon", group: "live-sky", method: "GET", path: "/api/v0/live-sky/moon",
+    summary: "Current Moon phase", status: "implemented",
+    description: "The current Moon phase and illuminated fraction, deterministically COMPUTED from public-domain solar/lunar formulae (method: computed — not a live provider feed). Carries its own honesty envelope (generatedAt, validFrom, validUntil, source, stale). Global values: no location needed.",
+    params: [{ name: "date", in: "query", required: false, type: "string", description: "Compute for a specific date (YYYY-MM-DD or ISO-8601). Defaults to the current instant.", example: "2026-06-29" }],
+    example: "/api/v0/live-sky/moon",
+    returns: "MoonData & { envelope }",
+  },
+  {
     id: "openapi", group: "meta", method: "GET", path: "/api/v0/openapi.json",
     summary: "OpenAPI document", status: "implemented",
     description: "The OpenAPI 3.1 description of every implemented endpoint. Planned endpoints are intentionally absent from the spec.",

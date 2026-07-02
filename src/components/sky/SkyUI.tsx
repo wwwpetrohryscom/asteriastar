@@ -12,6 +12,7 @@ import type { ProviderInfo } from "@/platform/live-sky/providers";
 const STATUS_CLASSES: Record<DataStatus, string> = {
   reference: "border-teal-400/30 bg-teal-400/10 text-teal-300",
   prepared: "border-amber-400/30 bg-amber-400/10 text-amber-300",
+  computed: "border-sky-400/30 bg-sky-400/10 text-sky-300",
   live: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
   stale: "border-rose-400/30 bg-rose-400/10 text-rose-300",
 };

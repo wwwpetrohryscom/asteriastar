@@ -43,6 +43,31 @@ export interface MoonPhase {
   ageDays?: number;
   moonEntityId: string; // moon:the-moon
 }
+
+/**
+ * The Program P Moon data contract — a computed (or, in future, provider-fetched)
+ * Moon phase for an instant. Timestamps, source, confidence, and staleness live
+ * in the accompanying SkyEnvelope; this payload carries the physical values.
+ */
+export interface MoonData {
+  objectEntityId: string; // moon:the-moon
+  phase: MoonPhaseName;
+  phaseName: string; // human label, e.g. "Waxing Gibbous"
+  /** Sun–Moon elongation in degrees (0 = new, 90 = first quarter, 180 = full, 270 = last quarter). */
+  phaseAngleDeg: number;
+  /** Illuminated fraction of the disc, 0–1. */
+  illuminationFraction: number;
+  /** Illuminated fraction as a percentage, 0–100. */
+  illuminationPercent: number;
+  /** Age since the previous new moon, in days. */
+  synodicAgeDays: number;
+  waxing: boolean;
+  /** How the value was obtained. v1 is always "computed". */
+  method: "computed" | "provider";
+  /** The instant the values are for (ISO-8601). */
+  atIso: string;
+  calculationNotes: string;
+}
 export interface RiseSet {
   bodyEntityId: string; // moon:the-moon or star:sun
   riseIso?: string;

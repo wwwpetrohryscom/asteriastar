@@ -20,9 +20,16 @@ deliberately, **no connected live providers yet**. Data is one of:
 - **`prepared`** — architecture ready for a named provider, with **no values
   shown** and **no timestamp**. Pages display a clear "prepared for integration"
   panel naming the provider that would supply the data.
+- **`computed`** *(added in Program P)* — a deterministic, source-backed
+  **calculation**, timestamped and stale-aware, and clearly **not** a live
+  provider feed. The first such datum is the current Moon phase and illumination
+  (see [NIGHT_SKY_PROVIDER_INTEGRATION.md](./NIGHT_SKY_PROVIDER_INTEGRATION.md)).
 
-`live` and `stale` statuses exist in the schema (the platform is stale-aware from
-day one) but **no datum ever carries them yet**, and the validator enforces that.
+The `live` status still describes **no datum** — no live provider is connected.
+`computed` readings are stale-aware: the current Moon reading flips to `stale`
+once it is past its validity window. The `stale` status exists in the schema from
+day one, and the validator still enforces that nothing is ever falsely marked
+`live`.
 
 ## The platform layer — `src/platform/live-sky/`
 

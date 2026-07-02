@@ -51,14 +51,14 @@ export interface SkyPageDef {
 export const SKY_PAGES: SkyPageDef[] = [
   {
     slug: "night-sky-tonight", title: "The Night Sky Tonight", eyebrow: "Night Sky Platform",
-    lead: "A location-aware view of what's up tonight — the Moon, visible planets, and any events — is prepared for integration. No conditions are shown until a location and data providers are connected.",
+    lead: "A location-aware view of what's up tonight — visible planets and events — is prepared for integration. The current Moon phase and illumination are already available on the Moon page. No location-dependent conditions are shown until a location and data providers are connected.",
     content: "tonight", providerKeys: ["jpl-horizons", "usno"], sourceKeys: ["jpl", "usno"],
     relatedEntityIds: ["moon:the-moon", "star:sun", "planet:jupiter", "planet:saturn"],
     learnHref: "/learn/observing-the-night-sky",
   },
   {
-    slug: "moon", title: "Moon Phase — Data Architecture", eyebrow: "Night Sky Platform",
-    lead: "The eight phases of the Moon and the synodic cycle are shown as reference. The current phase, illumination, and moonrise/moonset are prepared for a connected almanac provider.",
+    slug: "moon", title: "Moon Phase Data", eyebrow: "Night Sky Platform",
+    lead: "The current Moon phase and illuminated fraction, computed from public-domain astronomical formulae and timestamped, alongside the eight phases and the synodic cycle as reference. Moonrise and moonset are not yet available.",
     content: "moon", providerKeys: ["usno", "jpl-horizons"], sourceKeys: ["usno", "jpl"],
     relatedEntityIds: ["moon:the-moon", "star:sun"], learnHref: "/learn/observing-the-night-sky",
   },
