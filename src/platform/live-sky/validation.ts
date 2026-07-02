@@ -2,8 +2,10 @@ import { getEntityById } from "@/knowledge-graph";
 import type { Enveloped, SkyEnvelope } from "@/platform/live-sky/schema";
 import { meteorShowers, METEOR_SHOWERS } from "@/platform/live-sky/meteorShowers";
 import { moon, MOON_PHASES } from "@/platform/live-sky/moon";
+import { sun } from "@/platform/live-sky/sun";
 import { computeMoon } from "@/platform/live-sky/providers/computed-moon";
-import type { MoonPhaseName } from "@/platform/live-sky/models";
+import type { MoonPhaseName, SolarDayCondition } from "@/platform/live-sky/models";
+import { timezoneOffsetMinutes, type LocationInput } from "@/platform/live-sky/location";
 import { planets } from "@/platform/live-sky/planets";
 import { eclipses } from "@/platform/live-sky/eclipses";
 import { comets } from "@/platform/live-sky/comets";
@@ -111,6 +113,9 @@ export function validateLiveSky(): string[] {
   // 6. The computed Moon integration (Program P) — real data, honest envelope.
   issues.push(...validateMoon());
 
+  // 7. The computed Sun & Twilight integration (Program Q) — location-aware, honest.
+  issues.push(...validateSun());
+
   return issues;
 }
 
@@ -164,5 +169,144 @@ export function validateMoon(): string[] {
     }
     if (c.phase !== r.phase) issues.push(`moon calc: ${r.iso} phase ${c.phase} != expected ${r.phase}`);
   }
+  return issues;
+}
+
+/** UTC minutes-of-day of an ISO instant, or null. */
+function minuteOfDayUTC(iso: string | null): number | null {
+  if (!iso) return null;
+  const d = new Date(iso);
+  return d.getUTCHours() * 60 + d.getUTCMinutes();
+}
+
+interface SunFixture {
+  city: string;
+  input: LocationInput;
+  expect: SolarDayCondition; // the primary condition that must be present
+  /** For polar day/night: sunrise/sunset must be null. For normal: must be present. */
+  polar: boolean;
+  /** Optional extra conditions that must be present. */
+  also?: SolarDayCondition[];
+  /** Optional expected sunrise UTC minute-of-day (± tolerance) — a numeric correctness anchor. */
+  sunriseUtcMin?: number;
+}
+
+/**
+ * Validate the computed Sun & Twilight integration: the honesty envelope, the
+ * data contract, event ordering, durations, polar-condition handling, invalid
+ * input, and numeric correctness against known cities. Deterministic — a fixed
+ * `now`, fixed locations, fixed dates.
+ */
+export function validateSun(): string[] {
+  const issues: string[] = [];
+  const now = new Date("2026-06-29T00:00:00Z");
+
+  // Invalid inputs must return structured errors, never guessed values.
+  const bad: { input: LocationInput; field: string }[] = [
+    { input: { latitude: 91, longitude: 0, date: "2025-06-21" }, field: "latitude" },
+    { input: { latitude: 0, longitude: 200, date: "2025-06-21" }, field: "longitude" },
+    { input: { latitude: 0, longitude: 0, date: "not-a-date" }, field: "date" },
+    { input: { latitude: 0, longitude: 0, date: "1200-01-01" }, field: "date" },
+    { input: { latitude: 0, longitude: 0, date: "2025-06-21", timezone: "Nowhere/Nowhere" }, field: "timezone" },
+  ];
+  for (const b of bad) {
+    const r = sun.forLocationDate(b.input, now);
+    if (r.ok) issues.push(`sun: expected a ${b.field} error for ${JSON.stringify(b.input)}, got a result`);
+    else if (r.field !== b.field) issues.push(`sun: expected error field ${b.field}, got ${r.field}`);
+  }
+
+  const fixtures: SunFixture[] = [
+    { city: "Prague equinox", input: { latitude: 50.0755, longitude: 14.4378, date: "2025-03-20", timezone: "Europe/Prague" }, expect: "normal", polar: false },
+    { city: "Quito", input: { latitude: -0.1807, longitude: -78.4678, date: "2025-06-21", timezone: "America/Guayaquil" }, expect: "normal", polar: false },
+    { city: "New York solstice", input: { latitude: 40.7128, longitude: -74.006, date: "2025-06-21", timezone: "America/New_York" }, expect: "normal", polar: false, sunriseUtcMin: 9 * 60 + 25 },
+    { city: "Sydney winter", input: { latitude: -33.8688, longitude: 151.2093, date: "2025-06-21", timezone: "Australia/Sydney" }, expect: "normal", polar: false },
+    { city: "Reykjavik solstice", input: { latitude: 64.1466, longitude: -21.9426, date: "2025-06-21", timezone: "Atlantic/Reykjavik" }, expect: "normal", polar: false, also: ["no_astronomical_twilight"] },
+    { city: "Tromso solstice", input: { latitude: 69.6492, longitude: 18.9553, date: "2025-06-21", timezone: "Europe/Oslo" }, expect: "polar_day", polar: true },
+    { city: "Longyearbyen midsummer", input: { latitude: 78.2232, longitude: 15.6267, date: "2025-06-21", timezone: "Arctic/Longyearbyen" }, expect: "polar_day", polar: true },
+    { city: "Longyearbyen midwinter", input: { latitude: 78.2232, longitude: 15.6267, date: "2025-12-21", timezone: "Arctic/Longyearbyen" }, expect: "polar_night", polar: true },
+  ];
+
+  for (const f of fixtures) {
+    const r = sun.forLocationDate(f.input, now);
+    if (!r.ok) {
+      issues.push(`sun: ${f.city} returned an error (${r.field}: ${r.message})`);
+      continue;
+    }
+    const { data, envelope } = r.value;
+
+    // Envelope honesty.
+    checkEnvelope(envelope, `sun.${f.city}`, issues);
+    if (envelope.status !== "computed") issues.push(`sun.${f.city}: status must be computed, got ${envelope.status}`);
+    if (envelope.stale) issues.push(`sun.${f.city}: a deterministic date computation must not be stale`);
+    if (envelope.provider) issues.push(`sun.${f.city}: computed data must not claim a live provider`);
+    if (!envelope.generatedAt || !envelope.validFrom || !envelope.validUntil) issues.push(`sun.${f.city}: envelope missing timestamps`);
+
+    // Data contract.
+    if (!data) {
+      issues.push(`sun.${f.city}: data must not be null`);
+      continue;
+    }
+    if (!getEntityById(data.objectEntityId)) issues.push(`sun.${f.city}: objectEntityId does not resolve: ${data.objectEntityId}`);
+    if (data.method !== "computed") issues.push(`sun.${f.city}: method must be computed`);
+    if (data.input.latitude !== f.input.latitude || data.input.longitude !== f.input.longitude) issues.push(`sun.${f.city}: input coordinates not echoed`);
+    if (!data.status.includes(f.expect)) issues.push(`sun.${f.city}: expected status ${f.expect}, got [${data.status.join(", ")}]`);
+    for (const extra of f.also ?? []) {
+      if (!data.status.includes(extra)) issues.push(`sun.${f.city}: expected status ${extra}, got [${data.status.join(", ")}]`);
+    }
+
+    // Duration sanity.
+    const d = data.duration;
+    if (d.daylightMinutes < 0 || d.daylightMinutes > 1440) issues.push(`sun.${f.city}: daylightMinutes out of range: ${d.daylightMinutes}`);
+    for (const [k, v] of Object.entries(d)) {
+      if (v < 0) issues.push(`sun.${f.city}: ${k} is negative: ${v}`);
+    }
+
+    if (f.polar) {
+      // The Sun does not rise or set — those events MUST be null (never faked).
+      if (data.events.sunrise.iso !== null || data.events.sunset.iso !== null) issues.push(`sun.${f.city}: polar condition must have null sunrise/sunset`);
+      if (f.expect === "polar_day" && d.daylightMinutes !== 1440) issues.push(`sun.${f.city}: polar day must have 1440 daylight minutes, got ${d.daylightMinutes}`);
+      if (f.expect === "polar_night" && d.daylightMinutes !== 0) issues.push(`sun.${f.city}: polar night must have 0 daylight minutes, got ${d.daylightMinutes}`);
+    } else {
+      // Normal day: sunrise/sunset present and events strictly ordered where defined.
+      if (!data.events.sunrise.iso || !data.events.sunset.iso) issues.push(`sun.${f.city}: normal day must have sunrise and sunset`);
+      const order = [
+        data.events.astronomicalDawn.iso, data.events.nauticalDawn.iso, data.events.civilDawn.iso,
+        data.events.sunrise.iso, data.events.solarNoon.iso, data.events.sunset.iso,
+        data.events.civilDusk.iso, data.events.nauticalDusk.iso, data.events.astronomicalDusk.iso,
+      ].filter((x): x is string => x !== null).map((x) => new Date(x).getTime());
+      for (let i = 1; i < order.length; i++) {
+        if (order[i] < order[i - 1]) { issues.push(`sun.${f.city}: events out of chronological order`); break; }
+      }
+      // Numeric correctness anchor (sunrise UTC minute-of-day within 5 minutes).
+      if (f.sunriseUtcMin !== undefined) {
+        const got = minuteOfDayUTC(data.events.sunrise.iso);
+        if (got === null || Math.abs(got - f.sunriseUtcMin) > 5) {
+          issues.push(`sun.${f.city}: sunrise ${got} min UTC differs from expected ~${f.sunriseUtcMin} min`);
+        }
+      }
+    }
+  }
+
+  // Local-civil-date anchoring across the full timezone range, including the
+  // UTC+13/+14 and UTC−12 extremes where solar noon and clock noon straddle UTC
+  // midnight. Solar noon's LOCAL calendar date must equal the requested date.
+  const dateline: LocationInput[] = [
+    { city: "Kiritimati", latitude: 1.87, longitude: -157.36, date: "2025-06-21", timezone: "Pacific/Kiritimati" } as LocationInput & { city: string },
+    { city: "Apia", latitude: -13.83, longitude: -171.76, date: "2025-06-21", timezone: "Pacific/Apia" } as LocationInput & { city: string },
+    { city: "Baker-ish (UTC-12)", latitude: 0, longitude: -177, date: "2025-06-21", timezone: "Etc/GMT+12" } as LocationInput & { city: string },
+    { city: "Chatham", latitude: -43.95, longitude: -176.55, date: "2025-06-21", timezone: "Pacific/Chatham" } as LocationInput & { city: string },
+  ];
+  for (const input of dateline) {
+    const label = (input as LocationInput & { city: string }).city;
+    const r = sun.forLocationDate(input, now);
+    if (!r.ok) { issues.push(`sun.${label}: returned an error (${r.field})`); continue; }
+    const noonIso = r.value.data?.events.solarNoon.iso;
+    if (!noonIso) { issues.push(`sun.${label}: solar noon missing`); continue; }
+    const instant = new Date(noonIso);
+    const local = new Date(instant.getTime() + timezoneOffsetMinutes(input.timezone as string, instant) * 60_000);
+    const localDate = `${local.getUTCFullYear()}-${String(local.getUTCMonth() + 1).padStart(2, "0")}-${String(local.getUTCDate()).padStart(2, "0")}`;
+    if (localDate !== input.date) issues.push(`sun.${label}: solar noon local date ${localDate} != requested ${input.date} (timezone anchoring)`);
+  }
+
   return issues;
 }
