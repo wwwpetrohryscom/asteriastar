@@ -1,0 +1,195 @@
+{
+  "generatedAt": "2026-06-29T00:00:00Z",
+  "dataVersion": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "source": "Asteria Star — Scientific Data Engine & Knowledge Graph",
+  "license": "cc-by-sa-4.0",
+  "count": 21,
+  "images": [
+    {
+      "id": "cosmic-cliffs-carina",
+      "title": "Cosmic Cliffs in the Carina Nebula",
+      "objectName": "Carina Nebula (NGC 3372)",
+      "imageType": "composite",
+      "source": "stsci-webb",
+      "license": "public-domain",
+      "publicationYear": 2022
+    },
+    {
+      "id": "crab-nebula-hubble",
+      "title": "The Crab Nebula (M1)",
+      "objectName": "Crab Nebula (Messier 1)",
+      "imageType": "composite",
+      "source": "stsci-hubble",
+      "license": "public-domain",
+      "publicationYear": 2005
+    },
+    {
+      "id": "curiosity-gale-crater",
+      "title": "Curiosity on Mars — Gale Crater",
+      "objectName": "Gale Crater, Mars",
+      "imageType": "mission",
+      "source": "nasa-image-library",
+      "license": "public-domain"
+    },
+    {
+      "id": "day-the-earth-smiled",
+      "title": "Saturn — The Day the Earth Smiled",
+      "objectName": "Saturn and its rings, with Earth",
+      "imageType": "composite",
+      "source": "nasa-image-library",
+      "license": "public-domain",
+      "publicationYear": 2013
+    },
+    {
+      "id": "earthrise-apollo-8",
+      "title": "Earthrise",
+      "objectName": "Earth, from lunar orbit",
+      "imageType": "mission",
+      "source": "nasa-image-library",
+      "license": "public-domain",
+      "publicationYear": 1968
+    },
+    {
+      "id": "hubble-ultra-deep-field",
+      "title": "The Hubble Ultra Deep Field",
+      "objectName": "Hubble Ultra Deep Field",
+      "imageType": "composite",
+      "source": "stsci-hubble",
+      "license": "public-domain",
+      "publicationYear": 2004
+    },
+    {
+      "id": "iss-in-orbit",
+      "title": "The International Space Station",
+      "objectName": "The International Space Station",
+      "imageType": "mission",
+      "source": "nasa-image-library",
+      "license": "public-domain"
+    },
+    {
+      "id": "jupiter-jwst",
+      "title": "Jupiter (James Webb Space Telescope)",
+      "objectName": "Jupiter",
+      "imageType": "composite",
+      "source": "stsci-webb",
+      "license": "public-domain",
+      "publicationYear": 2022
+    },
+    {
+      "id": "m87-black-hole",
+      "title": "The First Image of a Black Hole (M87*)",
+      "objectName": "M87* — supermassive black hole in Messier 87",
+      "imageType": "processed",
+      "source": "eht",
+      "license": "cc-by-4-0",
+      "publicationYear": 2019
+    },
+    {
+      "id": "milky-way-over-paranal",
+      "title": "The Milky Way over Paranal",
+      "objectName": "The Milky Way",
+      "imageType": "observation",
+      "source": "eso",
+      "license": "cc-by-4-0"
+    },
+    {
+      "id": "pale-blue-dot",
+      "title": "Pale Blue Dot",
+      "objectName": "Earth, from 6 billion km",
+      "imageType": "mission",
+      "source": "nasa-image-library",
+      "license": "public-domain",
+      "publicationYear": 1990
+    },
+    {
+      "id": "perseverance-jezero",
+      "title": "Perseverance on Mars — Jezero Crater",
+      "objectName": "Jezero Crater, Mars",
+      "imageType": "mission",
+      "source": "nasa-image-library",
+      "license": "public-domain",
+      "publicationYear": 2021
+    },
+    {
+      "id": "pillars-of-creation-hubble",
+      "title": "Pillars of Creation (Hubble, 1995)",
+      "objectName": "Eagle Nebula (Messier 16)",
+      "imageType": "composite",
+      "source": "stsci-hubble",
+      "license": "public-domain",
+      "publicationYear": 1995
+    },
+    {
+      "id": "sagittarius-a-star-image",
+      "title": "Sagittarius A* — The Milky Way's Black Hole",
+      "objectName": "Sagittarius A* — the Milky Way's central black hole",
+      "imageType": "processed",
+      "source": "eht",
+      "license": "cc-by-4-0",
+      "publicationYear": 2022
+    },
+    {
+      "id": "sombrero-galaxy",
+      "title": "The Sombrero Galaxy (M104)",
+      "objectName": "Sombrero Galaxy (Messier 104)",
+      "imageType": "composite",
+      "source": "stsci-hubble",
+      "license": "public-domain",
+      "publicationYear": 2003
+    },
+    {
+      "id": "southern-ring-nebula",
+      "title": "The Southern Ring Nebula",
+      "objectName": "Southern Ring Nebula (NGC 3132)",
+      "imageType": "composite",
+      "source": "stsci-webb",
+      "license": "public-domain",
+      "publicationYear": 2022
+    },
+    {
+      "id": "stephans-quintet",
+      "title": "Stephan's Quintet",
+      "objectName": "Stephan's Quintet (galaxy group)",
+      "imageType": "composite",
+      "source": "stsci-webb",
+      "license": "public-domain",
+      "publicationYear": 2022
+    },
+    {
+      "id": "sun-sdo",
+      "title": "The Sun in Extreme Ultraviolet",
+      "objectName": "The Sun",
+      "imageType": "observation",
+      "source": "nasa-image-library",
+      "license": "public-domain"
+    },
+    {
+      "id": "the-blue-marble",
+      "title": "The Blue Marble",
+      "objectName": "Earth, from Apollo 17",
+      "imageType": "mission",
+      "source": "nasa-image-library",
+      "license": "public-domain",
+      "publicationYear": 1972
+    },
+    {
+      "id": "voyager-family-portrait",
+      "title": "The Solar System Family Portrait",
+      "objectName": "The Solar System, from Voyager 1",
+      "imageType": "composite",
+      "source": "nasa-image-library",
+      "license": "public-domain",
+      "publicationYear": 1990
+    },
+    {
+      "id": "webb-first-deep-field",
+      "title": "Webb's First Deep Field (SMACS 0723)",
+      "objectName": "Galaxy cluster SMACS 0723",
+      "imageType": "observation",
+      "source": "stsci-webb",
+      "license": "public-domain",
+      "publicationYear": 2022
+    }
+  ]
+}

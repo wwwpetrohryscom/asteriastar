@@ -1,0 +1,232 @@
+{
+  "generatedAt": "2026-06-29T00:00:00Z",
+  "dataVersion": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "source": "Asteria Star — Scientific Data Engine & Knowledge Graph",
+  "license": "cc-by-sa-4.0",
+  "count": 18,
+  "datasets": [
+    {
+      "id": "asteroids",
+      "title": "Asteroids",
+      "description": "Notable asteroids and small bodies.",
+      "recordCount": 10,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "jpl",
+        "mpc"
+      ]
+    },
+    {
+      "id": "astronomers",
+      "title": "Astronomers",
+      "description": "Astronomers whose work shaped our understanding of the sky.",
+      "recordCount": 48,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "britannica",
+        "iau"
+      ]
+    },
+    {
+      "id": "comets",
+      "title": "Comets",
+      "description": "Comets of the Solar System.",
+      "recordCount": 10,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "mpc"
+      ]
+    },
+    {
+      "id": "constellations",
+      "title": "Constellations",
+      "description": "Constellations referenced across the graph.",
+      "recordCount": 88,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "iau"
+      ]
+    },
+    {
+      "id": "deep-sky-objects",
+      "title": "Deep-Sky Objects",
+      "description": "Galaxies, nebulae, clusters, and black holes beyond the Solar System.",
+      "recordCount": 638,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa",
+        "noirlab",
+        "ned"
+      ]
+    },
+    {
+      "id": "dwarf-planets",
+      "title": "Dwarf Planets",
+      "description": "Recognized dwarf planets.",
+      "recordCount": 5,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "iau",
+        "jpl"
+      ]
+    },
+    {
+      "id": "exoplanets",
+      "title": "Exoplanets",
+      "description": "Worlds orbiting other stars, and their host systems.",
+      "recordCount": 849,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "galaxies",
+      "title": "Galaxies",
+      "description": "Galaxies in the knowledge graph.",
+      "recordCount": 145,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa",
+        "ned"
+      ]
+    },
+    {
+      "id": "launch-vehicles",
+      "title": "Launch Vehicles",
+      "description": "Rockets that carry missions to orbit and beyond.",
+      "recordCount": 20,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "meteor-showers",
+      "title": "Meteor Showers",
+      "description": "Annual meteor showers and their radiants.",
+      "recordCount": 6,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "imo",
+        "nasa"
+      ]
+    },
+    {
+      "id": "missions",
+      "title": "Space Missions",
+      "description": "Crewed and robotic missions of exploration.",
+      "recordCount": 58,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa",
+        "jpl"
+      ]
+    },
+    {
+      "id": "moons",
+      "title": "Moons",
+      "description": "Natural satellites of the planets and dwarf planets.",
+      "recordCount": 24,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jpl"
+      ]
+    },
+    {
+      "id": "nebulae",
+      "title": "Nebulae",
+      "description": "Interstellar clouds — emission, planetary, and supernova remnants.",
+      "recordCount": 119,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "observatories",
+      "title": "Observatories",
+      "description": "Ground-based observatories.",
+      "recordCount": 21,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "noirlab",
+        "eso",
+        "nasa"
+      ]
+    },
+    {
+      "id": "planets",
+      "title": "Planets",
+      "description": "The eight planets of the Solar System.",
+      "recordCount": 8,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jpl"
+      ]
+    },
+    {
+      "id": "space-agencies",
+      "title": "Space Agencies",
+      "description": "Agencies and institutions of spaceflight and astronomy.",
+      "recordCount": 31,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "stars",
+      "title": "Stars",
+      "description": "Named stars in the knowledge graph, with their constellations and connections.",
+      "recordCount": 2998,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "iau",
+        "nasa",
+        "simbad"
+      ]
+    },
+    {
+      "id": "telescopes",
+      "title": "Space Telescopes",
+      "description": "Orbiting observatories.",
+      "recordCount": 18,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    }
+  ]
+}

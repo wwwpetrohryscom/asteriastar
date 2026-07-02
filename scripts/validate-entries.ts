@@ -85,11 +85,20 @@ async function main() {
   }
   const citations = await import("../src/lib/citations");
   openIssues.push(...citations.validateCitations());
+  // Open Data & Scientific APIs platform (Program L): envelope, catalogue,
+  // licenses, endpoint registry, OpenAPI, and export-manifest integrity — plus
+  // the anti-fabrication invariants (no fake checksums, no planned endpoints in
+  // the spec, read-only, real record counts).
+  const openData = await import("../src/platform/open-data");
+  openIssues.push(...openData.validateOpenData());
   if (openIssues.length > 0) {
     console.error(`\n✗ ${openIssues.length} open-data issue(s):`);
     for (const i of openIssues) console.error(`  • ${i}`);
     process.exit(1);
   }
+  console.log(
+    `✓ Open data valid — ${openData.CATALOGUE_STATS.total} datasets, ${openData.IMPLEMENTED_ENDPOINTS.length} API endpoints, ${Object.keys(openData.EXPORT_MANIFEST.exports).length} checksummed exports`,
+  );
 
   // Platform core: registries, localization readiness, extensions, components,
   // search core, and layer-model consistency.

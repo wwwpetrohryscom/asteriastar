@@ -59,12 +59,12 @@ export default function OpenDataPage() {
           <h2 id="access-heading" className="font-display text-2xl font-bold">Access the graph</h2>
           <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {[
+              { href: ROUTES.data, title: "Data Portal", desc: "Datasets, exports, schemas, licensing, provenance & quality.", data: false },
+              { href: "/api/v0/entities", title: "Open Data API v0", desc: "Read-only, engine-backed JSON endpoints (live).", data: true },
               { href: ROUTES.datasets, title: "Datasets", desc: `${DATASETS.length} open datasets (JSON, CSV, JSON-LD).`, data: false },
-              { href: ROUTES.registry, title: "Registries", desc: "Schema, identifiers, relationships, and entities.", data: false },
-              { href: ROUTES.developers, title: "Developers", desc: "Versioned, typed API contracts (documented).", data: false },
+              { href: ROUTES.developersApi, title: "API reference", desc: "Endpoints, parameters, examples & OpenAPI.", data: false },
               { href: "/data/graph.json", title: "graph.json", desc: "The full graph as JSON.", data: true },
               { href: "/data/graph.jsonld", title: "graph.jsonld", desc: "JSON-LD (RDF-compatible).", data: true },
-              { href: ROUTES.entityIndex, title: "Entity index", desc: "Every entity, A–Z.", data: false },
             ].map((item) => {
               const className =
                 "rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:border-white/25 hover:bg-white/[0.04]";

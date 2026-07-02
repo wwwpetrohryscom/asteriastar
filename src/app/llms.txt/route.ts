@@ -4,6 +4,7 @@ import { GRAPH_STATS, GRAPH_VERSION_INFO } from "@/knowledge-graph";
 import { engine } from "@/platform/data-engine";
 import { TOPICS, RELATIONSHIP_PAGES } from "@/lib/discovery";
 import { DATASETS } from "@/lib/datasets";
+import { IMPLEMENTED_ENDPOINTS, EXPORT_MANIFEST } from "@/platform/open-data";
 import { COMPARISONS } from "@/lib/compare";
 import { LEARNING_PATHS } from "@/lib/learn";
 import { TIMELINES } from "@/lib/timelines";
@@ -217,13 +218,27 @@ export function GET(): Response {
   lines.push(`- [Authority Dashboard](${absoluteUrl(ROUTES.authority)}) — derived coverage & quality; no fabricated statistics`);
   lines.push(`- [Transparency](${absoluteUrl(ROUTES.transparency)}) — methodology, evidence framework, review process, provenance, scope`);
   lines.push(`- [Open Data](${absoluteUrl(ROUTES.openData)})`);
+  lines.push(`- [Data Portal](${absoluteUrl(ROUTES.data)}) — datasets, exports, schemas, licensing, provenance, quality`);
   lines.push(`- [Datasets](${absoluteUrl(ROUTES.datasets)})`);
   lines.push(`- [Knowledge Registry](${absoluteUrl(ROUTES.registry)})`);
-  lines.push(`- [Developers / API contracts](${absoluteUrl(ROUTES.developers)})`);
+  lines.push(`- [Developers](${absoluteUrl(ROUTES.developers)})`);
   lines.push(`- Graph export (JSON): ${absoluteUrl("/data/graph.json")}`);
   lines.push(`- Graph export (JSON-LD): ${absoluteUrl("/data/graph.jsonld")}`);
   for (const d of DATASETS) {
     lines.push(`- [${d.title} Dataset](${absoluteUrl(datasetPath(d.slug))}): ${d.entityCount} entities · JSON ${absoluteUrl(`/datasets/${d.slug}/json`)} · CSV ${absoluteUrl(`/datasets/${d.slug}/csv`)}`);
+  }
+  lines.push("");
+
+  lines.push("## Open Data API (v0)");
+  lines.push(
+    `Read-only, deterministic, engine-backed JSON API. Every response carries a provenance envelope (apiVersion, schemaVersion, dataVersion, generatedAt, source, license, attribution). No auth, no rate limits, no write endpoints. OpenAPI 3.1: ${absoluteUrl("/api/v0/openapi.json")}. Reference: ${absoluteUrl(ROUTES.developersApi)}.`,
+  );
+  for (const e of IMPLEMENTED_ENDPOINTS) {
+    lines.push(`- ${e.method} ${absoluteUrl(e.path)} — ${e.summary}${e.example ? ` (e.g. ${absoluteUrl(e.example)})` : ""}`);
+  }
+  lines.push("Checksummed exports (SHA-256 in the manifest):");
+  for (const [id, m] of Object.entries(EXPORT_MANIFEST.exports)) {
+    lines.push(`- ${id}: ${absoluteUrl(m.file)} — ${m.recordCount} records`);
   }
   lines.push("");
 

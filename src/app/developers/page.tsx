@@ -5,37 +5,35 @@ import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { CitationDemo } from "@/components/authority/CitationDemo";
-import { COMMUNITY_API_VERSION } from "@/lib/community";
+import { StatusBadge } from "@/components/data/StatusBadge";
+import { IMPLEMENTED_ENDPOINTS, CATALOGUE_STATS } from "@/platform/open-data";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES } from "@/lib/routes";
 
 const DESCRIPTION =
-  "Developer documentation for the Asteria Star Open Celestial Data Platform — versioned, typed API contracts (documented; the live API is planned). Open data is available today.";
+  "Developer documentation for the Asteria Star Open Celestial Data Platform. The read-only Open Data API v0 is live — versioned, typed, engine-backed JSON with a provenance envelope. Broader API surfaces are planned.";
 
 export const metadata: Metadata = buildMetadata({ title: "Developers", description: DESCRIPTION, path: ROUTES.developers });
 
-const V = COMMUNITY_API_VERSION; // "v0"
-
-const CONTRACTS: { name: string; description: string; endpoints: string[] }[] = [
-  { name: "Entity API", description: "Fetch a graph entity and its metadata by stable id.", endpoints: [`GET /api/${V}/entities/{id}`, `GET /api/${V}/entities?type={type}`] },
-  { name: "Relationship API", description: "Traverse typed relations from an entity, grouped by domain.", endpoints: [`GET /api/${V}/entities/{id}/relations`, `GET /api/${V}/relations?type={relationType}`] },
-  { name: "Search API", description: "Search entities, articles, topics, and more.", endpoints: [`GET /api/${V}/search?q={query}&group={group}`] },
-  { name: "Discovery API", description: "Graph-derived recommendations for an entity.", endpoints: [`GET /api/${V}/entities/{id}/recommendations`] },
-  { name: "Timeline API", description: "Curated, sourced chronologies.", endpoints: [`GET /api/${V}/timelines`, `GET /api/${V}/timelines/{slug}`] },
-  { name: "Comparison API", description: "Compare two entities or concepts.", endpoints: [`GET /api/${V}/compare/{slug}`] },
-  { name: "Image Metadata API", description: "Provenance-first image metadata (no media bundled).", endpoints: [`GET /api/${V}/entities/{id}/images`] },
-  { name: "Dataset API", description: "List datasets and download generated exports.", endpoints: [`GET /api/${V}/datasets`, `GET /api/${V}/datasets/{slug}`] },
-  { name: "Learning Path API", description: "Structured learning journeys.", endpoints: [`GET /api/${V}/learn`, `GET /api/${V}/learn/{slug}`] },
+/** Future API surfaces that are designed but not yet implemented. */
+const PLANNED_APIS: { name: string; description: string }[] = [
+  { name: "Timeline API", description: "Curated, sourced chronologies." },
+  { name: "Comparison API", description: "Compare two entities or concepts." },
+  { name: "Discovery API", description: "Graph-derived recommendations for an entity." },
+  { name: "Learning Path API", description: "Structured learning journeys." },
+  { name: "Live Sky API", description: "Real observational data — once a provider is connected and its licensing verified." },
 ];
 
-const PORTAL: { title: string; description: string; status: string; href?: string; linkLabel?: string }[] = [
-  { title: "API Documentation", description: "Versioned, typed contracts for every endpoint.", status: "Architecture", href: ROUTES.developers, linkLabel: "Contracts" },
+const PORTAL: { title: string; description: string; status: "Live" | "Planned" | "Architecture"; href?: string; linkLabel?: string }[] = [
+  { title: "API Reference", description: "Every implemented endpoint, its parameters, and runnable examples.", status: "Live", href: ROUTES.developersApi, linkLabel: "API reference" },
+  { title: "OpenAPI 3.1", description: "Machine-readable spec of the live API.", status: "Live", href: "/api/v0/openapi.json", linkLabel: "openapi.json" },
+  { title: "API Status", description: "What is implemented, prepared, and planned.", status: "Live", href: "/developers/status", linkLabel: "Status" },
+  { title: "Data Portal", description: "Datasets, exports, schemas, licensing, provenance, and quality.", status: "Live", href: ROUTES.data, linkLabel: "Data portal" },
   { title: "Entity Documentation", description: "Every entity self-documents its metadata, provenance, and connections.", status: "Live", href: ROUTES.entityIndex, linkLabel: "Entity index" },
-  { title: "Dataset Documentation", description: "Schemas, formats, and download endpoints per dataset.", status: "Live", href: ROUTES.datasets, linkLabel: "Datasets" },
-  { title: "Schema Documentation", description: "Entity and relation types, identifiers, and the registry.", status: "Live", href: ROUTES.registry, linkLabel: "Registry" },
-  { title: "Platform Architecture", description: "Layers, runtime, registries, and extension points.", status: "Live", href: ROUTES.platform, linkLabel: "Platform" },
-  { title: "SDK Documentation", description: "Client libraries for the public API.", status: "Planned" },
+  { title: "Schema & Registry", description: "Entity and relation types, identifiers, and the registry.", status: "Live", href: ROUTES.registry, linkLabel: "Registry" },
+  { title: "SDK", description: "Typed client libraries for the public API.", status: "Planned", href: "/developers/sdk", linkLabel: "SDK" },
+  { title: "Rate limits", description: "None today — read-only, static, cacheable.", status: "Architecture", href: "/developers/rate-limits", linkLabel: "Rate limits" },
 ];
 
 export default function DevelopersPage() {
@@ -58,41 +56,60 @@ export default function DevelopersPage() {
       <HeroSection
         compact
         accent="halo"
-        eyebrow={<span>API {V} · contracts</span>}
+        eyebrow={<span>Open Data API · v0</span>}
         title="Developers"
-        lead="Asteria Star is designed to be consumed by applications, researchers, and AI. These are the planned, versioned, typed API contracts — the live API is not implemented yet."
+        lead="Asteria Star is designed to be consumed by applications, researchers, and AI. The read-only Open Data API v0 is live today; broader API surfaces are planned and clearly labelled."
       />
 
       <Container className="mt-8 mb-12 space-y-10">
-        <aside className="flex gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-          <span aria-hidden className="mt-0.5 text-muted">
+        <aside className="flex gap-3 rounded-xl border border-emerald-400/20 bg-emerald-400/[0.04] p-4">
+          <span aria-hidden className="mt-0.5 text-emerald-300">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
-              <path d="M12 8h.01M11 11h1v5h1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </span>
           <p className="text-sm leading-relaxed text-muted">
-            <strong className="text-fg">Contracts, not a live API.</strong> No live API
-            endpoints are implemented in this phase. Open data is, however, available
-            today as static exports:{" "}
-            <a href="/data/graph.json" className="text-nebula underline-offset-4 hover:underline">graph.json</a>,{" "}
-            <a href="/data/graph.jsonld" className="text-nebula underline-offset-4 hover:underline">graph.jsonld</a>, and per-dataset{" "}
-            <Link href={ROUTES.datasets} className="text-nebula underline-offset-4 hover:underline">JSON/CSV</Link>.
+            <strong className="text-fg">The read-only API v0 is live.</strong> {IMPLEMENTED_ENDPOINTS.length} engine-backed
+            endpoints, a provenance envelope on every response, and an{" "}
+            <Link href="/api/v0/openapi.json" className="text-nebula underline-offset-4 hover:underline">OpenAPI 3.1 spec</Link>.
+            Start at the <Link href={ROUTES.developersApi} className="text-nebula underline-offset-4 hover:underline">API reference</Link>{" "}
+            or the <Link href={ROUTES.data} className="text-nebula underline-offset-4 hover:underline">data portal</Link>.
           </p>
         </aside>
 
-        <section aria-labelledby="contracts-heading">
-          <h2 id="contracts-heading" className="font-display text-2xl font-bold">API contracts</h2>
-          <ul className="mt-5 grid grid-cols-1 gap-4 lg:grid-cols-2">
-            {CONTRACTS.map((c) => (
-              <li key={c.name} className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                <h3 className="font-display text-lg font-semibold text-fg">{c.name}</h3>
+        <section aria-labelledby="api-heading">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <h2 id="api-heading" className="font-display text-2xl font-bold">Open Data API (v0)</h2>
+            <StatusBadge status="implemented" />
+          </div>
+          <p className="mt-2 max-w-2xl text-muted">
+            Read-only, deterministic, engine-backed JSON. {CATALOGUE_STATS.total} datasets are catalogued; every response is a
+            projection of the knowledge graph.
+          </p>
+          <ul className="mt-5 grid grid-cols-1 gap-2 sm:grid-cols-2">
+            {IMPLEMENTED_ENDPOINTS.map((e) => (
+              <li key={e.id}>
+                <Link href={e.example ?? ROUTES.developersApi} className="flex items-center justify-between gap-2 rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2 font-mono text-xs text-faint transition hover:border-white/25 hover:text-fg">
+                  <span><span className="text-emerald-300">{e.method}</span> {e.path}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <Link href={ROUTES.developersApi} className="mt-4 inline-block text-sm text-nebula underline-offset-4 hover:underline">Full API reference →</Link>
+        </section>
+
+        <section aria-labelledby="planned-heading">
+          <div className="flex items-center gap-3">
+            <h2 id="planned-heading" className="font-display text-2xl font-bold">Planned API surface</h2>
+            <StatusBadge status="planned" />
+          </div>
+          <p className="mt-2 max-w-2xl text-muted">Designed, not yet implemented. Listed for transparency and never exposed as fake endpoints.</p>
+          <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {PLANNED_APIS.map((c) => (
+              <li key={c.name} className="rounded-2xl border border-dashed border-white/10 bg-white/[0.01] p-5">
+                <h3 className="font-display text-base font-semibold text-fg">{c.name}</h3>
                 <p className="mt-1 text-sm text-muted">{c.description}</p>
-                <ul className="mt-3 space-y-1.5">
-                  {c.endpoints.map((e) => (
-                    <li key={e} className="rounded-lg border border-white/10 bg-white/[0.02] px-3 py-1.5 font-mono text-xs text-faint">{e}</li>
-                  ))}
-                </ul>
               </li>
             ))}
           </ul>
@@ -101,8 +118,8 @@ export default function DevelopersPage() {
         <section aria-labelledby="citation-heading">
           <h2 id="citation-heading" className="font-display text-2xl font-bold">Citation engine</h2>
           <p className="mt-2 max-w-2xl text-muted">
-            Reusable citation formatting generated from structured metadata — never
-            fabricated. One real reference, every supported style:
+            Reusable citation formatting generated from structured metadata — never fabricated. One real reference, every
+            supported style:
           </p>
           <div className="mt-5">
             <CitationDemo />
@@ -111,10 +128,6 @@ export default function DevelopersPage() {
 
         <section aria-labelledby="portal-heading">
           <h2 id="portal-heading" className="font-display text-2xl font-bold">Developer portal</h2>
-          <p className="mt-2 max-w-2xl text-muted">
-            The documentation surface for building on the platform. Architecture
-            today; the SDK and live API are planned.
-          </p>
           <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {PORTAL.map((d) => (
               <li key={d.title} className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">

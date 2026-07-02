@@ -106,15 +106,26 @@ export function getNavGroups(): NavGroup[] {
         {
           title: "Open data",
           links: [
+            { name: "Data Portal", href: ROUTES.data, description: "Datasets, exports & API" },
             { name: "Open Data", href: ROUTES.openData, description: "Standards & access" },
             { name: "Datasets", href: ROUTES.datasets, description: "JSON, CSV, JSON-LD" },
+            { name: "Exports", href: "/data/exports", description: "Checksummed downloads" },
+          ],
+        },
+        {
+          title: "API",
+          links: [
+            { name: "API Reference", href: ROUTES.developersApi, description: "Read-only v0 endpoints" },
+            { name: "OpenAPI", href: "/api/v0/openapi.json", description: "Machine-readable spec" },
+            { name: "API Status", href: "/developers/status", description: "Implemented vs planned" },
           ],
         },
         {
           title: "Reference",
           links: [
+            { name: "Developers", href: ROUTES.developers, description: "Build on the platform" },
             { name: "Registry", href: ROUTES.registry, description: "Schema & identifiers" },
-            { name: "Developers", href: ROUTES.developers, description: "API contracts" },
+            { name: "Licensing", href: "/data/licensing", description: "Terms & attribution" },
           ],
         },
       ],

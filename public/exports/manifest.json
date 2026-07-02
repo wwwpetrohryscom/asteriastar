@@ -1,0 +1,56 @@
+{
+  "generatedAt": "2026-06-29T00:00:00Z",
+  "dataVersion": "1.0.0",
+  "schemaVersion": "1.0.0",
+  "source": "Asteria Star — Scientific Data Engine & Knowledge Graph",
+  "exports": {
+    "entities-index": {
+      "file": "/exports/entities-index.json",
+      "bytes": 964321,
+      "sha256": "c901cbe3689902ccce0a812ddc1319b876ebbae53ee197160e769ba94652b1fb",
+      "recordCount": 5802,
+      "format": "JSON",
+      "license": "cc-by-sa-4.0"
+    },
+    "relationships-index": {
+      "file": "/exports/relationships-index.json",
+      "bytes": 2466027,
+      "sha256": "f48235559a7cf0628d0c497b316d0125d8eaa5dc23ede78d94c45bf278789e02",
+      "recordCount": 9009,
+      "format": "JSON",
+      "license": "cc-by-sa-4.0"
+    },
+    "dataset-catalogue": {
+      "file": "/exports/dataset-catalogue.json",
+      "bytes": 5392,
+      "sha256": "872349c81b887a9003e597f71d1ebb8170c3b82ccf0c4e462dbc860ae7c612ab",
+      "recordCount": 18,
+      "format": "JSON",
+      "license": "cc-by-sa-4.0"
+    },
+    "source-registry": {
+      "file": "/exports/source-registry.json",
+      "bytes": 11822,
+      "sha256": "08737edd4b412f4ee6b61c796a86c6039da2cbcbd7ad20e8e5395b12c3201eb2",
+      "recordCount": 35,
+      "format": "JSON",
+      "license": "cc-by-sa-4.0"
+    },
+    "image-catalogue": {
+      "file": "/exports/image-catalogue.json",
+      "bytes": 5823,
+      "sha256": "5db7001b3beae3ad9e7cd7d2cf32a09a14f73de2e1e9978b1b334513b758307a",
+      "recordCount": 21,
+      "format": "JSON",
+      "license": "cc-by-sa-4.0"
+    },
+    "live-sky-providers": {
+      "file": "/exports/live-sky-providers.json",
+      "bytes": 3850,
+      "sha256": "86b57bc2dbe11e28af1b9244a2a87bad1d6583c2dbad704f9339369d1f2ce8ca",
+      "recordCount": 9,
+      "format": "JSON",
+      "license": "cc-by-sa-4.0"
+    }
+  }
+}

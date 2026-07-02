@@ -25,9 +25,11 @@ export const ROUTES = {
   search: "/search",
   community: "/community",
   openData: "/open-data",
+  data: "/data",
   datasets: "/datasets",
   registry: "/registry",
   developers: "/developers",
+  developersApi: "/developers/api",
   platform: "/platform",
   observatory: "/observatory",
   authority: "/authority",
@@ -155,6 +157,21 @@ export function starDiscoveryPath(slug: string): string {
 
 export function datasetPath(slug: string): string {
   return `/datasets/${slug}`;
+}
+
+/** Public data-portal sub-page (e.g. /data/exports, /data/licensing). */
+export function dataPath(slug: string): string {
+  return `/data/${slug}`;
+}
+
+/** Developer API reference for one endpoint group (e.g. /developers/api/entities). */
+export function apiGroupPath(group: string): string {
+  return `/developers/api/${group}`;
+}
+
+/** Developer doc sub-page (e.g. /developers/sdk, /developers/openapi). */
+export function developerDocPath(slug: string): string {
+  return `/developers/${slug}`;
 }
 
 export function comparePath(slug: string): string {
