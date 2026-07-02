@@ -30,6 +30,7 @@ export const ROUTES = {
   registry: "/registry",
   developers: "/developers",
   developersApi: "/developers/api",
+  contribute: "/contribute",
   platform: "/platform",
   observatory: "/observatory",
   authority: "/authority",
@@ -172,6 +173,11 @@ export function apiGroupPath(group: string): string {
 /** Developer doc sub-page (e.g. /developers/sdk, /developers/openapi). */
 export function developerDocPath(slug: string): string {
   return `/developers/${slug}`;
+}
+
+/** Contribution portal sub-page (e.g. /contribute/guidelines, /contribute/review-queue). */
+export function contributePath(slug: string): string {
+  return `/contribute/${slug}`;
 }
 
 export function comparePath(slug: string): string {

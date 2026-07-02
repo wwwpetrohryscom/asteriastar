@@ -122,3 +122,66 @@ export function faqPageSchema(items: FaqItem[]): JsonLd {
     })),
   };
 }
+
+export function webPageSchema(input: {
+  name: string;
+  description: string;
+  url: string;
+}): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    name: input.name,
+    description: input.description,
+    url: absoluteUrl(input.url),
+    isPartOf: { "@id": SITE_ID },
+    publisher: { "@id": ORG_ID },
+    inLanguage: "en",
+  };
+}
+
+export interface HowToStep {
+  name: string;
+  text: string;
+}
+
+export function howToSchema(input: {
+  name: string;
+  description: string;
+  url: string;
+  steps: HowToStep[];
+}): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name: input.name,
+    description: input.description,
+    url: absoluteUrl(input.url),
+    inLanguage: "en",
+    step: input.steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.name,
+      text: s.text,
+    })),
+  };
+}
+
+export function softwareApplicationSchema(input: {
+  name: string;
+  description: string;
+  url: string;
+  category?: string;
+}): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: input.name,
+    description: input.description,
+    url: absoluteUrl(input.url),
+    applicationCategory: input.category ?? "DeveloperApplication",
+    operatingSystem: "Any",
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    publisher: { "@id": ORG_ID },
+  };
+}
