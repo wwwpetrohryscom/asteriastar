@@ -76,6 +76,70 @@ export interface RiseSet {
   note?: string;
 }
 
+/** A single solar event (Program Q). Null when the event does not occur that day. */
+export interface SunEvent {
+  /** UTC ISO-8601 instant, or null (polar day/night, or an absent twilight boundary). */
+  iso: string | null;
+  /** Local wall-clock time "HH:mm" in the resolved timezone, or null. */
+  local: string | null;
+}
+
+/** The daylight/twilight conditions that can apply to a location-date. */
+export type SolarDayCondition =
+  | "normal"
+  | "polar_day"                 // the Sun stays above the horizon for 24 h
+  | "polar_night"               // the Sun stays below the horizon for 24 h
+  | "no_civil_twilight"         // the Sun never sinks below −6° (no true civil darkness)
+  | "no_nautical_twilight"      // the Sun never sinks below −12°
+  | "no_astronomical_twilight"; // the Sun never sinks below −18° (no astronomical night)
+
+/**
+ * The Program Q Sun & Twilight data contract — deterministically computed solar
+ * times for an explicit location and date. Timestamps, source, confidence, and
+ * staleness live in the accompanying SkyEnvelope; this payload carries the values.
+ * Events are null where they genuinely do not occur (handled honestly, never faked).
+ */
+export interface SunData {
+  objectEntityId: string; // star:sun
+  input: {
+    latitude: number;
+    longitude: number;
+    date: string; // YYYY-MM-DD (the civil date at the location)
+    timezone: string; // resolved IANA id, or "UTC"
+    utcOffsetMinutes: number;
+  };
+  events: {
+    sunrise: SunEvent;
+    sunset: SunEvent;
+    solarNoon: SunEvent;
+    civilDawn: SunEvent;
+    civilDusk: SunEvent;
+    nauticalDawn: SunEvent;
+    nauticalDusk: SunEvent;
+    astronomicalDawn: SunEvent;
+    astronomicalDusk: SunEvent;
+  };
+  duration: {
+    /** Minutes the Sun is above the −0.833° horizon (0 in polar night, 1440 in polar day). */
+    daylightMinutes: number;
+    /** Total (morning + evening) minutes the Sun spends in each twilight band. */
+    civilTwilightMinutes: number;
+    nauticalTwilightMinutes: number;
+    astronomicalTwilightMinutes: number;
+  };
+  solar: {
+    declinationDeg: number;
+    equationOfTimeMinutes: number;
+    /** The Sun's altitude at solar noon (degrees). */
+    noonElevationDeg: number;
+  };
+  /** Applicable conditions; ["normal"] in the common case, plus polar / no-twilight flags. */
+  status: SolarDayCondition[];
+  /** How the value was obtained. v1 is always "computed". */
+  method: "computed" | "provider";
+  calculationNotes: string;
+}
+
 /* ----------------------------------------------------------------- planets */
 export type VisibilityWindow = "morning" | "evening" | "all-night" | "daytime" | "not-visible";
 export interface PlanetVisibility {
