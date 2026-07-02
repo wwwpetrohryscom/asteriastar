@@ -74,7 +74,11 @@ export function validateOpenData(): string[] {
   for (const e of ENDPOINTS) {
     if (ids.has(e.id)) issues.push(`endpoints: duplicate id ${e.id}`);
     ids.add(e.id);
-    if (e.method !== "GET") issues.push(`endpoints: ${e.id} is not read-only (method ${e.method})`);
+    // No IMPLEMENTED endpoint may be a write endpoint. A planned (future) write
+    // endpoint may be documented, but must never be implemented as a route.
+    if (e.status === "implemented" && e.method !== "GET") {
+      issues.push(`endpoints: implemented ${e.id} is not read-only (method ${e.method})`);
+    }
     if (/internal|admin|private/i.test(e.path)) issues.push(`endpoints: ${e.id} exposes a non-public path`);
     for (const p of e.params) {
       if (p.in === "path" && !e.path.includes(`{${p.name}}`)) issues.push(`endpoints: ${e.id} path param ${p.name} not present in path`);

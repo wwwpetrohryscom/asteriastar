@@ -20,7 +20,7 @@ export interface EndpointParam {
 export interface EndpointDef {
   id: string;
   group: string;
-  method: "GET";
+  method: "GET" | "POST";
   /** OpenAPI-style path with {braces} for path params. */
   path: string;
   summary: string;
@@ -137,8 +137,39 @@ export const ENDPOINTS: EndpointDef[] = [
     example: "/api/v0/openapi.json",
     returns: "OpenAPI 3.1 document",
   },
+  {
+    id: "contribution-types", group: "contributions", method: "GET", path: "/api/v0/contribution-types",
+    summary: "List contribution types", status: "implemented",
+    description: "The typed contribution models the scientific review workflow accepts, with their required targets, review track, and quality impact. Read-only.",
+    params: [],
+    example: "/api/v0/contribution-types",
+    returns: "{ count, contributionTypes: ContributionType[] }",
+  },
+  {
+    id: "review-states", group: "contributions", method: "GET", path: "/api/v0/review-states",
+    summary: "List review states", status: "implemented",
+    description: "The contribution review-state machine: every state, its description, and its valid next states. Read-only.",
+    params: [],
+    example: "/api/v0/review-states",
+    returns: "{ count, states: ReviewState[] }",
+  },
+  {
+    id: "contribution-guidelines", group: "contributions", method: "GET", path: "/api/v0/contribution-guidelines",
+    summary: "Contribution guidelines", status: "implemented",
+    description: "The workflow's core principle, contribution types, review states, roles, and security model — everything a future contributor or client needs. Read-only.",
+    params: [],
+    example: "/api/v0/contribution-guidelines",
+    returns: "{ principle, types, states, roles, security }",
+  },
 
   /* -------------------------------------------------------------- planned */
+  {
+    id: "contributions-submit", group: "contributions", method: "POST", path: "/api/v1/contributions",
+    summary: "Submit a contribution", status: "planned",
+    description: "Planned (v1, future). Would accept a structured proposal for review. NOT implemented: there is no write endpoint, no authentication, and no persistence in this program.",
+    params: [],
+    returns: "Accepted proposal receipt (not available)",
+  },
   {
     id: "relationship-get", group: "relationships", method: "GET", path: "/api/v0/relationships/{id}",
     summary: "Get one relationship", status: "planned",
