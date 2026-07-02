@@ -229,6 +229,17 @@ async function main() {
     `✓ Live Sky valid — ${sky.LIVE_SKY_STATS.meteorShowers} meteor showers, ${sky.LIVE_SKY_STATS.providers} providers, ${sky.LIVE_SKY_STATS.totalSkyPaths} pages, ${sky.LIVE_SKY_STATS.linkedEntities} graph links · ${sky.LIVE_SKY_STATS.connectedProviders} live providers connected (no fabricated data)`,
   );
 
+  const img = await import("../src/platform/images");
+  const imgIssues = img.validateImages();
+  if (imgIssues.length > 0) {
+    console.error(`\n✗ ${imgIssues.length} image-catalog issue(s):`);
+    for (const i of imgIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Images valid — ${img.IMAGE_STATS.images} images, ${img.IMAGE_STATS.collections} collections, ${img.IMAGE_STATS.sources} sources, ${img.IMAGE_STATS.licenses} licenses, ${img.IMAGE_STATS.newEntities} entities, ${img.IMAGE_STATS.relations} relations · every image has credit + license + source (no fabricated binaries)`,
+  );
+
   const { validateEntries, getAllEntries, ENTRY_STATS } = reg;
 
   const issues = validateEntries();

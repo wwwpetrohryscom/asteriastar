@@ -42,6 +42,7 @@ export const ROUTES = {
   history: "/history",
   cosmology: "/cosmology",
   sky: "/sky",
+  images: "/images",
 } as const;
 
 export function exoplanetPath(slug: string): string {
@@ -50,6 +51,22 @@ export function exoplanetPath(slug: string): string {
 
 export function exoplanetDiscoveryPath(slug: string): string {
   return `/exoplanets/discover/${slug}`;
+}
+
+export function imagePath(slug: string): string {
+  return `/images/${slug}`;
+}
+
+export function imageCollectionPath(slug: string): string {
+  return `/images/collections/${slug}`;
+}
+
+export function imageGalleryPath(slug: string): string {
+  return `/images/galleries/${slug}`;
+}
+
+export function astrophotographyPath(slug: string): string {
+  return `/images/astrophotography/${slug}`;
 }
 
 export function skyPath(slug: string): string {

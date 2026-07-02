@@ -61,6 +61,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "History of Astronomy", href: ROUTES.history, description: "How we discovered the universe" },
             { name: "Cosmology & Universe", href: ROUTES.cosmology, description: "The scientific model of the cosmos" },
             { name: "Night Sky", href: ROUTES.sky, description: "What to observe — meteor showers, eclipses, the Moon" },
+            { name: "Image Archive", href: ROUTES.images, description: "Scientific imagery with verified provenance" },
             { name: "Explore", href: ROUTES.explore, description: "Topics, entities, and connections" },
             { name: "Discover", href: ROUTES.discover, description: "Curated entry points" },
             { name: "Entity Index", href: ROUTES.entityIndex, description: "Every entity, A–Z" },

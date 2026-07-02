@@ -200,6 +200,15 @@ export function GET(): Response {
   lines.push(`- Every meteor shower and sky module links to real graph entities (Moon, planets, comets, the ISS, the Sun); pages at /sky/{slug} and /sky/meteor-showers/{slug}. Every datum is status- and source-labelled.`);
   lines.push("");
 
+  lines.push("## Scientific Image Archive");
+  lines.push(
+    `A provenance-first image catalogue where every image is a first-class knowledge-graph entity with verified provenance: source archive, instrument, capture/publication details where known, license, and credit. IMPORTANT: Asteria Star does NOT re-host or hotlink image binaries it has not verified, and never fabricates a photograph, credit, license, capture date, object name, or source URL — unknown fields are omitted, and each image links to its official source archive. Only openly-licensed or public-domain images (NASA public domain, CC BY 4.0) are catalogued. Every image links to at least one real graph entity (the depicted object, the capturing telescope/mission, and any related discovery). Automated ingest from NASA, STScI, ESA/Hubble, ESA/Webb, ESO, the EHT, NOIRLab, and Wikimedia is prepared (all 'planned').`,
+  );
+  lines.push(`- [Scientific Image Archive](${absoluteUrl("/images")})`);
+  lines.push(`- Latest: ${absoluteUrl("/images/galleries/latest")} · JWST: ${absoluteUrl("/images/galleries/jwst")} · Hubble: ${absoluteUrl("/images/galleries/hubble")} · Black holes: ${absoluteUrl("/images/galleries/black-holes")} · Public domain: ${absoluteUrl("/images/galleries/public-domain")} · Astrophotography guides: ${absoluteUrl("/images/astrophotography")}`);
+  lines.push(`- Every image, collection, license, and source resolves through the Scientific Data Engine; image pages at /images/{slug} carry ImageObject metadata. Astrophotography guides are kept separate from institutional imagery.`);
+  lines.push("");
+
   lines.push("## Open data");
   lines.push(
     `Asteria Star is open infrastructure for structured celestial knowledge: a versioned (graph ${GRAPH_VERSION_INFO.graphVersion}, schema ${GRAPH_VERSION_INFO.schemaVersion}), machine-readable knowledge graph of ${GRAPH_VERSION_INFO.entityCount} entities. Stable ids are permanent (type:slug). License: ${GRAPH_VERSION_INFO.license}.`,

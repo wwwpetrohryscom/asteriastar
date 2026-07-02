@@ -14,6 +14,7 @@ import { validateExoplanets } from "@/knowledge-graph/data/exoplanet-catalog";
 import { validateHistory } from "@/knowledge-graph/data/history-catalog";
 import { validateCosmology } from "@/knowledge-graph/data/cosmology-catalog";
 import { validateLiveSky } from "@/platform/live-sky";
+import { validateImages as validateImageCatalog } from "@/platform/images";
 import { validatePlatform } from "@/platform/validate";
 import { QUERIES, UNSUPPORTED_QUERIES } from "@/platform/data-engine/query-engine";
 import { traversalEngine } from "@/platform/data-engine/traversal-engine";
@@ -102,6 +103,7 @@ export const validationEngine = {
   history: (): string[] => validateHistory(),
   cosmology: (): string[] => validateCosmology(),
   liveSky: (): string[] => validateLiveSky(),
+  imagesCatalog: (): string[] => validateImageCatalog(),
   platform: (): string[] => validatePlatform(),
   engine: engineSelfCheck,
 
@@ -124,6 +126,7 @@ export const validationEngine = {
       { category: "history", issues: this.history() },
       { category: "cosmology", issues: this.cosmology() },
       { category: "liveSky", issues: this.liveSky() },
+      { category: "imageCatalog", issues: this.imagesCatalog() },
       { category: "platform", issues: this.platform() },
       { category: "engine", issues: this.engine() },
     ];
