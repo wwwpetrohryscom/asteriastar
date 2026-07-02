@@ -1,6 +1,6 @@
-import { getAllGraphEntities, relations, type EntityDomain } from "@/knowledge-graph";
+import { getAllGraphEntities, relations, GRAPH_RELEASED, type EntityDomain } from "@/knowledge-graph";
 import { validateSources } from "@/lib/sources";
-import { validateCitations, CITATIONS } from "@/lib/citations";
+import { validateCitations, CITATIONS, DOI_RE } from "@/lib/citations";
 import { validateProvenance, PROVENANCE } from "@/platform/authority/provenance";
 import { validateReviews, REVIEWS } from "@/platform/authority/review";
 import { validateVersions } from "@/platform/authority/versioning";
@@ -32,6 +32,30 @@ export function validateAuthority(): string[] {
   );
   issues.push(...validateReviews(REVIEWS, entityIds));
   issues.push(...validateVersions());
+
+  // No future dates: citation and provenance source dates must not postdate the
+  // graph release. No invalid DOIs on provenance references either.
+  const releaseYear = Number(GRAPH_RELEASED.slice(0, 4));
+  const yearOf = (d?: string): number | undefined => {
+    const m = d?.match(/\d{4}/);
+    return m ? Number(m[0]) : undefined;
+  };
+  for (const c of CITATIONS) {
+    const y = yearOf(c.date);
+    if (y !== undefined && y > releaseYear) issues.push(`citation ${c.id}: future date ${c.date}`);
+  }
+  for (const rv of REVIEWS) {
+    const y = yearOf(rv.reviewDate);
+    if (y !== undefined && y > releaseYear) issues.push(`review ${rv.entityId}: future reviewDate ${rv.reviewDate}`);
+  }
+  for (const r of PROVENANCE) {
+    for (const ref of [r.primarySource, ...(r.secondarySources ?? [])]) {
+      if (!ref) continue;
+      const y = yearOf(ref.publicationDate);
+      if (y !== undefined && y > releaseYear) issues.push(`provenance ${r.id}: future source date ${ref.publicationDate}`);
+      if (ref.doi !== undefined && !DOI_RE.test(ref.doi)) issues.push(`provenance ${r.id}: invalid DOI syntax "${ref.doi}"`);
+    }
+  }
 
   // Evidence-framework consistency: interpretive must never be a science level.
   if (SCIENCE_EVIDENCE_LEVELS.includes("interpretive")) {

@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/Badge";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SourceList } from "@/components/ui/SourceList";
 import { ReviewBadge, CoverageBadge } from "@/components/authority/TrustBadges";
+import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePanel";
 import { ConsensusBadge, ConsensusCallout, ConsensusCard } from "@/components/cosmology/Consensus";
 import { engine } from "@/platform/data-engine";
 import { QUALITY_DIMENSION_LABELS, type QualityDimension } from "@/platform";
@@ -94,6 +95,7 @@ export default async function CosmologyEntityPage({ params }: PageProps<"/cosmol
             <QuickFacts d={d} />
             {consensus && <ConsensusCard level={consensus} />}
             <QualityCard d={d} />
+            {d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
           </aside>
         </div>
       </Container>

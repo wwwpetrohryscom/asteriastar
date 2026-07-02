@@ -7,6 +7,8 @@ import { DATASETS } from "@/lib/datasets";
 import { getAllSources, type AuthorityType } from "@/lib/sources";
 import { computeEntityQuality, type CoverageLevel } from "@/platform/authority/quality";
 import { reviewStatusFor } from "@/platform/authority/review";
+import { PROVENANCE } from "@/platform/authority/provenance";
+import { CITATIONS } from "@/lib/citations";
 
 /**
  * Authority snapshot — a transparent, fully-derived view of the platform's
@@ -28,6 +30,9 @@ export interface AuthoritySnapshot {
   datasets: number;
   reviewed: number;
   awaitingReview: number;
+  provenanceRecords: number;
+  citations: number;
+  withProvenance: number;
   sourcesTotal: number;
   primarySources: number;
   secondarySources: number;
@@ -72,6 +77,9 @@ export function computeAuthoritySnapshot(): AuthoritySnapshot {
     datasets: DATASETS.length,
     reviewed,
     awaitingReview: entities.length - reviewed,
+    provenanceRecords: PROVENANCE.length,
+    citations: CITATIONS.length,
+    withProvenance: new Set(PROVENANCE.map((p) => p.entityId)).size,
     sourcesTotal: sources.length,
     primarySources: sources.filter((s) => PRIMARY_AUTHORITY.has(s.authorityType)).length,
     secondarySources: sources.filter((s) => !PRIMARY_AUTHORITY.has(s.authorityType)).length,

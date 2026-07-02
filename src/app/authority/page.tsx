@@ -33,10 +33,13 @@ export default function AuthorityPage() {
     { label: "Secondary sources", value: s.secondarySources },
     { label: "Reviewed", value: s.reviewed },
     { label: "Awaiting review", value: s.awaitingReview },
+    { label: "Provenance records", value: s.provenanceRecords },
+    { label: "Citations", value: s.citations },
   ];
 
   const coverage = [
     { label: "Has sources", value: s.coverage.withSources },
+    { label: "Has provenance", value: s.withProvenance },
     { label: "Has timeline", value: s.coverage.withTimeline },
     { label: "Has images", value: s.coverage.withImages },
     { label: "Localized", value: s.coverage.localized },
@@ -107,7 +110,9 @@ export default function AuthorityPage() {
             ))}
           </div>
           <p className="mt-3 text-sm text-faint">
-            Review, image, and localization coverage are honestly low: those registries are architecture-ready and ship empty. See the{" "}
+            Review and provenance coverage now reflect the first real batch of scientific authority records — {s.reviewed} flagship
+            entities reviewed by the internal Asteria Scientific Review Process, backed by {s.provenanceRecords} sourced provenance
+            records and {s.citations} citations. Coverage across the full graph is honestly still low and stays visible. See the{" "}
             <Link href={ROUTES.transparency} className="text-nebula underline-offset-4 hover:underline">transparency pages</Link>.
           </p>
         </section>

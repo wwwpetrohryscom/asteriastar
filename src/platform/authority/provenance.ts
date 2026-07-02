@@ -2,6 +2,7 @@ import type { EvidenceLevel } from "@/platform/authority/evidence";
 import { validateEvidenceAssignment } from "@/platform/authority/evidence";
 import type { SourceKey } from "@/lib/sources";
 import type { Confidence, EntityDomain } from "@/knowledge-graph";
+import { SEED_PROVENANCE } from "@/platform/authority/data/flagship-provenance";
 
 /**
  * Scientific provenance system.
@@ -51,8 +52,11 @@ export interface ProvenanceRecord {
   changeHistory?: ProvenanceChange[];
 }
 
-/** No fabricated facts: real provenance records are added when sourced. */
-export const PROVENANCE: ProvenanceRecord[] = [];
+/**
+ * Real, source-backed provenance records. Program N seeds the first batch for
+ * flagship entities (SEED_PROVENANCE); nothing is fabricated.
+ */
+export const PROVENANCE: ProvenanceRecord[] = [...SEED_PROVENANCE];
 
 export interface ProvenanceValidationContext {
   /** Known entity ids (provenance must reference a real entity). */

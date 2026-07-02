@@ -1,12 +1,24 @@
 /**
- * Scientific review model (architecture only — no backend, no auth).
+ * Scientific review model.
  *
  * The typed model for how an entity is reviewed for scientific and editorial
- * accuracy. The registry ships EMPTY — no fabricated review history. An entity
- * with no record is honestly "unreviewed".
+ * accuracy. Program N seeds the first real reviews for flagship entities, all
+ * performed by the internal Asteria Scientific Review Process — never a
+ * fabricated external reviewer. An entity with no record is honestly "unreviewed".
  */
+import { SEED_REVIEWS } from "@/platform/authority/data/flagship-reviews";
 
 export type ReviewStatus = "unreviewed" | "in-review" | "reviewed" | "verified" | "needs-update";
+
+/**
+ * The recognised review identities. Reviews may only claim one of these — an
+ * internal Asteria review process — so no fabricated external reviewer name can
+ * ever appear. A real, sourced external reviewer would be added here explicitly.
+ */
+export const INTERNAL_REVIEW_IDENTITIES = [
+  "Asteria Scientific Review Process",
+  "Asteria Editorial Review",
+] as const;
 
 export type AccuracyStatus = "unverified" | "accurate" | "needs-correction" | "disputed";
 
@@ -59,8 +71,12 @@ export interface EntityReview {
   reviewCycle?: string;
 }
 
-/** No fabricated review history — entities are honestly unreviewed until reviewed. */
-export const REVIEWS: EntityReview[] = [];
+/**
+ * Real entity reviews. Program N seeds the first batch (SEED_REVIEWS) for
+ * flagship entities via the internal Asteria Scientific Review Process. Entities
+ * without a record remain honestly "unreviewed".
+ */
+export const REVIEWS: EntityReview[] = [...SEED_REVIEWS];
 
 const BY_ENTITY = new Map<string, EntityReview>(REVIEWS.map((r) => [r.entityId, r]));
 
@@ -90,6 +106,15 @@ export function validateReviews(
     if (r.verificationLevel && !VERIFICATION_LEVELS.includes(r.verificationLevel))
       issues.push(`${r.entityId}: invalid verification level "${r.verificationLevel}"`);
     if (entityIds && !entityIds.has(r.entityId)) issues.push(`${r.entityId}: review references unknown entity`);
+
+    // A reviewed/verified entity must name a real (internal) review identity —
+    // never a fabricated external reviewer.
+    if (r.status === "reviewed" || r.status === "verified") {
+      if (!r.reviewedBy?.trim()) issues.push(`${r.entityId}: reviewed entity has no reviewer identity`);
+      else if (!(INTERNAL_REVIEW_IDENTITIES as readonly string[]).includes(r.reviewedBy))
+        issues.push(`${r.entityId}: unrecognized reviewer identity "${r.reviewedBy}" (no fabricated external reviewers)`);
+      if (!r.reviewVersion?.trim()) issues.push(`${r.entityId}: reviewed entity has no review version`);
+    }
   }
   return issues;
 }
