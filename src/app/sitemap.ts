@@ -55,10 +55,14 @@ import {
   imageCollectionPath,
   imageGalleryPath,
   astrophotographyPath,
+  dataPath,
+  apiGroupPath,
+  developerDocPath,
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
 import { ASTRO_GUIDES } from "@/app/images/astrophotography";
+import { DATA_SECTION_SLUGS, ENDPOINT_GROUPS, DEVELOPER_DOC_SLUGS } from "@/platform/open-data";
 
 /**
  * Generates sitemap.xml from the content registry, so every public route is
@@ -84,6 +88,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl(ROUTES.datasets), changeFrequency: "weekly", priority: 0.6 },
     { url: absoluteUrl(ROUTES.registry), changeFrequency: "weekly", priority: 0.6 },
     { url: absoluteUrl(ROUTES.developers), changeFrequency: "weekly", priority: 0.6 },
+    { url: absoluteUrl(ROUTES.data), changeFrequency: "weekly", priority: 0.7 },
+    ...DATA_SECTION_SLUGS.map((s) => ({ url: absoluteUrl(dataPath(s)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    { url: absoluteUrl(ROUTES.developersApi), changeFrequency: "weekly", priority: 0.6 },
+    ...ENDPOINT_GROUPS.map((g) => ({ url: absoluteUrl(apiGroupPath(g)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...DEVELOPER_DOC_SLUGS.map((s) => ({ url: absoluteUrl(developerDocPath(s)), changeFrequency: "monthly" as const, priority: 0.5 })),
     { url: absoluteUrl(ROUTES.platform), changeFrequency: "weekly", priority: 0.7 },
     { url: absoluteUrl(ROUTES.authority), changeFrequency: "weekly", priority: 0.7 },
     { url: absoluteUrl(ROUTES.transparency), changeFrequency: "weekly", priority: 0.7 },
