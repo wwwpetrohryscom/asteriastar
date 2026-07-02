@@ -154,11 +154,16 @@ export const ENDPOINTS: EndpointDef[] = [
   },
   {
     id: "live-sky-moon", group: "live-sky", method: "GET", path: "/api/v0/live-sky/moon",
-    summary: "Current Moon phase", status: "implemented",
-    description: "The current Moon phase and illuminated fraction, deterministically COMPUTED from public-domain solar/lunar formulae (method: computed — not a live provider feed). Carries its own honesty envelope (generatedAt, validFrom, validUntil, source, stale). Global values: no location needed.",
-    params: [{ name: "date", in: "query", required: false, type: "string", description: "Compute for a specific date (YYYY-MM-DD or ISO-8601). Defaults to the current instant.", example: "2026-06-29" }],
-    example: "/api/v0/live-sky/moon",
-    returns: "MoonData & { envelope }",
+    summary: "Moon phase & position", status: "implemented",
+    description: "The computed Moon (method: computed — not a live provider feed), with its own honesty envelope. WITHOUT latitude/longitude: the global Moon phase and illuminated fraction. WITH latitude and longitude: location-aware moonrise, moonset, transit, topocentric position, phase, and horizon status for the date (polar and no-rise/no-set cases handled honestly). Location is only ever what you pass in — never inferred, geolocated, or stored.",
+    params: [
+      { name: "date", in: "query", required: false, type: "string", description: "Compute for a specific date (YYYY-MM-DD or ISO-8601). Defaults to the current instant / today.", example: "2026-06-29" },
+      { name: "latitude", in: "query", required: false, type: "string", description: "Observer latitude, −90 to 90. When given (with longitude), returns location-aware moonrise/moonset/position.", example: "50.08" },
+      { name: "longitude", in: "query", required: false, type: "string", description: "Observer longitude, −180 to 180. Required together with latitude.", example: "14.44" },
+      { name: "timezone", in: "query", required: false, type: "string", description: "IANA timezone id for local event times (e.g. Europe/Prague). Defaults to UTC.", example: "Europe/Prague" },
+    ],
+    example: "/api/v0/live-sky/moon?latitude=50.08&longitude=14.44&timezone=Europe/Prague",
+    returns: "MoonData & { envelope }  |  MoonPositionData & { envelope }",
   },
   {
     id: "live-sky-sun", group: "live-sky", method: "GET", path: "/api/v0/live-sky/sun",
