@@ -206,6 +206,18 @@ async function main() {
     `✓ History valid — ${hist.HISTORY_STATS.astronomers} astronomers (${hist.HISTORY_STATS.reusedAstronomers} reused + ${hist.HISTORY_STATS.newAstronomers} new), ${hist.HISTORY_STATS.discoveries} discoveries, ${hist.HISTORY_STATS.publications} publications, ${hist.HISTORY_STATS.theories} theories, ${hist.HISTORY_STATS.catalogues} catalogues, ${hist.HISTORY_STATS.eras} eras — ${hist.HISTORY_STATS.newEntities} new entities, ${hist.HISTORY_STATS.relations} relations`,
   );
 
+  const cosmo = await import("../src/knowledge-graph/data/cosmology-catalog");
+  const cosmoIssues = cosmo.validateCosmology();
+  if (cosmoIssues.length > 0) {
+    console.error(`\n✗ ${cosmoIssues.length} cosmology issue(s):`);
+    for (const i of cosmoIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  const cb = cosmo.COSMOLOGY_STATS.byConsensus as Record<string, number>;
+  console.log(
+    `✓ Cosmology valid — ${cosmo.COSMOLOGY_STATS.concepts} concepts, ${cosmo.COSMOLOGY_STATS.models} models, ${cosmo.COSMOLOGY_STATS.objectClasses} object classes, ${cosmo.COSMOLOGY_STATS.programs} programs — ${cosmo.COSMOLOGY_STATS.newEntities} new entities, ${cosmo.COSMOLOGY_STATS.relations} relations · consensus: ${cb.established} established / ${cb["strong-evidence"]} strong / ${cb["active-research"]} active / ${cb.debate} debate / ${cb.speculative} speculative`,
+  );
+
   const { validateEntries, getAllEntries, ENTRY_STATS } = reg;
 
   const issues = validateEntries();

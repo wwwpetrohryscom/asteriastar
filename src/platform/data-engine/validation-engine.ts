@@ -12,6 +12,7 @@ import { validateHumanSpaceflight } from "@/knowledge-graph/data/human-spaceflig
 import { validateObservatories } from "@/knowledge-graph/data/observatory-catalog";
 import { validateExoplanets } from "@/knowledge-graph/data/exoplanet-catalog";
 import { validateHistory } from "@/knowledge-graph/data/history-catalog";
+import { validateCosmology } from "@/knowledge-graph/data/cosmology-catalog";
 import { validatePlatform } from "@/platform/validate";
 import { QUERIES, UNSUPPORTED_QUERIES } from "@/platform/data-engine/query-engine";
 import { traversalEngine } from "@/platform/data-engine/traversal-engine";
@@ -98,6 +99,7 @@ export const validationEngine = {
   observatories: (): string[] => validateObservatories(),
   exoplanets: (): string[] => validateExoplanets(),
   history: (): string[] => validateHistory(),
+  cosmology: (): string[] => validateCosmology(),
   platform: (): string[] => validatePlatform(),
   engine: engineSelfCheck,
 
@@ -118,6 +120,7 @@ export const validationEngine = {
       { category: "observatories", issues: this.observatories() },
       { category: "exoplanets", issues: this.exoplanets() },
       { category: "history", issues: this.history() },
+      { category: "cosmology", issues: this.cosmology() },
       { category: "platform", issues: this.platform() },
       { category: "engine", issues: this.engine() },
     ];
