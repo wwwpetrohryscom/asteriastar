@@ -51,8 +51,14 @@ import {
   historyDiscoveryPath,
   cosmologyPath,
   cosmologyDiscoveryPath,
+  imagePath,
+  imageCollectionPath,
+  imageGalleryPath,
+  astrophotographyPath,
   ROUTES,
 } from "@/lib/routes";
+import { ACTIVE_GALLERIES } from "@/app/images/galleries";
+import { ASTRO_GUIDES } from "@/app/images/astrophotography";
 
 /**
  * Generates sitemap.xml from the content registry, so every public route is
@@ -145,6 +151,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...engine.liveSky.allSkyPaths().map((p) => ({ url: absoluteUrl(p), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  // Image archive. Image-sitemap support is prepared: each image page can carry
+  // an `images` array of verified public URLs; none are populated yet because
+  // the platform links to source archives rather than re-hosting binaries, and
+  // no fabricated URL is ever emitted.
+  const imageRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.images), changeFrequency: "weekly", priority: 0.8 },
+    { url: absoluteUrl("/images/astrophotography"), changeFrequency: "monthly", priority: 0.5 },
+    ...engine.images.slugs().map((s) => ({ url: absoluteUrl(imagePath(s)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...engine.images.collections.slugs().map((s) => ({ url: absoluteUrl(imageCollectionPath(s)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...ACTIVE_GALLERIES.map((g) => ({ url: absoluteUrl(imageGalleryPath(g.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...ASTRO_GUIDES.map((g) => ({ url: absoluteUrl(astrophotographyPath(g.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+  ];
+
   const obsRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.observatories), changeFrequency: "weekly", priority: 0.8 },
     ...engine.observatories.all().map((r) => ({ url: absoluteUrl(observatoryPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -206,6 +225,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...historyRoutes,
     ...cosmologyRoutes,
     ...skyRoutes,
+    ...imageRoutes,
   ].map((entry) => ({
     lastModified: now,
     ...entry,
