@@ -5,6 +5,7 @@ import { engine } from "@/platform/data-engine";
 import { TOPICS, RELATIONSHIP_PAGES } from "@/lib/discovery";
 import { DATASETS } from "@/lib/datasets";
 import { IMPLEMENTED_ENDPOINTS, EXPORT_MANIFEST } from "@/platform/open-data";
+import { contributionsEngine as CONTRIB, ALL_CONTRIBUTE_SECTIONS } from "@/platform/contributions";
 import { COMPARISONS } from "@/lib/compare";
 import { LEARNING_PATHS } from "@/lib/learn";
 import { TIMELINES } from "@/lib/timelines";
@@ -18,6 +19,7 @@ import {
   learnPath,
   timelinePath,
   datasetPath,
+  contributePath,
   ROUTES,
 } from "@/lib/routes";
 import { SITE } from "@/lib/site";
@@ -240,6 +242,18 @@ export function GET(): Response {
   for (const [id, m] of Object.entries(EXPORT_MANIFEST.exports)) {
     lines.push(`- ${id}: ${absoluteUrl(m.file)} — ${m.recordCount} records`);
   }
+  lines.push("");
+
+  lines.push("## Contribute (scientific contributions & review workflow)");
+  lines.push(
+    `A controlled, review-first workflow (architecture preview). Every contribution is a structured PROPOSAL attached to a real knowledge-graph object — validated and reviewed before any versioned change. Not public editing, not a social network. ${CONTRIB.stats.types} contribution types, ${CONTRIB.stats.states} review states, ${CONTRIB.stats.roles} roles. No accounts, no database, no live submissions, no fabricated contributors/reviews/approvals.`,
+  );
+  lines.push(`- [Contribute](${absoluteUrl(ROUTES.contribute)})`);
+  for (const s of ALL_CONTRIBUTE_SECTIONS) {
+    lines.push(`- [${s.title}](${absoluteUrl(contributePath(s.slug))}): ${s.description}`);
+  }
+  lines.push(`- Read-only APIs: ${absoluteUrl("/api/v0/contribution-types")} · ${absoluteUrl("/api/v0/review-states")} · ${absoluteUrl("/api/v0/contribution-guidelines")}`);
+  lines.push(`- Planned (not implemented): POST /api/v1/contributions`);
   lines.push("");
 
   lines.push("## Policies");

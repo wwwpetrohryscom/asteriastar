@@ -100,6 +100,22 @@ async function main() {
     `✓ Open data valid — ${openData.CATALOGUE_STATS.total} datasets, ${openData.IMPLEMENTED_ENDPOINTS.length} API endpoints, ${Object.keys(openData.EXPORT_MANIFEST.exports).length} checksummed exports`,
   );
 
+  // Scientific contributions & review workflow (Program M): state machine, roles,
+  // impact/notification/security models, changesets, and graph-reference integrity
+  // for every proposal — plus the anti-fabrication invariant (all live registries
+  // are empty: no fake contributors, reviews, or approval history).
+  const contributions = await import("../src/platform/contributions");
+  const contribIssues = contributions.validateContributionArchitecture();
+  if (contribIssues.length > 0) {
+    console.error(`\n✗ ${contribIssues.length} contributions issue(s):`);
+    for (const i of contribIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  const cs = contributions.contributionsEngine.stats;
+  console.log(
+    `✓ Contributions valid — ${cs.types} types, ${cs.states} states, ${cs.roles} roles, ${cs.changeKinds} change kinds · ${cs.proposals} proposals / ${cs.reviewNotes} reviews / ${cs.auditEntries} audit entries (no fabricated data)`,
+  );
+
   // Platform core: registries, localization readiness, extensions, components,
   // search core, and layer-model consistency.
   const platform = await import("../src/platform");

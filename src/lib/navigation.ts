@@ -144,6 +144,15 @@ export function getNavGroups(): NavGroup[] {
           ],
         },
         {
+          title: "Contribute",
+          links: [
+            { name: "Contribute", href: ROUTES.contribute, description: "Review-first workflow" },
+            { name: "How it works", href: "/contribute/how-it-works", description: "The review lifecycle" },
+            { name: "Guidelines", href: "/contribute/guidelines", description: "What makes a good proposal" },
+            { name: "Proposal templates", href: "/contribute/templates", description: "Copyable, non-submitting" },
+          ],
+        },
+        {
           title: "About",
           links: [
             { name: "Community", href: ROUTES.community },
