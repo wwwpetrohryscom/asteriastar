@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/Badge";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SourceList } from "@/components/ui/SourceList";
 import { ReviewBadge, CoverageBadge } from "@/components/authority/TrustBadges";
+import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePanel";
 import { engine } from "@/platform/data-engine";
 import { QUALITY_DIMENSION_LABELS, type QualityDimension } from "@/platform";
 import { RELATION_LABELS, INVERSE_RELATION_LABELS } from "@/knowledge-graph/schema";
@@ -94,6 +95,7 @@ export default async function HistoryEntityPage({ params }: PageProps<"/history/
           <aside className="space-y-6">
             <QuickFacts d={d} />
             <QualityCard d={d} />
+            {"quality" in d && d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
           </aside>
         </div>
       </Container>

@@ -7,6 +7,7 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Badge } from "@/components/ui/Badge";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ReviewBadge, CoverageBadge } from "@/components/authority/TrustBadges";
+import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePanel";
 import { ExoplanetTable } from "@/components/exoplanets/ExoplanetTable";
 import { engine } from "@/platform/data-engine";
 import { QUALITY_DIMENSION_LABELS, type QualityDimension } from "@/platform";
@@ -76,6 +77,8 @@ export default async function ExoplanetPage({ params }: PageProps<"/exoplanets/[
           </div>
           <aside className="space-y-6">
             <QuickFacts d={d} />
+            {(d.kind === "planet" || d.kind === "host") && d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
+
             {(d.kind === "planet" || d.kind === "host") && d.quality && (
               <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
                 <div className="flex items-center justify-between gap-2">

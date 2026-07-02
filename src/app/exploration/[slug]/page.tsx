@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/Badge";
 import { SourceList } from "@/components/ui/SourceList";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ReviewBadge, CoverageBadge } from "@/components/authority/TrustBadges";
+import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePanel";
 import { ExplorationTable, StatusPill } from "@/components/exploration/ExplorationTable";
 import { engine } from "@/platform/data-engine";
 import { QUALITY_DIMENSION_LABELS, type QualityDimension } from "@/platform";
@@ -246,6 +247,8 @@ export default async function ExplorationPage({ params }: PageProps<"/exploratio
                 ))}
               </dl>
             </section>
+
+            {d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
 
             {d.quality && (
               <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">

@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/Badge";
 import { SourceList } from "@/components/ui/SourceList";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ReviewBadge, CoverageBadge } from "@/components/authority/TrustBadges";
+import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePanel";
 import { engine } from "@/platform/data-engine";
 import { relationLabel, type Connection } from "@/knowledge-graph";
 import { QUALITY_DIMENSION_LABELS, type QualityDimension } from "@/platform";
@@ -224,6 +225,8 @@ export default async function StarPage({ params }: PageProps<"/stars/[slug]">) {
                 </div>
               )}
             </section>
+
+            {s.quality && <EntityProvenancePanel entityId={s.quality.entityId} />}
 
             {s.quality && (
               <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">

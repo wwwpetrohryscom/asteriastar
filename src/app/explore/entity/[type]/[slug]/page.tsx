@@ -11,6 +11,7 @@ import { EntityCard } from "@/components/graph/EntityCard";
 import { EntityRecommendations } from "@/components/graph/EntityRecommendations";
 import { EntityDataPanel } from "@/components/graph/EntityDataPanel";
 import { EntityQualityPanel } from "@/components/authority/EntityQualityPanel";
+import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePanel";
 import { getStandaloneEntities } from "@/knowledge-graph";
 import { engine } from "@/platform/data-engine";
 import { topicPath } from "@/lib/routes";
@@ -98,6 +99,10 @@ export default async function GraphEntityPage({
         <div className="grid gap-6 lg:grid-cols-2">
           <EntityDataPanel resolved={resolved} />
           <EntityQualityPanel resolved={resolved} />
+        </div>
+
+        <div className="mt-6">
+          <EntityProvenancePanel entityId={resolved.id} />
         </div>
 
         {hasConnections && (
