@@ -1,7 +1,9 @@
 import { getEntityById } from "@/knowledge-graph";
 import type { Enveloped, SkyEnvelope } from "@/platform/live-sky/schema";
 import { meteorShowers, METEOR_SHOWERS } from "@/platform/live-sky/meteorShowers";
-import { moon } from "@/platform/live-sky/moon";
+import { moon, MOON_PHASES } from "@/platform/live-sky/moon";
+import { computeMoon } from "@/platform/live-sky/providers/computed-moon";
+import type { MoonPhaseName } from "@/platform/live-sky/models";
 import { planets } from "@/platform/live-sky/planets";
 import { eclipses } from "@/platform/live-sky/eclipses";
 import { comets } from "@/platform/live-sky/comets";
@@ -51,7 +53,6 @@ function preparedData(): { ctx: string; e: Enveloped<unknown> }[] {
   const add = (ctx: string, e: Enveloped<unknown> | Enveloped<unknown>[]) => {
     for (const x of Array.isArray(e) ? e : [e]) out.push({ ctx, e: x });
   };
-  add("moon.currentPhase", moon.currentPhase());
   add("planets.currentVisibility", planets.currentVisibility());
   add("eclipses.upcoming", eclipses.upcoming());
   add("comets.currentlyVisible", comets.currentlyVisible());
@@ -107,5 +108,61 @@ export function validateLiveSky(): string[] {
     if (e.envelope.status === "live" || e.envelope.status === "stale") issues.push(`${ctx}: no provider is connected — status must not be ${e.envelope.status}`);
   }
 
+  // 6. The computed Moon integration (Program P) — real data, honest envelope.
+  issues.push(...validateMoon());
+
+  return issues;
+}
+
+const KNOWN_PHASES: MoonPhaseName[] = MOON_PHASES.map((p) => p.phase);
+
+/**
+ * Validate the computed Moon integration: the honesty envelope, the data
+ * contract, and the CORRECTNESS of the calculation against known reference
+ * phases (deterministic — never a live provider). A fixed `now` keeps this test
+ * reproducible.
+ */
+export function validateMoon(): string[] {
+  const issues: string[] = [];
+  const now = new Date("2026-06-29T00:00:00Z");
+  const { data, envelope } = moon.current(now);
+
+  // Envelope honesty.
+  checkEnvelope(envelope, "moon.current", issues);
+  if (envelope.status !== "computed" && envelope.status !== "stale") issues.push(`moon.current: status must be computed/stale, got ${envelope.status}`);
+  if (!envelope.generatedAt) issues.push("moon.current: missing generatedAt");
+  if (!envelope.validFrom) issues.push("moon.current: missing validFrom");
+  if (!envelope.validUntil) issues.push("moon.current: missing validUntil");
+  if (envelope.provider) issues.push("moon.current: computed data must not claim a live provider");
+  if (typeof envelope.stale !== "boolean") issues.push("moon.current: missing stale flag");
+
+  // Data contract.
+  if (!data) {
+    issues.push("moon.current: computed data must not be null");
+    return issues;
+  }
+  if (!getEntityById(data.objectEntityId)) issues.push(`moon.current: objectEntityId does not resolve: ${data.objectEntityId}`);
+  if (!KNOWN_PHASES.includes(data.phase)) issues.push(`moon.current: invalid phase ${data.phase}`);
+  if (!(data.illuminationFraction >= 0 && data.illuminationFraction <= 1)) issues.push(`moon.current: illuminationFraction out of range: ${data.illuminationFraction}`);
+  if (!(data.illuminationPercent >= 0 && data.illuminationPercent <= 100)) issues.push(`moon.current: illuminationPercent out of range: ${data.illuminationPercent}`);
+  if (!(data.phaseAngleDeg >= 0 && data.phaseAngleDeg <= 360)) issues.push(`moon.current: phaseAngleDeg out of range: ${data.phaseAngleDeg}`);
+  if (!(data.synodicAgeDays >= 0 && data.synodicAgeDays <= 30)) issues.push(`moon.current: synodicAgeDays out of range: ${data.synodicAgeDays}`);
+  if (data.method !== "computed") issues.push(`moon.current: method must be computed, got ${data.method}`);
+
+  // Calculation correctness vs known reference phases (illumination tolerance 6%).
+  const refs: { iso: string; illum: number; phase: MoonPhaseName }[] = [
+    { iso: "2025-01-29T12:36:00Z", illum: 0, phase: "new-moon" },
+    { iso: "2025-02-12T13:53:00Z", illum: 1, phase: "full-moon" },
+    { iso: "2025-03-06T16:32:00Z", illum: 0.5, phase: "first-quarter" },
+    { iso: "2025-03-22T11:29:00Z", illum: 0.5, phase: "last-quarter" },
+    { iso: "2026-01-03T10:03:00Z", illum: 1, phase: "full-moon" },
+  ];
+  for (const r of refs) {
+    const c = computeMoon(new Date(r.iso));
+    if (Math.abs(c.illuminationFraction - r.illum) > 0.06) {
+      issues.push(`moon calc: ${r.iso} illumination ${(c.illuminationFraction * 100).toFixed(1)}% differs from expected ~${r.illum * 100}%`);
+    }
+    if (c.phase !== r.phase) issues.push(`moon calc: ${r.iso} phase ${c.phase} != expected ${r.phase}`);
+  }
   return issues;
 }
