@@ -9,6 +9,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { SourceList } from "@/components/ui/SourceList";
 import { DataStatusBadge, PreparedForIntegration, EnvelopeCard, LocationPlaceholder, RefCards, SkySection } from "@/components/sky/SkyUI";
 import { MoonDataPanel } from "@/components/sky/MoonDataPanel";
+import { MoonPositionPanel } from "@/components/sky/MoonPositionPanel";
 import { SunCalculatorPanel } from "@/components/sky/SunCalculatorPanel";
 import { engine } from "@/platform/data-engine";
 import { preparedEnvelope, type SkyEnvelope } from "@/platform/live-sky/schema";
@@ -45,7 +46,7 @@ export default async function SkyPageRoute({ params }: PageProps<"/sky/[slug]">)
     breadcrumbSchema(crumbs),
     { "@context": "https://schema.org", "@type": "WebPage", name: def.title, description: def.lead, url: absoluteUrl(skyPath(slug)) },
   ];
-  if (isSunOrTwilight) {
+  if (isSunOrTwilight || isMoon) {
     jsonLd.push(softwareApplicationSchema({ name: def.title, description: def.lead, url: skyPath(slug), category: "Astronomy" }));
   }
 
@@ -61,6 +62,7 @@ export default async function SkyPageRoute({ params }: PageProps<"/sky/[slug]">)
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
           <div className="space-y-10">
             {isMoon && <MoonDataPanel />}
+            {isMoon && <MoonPositionPanel />}
             {isSunOrTwilight && <SunCalculatorPanel />}
             <ReferenceBlock content={def.content} />
             {def.content !== "observing-calendar" && !isComputed && <PreparedForIntegration providers={providers} envelope={skyEnvelope} />}
@@ -107,7 +109,7 @@ function ReferenceBlock({ content }: { content: string }) {
   if (content === "moon") {
     return (
       <SkySection id="phases" title="The phases of the Moon">
-        <p className="mb-3 text-sm text-muted">The Moon cycles through its phases every {s.moon.synodicMonthDays} days (the synodic month). These are timeless facts; the <strong className="text-fg">current phase and illumination are computed above</strong> from public-domain formulae and timestamped.</p>
+        <p className="mb-3 text-sm text-muted">The Moon cycles through its phases every {s.moon.synodicMonthDays} days (the synodic month). These are timeless facts; the <strong className="text-fg">current phase and illumination — and, for your location, moonrise, moonset, and the Moon&apos;s position — are computed above</strong> from public-domain formulae and timestamped.</p>
         <Definitions items={s.moon.phases.map((ph) => [ph.name, ph.meaning])} />
       </SkySection>
     );

@@ -55,14 +55,14 @@ export interface SkyPageDef {
 export const SKY_PAGES: SkyPageDef[] = [
   {
     slug: "night-sky-tonight", title: "The Night Sky Tonight", eyebrow: "Night Sky Platform",
-    lead: "The current Moon phase is available on the Moon page, and sunrise, sunset, and twilight times for any location are available on the Sun & Twilight page. A fuller location-aware view — which planets are up, ISS passes — is prepared for integration; nothing location-dependent is fabricated until its provider is connected.",
+    lead: "The Moon phase, moonrise, moonset, and the Moon's position for any location are available on the Moon page, and sunrise, sunset, and twilight times on the Sun & Twilight page. A fuller location-aware view — which planets are up, ISS passes — is prepared for integration; nothing location-dependent is fabricated until its provider is connected.",
     content: "tonight", providerKeys: ["jpl-horizons", "usno"], sourceKeys: ["jpl", "usno"],
     relatedEntityIds: ["moon:the-moon", "star:sun", "planet:jupiter", "planet:saturn"],
     learnHref: "/learn/observing-the-night-sky",
   },
   {
-    slug: "moon", title: "Moon Phase Data", eyebrow: "Night Sky Platform",
-    lead: "The current Moon phase and illuminated fraction, computed from public-domain astronomical formulae and timestamped, alongside the eight phases and the synodic cycle as reference. Moonrise and moonset are not yet available.",
+    slug: "moon", title: "Moon Phase & Position", eyebrow: "Night Sky Platform",
+    lead: "The current Moon phase and illuminated fraction, computed from public-domain astronomical formulae and timestamped, plus location-aware moonrise, moonset, transit, and the Moon's altitude and azimuth for any latitude and longitude. Your location is used only for the calculation and is never stored.",
     content: "moon", providerKeys: ["usno", "jpl-horizons"], sourceKeys: ["usno", "jpl"],
     relatedEntityIds: ["moon:the-moon", "star:sun"], learnHref: "/learn/observing-the-night-sky",
   },
