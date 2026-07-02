@@ -1,6 +1,7 @@
 import type { SourceKey } from "@/lib/sources";
 import type { AccentToken } from "@/lib/content/types";
 import { HISTORY_TIMELINE_EVENTS } from "@/knowledge-graph/data/history-catalog";
+import { COSMOLOGY_TIMELINE_EVENTS } from "@/knowledge-graph/data/cosmology-catalog";
 
 /**
  * Timeline Engine — curated, well-documented chronologies. Every date is a
@@ -79,6 +80,14 @@ export const TIMELINES: Timeline[] = [
     accent: "stone",
     sources: ["britannica", "nasa", "iau"],
     events: HISTORY_TIMELINE_EVENTS,
+  },
+  {
+    slug: "universe-timeline",
+    title: "The Universe Timeline",
+    description: "The scientific history of the cosmos, from the Big Bang to the far future — with the real uncertainties acknowledged, not hidden.",
+    accent: "plasma",
+    sources: ["planck", "nasa", "esa"],
+    events: COSMOLOGY_TIMELINE_EVENTS,
   },
 ];
 

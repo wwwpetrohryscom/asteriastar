@@ -30,6 +30,43 @@ export interface LearningPath {
 
 export const LEARNING_PATHS: LearningPath[] = [
   {
+    slug: "understanding-the-universe",
+    title: "Understanding the Universe",
+    description: "The scientific story of the cosmos — how it began, how it evolved, and how we know. Each lesson connects to real cosmology entities, with the scientific consensus made explicit.",
+    accent: "plasma",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The Universe", href: "/cosmology/observable-universe", blurb: "What we can see, and how far it reaches." },
+          { title: "The Big Bang", href: "/cosmology/the-big-bang", blurb: "How the Universe began 13.8 billion years ago." },
+          { title: "Expansion", href: "/cosmology/cosmic-expansion", blurb: "Why space itself is stretching." },
+          { title: "Galaxies", href: "/cosmology/structure-formation", blurb: "How gravity built the cosmic web." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Stars", href: "/cosmology/cosmic-dawn", blurb: "The first stars and how they lit up the cosmos." },
+          { title: "Black Holes", href: "/cosmology/black-hole", blurb: "Where gravity wins and light cannot escape." },
+          { title: "Dark Matter", href: "/cosmology/dark-matter", blurb: "The unseen mass that shapes galaxies." },
+          { title: "Dark Energy", href: "/cosmology/dark-energy", blurb: "The mystery accelerating the expansion." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Relativity", href: "/cosmology/special-relativity", blurb: "Einstein's foundation for all of cosmology." },
+          { title: "Cosmology", href: "/cosmology/lambda-cdm", blurb: "The standard model of the Universe." },
+          { title: "Modern Observations", href: "/cosmology/cosmic-microwave-background", blurb: "Reading the oldest light in the Universe." },
+          { title: "The Future of the Universe", href: "/cosmology/present-universe", blurb: "Where an accelerating cosmos is heading." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["cosmology_concept:the-big-bang", "cosmology_concept:dark-energy", "cosmological_model:lambda-cdm", "astronomical_theory:general-relativity"],
+    next: ["history-of-astronomy", "understanding-stars"],
+  },
+  {
     slug: "history-of-astronomy",
     title: "History of Astronomy",
     description: "How humanity came to understand the universe — from the first sky-watchers to the age of gravitational waves. Each lesson connects to real astronomers, discoveries, and eras in the knowledge graph.",
