@@ -12,13 +12,15 @@ import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/js
 import { ROUTES, skyPath, meteorShowerPath } from "@/lib/routes";
 
 const s = engine.liveSky;
-const DESCRIPTION = "The Night Sky Platform — architecture for a daily-use observing dashboard. Meteor-shower guides and reference data are source-backed; the current Moon phase is computed and timestamped; other live, location-aware sky data (planets, ISS, aurora, space weather) is prepared for integration. Nothing here fabricates current conditions.";
+const DESCRIPTION = "The Night Sky Platform — architecture for a daily-use observing dashboard. Meteor-shower guides and reference data are source-backed; the current Moon phase and location-aware sunrise, sunset, and twilight times are computed and timestamped; other live, location-aware sky data (planets, ISS, aurora, space weather) is prepared for integration. Nothing here fabricates current conditions.";
 
 export const metadata: Metadata = buildMetadata({ title: "Night Sky Platform", description: DESCRIPTION, path: ROUTES.sky });
 
 const SECTIONS: { title: string; href: string; blurb: string }[] = [
   { title: "The Night Sky Tonight", href: skyPath("night-sky-tonight"), blurb: "A location-aware view of what's up — prepared for integration." },
   { title: "Moon Phase", href: skyPath("moon"), blurb: "Current phase & illumination — computed and timestamped." },
+  { title: "Sun & Twilight", href: skyPath("sun"), blurb: "Sunrise, sunset & twilight for any location — computed." },
+  { title: "Twilight Times", href: skyPath("twilight"), blurb: "Civil, nautical & astronomical twilight explained." },
   { title: "Planet Visibility", href: skyPath("planet-visibility"), blurb: "How the naked-eye planets appear through the year." },
   { title: "Meteor Showers", href: skyPath("meteor-showers"), blurb: "Guides to the eight major annual showers." },
   { title: "Eclipses", href: skyPath("eclipses"), blurb: "Solar and lunar eclipse types and safety." },

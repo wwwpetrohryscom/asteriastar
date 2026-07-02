@@ -9,10 +9,11 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { SourceList } from "@/components/ui/SourceList";
 import { DataStatusBadge, PreparedForIntegration, EnvelopeCard, LocationPlaceholder, RefCards, SkySection } from "@/components/sky/SkyUI";
 import { MoonDataPanel } from "@/components/sky/MoonDataPanel";
+import { SunCalculatorPanel } from "@/components/sky/SunCalculatorPanel";
 import { engine } from "@/platform/data-engine";
 import { preparedEnvelope, type SkyEnvelope } from "@/platform/live-sky/schema";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { breadcrumbSchema, type Crumb } from "@/lib/seo/jsonld";
+import { breadcrumbSchema, softwareApplicationSchema, type Crumb } from "@/lib/seo/jsonld";
 import { absoluteUrl, ROUTES, skyPath } from "@/lib/routes";
 
 const s = engine.liveSky;
@@ -37,27 +38,37 @@ export default async function SkyPageRoute({ params }: PageProps<"/sky/[slug]">)
   const crumbs: Crumb[] = [{ name: "Home", url: "/" }, { name: "Night Sky", url: ROUTES.sky }, { name: def.title, url: skyPath(slug) }];
   const locationRelevant = ["tonight", "iss", "planets", "aurora"].includes(def.content);
   const isMoon = def.content === "moon";
+  const isSunOrTwilight = def.content === "sun" || def.content === "twilight";
+  const isComputed = isMoon || isSunOrTwilight;
   const skyEnvelope = preparedEnvelopeFor(def.content);
+  const jsonLd: Record<string, unknown>[] = [
+    breadcrumbSchema(crumbs),
+    { "@context": "https://schema.org", "@type": "WebPage", name: def.title, description: def.lead, url: absoluteUrl(skyPath(slug)) },
+  ];
+  if (isSunOrTwilight) {
+    jsonLd.push(softwareApplicationSchema({ name: def.title, description: def.lead, url: skyPath(slug), category: "Astronomy" }));
+  }
 
   return (
     <>
-      <JsonLd data={[breadcrumbSchema(crumbs), { "@context": "https://schema.org", "@type": "WebPage", name: def.title, description: def.lead, url: absoluteUrl(skyPath(slug)) }]} />
+      <JsonLd data={jsonLd} />
       <Container className="pt-8"><Breadcrumbs crumbs={crumbs} /></Container>
       <HeroSection compact accent="aurora" eyebrow={<span>{def.eyebrow}</span>} title={def.title} lead={def.lead}>
-        <div className="mt-4 flex flex-wrap items-center gap-2"><Badge tone="accent">Night Sky</Badge><DataStatusBadge status={def.content === "observing-calendar" ? "reference" : isMoon ? "computed" : "prepared"} /></div>
+        <div className="mt-4 flex flex-wrap items-center gap-2"><Badge tone="accent">Night Sky</Badge><DataStatusBadge status={def.content === "observing-calendar" ? "reference" : isComputed ? "computed" : "prepared"} /></div>
       </HeroSection>
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
           <div className="space-y-10">
             {isMoon && <MoonDataPanel />}
+            {isSunOrTwilight && <SunCalculatorPanel />}
             <ReferenceBlock content={def.content} />
-            {def.content !== "observing-calendar" && !isMoon && <PreparedForIntegration providers={providers} envelope={skyEnvelope} />}
+            {def.content !== "observing-calendar" && !isComputed && <PreparedForIntegration providers={providers} envelope={skyEnvelope} />}
             {related.length > 0 && <SkySection id="related" title="Related in the Knowledge Graph"><RefCards refs={related} /></SkySection>}
             <SourceList keys={def.sourceKeys} title="Sources & references" />
           </div>
           <aside className="space-y-6">
-            {!isMoon && skyEnvelope && <EnvelopeCard envelope={skyEnvelope} />}
+            {!isComputed && skyEnvelope && <EnvelopeCard envelope={skyEnvelope} />}
             {locationRelevant && <LocationPlaceholder />}
             {def.learnHref && (
               <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
@@ -75,6 +86,8 @@ export default async function SkyPageRoute({ params }: PageProps<"/sky/[slug]">)
 function preparedEnvelopeFor(content: string): SkyEnvelope | undefined {
   switch (content) {
     case "moon": return undefined; // computed — rendered by MoonDataPanel, not a prepared stub
+    case "sun": return undefined; // computed — rendered by SunCalculatorPanel
+    case "twilight": return undefined; // computed — rendered by SunCalculatorPanel
     case "planets": return s.planets.currentVisibility()[0]?.envelope;
     case "comets": return s.comets.currentlyVisible()[0]?.envelope;
     case "asteroids": return s.asteroids.closeApproaches()[0]?.envelope;
@@ -97,6 +110,33 @@ function ReferenceBlock({ content }: { content: string }) {
         <p className="mb-3 text-sm text-muted">The Moon cycles through its phases every {s.moon.synodicMonthDays} days (the synodic month). These are timeless facts; the <strong className="text-fg">current phase and illumination are computed above</strong> from public-domain formulae and timestamped.</p>
         <Definitions items={s.moon.phases.map((ph) => [ph.name, ph.meaning])} />
       </SkySection>
+    );
+  }
+  if (content === "sun") {
+    return (
+      <>
+        <SkySection id="about" title="How these times are found">
+          <p className="leading-relaxed text-muted">Sunrise and sunset are the moments the Sun&apos;s centre sits 0.833° below the horizon — allowing for atmospheric refraction and the Sun&apos;s radius. Solar noon is when the Sun crosses your meridian, and day length is the time it spends above that horizon. The <strong className="text-fg">times above are computed</strong> from public-domain solar formulae and timestamped; they assume a flat, sea-level horizon and do not model local terrain.</p>
+        </SkySection>
+        <SkySection id="twilight-bands" title="The twilight phases">
+          <p className="mb-3 text-sm text-muted">Between day and full darkness the sky passes through three twilight phases. Their times for your location appear in the calculator above; see the <Link href={skyPath("twilight")} className="text-nebula hover:underline">twilight page</Link> for more.</p>
+          <Definitions items={s.twilight.bands.map((b) => [b.name, b.meaning])} />
+        </SkySection>
+      </>
+    );
+  }
+  if (content === "twilight") {
+    return (
+      <>
+        <SkySection id="bands" title="The three twilight phases">
+          <p className="mb-3 text-sm text-muted">Twilight is the time when the sky is lit by the Sun below the horizon. It is divided into three phases by how far below the horizon the Sun sits. Times for your location and date are <strong className="text-fg">computed in the calculator above</strong>; the definitions are timeless.</p>
+          <Definitions items={s.twilight.bands.map((b) => [b.name, `${b.meaning} (Sun ${b.upperDeg}° to ${b.lowerDeg}°.)`])} />
+        </SkySection>
+        <SkySection id="conditions" title="When twilight behaves differently">
+          <p className="mb-3 text-sm text-muted">Near the poles and in high-latitude summers, the Sun may never rise, never set, or never get dark enough for a given phase. The calculator reports these honestly and shows the affected times as unavailable rather than inventing them.</p>
+          <Definitions items={(["polar_day", "polar_night", "no_civil_twilight", "no_nautical_twilight", "no_astronomical_twilight"] as const).map((k) => [k.replace(/_/g, " "), s.twilight.conditionMeaning[k]])} />
+        </SkySection>
+      </>
     );
   }
   if (content === "planets") {
