@@ -18,8 +18,13 @@ export const YEAR_RANGE = { min: 1901, max: 2099 } as const;
 export interface LocationInput {
   latitude: number;
   longitude: number;
-  /** Civil date at the location, YYYY-MM-DD (or an ISO-8601 string, whose date part is used). */
-  date: string;
+  /**
+   * Civil date at the location, YYYY-MM-DD (or an ISO-8601 string, whose date part
+   * is used). Optional at the type level so callers that default it themselves
+   * (e.g. the location-aware Moon endpoint's "today") can omit it; `resolveLocation`
+   * still requires a valid date and returns a structured error if it is missing.
+   */
+  date?: string;
   /** Optional IANA timezone id (e.g. "Europe/Prague"). When omitted, times are UTC. */
   timezone?: string;
 }
