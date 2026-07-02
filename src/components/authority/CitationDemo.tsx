@@ -11,6 +11,7 @@ const EXAMPLE: Citation = {
   organization: "NASA Goddard Space Flight Center",
   url: "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
   date: "2024",
+  type: "dataset",
   source: "nasa",
 };
 
