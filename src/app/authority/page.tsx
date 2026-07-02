@@ -117,6 +117,53 @@ export default function AuthorityPage() {
           </p>
         </section>
 
+        <section aria-labelledby="citations-heading">
+          <h2 id="citations-heading" className="font-display text-2xl font-bold">Citation coverage</h2>
+          <p className="mt-2 max-w-2xl text-muted">
+            Real, source-backed references across flagship entities and datasets. Every number is derived from the citation
+            registry; DOIs appear only where verified, and no citation is fabricated.
+          </p>
+          <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            {[
+              { label: "Citations", value: s.citationCoverage.total },
+              { label: "Peer-reviewed", value: s.citationCoverage.peerReviewed },
+              { label: "With DOI", value: s.citationCoverage.withDoi },
+              { label: "Entities cited", value: s.citationCoverage.entitiesWithCitations },
+              { label: "Datasets cited", value: s.citationCoverage.datasetsWithCitations },
+              { label: "Primary / secondary", value: `${s.citationCoverage.primary} / ${s.citationCoverage.secondary}` },
+            ].map((k) => (
+              <div key={k.label} className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+                <div className="font-display text-2xl font-bold text-fg">{k.value}</div>
+                <div className="mt-1 text-xs text-faint">{k.label}</div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-5 grid gap-6 lg:grid-cols-2">
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-faint">Coverage by domain</h3>
+              <dl className="mt-3 space-y-1.5">
+                {Object.entries(s.citationCoverage.byDomain).sort((a, b) => b[1] - a[1]).map(([domain, n]) => (
+                  <div key={domain} className="flex items-center justify-between gap-3 text-sm">
+                    <dt className="capitalize text-muted">{domain}</dt>
+                    <dd className="font-mono text-faint">{n} entities</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+            <div>
+              <h3 className="text-sm font-semibold uppercase tracking-wider text-faint">Top source organizations</h3>
+              <dl className="mt-3 space-y-1.5">
+                {s.citationCoverage.topSources.map(({ source, count }) => (
+                  <div key={source} className="flex items-center justify-between gap-3 text-sm">
+                    <dt className="font-mono uppercase text-muted">{source}</dt>
+                    <dd className="font-mono text-faint">{count}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+        </section>
+
         <section aria-labelledby="sources-heading">
           <h2 id="sources-heading" className="font-display text-2xl font-bold">Connected sources</h2>
           <div className="mt-5 overflow-hidden rounded-2xl border border-white/10">
@@ -132,7 +179,7 @@ export default function AuthorityPage() {
                 {sources.map((src) => (
                   <tr key={src.key} className="transition hover:bg-white/[0.02]">
                     <td className="px-4 py-2.5">
-                      <a href={src.url} target="_blank" rel="noopener noreferrer" className="font-medium text-fg transition hover:text-nebula">{src.name}</a>
+                      <a href={src.url} target="_blank" rel="noopener noreferrer nofollow" className="font-medium text-fg transition hover:text-nebula">{src.name}</a>
                       <span className="block text-xs text-faint">{src.organization}</span>
                     </td>
                     <td className="hidden px-4 py-2.5 text-muted sm:table-cell">{src.country}</td>

@@ -20,7 +20,7 @@ export function generateStaticParams() {
 const GROUP_TITLE: Record<string, string> = {
   entities: "Entities", relationships: "Relationships", search: "Search",
   traversal: "Traversal", datasets: "Datasets", images: "Images", "live-sky": "Live sky",
-  contributions: "Contributions", meta: "Meta",
+  citations: "Citations", contributions: "Contributions", meta: "Meta",
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {

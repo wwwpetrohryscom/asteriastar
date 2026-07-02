@@ -1,6 +1,7 @@
 import { getAllGraphEntities, relations, GRAPH_RELEASED, type EntityDomain } from "@/knowledge-graph";
-import { validateSources } from "@/lib/sources";
+import { validateSources, SOURCES } from "@/lib/sources";
 import { validateCitations, CITATIONS, DOI_RE } from "@/lib/citations";
+import { DATASETS } from "@/lib/datasets";
 import { validateProvenance, PROVENANCE } from "@/platform/authority/provenance";
 import { validateReviews, REVIEWS } from "@/platform/authority/review";
 import { validateVersions } from "@/platform/authority/versioning";
@@ -47,6 +48,16 @@ export function validateAuthority(): string[] {
   for (const rv of REVIEWS) {
     const y = yearOf(rv.reviewDate);
     if (y !== undefined && y > releaseYear) issues.push(`review ${rv.entityId}: future reviewDate ${rv.reviewDate}`);
+  }
+
+  // Citation linkage: every related entity/dataset/provenance/source id resolves.
+  const datasetSlugs = new Set(DATASETS.map((d) => d.slug));
+  const provenanceIdSet = new Set(PROVENANCE.map((p) => p.id));
+  for (const cit of CITATIONS) {
+    for (const e of cit.entityIds ?? []) if (!entityIds.has(e)) issues.push(`citation ${cit.id}: unknown entity ${e}`);
+    for (const d of cit.datasetIds ?? []) if (!datasetSlugs.has(d)) issues.push(`citation ${cit.id}: unknown dataset ${d}`);
+    for (const p of cit.provenanceIds ?? []) if (!provenanceIdSet.has(p)) issues.push(`citation ${cit.id}: broken provenance link ${p}`);
+    if (cit.source && !Object.prototype.hasOwnProperty.call(SOURCES, cit.source)) issues.push(`citation ${cit.id}: unknown source ${cit.source}`);
   }
   for (const r of PROVENANCE) {
     for (const ref of [r.primarySource, ...(r.secondarySources ?? [])]) {

@@ -10,6 +10,8 @@ import { ENTITY_TYPE_LABELS, entityGraphPath } from "@/knowledge-graph";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES, datasetPath } from "@/lib/routes";
+import { citationsForDataset } from "@/lib/citations";
+import { CitationList } from "@/components/authority/CitationList";
 import Link from "next/link";
 
 export const dynamicParams = false;
@@ -70,9 +72,9 @@ export default async function DatasetPage({ params }: PageProps<"/datasets/[slug
       />
 
       <Container className="mt-8 mb-12 space-y-10">
-        <section className="grid gap-8 lg:grid-cols-3">
+        <section aria-labelledby="download-heading" className="grid gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2">
-            <h2 className="font-display text-xl font-semibold text-fg">Download</h2>
+            <h2 id="download-heading" className="font-display text-xl font-semibold text-fg">Download</h2>
             <p className="mt-1 text-sm text-faint">
               Generated from the canonical knowledge graph. Open, machine-readable, and free to reuse under {dataset.license}.
             </p>
@@ -82,6 +84,7 @@ export default async function DatasetPage({ params }: PageProps<"/datasets/[slug
                   {f.status === "available" && f.href ? (
                     <a
                       href={f.href}
+                      aria-label={`Download ${dataset.title} as ${f.format}`}
                       className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.03] px-4 py-2 text-sm font-medium text-fg transition hover:border-white/30 hover:bg-white/[0.06]"
                     >
                       {f.format} <span aria-hidden className="text-faint">↓</span>
@@ -134,6 +137,19 @@ export default async function DatasetPage({ params }: PageProps<"/datasets/[slug
             </table>
           </div>
         </section>
+
+        {(() => {
+          const citations = citationsForDataset(dataset.slug);
+          return citations.length > 0 ? (
+            <section aria-labelledby="dataset-citations" className="mt-10">
+              <h2 id="dataset-citations" className="font-display text-xl font-bold">Scientific citations</h2>
+              <p className="mt-1 text-sm text-muted">Real, source-backed references for this dataset — formatted through the citation engine.</p>
+              <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+                <CitationList citations={citations} />
+              </div>
+            </section>
+          ) : null;
+        })()}
 
         <SourceList keys={dataset.sources} title="Source references" />
       </Container>
