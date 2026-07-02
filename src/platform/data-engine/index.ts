@@ -36,9 +36,10 @@ import { observatoryEngine } from "@/platform/data-engine/observatory-engine";
 import { exoplanetEngine } from "@/platform/data-engine/exoplanet-engine";
 import { historyEngine } from "@/platform/data-engine/history-engine";
 import { cosmologyEngine } from "@/platform/data-engine/cosmology-engine";
+import { liveSkyEngine } from "@/platform/data-engine/live-sky-engine";
 import { validationEngine } from "@/platform/data-engine/validation-engine";
 
-/** The unified engine surface — the twenty-five modules of the data engine. */
+/** The unified engine surface — the twenty-six modules of the data engine. */
 export const engine = {
   entity: entityEngine,
   relationship: relationshipEngine,
@@ -64,6 +65,7 @@ export const engine = {
   exoplanets: exoplanetEngine,
   history: historyEngine,
   cosmology: cosmologyEngine,
+  liveSky: liveSkyEngine,
   validation: validationEngine,
 } as const;
 
@@ -74,7 +76,7 @@ export const ENGINE_MODULES = Object.keys(engine) as (keyof typeof engine)[];
 export { entityEngine, relationshipEngine, traversalEngine, queryEngine };
 export { recommendationEngine, timelineEngine, comparisonEngine, learningEngine };
 export { discoveryEngine, metadataEngine, sourceEngine, citationEngine };
-export { datasetEngine, authorityEngine, localizationEngine, starEngine, solarEngine, deepSkyEngine, explorationEngine, humanSpaceflightEngine, observatoryEngine, exoplanetEngine, historyEngine, cosmologyEngine, validationEngine };
+export { datasetEngine, authorityEngine, localizationEngine, starEngine, solarEngine, deepSkyEngine, explorationEngine, humanSpaceflightEngine, observatoryEngine, exoplanetEngine, historyEngine, cosmologyEngine, liveSkyEngine, validationEngine };
 export type { ResolvedStar } from "@/platform/data-engine/star-engine";
 export type { ResolvedBody } from "@/platform/data-engine/solar-engine";
 export type { ResolvedDeepSky } from "@/platform/data-engine/deepsky-engine";
@@ -84,6 +86,7 @@ export type { ResolvedObs } from "@/platform/data-engine/observatory-engine";
 export type { ResolvedExo } from "@/platform/data-engine/exoplanet-engine";
 export type { ResolvedHistory } from "@/platform/data-engine/history-engine";
 export type { ResolvedCosmology } from "@/platform/data-engine/cosmology-engine";
+export type { ResolvedSky } from "@/platform/data-engine/live-sky-engine";
 
 export type { ResolvedEntity } from "@/platform/data-engine/entity-engine";
 export type {

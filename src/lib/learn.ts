@@ -30,6 +30,43 @@ export interface LearningPath {
 
 export const LEARNING_PATHS: LearningPath[] = [
   {
+    slug: "observing-the-night-sky",
+    title: "Observing the Night Sky",
+    description: "A practical path to observing — the Moon, planets, meteor showers, eclipses, satellites, and space weather. Each lesson connects to real sky objects and honest, source-backed data (no fabricated live values).",
+    accent: "aurora",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "How the night sky changes", href: "/sky/night-sky-tonight", blurb: "Why the sky looks different by the hour, month, and latitude." },
+          { title: "Moon phases", href: "/sky/moon", blurb: "The Moon's monthly cycle and what it means for observing." },
+          { title: "Planet visibility", href: "/sky/planet-visibility", blurb: "How to tell the wandering planets from the stars." },
+          { title: "Meteor showers", href: "/sky/meteor-showers", blurb: "When and where to watch the annual showers." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Solar eclipses", href: "/sky/eclipses/solar", blurb: "The types — and how to watch the Sun safely." },
+          { title: "Lunar eclipses", href: "/sky/eclipses/lunar", blurb: "When the Moon slips into Earth's shadow." },
+          { title: "Comets and asteroids", href: "/sky/comets", blurb: "The Solar System's small, unpredictable wanderers." },
+          { title: "Satellites and the ISS", href: "/sky/iss-tracker", blurb: "Spotting the space station gliding overhead." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Aurora and space weather", href: "/sky/aurora", blurb: "How the Sun paints the polar skies." },
+          { title: "Light pollution", href: "/sky/night-sky-tonight", blurb: "Why dark skies matter and how to find them." },
+          { title: "Observing equipment", href: "/observatories", blurb: "From naked eye to binoculars to telescopes." },
+          { title: "Planning an observing night", href: "/sky/observing-calendar", blurb: "Putting Moon, weather, and events together." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["moon:the-moon", "meteor_shower:perseids", "satellite:international-space-station", "star:sun"],
+    next: ["understanding-stars", "observatories-and-telescopes"],
+  },
+  {
     slug: "understanding-the-universe",
     title: "Understanding the Universe",
     description: "The scientific story of the cosmos — how it began, how it evolved, and how we know. Each lesson connects to real cosmology entities, with the scientific consensus made explicit.",

@@ -13,6 +13,7 @@ import { validateObservatories } from "@/knowledge-graph/data/observatory-catalo
 import { validateExoplanets } from "@/knowledge-graph/data/exoplanet-catalog";
 import { validateHistory } from "@/knowledge-graph/data/history-catalog";
 import { validateCosmology } from "@/knowledge-graph/data/cosmology-catalog";
+import { validateLiveSky } from "@/platform/live-sky";
 import { validatePlatform } from "@/platform/validate";
 import { QUERIES, UNSUPPORTED_QUERIES } from "@/platform/data-engine/query-engine";
 import { traversalEngine } from "@/platform/data-engine/traversal-engine";
@@ -100,6 +101,7 @@ export const validationEngine = {
   exoplanets: (): string[] => validateExoplanets(),
   history: (): string[] => validateHistory(),
   cosmology: (): string[] => validateCosmology(),
+  liveSky: (): string[] => validateLiveSky(),
   platform: (): string[] => validatePlatform(),
   engine: engineSelfCheck,
 
@@ -121,6 +123,7 @@ export const validationEngine = {
       { category: "exoplanets", issues: this.exoplanets() },
       { category: "history", issues: this.history() },
       { category: "cosmology", issues: this.cosmology() },
+      { category: "liveSky", issues: this.liveSky() },
       { category: "platform", issues: this.platform() },
       { category: "engine", issues: this.engine() },
     ];

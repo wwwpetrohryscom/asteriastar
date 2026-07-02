@@ -191,6 +191,15 @@ export function GET(): Response {
   lines.push(`- Every concept, model, object class, observational program, and physicist resolves through the Scientific Data Engine; pages at /cosmology/{slug}.`);
   lines.push("");
 
+  lines.push("## Night Sky Platform");
+  lines.push(
+    `The architecture for a daily-use observing platform, built on top of the Knowledge Graph. IMPORTANT: no live data is fabricated. Data is either 'reference' (timeless, source-backed facts — e.g. the annual meteor-shower parameters from the IMO) or 'prepared' (architecture ready for a named provider, with NO current values shown). There are no fake positions, forecasts, ISS locations, solar-activity readings, or eclipse dates. Typed provider interfaces exist for JPL Horizons, the USNO almanac, NASA DONKI, NOAA SWPC, CelesTrak, the Minor Planet Center, the IMO, and NASA eclipse predictions — all currently 'planned', none connected.`,
+  );
+  lines.push(`- [Night Sky Platform](${absoluteUrl("/sky")})`);
+  lines.push(`- Meteor showers: ${absoluteUrl("/sky/meteor-showers")} · Moon: ${absoluteUrl("/sky/moon")} · Planet visibility: ${absoluteUrl("/sky/planet-visibility")} · Eclipses: ${absoluteUrl("/sky/eclipses")} · Space weather: ${absoluteUrl("/sky/space-weather")} · Observing calendar: ${absoluteUrl("/sky/observing-calendar")}`);
+  lines.push(`- Every meteor shower and sky module links to real graph entities (Moon, planets, comets, the ISS, the Sun); pages at /sky/{slug} and /sky/meteor-showers/{slug}. Every datum is status- and source-labelled.`);
+  lines.push("");
+
   lines.push("## Open data");
   lines.push(
     `Asteria Star is open infrastructure for structured celestial knowledge: a versioned (graph ${GRAPH_VERSION_INFO.graphVersion}, schema ${GRAPH_VERSION_INFO.schemaVersion}), machine-readable knowledge graph of ${GRAPH_VERSION_INFO.entityCount} entities. Stable ids are permanent (type:slug). License: ${GRAPH_VERSION_INFO.license}.`,

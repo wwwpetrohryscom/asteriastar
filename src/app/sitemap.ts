@@ -140,6 +140,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...COSMO_DISCOVERIES.map((d) => ({ url: absoluteUrl(cosmologyDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const skyRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.sky), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.liveSky.allSkyPaths().map((p) => ({ url: absoluteUrl(p), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const obsRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.observatories), changeFrequency: "weekly", priority: 0.8 },
     ...engine.observatories.all().map((r) => ({ url: absoluteUrl(observatoryPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -200,6 +205,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...exoRoutes,
     ...historyRoutes,
     ...cosmologyRoutes,
+    ...skyRoutes,
   ].map((entry) => ({
     lastModified: now,
     ...entry,

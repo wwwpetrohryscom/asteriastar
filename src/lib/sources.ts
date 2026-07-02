@@ -39,6 +39,9 @@ export type SourceKey =
   | "euclid"
   | "desi"
   | "sdss"
+  | "swpc"
+  | "donki"
+  | "celestrak"
   | "wikimedia";
 
 /** The kind of authority a source carries — used for evidence weighting. */
@@ -360,6 +363,37 @@ export const SOURCES: Record<SourceKey, Source> = {
     country: "International",
     authorityType: "database",
     reliability: "Reference survey; underlying observations are peer-reviewed public data.",
+  },
+  swpc: {
+    key: "swpc",
+    name: "NOAA SWPC",
+    organization: "NOAA Space Weather Prediction Center",
+    url: "https://www.swpc.noaa.gov",
+    scope: "Space-weather forecasts and alerts: aurora (OVATION), the Kp index, and the G1–G5 geomagnetic storm scale.",
+    country: "United States",
+    authorityType: "observatory",
+    reliability: "Authoritative US government source for real-time space-weather forecasts and alerts.",
+    citationFormat: "NOAA SWPC. (Year). Space weather product. https://www.swpc.noaa.gov",
+  },
+  donki: {
+    key: "donki",
+    name: "NASA DONKI",
+    organization: "NASA Community Coordinated Modeling Center",
+    url: "https://ccmc.gsfc.nasa.gov/tools/DONKI/",
+    scope: "The Space Weather Database Of Notifications, Knowledge, Information: solar flares, CMEs, and geomagnetic storms.",
+    country: "United States",
+    authorityType: "database",
+    reliability: "Public NASA space-weather database with an open API.",
+  },
+  celestrak: {
+    key: "celestrak",
+    name: "CelesTrak",
+    organization: "CelesTrak (Dr. T. S. Kelso)",
+    url: "https://celestrak.org",
+    scope: "Two-line orbital elements (TLEs) for satellites including the ISS, used with a propagator to predict passes.",
+    country: "United States",
+    authorityType: "database",
+    reliability: "Long-standing public source of orbital elements; attribution expected.",
   },
   wikimedia: {
     key: "wikimedia",
