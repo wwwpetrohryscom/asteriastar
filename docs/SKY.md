@@ -24,6 +24,11 @@ deliberately, **no connected live providers yet**. Data is one of:
   **calculation**, timestamped and stale-aware, and clearly **not** a live
   provider feed. The first such datum is the current Moon phase and illumination
   (see [NIGHT_SKY_PROVIDER_INTEGRATION.md](./NIGHT_SKY_PROVIDER_INTEGRATION.md)).
+  Program Q extends this to the first **location-aware** computed feature —
+  sunrise, sunset, solar noon, and civil/nautical/astronomical twilight for an
+  explicit latitude/longitude/date — on a privacy-first location model that never
+  guesses, geolocates, or stores a location (see
+  [SUN_AND_TWILIGHT.md](./SUN_AND_TWILIGHT.md)).
 
 The `live` status still describes **no datum** — no live provider is connected.
 `computed` readings are stale-aware: the current Moon reading flips to `stale`

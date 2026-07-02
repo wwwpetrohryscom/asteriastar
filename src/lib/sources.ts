@@ -40,6 +40,7 @@ export type SourceKey =
   | "desi"
   | "sdss"
   | "swpc"
+  | "noaa"          // NOAA — the public-domain Solar Calculator (sunrise/sunset/twilight geometry)
   | "donki"
   | "celestrak"
   | "stsci"
@@ -377,6 +378,18 @@ export const SOURCES: Record<SourceKey, Source> = {
     authorityType: "observatory",
     reliability: "Authoritative US government source for real-time space-weather forecasts and alerts.",
     citationFormat: "NOAA SWPC. (Year). Space weather product. https://www.swpc.noaa.gov",
+  },
+  noaa: {
+    key: "noaa",
+    name: "NOAA Solar Calculator",
+    organization: "NOAA Global Monitoring Laboratory",
+    url: "https://gml.noaa.gov/grad/solcalc/",
+    scope: "Public-domain solar-position geometry: sunrise, sunset, solar noon, twilight, declination, and the equation of time.",
+    country: "United States",
+    authorityType: "observatory",
+    reliability: "Authoritative US-government solar calculator; its algorithm is the low-precision method of the Astronomical Almanac.",
+    citationFormat: "NOAA Global Monitoring Laboratory. Solar Calculator. https://gml.noaa.gov/grad/solcalc/",
+    usage: "Public domain (US Government work).",
   },
   donki: {
     key: "donki",

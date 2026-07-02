@@ -3,6 +3,8 @@ import type { ProviderKey } from "@/platform/live-sky/schema";
 import { PROVIDERS, getProvider } from "@/platform/live-sky/providers";
 import { meteorShowers, METEOR_SHOWERS } from "@/platform/live-sky/meteorShowers";
 import { moon } from "@/platform/live-sky/moon";
+import { sun } from "@/platform/live-sky/sun";
+import { twilight } from "@/platform/live-sky/twilight";
 import { planets } from "@/platform/live-sky/planets";
 import { eclipses } from "@/platform/live-sky/eclipses";
 import { comets } from "@/platform/live-sky/comets";
@@ -25,6 +27,8 @@ export { PROVIDERS, getProvider } from "@/platform/live-sky/providers";
 export { validateLiveSky, collectLinkedEntityIds } from "@/platform/live-sky/validation";
 export { meteorShowers, METEOR_SHOWERS } from "@/platform/live-sky/meteorShowers";
 export { moon } from "@/platform/live-sky/moon";
+export { sun } from "@/platform/live-sky/sun";
+export { twilight, TWILIGHT_BANDS } from "@/platform/live-sky/twilight";
 export { planets } from "@/platform/live-sky/planets";
 export { eclipses } from "@/platform/live-sky/eclipses";
 export { comets } from "@/platform/live-sky/comets";
@@ -41,7 +45,7 @@ export interface SkyPageDef {
   eyebrow: string;
   lead: string;
   /** What kind of reference block the page renders. */
-  content: "tonight" | "moon" | "planets" | "comets" | "asteroids" | "iss" | "aurora" | "observing-calendar";
+  content: "tonight" | "moon" | "sun" | "twilight" | "planets" | "comets" | "asteroids" | "iss" | "aurora" | "observing-calendar";
   providerKeys: ProviderKey[];
   sourceKeys: SourceKey[];
   relatedEntityIds: string[];
@@ -51,7 +55,7 @@ export interface SkyPageDef {
 export const SKY_PAGES: SkyPageDef[] = [
   {
     slug: "night-sky-tonight", title: "The Night Sky Tonight", eyebrow: "Night Sky Platform",
-    lead: "A location-aware view of what's up tonight — visible planets and events — is prepared for integration. The current Moon phase and illumination are already available on the Moon page. No location-dependent conditions are shown until a location and data providers are connected.",
+    lead: "The current Moon phase is available on the Moon page, and sunrise, sunset, and twilight times for any location are available on the Sun & Twilight page. A fuller location-aware view — which planets are up, ISS passes — is prepared for integration; nothing location-dependent is fabricated until its provider is connected.",
     content: "tonight", providerKeys: ["jpl-horizons", "usno"], sourceKeys: ["jpl", "usno"],
     relatedEntityIds: ["moon:the-moon", "star:sun", "planet:jupiter", "planet:saturn"],
     learnHref: "/learn/observing-the-night-sky",
@@ -61,6 +65,18 @@ export const SKY_PAGES: SkyPageDef[] = [
     lead: "The current Moon phase and illuminated fraction, computed from public-domain astronomical formulae and timestamped, alongside the eight phases and the synodic cycle as reference. Moonrise and moonset are not yet available.",
     content: "moon", providerKeys: ["usno", "jpl-horizons"], sourceKeys: ["usno", "jpl"],
     relatedEntityIds: ["moon:the-moon", "star:sun"], learnHref: "/learn/observing-the-night-sky",
+  },
+  {
+    slug: "sun", title: "Sun & Twilight Calculator", eyebrow: "Night Sky Platform",
+    lead: "Source-backed sunrise, sunset, solar noon, day length, and civil, nautical, and astronomical twilight for any location and date — computed from public-domain solar formulae and timestamped. Enter a latitude and longitude; your location is used only for the calculation and is never stored.",
+    content: "sun", providerKeys: ["usno"], sourceKeys: ["noaa", "usno"],
+    relatedEntityIds: ["star:sun", "planet:earth"], learnHref: "/learn/observing-the-night-sky",
+  },
+  {
+    slug: "twilight", title: "Twilight Times & Phases", eyebrow: "Night Sky Platform",
+    lead: "Civil, nautical, and astronomical twilight explained, with source-backed computed times for any location and date. How long twilight lasts — and whether true night falls at all — depends on your latitude and the season.",
+    content: "twilight", providerKeys: ["usno"], sourceKeys: ["noaa", "usno"],
+    relatedEntityIds: ["star:sun", "planet:earth"], learnHref: "/learn/observing-the-night-sky",
   },
   {
     slug: "planet-visibility", title: "Planet Visibility Guide", eyebrow: "Night Sky Platform",
@@ -97,7 +113,7 @@ export const SKY_PAGES: SkyPageDef[] = [
   },
   {
     slug: "observing-calendar", title: "Observing Calendar", eyebrow: "Night Sky Platform",
-    lead: "A month-by-month guide to recurring sky events — meteor-shower peaks, equinoxes, and solstices. Exact dates and times for your year and location are prepared for a connected almanac provider.",
+    lead: "A month-by-month guide to recurring sky events — meteor-shower peaks, equinoxes, and solstices. Sunrise, sunset, and twilight times for your location and date are available now on the Sun & Twilight page; exact dates for other events are prepared for a connected almanac provider.",
     content: "observing-calendar", providerKeys: ["imo", "usno"], sourceKeys: ["imo", "usno"],
     relatedEntityIds: ["star:sun", "planet:earth", "meteor_shower:perseids", "meteor_shower:geminids"],
     learnHref: "/learn/observing-the-night-sky",
@@ -135,7 +151,7 @@ export const liveSky = {
   providers: PROVIDERS,
   getProvider,
   meteorShowers,
-  moon, planets, eclipses, comets, asteroids, iss, aurora, spaceWeather, observingCalendar,
+  moon, sun, twilight, planets, eclipses, comets, asteroids, iss, aurora, spaceWeather, observingCalendar,
   skyPages: SKY_PAGES,
   getSkyPage,
   allSkyPaths,

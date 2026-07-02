@@ -161,6 +161,19 @@ export const ENDPOINTS: EndpointDef[] = [
     returns: "MoonData & { envelope }",
   },
   {
+    id: "live-sky-sun", group: "live-sky", method: "GET", path: "/api/v0/live-sky/sun",
+    summary: "Sun & twilight times", status: "implemented",
+    description: "Sunrise, sunset, solar noon, civil/nautical/astronomical twilight, day length, and a solar summary for an EXPLICIT location and date, deterministically COMPUTED from the public-domain NOAA Solar Calculator algorithm (method: computed — not a live provider feed). Polar day/night is handled honestly (null events + a status). Location is only ever what you pass in — never inferred, geolocated, or stored.",
+    params: [
+      { name: "latitude", in: "query", required: true, type: "string", description: "Observer latitude as a decimal number, −90 to 90.", example: "50.08" },
+      { name: "longitude", in: "query", required: true, type: "string", description: "Observer longitude as a decimal number, −180 to 180.", example: "14.44" },
+      { name: "date", in: "query", required: false, type: "string", description: "Civil date (YYYY-MM-DD). Defaults to today (UTC).", example: "2025-06-21" },
+      { name: "timezone", in: "query", required: false, type: "string", description: "IANA timezone id for local times (e.g. Europe/Prague). Defaults to UTC.", example: "Europe/Prague" },
+    ],
+    example: "/api/v0/live-sky/sun?latitude=50.08&longitude=14.44&date=2025-06-21&timezone=Europe/Prague",
+    returns: "SunData & { envelope }",
+  },
+  {
     id: "openapi", group: "meta", method: "GET", path: "/api/v0/openapi.json",
     summary: "OpenAPI document", status: "implemented",
     description: "The OpenAPI 3.1 description of every implemented endpoint. Planned endpoints are intentionally absent from the spec.",
