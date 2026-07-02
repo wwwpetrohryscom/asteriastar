@@ -4,11 +4,11 @@ import {
   GRAPH_VERSION_INFO,
 } from "@/knowledge-graph";
 import { DATASETS } from "@/lib/datasets";
-import { getAllSources, type AuthorityType } from "@/lib/sources";
+import { getAllSources, SOURCES, type AuthorityType } from "@/lib/sources";
 import { computeEntityQuality, type CoverageLevel } from "@/platform/authority/quality";
 import { reviewStatusFor } from "@/platform/authority/review";
 import { PROVENANCE } from "@/platform/authority/provenance";
-import { CITATIONS } from "@/lib/citations";
+import { CITATIONS, CITATION_STATS } from "@/lib/citations";
 
 /**
  * Authority snapshot — a transparent, fully-derived view of the platform's
@@ -45,6 +45,18 @@ export interface AuthoritySnapshot {
     reviewed: number;
   };
   qualityDistribution: Record<CoverageLevel, number>;
+  citationCoverage: {
+    total: number;
+    withDoi: number;
+    peerReviewed: number;
+    entitiesWithCitations: number;
+    datasetsWithCitations: number;
+    primary: number;
+    secondary: number;
+    byType: Record<string, number>;
+    byDomain: Record<string, number>;
+    topSources: { source: string; count: number }[];
+  };
   version: typeof GRAPH_VERSION_INFO;
 }
 
@@ -71,6 +83,28 @@ export function computeAuthoritySnapshot(): AuthoritySnapshot {
     quality[q.overall]++;
   }
 
+  // Citation coverage: derived from the real citation registry.
+  const domainById = new Map(entities.map((e) => [e.id, e.domain]));
+  const citByDomain: Record<string, number> = {};
+  for (const entityId of new Set(CITATIONS.flatMap((cit) => cit.entityIds ?? []))) {
+    const domain = domainById.get(entityId);
+    if (domain) citByDomain[domain] = (citByDomain[domain] ?? 0) + 1;
+  }
+  const sourceCounts: Record<string, number> = {};
+  let primaryCit = 0;
+  let secondaryCit = 0;
+  for (const cit of CITATIONS) {
+    if (!cit.source) continue;
+    sourceCounts[cit.source] = (sourceCounts[cit.source] ?? 0) + 1;
+    const at = SOURCES[cit.source]?.authorityType;
+    if (at && PRIMARY_AUTHORITY.has(at)) primaryCit++;
+    else secondaryCit++;
+  }
+  const topCitationSources = Object.entries(sourceCounts)
+    .map(([source, count]) => ({ source, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 6);
+
   return {
     entities: entities.length,
     relationships: GRAPH_STATS.relationCount,
@@ -92,6 +126,18 @@ export function computeAuthoritySnapshot(): AuthoritySnapshot {
       reviewed,
     },
     qualityDistribution: quality,
+    citationCoverage: {
+      total: CITATION_STATS.total,
+      withDoi: CITATION_STATS.withDoi,
+      peerReviewed: CITATION_STATS.peerReviewed,
+      entitiesWithCitations: CITATION_STATS.entitiesWithCitations,
+      datasetsWithCitations: CITATION_STATS.datasetsWithCitations,
+      primary: primaryCit,
+      secondary: secondaryCit,
+      byType: CITATION_STATS.byType,
+      byDomain: citByDomain,
+      topSources: topCitationSources,
+    },
     version: GRAPH_VERSION_INFO,
   };
 }

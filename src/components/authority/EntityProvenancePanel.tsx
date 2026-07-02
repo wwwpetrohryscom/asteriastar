@@ -1,15 +1,17 @@
 import Link from "next/link";
 import { engine } from "@/platform/data-engine";
-import { CITATIONS, type Citation } from "@/lib/citations";
+import { CITATIONS, citationsForEntity, type Citation } from "@/lib/citations";
 import { SOURCES, type SourceKey } from "@/lib/sources";
 import { EVIDENCE_LABELS, EVIDENCE_DESCRIPTIONS, EVIDENCE_ACCENT, type EvidenceLevel } from "@/platform/authority/evidence";
+import { CitationList } from "@/components/authority/CitationList";
 
 /**
- * "Provenance & sources" — exposes an entity's seeded scientific authority: the
- * sourced statements, their evidence level, primary sources, linked citations,
- * the internal review status/version, and any honest limitations. Renders
- * nothing when an entity has no provenance yet (honest gaps stay invisible, not
- * faked). Driven entirely by real registry data.
+ * "Provenance & sources" + "Scientific citations" — exposes an entity's seeded
+ * scientific authority: the sourced statements, their evidence level, primary
+ * sources, the internal review status/version, honest limitations, and the full
+ * list of real citations supporting the entity (via the Citation Engine).
+ * Renders nothing when an entity has neither provenance nor citations (honest
+ * gaps stay invisible, not faked). Driven entirely by real registry data.
  */
 
 const ACCENT_CLASS: Record<string, string> = {
@@ -35,10 +37,13 @@ const CITATION_BY_ID = new Map<string, Citation>(CITATIONS.map((c) => [c.id, c])
 
 export function EntityProvenancePanel({ entityId }: { entityId: string }) {
   const records = engine.authority.provenanceFor(entityId);
-  if (records.length === 0) return null;
+  const citations = citationsForEntity(entityId);
+  if (records.length === 0 && citations.length === 0) return null;
   const review = engine.authority.review(entityId);
 
   return (
+    <div className="space-y-6">
+    {records.length > 0 && (
     <section aria-labelledby="provenance-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
       <div className="flex items-center justify-between gap-3">
         <h2 id="provenance-heading" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">
@@ -115,5 +120,24 @@ export function EntityProvenancePanel({ entityId }: { entityId: string }) {
         and <Link href="/authority" className="text-nebula underline-offset-4 hover:underline">authority dashboard</Link>.
       </p>
     </section>
+    )}
+
+    {citations.length > 0 && (
+      <section aria-labelledby="citations-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <div className="flex items-center justify-between gap-3">
+          <h2 id="citations-heading" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">
+            Scientific citations
+          </h2>
+          <span className="text-xs text-faint">{citations.length}</span>
+        </div>
+        <p className="mt-2 text-xs leading-relaxed text-faint">
+          Real, source-backed references — primary papers first, then datasets and institutional sources. Formatted through the citation engine; nothing is fabricated.
+        </p>
+        <div className="mt-4">
+          <CitationList citations={citations} />
+        </div>
+      </section>
+    )}
+    </div>
   );
 }
