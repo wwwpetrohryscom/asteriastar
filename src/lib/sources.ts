@@ -33,6 +33,12 @@ export type SourceKey =
   | "openngc"
   | "britannica"
   | "nobel"
+  | "planck"
+  | "ligo"
+  | "eht"
+  | "euclid"
+  | "desi"
+  | "sdss"
   | "wikimedia";
 
 /** The kind of authority a source carries — used for evidence weighting. */
@@ -293,6 +299,67 @@ export const SOURCES: Record<SourceKey, Source> = {
     authorityType: "reference",
     reliability: "Definitive primary source for Nobel Prize laureates, citations, and years.",
     citationFormat: "The Nobel Foundation. (Year). Title. https://www.nobelprize.org",
+  },
+  planck: {
+    key: "planck",
+    name: "Planck Collaboration",
+    organization: "ESA Planck mission / Planck Collaboration",
+    url: "https://www.cosmos.esa.int/web/planck",
+    scope: "Cosmic microwave background maps and the cosmological parameters of the ΛCDM model.",
+    country: "Europe",
+    authorityType: "space-agency",
+    reliability: "Primary source for CMB measurements and best-fit cosmological parameters; peer-reviewed.",
+    citationFormat: "Planck Collaboration. (Year). Planck results. Astronomy & Astrophysics.",
+  },
+  ligo: {
+    key: "ligo",
+    name: "LIGO Scientific Collaboration",
+    organization: "LIGO Scientific Collaboration & Virgo Collaboration",
+    url: "https://www.ligo.org",
+    scope: "Direct detections of gravitational waves from compact-object mergers.",
+    country: "International",
+    authorityType: "observatory",
+    reliability: "Primary source for gravitational-wave detections; peer-reviewed and openly archived.",
+  },
+  eht: {
+    key: "eht",
+    name: "Event Horizon Telescope",
+    organization: "Event Horizon Telescope Collaboration",
+    url: "https://eventhorizontelescope.org",
+    scope: "Horizon-scale images of supermassive black holes (M87*, Sagittarius A*).",
+    country: "International",
+    authorityType: "observatory",
+    reliability: "Primary source for black-hole imaging; peer-reviewed results.",
+  },
+  euclid: {
+    key: "euclid",
+    name: "ESA Euclid",
+    organization: "ESA Euclid mission",
+    url: "https://www.esa.int/Science_Exploration/Space_Science/Euclid",
+    scope: "Wide-field mapping of dark matter and dark energy via weak lensing and galaxy clustering.",
+    country: "Europe",
+    authorityType: "space-agency",
+    reliability: "Primary mission source for dark-energy and large-scale-structure constraints.",
+  },
+  desi: {
+    key: "desi",
+    name: "DESI",
+    organization: "Dark Energy Spectroscopic Instrument",
+    url: "https://www.desi.lbl.gov",
+    scope: "Spectroscopic redshift survey measuring baryon acoustic oscillations and dark energy.",
+    country: "International",
+    authorityType: "observatory",
+    reliability: "Primary survey source for BAO and expansion-history measurements; peer-reviewed.",
+  },
+  sdss: {
+    key: "sdss",
+    name: "SDSS",
+    organization: "Sloan Digital Sky Survey",
+    url: "https://www.sdss.org",
+    scope: "Multi-wavelength survey of galaxies, quasars, and large-scale structure.",
+    country: "International",
+    authorityType: "database",
+    reliability: "Reference survey; underlying observations are peer-reviewed public data.",
   },
   wikimedia: {
     key: "wikimedia",
