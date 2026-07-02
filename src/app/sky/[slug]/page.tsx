@@ -8,8 +8,9 @@ import { Badge } from "@/components/ui/Badge";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { SourceList } from "@/components/ui/SourceList";
 import { DataStatusBadge, PreparedForIntegration, EnvelopeCard, LocationPlaceholder, RefCards, SkySection } from "@/components/sky/SkyUI";
+import { MoonDataPanel } from "@/components/sky/MoonDataPanel";
 import { engine } from "@/platform/data-engine";
-import type { SkyEnvelope } from "@/platform/live-sky/schema";
+import { preparedEnvelope, type SkyEnvelope } from "@/platform/live-sky/schema";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, type Crumb } from "@/lib/seo/jsonld";
 import { absoluteUrl, ROUTES, skyPath } from "@/lib/routes";
@@ -34,27 +35,29 @@ export default async function SkyPageRoute({ params }: PageProps<"/sky/[slug]">)
   if (!p) notFound();
   const { def, related, providers } = p;
   const crumbs: Crumb[] = [{ name: "Home", url: "/" }, { name: "Night Sky", url: ROUTES.sky }, { name: def.title, url: skyPath(slug) }];
-  const locationRelevant = ["tonight", "iss", "moon", "planets", "aurora"].includes(def.content);
-  const preparedEnvelope = preparedEnvelopeFor(def.content);
+  const locationRelevant = ["tonight", "iss", "planets", "aurora"].includes(def.content);
+  const isMoon = def.content === "moon";
+  const skyEnvelope = preparedEnvelopeFor(def.content);
 
   return (
     <>
       <JsonLd data={[breadcrumbSchema(crumbs), { "@context": "https://schema.org", "@type": "WebPage", name: def.title, description: def.lead, url: absoluteUrl(skyPath(slug)) }]} />
       <Container className="pt-8"><Breadcrumbs crumbs={crumbs} /></Container>
       <HeroSection compact accent="aurora" eyebrow={<span>{def.eyebrow}</span>} title={def.title} lead={def.lead}>
-        <div className="mt-4 flex flex-wrap items-center gap-2"><Badge tone="accent">Night Sky</Badge><DataStatusBadge status={def.content === "observing-calendar" ? "reference" : "prepared"} /></div>
+        <div className="mt-4 flex flex-wrap items-center gap-2"><Badge tone="accent">Night Sky</Badge><DataStatusBadge status={def.content === "observing-calendar" ? "reference" : isMoon ? "computed" : "prepared"} /></div>
       </HeroSection>
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
           <div className="space-y-10">
+            {isMoon && <MoonDataPanel />}
             <ReferenceBlock content={def.content} />
-            {def.content !== "observing-calendar" && <PreparedForIntegration providers={providers} envelope={preparedEnvelope} />}
+            {def.content !== "observing-calendar" && !isMoon && <PreparedForIntegration providers={providers} envelope={skyEnvelope} />}
             {related.length > 0 && <SkySection id="related" title="Related in the Knowledge Graph"><RefCards refs={related} /></SkySection>}
             <SourceList keys={def.sourceKeys} title="Sources & references" />
           </div>
           <aside className="space-y-6">
-            {preparedEnvelope && <EnvelopeCard envelope={preparedEnvelope} />}
+            {!isMoon && skyEnvelope && <EnvelopeCard envelope={skyEnvelope} />}
             {locationRelevant && <LocationPlaceholder />}
             {def.learnHref && (
               <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
@@ -71,14 +74,18 @@ export default async function SkyPageRoute({ params }: PageProps<"/sky/[slug]">)
 
 function preparedEnvelopeFor(content: string): SkyEnvelope | undefined {
   switch (content) {
-    case "moon": return s.moon.currentPhase().envelope;
+    case "moon": return undefined; // computed — rendered by MoonDataPanel, not a prepared stub
     case "planets": return s.planets.currentVisibility()[0]?.envelope;
     case "comets": return s.comets.currentlyVisible()[0]?.envelope;
     case "asteroids": return s.asteroids.closeApproaches()[0]?.envelope;
     case "iss": return s.iss.passes()[0]?.envelope;
     case "aurora": return s.aurora.forecast().envelope;
     case "observing-calendar": return s.observingCalendar.envelope;
-    case "tonight": return s.moon.currentPhase().envelope;
+    case "tonight":
+      return preparedEnvelope({
+        source: ["usno", "jpl"], provider: "usno",
+        provenance: "A location-aware 'what's up tonight' view needs a connected ephemeris provider and your location. The current Moon phase is available now on the Moon page.",
+      });
     default: return undefined;
   }
 }
@@ -87,7 +94,7 @@ function ReferenceBlock({ content }: { content: string }) {
   if (content === "moon") {
     return (
       <SkySection id="phases" title="The phases of the Moon">
-        <p className="mb-3 text-sm text-muted">The Moon cycles through its phases every {s.moon.synodicMonthDays} days (the synodic month). These are timeless facts; the current phase requires a connected almanac.</p>
+        <p className="mb-3 text-sm text-muted">The Moon cycles through its phases every {s.moon.synodicMonthDays} days (the synodic month). These are timeless facts; the <strong className="text-fg">current phase and illumination are computed above</strong> from public-domain formulae and timestamped.</p>
         <Definitions items={s.moon.phases.map((ph) => [ph.name, ph.meaning])} />
       </SkySection>
     );
