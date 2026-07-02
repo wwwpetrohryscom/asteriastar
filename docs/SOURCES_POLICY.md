@@ -58,3 +58,21 @@ evidence.
 2. Reference its key from the relevant categories and entries (`sources: [...]`).
 3. It appears in `SourceList` / `EntrySourceList` and on `/sources-policy`
    automatically.
+
+## Source hierarchy for citations (Program O)
+
+Citations (`src/lib/citations/`) prefer primary and institutional sources over
+weaker ones, in this order:
+
+1. **Peer-reviewed papers** (with a verified DOI) — the strongest reference.
+2. **Primary institutions / datasets / catalogues** — NASA, JPL, ESA, ESO, IAU,
+   STScI, LIGO, EHT, NASA Exoplanet Archive, Planck, SIMBAD, NED, Gaia, Minor
+   Planet Center, HYG, OpenNGC.
+3. **Secondary / background** — Encyclopaedia Britannica, only for historical or
+   biographical context and only typed `historical_reference`. A secondary source
+   never replaces an available primary source for a factual value.
+
+DOIs are included only where verified; URLs are always a real canonical URL for
+the stated organization (never a fabricated deep link). Some publisher sites
+(e.g. Britannica) block automated fetchers, so an automated 403 does not mean a
+URL is wrong — it is verified for human access. See `CITATION_COVERAGE.md`.

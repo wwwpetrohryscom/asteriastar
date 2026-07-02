@@ -40,3 +40,12 @@ date, DOI, url, license, and an optional link to the source registry.
 
 See [EVIDENCE_FRAMEWORK.md](./EVIDENCE_FRAMEWORK.md) and
 [CITATION_ENGINE.md](./CITATION_ENGINE.md).
+
+## Provenance ↔ citation links (Program O)
+
+Provenance records reference the citation registry via `citationIds`, and
+citations reference provenance via `provenanceIds` — a two-way link validated by
+`validateAuthority()` (every id must resolve; no broken links). Program O added
+151 real citations, many of which back the provenance statements seeded in
+Program N (e.g. the Mayor & Queloz 1995 paper backs the 51 Pegasi b record). See
+`CITATION_COVERAGE.md` and `PROVENANCE_SEEDING.md`.

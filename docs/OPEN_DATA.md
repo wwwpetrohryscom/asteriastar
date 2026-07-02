@@ -41,3 +41,17 @@ its own license metadata (see [IMAGE_PLATFORM.md](./IMAGE_PLATFORM.md)).
 
 No live API, no fabricated download files, no fake checksums (checksums are
 placeholders, published at release), and no invented scientific data.
+
+## Citation API (Program O)
+
+The citation registry is exposed read-only through the Open Data API:
+
+- `GET /api/v0/citations` — the full registry, filterable by `type`, `source`,
+  `entity`, or `dataset`, paginated. Every record is real and source-backed.
+- `GET /api/v0/citations/{id}` — one citation with its formatted references
+  (APA / Chicago / MLA / Harvard / BibTeX / RIS) from the Citation Engine.
+
+Both are GET-only, wrapped in the standard provenance envelope, and listed in the
+OpenAPI document (implemented endpoints only). No write endpoints; no fabricated
+citations or DOIs. The `citation-registry` dataset in the catalogue reports the
+real record count and links to `/api/v0/citations`.
