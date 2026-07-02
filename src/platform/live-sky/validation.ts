@@ -4,6 +4,7 @@ import { meteorShowers, METEOR_SHOWERS } from "@/platform/live-sky/meteorShowers
 import { moon, MOON_PHASES } from "@/platform/live-sky/moon";
 import { sun } from "@/platform/live-sky/sun";
 import { computeMoon } from "@/platform/live-sky/providers/computed-moon";
+import { moonTopocentric } from "@/platform/live-sky/providers/lunar-position";
 import type { MoonPhaseName, SolarDayCondition } from "@/platform/live-sky/models";
 import { timezoneOffsetMinutes, type LocationInput } from "@/platform/live-sky/location";
 import { planets } from "@/platform/live-sky/planets";
@@ -115,6 +116,9 @@ export function validateLiveSky(): string[] {
 
   // 7. The computed Sun & Twilight integration (Program Q) — location-aware, honest.
   issues.push(...validateSun());
+
+  // 8. The location-aware Moon integration (Program R) — moonrise/set/position, honest.
+  issues.push(...validateMoonPosition());
 
   return issues;
 }
@@ -306,6 +310,155 @@ export function validateSun(): string[] {
     const local = new Date(instant.getTime() + timezoneOffsetMinutes(input.timezone as string, instant) * 60_000);
     const localDate = `${local.getUTCFullYear()}-${String(local.getUTCMonth() + 1).padStart(2, "0")}-${String(local.getUTCDate()).padStart(2, "0")}`;
     if (localDate !== input.date) issues.push(`sun.${label}: solar noon local date ${localDate} != requested ${input.date} (timezone anchoring)`);
+  }
+
+  return issues;
+}
+
+interface MoonPosFixture {
+  city: string;
+  input: LocationInput;
+  /** Expect a polar/circumpolar condition (alwaysAbove or alwaysBelow). */
+  expectPolar?: boolean;
+  /** Numeric anchor: moonrise UTC minute-of-day (± tolerance). */
+  moonriseUtcMin?: number;
+  /** Numeric anchor: moonrise azimuth (± tolerance). */
+  moonriseAz?: number;
+  /** Numeric anchor: illumination percent (± 2). */
+  illumPercent?: number;
+}
+
+/**
+ * Validate the location-aware Moon integration (Program R): envelope honesty, the
+ * data contract, coordinate ranges, illumination consistency, horizon-flag
+ * consistency, event ordering, polar/null handling, date-line anchoring, invalid
+ * input, and backward compatibility of the phase-only path. Deterministic.
+ */
+export function validateMoonPosition(): string[] {
+  const issues: string[] = [];
+  const now = new Date("2026-06-29T00:00:00Z");
+  const known = new Set<MoonPhaseName>(MOON_PHASES.map((p) => p.phase));
+
+  // Backward compatibility: the phase-only path is unchanged and never carries position.
+  const phaseOnly = moon.current(now);
+  if (!phaseOnly.data || "position" in (phaseOnly.data as object)) issues.push("moon.current must remain phase-only (no position) for backward compatibility");
+
+  // Invalid inputs → structured errors, never guessed values.
+  const bad: { input: LocationInput; field: string }[] = [
+    { input: { latitude: 91, longitude: 0, date: "2025-06-15" }, field: "latitude" },
+    { input: { latitude: 0, longitude: 200, date: "2025-06-15" }, field: "longitude" },
+    { input: { latitude: 0, longitude: 0, date: "not-a-date" }, field: "date" },
+    { input: { latitude: 0, longitude: 0, date: "2025-06-15", timezone: "Nowhere/Nowhere" }, field: "timezone" },
+  ];
+  for (const b of bad) {
+    const r = moon.forLocationDate(b.input, now);
+    if (r.ok) issues.push(`moonpos: expected a ${b.field} error for ${JSON.stringify(b.input)}`);
+    else if (r.field !== b.field) issues.push(`moonpos: expected error field ${b.field}, got ${r.field}`);
+  }
+
+  const fixtures: MoonPosFixture[] = [
+    // London 2025-03-14 is a full Moon at the equinox: it rises ~due east at ~18:28 UTC (GMT), fully lit.
+    { city: "London full moon", input: { latitude: 51.5, longitude: -0.13, date: "2025-03-14", timezone: "Europe/London" }, moonriseUtcMin: 18 * 60 + 28, moonriseAz: 90, illumPercent: 100 },
+    { city: "Prague", input: { latitude: 50.0755, longitude: 14.4378, date: "2025-06-15", timezone: "Europe/Prague" } },
+    { city: "Quito", input: { latitude: -0.1807, longitude: -78.4678, date: "2025-06-15", timezone: "America/Guayaquil" } },
+    { city: "Sydney", input: { latitude: -33.8688, longitude: 151.2093, date: "2025-06-15", timezone: "Australia/Sydney" } },
+    { city: "Tromso", input: { latitude: 69.6492, longitude: 18.9553, date: "2025-06-15", timezone: "Europe/Oslo" } },
+    { city: "Longyearbyen", input: { latitude: 78.2232, longitude: 15.6267, date: "2025-12-21", timezone: "Arctic/Longyearbyen" } },
+    // Near the North Pole the Moon is essentially always circumpolar or never up on a given day.
+    { city: "Near North Pole", input: { latitude: 89.5, longitude: 0, date: "2025-06-15", timezone: "UTC" }, expectPolar: true },
+    // Date-line extremes.
+    { city: "Apia UTC+13", input: { latitude: -13.83, longitude: -171.76, date: "2025-06-15", timezone: "Pacific/Apia" } },
+    { city: "UTC-12", input: { latitude: 0, longitude: -177, date: "2025-06-15", timezone: "Etc/GMT+12" } },
+  ];
+
+  for (const f of fixtures) {
+    const r = moon.forLocationDate(f.input, now);
+    if (!r.ok) { issues.push(`moonpos.${f.city}: returned an error (${r.field}: ${r.message})`); continue; }
+    const { data, envelope } = r.value;
+
+    // Envelope honesty.
+    checkEnvelope(envelope, `moonpos.${f.city}`, issues);
+    if (envelope.status !== "computed") issues.push(`moonpos.${f.city}: status must be computed, got ${envelope.status}`);
+    if (envelope.provider) issues.push(`moonpos.${f.city}: computed data must not claim a live provider`);
+    if (!envelope.generatedAt || !envelope.validFrom || !envelope.validUntil) issues.push(`moonpos.${f.city}: envelope missing timestamps`);
+
+    if (!data) { issues.push(`moonpos.${f.city}: data must not be null`); continue; }
+    if (!getEntityById(data.objectEntityId)) issues.push(`moonpos.${f.city}: objectEntityId does not resolve`);
+    if (data.method !== "computed") issues.push(`moonpos.${f.city}: method must be computed`);
+    if (data.input.latitude !== f.input.latitude || data.input.longitude !== f.input.longitude) issues.push(`moonpos.${f.city}: coordinates not echoed`);
+
+    // Position ranges.
+    const p = data.position;
+    if (!(p.altitudeDeg >= -90 && p.altitudeDeg <= 90)) issues.push(`moonpos.${f.city}: altitude out of range: ${p.altitudeDeg}`);
+    if (!(p.azimuthDeg >= 0 && p.azimuthDeg < 360.0001)) issues.push(`moonpos.${f.city}: azimuth out of range: ${p.azimuthDeg}`);
+    if (!(p.declinationDeg >= -90 && p.declinationDeg <= 90)) issues.push(`moonpos.${f.city}: declination out of range: ${p.declinationDeg}`);
+    if (!(p.rightAscensionDeg >= 0 && p.rightAscensionDeg < 360.0001)) issues.push(`moonpos.${f.city}: RA out of range: ${p.rightAscensionDeg}`);
+    if (!(p.distanceKm > 350000 && p.distanceKm < 410000)) issues.push(`moonpos.${f.city}: distance implausible: ${p.distanceKm}`);
+
+    // Phase contract + illumination consistency.
+    const ph = data.phase;
+    if (!known.has(ph.phase)) issues.push(`moonpos.${f.city}: invalid phase ${ph.phase}`);
+    if (!(ph.illuminationFraction >= 0 && ph.illuminationFraction <= 1)) issues.push(`moonpos.${f.city}: illuminationFraction out of range`);
+    if (Math.abs(ph.illuminationPercent - ph.illuminationFraction * 100) > 0.6) issues.push(`moonpos.${f.city}: illumination percent/fraction inconsistent`);
+    if (!(ph.phaseAngleDeg >= 0 && ph.phaseAngleDeg <= 360)) issues.push(`moonpos.${f.city}: phaseAngle out of range`);
+
+    // Horizon-flag consistency.
+    const h = data.horizon;
+    if (h.aboveHorizonAtReferenceTime !== p.altitudeDeg > -0.833) issues.push(`moonpos.${f.city}: aboveHorizon flag inconsistent with altitude ${p.altitudeDeg}`);
+    if (h.alwaysAboveHorizon && h.alwaysBelowHorizon) issues.push(`moonpos.${f.city}: cannot be always-above AND always-below`);
+    if (h.alwaysAboveHorizon && !(h.noMoonrise && h.noMoonset)) issues.push(`moonpos.${f.city}: always-above must have no moonrise/moonset`);
+    if (h.alwaysBelowHorizon && !(h.noMoonrise && h.noMoonset)) issues.push(`moonpos.${f.city}: always-below must have no moonrise/moonset`);
+    if (h.noMoonrise !== (data.events.moonrise.iso === null)) issues.push(`moonpos.${f.city}: noMoonrise flag inconsistent with moonrise event`);
+    if (h.noMoonset !== (data.events.moonset.iso === null)) issues.push(`moonpos.${f.city}: noMoonset flag inconsistent with moonset event`);
+
+    // Event ordering: transit altitude must exceed lower-transit-region; rise/set azimuths sane.
+    const e = data.events;
+    if (e.moonrise.azimuthDeg !== null && !(e.moonrise.azimuthDeg >= 0 && e.moonrise.azimuthDeg < 360.0001)) issues.push(`moonpos.${f.city}: rise azimuth out of range`);
+    if (e.lunarTransit.altitudeDeg !== null && !(e.lunarTransit.altitudeDeg >= -90 && e.lunarTransit.altitudeDeg <= 90)) issues.push(`moonpos.${f.city}: transit altitude out of range`);
+
+    if (f.expectPolar && !(h.alwaysAboveHorizon || h.alwaysBelowHorizon)) {
+      issues.push(`moonpos.${f.city}: expected a polar (always-above/below) condition near the pole`);
+    }
+
+    // A reported upper transit MUST be a genuine meridian passage: hour angle ≈ 0.
+    if (e.lunarTransit.iso) {
+      const ha = moonTopocentric(new Date(e.lunarTransit.iso), f.input.latitude, f.input.longitude).hourAngleDeg;
+      if (Math.abs(ha) > 1) issues.push(`moonpos.${f.city}: reported transit is not a culmination (hour angle ${ha.toFixed(2)}°, expected ~0)`);
+    }
+
+    // Numeric correctness anchors.
+    if (f.moonriseUtcMin !== undefined) {
+      const got = minuteOfDayUTC(data.events.moonrise.iso);
+      if (got === null || Math.abs(got - f.moonriseUtcMin) > 8) issues.push(`moonpos.${f.city}: moonrise ${got} min UTC differs from expected ~${f.moonriseUtcMin}`);
+    }
+    if (f.moonriseAz !== undefined && e.moonrise.azimuthDeg !== null && Math.abs(e.moonrise.azimuthDeg - f.moonriseAz) > 6) {
+      issues.push(`moonpos.${f.city}: moonrise azimuth ${e.moonrise.azimuthDeg} differs from expected ~${f.moonriseAz}`);
+    }
+    if (f.illumPercent !== undefined && Math.abs(ph.illuminationPercent - f.illumPercent) > 2) {
+      issues.push(`moonpos.${f.city}: illumination ${ph.illuminationPercent}% differs from expected ~${f.illumPercent}%`);
+    }
+  }
+
+  // Date-line anchoring: every non-null event must land on the requested LOCAL civil
+  // date, across the UTC+13/+14 and UTC−12 extremes (the off-by-a-day invariant).
+  const dateline: LocationInput[] = [
+    { latitude: 1.87, longitude: -157.36, date: "2025-06-15", timezone: "Pacific/Kiritimati" },
+    { latitude: -13.83, longitude: -171.76, date: "2025-06-15", timezone: "Pacific/Apia" },
+    { latitude: 0, longitude: -177, date: "2025-06-15", timezone: "Etc/GMT+12" },
+    { latitude: -43.95, longitude: -176.55, date: "2025-06-15", timezone: "Pacific/Chatham" },
+  ];
+  for (const input of dateline) {
+    const r = moon.forLocationDate(input, now);
+    if (!r.ok) { issues.push(`moonpos.dateline ${input.timezone}: returned an error (${r.field})`); continue; }
+    const ev = r.value.data?.events;
+    if (!ev) continue;
+    for (const [label, iso] of [["moonrise", ev.moonrise.iso], ["moonset", ev.moonset.iso], ["transit", ev.lunarTransit.iso]] as const) {
+      if (!iso) continue;
+      const instant = new Date(iso);
+      const local = new Date(instant.getTime() + timezoneOffsetMinutes(input.timezone as string, instant) * 60_000);
+      const localDate = `${local.getUTCFullYear()}-${String(local.getUTCMonth() + 1).padStart(2, "0")}-${String(local.getUTCDate()).padStart(2, "0")}`;
+      if (localDate !== input.date) issues.push(`moonpos.dateline ${input.timezone}: ${label} local date ${localDate} != requested ${input.date}`);
+    }
   }
 
   return issues;
