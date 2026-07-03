@@ -809,6 +809,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["satellite:landsat-8", "satellite_constellation:starlink", "satellite_constellation:gps", "orbit_type:leo"],
     next: ["understanding-launch-vehicles", "observing-the-night-sky"],
   },
+  {
+    slug: "understanding-asteroids",
+    title: "Understanding Asteroids",
+    description: "The rocky and icy small bodies of the Solar System — where they live, what they are made of, how they group into families and populations, how spacecraft explore them, and how near-Earth objects are tracked. Built on real MPC/JPL data that reuses the platform's dwarf planets, asteroids, and missions; nothing is fabricated.",
+    accent: "stone",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "What is an asteroid?", href: "/asteroids", blurb: "The leftover rocky and metallic building blocks of the Solar System." },
+          { title: "The main asteroid belt", href: "/asteroids/group/main-belt", blurb: "The reservoir of most asteroids, between Mars and Jupiter." },
+          { title: "The largest asteroids", href: "/asteroids/discover/largest", blurb: "Ceres, Vesta, Pallas, and the other giants of the belt." },
+          { title: "Dwarf planets", href: "/asteroids/discover/dwarf-planets", blurb: "The minor planets big enough to pull themselves round — Ceres, Pluto, Eris, and more." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Near-Earth objects", href: "/asteroids/discover/near-earth-objects", blurb: "The Apollo, Aten, Amor, and Atira asteroids whose orbits approach ours." },
+          { title: "What asteroids are made of", href: "/asteroids/discover/carbonaceous-asteroids", blurb: "Carbonaceous, silicaceous, and metallic taxonomy from their spectra." },
+          { title: "Asteroid families", href: "/asteroids/family/vesta", blurb: "Fragments of shattered parent bodies sharing similar orbits." },
+          { title: "Trojans and resonances", href: "/asteroids/discover/trojans", blurb: "How orbital resonances trap asteroids into distinctive populations." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Beyond Neptune", href: "/asteroids/discover/trans-neptunian", blurb: "The Kuiper Belt, scattered disc, and the distant detached objects." },
+          { title: "Exploring asteroids", href: "/asteroids/discover/most-explored", blurb: "The spacecraft that have flown by, orbited, and landed on small bodies." },
+          { title: "Sample return", href: "/asteroids/discover/sample-return-targets", blurb: "Bringing pieces of Itokawa, Ryugu, and Bennu back to Earth." },
+          { title: "Planetary defense", href: "/asteroids/planetary-defense", blurb: "Finding, tracking, and — if ever needed — deflecting hazardous asteroids." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["asteroid:vesta", "asteroid_family:vesta", "minor_planet_group:main-belt", "near_earth_object:apollo"],
+    next: ["the-solar-system", "understanding-the-universe"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

@@ -234,6 +234,24 @@ async function main() {
     `✓ Satellites valid — ${satellites.SATELLITES_STATS.satellites} satellites, ${satellites.SATELLITES_STATS.constellations} constellations, ${satellites.SATELLITES_STATS.orbits} orbit types, ${satellites.SATELLITES_STATS.operators} operators, ${satellites.SATELLITES_STATS.networks} tracking networks · ${satellites.SATELLITES_STATS.newEntities} new entities, ${satellites.SATELLITES_STATS.relations} relations (reused agencies/rockets/sites; no fabricated specs)`,
   );
 
+  const asteroids = await import("../src/knowledge-graph/data/asteroids-catalog");
+  const asteroidIssues = asteroids.validateAsteroids();
+  // Cross-reference resolution: every relation endpoint the catalog emits must
+  // resolve to a real graph entity (reused missions, planets, the Sun, dwarf planets).
+  const { getEntityById: getAstEnt } = await import("../src/knowledge-graph");
+  for (const r of asteroids.relations) {
+    if (!getAstEnt(r.from)) asteroidIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getAstEnt(r.to)) asteroidIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (asteroidIssues.length > 0) {
+    console.error(`\n✗ ${asteroidIssues.length} asteroid issue(s):`);
+    for (const i of asteroidIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Asteroids valid — ${asteroids.ASTEROIDS_STATS.asteroids} minor planets, ${asteroids.ASTEROIDS_STATS.families} families, ${asteroids.ASTEROIDS_STATS.groups} groups, ${asteroids.ASTEROIDS_STATS.neoClasses} NEO classes, ${asteroids.ASTEROIDS_STATS.trojanGroups} Trojan groups, ${asteroids.ASTEROIDS_STATS.resonances} resonances, ${asteroids.ASTEROIDS_STATS.impacts} impact events · ${asteroids.ASTEROIDS_STATS.newEntities} new entities, ${asteroids.ASTEROIDS_STATS.relations} relations (reused dwarf planets/asteroids/missions; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

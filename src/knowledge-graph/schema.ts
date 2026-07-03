@@ -25,6 +25,12 @@ export const ENTITY_TYPES = [
   "black_hole",
   "asteroid",
   "comet",
+  "asteroid_family",
+  "minor_planet_group",
+  "near_earth_object",
+  "trojan_group",
+  "orbital_resonance",
+  "impact_event",
   "meteor_shower",
   "eclipse",
   "catalog",
@@ -160,6 +166,7 @@ export const RELATION_TYPES = [
   "orbited",
   "visited",
   "returned_samples_from",
+  "shares_orbital_resonance",
   "captured_image_of",
   "contains_instrument",
   "used_instrument",
@@ -348,6 +355,7 @@ export const SCIENCE_ONLY_RELATIONS: ReadonlySet<RelationType> = new Set([
   "orbited",
   "visited",
   "returned_samples_from",
+  "shares_orbital_resonance",
   "captured_image_of",
   "contains_instrument",
   "used_instrument",
@@ -520,6 +528,7 @@ export const RELATION_LABELS: Record<RelationType, string> = {
   orbited: "Orbited",
   visited: "Visited",
   returned_samples_from: "Returned samples from",
+  shares_orbital_resonance: "In orbital resonance",
   captured_image_of: "Captured image of",
   contains_instrument: "Carries instrument",
   used_instrument: "Used instrument",
@@ -660,6 +669,7 @@ export const INVERSE_RELATION_LABELS: Record<RelationType, string> = {
   orbited: "Orbited by",
   visited: "Visited by",
   returned_samples_from: "Samples returned by",
+  shares_orbital_resonance: "Resonance shared by",
   captured_image_of: "Imaged by",
   contains_instrument: "Instrument on",
   used_instrument: "Instrument used by",
@@ -800,7 +810,7 @@ export function relationFacet(domain: Domain, type: RelationType): ConnectionFac
   if (["mission_target", "operated_by", "launched_by", "target_of_mission", "part_of_mission", "visited_by", "landed_on", "part_of_program", "launched_from", "carried_by", "orbited", "visited", "returned_samples_from", "captured_image_of", "part_of_station", "attached_to", "docked_with", "visited_station", "served_on_expedition", "commanded_expedition", "performed_eva", "launched_aboard", "returned_aboard", "crewed_by", "carried_crew", "carried_cargo"].includes(type)) return "mission";
   if (["observed_by", "measured_by", "captured_by", "taken_with", "taken_at"].includes(type)) return "observational";
   if (["discovered_by", "named_after", "catalogued_in", "discovered_by_method", "discovered_by_facility", "discovered_by_mission", "part_of_catalogue", "discovered", "predicted", "confirmed", "refuted", "introduced", "invented", "developed", "published", "predicts", "confirmed_by", "contradicted_by", "depicts", "documents"].includes(type)) return "discovery";
-  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of", "contains_instrument", "used_instrument", "performed_experiment", "supports_science", "preceded_by", "followed_by", "supported_by", "replaced_by", "built_by", "located_at", "part_of_observatory", "hosts_telescope", "related_discovery", "predecessor_of", "successor_of", "orbits_star", "member_of_planetary_system", "similar_to", "candidate_for_habitable_zone", "supports", "derived_from", "depends_on", "part_of_model", "requires", "contains", "formed_from", "evolved_into", "processed_by", "published_by", "licensed_by", "derived_from_image", "part_of_collection", "member_of_family", "has_stage", "powered_by", "uses_propellant", "belongs_to_family", "best_observed_in", "has_orbit"].includes(type)) return "related";
+  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of", "contains_instrument", "used_instrument", "performed_experiment", "supports_science", "preceded_by", "followed_by", "supported_by", "replaced_by", "built_by", "located_at", "part_of_observatory", "hosts_telescope", "related_discovery", "predecessor_of", "successor_of", "orbits_star", "member_of_planetary_system", "similar_to", "candidate_for_habitable_zone", "supports", "derived_from", "depends_on", "part_of_model", "requires", "contains", "formed_from", "evolved_into", "processed_by", "published_by", "licensed_by", "derived_from_image", "part_of_collection", "member_of_family", "has_stage", "powered_by", "uses_propellant", "belongs_to_family", "best_observed_in", "has_orbit", "shares_orbital_resonance"].includes(type)) return "related";
   return "scientific";
 }
 
@@ -825,6 +835,12 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   black_hole: "Black hole",
   asteroid: "Asteroid",
   comet: "Comet",
+  asteroid_family: "Asteroid family",
+  minor_planet_group: "Minor-planet group",
+  near_earth_object: "Near-Earth object class",
+  trojan_group: "Trojan group",
+  orbital_resonance: "Orbital resonance",
+  impact_event: "Impact event",
   meteor_shower: "Meteor shower",
   eclipse: "Eclipse",
   catalog: "Catalog",

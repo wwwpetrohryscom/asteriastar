@@ -58,6 +58,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Rockets & Launch Vehicles", href: ROUTES.rockets, description: "Rockets, engines, stages, propellants, pads" },
             { name: "Constellations", href: ROUTES.constellations, description: "The 88 IAU constellations, their stars & deep-sky objects" },
             { name: "Satellites", href: ROUTES.satellites, description: "Communications, navigation, Earth-observation & weather satellites" },
+            { name: "Asteroids & Minor Planets", href: ROUTES.asteroids, description: "Asteroids, near-Earth objects, families, resonances & planetary defense" },
             { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Observatories", href: ROUTES.observatories, description: "Telescopes, surveys, bands" },
             { name: "Exoplanets", href: ROUTES.exoplanets, description: "Worlds beyond the Sun" },
