@@ -23,6 +23,7 @@ import { entities as exoplanetCatalog } from "@/knowledge-graph/data/exoplanet-c
 import { entities as historyCatalog } from "@/knowledge-graph/data/history-catalog";
 import { entities as cosmologyCatalog } from "@/knowledge-graph/data/cosmology-catalog";
 import { entities as imageCatalog } from "@/knowledge-graph/data/image-catalog";
+import { entities as rocketsCatalog } from "@/knowledge-graph/data/rockets-catalog";
 
 /**
  * Knowledge-graph entities.
@@ -253,4 +254,5 @@ export const entities: GraphEntity[] = [
   ...historyCatalog,
   ...cosmologyCatalog,
   ...imageCatalog,
+  ...rocketsCatalog,
 ];

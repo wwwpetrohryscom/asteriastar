@@ -149,6 +149,15 @@ export function GET(): Response {
   lines.push(`- Every mission, spacecraft, and agency resolves through the Scientific Data Engine; pages at /exploration/{slug}.`);
   lines.push("");
 
+  lines.push("## Rockets & Launch Vehicles Encyclopedia");
+  lines.push(
+    `A source-backed encyclopedia of ${engine.launchVehicles.byKind("vehicle").length} launch vehicles plus rocket families, booster and upper stages, engines, propellants, launch providers, programs, and pads — ${engine.launchVehicles.count} records resolving through the Scientific Data Engine (engine.launchVehicles). Curated from agency user's manuals and manufacturer documentation (NASA, ESA, JAXA, ISRO, Roscosmos, SpaceX, ULA, Arianespace, Rocket Lab, Blue Origin). Specifications that are not reliably known are left blank — never invented; no fabricated payloads, thrusts, specific impulses, or launch counts.`,
+  );
+  lines.push(`- [Rockets & Launch Vehicles](${absoluteUrl("/rockets")})`);
+  lines.push(`- Launch vehicles: ${absoluteUrl("/rockets/discover/all-launch-vehicles")} · Engines: ${absoluteUrl("/rockets/discover/rocket-engines")} · Families: ${absoluteUrl("/rockets/discover/rocket-families")} · Providers: ${absoluteUrl("/rockets/discover/launch-providers")}`);
+  lines.push(`- Every rocket, engine, stage, and propellant resolves through the Scientific Data Engine; pages at /rockets/{slug}.`);
+  lines.push("");
+
   lines.push("## Space Stations & Human Spaceflight");
   lines.push(
     `How humans live and work in space: ${engine.humanSpaceflight.byKind("station").length} space stations (ISS, Mir, Skylab, Salyut, Tiangong, and planned stations) plus crewed and cargo spacecraft, ISS modules, expeditions, spacewalks, programs, and astronauts — ${engine.humanSpaceflight.count} interconnected entities. Curated from NASA, ESA, Roscosmos, JAXA, CSA, and Smithsonian sources. No fabricated crew, dates, EVAs, or modules; planned stations are clearly marked.`,

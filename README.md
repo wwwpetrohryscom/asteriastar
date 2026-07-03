@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Rockets & Launch Vehicles Encyclopedia (Program V)**
+
+- [Rockets & Launch Vehicles](docs/ROCKETS.md) — launch vehicles, rocket families, booster/upper stages, engines, propellants, launch providers, programs, and pads, source-backed with unknown specifications left blank (never invented)
+
 **Solar System Encyclopedia (Program B)**
 
 - [Solar System](docs/SOLAR_SYSTEM.md) — the Sun, planets, moons, asteroids, comets, missions, and spacecraft from real NASA/JPL data

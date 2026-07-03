@@ -46,7 +46,16 @@ export const ROUTES = {
   cosmology: "/cosmology",
   sky: "/sky",
   images: "/images",
+  rockets: "/rockets",
 } as const;
+
+/** Rockets & Launch Vehicles encyclopedia (Program V). */
+export function rocketPath(slug: string): string {
+  return `/rockets/${slug}`;
+}
+export function rocketDiscoveryPath(slug: string): string {
+  return `/rockets/discover/${slug}`;
+}
 
 export function exoplanetPath(slug: string): string {
   return `/exoplanets/${slug}`;

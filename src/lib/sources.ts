@@ -46,7 +46,16 @@ export type SourceKey =
   | "stsci"
   | "esa-hubble"
   | "esa-webb"
-  | "wikimedia";
+  | "wikimedia"
+  // Launch-vehicle manufacturers/operators + a specialist launch-vehicle reference
+  // (Program V). Manufacturer sources are "reference" authority — primary for
+  // their own hardware, but secondary/press-derived, not peer-reviewed.
+  | "spacex"
+  | "arianespace"
+  | "ula"
+  | "rocketlab"
+  | "blueorigin"
+  | "gunters";
 
 /** The kind of authority a source carries — used for evidence weighting. */
 export type AuthorityType =
@@ -454,6 +463,72 @@ export const SOURCES: Record<SourceKey, Source> = {
     authorityType: "media",
     reliability: "Media repository; each file's license and original source are verified before use.",
     usage: "Each file's license (public domain or Creative Commons) and attribution are recorded before use.",
+  },
+  spacex: {
+    key: "spacex",
+    name: "SpaceX",
+    organization: "Space Exploration Technologies Corp.",
+    url: "https://www.spacex.com",
+    scope: "Falcon 9, Falcon Heavy, Starship, and the Merlin/Raptor engines — manufacturer specifications and launch data.",
+    country: "United States",
+    authorityType: "reference",
+    reliability: "Primary manufacturer source for its own vehicles; published figures are cross-checked against launch records and agency documents.",
+    citationFormat: "SpaceX. (Year). Title. https://www.spacex.com",
+  },
+  arianespace: {
+    key: "arianespace",
+    name: "Arianespace",
+    organization: "Arianespace SA",
+    url: "https://www.arianespace.com",
+    scope: "Ariane and Vega launch-vehicle families — user's manuals and mission data.",
+    country: "Europe",
+    authorityType: "reference",
+    reliability: "Primary operator source for European launchers; user's-manual figures are authoritative for its own vehicles.",
+    citationFormat: "Arianespace. (Year). Title. https://www.arianespace.com",
+  },
+  ula: {
+    key: "ula",
+    name: "ULA",
+    organization: "United Launch Alliance",
+    url: "https://www.ulalaunch.com",
+    scope: "Atlas V, Delta IV, and Vulcan Centaur — manufacturer specifications and mission data.",
+    country: "United States",
+    authorityType: "reference",
+    reliability: "Primary manufacturer source for its own launch vehicles; specification sheets cross-checked against launch records.",
+    citationFormat: "United Launch Alliance. (Year). Title. https://www.ulalaunch.com",
+  },
+  rocketlab: {
+    key: "rocketlab",
+    name: "Rocket Lab",
+    organization: "Rocket Lab USA, Inc.",
+    url: "https://www.rocketlabusa.com",
+    scope: "Electron, Neutron, and the Rutherford/Archimedes engines — manufacturer specifications.",
+    country: "United States / New Zealand",
+    authorityType: "reference",
+    reliability: "Primary manufacturer source for its own vehicles; figures cross-checked against launch records.",
+    citationFormat: "Rocket Lab. (Year). Title. https://www.rocketlabusa.com",
+  },
+  blueorigin: {
+    key: "blueorigin",
+    name: "Blue Origin",
+    organization: "Blue Origin, LLC",
+    url: "https://www.blueorigin.com",
+    scope: "New Shepard, New Glenn, and the BE-3/BE-4 engines — manufacturer specifications.",
+    country: "United States",
+    authorityType: "reference",
+    reliability: "Primary manufacturer source for its own vehicles; figures cross-checked against launch records.",
+    citationFormat: "Blue Origin. (Year). Title. https://www.blueorigin.com",
+  },
+  gunters: {
+    key: "gunters",
+    name: "Gunter's Space Page",
+    organization: "Gunter Krebs — Gunter's Space Page",
+    url: "https://space.skyrocket.de",
+    scope: "A specialist reference compilation of launch vehicles, stages, and spacecraft across all spacefaring nations.",
+    country: "International",
+    authorityType: "reference",
+    reliability: "Widely-cited secondary reference for launch-vehicle history and configurations; used to corroborate agency and manufacturer figures, not as a sole primary source.",
+    citationFormat: "Krebs, G. D. (Year). Title. Gunter's Space Page. https://space.skyrocket.de",
   },
 };
 

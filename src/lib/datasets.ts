@@ -40,6 +40,11 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "telescopes", title: "Space Telescopes", description: "Orbiting observatories.", entityTypes: ["space_telescope"], sources: ["nasa", "esa"] },
   { slug: "observatories", title: "Observatories", description: "Ground-based observatories.", entityTypes: ["observatory"], sources: ["noirlab", "eso", "nasa"] },
   { slug: "launch-vehicles", title: "Launch Vehicles", description: "Rockets that carry missions to orbit and beyond.", entityTypes: ["launch_vehicle"], sources: ["nasa", "esa"] },
+  { slug: "rocket-families", title: "Rocket Families", description: "Multi-generation launch-vehicle lineages — Saturn, Atlas, Delta, Falcon, Ariane, Long March, and more.", entityTypes: ["rocket_family"], sources: ["nasa", "esa"] },
+  { slug: "rocket-engines", title: "Rocket Engines", description: "The engines that power the world's rockets, by combustion cycle and propellant.", entityTypes: ["rocket_engine"], sources: ["nasa", "esa"] },
+  { slug: "rocket-stages", title: "Rocket Stages", description: "First-class booster, core, and upper stages of flagship launch vehicles.", entityTypes: ["rocket_stage"], sources: ["nasa"] },
+  { slug: "propellants", title: "Rocket Propellants", description: "Fuel and oxidizer combinations — kerolox, hydrolox, methalox, hypergolics, and solids.", entityTypes: ["propellant"], sources: ["nasa"] },
+  { slug: "launch-pads", title: "Launch Pads", description: "The pads and complexes where rockets lift off, under their launch sites.", entityTypes: ["launch_pad"], sources: ["nasa"] },
   { slug: "space-agencies", title: "Space Agencies", description: "Agencies and institutions of spaceflight and astronomy.", entityTypes: ["organization"], sources: ["nasa", "esa"] },
   { slug: "astronomers", title: "Astronomers", description: "Astronomers whose work shaped our understanding of the sky.", entityTypes: ["astronomer"], sources: ["britannica", "iau"] },
 ];

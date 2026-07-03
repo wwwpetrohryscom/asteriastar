@@ -13,6 +13,7 @@ import { STAR_DISCOVERIES } from "@/app/stars/discovery";
 import { SOLAR_DISCOVERIES } from "@/app/solar-system/discovery";
 import { DEEP_SKY_DISCOVERIES } from "@/app/deep-sky/discovery";
 import { EXPLORATION_DISCOVERIES } from "@/app/exploration/discovery";
+import { ROCKET_DISCOVERIES } from "@/app/rockets/discovery";
 import { HSF_DISCOVERIES } from "@/app/human-spaceflight/discovery";
 import { OBS_DISCOVERIES } from "@/app/observatories/discovery";
 import { EXO_DISCOVERIES } from "@/app/exoplanets/discovery";
@@ -59,6 +60,8 @@ import {
   apiGroupPath,
   developerDocPath,
   contributePath,
+  rocketPath,
+  rocketDiscoveryPath,
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
@@ -195,6 +198,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...EXPLORATION_DISCOVERIES.map((d) => ({ url: absoluteUrl(explorationDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const rocketRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.rockets), changeFrequency: "weekly", priority: 0.8 },
+    // Only NEW rocket entities own a canonical /rockets/{slug} URL; reused entities
+    // (existing:true) canonicalize to their primary home, so they are excluded here
+    // to avoid duplicate-content URLs in the sitemap.
+    ...engine.launchVehicles.all().filter((r) => !r.existing).map((r) => ({ url: absoluteUrl(rocketPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...ROCKET_DISCOVERIES.map((d) => ({ url: absoluteUrl(rocketDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const deepSkyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
     ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -232,6 +244,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...solarRoutes,
     ...deepSkyRoutes,
     ...explorationRoutes,
+    ...rocketRoutes,
     ...hsfRoutes,
     ...obsRoutes,
     ...exoRoutes,
