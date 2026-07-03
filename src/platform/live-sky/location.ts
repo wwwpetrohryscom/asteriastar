@@ -83,6 +83,24 @@ export function timezoneOffsetMinutes(timezone: string, at: Date): number {
   return Math.round((asUTC - at.getTime()) / 60_000);
 }
 
+/**
+ * The UTC instant (ms) of local-clock minute `minuteOfDay` on a resolved date.
+ * DST-correct: the offset is resolved at the ACTUAL local instant by a short
+ * fixpoint iteration (resolving it at the naive wall-as-UTC instant instead would
+ * give the wrong offset near a DST transition and yield a non-monotonic sample
+ * day, fabricating or dropping rise/set events). Converges in one step on a
+ * normal day; two extra steps handle spring-forward and fall-back.
+ */
+export function localMinuteToUtcMs(loc: ResolvedLocation, minuteOfDay: number): number {
+  const wallAsUtc = Date.UTC(loc.year, loc.month - 1, loc.day, 0, 0, 0) + minuteOfDay * 60_000;
+  if (!loc.timezoneProvided) return wallAsUtc;
+  let utc = wallAsUtc - timezoneOffsetMinutes(loc.timezone, new Date(wallAsUtc)) * 60_000;
+  for (let i = 0; i < 3; i++) {
+    utc = wallAsUtc - timezoneOffsetMinutes(loc.timezone, new Date(utc)) * 60_000;
+  }
+  return utc;
+}
+
 function parseCalendarDate(input: string): { year: number; month: number; day: number } | null {
   const m = /^(\d{4})-(\d{2})-(\d{2})/.exec(input.trim());
   if (!m) return null;

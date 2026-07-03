@@ -1,5 +1,5 @@
 import { moonTopocentric, MOON_RISE_ALTITUDE } from "@/platform/live-sky/providers/lunar-position";
-import { timezoneOffsetMinutes, type ResolvedLocation } from "@/platform/live-sky/location";
+import { localMinuteToUtcMs, type ResolvedLocation } from "@/platform/live-sky/location";
 
 /**
  * Moonrise / moonset / transit finder (Program R). It samples the Moon's
@@ -15,14 +15,6 @@ import { timezoneOffsetMinutes, type ResolvedLocation } from "@/platform/live-sk
 const SAMPLE_STEP_MIN = 10;
 const round = (x: number, dp: number): number => Math.round(x * 10 ** dp) / 10 ** dp;
 const norm180 = (x: number): number => ((((x + 180) % 360) + 360) % 360) - 180;
-
-/** The UTC instant (ms) of local-clock minute `minuteOfDay` on the resolved date. DST-correct. */
-function wallToUtcMs(loc: ResolvedLocation, minuteOfDay: number): number {
-  const wallAsUtc = Date.UTC(loc.year, loc.month - 1, loc.day, 0, 0, 0) + minuteOfDay * 60_000;
-  if (!loc.timezoneProvided) return wallAsUtc; // UTC
-  const offset = timezoneOffsetMinutes(loc.timezone, new Date(wallAsUtc));
-  return wallAsUtc - offset * 60_000;
-}
 
 const altitudeAt = (utcMs: number, lat: number, lon: number): number => moonTopocentric(new Date(utcMs), lat, lon).altitudeDeg;
 
@@ -100,7 +92,7 @@ export function computeLunarDay(loc: ResolvedLocation): LunarDayEvents {
   // Sample the whole local day INCLUSIVE of both endpoints (00:00 and 24:00).
   const samples: { ms: number; alt: number; ha: number }[] = [];
   for (let m = 0; m <= 1440; m += SAMPLE_STEP_MIN) {
-    const ms = wallToUtcMs(loc, m);
+    const ms = localMinuteToUtcMs(loc, m);
     const t = moonTopocentric(new Date(ms), latitude, longitude);
     samples.push({ ms, alt: t.altitudeDeg, ha: t.hourAngleDeg });
   }
