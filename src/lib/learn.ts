@@ -735,6 +735,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["launch_vehicle:falcon-9", "rocket_engine:merlin-1d", "rocket_family:falcon", "launch_vehicle:saturn-v"],
     next: ["history-of-space-exploration", "human-spaceflight"],
   },
+  {
+    slug: "understanding-constellations",
+    title: "Understanding Constellations",
+    description: "Learn to read the night sky — the celestial sphere and coordinates, the zodiac, the seasonal and circumpolar sky, star designations, and how to find and star-hop between the 88 constellations. Built on real IAU constellation data.",
+    accent: "nebula",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The celestial sphere", href: "/constellations", blurb: "How the 88 constellations partition the whole sky into a single map." },
+          { title: "Right ascension", href: "/constellations/discover/all-constellations", blurb: "The sky's longitude, measured in hours eastward around the celestial equator." },
+          { title: "Declination", href: "/constellations/region/northern", blurb: "The sky's latitude — how far north or south of the celestial equator an object lies." },
+          { title: "Finding constellations", href: "/constellations/discover/beginner-constellations", blurb: "Start with the brightest, easiest patterns and work outward." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Circumpolar constellations", href: "/constellations/ursa-minor", blurb: "The constellations that never set from your latitude, circling the celestial pole around Polaris." },
+          { title: "The zodiac", href: "/constellations/discover/zodiac", blurb: "The twelve constellations the Sun, Moon, and planets travel through along the ecliptic." },
+          { title: "The seasonal sky", href: "/constellations/season/winter", blurb: "Why different constellations dominate the evening sky each season." },
+          { title: "Bayer designations", href: "/constellations/orion", blurb: "Greek letters (α, β, γ…) that name the brightest stars within each constellation." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Flamsteed designations", href: "/stars", blurb: "The numbered star designations that complement the Greek-letter Bayer names." },
+          { title: "Deep-sky navigation", href: "/constellations/discover/messier-rich-constellations", blurb: "Use bright constellations as signposts to galaxies, nebulae, and clusters." },
+          { title: "Star hopping", href: "/constellations/ursa-major", blurb: "Following chains of stars — like the Big Dipper's pointers to Polaris — to find fainter targets." },
+          { title: "Planning observations", href: "/sky/night-sky-tonight", blurb: "Combine constellation knowledge with the computed Tonight dashboard for your location." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["constellation:orion", "constellation:ursa-major", "constellation:cygnus", "constellation_family:zodiacal"],
+    next: ["observing-the-night-sky", "understanding-stars"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
