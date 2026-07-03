@@ -113,6 +113,7 @@ function toEntry(key: PlanetKey, day: PlanetDay, loc: ResolvedLocation): PlanetV
       visibilityWindow,
       morningOrEvening: day.window,
       bestTimeIso: day.bestTimeUtcMs !== null ? new Date(day.bestTimeUtcMs).toISOString() : null,
+      bestAltitudeDeg: day.bestAltitudeDeg,
       observingSummary,
       limitingFactors: day.limitingFactors,
     },
