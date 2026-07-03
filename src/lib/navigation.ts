@@ -60,6 +60,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Satellites", href: ROUTES.satellites, description: "Communications, navigation, Earth-observation & weather satellites" },
             { name: "Asteroids & Minor Planets", href: ROUTES.asteroids, description: "Asteroids, near-Earth objects, families, resonances & planetary defense" },
             { name: "Comets & Small Bodies", href: ROUTES.comets, description: "Comets, families, classes, the Oort cloud & meteor-shower parents" },
+            { name: "Meteorites & Fireballs", href: ROUTES.meteorites, description: "Meteorites, classes, fireballs, impact structures & recovery sites" },
             { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Observatories", href: ROUTES.observatories, description: "Telescopes, surveys, bands" },
             { name: "Exoplanets", href: ROUTES.exoplanets, description: "Worlds beyond the Sun" },

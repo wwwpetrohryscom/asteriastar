@@ -192,6 +192,15 @@ export function GET(): Response {
   lines.push(`- New comets resolve at /comets/{slug}; classes/families/reservoirs at /comets/{class,family,reservoir}/{slug}; transition objects at /comets/{active,dormant}/{slug}.`);
   lines.push("");
 
+  lines.push("## Meteors, Meteorites & Fireballs Encyclopedia");
+  lines.push(
+    `${engine.meteorites.count} meteorites plus ${engine.meteorites.classes().length} classes, ${engine.meteorites.groups().length} groups, ${engine.meteorites.fireballs().length} fireballs, ${engine.meteorites.structures().length} impact structures, and ${engine.meteorites.sites().length} recovery sites as first-class knowledge-graph entities (engine.meteorites) — the capstone of the small-bodies trilogy (asteroids → comets → meteorites). Classifications and fall data come from the Meteoritical Bulletin Database. The parent bodies are REUSED graph entities: the asteroid Vesta (Program Y) for the HED meteorites, Mars for the Martian meteorites, and the Moon for the lunar meteorites (parent_body); the impact events and meteor showers are likewise reused, never duplicated. No live fireball detection is performed or fabricated — the Live Sky meteor-shower tools are linked instead.`,
+  );
+  lines.push(`- [Meteors, Meteorites & Fireballs](${absoluteUrl("/meteorites")})`);
+  lines.push(`- Falls: ${absoluteUrl("/meteorites/discover/falls")} · Carbonaceous: ${absoluteUrl("/meteorites/discover/carbonaceous")} · Martian: ${absoluteUrl("/meteorites/discover/martian")} · Impact structures: ${absoluteUrl("/meteorites/discover/impact-structures")}`);
+  lines.push(`- Meteorites resolve at /meteorites/{slug}; classes/groups at /meteorites/{class,group}/{slug}; fireballs, impact structures, and recovery sites at /meteorites/{fireball,impact-structure,site}/{slug}.`);
+  lines.push("");
+
   lines.push("## Space Stations & Human Spaceflight");
   lines.push(
     `How humans live and work in space: ${engine.humanSpaceflight.byKind("station").length} space stations (ISS, Mir, Skylab, Salyut, Tiangong, and planned stations) plus crewed and cargo spacecraft, ISS modules, expeditions, spacewalks, programs, and astronauts — ${engine.humanSpaceflight.count} interconnected entities. Curated from NASA, ESA, Roscosmos, JAXA, CSA, and Smithsonian sources. No fabricated crew, dates, EVAs, or modules; planned stations are clearly marked.`,

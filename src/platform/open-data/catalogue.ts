@@ -13,7 +13,7 @@ import { DATA_GENERATED_AT, API_ATTRIBUTION } from "@/platform/open-data/api";
 /**
  * Unified open-data catalogue.
  *
- * A superset view over the 35 domain datasets plus the graph-level "meta"
+ * A superset view over the 40 domain datasets plus the graph-level "meta"
  * datasets (entities, relationships, sources, images, live-sky providers,
  * citations, evidence framework). Every record count is real (computed from the
  * engine/graph), and where a pre-generated export file exists, its size and
@@ -192,7 +192,7 @@ const META: CatalogueEntry[] = [
   },
 ];
 
-/* --------------------------------------------------------- domain datasets (35) */
+/* --------------------------------------------------------- domain datasets (40) */
 const DOMAIN: CatalogueEntry[] = DATASETS.map((d) => ({
   id: d.slug,
   title: d.title,
