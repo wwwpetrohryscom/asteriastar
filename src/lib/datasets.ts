@@ -51,6 +51,10 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "satellite-constellations", title: "Satellite Constellations", description: "Multi-satellite systems, from GPS and Galileo to Starlink and OneWeb.", entityTypes: ["satellite_constellation"], sources: ["nasa", "esa", "gunters"] },
   { slug: "orbit-types", title: "Orbit Types", description: "The orbital regimes satellites use — LEO, MEO, GEO, sun-synchronous, polar, and highly elliptical.", entityTypes: ["orbit_type"], sources: ["nasa", "esa"] },
   { slug: "tracking-networks", title: "Tracking Networks", description: "Ground networks that communicate with satellites and deep-space missions.", entityTypes: ["tracking_network"], sources: ["nasa", "esa"] },
+  { slug: "asteroid-families", title: "Asteroid Families", description: "Collisional families of asteroids sharing a common parent body.", entityTypes: ["asteroid_family"], sources: ["nasa", "jpl"] },
+  { slug: "near-earth-objects", title: "Near-Earth Object Classes", description: "The Apollo, Aten, Amor, and Atira near-Earth orbital classes.", entityTypes: ["near_earth_object"], sources: ["nasa", "jpl"] },
+  { slug: "minor-planet-populations", title: "Minor-Planet Populations", description: "Dynamical populations and orbital resonances — main belt, Hilda, Trojans, Kuiper Belt, and more.", entityTypes: ["minor_planet_group", "trojan_group", "orbital_resonance"], sources: ["nasa", "jpl"] },
+  { slug: "impact-events", title: "Impact Events", description: "Well-studied terrestrial asteroid and meteoroid impact events.", entityTypes: ["impact_event"], sources: ["nasa"] },
 ];
 
 export interface Dataset extends DatasetDef {

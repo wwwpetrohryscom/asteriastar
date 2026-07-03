@@ -16,6 +16,7 @@ import { EXPLORATION_DISCOVERIES } from "@/app/exploration/discovery";
 import { ROCKET_DISCOVERIES } from "@/app/rockets/discovery";
 import { CONSTELLATION_DISCOVERIES } from "@/app/constellations/discovery";
 import { SATELLITE_DISCOVERIES } from "@/app/satellites/discovery";
+import { ASTEROID_DISCOVERIES } from "@/app/asteroids/discovery";
 import { HSF_DISCOVERIES } from "@/app/human-spaceflight/discovery";
 import { OBS_DISCOVERIES } from "@/app/observatories/discovery";
 import { EXO_DISCOVERIES } from "@/app/exoplanets/discovery";
@@ -74,6 +75,14 @@ import {
   satelliteOperatorPath,
   satelliteOrbitPath,
   satelliteNetworkPath,
+  asteroidPath,
+  asteroidDiscoveryPath,
+  asteroidFamilyPath,
+  asteroidGroupPath,
+  asteroidNearEarthPath,
+  asteroidTrojanPath,
+  asteroidResonancePath,
+  asteroidImpactPath,
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
@@ -239,6 +248,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...SATELLITE_DISCOVERIES.map((d) => ({ url: absoluteUrl(satelliteDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const asteroidRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.asteroids), changeFrequency: "weekly", priority: 0.8 },
+    { url: absoluteUrl("/asteroids/planetary-defense"), changeFrequency: "monthly", priority: 0.7 },
+    // Only NEW asteroid bodies own a canonical /asteroids/{slug} URL; reused bodies
+    // (existing dwarf planets and asteroids) keep their Solar System / graph pages.
+    ...engine.asteroids.pages().map((r) => ({ url: absoluteUrl(asteroidPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...ASTEROID_DISCOVERIES.map((d) => ({ url: absoluteUrl(asteroidDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...engine.asteroids.families().map((f) => ({ url: absoluteUrl(asteroidFamilyPath(f.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...engine.asteroids.groups().map((g) => ({ url: absoluteUrl(asteroidGroupPath(g.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...engine.asteroids.neoClasses().map((n) => ({ url: absoluteUrl(asteroidNearEarthPath(n.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...engine.asteroids.trojans().map((t) => ({ url: absoluteUrl(asteroidTrojanPath(t.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...engine.asteroids.resonances().map((r) => ({ url: absoluteUrl(asteroidResonancePath(r.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...engine.asteroids.impacts().map((i) => ({ url: absoluteUrl(asteroidImpactPath(i.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+  ];
+
   const deepSkyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
     ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -279,6 +303,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...rocketRoutes,
     ...constellationRoutes,
     ...satelliteRoutes,
+    ...asteroidRoutes,
     ...hsfRoutes,
     ...obsRoutes,
     ...exoRoutes,

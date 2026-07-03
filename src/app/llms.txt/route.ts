@@ -174,6 +174,13 @@ export function GET(): Response {
   lines.push(`- [Satellites](${absoluteUrl("/satellites")})`);
   lines.push(`- All satellites: ${absoluteUrl("/satellites/discover/all-satellites")} · Constellations: ${absoluteUrl("/satellites/discover/constellations")} · Earth observation: ${absoluteUrl("/satellites/discover/earth-observation")} · Orbits: ${absoluteUrl("/satellites/orbit/leo")}`);
   lines.push(`- Every satellite, constellation, orbit type, operator, and tracking network resolves through the Scientific Data Engine; pages at /satellites/{slug}, /satellites/constellation/{slug}, /satellites/orbit/{slug}, /satellites/operator/{slug}, and /satellites/network/{slug}.`);
+  lines.push("## Asteroids & Minor Planets Encyclopedia");
+  lines.push(
+    `${engine.asteroids.count} minor planets (asteroids and dwarf planets) plus ${engine.asteroids.families().length} collisional families, ${engine.asteroids.groups().length} dynamical populations, ${engine.asteroids.neoClasses().length} near-Earth classes, ${engine.asteroids.trojans().length} Trojan groups, ${engine.asteroids.resonances().length} orbital resonances, and ${engine.asteroids.impacts().length} impact events as first-class knowledge-graph entities (engine.asteroids). Designations follow the IAU Minor Planet Center; orbits and sizes come from the NASA/JPL Small-Body Database. The five dwarf planets, the previously-modelled asteroids, and the small-body missions (Dawn, Hayabusa/2, OSIRIS-REx, DART, Psyche, Lucy…) are REUSED and never duplicated; reused bodies keep their canonical pages. A planetary-defense knowledge layer covers hazard scales, surveys, and deflection — factual and non-sensational. Sizes/orbits/discovery data are never fabricated; unknown values are left blank.`,
+  );
+  lines.push(`- [Asteroids & Minor Planets](${absoluteUrl("/asteroids")})`);
+  lines.push(`- Largest: ${absoluteUrl("/asteroids/discover/largest")} · Near-Earth: ${absoluteUrl("/asteroids/discover/near-earth-objects")} · Trojans: ${absoluteUrl("/asteroids/discover/trojans")} · Planetary defense: ${absoluteUrl("/asteroids/planetary-defense")}`);
+  lines.push(`- New asteroids resolve at /asteroids/{slug}; families/groups/near-Earth classes/Trojans/resonances/impacts at /asteroids/{family,group,near-earth,trojans,resonance,impact}/{slug}.`);
   lines.push("");
 
   lines.push("## Space Stations & Human Spaceflight");
