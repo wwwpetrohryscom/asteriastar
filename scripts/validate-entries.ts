@@ -271,6 +271,25 @@ async function main() {
     `✓ Comets valid — ${cometsCat.COMETS_STATS.comets} comets, ${cometsCat.COMETS_STATS.classes} classes, ${cometsCat.COMETS_STATS.families} families, ${cometsCat.COMETS_STATS.reservoirs} reservoirs, ${cometsCat.COMETS_STATS.activeAsteroids} active asteroids, ${cometsCat.COMETS_STATS.dormantComets} dormant comets · ${cometsCat.COMETS_STATS.newEntities} new entities, ${cometsCat.COMETS_STATS.relations} relations (reused comets/showers/missions/reservoirs; no fabricated data)`,
   );
 
+  const meteoritesCat = await import("../src/knowledge-graph/data/meteorites-catalog");
+  const meteoriteIssues = meteoritesCat.validateMeteorites();
+  // Cross-reference resolution: every relation endpoint the catalog emits must resolve
+  // to a real graph entity (reused parent bodies — Vesta, Mars, the Moon — impact events,
+  // and Earth).
+  const { getEntityById: getMetEnt } = await import("../src/knowledge-graph");
+  for (const r of meteoritesCat.relations) {
+    if (!getMetEnt(r.from)) meteoriteIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getMetEnt(r.to)) meteoriteIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (meteoriteIssues.length > 0) {
+    console.error(`\n✗ ${meteoriteIssues.length} meteorite issue(s):`);
+    for (const i of meteoriteIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Meteorites valid — ${meteoritesCat.METEORITES_STATS.meteorites} meteorites, ${meteoritesCat.METEORITES_STATS.classes} classes, ${meteoritesCat.METEORITES_STATS.groups} groups, ${meteoritesCat.METEORITES_STATS.fireballs} fireballs, ${meteoritesCat.METEORITES_STATS.structures} impact structures, ${meteoritesCat.METEORITES_STATS.sites} recovery sites · ${meteoritesCat.METEORITES_STATS.newEntities} new entities, ${meteoritesCat.METEORITES_STATS.relations} relations (reused Vesta/Mars/Moon/impact events; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

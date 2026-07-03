@@ -13,6 +13,7 @@ import { validateConstellations } from "@/knowledge-graph/data/constellations-ca
 import { validateSatellites } from "@/knowledge-graph/data/satellites-catalog";
 import { validateAsteroids } from "@/knowledge-graph/data/asteroids-catalog";
 import { validateComets } from "@/knowledge-graph/data/comets-catalog";
+import { validateMeteorites } from "@/knowledge-graph/data/meteorites-catalog";
 import { validateHumanSpaceflight } from "@/knowledge-graph/data/human-spaceflight-catalog";
 import { validateObservatories } from "@/knowledge-graph/data/observatory-catalog";
 import { validateExoplanets } from "@/knowledge-graph/data/exoplanet-catalog";
@@ -107,6 +108,7 @@ export const validationEngine = {
   satellites: (): string[] => validateSatellites(),
   asteroids: (): string[] => validateAsteroids(),
   comets: (): string[] => validateComets(),
+  meteorites: (): string[] => validateMeteorites(),
   humanSpaceflight: (): string[] => validateHumanSpaceflight(),
   observatories: (): string[] => validateObservatories(),
   exoplanets: (): string[] => validateExoplanets(),
@@ -135,6 +137,7 @@ export const validationEngine = {
       { category: "satellites", issues: this.satellites() },
       { category: "asteroids", issues: this.asteroids() },
       { category: "comets", issues: this.comets() },
+      { category: "meteorites", issues: this.meteorites() },
       { category: "humanSpaceflight", issues: this.humanSpaceflight() },
       { category: "observatories", issues: this.observatories() },
       { category: "exoplanets", issues: this.exoplanets() },
