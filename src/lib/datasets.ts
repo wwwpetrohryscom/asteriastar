@@ -64,6 +64,11 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "fireballs", title: "Fireballs", description: "Bright meteors and bolides that entered the atmosphere.", entityTypes: ["fireball"], sources: ["nasa"] },
   { slug: "impact-structures", title: "Impact Structures", description: "Terrestrial impact craters left by past impacts.", entityTypes: ["impact_structure"], sources: ["nasa"] },
   { slug: "recovery-sites", title: "Recovery Sites", description: "Strewn fields where meteorite fragments are recovered.", entityTypes: ["recovery_site"], sources: ["nasa"] },
+  { slug: "interstellar-objects", title: "Interstellar Objects", description: "Confirmed interstellar objects — 1I/ʻOumuamua, 2I/Borisov, and 3I/ATLAS — with their hyperbolic orbits.", entityTypes: ["interstellar_object"], sources: ["mpc", "jpl"] },
+  { slug: "interstellar-candidates", title: "Interstellar Candidates", description: "Debated and unconfirmed interstellar claims, kept separate from the confirmed objects.", entityTypes: ["interstellar_candidate"], sources: ["nasa", "jpl"] },
+  { slug: "hyperbolic-comets", title: "Hyperbolic Comets", description: "Solar-System comets on hyperbolic or near-parabolic orbits — not interstellar.", entityTypes: ["hyperbolic_comet"], sources: ["mpc", "jpl"] },
+  { slug: "trajectory-classes", title: "Trajectory Classes", description: "Orbital-trajectory classes by eccentricity — bound, near-parabolic, hyperbolic, and interstellar.", entityTypes: ["trajectory_class"], sources: ["jpl", "nasa"] },
+  { slug: "interstellar-detection-methods", title: "Interstellar Detection Methods", description: "The methods used to identify objects originating beyond the Solar System.", entityTypes: ["interstellar_detection_method"], sources: ["jpl", "nasa"] },
 ];
 
 export interface Dataset extends DatasetDef {

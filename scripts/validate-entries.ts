@@ -290,6 +290,24 @@ async function main() {
     `✓ Meteorites valid — ${meteoritesCat.METEORITES_STATS.meteorites} meteorites, ${meteoritesCat.METEORITES_STATS.classes} classes, ${meteoritesCat.METEORITES_STATS.groups} groups, ${meteoritesCat.METEORITES_STATS.fireballs} fireballs, ${meteoritesCat.METEORITES_STATS.structures} impact structures, ${meteoritesCat.METEORITES_STATS.sites} recovery sites · ${meteoritesCat.METEORITES_STATS.newEntities} new entities, ${meteoritesCat.METEORITES_STATS.relations} relations (reused Vesta/Mars/Moon/impact events; no fabricated data)`,
   );
 
+  const interstellarCat = await import("../src/knowledge-graph/data/interstellar-catalog");
+  const interstellarIssues = interstellarCat.validateInterstellarObjects();
+  // Cross-reference resolution: every relation endpoint the catalog emits must resolve to
+  // a real graph entity (reused comet class, Pan-STARRS / LSST, NASA/JPL, Earth).
+  const { getEntityById: getIntEnt } = await import("../src/knowledge-graph");
+  for (const r of interstellarCat.relations) {
+    if (!getIntEnt(r.from)) interstellarIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getIntEnt(r.to)) interstellarIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (interstellarIssues.length > 0) {
+    console.error(`\n✗ ${interstellarIssues.length} interstellar issue(s):`);
+    for (const i of interstellarIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Interstellar objects valid — ${interstellarCat.INTERSTELLAR_STATS.objects} confirmed, ${interstellarCat.INTERSTELLAR_STATS.candidates} candidate, ${interstellarCat.INTERSTELLAR_STATS.hyperbolicComets} hyperbolic comets, ${interstellarCat.INTERSTELLAR_STATS.methods} detection methods, ${interstellarCat.INTERSTELLAR_STATS.trajectoryClasses} trajectory classes · ${interstellarCat.INTERSTELLAR_STATS.newEntities} new entities, ${interstellarCat.INTERSTELLAR_STATS.relations} relations (reused comet class/Pan-STARRS/LSST/NASA-JPL; confirmed and candidate kept separate; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

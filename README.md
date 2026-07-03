@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Interstellar & Hyperbolic Objects Encyclopedia (Program AB)**
+
+- [Interstellar Objects](docs/INTERSTELLAR_OBJECTS.md) — the confirmed visitors from beyond the Solar System (1I/ʻOumuamua, 2I/Borisov, 3I/ATLAS), debated candidates, hyperbolic Solar-System comets, and the detection methods, trajectory classes, and surveys used to tell them apart — the coda to the small-body arc. Confirmed, candidate, and Solar-System objects are typed and displayed separately; an interstellar origin is asserted only for the confirmed objects; no "alien"/artificial-origin claims and no fabricated data (reuses the comet class, Pan-STARRS/LSST, and NASA/JPL)
+
 **Meteors, Meteorites & Fireballs Encyclopedia (Program AA)**
 
 - [Meteorites](docs/METEORITES.md) — meteorites, their classes and groups, fireballs and bolides, terrestrial impact structures, and recovery sites, traced to their parent bodies (Vesta, Mars, the Moon) — the capstone of the small-bodies trilogy (reuses existing asteroids, impact events, and meteor showers; no fabricated data)
