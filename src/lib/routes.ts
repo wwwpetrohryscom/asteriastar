@@ -49,6 +49,7 @@ export const ROUTES = {
   rockets: "/rockets",
   constellations: "/constellations",
   satellites: "/satellites",
+  asteroids: "/asteroids",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -97,6 +98,32 @@ export function satelliteOrbitPath(slug: string): string {
 }
 export function satelliteNetworkPath(slug: string): string {
   return `/satellites/network/${slug}`;
+}
+
+/** Asteroids & Minor Planets Encyclopedia (Program Y). */
+export function asteroidPath(slug: string): string {
+  return `/asteroids/${slug}`;
+}
+export function asteroidDiscoveryPath(slug: string): string {
+  return `/asteroids/discover/${slug}`;
+}
+export function asteroidFamilyPath(slug: string): string {
+  return `/asteroids/family/${slug}`;
+}
+export function asteroidGroupPath(slug: string): string {
+  return `/asteroids/group/${slug}`;
+}
+export function asteroidNearEarthPath(slug: string): string {
+  return `/asteroids/near-earth/${slug}`;
+}
+export function asteroidTrojanPath(slug: string): string {
+  return `/asteroids/trojans/${slug}`;
+}
+export function asteroidResonancePath(slug: string): string {
+  return `/asteroids/resonance/${slug}`;
+}
+export function asteroidImpactPath(slug: string): string {
+  return `/asteroids/impact/${slug}`;
 }
 
 export function exoplanetPath(slug: string): string {
