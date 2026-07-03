@@ -29,6 +29,7 @@ import { entities as satellitesCatalog } from "@/knowledge-graph/data/satellites
 import { entities as asteroidsCatalog } from "@/knowledge-graph/data/asteroids-catalog";
 import { entities as cometsCatalog } from "@/knowledge-graph/data/comets-catalog";
 import { entities as meteoritesCatalog } from "@/knowledge-graph/data/meteorites-catalog";
+import { entities as interstellarCatalog } from "@/knowledge-graph/data/interstellar-catalog";
 
 /**
  * Knowledge-graph entities.
@@ -265,4 +266,5 @@ export const entities: GraphEntity[] = [
   ...asteroidsCatalog,
   ...cometsCatalog,
   ...meteoritesCatalog,
+  ...interstellarCatalog,
 ];
