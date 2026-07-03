@@ -187,6 +187,17 @@ async function main() {
     `✓ Exploration valid — ${exploration.EXPLORATION_STATS.records} records, ${exploration.EXPLORATION_STATS.newEntities} new entities, ${exploration.EXPLORATION_STATS.missions} missions`,
   );
 
+  const rockets = await import("../src/knowledge-graph/data/rockets-catalog");
+  const rocketIssues = rockets.validateRockets();
+  if (rocketIssues.length > 0) {
+    console.error(`\n✗ ${rocketIssues.length} rockets issue(s):`);
+    for (const i of rocketIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Rockets & Launch Vehicles valid — ${rockets.ROCKETS_STATS.records} records, ${rockets.ROCKETS_STATS.newEntities} new entities, ${rockets.ROCKETS_STATS.launchVehicles} launch vehicles, ${rockets.ROCKETS_STATS.families} families, ${rockets.ROCKETS_STATS.engines} engines, ${rockets.ROCKETS_STATS.relations} relations (no fabricated specs)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
