@@ -42,10 +42,11 @@ import { launchVehicleEngine } from "@/platform/data-engine/launch-vehicle-engin
 import { constellationEngine } from "@/platform/data-engine/constellation-engine";
 import { satelliteEngine } from "@/platform/data-engine/satellite-engine";
 import { asteroidEngine } from "@/platform/data-engine/asteroid-engine";
+import { cometEngine } from "@/platform/data-engine/comet-engine";
 import { validationEngine } from "@/platform/data-engine/validation-engine";
 import { contributionsEngine } from "@/platform/contributions";
 
-/** The unified engine surface — the thirty-two modules of the data engine. */
+/** The unified engine surface — the thirty-three modules of the data engine. */
 export const engine = {
   entity: entityEngine,
   relationship: relationshipEngine,
@@ -77,6 +78,7 @@ export const engine = {
   constellations: constellationEngine,
   satellites: satelliteEngine,
   asteroids: asteroidEngine,
+  comets: cometEngine,
   contributions: contributionsEngine,
   validation: validationEngine,
 } as const;
@@ -88,11 +90,12 @@ export const ENGINE_MODULES = Object.keys(engine) as (keyof typeof engine)[];
 export { entityEngine, relationshipEngine, traversalEngine, queryEngine };
 export { recommendationEngine, timelineEngine, comparisonEngine, learningEngine };
 export { discoveryEngine, metadataEngine, sourceEngine, citationEngine };
-export { datasetEngine, authorityEngine, localizationEngine, starEngine, solarEngine, deepSkyEngine, explorationEngine, humanSpaceflightEngine, observatoryEngine, exoplanetEngine, historyEngine, cosmologyEngine, liveSkyEngine, imagesEngine, launchVehicleEngine, constellationEngine, satelliteEngine, asteroidEngine, contributionsEngine, validationEngine };
+export { datasetEngine, authorityEngine, localizationEngine, starEngine, solarEngine, deepSkyEngine, explorationEngine, humanSpaceflightEngine, observatoryEngine, exoplanetEngine, historyEngine, cosmologyEngine, liveSkyEngine, imagesEngine, launchVehicleEngine, constellationEngine, satelliteEngine, asteroidEngine, cometEngine, contributionsEngine, validationEngine };
 export type { ResolvedLaunchVehicle } from "@/platform/data-engine/launch-vehicle-engine";
 export type { ResolvedConstellation } from "@/platform/data-engine/constellation-engine";
 export type { ResolvedSatellite, ResolvedConstellationSat, ResolvedOperator, ResolvedOrbit, ResolvedNetwork, ResolvedProgram } from "@/platform/data-engine/satellite-engine";
 export type { ResolvedAsteroid, ResolvedPopulation, ResolvedImpact, ResolvedPlanetaryDefense } from "@/platform/data-engine/asteroid-engine";
+export type { ResolvedComet, ResolvedCometGroup } from "@/platform/data-engine/comet-engine";
 export type { ResolvedStar } from "@/platform/data-engine/star-engine";
 export type { ResolvedBody } from "@/platform/data-engine/solar-engine";
 export type { ResolvedDeepSky } from "@/platform/data-engine/deepsky-engine";

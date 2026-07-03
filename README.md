@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Comets & Small-Body Reservoirs Encyclopedia (Program Z)**
+
+- [Comets](docs/COMETS.md) — comets, dynamical classes, genetic families, the Oort cloud and (reused) trans-Neptunian reservoirs, comet missions, and the meteor-shower parent bodies, plus active-asteroid/dormant-comet transition objects (reuses existing comets, meteor showers, missions, and Program Y's reservoirs; no fabricated data)
+
 **Asteroids & Minor Planets Encyclopedia (Program Y)**
 
 - [Asteroids](docs/ASTEROIDS.md) — asteroids, near-Earth objects, Trojans, Centaurs, and trans-Neptunian objects as first-class graph entities, with collisional families, orbital resonances, impact events, and a planetary-defense knowledge layer (reuses existing dwarf planets, asteroids, and missions; no fabricated data)

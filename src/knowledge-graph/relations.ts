@@ -27,6 +27,7 @@ import { relations as rocketsCatalog } from "@/knowledge-graph/data/rockets-cata
 import { relations as constellationsCatalog } from "@/knowledge-graph/data/constellations-catalog";
 import { relations as satellitesCatalog } from "@/knowledge-graph/data/satellites-catalog";
 import { relations as asteroidsCatalog } from "@/knowledge-graph/data/asteroids-catalog";
+import { relations as cometsCatalog } from "@/knowledge-graph/data/comets-catalog";
 import { coreRelations } from "@/knowledge-graph/data/core-relations";
 
 /**
@@ -68,4 +69,5 @@ export const relations: GraphRelation[] = [
   ...constellationsCatalog,
   ...satellitesCatalog,
   ...asteroidsCatalog,
+  ...cometsCatalog,
 ];

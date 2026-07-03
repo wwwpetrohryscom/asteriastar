@@ -50,6 +50,7 @@ export const ROUTES = {
   constellations: "/constellations",
   satellites: "/satellites",
   asteroids: "/asteroids",
+  comets: "/comets",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -124,6 +125,29 @@ export function asteroidResonancePath(slug: string): string {
 }
 export function asteroidImpactPath(slug: string): string {
   return `/asteroids/impact/${slug}`;
+}
+
+/** Comets & Small-Body Reservoirs Encyclopedia (Program Z). */
+export function cometPath(slug: string): string {
+  return `/comets/${slug}`;
+}
+export function cometDiscoveryPath(slug: string): string {
+  return `/comets/discover/${slug}`;
+}
+export function cometClassPath(slug: string): string {
+  return `/comets/class/${slug}`;
+}
+export function cometFamilyPath(slug: string): string {
+  return `/comets/family/${slug}`;
+}
+export function cometReservoirPath(slug: string): string {
+  return `/comets/reservoir/${slug}`;
+}
+export function cometActivePath(slug: string): string {
+  return `/comets/active/${slug}`;
+}
+export function cometDormantPath(slug: string): string {
+  return `/comets/dormant/${slug}`;
 }
 
 export function exoplanetPath(slug: string): string {

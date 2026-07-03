@@ -47,6 +47,7 @@ const moons = engine.query.run("moons-of-jupiter");
 | `constellations` | Constellation encyclopedia resolver & queries | slug → `ResolvedConstellation`; stars / deep-sky / exoplanets / meteor radiants / neighbours / family / season (see [CONSTELLATIONS.md](./CONSTELLATIONS.md)) |
 | `satellites` | Satellite encyclopedia resolver & queries | slug → `ResolvedSatellite`; satellites / constellations / orbits / operators / networks; by category / orbit / operator (see [SATELLITES.md](./SATELLITES.md)) |
 | `asteroids` | Asteroids & minor planets resolver & queries | slug → `ResolvedAsteroid`; families / groups / near-Earth classes / Trojans / resonances / impacts / planetary defense (see [ASTEROIDS.md](./ASTEROIDS.md)) |
+| `comets` | Comets & small-body reservoirs resolver & queries | slug → `ResolvedComet`; classes / families / reservoirs / meteor-shower parents / mission targets / transition objects (see [COMETS.md](./COMETS.md)) |
 | `validation` | The single validator | () → `ValidationReport[]` |
 
 The `star` engine powers the [Star Encyclopedia](./STAR_ENCYCLOPEDIA.md) — it
