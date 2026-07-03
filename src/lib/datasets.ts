@@ -55,6 +55,10 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "near-earth-objects", title: "Near-Earth Object Classes", description: "The Apollo, Aten, Amor, and Atira near-Earth orbital classes.", entityTypes: ["near_earth_object"], sources: ["nasa", "jpl"] },
   { slug: "minor-planet-populations", title: "Minor-Planet Populations", description: "Dynamical populations and orbital resonances — main belt, Hilda, Trojans, Kuiper Belt, and more.", entityTypes: ["minor_planet_group", "trojan_group", "orbital_resonance"], sources: ["nasa", "jpl"] },
   { slug: "impact-events", title: "Impact Events", description: "Well-studied terrestrial asteroid and meteoroid impact events.", entityTypes: ["impact_event"], sources: ["nasa"] },
+  { slug: "comet-classes", title: "Comet Classes", description: "Dynamical classes of comets — Jupiter-family, Halley-type, long-period, sungrazing, and main-belt.", entityTypes: ["comet_class"], sources: ["nasa", "jpl"] },
+  { slug: "comet-families", title: "Comet Families", description: "Genetic comet families, such as the Kreutz sungrazers.", entityTypes: ["comet_family"], sources: ["nasa"] },
+  { slug: "small-body-reservoirs", title: "Small-Body Reservoirs", description: "Comet source reservoirs — the Oort cloud and inner Oort cloud.", entityTypes: ["small_body_reservoir"], sources: ["nasa"] },
+  { slug: "comet-transition-objects", title: "Comet Transition Objects", description: "Objects blurring the asteroid–comet boundary: active asteroids and dormant comets.", entityTypes: ["active_asteroid", "dormant_comet"], sources: ["nasa", "jpl"] },
 ];
 
 export interface Dataset extends DatasetDef {

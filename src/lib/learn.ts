@@ -846,6 +846,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["asteroid:vesta", "asteroid_family:vesta", "minor_planet_group:main-belt", "near_earth_object:apollo"],
     next: ["the-solar-system", "understanding-the-universe"],
   },
+  {
+    slug: "understanding-comets",
+    title: "Understanding Comets and Small-Body Reservoirs",
+    description: "The icy small bodies of the Solar System — what comets are, where they come from, how they were explored, and how they connect to the meteor showers. Built on real MPC/JPL data that reuses the platform's comets, meteor showers, missions, and the asteroid encyclopedia's trans-Neptunian reservoirs; nothing is fabricated.",
+    accent: "comet",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "What is a comet?", href: "/comets", blurb: "The icy 'dirty snowballs' that grow tails as they near the Sun." },
+          { title: "Anatomy of a comet", href: "/comets/discover/great-comets", blurb: "Nucleus, coma, and the dust and ion tails of the great comets." },
+          { title: "Comet orbits", href: "/comets/discover/periodic-comets", blurb: "From Encke's 3-year loop to comets that fall in over millennia." },
+          { title: "Periodic and long-period comets", href: "/comets/discover/long-period-comets", blurb: "The two great families of comets, defined by how long they take to return." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "The Kuiper Belt and scattered disc", href: "/comets/discover/scattered-disc-comets", blurb: "The trans-Neptunian source of the short-period, Jupiter-family comets." },
+          { title: "The Oort cloud", href: "/comets/reservoir/oort-cloud", blurb: "The vast, distant shell that supplies the long-period comets." },
+          { title: "Meteor showers and parent bodies", href: "/comets/discover/meteor-shower-parents", blurb: "How comet debris streams become the annual meteor showers." },
+          { title: "Sungrazing comets", href: "/comets/discover/sungrazing-comets", blurb: "The Kreutz family and other comets that skim the Sun." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Main-belt comets and active asteroids", href: "/comets/discover/active-asteroids", blurb: "Objects that blur the line between asteroid and comet." },
+          { title: "Comet missions", href: "/comets/discover/comet-missions", blurb: "Giotto, Stardust, Deep Impact, and Rosetta up close at a comet." },
+          { title: "Impact risk and planetary defense", href: "/comets/discover/planetary-defense-comets", blurb: "Shoemaker–Levy 9 at Jupiter and Siding Spring at Mars." },
+          { title: "What comets tell us", href: "/comets/class/long-period", blurb: "Pristine long-period comets as frozen samples of the early Solar System." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["comet:halleys-comet", "comet_class:jupiter-family", "small_body_reservoir:oort-cloud", "comet_family:kreutz-sungrazers"],
+    next: ["understanding-asteroids", "the-solar-system"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

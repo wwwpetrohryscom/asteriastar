@@ -183,6 +183,15 @@ export function GET(): Response {
   lines.push(`- New asteroids resolve at /asteroids/{slug}; families/groups/near-Earth classes/Trojans/resonances/impacts at /asteroids/{family,group,near-earth,trojans,resonance,impact}/{slug}.`);
   lines.push("");
 
+  lines.push("## Comets & Small-Body Reservoirs Encyclopedia");
+  lines.push(
+    `${engine.comets.count} comets and transition objects plus ${engine.comets.classes().length} dynamical classes, ${engine.comets.families().length} genetic families, and ${engine.comets.reservoirs().length} source reservoirs as first-class knowledge-graph entities (engine.comets). Designations and orbits come from the IAU Minor Planet Center and the NASA/JPL Small-Body Database. The ten comets already modelled, the meteor showers, the missions (Rosetta, Giotto, Stardust, Deep Impact…), and Program Y's trans-Neptunian reservoirs (Kuiper Belt, scattered disc, Centaurs) are REUSED and never duplicated; reused comets keep their canonical pages. Comets are linked to the meteor showers they parent (source_of_meteor_shower) and to their source reservoirs (belongs_to_reservoir). No live comet visibility or brightness is computed or fabricated — the Live Sky tools are linked instead.`,
+  );
+  lines.push(`- [Comets & Small-Body Reservoirs](${absoluteUrl("/comets")})`);
+  lines.push(`- Periodic: ${absoluteUrl("/comets/discover/periodic-comets")} · Great comets: ${absoluteUrl("/comets/discover/great-comets")} · Meteor-shower parents: ${absoluteUrl("/comets/discover/meteor-shower-parents")} · Oort cloud: ${absoluteUrl("/comets/reservoir/oort-cloud")}`);
+  lines.push(`- New comets resolve at /comets/{slug}; classes/families/reservoirs at /comets/{class,family,reservoir}/{slug}; transition objects at /comets/{active,dormant}/{slug}.`);
+  lines.push("");
+
   lines.push("## Space Stations & Human Spaceflight");
   lines.push(
     `How humans live and work in space: ${engine.humanSpaceflight.byKind("station").length} space stations (ISS, Mir, Skylab, Salyut, Tiangong, and planned stations) plus crewed and cargo spacecraft, ISS modules, expeditions, spacewalks, programs, and astronauts — ${engine.humanSpaceflight.count} interconnected entities. Curated from NASA, ESA, Roscosmos, JAXA, CSA, and Smithsonian sources. No fabricated crew, dates, EVAs, or modules; planned stations are clearly marked.`,
