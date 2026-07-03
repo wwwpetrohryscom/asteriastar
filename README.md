@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Asteroids & Minor Planets Encyclopedia (Program Y)**
+
+- [Asteroids](docs/ASTEROIDS.md) — asteroids, near-Earth objects, Trojans, Centaurs, and trans-Neptunian objects as first-class graph entities, with collisional families, orbital resonances, impact events, and a planetary-defense knowledge layer (reuses existing dwarf planets, asteroids, and missions; no fabricated data)
+
 **Constellation Encyclopedia (Program W)**
 
 - [Constellations](docs/CONSTELLATIONS.md) — all 88 IAU constellations as first-class graph entities, connected to their stars, deep-sky objects, exoplanets, meteor showers, mythology, families, and seasonal sky (reuses existing entities; no fabricated data)
