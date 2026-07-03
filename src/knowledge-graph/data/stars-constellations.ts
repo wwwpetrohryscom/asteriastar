@@ -121,7 +121,7 @@ export const entities: GraphEntity[] = [
 
   // -------------------------------------------------------- constellations
   {
-    id: "constellation:scorpius",
+    id: "constellation:scorpius", entryPath: "/constellations/scorpius",
     type: "constellation",
     name: "Scorpius",
     domain: "science",
@@ -130,7 +130,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:cygnus",
+    id: "constellation:cygnus", entryPath: "/constellations/cygnus",
     type: "constellation",
     name: "Cygnus",
     domain: "science",
@@ -139,7 +139,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:aquila",
+    id: "constellation:aquila", entryPath: "/constellations/aquila",
     type: "constellation",
     name: "Aquila",
     domain: "science",
@@ -148,7 +148,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:taurus",
+    id: "constellation:taurus", entryPath: "/constellations/taurus",
     type: "constellation",
     name: "Taurus",
     domain: "science",
@@ -157,7 +157,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:virgo",
+    id: "constellation:virgo", entryPath: "/constellations/virgo",
     type: "constellation",
     name: "Virgo",
     domain: "science",
@@ -166,7 +166,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:bootes",
+    id: "constellation:bootes", entryPath: "/constellations/bootes",
     type: "constellation",
     name: "Boötes",
     domain: "science",
@@ -175,7 +175,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:auriga",
+    id: "constellation:auriga", entryPath: "/constellations/auriga",
     type: "constellation",
     name: "Auriga",
     domain: "science",
@@ -184,7 +184,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:canis-minor",
+    id: "constellation:canis-minor", entryPath: "/constellations/canis-minor",
     type: "constellation",
     name: "Canis Minor",
     domain: "science",
@@ -193,7 +193,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:gemini",
+    id: "constellation:gemini", entryPath: "/constellations/gemini",
     type: "constellation",
     name: "Gemini",
     domain: "science",
@@ -202,7 +202,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:leo",
+    id: "constellation:leo", entryPath: "/constellations/leo",
     type: "constellation",
     name: "Leo",
     domain: "science",
@@ -211,7 +211,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:piscis-austrinus",
+    id: "constellation:piscis-austrinus", entryPath: "/constellations/piscis-austrinus",
     type: "constellation",
     name: "Piscis Austrinus",
     domain: "science",

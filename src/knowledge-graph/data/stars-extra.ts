@@ -11,7 +11,7 @@ import { rel } from "@/knowledge-graph/schema";
 export const entities: GraphEntity[] = [
   // ------------------------------------------------------ new constellations
   {
-    id: "constellation:carina",
+    id: "constellation:carina", entryPath: "/constellations/carina",
     type: "constellation",
     name: "Carina",
     domain: "science",
@@ -20,7 +20,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:eridanus",
+    id: "constellation:eridanus", entryPath: "/constellations/eridanus",
     type: "constellation",
     name: "Eridanus",
     domain: "science",
@@ -29,7 +29,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:centaurus",
+    id: "constellation:centaurus", entryPath: "/constellations/centaurus",
     type: "constellation",
     name: "Centaurus",
     domain: "science",
@@ -38,7 +38,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:crux",
+    id: "constellation:crux", entryPath: "/constellations/crux",
     type: "constellation",
     name: "Crux",
     domain: "science",
@@ -47,7 +47,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:ursa-major",
+    id: "constellation:ursa-major", entryPath: "/constellations/ursa-major",
     type: "constellation",
     name: "Ursa Major",
     domain: "science",
@@ -56,7 +56,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:ophiuchus",
+    id: "constellation:ophiuchus", entryPath: "/constellations/ophiuchus",
     type: "constellation",
     name: "Ophiuchus",
     domain: "science",
@@ -65,7 +65,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:capricornus",
+    id: "constellation:capricornus", entryPath: "/constellations/capricornus",
     type: "constellation",
     name: "Capricornus",
     domain: "science",
@@ -74,7 +74,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:aries",
+    id: "constellation:aries", entryPath: "/constellations/aries",
     type: "constellation",
     name: "Aries",
     domain: "science",

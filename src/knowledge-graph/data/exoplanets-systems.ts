@@ -4,7 +4,7 @@ import { rel } from "@/knowledge-graph/schema";
 export const entities: GraphEntity[] = [
   /* ----------------------------------------------------- constellations */
   {
-    id: "constellation:aquarius",
+    id: "constellation:aquarius", entryPath: "/constellations/aquarius",
     type: "constellation",
     name: "Aquarius",
     domain: "science",
@@ -13,7 +13,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:pegasus",
+    id: "constellation:pegasus", entryPath: "/constellations/pegasus",
     type: "constellation",
     name: "Pegasus",
     domain: "science",
@@ -22,7 +22,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:cancer",
+    id: "constellation:cancer", entryPath: "/constellations/cancer",
     type: "constellation",
     name: "Cancer",
     domain: "science",
@@ -31,7 +31,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:libra",
+    id: "constellation:libra", entryPath: "/constellations/libra",
     type: "constellation",
     name: "Libra",
     domain: "science",
@@ -40,7 +40,7 @@ export const entities: GraphEntity[] = [
     sources: ["iau"],
   },
   {
-    id: "constellation:cetus-constellation",
+    id: "constellation:cetus-constellation", entryPath: "/constellations/cetus-constellation",
     type: "constellation",
     name: "Cetus",
     domain: "science",

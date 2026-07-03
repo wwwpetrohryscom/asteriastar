@@ -24,6 +24,7 @@ import { entities as historyCatalog } from "@/knowledge-graph/data/history-catal
 import { entities as cosmologyCatalog } from "@/knowledge-graph/data/cosmology-catalog";
 import { entities as imageCatalog } from "@/knowledge-graph/data/image-catalog";
 import { entities as rocketsCatalog } from "@/knowledge-graph/data/rockets-catalog";
+import { entities as constellationsCatalog } from "@/knowledge-graph/data/constellations-catalog";
 
 /**
  * Knowledge-graph entities.
@@ -97,13 +98,13 @@ const coreEntities: GraphEntity[] = [
   },
 
   /* --------------------------------------------- science: constellations */
-  { id: "constellation:canis-major", type: "constellation", name: "Canis Major", domain: "science", sources: ["iau"] },
-  { id: "constellation:orion", type: "constellation", name: "Orion", domain: "science", sources: ["iau"] },
-  { id: "constellation:lyra", type: "constellation", name: "Lyra", domain: "science", sources: ["iau"] },
-  { id: "constellation:ursa-minor", type: "constellation", name: "Ursa Minor", domain: "science", sources: ["iau"] },
-  { id: "constellation:andromeda", type: "constellation", name: "Andromeda (constellation)", domain: "science", sources: ["iau"] },
-  { id: "constellation:cassiopeia", type: "constellation", name: "Cassiopeia (constellation)", domain: "science", sources: ["iau"] },
-  { id: "constellation:perseus", type: "constellation", name: "Perseus (constellation)", domain: "science", sources: ["iau"] },
+  { id: "constellation:canis-major", entryPath: "/constellations/canis-major", type: "constellation", name: "Canis Major", domain: "science", sources: ["iau"] },
+  { id: "constellation:orion", entryPath: "/constellations/orion", type: "constellation", name: "Orion", domain: "science", sources: ["iau"] },
+  { id: "constellation:lyra", entryPath: "/constellations/lyra", type: "constellation", name: "Lyra", domain: "science", sources: ["iau"] },
+  { id: "constellation:ursa-minor", entryPath: "/constellations/ursa-minor", type: "constellation", name: "Ursa Minor", domain: "science", sources: ["iau"] },
+  { id: "constellation:andromeda", entryPath: "/constellations/andromeda", type: "constellation", name: "Andromeda (constellation)", domain: "science", sources: ["iau"] },
+  { id: "constellation:cassiopeia", entryPath: "/constellations/cassiopeia", type: "constellation", name: "Cassiopeia (constellation)", domain: "science", sources: ["iau"] },
+  { id: "constellation:perseus", entryPath: "/constellations/perseus", type: "constellation", name: "Perseus (constellation)", domain: "science", sources: ["iau"] },
 
   /* --------------------------------------------------- science: planets */
   {
@@ -255,4 +256,5 @@ export const entities: GraphEntity[] = [
   ...cosmologyCatalog,
   ...imageCatalog,
   ...rocketsCatalog,
+  ...constellationsCatalog,
 ];
