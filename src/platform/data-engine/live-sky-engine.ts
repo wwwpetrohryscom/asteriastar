@@ -2,7 +2,7 @@ import { getEntityById } from "@/knowledge-graph";
 import { getProvider } from "@/platform/live-sky/providers";
 import {
   liveSky, SKY_PAGES, getSkyPage, allSkyPaths, LIVE_SKY_STATS,
-  meteorShowers, moon, sun, twilight, planets, eclipses, comets, asteroids, iss, aurora, spaceWeather, observingCalendar,
+  meteorShowers, moon, sun, twilight, planets, tonight, eclipses, comets, asteroids, iss, aurora, spaceWeather, observingCalendar,
   type SkyPageDef,
 } from "@/platform/live-sky";
 import type { MeteorShower } from "@/platform/live-sky/models";
@@ -67,7 +67,7 @@ export const liveSkyEngine = {
   meteorShowersForMonth: (m: number) => meteorShowers.forMonth(m),
 
   /* domain modules (reference facts, computed values, and honest prepared states) */
-  moon, sun, twilight, planets, eclipses, comets, asteroids, iss, aurora, spaceWeather, observingCalendar,
+  moon, sun, twilight, planets, tonight, eclipses, comets, asteroids, iss, aurora, spaceWeather, observingCalendar,
 
   /* pages */
   skyPages: (): SkyPageDef[] => SKY_PAGES,

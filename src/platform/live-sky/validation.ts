@@ -9,6 +9,7 @@ import { equatorialToHorizontal } from "@/platform/live-sky/providers/planetary-
 import type { MoonPhaseName, SolarDayCondition } from "@/platform/live-sky/models";
 import { timezoneOffsetMinutes, type LocationInput } from "@/platform/live-sky/location";
 import { planets } from "@/platform/live-sky/planets";
+import { tonight } from "@/platform/live-sky/tonight";
 import { eclipses } from "@/platform/live-sky/eclipses";
 import { comets } from "@/platform/live-sky/comets";
 import { asteroids } from "@/platform/live-sky/asteroids";
@@ -122,6 +123,9 @@ export function validateLiveSky(): string[] {
 
   // 9. The computed planet-visibility integration (Program S) — location-aware, honest.
   issues.push(...validatePlanets());
+
+  // 10. The Tonight observing dashboard (Program T) — composite of the above, honest.
+  issues.push(...validateTonight());
 
   return issues;
 }
@@ -577,6 +581,111 @@ export function validatePlanets(): string[] {
         const ld = `${local.getUTCFullYear()}-${String(local.getUTCMonth() + 1).padStart(2, "0")}-${String(local.getUTCDate()).padStart(2, "0")}`;
         if (ld !== input.date) issues.push(`planets.dateline ${input.timezone}: ${p.planetName} ${label} local date ${ld} != ${input.date}`);
       }
+    }
+  }
+
+  return issues;
+}
+
+/**
+ * Validate the Tonight observing dashboard (Program T): envelope honesty, the
+ * composite contract, night classification, moonlight/ranking consistency,
+ * COMPOSITION (its sub-sections match the underlying engines — not recomputed),
+ * date-line and polar handling, and invalid input. Deterministic.
+ */
+export function validateTonight(): string[] {
+  const issues: string[] = [];
+  const now = new Date("2026-06-29T00:00:00Z");
+  const NIGHT_TYPES = ["normal_night", "short_night", "no_darkness", "polar_day", "polar_night"];
+  const IMPACTS = ["low", "moderate", "high", "unknown"];
+
+  // Invalid inputs → structured errors.
+  const bad: { input: LocationInput; field: string }[] = [
+    { input: { latitude: 91, longitude: 0, date: "2025-01-01" }, field: "latitude" },
+    { input: { latitude: 0, longitude: 200, date: "2025-01-01" }, field: "longitude" },
+    { input: { latitude: 0, longitude: 0, date: "not-a-date" }, field: "date" },
+    { input: { latitude: 0, longitude: 0, date: "2025-01-01", timezone: "Nowhere/Nowhere" }, field: "timezone" },
+  ];
+  for (const b of bad) {
+    const r = tonight.forLocationDate(b.input, now);
+    if (r.ok) issues.push(`tonight: expected a ${b.field} error for ${JSON.stringify(b.input)}`);
+    else if (r.field !== b.field) issues.push(`tonight: expected error field ${b.field}, got ${r.field}`);
+  }
+
+  const fixtures: { city: string; input: LocationInput; expectNight?: string; expectDarkAvailable?: boolean }[] = [
+    { city: "Prague", input: { latitude: 50.0755, longitude: 14.4378, date: "2025-01-01", timezone: "Europe/Prague" }, expectNight: "normal_night", expectDarkAvailable: true },
+    { city: "Quito", input: { latitude: -0.1807, longitude: -78.4678, date: "2025-06-15", timezone: "America/Guayaquil" } },
+    { city: "Sydney", input: { latitude: -33.8688, longitude: 151.2093, date: "2025-06-15", timezone: "Australia/Sydney" } },
+    { city: "Tromso midsummer", input: { latitude: 69.6492, longitude: 18.9553, date: "2025-06-15", timezone: "Europe/Oslo" }, expectNight: "polar_day", expectDarkAvailable: false },
+    { city: "Longyearbyen midwinter", input: { latitude: 78.2232, longitude: 15.6267, date: "2025-12-21", timezone: "Arctic/Longyearbyen" }, expectNight: "polar_night" },
+    { city: "Kiritimati UTC+14", input: { latitude: 1.87, longitude: -157.36, date: "2025-06-15", timezone: "Pacific/Kiritimati" } },
+    { city: "UTC-12", input: { latitude: 0, longitude: -177, date: "2025-06-15", timezone: "Etc/GMT+12" } },
+  ];
+
+  for (const f of fixtures) {
+    const r = tonight.forLocationDate(f.input, now);
+    if (!r.ok) { issues.push(`tonight.${f.city}: returned an error (${r.field}: ${r.message})`); continue; }
+    const { data, envelope } = r.value;
+
+    // Envelope honesty.
+    checkEnvelope(envelope, `tonight.${f.city}`, issues);
+    if (envelope.status !== "computed") issues.push(`tonight.${f.city}: status must be computed, got ${envelope.status}`);
+    if (envelope.provider) issues.push(`tonight.${f.city}: composite must not claim a live provider`);
+    if (!envelope.generatedAt || !envelope.validFrom || !envelope.validUntil) issues.push(`tonight.${f.city}: envelope missing timestamps`);
+    if (!data) { issues.push(`tonight.${f.city}: data must not be null`); continue; }
+    if (data.method !== "computed_composite") issues.push(`tonight.${f.city}: method must be computed_composite`);
+
+    // Summary consistency.
+    const s = data.summary;
+    if (!NIGHT_TYPES.includes(s.nightType)) issues.push(`tonight.${f.city}: invalid nightType ${s.nightType}`);
+    if (s.darknessAvailable !== s.darknessMinutes > 0) issues.push(`tonight.${f.city}: darknessAvailable inconsistent with darknessMinutes ${s.darknessMinutes}`);
+    if (s.darknessMinutes < 0 || s.darknessMinutes > 1440) issues.push(`tonight.${f.city}: darknessMinutes out of range: ${s.darknessMinutes}`);
+    if (s.observingDate !== f.input.date) issues.push(`tonight.${f.city}: observingDate ${s.observingDate} != ${f.input.date}`);
+    // The dusk→dawn dark window must be a FORWARD interval (end after start).
+    if (s.bestOverallWindow && new Date(s.bestOverallWindow.endIso).getTime() <= new Date(s.bestOverallWindow.startIso).getTime()) {
+      issues.push(`tonight.${f.city}: bestOverallWindow end must be after start (dusk→next-dawn)`);
+    }
+    if (f.expectNight && s.nightType !== f.expectNight) issues.push(`tonight.${f.city}: expected nightType ${f.expectNight}, got ${s.nightType}`);
+    if (f.expectDarkAvailable !== undefined && s.darknessAvailable !== f.expectDarkAvailable) issues.push(`tonight.${f.city}: expected darknessAvailable ${f.expectDarkAvailable}`);
+
+    // Moon consistency + moonlight impact enum.
+    if (data.moon) {
+      if (!IMPACTS.includes(data.moon.moonlightImpact)) issues.push(`tonight.${f.city}: invalid moonlightImpact ${data.moon.moonlightImpact}`);
+      if (data.moon.illuminationPercent < 35 && data.moon.moonlightImpact !== "low" && data.moon.moonlightImpact !== "unknown") {
+        issues.push(`tonight.${f.city}: a Moon <35% lit must be low/unknown impact, got ${data.moon.moonlightImpact}`);
+      }
+    }
+
+    // Planet ranking consistency.
+    for (const p of data.planets) {
+      if (p.visibilityScore !== null && (p.visibilityScore < 0 || p.visibilityScore > 100)) issues.push(`tonight.${f.city}.${p.planetName}: score out of range ${p.visibilityScore}`);
+      if (p.visibilityScore !== null && !p.visibleTonight) issues.push(`tonight.${f.city}.${p.planetName}: scored but not visibleTonight`);
+    }
+    const visibleNames = new Set(data.planets.filter((p) => p.visibleTonight).map((p) => p.planetName));
+    for (const name of data.recommendations.topPlanets) {
+      if (!visibleNames.has(name)) issues.push(`tonight.${f.city}: topPlanet ${name} is not visible tonight`);
+    }
+    // topPlanets must be in descending score order.
+    const scoreOf = (n: string) => data.planets.find((p) => p.planetName === n)?.visibilityScore ?? -1;
+    for (let i = 1; i < data.recommendations.topPlanets.length; i++) {
+      if (scoreOf(data.recommendations.topPlanets[i]) > scoreOf(data.recommendations.topPlanets[i - 1])) {
+        issues.push(`tonight.${f.city}: topPlanets not in descending score order`);
+        break;
+      }
+    }
+
+    // COMPOSITION: the dashboard must reflect the underlying engines, not recompute them.
+    const sunDirect = sun.forLocationDate({ ...f.input }, now);
+    const moonDirect = moon.forLocationDate(f.input, now);
+    const planetsDirect = planets.forLocationDate(f.input, now);
+    if (sunDirect.ok && data.sun && sunDirect.value.data && data.sun.daylightMinutes !== sunDirect.value.data.duration.daylightMinutes) {
+      issues.push(`tonight.${f.city}: sun.daylightMinutes does not match the Sun engine`);
+    }
+    if (moonDirect.ok && data.moon && moonDirect.value.data && data.moon.phaseName !== moonDirect.value.data.phase.phaseName) {
+      issues.push(`tonight.${f.city}: moon.phaseName does not match the Moon engine`);
+    }
+    if (planetsDirect.ok && planetsDirect.value.data && data.planets.length !== planetsDirect.value.data.planets.length) {
+      issues.push(`tonight.${f.city}: planet count does not match the Planet engine`);
     }
   }
 
