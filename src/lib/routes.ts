@@ -51,6 +51,7 @@ export const ROUTES = {
   satellites: "/satellites",
   asteroids: "/asteroids",
   comets: "/comets",
+  meteorites: "/meteorites",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -148,6 +149,29 @@ export function cometActivePath(slug: string): string {
 }
 export function cometDormantPath(slug: string): string {
   return `/comets/dormant/${slug}`;
+}
+
+/** Meteors, Meteorites & Fireballs Encyclopedia (Program AA). */
+export function meteoritePath(slug: string): string {
+  return `/meteorites/${slug}`;
+}
+export function meteoriteDiscoveryPath(slug: string): string {
+  return `/meteorites/discover/${slug}`;
+}
+export function meteoriteClassPath(slug: string): string {
+  return `/meteorites/class/${slug}`;
+}
+export function meteoriteGroupPath(slug: string): string {
+  return `/meteorites/group/${slug}`;
+}
+export function meteoriteFireballPath(slug: string): string {
+  return `/meteorites/fireball/${slug}`;
+}
+export function meteoriteImpactStructurePath(slug: string): string {
+  return `/meteorites/impact-structure/${slug}`;
+}
+export function meteoriteSitePath(slug: string): string {
+  return `/meteorites/site/${slug}`;
 }
 
 export function exoplanetPath(slug: string): string {
