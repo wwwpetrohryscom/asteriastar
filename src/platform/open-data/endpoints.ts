@@ -193,6 +193,19 @@ export const ENDPOINTS: EndpointDef[] = [
     returns: "PlanetVisibilityData & { envelope }",
   },
   {
+    id: "live-sky-tonight", group: "live-sky", method: "GET", path: "/api/v0/live-sky/tonight",
+    summary: "Tonight observing dashboard", status: "implemented",
+    description: "A computed COMPOSITE of the Sun & Twilight, Moon, and Planet engines (method: computed_composite — not a live provider feed): twilight/darkness summary and night type, Moon phase/rise/set/position and moonlight impact, ranked naked-eye planet visibility, and best observing windows for an EXPLICIT location and date. It invents no weather, cloud, seeing, ISS, aurora, meteor, or comet data; a sub-engine failure yields a null section plus a limitation. Location is only ever what you pass in — never inferred, geolocated, or stored.",
+    params: [
+      { name: "latitude", in: "query", required: true, type: "string", description: "Observer latitude as a decimal number, −90 to 90.", example: "50.08" },
+      { name: "longitude", in: "query", required: true, type: "string", description: "Observer longitude as a decimal number, −180 to 180.", example: "14.44" },
+      { name: "date", in: "query", required: false, type: "string", description: "Civil date (YYYY-MM-DD). Defaults to today.", example: "2025-06-21" },
+      { name: "timezone", in: "query", required: false, type: "string", description: "IANA timezone id for local times (e.g. Europe/Prague). Defaults to UTC.", example: "Europe/Prague" },
+    ],
+    example: "/api/v0/live-sky/tonight?latitude=50.08&longitude=14.44&timezone=Europe/Prague",
+    returns: "TonightObservingData & { envelope }",
+  },
+  {
     id: "openapi", group: "meta", method: "GET", path: "/api/v0/openapi.json",
     summary: "OpenAPI document", status: "implemented",
     description: "The OpenAPI 3.1 description of every implemented endpoint. Planned endpoints are intentionally absent from the spec.",
