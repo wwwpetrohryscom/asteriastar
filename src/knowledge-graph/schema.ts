@@ -125,6 +125,15 @@ export const ENTITY_TYPES = [
   "satellite_constellation",
   "orbit_type",
   "tracking_network",
+  // Interstellar & Hyperbolic Objects (Program AB). Reuses comet / comet_class /
+  // sky_survey / observatory / organization; these are the genuinely-new types. A
+  // confirmed interstellar object and a candidate are typed separately so the two are
+  // never conflated in the graph, in queries, or on a page.
+  "interstellar_object",
+  "interstellar_candidate",
+  "hyperbolic_comet",
+  "interstellar_detection_method",
+  "trajectory_class",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -279,6 +288,12 @@ export const RELATION_TYPES = [
   // launched_from / part_of_program / contains_instrument / belongs_to_constellation /
   // replaced_by / part_of; only orbit membership has no equivalent.
   "has_orbit",
+  // Interstellar & Hyperbolic Objects (Program AB). Reuse surveyed_by (detected by a
+  // survey) / observed_by / catalogued_in (reported to MPC / JPL) / associated_with
+  // (detection method, related comet class) / studied_by / related_to; only the
+  // trajectory-class classification (elliptical → hyperbolic → interstellar) has no
+  // existing equivalent.
+  "has_trajectory_class",
 ] as const;
 export type RelationType = (typeof RELATION_TYPES)[number];
 
@@ -462,6 +477,7 @@ export const SCIENCE_ONLY_RELATIONS: ReadonlySet<RelationType> = new Set([
   "belongs_to_family",
   "best_observed_in",
   "has_orbit",
+  "has_trajectory_class",
 ]);
 
 /** Relation types that may ONLY be used in the astrology domain. */
@@ -638,6 +654,7 @@ export const RELATION_LABELS: Record<RelationType, string> = {
   belongs_to_family: "Belongs to family",
   best_observed_in: "Best observed in",
   has_orbit: "Orbit",
+  has_trajectory_class: "Trajectory class",
 };
 
 /** Labels for when the current entity is the *target* (incoming relation). */
@@ -782,6 +799,7 @@ export const INVERSE_RELATION_LABELS: Record<RelationType, string> = {
   belongs_to_family: "Family includes",
   best_observed_in: "Best season for",
   has_orbit: "Orbit of",
+  has_trajectory_class: "Trajectory class of",
 };
 
 /** Pick the readable label for a relation given the viewing direction. */
@@ -833,7 +851,7 @@ export function relationFacet(domain: Domain, type: RelationType): ConnectionFac
   if (["mission_target", "operated_by", "launched_by", "target_of_mission", "part_of_mission", "visited_by", "landed_on", "part_of_program", "launched_from", "carried_by", "orbited", "visited", "returned_samples_from", "captured_image_of", "part_of_station", "attached_to", "docked_with", "visited_station", "served_on_expedition", "commanded_expedition", "performed_eva", "launched_aboard", "returned_aboard", "crewed_by", "carried_crew", "carried_cargo"].includes(type)) return "mission";
   if (["observed_by", "measured_by", "captured_by", "taken_with", "taken_at"].includes(type)) return "observational";
   if (["discovered_by", "named_after", "catalogued_in", "discovered_by_method", "discovered_by_facility", "discovered_by_mission", "part_of_catalogue", "discovered", "predicted", "confirmed", "refuted", "introduced", "invented", "developed", "published", "predicts", "confirmed_by", "contradicted_by", "depicts", "documents"].includes(type)) return "discovery";
-  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of", "contains_instrument", "used_instrument", "performed_experiment", "supports_science", "preceded_by", "followed_by", "supported_by", "replaced_by", "built_by", "located_at", "part_of_observatory", "hosts_telescope", "related_discovery", "predecessor_of", "successor_of", "orbits_star", "member_of_planetary_system", "similar_to", "candidate_for_habitable_zone", "supports", "derived_from", "depends_on", "part_of_model", "requires", "contains", "formed_from", "evolved_into", "processed_by", "published_by", "licensed_by", "derived_from_image", "part_of_collection", "member_of_family", "has_stage", "powered_by", "uses_propellant", "belongs_to_family", "best_observed_in", "has_orbit", "shares_orbital_resonance", "belongs_to_reservoir", "source_of_meteor_shower", "parent_body"].includes(type)) return "related";
+  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of", "contains_instrument", "used_instrument", "performed_experiment", "supports_science", "preceded_by", "followed_by", "supported_by", "replaced_by", "built_by", "located_at", "part_of_observatory", "hosts_telescope", "related_discovery", "predecessor_of", "successor_of", "orbits_star", "member_of_planetary_system", "similar_to", "candidate_for_habitable_zone", "supports", "derived_from", "depends_on", "part_of_model", "requires", "contains", "formed_from", "evolved_into", "processed_by", "published_by", "licensed_by", "derived_from_image", "part_of_collection", "member_of_family", "has_stage", "powered_by", "uses_propellant", "belongs_to_family", "best_observed_in", "has_orbit", "shares_orbital_resonance", "belongs_to_reservoir", "source_of_meteor_shower", "parent_body", "has_trajectory_class"].includes(type)) return "related";
   return "scientific";
 }
 
@@ -952,4 +970,9 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   satellite_constellation: "Satellite constellation",
   orbit_type: "Orbit type",
   tracking_network: "Tracking network",
+  interstellar_object: "Interstellar object",
+  interstellar_candidate: "Interstellar candidate",
+  hyperbolic_comet: "Hyperbolic comet",
+  interstellar_detection_method: "Detection method",
+  trajectory_class: "Trajectory class",
 };
