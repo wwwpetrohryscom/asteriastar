@@ -103,6 +103,11 @@ export const ENTITY_TYPES = [
   "constellation_family",
   "asterism",
   "seasonal_sky",
+  // Satellite Encyclopedia (Program X). `satellite` already exists and is reused;
+  // these are the new group/orbit/network types.
+  "satellite_constellation",
+  "orbit_type",
+  "tracking_network",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -249,6 +254,10 @@ export const RELATION_TYPES = [
   // mythologically_linked_to; these two have no equivalent.
   "belongs_to_family",
   "best_observed_in",
+  // Satellite Encyclopedia (Program X). Reuse operated_by / launched_by /
+  // launched_from / part_of_program / contains_instrument / belongs_to_constellation /
+  // replaced_by / part_of; only orbit membership has no equivalent.
+  "has_orbit",
 ] as const;
 export type RelationType = (typeof RELATION_TYPES)[number];
 
@@ -427,6 +436,7 @@ export const SCIENCE_ONLY_RELATIONS: ReadonlySet<RelationType> = new Set([
   "uses_propellant",
   "belongs_to_family",
   "best_observed_in",
+  "has_orbit",
 ]);
 
 /** Relation types that may ONLY be used in the astrology domain. */
@@ -598,6 +608,7 @@ export const RELATION_LABELS: Record<RelationType, string> = {
   uses_propellant: "Uses propellant",
   belongs_to_family: "Belongs to family",
   best_observed_in: "Best observed in",
+  has_orbit: "Orbit",
 };
 
 /** Labels for when the current entity is the *target* (incoming relation). */
@@ -737,6 +748,7 @@ export const INVERSE_RELATION_LABELS: Record<RelationType, string> = {
   uses_propellant: "Propellant of",
   belongs_to_family: "Family includes",
   best_observed_in: "Best season for",
+  has_orbit: "Orbit of",
 };
 
 /** Pick the readable label for a relation given the viewing direction. */
@@ -788,7 +800,7 @@ export function relationFacet(domain: Domain, type: RelationType): ConnectionFac
   if (["mission_target", "operated_by", "launched_by", "target_of_mission", "part_of_mission", "visited_by", "landed_on", "part_of_program", "launched_from", "carried_by", "orbited", "visited", "returned_samples_from", "captured_image_of", "part_of_station", "attached_to", "docked_with", "visited_station", "served_on_expedition", "commanded_expedition", "performed_eva", "launched_aboard", "returned_aboard", "crewed_by", "carried_crew", "carried_cargo"].includes(type)) return "mission";
   if (["observed_by", "measured_by", "captured_by", "taken_with", "taken_at"].includes(type)) return "observational";
   if (["discovered_by", "named_after", "catalogued_in", "discovered_by_method", "discovered_by_facility", "discovered_by_mission", "part_of_catalogue", "discovered", "predicted", "confirmed", "refuted", "introduced", "invented", "developed", "published", "predicts", "confirmed_by", "contradicted_by", "depicts", "documents"].includes(type)) return "discovery";
-  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of", "contains_instrument", "used_instrument", "performed_experiment", "supports_science", "preceded_by", "followed_by", "supported_by", "replaced_by", "built_by", "located_at", "part_of_observatory", "hosts_telescope", "related_discovery", "predecessor_of", "successor_of", "orbits_star", "member_of_planetary_system", "similar_to", "candidate_for_habitable_zone", "supports", "derived_from", "depends_on", "part_of_model", "requires", "contains", "formed_from", "evolved_into", "processed_by", "published_by", "licensed_by", "derived_from_image", "part_of_collection", "member_of_family", "has_stage", "powered_by", "uses_propellant", "belongs_to_family", "best_observed_in"].includes(type)) return "related";
+  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of", "contains_instrument", "used_instrument", "performed_experiment", "supports_science", "preceded_by", "followed_by", "supported_by", "replaced_by", "built_by", "located_at", "part_of_observatory", "hosts_telescope", "related_discovery", "predecessor_of", "successor_of", "orbits_star", "member_of_planetary_system", "similar_to", "candidate_for_habitable_zone", "supports", "derived_from", "depends_on", "part_of_model", "requires", "contains", "formed_from", "evolved_into", "processed_by", "published_by", "licensed_by", "derived_from_image", "part_of_collection", "member_of_family", "has_stage", "powered_by", "uses_propellant", "belongs_to_family", "best_observed_in", "has_orbit"].includes(type)) return "related";
   return "scientific";
 }
 
@@ -887,4 +899,7 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   constellation_family: "Constellation family",
   asterism: "Asterism",
   seasonal_sky: "Seasonal sky",
+  satellite_constellation: "Satellite constellation",
+  orbit_type: "Orbit type",
+  tracking_network: "Tracking network",
 };
