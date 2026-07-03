@@ -17,7 +17,7 @@ const DESCRIPTION = "The Night Sky Platform — architecture for a daily-use obs
 export const metadata: Metadata = buildMetadata({ title: "Night Sky Platform", description: DESCRIPTION, path: ROUTES.sky });
 
 const SECTIONS: { title: string; href: string; blurb: string }[] = [
-  { title: "The Night Sky Tonight", href: skyPath("night-sky-tonight"), blurb: "A location-aware view of what's up — prepared for integration." },
+  { title: "Tonight Observing Dashboard", href: skyPath("night-sky-tonight"), blurb: "What's observable tonight — twilight, Moon & ranked planets, composed & computed." },
   { title: "Moon Phase & Position", href: skyPath("moon"), blurb: "Phase, illumination, and location-aware moonrise, moonset & position — computed." },
   { title: "Sun & Twilight", href: skyPath("sun"), blurb: "Sunrise, sunset & twilight for any location — computed." },
   { title: "Twilight Times", href: skyPath("twilight"), blurb: "Civil, nautical & astronomical twilight explained." },
