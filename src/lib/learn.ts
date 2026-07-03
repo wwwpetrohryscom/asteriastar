@@ -698,6 +698,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["mythology_figure:orion", "mythology_figure:perseus", "mythology_figure:asteria"],
     next: ["learn-night-sky", "learn-astronomy"],
   },
+  {
+    slug: "understanding-launch-vehicles",
+    title: "Understanding Launch Vehicles",
+    description: "How rockets reach orbit — twelve steps through fundamentals, stages, engines, propellants, human-rating, reusability, and the future of space transportation. Built on real launch-vehicle data; no fabricated performance figures.",
+    accent: "comet",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Rocket fundamentals", href: "/rockets", blurb: "What a launch vehicle is, and how thrust overcomes gravity and drag to reach orbit." },
+          { title: "Escape velocity", href: "/rockets/discover/super-heavy-lift", blurb: "The energy needed to leave orbit for the Moon and beyond — the domain of the most powerful rockets." },
+          { title: "Rocket stages", href: "/rockets/discover/rocket-stages", blurb: "Why rockets shed mass in stages — boosters, cores, and upper stages." },
+          { title: "Rocket engines", href: "/rockets/discover/rocket-engines", blurb: "How engines turn propellant into thrust, and the combustion cycles they use." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Propellants", href: "/rockets/discover/propellants", blurb: "Kerolox, hydrolox, methalox, hypergolics, and solids — the trade-offs of each." },
+          { title: "Guidance", href: "/rockets/falcon-9", blurb: "How a modern rocket steers itself to orbit — and, for Falcon 9, back to a landing." },
+          { title: "Payload fairings", href: "/rockets/ariane-5", blurb: "The nose cone that protects the payload through the atmosphere, seen on the large Ariane 5." },
+          { title: "Human-rated systems", href: "/rockets/discover/human-rated-rockets", blurb: "What it takes to certify a rocket to carry crews safely." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Reusability", href: "/rockets/discover/reusable-rockets", blurb: "Recovering and re-flying hardware, from the Space Shuttle to Falcon 9 and Starship." },
+          { title: "Heavy lift", href: "/rockets/discover/heavy-lift", blurb: "The vehicles that place 20+ tonnes into low Earth orbit." },
+          { title: "Deep-space launch", href: "/rockets/saturn-v", blurb: "Sending payloads to the Moon and planets — the Saturn V and its super-heavy successors." },
+          { title: "Future transportation", href: "/rockets/discover/future-rockets", blurb: "Fully reusable and next-generation vehicles now in development." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["launch_vehicle:falcon-9", "rocket_engine:merlin-1d", "rocket_family:falcon", "launch_vehicle:saturn-v"],
+    next: ["history-of-space-exploration", "human-spaceflight"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
