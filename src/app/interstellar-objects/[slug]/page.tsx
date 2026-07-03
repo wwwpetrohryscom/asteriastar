@@ -1,0 +1,25 @@
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { InterstellarDetail } from "@/components/interstellar/InterstellarDetail";
+import { engine } from "@/platform/data-engine";
+import { buildMetadata } from "@/lib/seo/metadata";
+import { interstellarObjectPath } from "@/lib/routes";
+
+export const dynamicParams = false;
+export function generateStaticParams() {
+  return engine.interstellarObjects.all().map((r) => ({ slug: r.slug }));
+}
+
+export async function generateMetadata({ params }: PageProps<"/interstellar-objects/[slug]">): Promise<Metadata> {
+  const { slug } = await params;
+  const r = engine.interstellarObjects.get(slug);
+  if (!r) return {};
+  return buildMetadata({ title: r.name, description: r.description, path: interstellarObjectPath(slug) });
+}
+
+export default async function InterstellarObjectPage({ params }: PageProps<"/interstellar-objects/[slug]">) {
+  const { slug } = await params;
+  const d = engine.interstellarObjects.resolveObject(slug);
+  if (!d) notFound();
+  return <InterstellarDetail d={d} />;
+}

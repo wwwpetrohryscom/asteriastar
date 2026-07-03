@@ -52,6 +52,7 @@ export const ROUTES = {
   asteroids: "/asteroids",
   comets: "/comets",
   meteorites: "/meteorites",
+  interstellarObjects: "/interstellar-objects",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -172,6 +173,20 @@ export function meteoriteImpactStructurePath(slug: string): string {
 }
 export function meteoriteSitePath(slug: string): string {
   return `/meteorites/site/${slug}`;
+}
+
+/** Interstellar & Hyperbolic Objects Encyclopedia (Program AB). */
+export function interstellarObjectPath(slug: string): string {
+  return `/interstellar-objects/${slug}`;
+}
+export function interstellarDiscoveryPath(slug: string): string {
+  return `/interstellar-objects/discover/${slug}`;
+}
+export function interstellarDetectionPath(slug: string): string {
+  return `/interstellar-objects/detection/${slug}`;
+}
+export function interstellarTrajectoryPath(slug: string): string {
+  return `/interstellar-objects/trajectory/${slug}`;
 }
 
 export function exoplanetPath(slug: string): string {
