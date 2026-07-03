@@ -201,6 +201,15 @@ export function GET(): Response {
   lines.push(`- Meteorites resolve at /meteorites/{slug}; classes/groups at /meteorites/{class,group}/{slug}; fireballs, impact structures, and recovery sites at /meteorites/{fireball,impact-structure,site}/{slug}.`);
   lines.push("");
 
+  lines.push("## Interstellar & Hyperbolic Objects Encyclopedia");
+  lines.push(
+    `${engine.interstellarObjects.count} confirmed interstellar objects (1I/ʻOumuamua, 2I/Borisov, 3I/ATLAS) plus ${engine.interstellarObjects.candidateInterstellarObjects().length} debated candidate, ${engine.interstellarObjects.hyperbolicComets().length} hyperbolic Solar-System comets, ${engine.interstellarObjects.detectionMethods().length} detection methods, and ${engine.interstellarObjects.trajectoryClasses().length} trajectory classes as first-class knowledge-graph entities (engine.interstellarObjects) — the coda to the small-body arc (asteroids → comets → meteorites → interstellar). Orbits and designations come from the IAU Minor Planet Center and the NASA/JPL Small-Body Database. HONEST STATUS is the governing rule: confirmed interstellar objects, unconfirmed candidates, and hyperbolic Solar-System comets are typed and displayed separately, and an interstellar origin (has_trajectory_class → interstellar-hyperbolic) is asserted ONLY for the confirmed objects; candidates such as the CNEOS 2014-01-08 bolide carry explicit uncertainty notes and are NEVER labelled confirmed. The reused comet class, Pan-STARRS / LSST, and NASA/JPL are never duplicated; new ATLAS/Catalina/Minor Planet Center/CNEOS entities are created. No "alien" or artificial-origin claims are made; no live visibility is computed or fabricated.`,
+  );
+  lines.push(`- [Interstellar & Hyperbolic Objects](${absoluteUrl("/interstellar-objects")})`);
+  lines.push(`- Confirmed: ${absoluteUrl("/interstellar-objects/discover/confirmed")} · Debated: ${absoluteUrl("/interstellar-objects/discover/debated")} · Hyperbolic comets: ${absoluteUrl("/interstellar-objects/discover/hyperbolic-comets")} · Detection: ${absoluteUrl("/interstellar-objects/detection/excess-hyperbolic-velocity")}`);
+  lines.push(`- Objects/comets resolve at /interstellar-objects/{slug}; detection methods at /interstellar-objects/detection/{slug}; trajectory classes at /interstellar-objects/trajectory/{slug}.`);
+  lines.push("");
+
   lines.push("## Space Stations & Human Spaceflight");
   lines.push(
     `How humans live and work in space: ${engine.humanSpaceflight.byKind("station").length} space stations (ISS, Mir, Skylab, Salyut, Tiangong, and planned stations) plus crewed and cargo spacecraft, ISS modules, expeditions, spacewalks, programs, and astronauts — ${engine.humanSpaceflight.count} interconnected entities. Curated from NASA, ESA, Roscosmos, JAXA, CSA, and Smithsonian sources. No fabricated crew, dates, EVAs, or modules; planned stations are clearly marked.`,

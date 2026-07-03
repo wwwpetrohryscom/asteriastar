@@ -920,6 +920,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["meteorite:allende", "meteorite_group:hed", "meteorite_class:chondrite", "asteroid:vesta"],
     next: ["understanding-comets", "understanding-asteroids"],
   },
+  {
+    slug: "understanding-interstellar-objects",
+    title: "Understanding Interstellar Objects",
+    description: "Visitors from beyond the Solar System — what makes an object interstellar, how hyperbolic orbits reveal it, how the confirmed objects (1I/ʻOumuamua, 2I/Borisov, 3I/ATLAS) were found, and how astronomers tell them apart from Solar-System comets and from unconfirmed candidates. Built on real MPC/JPL data; confirmed and candidate objects are kept clearly separate and nothing is fabricated.",
+    accent: "aurora",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "What is an interstellar object?", href: "/interstellar-objects", blurb: "A body from another star system, passing once through our own." },
+          { title: "Hyperbolic orbits", href: "/interstellar-objects/trajectory/hyperbolic-ejection", blurb: "Unbound trajectories that never return — and where they come from." },
+          { title: "Eccentricity greater than one", href: "/interstellar-objects/trajectory/interstellar-hyperbolic", blurb: "Why an eccentricity well above 1, with excess speed, means interstellar." },
+          { title: "How interstellar objects are detected", href: "/interstellar-objects/detection/excess-hyperbolic-velocity", blurb: "The excess-velocity signature that betrays a visitor from another star." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "1I/ʻOumuamua", href: "/interstellar-objects/oumuamua", blurb: "The first interstellar object — elongated, dry, and much-discussed." },
+          { title: "2I/Borisov", href: "/interstellar-objects/borisov", blurb: "The first clearly cometary interstellar object, rich in carbon monoxide." },
+          { title: "Comets vs asteroids vs interstellar objects", href: "/interstellar-objects/discover/hyperbolic-comets", blurb: "Telling a visitor from another star from a hyperbolic Solar-System comet." },
+          { title: "Survey telescopes", href: "/observatories/pan-starrs", blurb: "Pan-STARRS, ATLAS, and Catalina — the wide-field surveys that catch them." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "The Minor Planet Center", href: "/interstellar-objects/detection/incoming-trajectory-analysis", blurb: "Orbit determination and the IAU “I” interstellar designations." },
+          { title: "Candidate and debated objects", href: "/interstellar-objects/discover/debated", blurb: "The CNEOS 2014 bolide and why some interstellar claims stay disputed." },
+          { title: "What interstellar objects reveal", href: "/interstellar-objects/detection/spectroscopic-composition", blurb: "Spectroscopy of material formed around other stars." },
+          { title: "Future interstellar surveys", href: "/observatories/lsst", blurb: "Why the Vera C. Rubin Observatory should find many more." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["interstellar_object:oumuamua", "interstellar_object:borisov", "trajectory_class:interstellar-hyperbolic", "interstellar_detection_method:excess-hyperbolic-velocity"],
+    next: ["understanding-comets", "understanding-meteorites"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

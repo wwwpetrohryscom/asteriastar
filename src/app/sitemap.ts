@@ -19,6 +19,7 @@ import { SATELLITE_DISCOVERIES } from "@/app/satellites/discovery";
 import { ASTEROID_DISCOVERIES } from "@/app/asteroids/discovery";
 import { COMET_DISCOVERIES } from "@/app/comets/discovery";
 import { METEORITE_DISCOVERIES } from "@/app/meteorites/discovery";
+import { INTERSTELLAR_DISCOVERIES } from "@/app/interstellar-objects/discovery";
 import { HSF_DISCOVERIES } from "@/app/human-spaceflight/discovery";
 import { OBS_DISCOVERIES } from "@/app/observatories/discovery";
 import { EXO_DISCOVERIES } from "@/app/exoplanets/discovery";
@@ -99,6 +100,10 @@ import {
   meteoriteFireballPath,
   meteoriteImpactStructurePath,
   meteoriteSitePath,
+  interstellarObjectPath,
+  interstellarDiscoveryPath,
+  interstellarDetectionPath,
+  interstellarTrajectoryPath,
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
@@ -303,6 +308,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...engine.meteorites.sites().map((s) => ({ url: absoluteUrl(meteoriteSitePath(s.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
   ];
 
+  const interstellarRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.interstellarObjects), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.interstellarObjects.all().map((r) => ({ url: absoluteUrl(interstellarObjectPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...INTERSTELLAR_DISCOVERIES.map((d) => ({ url: absoluteUrl(interstellarDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...engine.interstellarObjects.detectionMethods().map((m) => ({ url: absoluteUrl(interstellarDetectionPath(m.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...engine.interstellarObjects.trajectoryClasses().map((c) => ({ url: absoluteUrl(interstellarTrajectoryPath(c.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+  ];
+
   const deepSkyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
     ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -346,6 +359,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...asteroidRoutes,
     ...cometRoutes,
     ...meteoriteRoutes,
+    ...interstellarRoutes,
     ...hsfRoutes,
     ...obsRoutes,
     ...exoRoutes,
