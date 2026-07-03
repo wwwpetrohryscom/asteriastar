@@ -48,6 +48,7 @@ export const ROUTES = {
   images: "/images",
   rockets: "/rockets",
   constellations: "/constellations",
+  satellites: "/satellites",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -76,6 +77,26 @@ export function constellationRegionPath(slug: string): string {
 }
 export function constellationAsterismPath(slug: string): string {
   return `/constellations/asterism/${slug}`;
+}
+
+/** Satellite Encyclopedia (Program X). */
+export function satellitePath(slug: string): string {
+  return `/satellites/${slug}`;
+}
+export function satelliteDiscoveryPath(slug: string): string {
+  return `/satellites/discover/${slug}`;
+}
+export function satelliteConstellationPath(slug: string): string {
+  return `/satellites/constellation/${slug}`;
+}
+export function satelliteOperatorPath(slug: string): string {
+  return `/satellites/operator/${slug}`;
+}
+export function satelliteOrbitPath(slug: string): string {
+  return `/satellites/orbit/${slug}`;
+}
+export function satelliteNetworkPath(slug: string): string {
+  return `/satellites/network/${slug}`;
 }
 
 export function exoplanetPath(slug: string): string {
