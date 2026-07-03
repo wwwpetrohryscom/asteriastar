@@ -47,6 +47,10 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "launch-pads", title: "Launch Pads", description: "The pads and complexes where rockets lift off, under their launch sites.", entityTypes: ["launch_pad"], sources: ["nasa"] },
   { slug: "space-agencies", title: "Space Agencies", description: "Agencies and institutions of spaceflight and astronomy.", entityTypes: ["organization"], sources: ["nasa", "esa"] },
   { slug: "astronomers", title: "Astronomers", description: "Astronomers whose work shaped our understanding of the sky.", entityTypes: ["astronomer"], sources: ["britannica", "iau"] },
+  { slug: "satellites", title: "Satellites", description: "Individual artificial satellites — communications, navigation, Earth-observation, weather, and science.", entityTypes: ["satellite"], sources: ["nasa", "esa", "noaa"] },
+  { slug: "satellite-constellations", title: "Satellite Constellations", description: "Multi-satellite systems, from GPS and Galileo to Starlink and OneWeb.", entityTypes: ["satellite_constellation"], sources: ["nasa", "esa", "gunters"] },
+  { slug: "orbit-types", title: "Orbit Types", description: "The orbital regimes satellites use — LEO, MEO, GEO, sun-synchronous, polar, and highly elliptical.", entityTypes: ["orbit_type"], sources: ["nasa", "esa"] },
+  { slug: "tracking-networks", title: "Tracking Networks", description: "Ground networks that communicate with satellites and deep-space missions.", entityTypes: ["tracking_network"], sources: ["nasa", "esa"] },
 ];
 
 export interface Dataset extends DatasetDef {
