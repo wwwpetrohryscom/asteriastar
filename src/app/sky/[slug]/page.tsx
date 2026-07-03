@@ -12,13 +12,21 @@ import { MoonDataPanel } from "@/components/sky/MoonDataPanel";
 import { MoonPositionPanel } from "@/components/sky/MoonPositionPanel";
 import { SunCalculatorPanel } from "@/components/sky/SunCalculatorPanel";
 import { PlanetVisibilityPanel } from "@/components/sky/PlanetVisibilityPanel";
+import { TonightDashboardPanel } from "@/components/sky/TonightDashboardPanel";
 import { engine } from "@/platform/data-engine";
-import { preparedEnvelope, type SkyEnvelope } from "@/platform/live-sky/schema";
+import { type SkyEnvelope } from "@/platform/live-sky/schema";
 import { buildMetadata } from "@/lib/seo/metadata";
-import { breadcrumbSchema, softwareApplicationSchema, type Crumb } from "@/lib/seo/jsonld";
-import { absoluteUrl, ROUTES, skyPath } from "@/lib/routes";
+import { breadcrumbSchema, softwareApplicationSchema, webPageSchema, type Crumb } from "@/lib/seo/jsonld";
+import { ROUTES, skyPath } from "@/lib/routes";
 
 const s = engine.liveSky;
+
+/** A complete, self-contained meta description: whole words, ≤ ~160 chars. */
+function metaDescription(lead: string): string {
+  if (lead.length <= 160) return lead;
+  const cut = lead.slice(0, 157);
+  return `${cut.slice(0, cut.lastIndexOf(" "))}…`;
+}
 
 export const dynamicParams = false;
 export function generateStaticParams() {
@@ -29,7 +37,7 @@ export async function generateMetadata({ params }: PageProps<"/sky/[slug]">): Pr
   const { slug } = await params;
   const p = s.skyPage(slug);
   if (!p) return {};
-  return buildMetadata({ title: p.def.title, description: p.def.lead.slice(0, 200), path: skyPath(slug) });
+  return buildMetadata({ title: p.def.title, description: metaDescription(p.def.lead), path: skyPath(slug) });
 }
 
 export default async function SkyPageRoute({ params }: PageProps<"/sky/[slug]">) {
@@ -38,15 +46,16 @@ export default async function SkyPageRoute({ params }: PageProps<"/sky/[slug]">)
   if (!p) notFound();
   const { def, related, providers } = p;
   const crumbs: Crumb[] = [{ name: "Home", url: "/" }, { name: "Night Sky", url: ROUTES.sky }, { name: def.title, url: skyPath(slug) }];
-  const locationRelevant = ["tonight", "iss", "aurora"].includes(def.content);
+  const locationRelevant = ["iss", "aurora"].includes(def.content);
   const isMoon = def.content === "moon";
   const isSunOrTwilight = def.content === "sun" || def.content === "twilight";
   const isPlanets = def.content === "planets";
-  const isComputed = isMoon || isSunOrTwilight || isPlanets;
+  const isTonight = def.content === "tonight";
+  const isComputed = isMoon || isSunOrTwilight || isPlanets || isTonight;
   const skyEnvelope = preparedEnvelopeFor(def.content);
   const jsonLd: Record<string, unknown>[] = [
     breadcrumbSchema(crumbs),
-    { "@context": "https://schema.org", "@type": "WebPage", name: def.title, description: def.lead, url: absoluteUrl(skyPath(slug)) },
+    webPageSchema({ name: def.title, description: def.lead, url: skyPath(slug) }),
   ];
   if (isComputed) {
     jsonLd.push(softwareApplicationSchema({ name: def.title, description: def.lead, url: skyPath(slug), category: "Astronomy" }));
@@ -67,6 +76,7 @@ export default async function SkyPageRoute({ params }: PageProps<"/sky/[slug]">)
             {isMoon && <MoonPositionPanel />}
             {isSunOrTwilight && <SunCalculatorPanel />}
             {isPlanets && <PlanetVisibilityPanel />}
+            {isTonight && <TonightDashboardPanel />}
             <ReferenceBlock content={def.content} />
             {def.content !== "observing-calendar" && !isComputed && <PreparedForIntegration providers={providers} envelope={skyEnvelope} />}
             {related.length > 0 && <SkySection id="related" title="Related in the Knowledge Graph"><RefCards refs={related} /></SkySection>}
@@ -74,6 +84,12 @@ export default async function SkyPageRoute({ params }: PageProps<"/sky/[slug]">)
           </div>
           <aside className="space-y-6">
             {!isComputed && skyEnvelope && <EnvelopeCard envelope={skyEnvelope} />}
+            {isComputed && !isTonight && (
+              <section className="rounded-2xl border border-sky-400/20 bg-sky-400/[0.04] p-5">
+                <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">See it all together</h2>
+                <p className="mt-2 text-sm text-muted">The <Link href={skyPath("night-sky-tonight")} className="text-nebula hover:underline">Tonight Observing Dashboard</Link> composes the Sun, Moon, and planet tools into one view for your location.</p>
+              </section>
+            )}
             {locationRelevant && <LocationPlaceholder />}
             {def.learnHref && (
               <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
@@ -99,11 +115,7 @@ function preparedEnvelopeFor(content: string): SkyEnvelope | undefined {
     case "iss": return s.iss.passes()[0]?.envelope;
     case "aurora": return s.aurora.forecast().envelope;
     case "observing-calendar": return s.observingCalendar.envelope;
-    case "tonight":
-      return preparedEnvelope({
-        source: ["usno", "jpl"], provider: "usno",
-        provenance: "A location-aware 'what's up tonight' view needs a connected ephemeris provider and your location. The current Moon phase is available now on the Moon page.",
-      });
+    case "tonight": return undefined; // computed composite — rendered by TonightDashboardPanel
     default: return undefined;
   }
 }
@@ -200,10 +212,10 @@ function ReferenceBlock({ content }: { content: string }) {
   }
   // "tonight"
   return (
-    <SkySection id="tonight" title="What tonight's sky page will show">
-      <p className="leading-relaxed text-muted">Once a location and ephemeris providers are connected, this page will show the Moon&apos;s phase, which planets are visible and where, any bright ISS passes, and active meteor showers — each clearly timestamped and sourced. For now, explore the reference guides:</p>
+    <SkySection id="tonight" title="What this dashboard composes — and what it doesn't">
+      <p className="leading-relaxed text-muted">The dashboard above is a <strong className="text-fg">composite</strong> of the computed Sun &amp; Twilight, Moon, and Planet tools — it adds no new astronomy, only aggregates and ranks. It does <strong className="text-fg">not</strong> include weather, cloud cover, seeing, transparency, or light pollution, and it does not show live ISS passes, aurora, meteor showers, or comets. Each underlying tool stands on its own:</p>
       <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
-        {[["Moon phase", skyPath("moon")], ["Planet visibility", skyPath("planet-visibility")], ["Meteor showers", skyPath("meteor-showers")], ["ISS passes", skyPath("iss-tracker")]].map(([label, href]) => (
+        {[["Sun & twilight", skyPath("sun")], ["Moon phase & position", skyPath("moon")], ["Planet visibility", skyPath("planet-visibility")], ["Meteor showers (reference)", skyPath("meteor-showers")]].map(([label, href]) => (
           <li key={href}><Link href={href} className="text-nebula hover:underline">{label} →</Link></li>
         ))}
       </ul>

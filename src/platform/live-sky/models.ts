@@ -271,6 +271,8 @@ export interface PlanetVisibilityEntry {
     visibilityWindow: string; // a human-readable observing window
     morningOrEvening: "morning" | "evening" | "all-night" | "not-visible";
     bestTimeIso: string | null;
+    /** The planet's highest altitude (degrees) while the sky is dark, or null if never up in the dark. */
+    bestAltitudeDeg: number | null;
     observingSummary: string;
     limitingFactors: string[];
   };
@@ -296,6 +298,90 @@ export interface PlanetVisibilityData {
   referenceTimeIso: string;
   planets: PlanetVisibilityEntry[];
   method: "computed" | "provider";
+  calculationNotes: string;
+  accuracyNotes: string;
+}
+
+/* ------------------------------------------ tonight observing dashboard (Program T) */
+
+export type NightType = "normal_night" | "short_night" | "no_darkness" | "polar_day" | "polar_night";
+export type MoonlightImpact = "low" | "moderate" | "high" | "unknown";
+
+/** A time window (crosses midnight when startIso is later in the day than endIso). */
+export interface TonightWindow {
+  startIso: string;
+  endIso: string;
+}
+
+/** One planet as ranked by the Tonight dashboard (composed from the planet engine). */
+export interface TonightPlanet {
+  objectEntityId: string; // planet:*
+  planetName: string;
+  visibleTonight: boolean;
+  bestTimeIso: string | null;
+  bestAltitudeDeg: number | null;
+  altitudeDeg: number; // at the reference time
+  azimuthDeg: number;
+  apparentMagnitude: number;
+  limitingFactors: string[];
+  /** 0–100 deterministic observability score (documented), or null if not visible. */
+  visibilityScore: number | null;
+}
+
+/**
+ * The Program T "Tonight" observing dashboard — a COMPOSITE of the computed Sun,
+ * Moon, and Planet engines for an explicit location and date. It adds no new
+ * astronomy: it aggregates and ranks. A sub-engine failure yields a null section
+ * plus a limitation, never fabricated data. Weather, cloud, seeing, transparency,
+ * light pollution, ISS, aurora, meteors, and comets are NOT included.
+ */
+export interface TonightObservingData {
+  input: {
+    latitude: number;
+    longitude: number;
+    date: string; // YYYY-MM-DD
+    timezone: string; // resolved IANA id, or "UTC"
+    utcOffsetMinutes: number;
+  };
+  referenceTimeIso: string;
+  summary: {
+    observingDate: string;
+    locationStatus: string;
+    darknessAvailable: boolean;
+    darknessMinutes: number;
+    nightType: NightType;
+    bestOverallWindow: TonightWindow | null;
+    limitations: string[];
+  };
+  sun: {
+    sunrise: SunEvent;
+    sunset: SunEvent;
+    solarNoon: SunEvent;
+    civilTwilight: { dawn: SunEvent; dusk: SunEvent };
+    nauticalTwilight: { dawn: SunEvent; dusk: SunEvent };
+    astronomicalTwilight: { dawn: SunEvent; dusk: SunEvent };
+    daylightMinutes: number;
+    darknessWindows: TonightWindow[];
+  } | null;
+  moon: {
+    phaseName: string;
+    illuminationPercent: number;
+    moonrise: SunEvent;
+    moonset: SunEvent;
+    lunarTransit: SunEvent;
+    currentAltitudeDeg: number;
+    currentAzimuthDeg: number;
+    moonlightImpact: MoonlightImpact;
+    limitations: string[];
+  } | null;
+  planets: TonightPlanet[];
+  recommendations: {
+    topPlanets: string[];
+    bestMoonObservingWindow: string | null;
+    bestDarkSkyWindow: string | null;
+    notAvailable: string[];
+  };
+  method: "computed_composite";
   calculationNotes: string;
   accuracyNotes: string;
 }

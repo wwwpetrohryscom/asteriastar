@@ -36,7 +36,11 @@ deliberately, **no connected live providers yet**. Data is one of:
   Program S adds computed, location-aware **naked-eye planet visibility** — rise,
   set, transit, position, approximate magnitude, and conservative observing rules
   from public-domain NASA/JPL planetary elements (see
-  [PLANET_VISIBILITY.md](./PLANET_VISIBILITY.md)).
+  [PLANET_VISIBILITY.md](./PLANET_VISIBILITY.md)). Program T composes the Sun,
+  Moon, and Planet engines into the **Tonight Observing Dashboard** — a
+  `computed_composite` that classifies the night, ranks the planets, and rates
+  moonlight, inventing no weather or event data (see
+  [TONIGHT_OBSERVING_DASHBOARD.md](./TONIGHT_OBSERVING_DASHBOARD.md)).
 
 The `live` status still describes **no datum** — no live provider is connected.
 `computed` readings are stale-aware: the current Moon reading flips to `stale`
