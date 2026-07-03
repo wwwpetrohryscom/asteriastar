@@ -226,6 +226,80 @@ export interface PlanetVisibility {
   note?: string;
 }
 
+/* ----------------------------------------- computed planet visibility (Program S) */
+
+export type PlanetStatus =
+  | "normal"
+  | "not_visible"
+  | "above_horizon_all_day"
+  | "below_horizon_all_day"
+  | "no_rise"
+  | "no_set"
+  | "near_sun_glare"
+  | "low_altitude";
+
+/** A planet rise/set/transit event — its instant, or null when it does not occur. */
+export interface PlanetEvent {
+  iso: string | null;
+  local: string | null;
+}
+
+/** One planet's computed visibility for an explicit location and date. */
+export interface PlanetVisibilityEntry {
+  objectEntityId: string; // planet:*
+  planetName: string;
+  events: {
+    rise: PlanetEvent;
+    set: PlanetEvent;
+    transit: PlanetEvent;
+  };
+  position: {
+    /** Topocentric altitude at the reference time (degrees). */
+    altitudeDeg: number;
+    /** Azimuth from north, increasing eastward (0 = N, 90 = E, 180 = S, 270 = W). */
+    azimuthDeg: number;
+    rightAscensionDeg: number;
+    declinationDeg: number;
+    distanceAu: number;
+    elongationDeg: number;
+    /** Approximate apparent visual magnitude (formula-backed; Saturn excludes ring tilt). */
+    apparentMagnitude: number;
+  };
+  visibility: {
+    aboveHorizonAtReferenceTime: boolean;
+    visibleTonight: boolean;
+    visibilityWindow: string; // a human-readable observing window
+    morningOrEvening: "morning" | "evening" | "all-night" | "not-visible";
+    bestTimeIso: string | null;
+    observingSummary: string;
+    limitingFactors: string[];
+  };
+  status: PlanetStatus[];
+}
+
+/**
+ * The Program S location-aware planet-visibility contract — deterministically
+ * computed rise/set/transit, position, and honest visibility rules for the
+ * naked-eye planets (and optionally Uranus/Neptune) at an explicit location and
+ * date. Timestamps, source, confidence, and staleness live in the SkyEnvelope.
+ * Events that do not occur are null; visibility is conservative, never overpromised.
+ */
+export interface PlanetVisibilityData {
+  input: {
+    latitude: number;
+    longitude: number;
+    date: string; // YYYY-MM-DD (the civil date at the location)
+    timezone: string; // resolved IANA id, or "UTC"
+    utcOffsetMinutes: number;
+  };
+  /** The instant positions and visibility are evaluated at (now for a current query, else local noon). */
+  referenceTimeIso: string;
+  planets: PlanetVisibilityEntry[];
+  method: "computed" | "provider";
+  calculationNotes: string;
+  accuracyNotes: string;
+}
+
 /* --------------------------------------------------------------- meteor showers */
 export interface MeteorShower {
   slug: string;

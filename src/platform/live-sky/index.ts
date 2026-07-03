@@ -55,7 +55,7 @@ export interface SkyPageDef {
 export const SKY_PAGES: SkyPageDef[] = [
   {
     slug: "night-sky-tonight", title: "The Night Sky Tonight", eyebrow: "Night Sky Platform",
-    lead: "The Moon phase, moonrise, moonset, and the Moon's position for any location are available on the Moon page, and sunrise, sunset, and twilight times on the Sun & Twilight page. A fuller location-aware view — which planets are up, ISS passes — is prepared for integration; nothing location-dependent is fabricated until its provider is connected.",
+    lead: "Location-aware Moon (phase, rise, set, position), Sun (rise, set, twilight), and naked-eye planet visibility are available now — on the Moon, Sun & Twilight, and Planet Visibility pages. A single combined 'tonight' view, plus ISS passes, is prepared for integration; nothing location-dependent is fabricated until its provider is connected.",
     content: "tonight", providerKeys: ["jpl-horizons", "usno"], sourceKeys: ["jpl", "usno"],
     relatedEntityIds: ["moon:the-moon", "star:sun", "planet:jupiter", "planet:saturn"],
     learnHref: "/learn/observing-the-night-sky",
@@ -79,9 +79,9 @@ export const SKY_PAGES: SkyPageDef[] = [
     relatedEntityIds: ["star:sun", "planet:earth"], learnHref: "/learn/observing-the-night-sky",
   },
   {
-    slug: "planet-visibility", title: "Planet Visibility Guide", eyebrow: "Night Sky Platform",
-    lead: "How each naked-eye planet appears through the year is shown as reference. Tonight's specific planet positions and rise/set times are prepared for a connected ephemeris provider.",
-    content: "planets", providerKeys: ["jpl-horizons"], sourceKeys: ["jpl"],
+    slug: "planet-visibility", title: "Planet Visibility Calculator", eyebrow: "Night Sky Platform",
+    lead: "Which naked-eye planets are up tonight, and where — computed rise, set, and transit times, altitude, approximate magnitude, and honest, conservative visibility for any location and date, from public-domain planetary elements. Your location is used only for the calculation and is never stored.",
+    content: "planets", providerKeys: ["jpl-horizons"], sourceKeys: ["jpl", "usno"],
     relatedEntityIds: ["planet:mercury", "planet:venus", "planet:mars", "planet:jupiter", "planet:saturn"],
     learnHref: "/learn/observing-the-night-sky",
   },
@@ -113,7 +113,7 @@ export const SKY_PAGES: SkyPageDef[] = [
   },
   {
     slug: "observing-calendar", title: "Observing Calendar", eyebrow: "Night Sky Platform",
-    lead: "A month-by-month guide to recurring sky events — meteor-shower peaks, equinoxes, and solstices. Sunrise, sunset, and twilight times for your location and date are available now on the Sun & Twilight page; exact dates for other events are prepared for a connected almanac provider.",
+    lead: "A month-by-month guide to recurring sky events — meteor-shower peaks, equinoxes, and solstices. Sun, Moon, and planet times for your location and date are available now on the Sun & Twilight, Moon, and Planet Visibility pages; exact dates for other events are prepared for a connected almanac provider.",
     content: "observing-calendar", providerKeys: ["imo", "usno"], sourceKeys: ["imo", "usno"],
     relatedEntityIds: ["star:sun", "planet:earth", "meteor_shower:perseids", "meteor_shower:geminids"],
     learnHref: "/learn/observing-the-night-sky",

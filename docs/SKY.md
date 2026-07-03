@@ -33,6 +33,10 @@ deliberately, **no connected live providers yet**. Data is one of:
   distance), reusing that location model and extending the Moon endpoint without
   breaking its phase-only behaviour (see
   [MOONRISE_MOONSET_LUNAR_POSITION.md](./MOONRISE_MOONSET_LUNAR_POSITION.md)).
+  Program S adds computed, location-aware **naked-eye planet visibility** — rise,
+  set, transit, position, approximate magnitude, and conservative observing rules
+  from public-domain NASA/JPL planetary elements (see
+  [PLANET_VISIBILITY.md](./PLANET_VISIBILITY.md)).
 
 The `live` status still describes **no datum** — no live provider is connected.
 `computed` readings are stale-aware: the current Moon reading flips to `stale`

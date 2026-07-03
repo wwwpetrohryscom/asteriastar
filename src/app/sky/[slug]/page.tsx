@@ -11,6 +11,7 @@ import { DataStatusBadge, PreparedForIntegration, EnvelopeCard, LocationPlacehol
 import { MoonDataPanel } from "@/components/sky/MoonDataPanel";
 import { MoonPositionPanel } from "@/components/sky/MoonPositionPanel";
 import { SunCalculatorPanel } from "@/components/sky/SunCalculatorPanel";
+import { PlanetVisibilityPanel } from "@/components/sky/PlanetVisibilityPanel";
 import { engine } from "@/platform/data-engine";
 import { preparedEnvelope, type SkyEnvelope } from "@/platform/live-sky/schema";
 import { buildMetadata } from "@/lib/seo/metadata";
@@ -37,16 +38,17 @@ export default async function SkyPageRoute({ params }: PageProps<"/sky/[slug]">)
   if (!p) notFound();
   const { def, related, providers } = p;
   const crumbs: Crumb[] = [{ name: "Home", url: "/" }, { name: "Night Sky", url: ROUTES.sky }, { name: def.title, url: skyPath(slug) }];
-  const locationRelevant = ["tonight", "iss", "planets", "aurora"].includes(def.content);
+  const locationRelevant = ["tonight", "iss", "aurora"].includes(def.content);
   const isMoon = def.content === "moon";
   const isSunOrTwilight = def.content === "sun" || def.content === "twilight";
-  const isComputed = isMoon || isSunOrTwilight;
+  const isPlanets = def.content === "planets";
+  const isComputed = isMoon || isSunOrTwilight || isPlanets;
   const skyEnvelope = preparedEnvelopeFor(def.content);
   const jsonLd: Record<string, unknown>[] = [
     breadcrumbSchema(crumbs),
     { "@context": "https://schema.org", "@type": "WebPage", name: def.title, description: def.lead, url: absoluteUrl(skyPath(slug)) },
   ];
-  if (isSunOrTwilight || isMoon) {
+  if (isComputed) {
     jsonLd.push(softwareApplicationSchema({ name: def.title, description: def.lead, url: skyPath(slug), category: "Astronomy" }));
   }
 
@@ -64,6 +66,7 @@ export default async function SkyPageRoute({ params }: PageProps<"/sky/[slug]">)
             {isMoon && <MoonDataPanel />}
             {isMoon && <MoonPositionPanel />}
             {isSunOrTwilight && <SunCalculatorPanel />}
+            {isPlanets && <PlanetVisibilityPanel />}
             <ReferenceBlock content={def.content} />
             {def.content !== "observing-calendar" && !isComputed && <PreparedForIntegration providers={providers} envelope={skyEnvelope} />}
             {related.length > 0 && <SkySection id="related" title="Related in the Knowledge Graph"><RefCards refs={related} /></SkySection>}
@@ -90,7 +93,7 @@ function preparedEnvelopeFor(content: string): SkyEnvelope | undefined {
     case "moon": return undefined; // computed — rendered by MoonDataPanel, not a prepared stub
     case "sun": return undefined; // computed — rendered by SunCalculatorPanel
     case "twilight": return undefined; // computed — rendered by SunCalculatorPanel
-    case "planets": return s.planets.currentVisibility()[0]?.envelope;
+    case "planets": return undefined; // computed — rendered by PlanetVisibilityPanel
     case "comets": return s.comets.currentlyVisible()[0]?.envelope;
     case "asteroids": return s.asteroids.closeApproaches()[0]?.envelope;
     case "iss": return s.iss.passes()[0]?.envelope;
@@ -144,8 +147,9 @@ function ReferenceBlock({ content }: { content: string }) {
   if (content === "planets") {
     return (
       <SkySection id="planets" title="The naked-eye planets">
+        <p className="mb-3 text-sm text-muted">These are timeless facts about how each planet behaves; <strong className="text-fg">tonight&apos;s specific rise, set, and visibility for your location are computed in the calculator above</strong> from public-domain planetary elements.</p>
         <Definitions items={s.planets.nakedEye.map((pl) => [pl.name, pl.behaviour])} />
-        <p className="mt-3 text-sm text-faint">Uranus and Neptune require binoculars or a telescope.</p>
+        <p className="mt-3 text-sm text-faint">Uranus and Neptune require binoculars or a telescope (add <code className="text-muted">?planet=uranus</code> to the API).</p>
       </SkySection>
     );
   }

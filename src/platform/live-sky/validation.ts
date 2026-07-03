@@ -5,6 +5,7 @@ import { moon, MOON_PHASES } from "@/platform/live-sky/moon";
 import { sun } from "@/platform/live-sky/sun";
 import { computeMoon } from "@/platform/live-sky/providers/computed-moon";
 import { moonTopocentric } from "@/platform/live-sky/providers/lunar-position";
+import { equatorialToHorizontal } from "@/platform/live-sky/providers/planetary-position";
 import type { MoonPhaseName, SolarDayCondition } from "@/platform/live-sky/models";
 import { timezoneOffsetMinutes, type LocationInput } from "@/platform/live-sky/location";
 import { planets } from "@/platform/live-sky/planets";
@@ -56,7 +57,6 @@ function preparedData(): { ctx: string; e: Enveloped<unknown> }[] {
   const add = (ctx: string, e: Enveloped<unknown> | Enveloped<unknown>[]) => {
     for (const x of Array.isArray(e) ? e : [e]) out.push({ ctx, e: x });
   };
-  add("planets.currentVisibility", planets.currentVisibility());
   add("eclipses.upcoming", eclipses.upcoming());
   add("comets.currentlyVisible", comets.currentlyVisible());
   add("asteroids.closeApproaches", asteroids.closeApproaches());
@@ -119,6 +119,9 @@ export function validateLiveSky(): string[] {
 
   // 8. The location-aware Moon integration (Program R) — moonrise/set/position, honest.
   issues.push(...validateMoonPosition());
+
+  // 9. The computed planet-visibility integration (Program S) — location-aware, honest.
+  issues.push(...validatePlanets());
 
   return issues;
 }
@@ -458,6 +461,122 @@ export function validateMoonPosition(): string[] {
       const local = new Date(instant.getTime() + timezoneOffsetMinutes(input.timezone as string, instant) * 60_000);
       const localDate = `${local.getUTCFullYear()}-${String(local.getUTCMonth() + 1).padStart(2, "0")}-${String(local.getUTCDate()).padStart(2, "0")}`;
       if (localDate !== input.date) issues.push(`moonpos.dateline ${input.timezone}: ${label} local date ${localDate} != requested ${input.date}`);
+    }
+  }
+
+  return issues;
+}
+
+interface PlanetFixture {
+  city: string;
+  input: LocationInput;
+  /** Optional: expect Venus elongation within ±3° (a numeric anchor). */
+  venusElong?: number;
+  /** Optional: expect this planet's window on this date. */
+  expectWindow?: { planet: string; window: string };
+}
+
+/**
+ * Validate the computed planet-visibility integration (Program S): envelope
+ * honesty, the data contract, coordinate/elongation/magnitude ranges,
+ * horizon/visibility consistency, transit-is-a-culmination, polar and date-line
+ * handling, invalid input, and a numeric correctness anchor. Deterministic.
+ */
+export function validatePlanets(): string[] {
+  const issues: string[] = [];
+  const now = new Date("2026-06-29T00:00:00Z");
+
+  // Invalid inputs → structured errors, never guessed values.
+  const bad: { input: LocationInput; field: string }[] = [
+    { input: { latitude: 91, longitude: 0, date: "2025-06-15" }, field: "latitude" },
+    { input: { latitude: 0, longitude: 200, date: "2025-06-15" }, field: "longitude" },
+    { input: { latitude: 0, longitude: 0, date: "not-a-date" }, field: "date" },
+    { input: { latitude: 0, longitude: 0, date: "2025-06-15", timezone: "Nowhere/Nowhere" }, field: "timezone" },
+  ];
+  for (const b of bad) {
+    const r = planets.forLocationDate(b.input, now);
+    if (r.ok) issues.push(`planets: expected a ${b.field} error for ${JSON.stringify(b.input)}`);
+    else if (r.field !== b.field) issues.push(`planets: expected error field ${b.field}, got ${r.field}`);
+  }
+
+  const fixtures: PlanetFixture[] = [
+    // 2025-01-01: Venus near greatest evening elongation (~47°); Mars & Jupiter near opposition (all-night).
+    { city: "Prague", input: { latitude: 50.0755, longitude: 14.4378, date: "2025-01-01", timezone: "Europe/Prague" }, venusElong: 47, expectWindow: { planet: "Jupiter", window: "all-night" } },
+    { city: "Quito", input: { latitude: -0.1807, longitude: -78.4678, date: "2025-06-15", timezone: "America/Guayaquil" } },
+    { city: "Sydney", input: { latitude: -33.8688, longitude: 151.2093, date: "2025-06-15", timezone: "Australia/Sydney" } },
+    { city: "Tromso", input: { latitude: 69.6492, longitude: 18.9553, date: "2025-06-15", timezone: "Europe/Oslo" } },
+    { city: "Longyearbyen", input: { latitude: 78.2232, longitude: 15.6267, date: "2025-12-21", timezone: "Arctic/Longyearbyen" } },
+    { city: "Kiritimati UTC+14", input: { latitude: 1.87, longitude: -157.36, date: "2025-06-15", timezone: "Pacific/Kiritimati" } },
+    { city: "UTC-12", input: { latitude: 0, longitude: -177, date: "2025-06-15", timezone: "Etc/GMT+12" } },
+  ];
+
+  for (const f of fixtures) {
+    const r = planets.forLocationDate(f.input, now);
+    if (!r.ok) { issues.push(`planets.${f.city}: returned an error (${r.field}: ${r.message})`); continue; }
+    const { data, envelope } = r.value;
+
+    checkEnvelope(envelope, `planets.${f.city}`, issues);
+    if (envelope.status !== "computed") issues.push(`planets.${f.city}: status must be computed, got ${envelope.status}`);
+    if (envelope.provider) issues.push(`planets.${f.city}: computed data must not claim a live provider`);
+    if (!envelope.generatedAt || !envelope.validFrom || !envelope.validUntil) issues.push(`planets.${f.city}: envelope missing timestamps`);
+    if (!data) { issues.push(`planets.${f.city}: data must not be null`); continue; }
+    if (data.method !== "computed") issues.push(`planets.${f.city}: method must be computed`);
+    if (data.input.latitude !== f.input.latitude || data.input.longitude !== f.input.longitude) issues.push(`planets.${f.city}: coordinates not echoed`);
+    if (data.planets.length !== 5) issues.push(`planets.${f.city}: default response must have 5 naked-eye planets, got ${data.planets.length}`);
+
+    for (const p of data.planets) {
+      const ctx = `planets.${f.city}.${p.planetName}`;
+      if (!getEntityById(p.objectEntityId)) issues.push(`${ctx}: objectEntityId does not resolve: ${p.objectEntityId}`);
+      const pos = p.position;
+      if (!(pos.altitudeDeg >= -90 && pos.altitudeDeg <= 90)) issues.push(`${ctx}: altitude out of range: ${pos.altitudeDeg}`);
+      if (!(pos.azimuthDeg >= 0 && pos.azimuthDeg < 360.0001)) issues.push(`${ctx}: azimuth out of range: ${pos.azimuthDeg}`);
+      if (!(pos.declinationDeg >= -90 && pos.declinationDeg <= 90)) issues.push(`${ctx}: declination out of range: ${pos.declinationDeg}`);
+      if (!(pos.rightAscensionDeg >= 0 && pos.rightAscensionDeg < 360.0001)) issues.push(`${ctx}: RA out of range: ${pos.rightAscensionDeg}`);
+      if (!(pos.elongationDeg >= 0 && pos.elongationDeg <= 180)) issues.push(`${ctx}: elongation out of range: ${pos.elongationDeg}`);
+      if (!(pos.distanceAu > 0 && pos.distanceAu < 40)) issues.push(`${ctx}: distance implausible: ${pos.distanceAu}`);
+      if (!(pos.apparentMagnitude > -6 && pos.apparentMagnitude < 12)) issues.push(`${ctx}: magnitude implausible: ${pos.apparentMagnitude}`);
+
+      // Horizon / visibility consistency.
+      const v = p.visibility;
+      if (v.aboveHorizonAtReferenceTime !== pos.altitudeDeg > -0.5667) issues.push(`${ctx}: aboveHorizon flag inconsistent with altitude ${pos.altitudeDeg}`);
+      const belowAllDay = p.status.includes("below_horizon_all_day");
+      if (belowAllDay && (p.events.rise.iso !== null || p.events.set.iso !== null)) issues.push(`${ctx}: below-all-day must have null rise/set`);
+      if (v.visibleTonight !== p.status.includes("normal")) issues.push(`${ctx}: visibleTonight must match a 'normal' status`);
+      if (v.visibleTonight && p.status.includes("not_visible")) issues.push(`${ctx}: cannot be visible and not_visible`);
+
+      // A reported transit must be a genuine culmination (hour angle ≈ 0).
+      if (p.events.transit.iso) {
+        const ha = equatorialToHorizontal(pos.rightAscensionDeg, pos.declinationDeg, f.input.latitude, f.input.longitude, new Date(p.events.transit.iso)).hourAngleDeg;
+        if (Math.abs(ha) > 1) issues.push(`${ctx}: reported transit is not a culmination (hour angle ${ha.toFixed(2)}°)`);
+      }
+    }
+
+    if (f.venusElong !== undefined) {
+      const venus = data.planets.find((p) => p.planetName === "Venus");
+      if (venus && Math.abs(venus.position.elongationDeg - f.venusElong) > 3) issues.push(`planets.${f.city}: Venus elongation ${venus.position.elongationDeg}° differs from expected ~${f.venusElong}°`);
+    }
+    if (f.expectWindow) {
+      const pl = data.planets.find((p) => p.planetName === f.expectWindow!.planet);
+      if (pl && pl.visibility.morningOrEvening !== f.expectWindow.window) issues.push(`planets.${f.city}: ${f.expectWindow.planet} window ${pl.visibility.morningOrEvening} != expected ${f.expectWindow.window}`);
+    }
+  }
+
+  // Date-line anchoring: every non-null event lands on the requested LOCAL civil date.
+  const dateline: LocationInput[] = [
+    { latitude: 1.87, longitude: -157.36, date: "2025-06-15", timezone: "Pacific/Kiritimati" },
+    { latitude: 0, longitude: -177, date: "2025-06-15", timezone: "Etc/GMT+12" },
+  ];
+  for (const input of dateline) {
+    const r = planets.forLocationDate(input, now);
+    if (!r.ok || !r.value.data) { issues.push(`planets.dateline ${input.timezone}: error`); continue; }
+    for (const p of r.value.data.planets) {
+      for (const [label, iso] of [["rise", p.events.rise.iso], ["transit", p.events.transit.iso], ["set", p.events.set.iso]] as const) {
+        if (!iso) continue;
+        const inst = new Date(iso);
+        const local = new Date(inst.getTime() + timezoneOffsetMinutes(input.timezone as string, inst) * 60_000);
+        const ld = `${local.getUTCFullYear()}-${String(local.getUTCMonth() + 1).padStart(2, "0")}-${String(local.getUTCDate()).padStart(2, "0")}`;
+        if (ld !== input.date) issues.push(`planets.dateline ${input.timezone}: ${p.planetName} ${label} local date ${ld} != ${input.date}`);
+      }
     }
   }
 
