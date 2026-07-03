@@ -59,6 +59,11 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "comet-families", title: "Comet Families", description: "Genetic comet families, such as the Kreutz sungrazers.", entityTypes: ["comet_family"], sources: ["nasa"] },
   { slug: "small-body-reservoirs", title: "Small-Body Reservoirs", description: "Comet source reservoirs — the Oort cloud and inner Oort cloud.", entityTypes: ["small_body_reservoir"], sources: ["nasa"] },
   { slug: "comet-transition-objects", title: "Comet Transition Objects", description: "Objects blurring the asteroid–comet boundary: active asteroids and dormant comets.", entityTypes: ["active_asteroid", "dormant_comet"], sources: ["nasa", "jpl"] },
+  { slug: "meteorites", title: "Meteorites", description: "Individual meteorites — chondrites, achondrites, irons, and stony-irons.", entityTypes: ["meteorite"], sources: ["nasa"] },
+  { slug: "meteorite-classes", title: "Meteorite Classes", description: "The classes and groups of meteorites — chondrites, HED, martian, lunar, pallasites, and more.", entityTypes: ["meteorite_class", "meteorite_group"], sources: ["nasa"] },
+  { slug: "fireballs", title: "Fireballs", description: "Bright meteors and bolides that entered the atmosphere.", entityTypes: ["fireball"], sources: ["nasa"] },
+  { slug: "impact-structures", title: "Impact Structures", description: "Terrestrial impact craters left by past impacts.", entityTypes: ["impact_structure"], sources: ["nasa"] },
+  { slug: "recovery-sites", title: "Recovery Sites", description: "Strewn fields where meteorite fragments are recovered.", entityTypes: ["recovery_site"], sources: ["nasa"] },
 ];
 
 export interface Dataset extends DatasetDef {

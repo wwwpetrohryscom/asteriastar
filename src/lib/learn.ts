@@ -883,6 +883,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["comet:halleys-comet", "comet_class:jupiter-family", "small_body_reservoir:oort-cloud", "comet_family:kreutz-sungrazers"],
     next: ["understanding-asteroids", "the-solar-system"],
   },
+  {
+    slug: "understanding-meteorites",
+    title: "Understanding Meteors & Meteorites",
+    description: "The small bodies that reach the ground — how meteors become meteorites, how they are classified, where they come from, and the fireballs and craters they leave behind. Built on real Meteoritical Bulletin data that reuses the platform's asteroids, impact events, and meteor showers; nothing is fabricated.",
+    accent: "halo",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Meteors, meteoroids, and meteorites", href: "/meteorites", blurb: "The difference between a shooting star, the rock in space, and the piece that lands." },
+          { title: "Falls and finds", href: "/meteorites/discover/falls", blurb: "Meteorites seen to fall versus those discovered later on the ground." },
+          { title: "Meteorite classification", href: "/meteorites/class/chondrite", blurb: "The four great classes: chondrites, achondrites, irons, and stony-irons." },
+          { title: "The largest meteorites", href: "/meteorites/discover/largest", blurb: "From the ~60-tonne Hoba iron to the great strewn fields." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Carbonaceous chondrites", href: "/meteorites/discover/carbonaceous", blurb: "Primitive, water- and organic-rich meteorites carrying the ingredients of life." },
+          { title: "Meteorites from Vesta", href: "/meteorites/group/hed", blurb: "The HED achondrites, matched to the asteroid Vesta's crust." },
+          { title: "Martian and lunar meteorites", href: "/meteorites/discover/martian", blurb: "Rocks blasted off Mars and the Moon and delivered to Earth for free." },
+          { title: "Iron and stony-iron meteorites", href: "/meteorites/class/iron", blurb: "Fragments of the metallic cores of shattered asteroids." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Fireballs and bolides", href: "/meteorites/discover/fireballs", blurb: "The bright entries and airbursts — Peekskill, Chelyabinsk, the Bering Sea." },
+          { title: "Impact structures", href: "/meteorites/discover/impact-structures", blurb: "The craters left on Earth, from young Meteor Crater to ancient Vredefort." },
+          { title: "Meteor showers and their parents", href: "/sky/meteor-showers", blurb: "How comet and asteroid debris streams light up the sky each year." },
+          { title: "Impact hazard and planetary defense", href: "/meteorites/discover/planetary-defense", blurb: "Why we track the near-Earth objects that could reach the ground." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["meteorite:allende", "meteorite_group:hed", "meteorite_class:chondrite", "asteroid:vesta"],
+    next: ["understanding-comets", "understanding-asteroids"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
