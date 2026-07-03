@@ -772,6 +772,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["constellation:orion", "constellation:ursa-major", "constellation:cygnus", "constellation_family:zodiacal"],
     next: ["observing-the-night-sky", "understanding-stars"],
   },
+  {
+    slug: "understanding-satellites",
+    title: "Understanding Artificial Satellites",
+    description: "How the satellites that watch the Earth, connect the world, and navigate the planet actually work — the orbits they use, what they do, who operates them, and how the space age began. Built on real satellite data that reuses the platform's agencies, rockets, and launch sites; nothing is fabricated.",
+    accent: "halo",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "What is a satellite?", href: "/satellites", blurb: "An object placed in orbit to do a job — communications, imaging, navigation, or science." },
+          { title: "Low Earth orbit", href: "/satellites/orbit/leo", blurb: "The busy, low-latency regime where the ISS and most Earth-observation and broadband satellites fly." },
+          { title: "Geostationary orbit", href: "/satellites/orbit/geo", blurb: "Why parking a satellite over the equator makes it appear fixed in the sky." },
+          { title: "The first satellites", href: "/satellites/discover/satellite-firsts", blurb: "Explorer 1, Vanguard 1, TIROS-1, Telstar, and the milestones that opened the space age." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Communications satellites", href: "/satellites/discover/communications", blurb: "From the first transatlantic relay to today's broadband constellations." },
+          { title: "Navigation systems", href: "/satellites/discover/navigation", blurb: "How GPS, Galileo, GLONASS, and BeiDou fix your position from medium Earth orbit." },
+          { title: "Watching the Earth", href: "/satellites/discover/earth-observation", blurb: "Landsat, the Sentinels, Terra, and Aqua — the satellites that map a changing planet." },
+          { title: "Weather from orbit", href: "/satellites/discover/weather", blurb: "The geostationary and polar satellites behind every modern forecast." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Satellite constellations", href: "/satellites/discover/constellations", blurb: "Why some jobs need dozens or thousands of coordinated satellites instead of one." },
+          { title: "Scientific satellites", href: "/satellites/discover/science", blurb: "Measuring gravity, ice, soil moisture, and clouds to understand the Earth system." },
+          { title: "Who operates satellites", href: "/satellites/operator/nasa", blurb: "The agencies, civil bodies, and companies that build, launch, and run the fleets." },
+          { title: "Seeing satellites tonight", href: "/sky/night-sky-tonight", blurb: "Use the computed Live Sky dashboard for what is genuinely overhead — this encyclopedia states no pass times." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["satellite:landsat-8", "satellite_constellation:starlink", "satellite_constellation:gps", "orbit_type:leo"],
+    next: ["understanding-launch-vehicles", "observing-the-night-sky"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

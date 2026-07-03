@@ -167,6 +167,15 @@ export function GET(): Response {
   lines.push(`- Every constellation resolves through the Scientific Data Engine; pages at /constellations/{slug}, with family/season/region and discover sub-hubs.`);
   lines.push("");
 
+  lines.push("## Satellite Encyclopedia");
+  lines.push(
+    `${engine.satellites.count} individual artificial satellites plus ${engine.satellites.constellations().length} constellations, ${engine.satellites.orbits().length} orbit types, ${engine.satellites.operators().length} operators, and ${engine.satellites.networks().length} tracking networks as first-class knowledge-graph entities (engine.satellites) — spanning communications, navigation, Earth observation, weather, and science. Agencies, launch vehicles, and launch sites are the platform's existing source-backed entities — reused, never duplicated. Specifications, launch dates, operators, and orbital parameters are never fabricated; unknown values are left blank. No real-time tracking is performed and no pass times are stated — the computed Live Sky tools are linked instead.`,
+  );
+  lines.push(`- [Satellites](${absoluteUrl("/satellites")})`);
+  lines.push(`- All satellites: ${absoluteUrl("/satellites/discover/all-satellites")} · Constellations: ${absoluteUrl("/satellites/discover/constellations")} · Earth observation: ${absoluteUrl("/satellites/discover/earth-observation")} · Orbits: ${absoluteUrl("/satellites/orbit/leo")}`);
+  lines.push(`- Every satellite, constellation, orbit type, operator, and tracking network resolves through the Scientific Data Engine; pages at /satellites/{slug}, /satellites/constellation/{slug}, /satellites/orbit/{slug}, /satellites/operator/{slug}, and /satellites/network/{slug}.`);
+  lines.push("");
+
   lines.push("## Space Stations & Human Spaceflight");
   lines.push(
     `How humans live and work in space: ${engine.humanSpaceflight.byKind("station").length} space stations (ISS, Mir, Skylab, Salyut, Tiangong, and planned stations) plus crewed and cargo spacecraft, ISS modules, expeditions, spacewalks, programs, and astronauts — ${engine.humanSpaceflight.count} interconnected entities. Curated from NASA, ESA, Roscosmos, JAXA, CSA, and Smithsonian sources. No fabricated crew, dates, EVAs, or modules; planned stations are clearly marked.`,

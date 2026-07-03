@@ -215,6 +215,25 @@ async function main() {
     `✓ Constellations valid — all ${constellations.CONSTELLATIONS_STATS.constellations} IAU constellations (${constellations.CONSTELLATIONS_STATS.withArea} with official area, ${constellations.CONSTELLATIONS_STATS.zodiac} zodiac), ${constellations.CONSTELLATIONS_STATS.families} families, ${constellations.CONSTELLATIONS_STATS.asterisms} asterisms, ${constellations.CONSTELLATIONS_STATS.seasons} seasonal skies · ${constellations.CONSTELLATIONS_STATS.newEntities} new entities, ${constellations.CONSTELLATIONS_STATS.relations} relations (reused stars/objects/showers; no fabricated data)`,
   );
 
+  const satellites = await import("../src/knowledge-graph/data/satellites-catalog");
+  const satelliteIssues = satellites.validateSatellites();
+  // Cross-reference resolution: every relation endpoint the catalog emits must
+  // resolve to a real graph entity (this runs in the gate, where the assembled
+  // graph is available) — catches reused rockets/sites/agencies that don't exist.
+  const { getEntityById: getSatEnt } = await import("../src/knowledge-graph");
+  for (const r of satellites.relations) {
+    if (!getSatEnt(r.from)) satelliteIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getSatEnt(r.to)) satelliteIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (satelliteIssues.length > 0) {
+    console.error(`\n✗ ${satelliteIssues.length} satellite issue(s):`);
+    for (const i of satelliteIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Satellites valid — ${satellites.SATELLITES_STATS.satellites} satellites, ${satellites.SATELLITES_STATS.constellations} constellations, ${satellites.SATELLITES_STATS.orbits} orbit types, ${satellites.SATELLITES_STATS.operators} operators, ${satellites.SATELLITES_STATS.networks} tracking networks · ${satellites.SATELLITES_STATS.newEntities} new entities, ${satellites.SATELLITES_STATS.relations} relations (reused agencies/rockets/sites; no fabricated specs)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

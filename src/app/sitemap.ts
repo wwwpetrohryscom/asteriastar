@@ -15,6 +15,7 @@ import { DEEP_SKY_DISCOVERIES } from "@/app/deep-sky/discovery";
 import { EXPLORATION_DISCOVERIES } from "@/app/exploration/discovery";
 import { ROCKET_DISCOVERIES } from "@/app/rockets/discovery";
 import { CONSTELLATION_DISCOVERIES } from "@/app/constellations/discovery";
+import { SATELLITE_DISCOVERIES } from "@/app/satellites/discovery";
 import { HSF_DISCOVERIES } from "@/app/human-spaceflight/discovery";
 import { OBS_DISCOVERIES } from "@/app/observatories/discovery";
 import { EXO_DISCOVERIES } from "@/app/exoplanets/discovery";
@@ -67,6 +68,12 @@ import {
   constellationSeasonPath,
   constellationRegionPath,
   constellationAsterismPath,
+  satellitePath,
+  satelliteDiscoveryPath,
+  satelliteConstellationPath,
+  satelliteOperatorPath,
+  satelliteOrbitPath,
+  satelliteNetworkPath,
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
@@ -222,6 +229,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...(["northern", "southern", "equatorial"] as const).map((r) => ({ url: absoluteUrl(constellationRegionPath(r)), changeFrequency: "monthly" as const, priority: 0.5 })),
   ];
 
+  const satelliteRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.satellites), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.satellites.satellites().map((s) => ({ url: absoluteUrl(satellitePath(s.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...engine.satellites.constellations().map((c) => ({ url: absoluteUrl(satelliteConstellationPath(c.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...engine.satellites.orbits().map((o) => ({ url: absoluteUrl(satelliteOrbitPath(o.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...engine.satellites.operators().map((o) => ({ url: absoluteUrl(satelliteOperatorPath(o.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...engine.satellites.networks().map((n) => ({ url: absoluteUrl(satelliteNetworkPath(n.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...SATELLITE_DISCOVERIES.map((d) => ({ url: absoluteUrl(satelliteDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const deepSkyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
     ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -261,6 +278,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...explorationRoutes,
     ...rocketRoutes,
     ...constellationRoutes,
+    ...satelliteRoutes,
     ...hsfRoutes,
     ...obsRoutes,
     ...exoRoutes,

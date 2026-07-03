@@ -116,6 +116,10 @@ automatically.
 
 - [Rockets & Launch Vehicles](docs/ROCKETS.md) — launch vehicles, rocket families, booster/upper stages, engines, propellants, launch providers, programs, and pads, source-backed with unknown specifications left blank (never invented)
 
+**Satellite Encyclopedia (Program X)**
+
+- [Satellites](docs/SATELLITES.md) — artificial satellites, satellite constellations, orbit types, operators, and tracking networks as first-class graph entities, reusing existing agencies, rockets, and launch sites (no real-time tracking; unknown specifications left blank, never invented)
+
 **Solar System Encyclopedia (Program B)**
 
 - [Solar System](docs/SOLAR_SYSTEM.md) — the Sun, planets, moons, asteroids, comets, missions, and spacecraft from real NASA/JPL data
