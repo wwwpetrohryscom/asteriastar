@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Constellation Encyclopedia (Program W)**
+
+- [Constellations](docs/CONSTELLATIONS.md) — all 88 IAU constellations as first-class graph entities, connected to their stars, deep-sky objects, exoplanets, meteor showers, mythology, families, and seasonal sky (reuses existing entities; no fabricated data)
+
 **Rockets & Launch Vehicles Encyclopedia (Program V)**
 
 - [Rockets & Launch Vehicles](docs/ROCKETS.md) — launch vehicles, rocket families, booster/upper stages, engines, propellants, launch providers, programs, and pads, source-backed with unknown specifications left blank (never invented)

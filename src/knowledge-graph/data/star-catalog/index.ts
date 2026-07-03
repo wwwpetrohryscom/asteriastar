@@ -88,7 +88,7 @@ const constellationEntities: GraphEntity[] = CONSTELLATIONS.filter(
   type: "constellation",
   name: c.name,
   domain: "science",
-  entryPath: `/stars/constellations/${c.slug}`,
+  entryPath: `/constellations/${c.slug}`,
   description: `The constellation ${c.name} (${c.genitive}) — ${STARS_BY_CONSTELLATION.get(`constellation:${c.slug}`)?.length ?? 0} catalogued stars in this encyclopedia.`,
   sources: ["iau"],
 }));

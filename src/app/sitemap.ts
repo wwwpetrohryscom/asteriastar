@@ -14,13 +14,13 @@ import { SOLAR_DISCOVERIES } from "@/app/solar-system/discovery";
 import { DEEP_SKY_DISCOVERIES } from "@/app/deep-sky/discovery";
 import { EXPLORATION_DISCOVERIES } from "@/app/exploration/discovery";
 import { ROCKET_DISCOVERIES } from "@/app/rockets/discovery";
+import { CONSTELLATION_DISCOVERIES } from "@/app/constellations/discovery";
 import { HSF_DISCOVERIES } from "@/app/human-spaceflight/discovery";
 import { OBS_DISCOVERIES } from "@/app/observatories/discovery";
 import { EXO_DISCOVERIES } from "@/app/exoplanets/discovery";
 import { HISTORY_DISCOVERIES } from "@/app/history/discovery";
 import { COSMO_DISCOVERIES } from "@/app/cosmology/discovery";
 import { bodySlug } from "@/knowledge-graph/data/solar-system-catalog";
-import { CONSTELLATIONS } from "@/knowledge-graph/data/star-catalog/constellations";
 import {
   absoluteUrl,
   categoryPath,
@@ -34,7 +34,6 @@ import {
   transparencyPath,
   starPath,
   starDiscoveryPath,
-  constellationStarsPath,
   starCategoryPath,
   solarBodyPath,
   solarDiscoveryPath,
@@ -62,6 +61,12 @@ import {
   contributePath,
   rocketPath,
   rocketDiscoveryPath,
+  constellationPath,
+  constellationDiscoveryPath,
+  constellationFamilyPath,
+  constellationSeasonPath,
+  constellationRegionPath,
+  constellationAsterismPath,
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
@@ -133,7 +138,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl(ROUTES.stars), changeFrequency: "weekly", priority: 0.8 },
     ...engine.star.all().map((s) => ({ url: absoluteUrl(starPath(s.slug)), changeFrequency: "yearly" as const, priority: 0.5 })),
     ...STAR_DISCOVERIES.map((d) => ({ url: absoluteUrl(starDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
-    ...CONSTELLATIONS.map((c) => ({ url: absoluteUrl(constellationStarsPath(c.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    // Per-constellation star-list pages canonicalize to /constellations/{slug} (Program W), so they are not listed here.
     ...engine.star.categories().map((c) => ({ url: absoluteUrl(starCategoryPath(c.category)), changeFrequency: "monthly" as const, priority: 0.5 })),
   ];
 
@@ -207,6 +212,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...ROCKET_DISCOVERIES.map((d) => ({ url: absoluteUrl(rocketDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const constellationRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.constellations), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.constellations.all().map((c) => ({ url: absoluteUrl(constellationPath(c.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...CONSTELLATION_DISCOVERIES.map((d) => ({ url: absoluteUrl(constellationDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...engine.constellations.families().map((f) => ({ url: absoluteUrl(constellationFamilyPath(f.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...engine.constellations.seasons().map((s) => ({ url: absoluteUrl(constellationSeasonPath(s.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...engine.constellations.asterisms().map((a) => ({ url: absoluteUrl(constellationAsterismPath(a.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...(["northern", "southern", "equatorial"] as const).map((r) => ({ url: absoluteUrl(constellationRegionPath(r)), changeFrequency: "monthly" as const, priority: 0.5 })),
+  ];
+
   const deepSkyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
     ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -245,6 +260,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...deepSkyRoutes,
     ...explorationRoutes,
     ...rocketRoutes,
+    ...constellationRoutes,
     ...hsfRoutes,
     ...obsRoutes,
     ...exoRoutes,

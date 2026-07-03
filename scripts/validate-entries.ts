@@ -198,6 +198,23 @@ async function main() {
     `✓ Rockets & Launch Vehicles valid — ${rockets.ROCKETS_STATS.records} records, ${rockets.ROCKETS_STATS.newEntities} new entities, ${rockets.ROCKETS_STATS.launchVehicles} launch vehicles, ${rockets.ROCKETS_STATS.families} families, ${rockets.ROCKETS_STATS.engines} engines, ${rockets.ROCKETS_STATS.relations} relations (no fabricated specs)`,
   );
 
+  const constellations = await import("../src/knowledge-graph/data/constellations-catalog");
+  const constellationIssues = constellations.validateConstellations();
+  // Object/star resolution: every curated brightest-star id must resolve to a real
+  // graph entity (this runs in the gate, where the assembled graph is available).
+  const { getEntityById: getEnt } = await import("../src/knowledge-graph");
+  for (const c of constellations.CONSTELLATION_RECORDS) {
+    if (c.brightestStarId && !getEnt(c.brightestStarId)) constellationIssues.push(`${c.id}: brightestStarId does not resolve: ${c.brightestStarId}`);
+  }
+  if (constellationIssues.length > 0) {
+    console.error(`\n✗ ${constellationIssues.length} constellation issue(s):`);
+    for (const i of constellationIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Constellations valid — all ${constellations.CONSTELLATIONS_STATS.constellations} IAU constellations (${constellations.CONSTELLATIONS_STATS.withArea} with official area, ${constellations.CONSTELLATIONS_STATS.zodiac} zodiac), ${constellations.CONSTELLATIONS_STATS.families} families, ${constellations.CONSTELLATIONS_STATS.asterisms} asterisms, ${constellations.CONSTELLATIONS_STATS.seasons} seasonal skies · ${constellations.CONSTELLATIONS_STATS.newEntities} new entities, ${constellations.CONSTELLATIONS_STATS.relations} relations (reused stars/objects/showers; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

@@ -119,7 +119,7 @@ export function GET(): Response {
   );
   lines.push(`- [Star Encyclopedia](${absoluteUrl("/stars")})`);
   lines.push(`- Brightest: ${absoluteUrl("/stars/discover/brightest")} · Nearest: ${absoluteUrl("/stars/discover/nearest")} · Variable: ${absoluteUrl("/stars/discover/variable")}`);
-  lines.push(`- Every star resolves through the Scientific Data Engine; pages at /stars/{slug}, /stars/constellations/{slug}, /stars/type/{slug}.`);
+  lines.push(`- Every star resolves through the Scientific Data Engine; pages at /stars/{slug} and /stars/type/{slug}. Full constellation entries live at /constellations/{slug}.`);
   lines.push("");
 
   lines.push("## Solar System Encyclopedia");
@@ -156,6 +156,15 @@ export function GET(): Response {
   lines.push(`- [Rockets & Launch Vehicles](${absoluteUrl("/rockets")})`);
   lines.push(`- Launch vehicles: ${absoluteUrl("/rockets/discover/all-launch-vehicles")} · Engines: ${absoluteUrl("/rockets/discover/rocket-engines")} · Families: ${absoluteUrl("/rockets/discover/rocket-families")} · Providers: ${absoluteUrl("/rockets/discover/launch-providers")}`);
   lines.push(`- Every rocket, engine, stage, and propellant resolves through the Scientific Data Engine; pages at /rockets/{slug}.`);
+  lines.push("");
+
+  lines.push("## Constellation Encyclopedia");
+  lines.push(
+    `All ${engine.constellations.count} official IAU constellations as first-class knowledge-graph entities (engine.constellations), each connected to its brightest stars, deep-sky objects, exoplanet hosts, meteor-shower radiants, mythology, family, and seasonal visibility. Boundaries, areas, and designations follow the International Astronomical Union; stars, deep-sky objects, exoplanets, and meteor showers are the platform's existing source-backed entities — reused, never duplicated. Unknown values are left blank; constellation visibility is not fabricated (the computed Live Sky tools are linked instead).`,
+  );
+  lines.push(`- [Constellations](${absoluteUrl("/constellations")})`);
+  lines.push(`- All 88: ${absoluteUrl("/constellations/discover/all-constellations")} · Zodiac: ${absoluteUrl("/constellations/discover/zodiac")} · Families: ${absoluteUrl("/constellations/family/zodiacal")} · Seasonal sky: ${absoluteUrl("/constellations/season/winter")}`);
+  lines.push(`- Every constellation resolves through the Scientific Data Engine; pages at /constellations/{slug}, with family/season/region and discover sub-hubs.`);
   lines.push("");
 
   lines.push("## Space Stations & Human Spaceflight");
