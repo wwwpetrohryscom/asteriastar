@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Meteors, Meteorites & Fireballs Encyclopedia (Program AA)**
+
+- [Meteorites](docs/METEORITES.md) — meteorites, their classes and groups, fireballs and bolides, terrestrial impact structures, and recovery sites, traced to their parent bodies (Vesta, Mars, the Moon) — the capstone of the small-bodies trilogy (reuses existing asteroids, impact events, and meteor showers; no fabricated data)
+
 **Comets & Small-Body Reservoirs Encyclopedia (Program Z)**
 
 - [Comets](docs/COMETS.md) — comets, dynamical classes, genetic families, the Oort cloud and (reused) trans-Neptunian reservoirs, comet missions, and the meteor-shower parent bodies, plus active-asteroid/dormant-comet transition objects (reuses existing comets, meteor showers, missions, and Program Y's reservoirs; no fabricated data)
