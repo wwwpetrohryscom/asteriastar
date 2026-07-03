@@ -179,6 +179,20 @@ export const ENDPOINTS: EndpointDef[] = [
     returns: "SunData & { envelope }",
   },
   {
+    id: "live-sky-planets", group: "live-sky", method: "GET", path: "/api/v0/live-sky/planets",
+    summary: "Planet visibility & rise/set", status: "implemented",
+    description: "Computed, location-aware visibility for the naked-eye planets (Mercury–Saturn; Uranus/Neptune via ?planet): rise, set, transit, topocentric position, approximate magnitude, and conservative honest observing rules (method: computed — not a live provider feed). Positions use the public-domain NASA/JPL approximate planetary elements. Location is only ever what you pass in — never inferred, geolocated, or stored.",
+    params: [
+      { name: "latitude", in: "query", required: true, type: "string", description: "Observer latitude as a decimal number, −90 to 90.", example: "50.08" },
+      { name: "longitude", in: "query", required: true, type: "string", description: "Observer longitude as a decimal number, −180 to 180.", example: "14.44" },
+      { name: "date", in: "query", required: false, type: "string", description: "Civil date (YYYY-MM-DD). Defaults to today.", example: "2025-06-21" },
+      { name: "timezone", in: "query", required: false, type: "string", description: "IANA timezone id for local times (e.g. Europe/Prague). Defaults to UTC.", example: "Europe/Prague" },
+      { name: "planet", in: "query", required: false, type: "string", description: "One planet (mercury|venus|mars|jupiter|saturn|uranus|neptune). Default is the five naked-eye planets.", example: "jupiter" },
+    ],
+    example: "/api/v0/live-sky/planets?latitude=50.08&longitude=14.44&timezone=Europe/Prague",
+    returns: "PlanetVisibilityData & { envelope }",
+  },
+  {
     id: "openapi", group: "meta", method: "GET", path: "/api/v0/openapi.json",
     summary: "OpenAPI document", status: "implemented",
     description: "The OpenAPI 3.1 description of every implemented endpoint. Planned endpoints are intentionally absent from the spec.",
