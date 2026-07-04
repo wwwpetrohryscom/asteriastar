@@ -1031,6 +1031,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["tracking_network:deep-space-network", "tracking_station:goldstone", "signal_band:x-band", "navigation_system:radiometric-navigation"],
     next: ["understanding-small-body-missions", "understanding-satellites"],
   },
+  {
+    slug: "understanding-space-environment",
+    title: "Understanding the Space Environment",
+    description: "The hazards of space — the Sun's storms, the radiation of the Solar System and galaxy, and the debris and plasma that threaten spacecraft and astronauts — and the missions that watch for them. Built on real NASA and NOAA data; this encyclopedia states no live conditions and nothing is fabricated.",
+    accent: "ember",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "What is space weather?", href: "/space-environment", blurb: "Space is not empty — it is full of radiation, plasma, and debris." },
+          { title: "The solar wind", href: "/space-environment/solar-wind", blurb: "The Sun's constant outflow that fills the Solar System." },
+          { title: "Solar flares and CMEs", href: "/space-environment/coronal-mass-ejection", blurb: "The eruptions that drive the biggest storms at Earth." },
+          { title: "Geomagnetic storms and auroras", href: "/space-environment/geomagnetic-storm", blurb: "How solar eruptions disturb Earth's magnetic field." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "The magnetosphere", href: "/space-environment/magnetosphere", blurb: "The magnetic shield that deflects the solar wind." },
+          { title: "The Van Allen belts", href: "/space-environment/van-allen-belts", blurb: "The doughnuts of trapped radiation around Earth." },
+          { title: "Cosmic rays", href: "/space-environment/galactic-cosmic-rays", blurb: "High-energy particles from the Sun and the galaxy." },
+          { title: "Measuring space weather", href: "/space-environment/kp-index", blurb: "The Kp, Dst, and NOAA scales that quantify the storms." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Orbital debris", href: "/space-environment/orbital-debris", blurb: "The growing hazard of human-made junk in Earth orbit." },
+          { title: "Spacecraft charging", href: "/space-environment/spacecraft-charging", blurb: "How the plasma environment can zap electronics." },
+          { title: "Radiation on the way to Mars", href: "/space-environment/discover/radiation", blurb: "The dominant risk for long-duration human missions." },
+          { title: "The heliosphere and its edge", href: "/space-environment/heliopause", blurb: "The Sun's bubble, and the boundary the Voyagers crossed." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["space_weather_phenomenon:solar-wind", "space_weather_phenomenon:geomagnetic-storm", "radiation_environment:van-allen-belts", "geomagnetic_index:kp-index"],
+    next: ["understanding-deep-space-communications", "the-solar-system"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

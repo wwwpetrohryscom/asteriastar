@@ -1,6 +1,6 @@
 # Scientific Data Engine
 
-Phase 10 introduces the **Scientific Data Engine** — the execution layer of
+Phase 10 introduces the **Scientific Data Engine** â the execution layer of
 Asteria Star ([`src/platform/data-engine/`](../src/platform/data-engine)). The
 website is only one consumer; mobile, desktop, a public API, an SDK, AI
 assistants, research and educational tools, and planetarium software all read
@@ -15,46 +15,47 @@ const moons = engine.query.run("moons-of-jupiter");
 
 ## Principles
 
-- **Pure & deterministic** — same input, same output; BFS in stable order.
-- **Composable & cacheable** — small modules; entity resolution is memoized.
-- **Framework-independent** — no React, no Next.js, no UI imports (enforced by
+- **Pure & deterministic** â same input, same output; BFS in stable order.
+- **Composable & cacheable** â small modules; entity resolution is memoized.
+- **Framework-independent** â no React, no Next.js, no UI imports (enforced by
   `npm run check:arch`). Future CLI- and API-compatible.
-- **No duplicated logic** — facade engines delegate to the existing subsystems;
+- **No duplicated logic** â facade engines delegate to the existing subsystems;
   only the traversal and query engines add new logic.
 
 ## Modules
 
-| Engine | Responsibility | Input → Output |
+| Engine | Responsibility | Input â Output |
 | --- | --- | --- |
-| `entity` | Resolve everything about an entity | id → `ResolvedEntity` (identity, metadata, relationships, sources, evidence, quality, timeline, images, datasets, learning, recommendations, localization, authority) |
-| `relationship` | Typed relation access | id → `Connection[]` / grouped / by type / by domain |
-| `traversal` | Walk the graph (NEW) | startId + options → `TraversalResult` (nodes, edges, paths) |
-| `query` | Graph-derived scientific queries (NEW) | query id → `QueryResult` (entities, count, derivation) |
-| `recommendation` | Graph-derived suggestions | id → `Recommendation[]` / shared-via / same-type |
-| `timeline` | Curated chronologies | slug/path → `Timeline[]` |
-| `comparison` | Rule-produced comparisons | slug → `Comparison` + resolved sides |
-| `learning` | Structured learning (no AI) | topic/level → `LearningPath[]` / sequence |
-| `discovery` | Topics + exploration paths | startId → `TraversalNode[]` |
-| `metadata` | All metadata facets | `RuntimeEntity` → `EntityMetadata` |
-| `source` | Source registry access | key(s) → `Source[]` |
-| `citation` | Citation formatting | `Citation` + style → text |
-| `dataset` | Dataset views & exports | slug → JSON / CSV |
-| `authority` | Evidence/review/quality/version/provenance | id → authority data |
-| `localization` | Localized text (id never localized) | id + locale → `LocalizedEntity` |
-| `star` | Star encyclopedia resolver & queries | slug → `ResolvedStar`; brightest / nearest / by-constellation / by-type / visibility |
-| `solar` | Solar System resolver & queries | slug → `ResolvedBody`; planets / moons / missions / by-kind |
-| `launchVehicles` | Rockets & launch vehicles resolver & queries | slug → `ResolvedLaunchVehicle`; vehicles / families / engines / stages / propellants / providers / pads (see [ROCKETS.md](./ROCKETS.md)) |
-| `constellations` | Constellation encyclopedia resolver & queries | slug → `ResolvedConstellation`; stars / deep-sky / exoplanets / meteor radiants / neighbours / family / season (see [CONSTELLATIONS.md](./CONSTELLATIONS.md)) |
-| `satellites` | Satellite encyclopedia resolver & queries | slug → `ResolvedSatellite`; satellites / constellations / orbits / operators / networks; by category / orbit / operator (see [SATELLITES.md](./SATELLITES.md)) |
-| `asteroids` | Asteroids & minor planets resolver & queries | slug → `ResolvedAsteroid`; families / groups / near-Earth classes / Trojans / resonances / impacts / planetary defense (see [ASTEROIDS.md](./ASTEROIDS.md)) |
-| `comets` | Comets & small-body reservoirs resolver & queries | slug → `ResolvedComet`; classes / families / reservoirs / meteor-shower parents / mission targets / transition objects (see [COMETS.md](./COMETS.md)) |
-| `meteorites` | Meteorites, fireballs & impact structures resolver & queries | slug → `ResolvedMeteorite`; classes / groups / falls / finds / martian / lunar / iron / fireballs / impact structures (see [METEORITES.md](./METEORITES.md)) |
-| `interstellarObjects` | Interstellar & hyperbolic objects resolver & queries | slug → `ResolvedInterstellar`; confirmed / candidate / debated / hyperbolic comets / detection methods / trajectory classes / detection surveys — confirmed and candidate kept strictly separate (see [INTERSTELLAR_OBJECTS.md](./INTERSTELLAR_OBJECTS.md)) |
-| `smallBodyMissions` | Small-body missions & sample return resolver & queries | slug → `ResolvedMission`; sample-return / comet / asteroid / planetary-defense / active / completed / future missions / returned samples / mission classes / timeline — reuses existing space missions (enriched, not duplicated); planned missions assert no past-tense outcomes (see [SMALL_BODY_MISSIONS.md](./SMALL_BODY_MISSIONS.md)) |
-| `deepSpaceCommunications` | Deep-space communication & navigation infrastructure resolver & queries | slug → `ResolvedDSNetwork` / `ResolvedStation` / `ResolvedInfra`; networks / tracking + ground stations / antennas / signal bands / navigation / laser comms / mission support — reuses the DSN, Estrack & Near Space Network (enriched, not duplicated); signal light-time is real physics, never a fixed delay (see [DEEP_SPACE_COMMUNICATIONS.md](./DEEP_SPACE_COMMUNICATIONS.md)) |
-| `validation` | The single validator | () → `ValidationReport[]` |
+| `entity` | Resolve everything about an entity | id â `ResolvedEntity` (identity, metadata, relationships, sources, evidence, quality, timeline, images, datasets, learning, recommendations, localization, authority) |
+| `relationship` | Typed relation access | id â `Connection[]` / grouped / by type / by domain |
+| `traversal` | Walk the graph (NEW) | startId + options â `TraversalResult` (nodes, edges, paths) |
+| `query` | Graph-derived scientific queries (NEW) | query id â `QueryResult` (entities, count, derivation) |
+| `recommendation` | Graph-derived suggestions | id â `Recommendation[]` / shared-via / same-type |
+| `timeline` | Curated chronologies | slug/path â `Timeline[]` |
+| `comparison` | Rule-produced comparisons | slug â `Comparison` + resolved sides |
+| `learning` | Structured learning (no AI) | topic/level â `LearningPath[]` / sequence |
+| `discovery` | Topics + exploration paths | startId â `TraversalNode[]` |
+| `metadata` | All metadata facets | `RuntimeEntity` â `EntityMetadata` |
+| `source` | Source registry access | key(s) â `Source[]` |
+| `citation` | Citation formatting | `Citation` + style â text |
+| `dataset` | Dataset views & exports | slug â JSON / CSV |
+| `authority` | Evidence/review/quality/version/provenance | id â authority data |
+| `localization` | Localized text (id never localized) | id + locale â `LocalizedEntity` |
+| `star` | Star encyclopedia resolver & queries | slug â `ResolvedStar`; brightest / nearest / by-constellation / by-type / visibility |
+| `solar` | Solar System resolver & queries | slug â `ResolvedBody`; planets / moons / missions / by-kind |
+| `launchVehicles` | Rockets & launch vehicles resolver & queries | slug â `ResolvedLaunchVehicle`; vehicles / families / engines / stages / propellants / providers / pads (see [ROCKETS.md](./ROCKETS.md)) |
+| `constellations` | Constellation encyclopedia resolver & queries | slug â `ResolvedConstellation`; stars / deep-sky / exoplanets / meteor radiants / neighbours / family / season (see [CONSTELLATIONS.md](./CONSTELLATIONS.md)) |
+| `satellites` | Satellite encyclopedia resolver & queries | slug â `ResolvedSatellite`; satellites / constellations / orbits / operators / networks; by category / orbit / operator (see [SATELLITES.md](./SATELLITES.md)) |
+| `asteroids` | Asteroids & minor planets resolver & queries | slug â `ResolvedAsteroid`; families / groups / near-Earth classes / Trojans / resonances / impacts / planetary defense (see [ASTEROIDS.md](./ASTEROIDS.md)) |
+| `comets` | Comets & small-body reservoirs resolver & queries | slug â `ResolvedComet`; classes / families / reservoirs / meteor-shower parents / mission targets / transition objects (see [COMETS.md](./COMETS.md)) |
+| `meteorites` | Meteorites, fireballs & impact structures resolver & queries | slug â `ResolvedMeteorite`; classes / groups / falls / finds / martian / lunar / iron / fireballs / impact structures (see [METEORITES.md](./METEORITES.md)) |
+| `interstellarObjects` | Interstellar & hyperbolic objects resolver & queries | slug â `ResolvedInterstellar`; confirmed / candidate / debated / hyperbolic comets / detection methods / trajectory classes / detection surveys â confirmed and candidate kept strictly separate (see [INTERSTELLAR_OBJECTS.md](./INTERSTELLAR_OBJECTS.md)) |
+| `smallBodyMissions` | Small-body missions & sample return resolver & queries | slug â `ResolvedMission`; sample-return / comet / asteroid / planetary-defense / active / completed / future missions / returned samples / mission classes / timeline â reuses existing space missions (enriched, not duplicated); planned missions assert no past-tense outcomes (see [SMALL_BODY_MISSIONS.md](./SMALL_BODY_MISSIONS.md)) |
+| `deepSpaceCommunications` | Deep-space communication & navigation infrastructure resolver & queries | slug â `ResolvedDSNetwork` / `ResolvedStation` / `ResolvedInfra`; networks / tracking + ground stations / antennas / signal bands / navigation / laser comms / mission support â reuses the DSN, Estrack & Near Space Network (enriched, not duplicated); signal light-time is real physics, never a fixed delay (see [DEEP_SPACE_COMMUNICATIONS.md](./DEEP_SPACE_COMMUNICATIONS.md)) |
+| `spaceEnvironment` | Space environment & hazards resolver & queries | slug → `ResolvedEnv`; space-weather phenomena / radiation environments / hazards / indices / monitors — reuses the Sun, planets, and solar missions; states no live conditions (see [SPACE_ENVIRONMENT.md](./SPACE_ENVIRONMENT.md)) |
+| `validation` | The single validator | () â `ValidationReport[]` |
 
-The `star` engine powers the [Star Encyclopedia](./STAR_ENCYCLOPEDIA.md) — it
+The `star` engine powers the [Star Encyclopedia](./STAR_ENCYCLOPEDIA.md) â it
 resolves stars from the typed catalogue with lightweight, index-driven lookups so
 it scales across thousands of pages.
 
@@ -62,20 +63,20 @@ it scales across thousands of pages.
 
 ```
 UI / API / CLI consumers
-        │  (only)
-        ▼
-   data-engine  ──delegates──▶ runtime · metadata · authority · localization
-        │                      lib/{datasets,sources,citations,compare,learn,
-        ▼                            timelines,discovery,media}
+        â  (only)
+        â¼
+   data-engine  ââdelegatesâââ¶ runtime Â· metadata Â· authority Â· localization
+        â                      lib/{datasets,sources,citations,compare,learn,
+        â¼                            timelines,discovery,media}
    knowledge-graph (entities + relations)
-        ▼
+        â¼
    lib/sources (leaf)
 ```
 
 The engine sits in the **Registry layer**; it may depend on Graph, Knowledge,
-Explorer, Data, and Source — never on Presentation. Acyclic and enforced.
+Explorer, Data, and Source â never on Presentation. Acyclic and enforced.
 
-## Entity Resolver — example
+## Entity Resolver â example
 
 ```ts
 const e = engine.entity.resolve("planet:mars");
@@ -86,7 +87,7 @@ e.reviewStatus;      // "unreviewed"
 e.evidenceLevels;    // ["high","moderate","limited","historical","unknown"]
 ```
 
-## Graph Traversal — example
+## Graph Traversal â example
 
 ```ts
 engine.traversal.traverse("space_telescope:james-webb-space-telescope", {
@@ -94,14 +95,14 @@ engine.traversal.traverse("space_telescope:james-webb-space-telescope", {
 });
 // nodes reach NASA/ESA/CSA and the nebulae JWST studies, then Hubble at depth 2.
 engine.traversal.path("space_telescope:james-webb-space-telescope", "planet:mars");
-// JWST → NASA → Mars Science Laboratory → Mars
+// JWST â NASA â Mars Science Laboratory â Mars
 ```
 
 Options: `maxDepth`, `maxNodes`, `relationTypes`, `domain`
 (`scientific` | `interpretive` | `mixed`). Cycle protection via a visited set;
 `maxNodes` caps the walk (`truncated: true`).
 
-## Scientific Query — honesty
+## Scientific Query â honesty
 
 Queries are derived from the live graph (no hardcoded lists). Queries that would
 require measurement data the graph does not hold (brightness, distance, size,
@@ -109,16 +110,16 @@ rings, nationality) are declared in `UNSUPPORTED_QUERIES` rather than fabricated
 
 ## Extension points
 
-- **New query** — add a `ScientificQuery` to `QUERIES` (a `run()` that reads the
+- **New query** â add a `ScientificQuery` to `QUERIES` (a `run()` that reads the
   graph). Validated for unique ids and runnability.
-- **New facade** — wrap a subsystem in a new `*-engine.ts` and add it to the
+- **New facade** â wrap a subsystem in a new `*-engine.ts` and add it to the
   `engine` object in `index.ts`.
 - Plugins register via the platform [extension points](./EXTENSIONS.md).
 
 ## Failure modes
 
-- Unknown id → resolvers/queries return `null` (never throw).
-- Traversal from an unknown start → `null`; cycles are bounded by the visited set
+- Unknown id â resolvers/queries return `null` (never throw).
+- Traversal from an unknown start â `null`; cycles are bounded by the visited set
   and `maxNodes`.
 - The validation engine returns issue lists; it never throws on data problems.
 
@@ -126,7 +127,7 @@ rings, nationality) are declared in `UNSUPPORTED_QUERIES` rather than fabricated
 
 - Entity resolution is memoized by `id@locale` (results are immutable).
 - Traversal/query are O(edges visited); `maxNodes`/`maxDepth` bound the cost.
-- The authority snapshot resolves quality for all entities — fine at build scale;
+- The authority snapshot resolves quality for all entities â fine at build scale;
   memoize if the graph grows much larger.
 
 See [PLATFORM_ARCHITECTURE.md](./PLATFORM_ARCHITECTURE.md) and

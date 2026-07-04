@@ -153,6 +153,12 @@ export const ENTITY_TYPES = [
   "navigation_system",
   "time_standard",
   "communication_system",
+  // Space Environment & Hazards (Program AE). Reuses the Sun, planets, moons, solar
+  // missions, and NOAA/NASA; these are the genuinely-new hazard-layer types.
+  "space_weather_phenomenon",
+  "radiation_environment",
+  "space_hazard",
+  "geomagnetic_index",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -324,6 +330,9 @@ export const RELATION_TYPES = [
   // mission and operating in a communication band have no existing equivalent.
   "tracks",
   "uses_band",
+  // Space Environment & Hazards (Program AE). Reuse observed_by (monitoring), associated_with,
+  // and part_of; only a hazard affecting a body/mission has no existing equivalent.
+  "affects",
 ] as const;
 export type RelationType = (typeof RELATION_TYPES)[number];
 
@@ -512,6 +521,7 @@ export const SCIENCE_ONLY_RELATIONS: ReadonlySet<RelationType> = new Set([
   "collected_sample",
   "tracks",
   "uses_band",
+  "affects",
 ]);
 
 /** Relation types that may ONLY be used in the astrology domain. */
@@ -693,6 +703,7 @@ export const RELATION_LABELS: Record<RelationType, string> = {
   collected_sample: "Collected sample",
   tracks: "Tracks",
   uses_band: "Uses band",
+  affects: "Affects",
 };
 
 /** Labels for when the current entity is the *target* (incoming relation). */
@@ -842,6 +853,7 @@ export const INVERSE_RELATION_LABELS: Record<RelationType, string> = {
   collected_sample: "Collected by",
   tracks: "Tracked by",
   uses_band: "Used by",
+  affects: "Affected by",
 };
 
 /** Pick the readable label for a relation given the viewing direction. */
@@ -893,7 +905,7 @@ export function relationFacet(domain: Domain, type: RelationType): ConnectionFac
   if (["mission_target", "operated_by", "launched_by", "target_of_mission", "part_of_mission", "visited_by", "landed_on", "part_of_program", "launched_from", "carried_by", "orbited", "visited", "returned_samples_from", "captured_image_of", "part_of_station", "attached_to", "docked_with", "visited_station", "served_on_expedition", "commanded_expedition", "performed_eva", "launched_aboard", "returned_aboard", "crewed_by", "carried_crew", "carried_cargo", "impacted", "collected_sample", "tracks"].includes(type)) return "mission";
   if (["observed_by", "measured_by", "captured_by", "taken_with", "taken_at"].includes(type)) return "observational";
   if (["discovered_by", "named_after", "catalogued_in", "discovered_by_method", "discovered_by_facility", "discovered_by_mission", "part_of_catalogue", "discovered", "predicted", "confirmed", "refuted", "introduced", "invented", "developed", "published", "predicts", "confirmed_by", "contradicted_by", "depicts", "documents"].includes(type)) return "discovery";
-  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of", "contains_instrument", "used_instrument", "performed_experiment", "supports_science", "preceded_by", "followed_by", "supported_by", "replaced_by", "built_by", "located_at", "part_of_observatory", "hosts_telescope", "related_discovery", "predecessor_of", "successor_of", "orbits_star", "member_of_planetary_system", "similar_to", "candidate_for_habitable_zone", "supports", "derived_from", "depends_on", "part_of_model", "requires", "contains", "formed_from", "evolved_into", "processed_by", "published_by", "licensed_by", "derived_from_image", "part_of_collection", "member_of_family", "has_stage", "powered_by", "uses_propellant", "belongs_to_family", "best_observed_in", "has_orbit", "shares_orbital_resonance", "belongs_to_reservoir", "source_of_meteor_shower", "parent_body", "has_trajectory_class", "uses_band"].includes(type)) return "related";
+  if (["scientifically_related_to", "related_to", "references", "belongs_to_constellation", "part_of_star_system", "binary_with", "member_of_cluster", "hosts_exoplanet", "orbits", "belongs_to_planet", "located_on", "located_in_constellation", "member_of_group", "neighbor_of", "contains_instrument", "used_instrument", "performed_experiment", "supports_science", "preceded_by", "followed_by", "supported_by", "replaced_by", "built_by", "located_at", "part_of_observatory", "hosts_telescope", "related_discovery", "predecessor_of", "successor_of", "orbits_star", "member_of_planetary_system", "similar_to", "candidate_for_habitable_zone", "supports", "derived_from", "depends_on", "part_of_model", "requires", "contains", "formed_from", "evolved_into", "processed_by", "published_by", "licensed_by", "derived_from_image", "part_of_collection", "member_of_family", "has_stage", "powered_by", "uses_propellant", "belongs_to_family", "best_observed_in", "has_orbit", "shares_orbital_resonance", "belongs_to_reservoir", "source_of_meteor_shower", "parent_body", "has_trajectory_class", "uses_band", "affects"].includes(type)) return "related";
   return "scientific";
 }
 
@@ -1029,4 +1041,8 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   navigation_system: "Navigation system",
   time_standard: "Time standard",
   communication_system: "Communication system",
+  space_weather_phenomenon: "Space-weather phenomenon",
+  radiation_environment: "Radiation environment",
+  space_hazard: "Space hazard",
+  geomagnetic_index: "Geomagnetic index",
 };

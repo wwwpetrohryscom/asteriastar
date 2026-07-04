@@ -55,6 +55,7 @@ export const ROUTES = {
   interstellarObjects: "/interstellar-objects",
   smallBodyMissions: "/small-body-missions",
   deepSpaceNetwork: "/deep-space-network",
+  spaceEnvironment: "/space-environment",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -402,4 +403,12 @@ export function absoluteUrl(path: string): string {
   if (path.startsWith("http")) return path;
   const normalized = path.startsWith("/") ? path : `/${path}`;
   return `${SITE_URL}${normalized === "/" ? "" : normalized}`;
+}
+
+/** Space Environment & Hazards Encyclopedia (Program AE). */
+export function spaceEnvironmentPath(slug: string): string {
+  return `/space-environment/${slug}`;
+}
+export function spaceEnvironmentDiscoveryPath(slug: string): string {
+  return `/space-environment/discover/${slug}`;
 }
