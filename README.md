@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Scientific Instruments & Payloads Encyclopedia (Program AH)**
+
+- [Scientific Instruments](docs/INSTRUMENTS.md) — the science-payload layer: the classes of instrument (cameras, spectrometers, magnetometers, particle and dust detectors, radars, laser altimeters, seismometers, radio science) and notable instruments (LORRI, JunoCam, SEIS, Magellan SAR, and more), linked to their host missions. Reuses and enriches the platform's existing instruments (Mars, JWST, Hubble, Juno, ground telescopes), never duplicating them; no fabricated data
+
 **Spacecraft Systems & Engineering Encyclopedia (Program AG)**
 
 - [Spacecraft Systems](docs/SPACECRAFT_SYSTEMS.md) — the engineering layer of spacecraft: the subsystems (structure, thermal, power, propulsion, attitude control, avionics, telecommunications, entry-descent-and-landing, robotics) and their components (solar arrays, RTGs, ion thrusters, reaction wheels, flight computers, heat shields, and more). Reuses the platform's docking systems, life-support systems, antennas, and attitude sensors; no fabricated data

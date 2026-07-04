@@ -392,6 +392,22 @@ async function main() {
     `✓ Spacecraft systems valid — ${sysCat.SYS_STATS.subsystems} subsystems, ${sysCat.SYS_STATS.components} components · ${sysCat.SYS_STATS.newEntities} new entities, ${sysCat.SYS_STATS.relations} relations (reused docking/life-support/antennas/attitude sensors; no fabricated data)`,
   );
 
+  const instCat = await import("../src/knowledge-graph/data/instruments-catalog");
+  const instIssues = instCat.validateInstruments();
+  const { getEntityById: getInstEnt } = await import("../src/knowledge-graph");
+  for (const r of instCat.relations) {
+    if (!getInstEnt(r.from)) instIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getInstEnt(r.to)) instIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (instIssues.length > 0) {
+    console.error(`\n✗ ${instIssues.length} instruments issue(s):`);
+    for (const i of instIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Instruments valid — ${instCat.INST_STATS.classes} instrument classes, ${instCat.INST_STATS.newInstruments} new instruments (${instCat.INST_STATS.reusedInstruments} existing enriched) · ${instCat.INST_STATS.newEntities} new entities, ${instCat.INST_STATS.relations} relations (reused instruments + host missions; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

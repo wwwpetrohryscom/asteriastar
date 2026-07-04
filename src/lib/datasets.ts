@@ -88,6 +88,8 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "operations-functions", title: "Operations Functions", description: "The functions of mission operations — mission control, flight dynamics, navigation, telemetry, fault protection, and the operations lifecycle.", entityTypes: ["operations_function"], sources: ["nasa", "esa"] },
   { slug: "spacecraft-subsystems", title: "Spacecraft Subsystems", description: "The major spacecraft subsystems — structure, thermal, power, propulsion, attitude control, avionics, and more.", entityTypes: ["spacecraft_subsystem"], sources: ["nasa", "esa"] },
   { slug: "spacecraft-components", title: "Spacecraft Components", description: "Components within spacecraft subsystems — solar arrays, RTGs, ion thrusters, reaction wheels, flight computers, heat shields, and more.", entityTypes: ["spacecraft_component"], sources: ["nasa", "esa"] },
+  { slug: "instrument-classes", title: "Instrument Classes", description: "The classes of scientific instrument — cameras, spectrometers, magnetometers, radars, altimeters, seismometers, and more.", entityTypes: ["instrument_class"], sources: ["nasa", "esa"] },
+  { slug: "scientific-instruments", title: "Scientific Instruments", description: "Scientific instruments and payloads across missions and telescopes.", entityTypes: ["scientific_instrument"], sources: ["nasa", "esa"] },
 ];
 
 export interface Dataset extends DatasetDef {

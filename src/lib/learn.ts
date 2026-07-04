@@ -1142,6 +1142,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["spacecraft_subsystem:electrical-power", "spacecraft_component:ion-thruster", "spacecraft_component:reaction-wheel", "spacecraft_component:rtg"],
     next: ["understanding-mission-operations", "understanding-launch-vehicles"],
   },
+  {
+    slug: "understanding-scientific-instruments",
+    title: "Understanding Scientific Instruments",
+    description: "How spacecraft do science — the classes of instrument and the payloads that map worlds, read composition in light, and sense the invisible environment of space. Built on real NASA and ESA mission data; nothing is fabricated.",
+    accent: "nebula",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "What is a science payload?", href: "/instruments", blurb: "The instruments that turn a spacecraft into a scientific observatory." },
+          { title: "Cameras", href: "/instruments/optical-camera", blurb: "The eyes of a spacecraft, from wide-angle to narrow-angle telescopes." },
+          { title: "Spectrometers", href: "/instruments/spectrometer", blurb: "Splitting light to read composition, temperature, and motion." },
+          { title: "Instruments by class", href: "/instruments/discover/classes", blurb: "The families of instrument used across missions." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Imaging spectrometers", href: "/instruments/imaging-spectrometer", blurb: "A spectrum for every pixel — mapping composition in an image." },
+          { title: "Magnetometers", href: "/instruments/magnetometer", blurb: "Feeling magnetic fields — and the hidden oceans they reveal." },
+          { title: "Radar and altimeters", href: "/instruments/discover/active-sensing", blurb: "Actively probing surfaces through cloud and darkness." },
+          { title: "Seismometers", href: "/instruments/seismometer", blurb: "Listening to a planet's interior, as InSight did at Mars." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Mass spectrometers", href: "/instruments/mass-spectrometer", blurb: "Sorting atoms by mass to identify chemistry and isotopes." },
+          { title: "Fields and particles", href: "/instruments/discover/fields-particles", blurb: "Sensing the plasma, dust, and radiation of space." },
+          { title: "Radio science", href: "/instruments/radio-science", blurb: "Using the spacecraft's own signal to weigh a planet." },
+          { title: "A famous instrument: SEIS", href: "/instruments/insight-seis", blurb: "The seismometer that first mapped the interior of Mars." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["instrument_class:optical-camera", "instrument_class:spectrometer", "scientific_instrument:insight-seis", "scientific_instrument:lorri"],
+    next: ["understanding-spacecraft-systems", "understanding-the-universe"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

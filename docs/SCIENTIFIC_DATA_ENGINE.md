@@ -55,6 +55,7 @@ const moons = engine.query.run("moons-of-jupiter");
 | `spaceEnvironment` | Space environment & hazards resolver & queries | slug → `ResolvedEnv`; space-weather phenomena / radiation environments / hazards / indices / monitors — reuses the Sun, planets, and solar missions; states no live conditions (see [SPACE_ENVIRONMENT.md](./SPACE_ENVIRONMENT.md)) |
 | `missionOperations` | Ground segment & mission operations resolver & queries | slug → `ResolvedOps`; operations centres / functions by category (control / dynamics / planning / health / lifecycle) — reuses the agencies, tracking networks, and missions (see [MISSION_OPERATIONS.md](./MISSION_OPERATIONS.md)) |
 | `spacecraftSystems` | Spacecraft systems & engineering resolver & queries | slug → `ResolvedSys`; subsystems / components by category (power / propulsion / attitude / avionics / thermal / EDL) — reuses docking systems, life support, antennas, and attitude sensors (see [SPACECRAFT_SYSTEMS.md](./SPACECRAFT_SYSTEMS.md)) |
+| `instruments` | Scientific instruments & payloads resolver & queries | slug → `ResolvedInstrument`; instrument classes / instruments by class / category (imaging / spectroscopy / fields-particles / active-sensing) — reuses and enriches existing instruments and their host missions (see [INSTRUMENTS.md](./INSTRUMENTS.md)) |
 | `validation` | The single validator | () â `ValidationReport[]` |
 
 The `star` engine powers the [Star Encyclopedia](./STAR_ENCYCLOPEDIA.md) â it
