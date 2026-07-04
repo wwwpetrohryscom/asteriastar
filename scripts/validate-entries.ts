@@ -469,7 +469,7 @@ async function main() {
     process.exit(1);
   }
   console.log(
-    `✓ Space medicine valid — ${medCat.MED_STATS.topics} disciplines, ${medCat.MED_STATS.effects} effects, ${medCat.MED_STATS.technologies} technologies, ${medCat.MED_STATS.countermeasures} countermeasures · ${medCat.MED_STATS.newEntities} new entities, ${medCat.MED_STATS.relations} relations (reused ECLSS/radiation/stations/astronauts; no fabricated data)`,
+    `✓ Space medicine valid — ${medCat.MED_STATS.topics} disciplines, ${medCat.MED_STATS.effects} new effects (${medCat.MED_STATS.reusedEffects} existing reused), ${medCat.MED_STATS.technologies} technologies, ${medCat.MED_STATS.countermeasures} countermeasures · ${medCat.MED_STATS.newEntities} new entities, ${medCat.MED_STATS.relations} relations (reused ECLSS/radiation/stations/astronauts + space_medicine_topic effects; no fabricated data)`,
   );
 
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");

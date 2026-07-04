@@ -1,6 +1,8 @@
 import {
   MED_RECORDS,
   MED_BY_SLUG,
+  REUSED_EFFECTS,
+  effectIdForSlug,
   topics,
   effects,
   technologies,
@@ -34,7 +36,8 @@ export interface ResolvedMed {
   mitigates: Ref[]; // for a countermeasure: the effects it mitigates
   mitigatedBy: Ref[]; // for an effect: the countermeasures that mitigate it
   related: Ref[]; // reused entities it concerns
-  members: MedRecord[]; // for a discipline: its effects, technologies, and countermeasures
+  members: MedRecord[]; // for a discipline: its new effects, technologies, and countermeasures
+  reusedMembers: Ref[]; // for a discipline: the reused space_medicine_topic effects in it
   connections: ReturnType<typeof getConnectionsByDomain>;
   quality: EntityQuality | null;
   reviewStatus: ReviewStatus;
@@ -43,10 +46,13 @@ export interface ResolvedMed {
 function resolveRecord(r: MedRecord): ResolvedMed {
   const entity = getEntityById(r.id);
   const mitigates = r.kind === "countermeasure"
-    ? (r.mitigatesSlugs ?? []).map((s) => refFromId(`physiological_effect:${s}`)).filter(Boolean) as Ref[]
+    ? (r.mitigatesSlugs ?? []).map((s) => refFromId(effectIdForSlug(s))).filter(Boolean) as Ref[]
     : [];
   const mitigatedBy = r.kind === "effect"
     ? countermeasures.filter((c) => (c.mitigatesSlugs ?? []).includes(r.slug)).map((c) => refFromId(c.id)).filter(Boolean) as Ref[]
+    : [];
+  const reusedMembers = r.kind === "topic"
+    ? REUSED_EFFECTS.filter((re) => re.topicSlug === r.slug).map((re) => refFromId(re.id)).filter(Boolean) as Ref[]
     : [];
   return {
     record: r,
@@ -56,6 +62,7 @@ function resolveRecord(r: MedRecord): ResolvedMed {
     mitigatedBy,
     related: (r.relatedKeys ?? []).map((k) => refFromId(k)).filter(Boolean) as Ref[],
     members: r.kind === "topic" ? NON_TOPIC.filter((x) => x.topicSlug === r.slug).sort(byName) : [],
+    reusedMembers,
     connections: getConnectionsByDomain(r.id),
     quality: entity ? computeEntityQuality(entity) : null,
     reviewStatus: reviewStatusFor(r.id),

@@ -23,7 +23,28 @@ export const MED_BY_SLUG = new Map(MED_RECORDS.map((r) => [r.slug, r]));
 const TOPIC_BY_SLUG = new Map(topics.map((r) => [r.slug, r]));
 const EFFECT_BY_SLUG = new Map(effects.map((r) => [r.slug, r]));
 const rTopic = (s?: string) => (s ? TOPIC_BY_SLUG.get(s)?.id : undefined);
-const rEffect = (s?: string) => (s ? EFFECT_BY_SLUG.get(s)?.id : undefined);
+
+/**
+ * Existing `space_medicine_topic` entities (from the human-spaceflight catalog) that describe
+ * physiological effects already in the graph. Program AL REUSES them — enriching each into a
+ * discipline and letting countermeasures mitigate them — rather than minting a duplicate
+ * `physiological_effect` node. They keep their canonical /human-spaceflight pages.
+ */
+export const REUSED_EFFECTS: { id: string; topicSlug: string; relatedKeys?: string[] }[] = [
+  { id: "space_medicine_topic:bone-density-loss", topicSlug: "space-medicine", relatedKeys: ["satellite:international-space-station", "space_station:mir"] },
+  { id: "space_medicine_topic:muscle-atrophy", topicSlug: "space-medicine", relatedKeys: ["satellite:international-space-station"] },
+  { id: "space_medicine_topic:fluid-shift", topicSlug: "space-medicine", relatedKeys: ["satellite:international-space-station"] },
+  { id: "space_medicine_topic:space-radiation", topicSlug: "space-radiation-biology", relatedKeys: ["radiation_environment:galactic-cosmic-rays", "radiation_environment:solar-energetic-particles", "radiation_environment:cosmic-rays"] },
+];
+const REUSED_EFFECT_ID = new Map(REUSED_EFFECTS.map((r) => [r.id.slice(r.id.indexOf(":") + 1), r.id]));
+
+/** Resolve an effect slug to its graph id — a new physiological_effect, or a reused space_medicine_topic. */
+export function effectIdForSlug(slug?: string): string | undefined {
+  if (!slug) return undefined;
+  if (EFFECT_BY_SLUG.has(slug)) return `physiological_effect:${slug}`;
+  return REUSED_EFFECT_ID.get(slug);
+}
+const rEffect = effectIdForSlug;
 
 export function entryPathFor(r: Pick<MedRecord, "slug">): string {
   return `/space-medicine/${r.slug}`;
@@ -60,6 +81,11 @@ for (const r of MED_RECORDS) {
   if (r.kind === "countermeasure") for (const s of r.mitigatesSlugs ?? []) add(r.id, "mitigates", rEffect(s));
   for (const k of r.relatedKeys ?? []) add(r.id, "associated_with", k);
 }
+// Enrich the reused space_medicine_topic effects into their discipline (never duplicated).
+for (const re of REUSED_EFFECTS) {
+  add(re.id, "member_of_group", rTopic(re.topicSlug));
+  for (const k of re.relatedKeys ?? []) add(re.id, "associated_with", k);
+}
 
 export const relations: GraphRelation[] = derived;
 
@@ -69,6 +95,7 @@ export const MED_STATS = {
   relations: relations.length,
   topics: topics.length,
   effects: effects.length,
+  reusedEffects: REUSED_EFFECTS.length,
   technologies: technologies.length,
   countermeasures: countermeasures.length,
 } as const;
@@ -98,6 +125,15 @@ export function validateSpaceMedicine(): string[] {
     if (r.kind !== "countermeasure" && r.mitigatesSlugs?.length) issues.push(`${r.id}: mitigatesSlugs only valid on a countermeasure`);
     if (r.kind !== "technology" && r.partOfEclss) issues.push(`${r.id}: partOfEclss only valid on a technology`);
     for (const k of r.relatedKeys ?? []) if (!ID.test(k)) issues.push(`${r.id}: malformed reference id "${k}"`);
+  }
+  const reusedSeen = new Set<string>();
+  for (const re of REUSED_EFFECTS) {
+    if (!re.id.startsWith("space_medicine_topic:")) issues.push(`reused effect must be a space_medicine_topic id: "${re.id}"`);
+    if (MED_BY_ID.has(re.id)) issues.push(`reused effect ${re.id} must not also be a new record`);
+    if (reusedSeen.has(re.id)) issues.push(`duplicate reused effect: ${re.id}`);
+    reusedSeen.add(re.id);
+    if (!rTopic(re.topicSlug)) issues.push(`reused ${re.id}: unresolved discipline "${re.topicSlug}"`);
+    for (const k of re.relatedKeys ?? []) if (!ID.test(k)) issues.push(`reused ${re.id}: malformed reference id "${k}"`);
   }
   const connected = new Set<string>();
   for (const x of relations) { connected.add(x.from); connected.add(x.to); }

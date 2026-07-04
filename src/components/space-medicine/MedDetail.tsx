@@ -69,10 +69,11 @@ export function MedDetail({ d }: { d: ResolvedMed }) {
               </section>
             ) : null}
 
-            {d.members.length ? (
+            {(d.members.length || d.reusedMembers.length) ? (
               <section aria-labelledby="members">
                 <h2 id="members" className="font-display text-2xl font-bold">In this discipline</h2>
-                <div className="mt-4"><MedCards records={d.members} /></div>
+                {d.members.length ? <div className="mt-4"><MedCards records={d.members} /></div> : null}
+                {d.reusedMembers.length ? <Chips refs={d.reusedMembers} /> : null}
               </section>
             ) : null}
 

@@ -34,6 +34,12 @@ Everything else reuses `member_of_group`, `part_of`, and `associated_with`.
 
 ## Reuse
 
+- The graph already models `bone-density-loss`, `muscle-atrophy`, `fluid-shift` (with vision
+  changes), and `space-radiation` as `space_medicine_topic` entities (from the
+  human-spaceflight catalog). Program AL **reuses** these — enriching each into a discipline
+  and letting countermeasures mitigate them (`REUSED_EFFECTS` in `index.ts`) — rather than
+  minting duplicate `physiological_effect` nodes; they keep their canonical
+  `/human-spaceflight` pages. Only the effects with no existing equivalent are created new.
 - Technologies are `part_of` the existing `life_support_system:eclss` — the ECLSS entity is
   enriched, never duplicated.
 - Radiation effects and shielding link to the reused `radiation_environment` entities
