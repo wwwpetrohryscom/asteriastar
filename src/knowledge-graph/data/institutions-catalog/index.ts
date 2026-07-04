@@ -30,7 +30,6 @@ const REUSED_INSTITUTION_TYPE: [string, string][] = [
   ["organization:kari", "space-agency"],
   ["organization:aeb", "space-agency"],
   ["organization:uae-space-agency", "space-agency"],
-  ["organization:eumetsat", "space-agency"],
   // Research laboratory
   ["organization:jpl", "research-laboratory"],
   // Commercial space companies
