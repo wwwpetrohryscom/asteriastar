@@ -63,6 +63,7 @@ export const ROUTES = {
   institutions: "/institutions",
   spaceflightTimeline: "/timeline",
   spaceMedicine: "/space-medicine",
+  spaceInfrastructure: "/space-infrastructure",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -474,4 +475,12 @@ export function spaceMedicinePath(slug: string): string {
 }
 export function spaceMedicineDiscoveryPath(slug: string): string {
   return `/space-medicine/discover/${slug}`;
+}
+
+/** Space Manufacturing & In-Space Infrastructure encyclopedia (Program AM). */
+export function spaceInfrastructurePath(slug: string): string {
+  return `/space-infrastructure/${slug}`;
+}
+export function spaceInfrastructureDiscoveryPath(slug: string): string {
+  return `/space-infrastructure/discover/${slug}`;
 }

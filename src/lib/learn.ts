@@ -1327,6 +1327,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["space_biology_topic:space-medicine", "space_medicine_topic:bone-density-loss", "countermeasure:resistive-exercise", "life_support_technology:water-recovery"],
     next: ["understanding-spacecraft-systems", "understanding-the-history-of-spaceflight"],
   },
+  {
+    slug: "understanding-building-in-space",
+    title: "Understanding Building in Space",
+    description: "How the next era of spaceflight will make and build things in space instead of launching them — mining the Moon and asteroids, printing parts in orbit, and building depots, habitats, and power stations. Each technology's real maturity is stated honestly.",
+    accent: "stone",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Building in space", href: "/space-infrastructure", blurb: "Why the future will not launch everything from Earth." },
+          { title: "Living off the land (ISRU)", href: "/space-infrastructure/discover/resource-utilisation", blurb: "Water, oxygen, and metal from the Moon, Mars, and asteroids." },
+          { title: "Water: the keystone resource", href: "/space-infrastructure/water-extraction", blurb: "Drinking water, oxygen, shielding, and rocket fuel." },
+          { title: "Making oxygen on Mars", href: "/space-infrastructure/oxygen-production", blurb: "MOXIE demonstrated it on Perseverance." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Manufacturing in orbit", href: "/space-infrastructure/discover/manufacturing", blurb: "3D printing, assembly, and servicing in space." },
+          { title: "3D printing in space", href: "/space-infrastructure/additive-manufacturing", blurb: "A printer has run on the ISS since 2014." },
+          { title: "Infrastructure systems", href: "/space-infrastructure/discover/infrastructure-systems", blurb: "Depots, habitats, power, and logistics." },
+          { title: "Propellant depots", href: "/space-infrastructure/propellant-depot", blurb: "Refuel in orbit instead of launching full." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Inflatable habitats", href: "/space-infrastructure/inflatable-habitat", blurb: "More living volume per kilogram launched." },
+          { title: "Space-based power", href: "/space-infrastructure/solar-power-satellite", blurb: "Collect sunlight in orbit, beam it to Earth." },
+          { title: "Making propellant off-world", href: "/space-infrastructure/propellant-production", blurb: "Fuel a return trip at the destination." },
+          { title: "Megastructures", href: "/space-infrastructure/space-elevator", blurb: "Theoretical — no material yet strong enough." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["infrastructure_domain:in-situ-resource-utilisation", "isru_technique:oxygen-production", "space_manufacturing_process:additive-manufacturing", "space_infrastructure:propellant-depot"],
+    next: ["understanding-humans-in-space", "the-solar-system"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
