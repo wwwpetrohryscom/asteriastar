@@ -177,6 +177,13 @@ export const ENTITY_TYPES = [
   // entities (agencies, commercial companies, observatory operators); institution_type is
   // the new grouping type that classifies them.
   "institution_type",
+  // Space Missions Timeline & Historical Events (Program AK). Reuses the missions, programs,
+  // astronauts, stations, and telescopes; these are the new chronology entities — eras
+  // (historic_space_event), dated events, milestone firsts, and standing records.
+  "historic_space_event",
+  "timeline_event",
+  "mission_milestone",
+  "record",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1070,4 +1077,8 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   instrument_class: "Instrument class",
   geological_feature_type: "Geological feature type",
   institution_type: "Institution type",
+  historic_space_event: "Spaceflight era",
+  timeline_event: "Timeline event",
+  mission_milestone: "Mission milestone",
+  record: "Record",
 };

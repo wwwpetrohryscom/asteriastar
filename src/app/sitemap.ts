@@ -28,6 +28,7 @@ import { SYS_DISCOVERIES } from "@/app/spacecraft-systems/discovery";
 import { INST_DISCOVERIES } from "@/app/instruments/discovery";
 import { GEO_DISCOVERIES } from "@/app/planetary-geology/discovery";
 import { INSTITUTION_DISCOVERIES } from "@/app/institutions/discovery";
+import { TIMELINE_DISCOVERIES } from "@/app/timeline/discovery";
 import { HSF_DISCOVERIES } from "@/app/human-spaceflight/discovery";
 import { OBS_DISCOVERIES } from "@/app/observatories/discovery";
 import { EXO_DISCOVERIES } from "@/app/exoplanets/discovery";
@@ -134,6 +135,8 @@ import {
   planetaryGeologyDiscoveryPath,
   institutionsPath,
   institutionsDiscoveryPath,
+  spaceflightTimelinePath,
+  spaceflightTimelineDiscoveryPath,
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
@@ -403,6 +406,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...INSTITUTION_DISCOVERIES.map((d) => ({ url: absoluteUrl(institutionsDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const spaceflightTimelineRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.spaceflightTimeline), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.spaceflightHistory.all().map((r) => ({ url: absoluteUrl(spaceflightTimelinePath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...TIMELINE_DISCOVERIES.map((d) => ({ url: absoluteUrl(spaceflightTimelineDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const deepSkyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
     ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -455,6 +464,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...instrumentsRoutes,
     ...planetaryGeologyRoutes,
     ...institutionsRoutes,
+    ...spaceflightTimelineRoutes,
     ...hsfRoutes,
     ...obsRoutes,
     ...exoRoutes,

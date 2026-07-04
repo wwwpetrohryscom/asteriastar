@@ -1253,6 +1253,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["institution_type:space-agency", "institution_type:field-center", "organization:nasa-goddard", "organization:jpl"],
     next: ["history-of-astronomy", "understanding-mission-operations"],
   },
+  {
+    slug: "understanding-the-history-of-spaceflight",
+    title: "Understanding the History of Spaceflight",
+    description: "How humanity reached space and explored the Solar System — the eras, the milestone firsts, and the records, from Sputnik to Artemis. Built on real dated events; nothing is fabricated.",
+    accent: "comet",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The story of spaceflight", href: "/timeline", blurb: "Eras, events, milestones, and records — the whole arc of the space age." },
+          { title: "The eras of spaceflight", href: "/timeline/discover/eras", blurb: "From the Space Race to the Artemis era." },
+          { title: "Sputnik opens the space age", href: "/timeline/launch-of-sputnik-1", blurb: "The first artificial satellite, 1957." },
+          { title: "The first Moon landing", href: "/timeline/apollo-11-first-humans-on-the-moon", blurb: "Apollo 11, and the first footsteps on another world." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Firsts & milestones", href: "/timeline/discover/firsts-and-milestones", blurb: "The milestone achievements of spaceflight." },
+          { title: "The first human in space", href: "/timeline/gagarin-first-human-in-space", blurb: "Yuri Gagarin and Vostok 1, 1961." },
+          { title: "Human spaceflight history", href: "/timeline/discover/human-spaceflight-history", blurb: "Crewed firsts, spacewalks, and space stations." },
+          { title: "Building the ISS", href: "/timeline/first-module-of-the-iss", blurb: "The largest structure ever built in space." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Robotic exploration history", href: "/timeline/discover/robotic-exploration-history", blurb: "Flybys, orbiters, landers, and sample return." },
+          { title: "The only visit to Neptune", href: "/timeline/voyager-2-neptune-flyby", blurb: "Voyager 2 completes the grand tour, 1989." },
+          { title: "The first close-up of Pluto", href: "/timeline/new-horizons-flies-past-pluto", blurb: "New Horizons, 2015." },
+          { title: "Records of spaceflight", href: "/timeline/discover/records", blurb: "The most distant, fastest, and longest-lived." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["historic_space_event:the-space-race", "timeline_event:apollo-11-first-humans-on-the-moon", "mission_milestone:first-human-in-space", "record:most-distant-human-made-object"],
+    next: ["understanding-space-institutions", "history-of-astronomy"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
