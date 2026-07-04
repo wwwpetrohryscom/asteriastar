@@ -35,6 +35,7 @@ export type TimelineCategory =
   | "crewed"
   | "landing"
   | "flyby"
+  | "flight"
   | "orbit"
   | "spacewalk"
   | "failure"

@@ -17,7 +17,7 @@ export const TIMELINE_DISCOVERIES: TimelineDiscovery[] = [
   { slug: "firsts-and-milestones", title: "Firsts & Milestones", description: "The milestone achievements — the first satellite, the first human in space, the first Moon landing, and more.", get: () => e.milestones() },
   { slug: "records", title: "Records", description: "The standing records of spaceflight — the most distant, fastest, and longest-lived of humanity's craft and crews.", get: () => e.recordsList() },
   { slug: "human-spaceflight-history", title: "Human Spaceflight History", description: "The crewed milestones — first flights, spacewalks, and space stations.", get: () => [...e.byCategory("crewed"), ...e.byCategory("spacewalk"), ...e.byCategory("station")].sort((a, b) => (a.year ?? 0) - (b.year ?? 0)) },
-  { slug: "robotic-exploration-history", title: "Robotic Exploration History", description: "The great robotic firsts — flybys, orbiters, landers, and the missions that returned samples.", get: () => [...e.byCategory("flyby"), ...e.byCategory("orbit"), ...e.byCategory("landing"), ...e.byCategory("sample-return")].sort((a, b) => (a.year ?? 0) - (b.year ?? 0)) },
+  { slug: "robotic-exploration-history", title: "Robotic Exploration History", description: "The great robotic firsts — flybys, orbiters, landers, aircraft, and the missions that returned samples.", get: () => [...e.byCategory("flyby"), ...e.byCategory("orbit"), ...e.byCategory("landing"), ...e.byCategory("sample-return"), ...e.byCategory("flight")].sort((a, b) => (a.year ?? 0) - (b.year ?? 0)) },
 ];
 
 const BY_SLUG = new Map(TIMELINE_DISCOVERIES.map((d) => [d.slug, d]));
