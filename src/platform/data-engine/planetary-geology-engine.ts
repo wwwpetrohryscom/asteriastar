@@ -23,6 +23,8 @@ function refFromId(id: string | undefined): Ref | undefined {
   return e ? { id, name: e.name, href: entityGraphPath(e) } : undefined;
 }
 const byName = (a: GeoRecord, b: GeoRecord) => a.name.localeCompare(b.name, "en", { numeric: true });
+// A feature inherits its category from its feature type (features carry no category of their own).
+const TYPE_CATEGORY = new Map(featureTypes.map((t) => [t.slug, t.category]));
 
 export interface ResolvedGeo {
   record: GeoRecord;
@@ -66,7 +68,8 @@ export const planetaryGeologyEngine = {
   features: (): GeoRecord[] => features.slice().sort(byName),
   byType: (typeSlug: string): GeoRecord[] => features.filter((x) => x.typeSlug === typeSlug).sort(byName),
   byBody: (bodyKey: string): GeoRecord[] => features.filter((x) => x.bodyKey === bodyKey).sort(byName),
-  byCategory: (c: GeoCategory): GeoRecord[] => GEO_RECORDS.filter((r) => r.category === c).sort(byName),
+  // The named features of a category (a feature's category is that of its feature type).
+  byCategory: (c: GeoCategory): GeoRecord[] => features.filter((f) => TYPE_CATEGORY.get(f.typeSlug ?? "") === c).sort(byName),
   resolveEntry: (slug: string): ResolvedGeo | null => {
     const r = GEO_BY_SLUG.get(slug);
     return r ? resolveRecord(r) : null;
