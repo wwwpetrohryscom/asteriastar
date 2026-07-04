@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Spacecraft Systems & Engineering Encyclopedia (Program AG)**
+
+- [Spacecraft Systems](docs/SPACECRAFT_SYSTEMS.md) — the engineering layer of spacecraft: the subsystems (structure, thermal, power, propulsion, attitude control, avionics, telecommunications, entry-descent-and-landing, robotics) and their components (solar arrays, RTGs, ion thrusters, reaction wheels, flight computers, heat shields, and more). Reuses the platform's docking systems, life-support systems, antennas, and attitude sensors; no fabricated data
+
 **Ground Segment & Mission Operations Encyclopedia (Program AF)**
 
 - [Mission Operations](docs/MISSION_OPERATIONS.md) — the operational infrastructure behind every mission: the mission-control and operations centres (JPL's SFOF, ESA's ESOC, Houston's Mission Control) and the operational functions that fly spacecraft (mission control, flight dynamics, orbit determination, navigation, telemetry, fault protection, and the operations lifecycle). Reuses the agencies, tracking networks, and missions; no fabricated data

@@ -376,6 +376,22 @@ async function main() {
     `✓ Mission operations valid — ${opsCat.OPS_STATS.centers} operations centres, ${opsCat.OPS_STATS.functions} operations functions · ${opsCat.OPS_STATS.newEntities} new entities, ${opsCat.OPS_STATS.relations} relations (reused agencies/networks/missions; no fabricated data)`,
   );
 
+  const sysCat = await import("../src/knowledge-graph/data/spacecraft-systems-catalog");
+  const sysIssues = sysCat.validateSpacecraftSystems();
+  const { getEntityById: getSysEnt } = await import("../src/knowledge-graph");
+  for (const r of sysCat.relations) {
+    if (!getSysEnt(r.from)) sysIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getSysEnt(r.to)) sysIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (sysIssues.length > 0) {
+    console.error(`\n✗ ${sysIssues.length} spacecraft-systems issue(s):`);
+    for (const i of sysIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Spacecraft systems valid — ${sysCat.SYS_STATS.subsystems} subsystems, ${sysCat.SYS_STATS.components} components · ${sysCat.SYS_STATS.newEntities} new entities, ${sysCat.SYS_STATS.relations} relations (reused docking/life-support/antennas/attitude sensors; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
