@@ -424,6 +424,22 @@ async function main() {
     `✓ Planetary geology valid — ${geoCat.GEO_STATS.featureTypes} feature types, ${geoCat.GEO_STATS.newFeatures} new features (${geoCat.GEO_STATS.reusedFeatures} existing enriched) · ${geoCat.GEO_STATS.newEntities} new entities, ${geoCat.GEO_STATS.relations} relations (reused bodies + surface features; no fabricated data)`,
   );
 
+  const instCatalog = await import("../src/knowledge-graph/data/institutions-catalog");
+  const instituteIssues = instCatalog.validateInstitutions();
+  const { getEntityById: getInstitutionEnt } = await import("../src/knowledge-graph");
+  for (const r of instCatalog.relations) {
+    if (!getInstitutionEnt(r.from)) instituteIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getInstitutionEnt(r.to)) instituteIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (instituteIssues.length > 0) {
+    console.error(`\n✗ ${instituteIssues.length} institutions issue(s):`);
+    for (const i of instituteIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Institutions valid — ${instCatalog.INST_STATS.types} institution types, ${instCatalog.INST_STATS.newOrgs} new field centers/labs (${instCatalog.INST_STATS.reusedOrgs} existing enriched) · ${instCatalog.INST_STATS.newEntities} new entities, ${instCatalog.INST_STATS.relations} relations (reused agencies + organizations; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

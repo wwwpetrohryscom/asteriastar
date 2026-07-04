@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Space Agencies, Institutions & Laboratories Encyclopedia (Program AJ)**
+
+- [Space Agencies, Institutions & Laboratories](docs/INSTITUTIONS.md) — the institutional layer of spaceflight: the classes of institution (space agency, field center, research laboratory, science institute, commercial company, observatory operator) and the field centers and laboratories that were missing from the graph (Goddard, Johnson, Marshall, Kennedy, ESTEC, ESAC, Tsukuba, APL, SwRI, and more), each linked part_of its parent agency. Reuses and enriches the platform's existing organizations (the agencies, commercial companies, and observatory operators), never duplicating them; no fabricated data
+
 **Planetary Geology & Surface Features Encyclopedia (Program AI)**
 
 - [Planetary Geology](docs/PLANETARY_GEOLOGY.md) — the geology of the Solar System's surfaces: the classes of geological feature (impact craters and basins, shield volcanoes and cryovolcanoes, canyons, dunes, chaos terrain, ice plains, hydrocarbon lakes) and named features (Tharsis, Hellas, Caloris, Maxwell Montes, Occator, Sputnik Planitia, and more) across Mars, the Moon, Mercury, Venus, Ceres, Vesta, the icy moons, and Pluto. Reuses the platform's planets, moons, and surface features; no fabricated data

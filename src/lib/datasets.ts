@@ -92,6 +92,8 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "scientific-instruments", title: "Scientific Instruments", description: "Scientific instruments and payloads across missions and telescopes.", entityTypes: ["scientific_instrument"], sources: ["nasa", "esa"] },
   { slug: "geological-feature-types", title: "Geological Feature Types", description: "The classes of geological feature — craters, volcanoes, canyons, dunes, chaos terrain, and more.", entityTypes: ["geological_feature_type"], sources: ["nasa"] },
   { slug: "surface-features", title: "Surface Features", description: "Named surface features across the planets, moons, and dwarf planets.", entityTypes: ["surface_feature"], sources: ["nasa", "jpl"] },
+  { slug: "institution-types", title: "Institution Types", description: "The classes of space institution — space agencies, field centers, research laboratories, science institutes, commercial companies, and observatory operators.", entityTypes: ["institution_type"], sources: ["nasa", "esa"] },
+  { slug: "space-institutions", title: "Space Agencies & Institutions", description: "Space agencies, field centers, laboratories, commercial companies, and observatory operators as first-class organizations.", entityTypes: ["organization"], sources: ["nasa", "esa"] },
 ];
 
 export interface Dataset extends DatasetDef {

@@ -1216,6 +1216,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["geological_feature_type:impact-crater", "geological_feature_type:shield-volcano", "surface_feature:sputnik-planitia", "surface_feature:occator-crater"],
     next: ["the-solar-system", "understanding-scientific-instruments"],
   },
+  {
+    slug: "understanding-space-institutions",
+    title: "Understanding Space Institutions",
+    description: "Who builds and flies the spacecraft — the space agencies, field centers, laboratories, and companies of the space enterprise, and how they fit together. Built on real organizations from NASA, ESA, and JAXA; nothing is fabricated.",
+    accent: "halo",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The institutions of spaceflight", href: "/institutions", blurb: "Agencies, field centers, laboratories, and companies — and how they connect." },
+          { title: "Space agencies", href: "/institutions/discover/space-agencies", blurb: "The government bodies that fund and run space programs." },
+          { title: "A field center: Goddard", href: "/institutions/nasa-goddard", blurb: "How a space agency's work is split across specialised centres." },
+          { title: "Field centers", href: "/institutions/discover/field-centers", blurb: "The centres of NASA, ESA, and JAXA, each with its own role." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Mission Control: Johnson", href: "/institutions/nasa-jsc", blurb: "Where human spaceflight is trained and flown." },
+          { title: "The Applied Physics Laboratory", href: "/institutions/jhuapl", blurb: "The lab behind New Horizons, Parker Solar Probe, and DART." },
+          { title: "Laboratories & institutes", href: "/institutions/discover/laboratories", blurb: "Who designs, builds, and leads the science of robotic missions." },
+          { title: "Europe's technical heart: ESTEC", href: "/institutions/esa-estec", blurb: "Where almost every ESA spacecraft is engineered and tested." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Commercial space", href: "/institutions/discover/commercial", blurb: "The private companies building launch vehicles and spacecraft." },
+          { title: "Observatory organisations", href: "/institutions/discover/observatories", blurb: "Who operates the great ground-based telescopes." },
+          { title: "An independent institute: SwRI", href: "/institutions/swri", blurb: "Leading the science of Juno, New Horizons, and Lucy." },
+          { title: "JAXA's hub: Tsukuba", href: "/institutions/jaxa-tsukuba", blurb: "Japan's centre for astronauts and the Kibo module." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["institution_type:space-agency", "institution_type:field-center", "organization:nasa-goddard", "organization:jpl"],
+    next: ["history-of-astronomy", "understanding-mission-operations"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

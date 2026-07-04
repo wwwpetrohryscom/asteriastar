@@ -57,6 +57,7 @@ const moons = engine.query.run("moons-of-jupiter");
 | `spacecraftSystems` | Spacecraft systems & engineering resolver & queries | slug → `ResolvedSys`; subsystems / components by category (power / propulsion / attitude / avionics / thermal / EDL) — reuses docking systems, life support, antennas, and attitude sensors (see [SPACECRAFT_SYSTEMS.md](./SPACECRAFT_SYSTEMS.md)) |
 | `instruments` | Scientific instruments & payloads resolver & queries | slug → `ResolvedInstrument`; instrument classes / instruments by class / category (imaging / spectroscopy / fields-particles / active-sensing) — reuses and enriches existing instruments and their host missions (see [INSTRUMENTS.md](./INSTRUMENTS.md)) |
 | `planetaryGeology` | Planetary geology & surface features resolver & queries | slug → `ResolvedGeo`; feature types / features by type / body / category (impact / volcanic / tectonic / icy / …) — reuses the planets, moons, and existing surface features (see [PLANETARY_GEOLOGY.md](./PLANETARY_GEOLOGY.md)) |
+| `institutions` | Space agencies, institutions & laboratories resolver & queries | slug → `ResolvedInstitution`; institution types / orgs by type / member sets (agencies / field centers / laboratories / commercial / observatories) — reuses and enriches the existing agencies, companies, and observatory operators, wiring them part_of their parent agency (see [INSTITUTIONS.md](./INSTITUTIONS.md)) |
 | `validation` | The single validator | () â `ValidationReport[]` |
 
 The `star` engine powers the [Star Encyclopedia](./STAR_ENCYCLOPEDIA.md) â it
