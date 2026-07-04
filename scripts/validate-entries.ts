@@ -308,6 +308,24 @@ async function main() {
     `✓ Interstellar objects valid — ${interstellarCat.INTERSTELLAR_STATS.objects} confirmed, ${interstellarCat.INTERSTELLAR_STATS.candidates} candidate, ${interstellarCat.INTERSTELLAR_STATS.hyperbolicComets} hyperbolic comets, ${interstellarCat.INTERSTELLAR_STATS.methods} detection methods, ${interstellarCat.INTERSTELLAR_STATS.trajectoryClasses} trajectory classes · ${interstellarCat.INTERSTELLAR_STATS.newEntities} new entities, ${interstellarCat.INTERSTELLAR_STATS.relations} relations (reused comet class/Pan-STARRS/LSST/NASA-JPL; confirmed and candidate kept separate; no fabricated data)`,
   );
 
+  const smallBodyCat = await import("../src/knowledge-graph/data/small-body-missions-catalog");
+  const smallBodyIssues = smallBodyCat.validateSmallBodyMissions();
+  // Cross-reference resolution: every relation endpoint the catalog emits must resolve to
+  // a real graph entity (reused space missions, asteroids, comets, rockets, agencies).
+  const { getEntityById: getSbmEnt } = await import("../src/knowledge-graph");
+  for (const r of smallBodyCat.relations) {
+    if (!getSbmEnt(r.from)) smallBodyIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getSbmEnt(r.to)) smallBodyIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (smallBodyIssues.length > 0) {
+    console.error(`\n✗ ${smallBodyIssues.length} small-body-mission issue(s):`);
+    for (const i of smallBodyIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Small-body missions valid — ${smallBodyCat.SMALLBODY_STATS.missions} missions (${smallBodyCat.SMALLBODY_STATS.reusedMissions} reused + ${smallBodyCat.SMALLBODY_STATS.newMissions} new), ${smallBodyCat.SMALLBODY_STATS.classes} classes, ${smallBodyCat.SMALLBODY_STATS.samples} returned samples, ${smallBodyCat.SMALLBODY_STATS.capsules} capsules, ${smallBodyCat.SMALLBODY_STATS.phases} phases, ${smallBodyCat.SMALLBODY_STATS.campaigns} campaign · ${smallBodyCat.SMALLBODY_STATS.newEntities} new entities, ${smallBodyCat.SMALLBODY_STATS.relations} relations (reused missions/asteroids/comets/rockets/agencies; planned missions assert no past-tense outcomes; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
