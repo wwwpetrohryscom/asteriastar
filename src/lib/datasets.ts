@@ -101,6 +101,8 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "life-support-technologies", title: "Life-Support Technologies & Countermeasures", description: "The ECLSS technologies and health countermeasures that keep crews alive and well in space.", entityTypes: ["life_support_technology", "countermeasure"], sources: ["nasa", "esa"] },
   { slug: "isru-and-manufacturing", title: "ISRU & In-Space Manufacturing", description: "In-situ resource-utilisation techniques and in-space manufacturing and construction processes.", entityTypes: ["isru_technique", "space_manufacturing_process"], sources: ["nasa"] },
   { slug: "space-infrastructure", title: "Space Infrastructure", description: "The infrastructure of a spacefaring economy — depots, habitats, power stations, tugs, and megastructure concepts.", entityTypes: ["space_infrastructure"], sources: ["nasa"] },
+  { slug: "exploration-themes", title: "Future Exploration Themes", description: "The themes of future exploration — the Moon, Mars, Venus, ocean worlds, small bodies, observatories, and the outer Solar System.", entityTypes: ["exploration_theme"], sources: ["nasa"] },
+  { slug: "mission-concepts", title: "Mission Concepts", description: "Official and credible planned missions and mission concepts, each with its status, goals, target, and uncertainties.", entityTypes: ["mission_concept"], sources: ["nasa", "esa"] },
 ];
 
 export interface Dataset extends DatasetDef {

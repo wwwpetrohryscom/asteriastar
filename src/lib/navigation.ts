@@ -73,6 +73,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Space Missions Timeline & Historical Events", href: ROUTES.spaceflightTimeline, description: "The chronological history of spaceflight — Sputnik, Apollo, Shuttle, ISS, Voyager, Artemis; eras, firsts & records" },
             { name: "Life Support, Space Biology & Space Medicine", href: ROUTES.spaceMedicine, description: "The human-in-space layer — microgravity effects, radiation biology, ECLSS life support & countermeasures" },
             { name: "Space Manufacturing & In-Space Infrastructure", href: ROUTES.spaceInfrastructure, description: "The future engineering layer — ISRU, orbital manufacturing, depots, habitats, power & logistics" },
+            { name: "Future Space Exploration & Mission Concepts", href: ROUTES.futureExploration, description: "Planned missions & concepts — Artemis, Mars Sample Return, Dragonfly, the Venus fleet, Roman, HWO, LISA" },
             { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Observatories", href: ROUTES.observatories, description: "Telescopes, surveys, bands" },
             { name: "Exoplanets", href: ROUTES.exoplanets, description: "Worlds beyond the Sun" },

@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Future Space Exploration & Mission Concepts Encyclopedia (Program AN)**
+
+- [Future Exploration](docs/FUTURE_EXPLORATION.md) — a future-exploration authority of official and credible planned missions and concepts: the Artemis return to the Moon, Mars Sample Return, the Venus fleet (DAVINCI, VERITAS, EnVision), the ocean worlds (Dragonfly, Europa Clipper, JUICE), the next great observatories (Roman, Habitable Worlds Observatory, LISA, Athena), planetary defence (NEO Surveyor), and the outer Solar System. Each concept states its status, agency, timeline, goals, target, technology, and uncertainties honestly. Reuses the platform's in-development missions and agencies; nothing duplicated or fabricated
+
 **Space Manufacturing & In-Space Infrastructure Encyclopedia (Program AM)**
 
 - [Space Infrastructure](docs/SPACE_INFRASTRUCTURE.md) — the future engineering layer: in-situ resource utilisation (water, oxygen, metals, and propellant from the Moon, Mars, and asteroids), in-space manufacturing (3D printing, assembly, servicing, autonomous construction), and the infrastructure of a spacefaring economy (propellant depots, commercial & inflatable habitats, lunar bases, solar-power satellites, surface fission power, space tugs, orbital refuelling, and megastructure concepts). Reuses the platform's worlds, commercial/inflatable stations, propellants, and components; each technology's maturity is stated honestly, from operational to theoretical; no fabricated data

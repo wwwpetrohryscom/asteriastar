@@ -64,6 +64,7 @@ export const ROUTES = {
   spaceflightTimeline: "/timeline",
   spaceMedicine: "/space-medicine",
   spaceInfrastructure: "/space-infrastructure",
+  futureExploration: "/future-exploration",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -483,4 +484,12 @@ export function spaceInfrastructurePath(slug: string): string {
 }
 export function spaceInfrastructureDiscoveryPath(slug: string): string {
   return `/space-infrastructure/discover/${slug}`;
+}
+
+/** Future Space Exploration & Mission Concepts encyclopedia (Program AN). */
+export function futureExplorationPath(slug: string): string {
+  return `/future-exploration/${slug}`;
+}
+export function futureExplorationDiscoveryPath(slug: string): string {
+  return `/future-exploration/discover/${slug}`;
 }
