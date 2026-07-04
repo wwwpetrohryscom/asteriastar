@@ -32,6 +32,7 @@ import { TIMELINE_DISCOVERIES } from "@/app/timeline/discovery";
 import { MED_DISCOVERIES } from "@/app/space-medicine/discovery";
 import { INFRA_DISCOVERIES } from "@/app/space-infrastructure/discovery";
 import { FUTURE_DISCOVERIES } from "@/app/future-exploration/discovery";
+import { METHOD_DISCOVERIES } from "@/app/methods/discovery";
 import { HSF_DISCOVERIES } from "@/app/human-spaceflight/discovery";
 import { OBS_DISCOVERIES } from "@/app/observatories/discovery";
 import { EXO_DISCOVERIES } from "@/app/exoplanets/discovery";
@@ -146,6 +147,8 @@ import {
   spaceInfrastructureDiscoveryPath,
   futureExplorationPath,
   futureExplorationDiscoveryPath,
+  methodPath,
+  methodDiscoveryPath,
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
@@ -439,6 +442,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...FUTURE_DISCOVERIES.map((d) => ({ url: absoluteUrl(futureExplorationDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const methodsRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.methods), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.astronomyMethods.all().map((r) => ({ url: absoluteUrl(methodPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...METHOD_DISCOVERIES.map((d) => ({ url: absoluteUrl(methodDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const deepSkyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
     ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -495,6 +504,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...spaceMedicineRoutes,
     ...spaceInfrastructureRoutes,
     ...futureExplorationRoutes,
+    ...methodsRoutes,
     ...hsfRoutes,
     ...obsRoutes,
     ...exoRoutes,

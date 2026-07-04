@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Astronomy Methods, Measurements & Scientific Techniques Encyclopedia (Program AO)**
+
+- [Astronomy Methods](docs/METHODS.md) — how astronomy actually works: astrometry and parallax, photometry and the magnitude system, spectroscopy and spectral classification, interferometry and adaptive optics, the cosmic distance ladder (Cepheids, standard candles, redshift), helioseismology and asteroseismology, gravitational lensing, gravitational-wave detection, neutrino and multi-messenger astronomy, CMB measurements, galaxy rotation curves and black-hole masses, and the error analysis, calibration, and honest uncertainty that make a measurement science. Reuses the platform's exoplanet-detection methods, cosmology concepts, observing bands, and the Gaia telescope; nothing duplicated or fabricated
+
 **Future Space Exploration & Mission Concepts Encyclopedia (Program AN)**
 
 - [Future Exploration](docs/FUTURE_EXPLORATION.md) — a future-exploration authority of official and credible planned missions and concepts: the Artemis return to the Moon, Mars Sample Return, the Venus fleet (DAVINCI, VERITAS, EnVision), the ocean worlds (Dragonfly, Europa Clipper, JUICE), the next great observatories (Roman, Habitable Worlds Observatory, LISA, Athena), planetary defence (NEO Surveyor), and the outer Solar System. Each concept states its status, agency, timeline, goals, target, technology, and uncertainties honestly. Reuses the platform's in-development missions and agencies; nothing duplicated or fabricated
