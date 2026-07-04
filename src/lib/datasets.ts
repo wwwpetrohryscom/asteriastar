@@ -94,6 +94,9 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "surface-features", title: "Surface Features", description: "Named surface features across the planets, moons, and dwarf planets.", entityTypes: ["surface_feature"], sources: ["nasa", "jpl"] },
   { slug: "institution-types", title: "Institution Types", description: "The classes of space institution — space agencies, field centers, research laboratories, science institutes, commercial companies, and observatory operators.", entityTypes: ["institution_type"], sources: ["nasa", "esa"] },
   { slug: "space-institutions", title: "Space Agencies & Institutions", description: "Space agencies, field centers, laboratories, commercial companies, and observatory operators as first-class organizations.", entityTypes: ["organization"], sources: ["nasa", "esa"] },
+  { slug: "spaceflight-eras", title: "Eras of Spaceflight", description: "The great historic periods of the space age, from the Space Race to the Artemis era.", entityTypes: ["historic_space_event"], sources: ["nasa"] },
+  { slug: "spaceflight-timeline-events", title: "Spaceflight Timeline Events", description: "Dated landmark events in the history of spaceflight, from Sputnik to Artemis.", entityTypes: ["timeline_event"], sources: ["nasa", "esa"] },
+  { slug: "spaceflight-milestones", title: "Spaceflight Milestones & Records", description: "Milestone firsts and standing records of spaceflight — first satellite, first human in space, most distant spacecraft, and more.", entityTypes: ["mission_milestone", "record"], sources: ["nasa"] },
 ];
 
 export interface Dataset extends DatasetDef {

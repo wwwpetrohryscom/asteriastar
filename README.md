@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Space Missions Timeline & Historical Events Encyclopedia (Program AK)**
+
+- [Space Missions Timeline](docs/SPACEFLIGHT_TIMELINE.md) — the chronological history of spaceflight: the eras (Space Race, golden age of planetary exploration, Shuttle, ISS, commercial, Artemis), the dated timeline events (Sputnik, Gagarin, Apollo 11, the Voyagers, Cassini, New Horizons, JWST, DART, Chandrayaan-3), the milestone firsts, and the standing records. Reuses the platform's missions, mission programs, astronauts, agencies, stations, telescopes, and worlds, linking every event to what it concerns; no fabricated events or dates
+
 **Space Agencies, Institutions & Laboratories Encyclopedia (Program AJ)**
 
 - [Space Agencies, Institutions & Laboratories](docs/INSTITUTIONS.md) — the institutional layer of spaceflight: the classes of institution (space agency, field center, research laboratory, science institute, commercial company, observatory operator) and the field centers and laboratories that were missing from the graph (Goddard, Johnson, Marshall, Kennedy, ESTEC, ESAC, Tsukuba, APL, SwRI, and more), each linked part_of its parent agency. Reuses and enriches the platform's existing organizations (the agencies, commercial companies, and observatory operators), never duplicating them; no fabricated data

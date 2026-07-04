@@ -266,6 +266,14 @@ export function GET(): Response {
   lines.push(`- Impact: ${absoluteUrl("/planetary-geology/discover/impact")} · Volcanic: ${absoluteUrl("/planetary-geology/discover/volcanic")} · Icy: ${absoluteUrl("/planetary-geology/discover/icy")}`);
   lines.push("");
 
+  lines.push("## Space Missions Timeline & Historical Events Encyclopedia");
+  lines.push(
+    `${engine.spaceflightHistory.eras().length} eras and ${engine.spaceflightHistory.eventCount} dated events plus milestone firsts and standing records (engine.spaceflightHistory) — the chronological history of spaceflight, from Sputnik and Gagarin through Apollo, the Space Shuttle, the ISS, Voyager, Cassini, and New Horizons to Artemis. Curated from NASA, ESA, and national space-agency records. Every era, event, milestone, and record links to the REUSED missions, mission programs, astronauts, agencies, stations, telescopes, and worlds it concerns; those entities are never duplicated. Dates are given only to the precision that is well established. No fabricated events or dates.`,
+  );
+  lines.push(`- [Space Missions Timeline & Historical Events](${absoluteUrl("/timeline")})`);
+  lines.push(`- Master timeline: ${absoluteUrl("/timeline/discover/master-timeline")} · Firsts: ${absoluteUrl("/timeline/discover/firsts-and-milestones")} · Records: ${absoluteUrl("/timeline/discover/records")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

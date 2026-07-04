@@ -440,6 +440,22 @@ async function main() {
     `✓ Institutions valid — ${instCatalog.INST_STATS.types} institution types, ${instCatalog.INST_STATS.newOrgs} new field centers/labs (${instCatalog.INST_STATS.reusedOrgs} existing enriched) · ${instCatalog.INST_STATS.newEntities} new entities, ${instCatalog.INST_STATS.relations} relations (reused agencies + organizations; no fabricated data)`,
   );
 
+  const timeCat = await import("../src/knowledge-graph/data/spaceflight-history-catalog");
+  const timeIssues = timeCat.validateSpaceflightHistory();
+  const { getEntityById: getTimeEnt } = await import("../src/knowledge-graph");
+  for (const r of timeCat.relations) {
+    if (!getTimeEnt(r.from)) timeIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getTimeEnt(r.to)) timeIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (timeIssues.length > 0) {
+    console.error(`\n✗ ${timeIssues.length} spaceflight-history issue(s):`);
+    for (const i of timeIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Spaceflight history valid — ${timeCat.TIMELINE_STATS.eras} eras, ${timeCat.TIMELINE_STATS.events} events, ${timeCat.TIMELINE_STATS.milestones} milestones, ${timeCat.TIMELINE_STATS.superlatives} records · ${timeCat.TIMELINE_STATS.newEntities} new entities, ${timeCat.TIMELINE_STATS.relations} relations (reused missions/programs/astronauts/bodies; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

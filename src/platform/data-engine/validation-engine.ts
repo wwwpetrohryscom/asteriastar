@@ -23,6 +23,7 @@ import { validateSpacecraftSystems } from "@/knowledge-graph/data/spacecraft-sys
 import { validateInstruments } from "@/knowledge-graph/data/instruments-catalog";
 import { validatePlanetaryGeology } from "@/knowledge-graph/data/planetary-geology-catalog";
 import { validateInstitutions } from "@/knowledge-graph/data/institutions-catalog";
+import { validateSpaceflightHistory } from "@/knowledge-graph/data/spaceflight-history-catalog";
 import { validateHumanSpaceflight } from "@/knowledge-graph/data/human-spaceflight-catalog";
 import { validateObservatories } from "@/knowledge-graph/data/observatory-catalog";
 import { validateExoplanets } from "@/knowledge-graph/data/exoplanet-catalog";
@@ -127,6 +128,7 @@ export const validationEngine = {
   instruments: (): string[] => validateInstruments(),
   planetaryGeology: (): string[] => validatePlanetaryGeology(),
   institutions: (): string[] => validateInstitutions(),
+  spaceflightHistory: (): string[] => validateSpaceflightHistory(),
   humanSpaceflight: (): string[] => validateHumanSpaceflight(),
   observatories: (): string[] => validateObservatories(),
   exoplanets: (): string[] => validateExoplanets(),
@@ -165,6 +167,7 @@ export const validationEngine = {
       { category: "instruments", issues: this.instruments() },
       { category: "planetaryGeology", issues: this.planetaryGeology() },
       { category: "institutions", issues: this.institutions() },
+      { category: "spaceflightHistory", issues: this.spaceflightHistory() },
       { category: "humanSpaceflight", issues: this.humanSpaceflight() },
       { category: "observatories", issues: this.observatories() },
       { category: "exoplanets", issues: this.exoplanets() },

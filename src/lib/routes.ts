@@ -61,6 +61,7 @@ export const ROUTES = {
   instruments: "/instruments",
   planetaryGeology: "/planetary-geology",
   institutions: "/institutions",
+  spaceflightTimeline: "/timeline",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -456,4 +457,12 @@ export function institutionsPath(slug: string): string {
 }
 export function institutionsDiscoveryPath(slug: string): string {
   return `/institutions/discover/${slug}`;
+}
+
+/** Space Missions Timeline & Historical Events encyclopedia (Program AK). */
+export function spaceflightTimelinePath(slug: string): string {
+  return `/timeline/${slug}`;
+}
+export function spaceflightTimelineDiscoveryPath(slug: string): string {
+  return `/timeline/discover/${slug}`;
 }
