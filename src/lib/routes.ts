@@ -53,6 +53,7 @@ export const ROUTES = {
   comets: "/comets",
   meteorites: "/meteorites",
   interstellarObjects: "/interstellar-objects",
+  smallBodyMissions: "/small-body-missions",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -187,6 +188,20 @@ export function interstellarDetectionPath(slug: string): string {
 }
 export function interstellarTrajectoryPath(slug: string): string {
   return `/interstellar-objects/trajectory/${slug}`;
+}
+
+/** Small-Body Missions & Sample Return Encyclopedia (Program AC). */
+export function smallBodyMissionPath(slug: string): string {
+  return `/small-body-missions/${slug}`;
+}
+export function smallBodyDiscoveryPath(slug: string): string {
+  return `/small-body-missions/discover/${slug}`;
+}
+export function smallBodyTypePath(slug: string): string {
+  return `/small-body-missions/type/${slug}`;
+}
+export function smallBodySamplePath(slug: string): string {
+  return `/small-body-missions/sample/${slug}`;
 }
 
 export function exoplanetPath(slug: string): string {
