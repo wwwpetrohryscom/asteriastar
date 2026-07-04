@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Small-Body Missions & Sample Return Encyclopedia (Program AC)**
+
+- [Small-Body Missions](docs/SMALL_BODY_MISSIONS.md) — the flybys, orbiters, landers, impactors, and sample-return missions that explored asteroids and comets (Hayabusa, OSIRIS-REx, Rosetta, DART, Lucy…), with their mission classes, returned samples, capsules, lifecycle phases, and the AIDA campaign — the engineering bridge across the small-body arc. Existing missions, rockets, asteroids, and comets are reused and enriched (never duplicated); reused missions keep their canonical page; planned missions assert no results they have not achieved; no fabricated data
+
 **Interstellar & Hyperbolic Objects Encyclopedia (Program AB)**
 
 - [Interstellar Objects](docs/INTERSTELLAR_OBJECTS.md) — the confirmed visitors from beyond the Solar System (1I/ʻOumuamua, 2I/Borisov, 3I/ATLAS), debated candidates, hyperbolic Solar-System comets, and the detection methods, trajectory classes, and surveys used to tell them apart — the coda to the small-body arc. Confirmed, candidate, and Solar-System objects are typed and displayed separately; an interstellar origin is asserted only for the confirmed objects; no "alien"/artificial-origin claims and no fabricated data (reuses the comet class, Pan-STARRS/LSST, and NASA/JPL)

@@ -957,6 +957,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["interstellar_object:oumuamua", "interstellar_object:borisov", "trajectory_class:interstellar-hyperbolic", "interstellar_detection_method:excess-hyperbolic-velocity"],
     next: ["understanding-comets", "understanding-meteorites"],
   },
+  {
+    slug: "understanding-small-body-missions",
+    title: "Understanding Small-Body Missions",
+    description: "How we reached the asteroids and comets — the flybys, orbiters, landers, impactors, and sample-return missions that explored them, from Giotto at Halley to OSIRIS-REx at Bennu and DART at Dimorphos. Built on real NASA/JPL, ESA, and JAXA mission data that reuses the platform's spacecraft, rockets, asteroids, and comets; planned missions claim no results they have not achieved and nothing is fabricated.",
+    accent: "halo",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Why explore small bodies?", href: "/small-body-missions", blurb: "Asteroids and comets are pristine leftovers of planet formation — and potential hazards." },
+          { title: "Flyby missions", href: "/small-body-missions/type/flyby", blurb: "The quickest way to reach a new target: a single high-speed pass." },
+          { title: "Orbiters and rendezvous", href: "/small-body-missions/type/orbiter", blurb: "Staying with a body to map it in detail — NEAR, Dawn, Rosetta." },
+          { title: "Landers", href: "/small-body-missions/type/lander", blurb: "Touching down on a low-gravity surface — Philae, NEAR, the Hayabusa touchdowns." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Impactor missions", href: "/small-body-missions/type/impactor", blurb: "Deliberately striking a body — to look inside it, or to deflect it." },
+          { title: "Sample return", href: "/small-body-missions/discover/sample-return", blurb: "Bringing pieces of an asteroid or comet back to Earth's laboratories." },
+          { title: "The Hayabusa line", href: "/small-body-missions/hayabusa2", blurb: "JAXA's pioneering asteroid sample-return missions, Hayabusa and Hayabusa2." },
+          { title: "OSIRIS-REx at Bennu", href: "/small-body-missions/osiris-rex", blurb: "NASA's first asteroid sample return — 121.6 grams of a carbon-rich world." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Comet missions", href: "/small-body-missions/discover/comet-missions", blurb: "From Giotto's first close-up of Halley to Rosetta orbiting comet 67P." },
+          { title: "Planetary defense", href: "/small-body-missions/discover/planetary-defense", blurb: "DART's kinetic impact and Hera's follow-up — testing asteroid deflection." },
+          { title: "What returned samples reveal", href: "/small-body-missions/sample/ryugu-sample", blurb: "Water, organics, and amino acids in pristine asteroid material." },
+          { title: "Future missions", href: "/small-body-missions/discover/future-missions", blurb: "MMX, Comet Interceptor, Psyche, and the missions still to come." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["space_mission:osiris-rex", "space_mission:rosetta", "returned_sample:ryugu-sample", "mission_class:sample-return"],
+    next: ["understanding-asteroids", "understanding-comets"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

@@ -50,6 +50,7 @@ const moons = engine.query.run("moons-of-jupiter");
 | `comets` | Comets & small-body reservoirs resolver & queries | slug → `ResolvedComet`; classes / families / reservoirs / meteor-shower parents / mission targets / transition objects (see [COMETS.md](./COMETS.md)) |
 | `meteorites` | Meteorites, fireballs & impact structures resolver & queries | slug → `ResolvedMeteorite`; classes / groups / falls / finds / martian / lunar / iron / fireballs / impact structures (see [METEORITES.md](./METEORITES.md)) |
 | `interstellarObjects` | Interstellar & hyperbolic objects resolver & queries | slug → `ResolvedInterstellar`; confirmed / candidate / debated / hyperbolic comets / detection methods / trajectory classes / detection surveys — confirmed and candidate kept strictly separate (see [INTERSTELLAR_OBJECTS.md](./INTERSTELLAR_OBJECTS.md)) |
+| `smallBodyMissions` | Small-body missions & sample return resolver & queries | slug → `ResolvedMission`; sample-return / comet / asteroid / planetary-defense / active / completed / future missions / returned samples / mission classes / timeline — reuses existing space missions (enriched, not duplicated); planned missions assert no past-tense outcomes (see [SMALL_BODY_MISSIONS.md](./SMALL_BODY_MISSIONS.md)) |
 | `validation` | The single validator | () → `ValidationReport[]` |
 
 The `star` engine powers the [Star Encyclopedia](./STAR_ENCYCLOPEDIA.md) — it
