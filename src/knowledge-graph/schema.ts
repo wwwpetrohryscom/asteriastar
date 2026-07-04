@@ -208,6 +208,12 @@ export const ENTITY_TYPES = [
   // methods layer — method categories and the measurement/observation techniques.
   "method_category",
   "astronomy_method",
+  // Multi-Wavelength & Time-Domain Astronomy (Program AP). Reuses the wavelength/messenger
+  // bands, multi-messenger methods, surveys, and observatories; these are the new time-domain
+  // types — transient classes, alert-infrastructure systems, and observation-workflow stages.
+  "transient_class",
+  "alert_system",
+  "observation_stage",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1124,4 +1130,7 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   mission_concept: "Mission concept",
   method_category: "Method category",
   astronomy_method: "Astronomy method",
+  transient_class: "Transient class",
+  alert_system: "Alert system",
+  observation_stage: "Observation stage",
 };

@@ -105,6 +105,8 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "mission-concepts", title: "Mission Concepts", description: "Official and credible planned missions and mission concepts, each with its status, goals, target, and uncertainties.", entityTypes: ["mission_concept"], sources: ["nasa", "esa"] },
   { slug: "method-categories", title: "Astronomy Method Categories", description: "The families of astronomical technique — astrometry, photometry, spectroscopy, the distance ladder, exoplanet detection, and more.", entityTypes: ["method_category"], sources: ["nasa"] },
   { slug: "astronomy-methods", title: "Astronomy Methods & Techniques", description: "The measurement and observation techniques of astronomy — parallax, spectroscopy, standard candles, gravitational lensing, and more.", entityTypes: ["astronomy_method"], sources: ["nasa", "esa"] },
+  { slug: "transient-classes", title: "Transient & Time-Domain Classes", description: "The classes of transient phenomenon — supernovae, gamma-ray bursts, kilonovae, fast radio bursts, tidal disruption events, and more.", entityTypes: ["transient_class"], sources: ["nasa", "esa"] },
+  { slug: "alert-infrastructure", title: "Transient Alert Infrastructure", description: "The alert systems and observation-workflow stages that turn a transient discovery into science — GCN, VOEvent, TNS, ATel, and the Rubin stream.", entityTypes: ["alert_system", "observation_stage"], sources: ["nasa"] },
 ];
 
 export interface Dataset extends DatasetDef {

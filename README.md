@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Multi-Wavelength & Time-Domain Astronomy Atlas (Program AP)**
+
+- [Time-Domain Astronomy](docs/TIME_DOMAIN.md) — how the dynamic universe is observed across every wavelength (radio → gamma-ray) and messenger (gravitational waves, neutrinos, cosmic rays): the transient classes (Type Ia and core-collapse supernovae, hypernovae, novae, gamma-ray bursts, magnetar flares, kilonovae, compact-binary mergers, tidal disruption events, fast radio bursts, variables), the alert infrastructure (GCN, VOEvent, TNS, ATel, the Rubin stream), and the discovery→publication workflow. Reuses the platform's observing bands, multi-messenger methods, surveys, and observatories; nothing duplicated or fabricated
+
 **Astronomy Methods, Measurements & Scientific Techniques Encyclopedia (Program AO)**
 
 - [Astronomy Methods](docs/METHODS.md) — how astronomy actually works: astrometry and parallax, photometry and the magnitude system, spectroscopy and spectral classification, interferometry and adaptive optics, the cosmic distance ladder (Cepheids, standard candles, redshift), helioseismology and asteroseismology, gravitational lensing, gravitational-wave detection, neutrino and multi-messenger astronomy, CMB measurements, galaxy rotation curves and black-hole masses, and the error analysis, calibration, and honest uncertainty that make a measurement science. Reuses the platform's exoplanet-detection methods, cosmology concepts, observing bands, and the Gaia telescope; nothing duplicated or fabricated

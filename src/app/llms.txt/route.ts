@@ -306,6 +306,14 @@ export function GET(): Response {
   lines.push(`- Distances: ${absoluteUrl("/methods/discover/the-distance-ladder")} · Light & spectra: ${absoluteUrl("/methods/discover/light-and-spectra")} · Beyond light: ${absoluteUrl("/methods/discover/beyond-light")}`);
   lines.push("");
 
+  lines.push("## Multi-Wavelength & Time-Domain Astronomy Atlas");
+  lines.push(
+    `${engine.timeDomain.spectrumBands().length} reused wavelength/messenger bands and ${engine.timeDomain.transientCount} transient classes plus alert infrastructure and workflow stages (engine.timeDomain) — how the dynamic universe is observed across radio, infrared, optical, UV, X-ray and gamma-ray light and through gravitational waves, neutrinos, and cosmic rays. Transient classes: Type Ia and core-collapse supernovae, hypernovae, novae, gamma-ray bursts, magnetar flares, kilonovae, compact-binary mergers, tidal disruption events, fast radio bursts, and cataclysmic/eruptive variables. Alert infrastructure: GCN, VOEvent, the Transient Name Server, the Astronomer's Telegram, and the Rubin alert stream. Workflow: discovery → follow-up → confirmation → classification → publication. Curated from NASA and ESA. The multi-wavelength axis REUSES the existing observing bands (at /observatories/{band}), the multi-messenger methods, and the surveys/observatories; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Multi-Wavelength & Time-Domain Astronomy](${absoluteUrl("/time-domain")})`);
+  lines.push(`- Explosive: ${absoluteUrl("/time-domain/discover/explosive-transients")} · Relativistic & mergers: ${absoluteUrl("/time-domain/discover/relativistic-and-mergers")} · Alerts: ${absoluteUrl("/time-domain/discover/alert-infrastructure")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

@@ -1438,6 +1438,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["method_category:the-cosmic-distance-ladder", "astronomy_method:spectroscopy", "astronomy_method:parallax", "astronomy_method:gravitational-wave-detection"],
     next: ["understanding-the-universe", "the-solar-system"],
   },
+  {
+    slug: "understanding-the-dynamic-universe",
+    title: "Understanding the Dynamic Universe",
+    description: "How astronomers watch the universe change — across every wavelength and messenger — and the transients, alert networks, and workflows that turn a flicker in the sky into science within hours. Built on real observations; nothing is fabricated.",
+    accent: "plasma",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The dynamic universe", href: "/time-domain", blurb: "The sky is not still — how we watch it change." },
+          { title: "Explosive transients", href: "/time-domain/discover/explosive-transients", blurb: "The supernovae and novae." },
+          { title: "Type Ia supernovae", href: "/time-domain/type-ia-supernova", blurb: "The standard candles that revealed dark energy." },
+          { title: "Across the spectrum", href: "/observatories", blurb: "Radio to gamma-ray, and beyond light." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Relativistic events & mergers", href: "/time-domain/discover/relativistic-and-mergers", blurb: "Gamma-ray bursts, kilonovae, and mergers." },
+          { title: "Gamma-ray bursts", href: "/time-domain/gamma-ray-burst", blurb: "The most luminous explosions known." },
+          { title: "Kilonovae", href: "/time-domain/kilonova", blurb: "Where the heaviest elements are made." },
+          { title: "Fast radio bursts", href: "/time-domain/fast-radio-burst", blurb: "Millisecond radio flashes across the cosmos." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "The alert infrastructure", href: "/time-domain/discover/alert-infrastructure", blurb: "GCN, VOEvent, TNS, and the Rubin stream." },
+          { title: "The Rubin alert stream", href: "/time-domain/rubin-alert-stream", blurb: "Millions of transient alerts every night." },
+          { title: "The observation workflow", href: "/time-domain/discover/observation-workflow", blurb: "Discovery to publication." },
+          { title: "Multi-messenger astronomy", href: "/methods/multi-messenger-astronomy", blurb: "Combining light, waves, and neutrinos." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["transient_class:type-ia-supernova", "transient_class:kilonova", "transient_class:fast-radio-burst", "alert_system:rubin-alert-stream"],
+    next: ["understanding-how-astronomy-works", "understanding-the-universe"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

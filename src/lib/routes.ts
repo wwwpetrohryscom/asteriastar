@@ -66,6 +66,7 @@ export const ROUTES = {
   spaceInfrastructure: "/space-infrastructure",
   futureExploration: "/future-exploration",
   methods: "/methods",
+  timeDomain: "/time-domain",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -501,4 +502,12 @@ export function methodPath(slug: string): string {
 }
 export function methodDiscoveryPath(slug: string): string {
   return `/methods/discover/${slug}`;
+}
+
+/** Multi-Wavelength & Time-Domain Astronomy Atlas (Program AP). */
+export function timeDomainPath(slug: string): string {
+  return `/time-domain/${slug}`;
+}
+export function timeDomainDiscoveryPath(slug: string): string {
+  return `/time-domain/discover/${slug}`;
 }

@@ -520,6 +520,22 @@ async function main() {
     `✓ Astronomy methods valid — ${methodsCat.METHOD_STATS.categories} categories, ${methodsCat.METHOD_STATS.methods} techniques (${methodsCat.METHOD_STATS.reusedMethods} existing reused) · ${methodsCat.METHOD_STATS.newEntities} new entities, ${methodsCat.METHOD_STATS.relations} relations (reused detection methods/cosmology/bands/Gaia; no fabricated data)`,
   );
 
+  const tdCat = await import("../src/knowledge-graph/data/time-domain-catalog");
+  const tdIssues = tdCat.validateTimeDomain();
+  const { getEntityById: getTdEnt } = await import("../src/knowledge-graph");
+  for (const r of tdCat.relations) {
+    if (!getTdEnt(r.from)) tdIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getTdEnt(r.to)) tdIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (tdIssues.length > 0) {
+    console.error(`\n✗ ${tdIssues.length} time-domain issue(s):`);
+    for (const i of tdIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Time-domain valid — ${tdCat.TD_STATS.transients} transient classes, ${tdCat.TD_STATS.alerts} alert systems, ${tdCat.TD_STATS.stages} workflow stages · ${tdCat.TD_STATS.newEntities} new entities, ${tdCat.TD_STATS.relations} relations (reused bands/methods/surveys/observatories; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
