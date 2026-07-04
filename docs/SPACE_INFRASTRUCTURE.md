@@ -2,7 +2,8 @@
 
 The future engineering layer — making and building things in space rather than launching them.
 
-This layer **reuses** the Moon, Mars, the metal asteroids (Psyche, Bennu), the commercial and
+This layer **reuses** the Moon, Mars, the metal asteroid Psyche and the water-bearing
+carbonaceous asteroid Bennu, the commercial and
 inflatable space stations (Gateway, Axiom, Genesis), the propellants, and the
 solar-array/robotic-arm components already in the graph. The new entities are the
 *infrastructure domains*, the *ISRU techniques*, the *manufacturing processes*, and the
@@ -33,8 +34,9 @@ strong enough). Nothing is presented as more real than it is.
 
 ## Reuse
 
-Water/oxygen/regolith techniques link to `moon:the-moon` and `planet:mars`; metal extraction
-links to `asteroid:psyche` and `asteroid:bennu`; habitats link to the existing
+Water/oxygen/regolith techniques link to `moon:the-moon`, `planet:mars`, and the
+water-bearing `asteroid:bennu`; metal extraction links to the M-type `asteroid:psyche`;
+habitats link to the existing
 `space_station:axiom-station`, `space_station:genesis-i/ii`, and `space_station:lunar-gateway`;
 depots and refuelling link to the reused `propellant:*` entities. Nothing is duplicated, and
 every emitted relation is deduped against `LEGACY_RELATION_IDS`.
