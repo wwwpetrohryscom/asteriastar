@@ -97,6 +97,8 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "spaceflight-eras", title: "Eras of Spaceflight", description: "The great historic periods of the space age, from the Space Race to the Artemis era.", entityTypes: ["historic_space_event"], sources: ["nasa"] },
   { slug: "spaceflight-timeline-events", title: "Spaceflight Timeline Events", description: "Dated landmark events in the history of spaceflight, from Sputnik to Artemis.", entityTypes: ["timeline_event"], sources: ["nasa", "esa"] },
   { slug: "spaceflight-milestones", title: "Spaceflight Milestones & Records", description: "Milestone firsts and standing records of spaceflight — first satellite, first human in space, most distant spacecraft, and more.", entityTypes: ["mission_milestone", "record"], sources: ["nasa"] },
+  { slug: "space-physiological-effects", title: "Physiological Effects of Spaceflight", description: "How spaceflight changes the human body — bone and muscle loss, fluid shift, vision changes, radiation effects, and more.", entityTypes: ["physiological_effect"], sources: ["nasa"] },
+  { slug: "life-support-technologies", title: "Life-Support Technologies & Countermeasures", description: "The ECLSS technologies and health countermeasures that keep crews alive and well in space.", entityTypes: ["life_support_technology", "countermeasure"], sources: ["nasa", "esa"] },
 ];
 
 export interface Dataset extends DatasetDef {

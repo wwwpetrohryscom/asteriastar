@@ -456,6 +456,22 @@ async function main() {
     `✓ Spaceflight history valid — ${timeCat.TIMELINE_STATS.eras} eras, ${timeCat.TIMELINE_STATS.events} events, ${timeCat.TIMELINE_STATS.milestones} milestones, ${timeCat.TIMELINE_STATS.superlatives} records · ${timeCat.TIMELINE_STATS.newEntities} new entities, ${timeCat.TIMELINE_STATS.relations} relations (reused missions/programs/astronauts/bodies; no fabricated data)`,
   );
 
+  const medCat = await import("../src/knowledge-graph/data/space-medicine-catalog");
+  const medIssues = medCat.validateSpaceMedicine();
+  const { getEntityById: getMedEnt } = await import("../src/knowledge-graph");
+  for (const r of medCat.relations) {
+    if (!getMedEnt(r.from)) medIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getMedEnt(r.to)) medIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (medIssues.length > 0) {
+    console.error(`\n✗ ${medIssues.length} space-medicine issue(s):`);
+    for (const i of medIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Space medicine valid — ${medCat.MED_STATS.topics} disciplines, ${medCat.MED_STATS.effects} effects, ${medCat.MED_STATS.technologies} technologies, ${medCat.MED_STATS.countermeasures} countermeasures · ${medCat.MED_STATS.newEntities} new entities, ${medCat.MED_STATS.relations} relations (reused ECLSS/radiation/stations/astronauts; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

@@ -1,0 +1,13 @@
+import type { MedRecord } from "@/knowledge-graph/data/space-medicine-catalog/types";
+
+/** The disciplines of space life science — the groups the effects, technologies, and
+ *  countermeasures belong to. */
+const topic = (r: Omit<MedRecord, "kind" | "id" | "category"> & { slug: string }): MedRecord => ({ ...r, kind: "topic", id: `space_biology_topic:${r.slug}`, category: "discipline" });
+
+export const topics: MedRecord[] = [
+  topic({ slug: "space-medicine", name: "Space Medicine", description: "The medical discipline concerned with keeping astronauts healthy before, during, and after spaceflight — studying how microgravity changes the body and how to protect it on long missions to the ISS, the Moon, and Mars.", definition: "The medicine of keeping humans healthy in space.", sources: ["nasa"], highlights: ["Underpins long-duration missions and future Mars health"] }),
+  topic({ slug: "space-radiation-biology", name: "Space Radiation Biology", description: "The study of how the radiation of space — galactic cosmic rays and solar energetic particles — affects living tissue, and how crews can be protected beyond the shelter of Earth's magnetic field.", definition: "How space radiation affects the body, and how to shield it.", sources: ["nasa"] }),
+  topic({ slug: "space-psychology-and-human-factors", name: "Space Psychology & Human Factors", description: "The behavioural health and human-factors discipline — how isolation, confinement, altered day–night cycles, and workload affect crews, and how habitats and schedules are designed around human needs.", definition: "Behavioural health and human-centred design for spaceflight.", sources: ["nasa"] }),
+  topic({ slug: "environmental-control-and-life-support", name: "Environmental Control & Life Support", altNames: ["ECLSS engineering"], description: "The engineering that keeps a crew alive — generating oxygen, scrubbing carbon dioxide, recovering water, managing waste, and controlling the atmosphere. These technologies make up the Environmental Control and Life Support System.", definition: "The technologies that keep a crew's environment survivable.", sources: ["nasa"] }),
+  topic({ slug: "bioregenerative-life-support", name: "Bioregenerative Life Support", altNames: ["Closed Ecosystems"], description: "Life support that uses living systems — plants and microbes — to recycle air, water, and waste and to grow food, moving toward the closed ecosystems that long missions far from Earth will need.", definition: "Life support that recycles resources with living systems.", sources: ["nasa"], highlights: ["From ISS plant experiments toward closed ecosystems for Mars"] }),
+];

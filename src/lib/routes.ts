@@ -62,6 +62,7 @@ export const ROUTES = {
   planetaryGeology: "/planetary-geology",
   institutions: "/institutions",
   spaceflightTimeline: "/timeline",
+  spaceMedicine: "/space-medicine",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -465,4 +466,12 @@ export function spaceflightTimelinePath(slug: string): string {
 }
 export function spaceflightTimelineDiscoveryPath(slug: string): string {
   return `/timeline/discover/${slug}`;
+}
+
+/** Life Support, Space Biology & Space Medicine encyclopedia (Program AL). */
+export function spaceMedicinePath(slug: string): string {
+  return `/space-medicine/${slug}`;
+}
+export function spaceMedicineDiscoveryPath(slug: string): string {
+  return `/space-medicine/discover/${slug}`;
 }
