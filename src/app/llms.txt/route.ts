@@ -282,6 +282,14 @@ export function GET(): Response {
   lines.push(`- Effects: ${absoluteUrl("/space-medicine/discover/physiological-effects")} · Countermeasures: ${absoluteUrl("/space-medicine/discover/countermeasures")} · Life support: ${absoluteUrl("/space-medicine/discover/life-support-technologies")}`);
   lines.push("");
 
+  lines.push("## Space Manufacturing & In-Space Infrastructure Encyclopedia");
+  lines.push(
+    `${engine.spaceInfrastructure.domains().length} domains and ${engine.spaceInfrastructure.itemCount} technologies (engine.spaceInfrastructure) — the future engineering layer: in-situ resource utilisation (water, oxygen, metals, and propellant from the Moon, Mars, and asteroids), in-space manufacturing (3D printing, in-space assembly, servicing, autonomous construction), and the infrastructure of a spacefaring economy (propellant depots, commercial and inflatable habitats, lunar bases, solar-power satellites, surface fission power, space tugs, orbital refuelling, and megastructure concepts such as space elevators and mass drivers). Curated from NASA and ESA. Reuses the Moon, Mars, metal asteroids, the commercial/inflatable stations (Gateway, Axiom, Genesis), the propellants, and the components already in the graph. Technology maturity is stated honestly — from operational (ISS 3D printing, MOXIE oxygen on Mars) to purely theoretical (space elevator). No fabricated data.`,
+  );
+  lines.push(`- [Space Manufacturing & In-Space Infrastructure](${absoluteUrl("/space-infrastructure")})`);
+  lines.push(`- ISRU: ${absoluteUrl("/space-infrastructure/discover/resource-utilisation")} · Manufacturing: ${absoluteUrl("/space-infrastructure/discover/manufacturing")} · Infrastructure: ${absoluteUrl("/space-infrastructure/discover/infrastructure-systems")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

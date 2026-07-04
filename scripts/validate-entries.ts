@@ -472,6 +472,22 @@ async function main() {
     `✓ Space medicine valid — ${medCat.MED_STATS.topics} disciplines, ${medCat.MED_STATS.effects} new effects (${medCat.MED_STATS.reusedEffects} existing reused), ${medCat.MED_STATS.technologies} technologies, ${medCat.MED_STATS.countermeasures} countermeasures · ${medCat.MED_STATS.newEntities} new entities, ${medCat.MED_STATS.relations} relations (reused ECLSS/radiation/stations/astronauts + space_medicine_topic effects; no fabricated data)`,
   );
 
+  const infraCat = await import("../src/knowledge-graph/data/space-infrastructure-catalog");
+  const infraIssues = infraCat.validateSpaceInfrastructure();
+  const { getEntityById: getInfraEnt } = await import("../src/knowledge-graph");
+  for (const r of infraCat.relations) {
+    if (!getInfraEnt(r.from)) infraIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getInfraEnt(r.to)) infraIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (infraIssues.length > 0) {
+    console.error(`\n✗ ${infraIssues.length} space-infrastructure issue(s):`);
+    for (const i of infraIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Space infrastructure valid — ${infraCat.INFRA_STATS.domains} domains, ${infraCat.INFRA_STATS.isru} ISRU techniques, ${infraCat.INFRA_STATS.manufacturing} manufacturing processes, ${infraCat.INFRA_STATS.infrastructure} systems · ${infraCat.INFRA_STATS.newEntities} new entities, ${infraCat.INFRA_STATS.relations} relations (reused bodies/stations/propellants/components; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

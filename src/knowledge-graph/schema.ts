@@ -191,6 +191,13 @@ export const ENTITY_TYPES = [
   "physiological_effect",
   "life_support_technology",
   "countermeasure",
+  // Space Manufacturing & In-Space Infrastructure (Program AM). Reuses the Moon, Mars, metal
+  // asteroids, commercial/inflatable stations, propellants, and components; these are the new
+  // future-engineering types — domains, ISRU techniques, manufacturing processes, and systems.
+  "infrastructure_domain",
+  "isru_technique",
+  "space_manufacturing_process",
+  "space_infrastructure",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1099,4 +1106,8 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   physiological_effect: "Physiological effect",
   life_support_technology: "Life-support technology",
   countermeasure: "Countermeasure",
+  infrastructure_domain: "Infrastructure domain",
+  isru_technique: "ISRU technique",
+  space_manufacturing_process: "Space manufacturing process",
+  space_infrastructure: "Space infrastructure",
 };

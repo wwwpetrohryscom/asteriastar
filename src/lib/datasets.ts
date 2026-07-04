@@ -99,6 +99,8 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "spaceflight-milestones", title: "Spaceflight Milestones & Records", description: "Milestone firsts and standing records of spaceflight — first satellite, first human in space, most distant spacecraft, and more.", entityTypes: ["mission_milestone", "record"], sources: ["nasa"] },
   { slug: "space-physiological-effects", title: "Physiological Effects of Spaceflight", description: "How spaceflight changes the human body — bone and muscle loss, fluid shift, vision changes, radiation effects, and more.", entityTypes: ["physiological_effect"], sources: ["nasa"] },
   { slug: "life-support-technologies", title: "Life-Support Technologies & Countermeasures", description: "The ECLSS technologies and health countermeasures that keep crews alive and well in space.", entityTypes: ["life_support_technology", "countermeasure"], sources: ["nasa", "esa"] },
+  { slug: "isru-and-manufacturing", title: "ISRU & In-Space Manufacturing", description: "In-situ resource-utilisation techniques and in-space manufacturing and construction processes.", entityTypes: ["isru_technique", "space_manufacturing_process"], sources: ["nasa"] },
+  { slug: "space-infrastructure", title: "Space Infrastructure", description: "The infrastructure of a spacefaring economy — depots, habitats, power stations, tugs, and megastructure concepts.", entityTypes: ["space_infrastructure"], sources: ["nasa"] },
 ];
 
 export interface Dataset extends DatasetDef {

@@ -72,6 +72,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Space Agencies, Institutions & Laboratories", href: ROUTES.institutions, description: "Agencies, field centers, laboratories & commercial companies — NASA, ESA, JAXA, JPL, APL, SpaceX" },
             { name: "Space Missions Timeline & Historical Events", href: ROUTES.spaceflightTimeline, description: "The chronological history of spaceflight — Sputnik, Apollo, Shuttle, ISS, Voyager, Artemis; eras, firsts & records" },
             { name: "Life Support, Space Biology & Space Medicine", href: ROUTES.spaceMedicine, description: "The human-in-space layer — microgravity effects, radiation biology, ECLSS life support & countermeasures" },
+            { name: "Space Manufacturing & In-Space Infrastructure", href: ROUTES.spaceInfrastructure, description: "The future engineering layer — ISRU, orbital manufacturing, depots, habitats, power & logistics" },
             { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Observatories", href: ROUTES.observatories, description: "Telescopes, surveys, bands" },
             { name: "Exoplanets", href: ROUTES.exoplanets, description: "Worlds beyond the Sun" },
