@@ -12,7 +12,7 @@ import { ROUTES, missionOperationsDiscoveryPath } from "@/lib/routes";
 import { OPS_DISCOVERIES } from "@/app/mission-operations/discovery";
 
 const DESCRIPTION =
-  "An encyclopedia of the operational infrastructure behind every mission — the mission-control and operations centres (JPL&apos;s SFOF, ESA&apos;s ESOC, Houston&apos;s Mission Control) and the operational functions that fly spacecraft: mission control, flight dynamics, orbit determination, navigation, telemetry, command sequencing, fault protection, and the operations lifecycle. Reuses the agencies, tracking networks, and missions; nothing is fabricated.";
+  "An encyclopedia of the operational infrastructure behind every mission — the mission-control and operations centres (JPL's SFOF, ESA's ESOC, Houston's Mission Control) and the operational functions that fly spacecraft: mission control, flight dynamics, orbit determination, navigation, telemetry, command sequencing, fault protection, and the operations lifecycle. Reuses the agencies, tracking networks, and missions; nothing is fabricated.";
 
 export const metadata: Metadata = buildMetadata({ title: "Ground Segment & Mission Operations", description: DESCRIPTION, path: ROUTES.missionOperations });
 

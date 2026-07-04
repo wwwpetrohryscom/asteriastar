@@ -41,6 +41,22 @@ export function OpsDetail({ d }: { d: ResolvedOps }) {
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
           <div className="space-y-10">
+            {r.definition ? (
+              <section aria-labelledby="definition" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+                <h2 id="definition" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">In brief</h2>
+                <p className="mt-2 text-sm text-muted">{r.definition}</p>
+              </section>
+            ) : null}
+
+            {r.highlights?.length ? (
+              <section aria-labelledby="highlights">
+                <h2 id="highlights" className="font-display text-2xl font-bold">Highlights</h2>
+                <ul className="mt-3 space-y-1.5 text-sm text-muted">
+                  {r.highlights.map((h) => <li key={h} className="flex gap-2"><span className="text-stone">›</span>{h}</li>)}
+                </ul>
+              </section>
+            ) : null}
+
             {(d.operator || d.networks.length || d.related.length) ? (
               <section aria-labelledby="links">
                 <h2 id="links" className="font-display text-2xl font-bold">Connections</h2>
@@ -70,7 +86,7 @@ export function OpsDetail({ d }: { d: ResolvedOps }) {
           </div>
 
           <aside className="space-y-6">
-            {(r.locationLabel || r.role) ? (
+            {(r.locationLabel || r.countryLabel) ? (
               <section aria-labelledby="quick" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
                 <h2 id="quick" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
                 <dl className="mt-3 divide-y divide-white/5 text-sm">
