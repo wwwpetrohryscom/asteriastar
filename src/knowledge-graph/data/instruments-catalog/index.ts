@@ -27,7 +27,7 @@ const REUSED_INSTRUMENT_CLASS: [string, string][] = [
   ["scientific_instrument:acs", "optical-camera"],
   ["scientific_instrument:cos", "spectrometer"],
   ["scientific_instrument:stis", "spectrometer"],
-  ["scientific_instrument:juno-microwave-radiometer", "radio-science"],
+  ["scientific_instrument:juno-microwave-radiometer", "spectrometer"],
   ["scientific_instrument:hires", "spectrometer"],
   ["scientific_instrument:muse", "imaging-spectrometer"],
   ["scientific_instrument:sphere", "optical-camera"],
