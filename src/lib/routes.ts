@@ -54,6 +54,7 @@ export const ROUTES = {
   meteorites: "/meteorites",
   interstellarObjects: "/interstellar-objects",
   smallBodyMissions: "/small-body-missions",
+  deepSpaceNetwork: "/deep-space-network",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -202,6 +203,26 @@ export function smallBodyTypePath(slug: string): string {
 }
 export function smallBodySamplePath(slug: string): string {
   return `/small-body-missions/sample/${slug}`;
+}
+
+/** Deep Space Communications & Navigation Encyclopedia (Program AD). */
+export function dsnNetworkPath(slug: string): string {
+  return `/deep-space-network/network/${slug}`;
+}
+export function dsnStationPath(slug: string): string {
+  return `/deep-space-network/station/${slug}`;
+}
+export function dsnAntennaPath(slug: string): string {
+  return `/deep-space-network/antenna/${slug}`;
+}
+export function dsnBandPath(slug: string): string {
+  return `/deep-space-network/band/${slug}`;
+}
+export function dsnNavigationPath(slug: string): string {
+  return `/deep-space-network/navigation/${slug}`;
+}
+export function dsnDiscoveryPath(slug: string): string {
+  return `/deep-space-network/discover/${slug}`;
 }
 
 export function exoplanetPath(slug: string): string {
