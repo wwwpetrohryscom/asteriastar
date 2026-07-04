@@ -74,6 +74,12 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "sample-return-capsules", title: "Sample-Return Capsules", description: "The reentry capsules that carried returned small-body samples back through the atmosphere.", entityTypes: ["sample_return_capsule"], sources: ["nasa", "jaxa"] },
   { slug: "mission-phases", title: "Mission Phases", description: "The generic lifecycle stages of a small-body mission, from launch and cruise to return and reentry.", entityTypes: ["mission_phase"], sources: ["nasa", "esa"] },
   { slug: "science-campaigns", title: "Science Campaigns", description: "Joint multi-mission science campaigns, such as the AIDA asteroid-deflection collaboration.", entityTypes: ["science_campaign"], sources: ["nasa", "esa"] },
+  { slug: "tracking-stations", title: "Deep-Space Tracking Stations", description: "The ground complexes with giant antennas that track deep-space missions — Goldstone, Madrid, Canberra, and more.", entityTypes: ["tracking_station"], sources: ["nasa", "jpl", "esa"] },
+  { slug: "ground-stations", title: "Ground Stations", description: "Near-Earth network ground terminals, including the TDRS gateway at White Sands.", entityTypes: ["ground_station"], sources: ["nasa"] },
+  { slug: "antennas", title: "Antennas", description: "Ground and spacecraft antennas used for deep-space communication, from 70 m dishes to laser terminals.", entityTypes: ["antenna"], sources: ["nasa", "jpl"] },
+  { slug: "signal-bands", title: "Signal Bands", description: "Communication signal bands — S, X, Ka, UHF, and optical (laser).", entityTypes: ["signal_band"], sources: ["nasa", "jpl"] },
+  { slug: "navigation-methods", title: "Navigation Methods", description: "Deep-space navigation systems — radiometric tracking, Delta-DOR, optical, and autonomous navigation.", entityTypes: ["navigation_system"], sources: ["nasa", "jpl"] },
+  { slug: "communication-technologies", title: "Communication Technologies", description: "Communication and timing systems — optical relays, TDRS, telemetry/tracking/command, and time standards.", entityTypes: ["communication_system", "time_standard"], sources: ["nasa", "jpl"] },
 ];
 
 export interface Dataset extends DatasetDef {

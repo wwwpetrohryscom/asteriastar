@@ -994,6 +994,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["space_mission:osiris-rex", "space_mission:rosetta", "returned_sample:ryugu-sample", "mission_class:sample-return"],
     next: ["understanding-asteroids", "understanding-comets"],
   },
+  {
+    slug: "understanding-deep-space-communications",
+    title: "Understanding Deep Space Communications",
+    description: "How we stay in touch with, and navigate, spacecraft across the Solar System — the giant antennas and tracking stations, the radio and laser signal bands, the light-time that makes deep space so hard, and the radiometric, optical, and autonomous navigation that keeps missions on course. Built on real NASA/JPL, ESA, and JAXA data that reuses the platform's networks and missions; nothing is fabricated.",
+    accent: "aurora",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Why deep-space communication is hard", href: "/deep-space-network", blurb: "Faint signals, huge distances, and the speed-of-light delay." },
+          { title: "The Deep Space Network", href: "/deep-space-network/network/deep-space-network", blurb: "Three complexes ~120° apart that keep spacecraft always in view." },
+          { title: "Tracking stations", href: "/deep-space-network/discover/tracking-stations", blurb: "Goldstone, Madrid, Canberra, and their counterparts worldwide." },
+          { title: "Antennas", href: "/deep-space-network/discover/antennas", blurb: "From 70 m giants to the dishes on the spacecraft themselves." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Signal bands", href: "/deep-space-network/band/x-band", blurb: "S, X, Ka, and optical — the frequencies that carry the data." },
+          { title: "Light-time and latency", href: "/deep-space-network/band/x-band", blurb: "Why a command to Jupiter takes the best part of an hour." },
+          { title: "Radiometric navigation", href: "/deep-space-network/navigation/radiometric-navigation", blurb: "Distance from signal time, velocity from the Doppler shift." },
+          { title: "Delta-DOR", href: "/deep-space-network/navigation/delta-dor", blurb: "Using a quasar as a fixed reference for pinpoint accuracy." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Optical and autonomous navigation", href: "/deep-space-network/navigation/autonomous-navigation", blurb: "Spacecraft that steer themselves in the final approach." },
+          { title: "Onboard atomic clocks", href: "/deep-space-network/navigation/deep-space-atomic-clock", blurb: "Precise timekeeping that enables one-way navigation." },
+          { title: "Laser communications", href: "/deep-space-network/discover/laser-communications", blurb: "DSOC and the leap to optical data rates." },
+          { title: "The future of deep-space communication", href: "/deep-space-network/discover/future-communications", blurb: "Optical links, antenna arraying, and onboard timing." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["tracking_network:deep-space-network", "tracking_station:goldstone", "signal_band:x-band", "navigation_system:radiometric-navigation"],
+    next: ["understanding-small-body-missions", "understanding-satellites"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

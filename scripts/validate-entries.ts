@@ -326,6 +326,24 @@ async function main() {
     `✓ Small-body missions valid — ${smallBodyCat.SMALLBODY_STATS.missions} missions (${smallBodyCat.SMALLBODY_STATS.reusedMissions} reused + ${smallBodyCat.SMALLBODY_STATS.newMissions} new), ${smallBodyCat.SMALLBODY_STATS.classes} classes, ${smallBodyCat.SMALLBODY_STATS.samples} returned samples, ${smallBodyCat.SMALLBODY_STATS.capsules} capsules, ${smallBodyCat.SMALLBODY_STATS.phases} phases, ${smallBodyCat.SMALLBODY_STATS.campaigns} campaign · ${smallBodyCat.SMALLBODY_STATS.newEntities} new entities, ${smallBodyCat.SMALLBODY_STATS.relations} relations (reused missions/asteroids/comets/rockets/agencies; planned missions assert no past-tense outcomes; no fabricated data)`,
   );
 
+  const dsCommCat = await import("../src/knowledge-graph/data/deep-space-comms-catalog");
+  const dsCommIssues = dsCommCat.validateDeepSpaceCommunications();
+  // Cross-reference resolution: every relation endpoint the catalog emits must resolve to
+  // a real graph entity (reused networks, missions, telescopes, organizations).
+  const { getEntityById: getDscEnt } = await import("../src/knowledge-graph");
+  for (const r of dsCommCat.relations) {
+    if (!getDscEnt(r.from)) dsCommIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getDscEnt(r.to)) dsCommIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (dsCommIssues.length > 0) {
+    console.error(`\n✗ ${dsCommIssues.length} deep-space-comms issue(s):`);
+    for (const i of dsCommIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Deep-space communications valid — ${dsCommCat.DSCOMM_STATS.networks} networks (${dsCommCat.DSCOMM_STATS.reusedNetworks} reused + ${dsCommCat.DSCOMM_STATS.newNetworks} new), ${dsCommCat.DSCOMM_STATS.trackingStations} tracking + ${dsCommCat.DSCOMM_STATS.groundStations} ground stations, ${dsCommCat.DSCOMM_STATS.antennas} antennas, ${dsCommCat.DSCOMM_STATS.bands} signal bands, ${dsCommCat.DSCOMM_STATS.navigation} navigation systems, ${dsCommCat.DSCOMM_STATS.timeStandards} time standards, ${dsCommCat.DSCOMM_STATS.commSystems} comm systems · ${dsCommCat.DSCOMM_STATS.newEntities} new entities, ${dsCommCat.DSCOMM_STATS.relations} relations (reused DSN/Estrack/NSN, missions, agencies; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

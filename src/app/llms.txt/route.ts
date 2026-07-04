@@ -219,6 +219,15 @@ export function GET(): Response {
   lines.push(`- Missions resolve at /small-body-missions/{slug} (reused ones canonical to their main page); mission classes at /small-body-missions/type/{slug}; returned samples at /small-body-missions/sample/{slug}.`);
   lines.push("");
 
+  lines.push("## Deep Space Communications & Navigation Encyclopedia");
+  lines.push(
+    `${engine.deepSpaceCommunications.count} communication networks, ${engine.deepSpaceCommunications.trackingStations().length} deep-space tracking stations, ${engine.deepSpaceCommunications.groundStations().length} near-Earth ground stations, ${engine.deepSpaceCommunications.antennas().length} antennas, ${engine.deepSpaceCommunications.signalBands().length} signal bands, ${engine.deepSpaceCommunications.navigationMethods().length} navigation systems, and timing/communication systems (engine.deepSpaceCommunications) — the infrastructure layer beneath nearly every space program. Capabilities and antenna sizes come from NASA/JPL, ESA, and JAXA. The Deep Space Network, Estrack, and Near Space Network already exist as tracking_network entities and are REUSED and enriched (never duplicated) — reused networks keep their canonical page, so their /deep-space-network view is excluded from the sitemap; mission-support links reuse the existing spacecraft (Voyager, Cassini, JWST, Rosetta, Hayabusa, Psyche…). Signal light-time is real physics (distance ÷ the speed of light), never a fabricated fixed delay. No fabricated capabilities, antenna sizes, or coverage.`,
+  );
+  lines.push(`- [Deep Space Communications & Navigation](${absoluteUrl("/deep-space-network")})`);
+  lines.push(`- Tracking stations: ${absoluteUrl("/deep-space-network/discover/tracking-stations")} · Signal bands: ${absoluteUrl("/deep-space-network/band/x-band")} · Navigation: ${absoluteUrl("/deep-space-network/discover/navigation")} · Laser comms: ${absoluteUrl("/deep-space-network/discover/laser-communications")}`);
+  lines.push(`- Networks resolve at /deep-space-network/network/{slug} (reused ones canonical to their existing page); stations at /deep-space-network/station/{slug}; antennas, bands, and navigation at /deep-space-network/{antenna,band,navigation}/{slug}.`);
+  lines.push("");
+
   lines.push("## Space Stations & Human Spaceflight");
   lines.push(
     `How humans live and work in space: ${engine.humanSpaceflight.byKind("station").length} space stations (ISS, Mir, Skylab, Salyut, Tiangong, and planned stations) plus crewed and cargo spacecraft, ISS modules, expeditions, spacewalks, programs, and astronauts — ${engine.humanSpaceflight.count} interconnected entities. Curated from NASA, ESA, Roscosmos, JAXA, CSA, and Smithsonian sources. No fabricated crew, dates, EVAs, or modules; planned stations are clearly marked.`,
