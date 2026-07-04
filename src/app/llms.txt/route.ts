@@ -234,6 +234,14 @@ export function GET(): Response {
   lines.push(`- Space weather: ${absoluteUrl("/space-environment/discover/space-weather")} · Radiation: ${absoluteUrl("/space-environment/discover/radiation")} · Hazards: ${absoluteUrl("/space-environment/discover/hazards")}`);
   lines.push("");
 
+  lines.push("## Ground Segment & Mission Operations Encyclopedia");
+  lines.push(
+    `${engine.missionOperations.centers().length} mission operations centres and ${engine.missionOperations.functions().length} operational functions (engine.missionOperations) — the operational infrastructure behind every mission. Curated from NASA, ESA, JAXA, ISRO, Roscosmos, and CNSA. The agencies, the tracking networks (DSN, Estrack), and the missions are REUSED, never duplicated. No fabricated data.`,
+  );
+  lines.push(`- [Ground Segment & Mission Operations](${absoluteUrl("/mission-operations")})`);
+  lines.push(`- Centres: ${absoluteUrl("/mission-operations/discover/operations-centers")} · Flight dynamics: ${absoluteUrl("/mission-operations/discover/flight-dynamics")} · Lifecycle: ${absoluteUrl("/mission-operations/discover/mission-lifecycle")}`);
+  lines.push("");
+
   lines.push("## Space Stations & Human Spaceflight");
   lines.push(
     `How humans live and work in space: ${engine.humanSpaceflight.byKind("station").length} space stations (ISS, Mir, Skylab, Salyut, Tiangong, and planned stations) plus crewed and cargo spacecraft, ISS modules, expeditions, spacewalks, programs, and astronauts â ${engine.humanSpaceflight.count} interconnected entities. Curated from NASA, ESA, Roscosmos, JAXA, CSA, and Smithsonian sources. No fabricated crew, dates, EVAs, or modules; planned stations are clearly marked.`,

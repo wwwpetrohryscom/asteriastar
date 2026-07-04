@@ -1068,6 +1068,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["space_weather_phenomenon:solar-wind", "space_weather_phenomenon:geomagnetic-storm", "radiation_environment:van-allen-belts", "geomagnetic_index:kp-index"],
     next: ["understanding-deep-space-communications", "the-solar-system"],
   },
+  {
+    slug: "understanding-mission-operations",
+    title: "Understanding Mission Operations",
+    description: "The operational infrastructure behind every mission — the control centres and the functions that fly spacecraft, from mission control and flight dynamics to fault protection and the operations lifecycle. Built on real NASA, ESA, and agency data; nothing is fabricated.",
+    accent: "stone",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "What is mission operations?", href: "/mission-operations", blurb: "The teams on the ground that fly the spacecraft." },
+          { title: "Operations centres", href: "/mission-operations/discover/operations-centers", blurb: "The control rooms — JPL's SFOF, ESA's ESOC, Houston's Mission Control." },
+          { title: "Mission control", href: "/mission-operations/mission-control", blurb: "Commanding and monitoring a spacecraft in real time." },
+          { title: "Telemetry and commanding", href: "/mission-operations/telemetry-processing", blurb: "Reading a spacecraft's data and sending it instructions." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Flight dynamics", href: "/mission-operations/flight-dynamics", blurb: "Knowing and controlling a spacecraft's orbit and attitude." },
+          { title: "Orbit determination", href: "/mission-operations/orbit-determination", blurb: "Pinning down where a spacecraft is from tracking data." },
+          { title: "Navigation operations", href: "/mission-operations/navigation-operations", blurb: "Guiding a spacecraft to its target through the DSN." },
+          { title: "Mission planning", href: "/mission-operations/mission-planning", blurb: "Turning goals into a resource-constrained plan of activities." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Spacecraft health and safe mode", href: "/mission-operations/safe-mode", blurb: "How a spacecraft protects itself when something goes wrong." },
+          { title: "Fault protection", href: "/mission-operations/fault-protection", blurb: "Automatic responses when the ground cannot react in time." },
+          { title: "The operations lifecycle", href: "/mission-operations/discover/mission-lifecycle", blurb: "From launch and cruise to science and end-of-mission." },
+          { title: "End-of-mission operations", href: "/mission-operations/end-of-mission-operations", blurb: "Disposing of a spacecraft responsibly and preserving its data." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["mission_operations_center:jpl-sfof", "operations_function:mission-control", "operations_function:flight-dynamics", "operations_function:navigation-operations"],
+    next: ["understanding-deep-space-communications", "understanding-small-body-missions"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

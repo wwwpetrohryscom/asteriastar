@@ -33,6 +33,7 @@ import { relations as interstellarCatalog } from "@/knowledge-graph/data/interst
 import { relations as smallBodyMissionsCatalog } from "@/knowledge-graph/data/small-body-missions-catalog";
 import { relations as deepSpaceCommsCatalog } from "@/knowledge-graph/data/deep-space-comms-catalog";
 import { relations as spaceEnvironmentCatalog } from "@/knowledge-graph/data/space-environment-catalog";
+import { relations as missionOperationsCatalog } from "@/knowledge-graph/data/mission-operations-catalog";
 import { coreRelations } from "@/knowledge-graph/data/core-relations";
 
 /**
@@ -80,4 +81,5 @@ export const relations: GraphRelation[] = [
   ...smallBodyMissionsCatalog,
   ...deepSpaceCommsCatalog,
   ...spaceEnvironmentCatalog,
+  ...missionOperationsCatalog,
 ];
