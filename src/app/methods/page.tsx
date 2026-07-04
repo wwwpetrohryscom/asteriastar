@@ -9,7 +9,7 @@ import { engine } from "@/platform/data-engine";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES, methodDiscoveryPath } from "@/lib/routes";
-import { METHOD_DISCOVERIES } from "@/app/methods/discovery";
+import { METHOD_DISCOVERIES, reusedForMethodDiscovery } from "@/app/methods/discovery";
 
 const DESCRIPTION =
   "How astronomy actually works — the methods, measurements, and techniques behind the science. Astrometry and parallax; photometry and spectroscopy; the cosmic distance ladder from Cepheids to redshift; exoplanet detection; helioseismology; gravitational lensing, gravitational-wave detection, neutrino and multi-messenger astronomy; and the calibration, error analysis, and honest uncertainty that make a measurement science. Reuses the platform's exoplanet-detection methods, cosmology concepts, observing bands, and the Gaia telescope; nothing is fabricated.";
@@ -35,7 +35,7 @@ export default function MethodsHubPage() {
               <li key={d.slug} className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
                 <Link href={methodDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nebula hover:underline">{d.title}</Link>
                 <p className="mt-1 flex-1 text-sm text-muted">{d.description}</p>
-                <span className="mt-3 text-xs text-faint">{d.get().length} entries</span>
+                <span className="mt-3 text-xs text-faint">{d.get().length + reusedForMethodDiscovery(d).length} entries</span>
               </li>
             ))}
           </ul>
