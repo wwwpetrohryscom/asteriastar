@@ -56,6 +56,7 @@ export const ROUTES = {
   smallBodyMissions: "/small-body-missions",
   deepSpaceNetwork: "/deep-space-network",
   spaceEnvironment: "/space-environment",
+  missionOperations: "/mission-operations",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -411,4 +412,12 @@ export function spaceEnvironmentPath(slug: string): string {
 }
 export function spaceEnvironmentDiscoveryPath(slug: string): string {
   return `/space-environment/discover/${slug}`;
+}
+
+/** Ground Segment & Mission Operations Encyclopedia (Program AF). */
+export function missionOperationsPath(slug: string): string {
+  return `/mission-operations/${slug}`;
+}
+export function missionOperationsDiscoveryPath(slug: string): string {
+  return `/mission-operations/discover/${slug}`;
 }

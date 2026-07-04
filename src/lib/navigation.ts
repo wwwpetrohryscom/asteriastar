@@ -65,6 +65,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Small-Body Missions", href: ROUTES.smallBodyMissions, description: "Sample return, flybys, orbiters, impactors & planetary defense — Hayabusa, OSIRIS-REx, Rosetta, DART" },
             { name: "Deep Space Network", href: ROUTES.deepSpaceNetwork, description: "Communication & navigation infrastructure — antennas, tracking stations, signal bands, DSN & Estrack" },
             { name: "Space Environment & Hazards", href: ROUTES.spaceEnvironment, description: "Space weather, radiation belts, cosmic rays, orbital debris & the missions that monitor them" },
+            { name: "Mission Operations", href: ROUTES.missionOperations, description: "Ground segment: operations centres, flight dynamics, navigation ops, command & control" },
             { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Observatories", href: ROUTES.observatories, description: "Telescopes, surveys, bands" },
             { name: "Exoplanets", href: ROUTES.exoplanets, description: "Worlds beyond the Sun" },

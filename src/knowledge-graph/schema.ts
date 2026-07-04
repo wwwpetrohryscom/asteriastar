@@ -159,6 +159,10 @@ export const ENTITY_TYPES = [
   "radiation_environment",
   "space_hazard",
   "geomagnetic_index",
+  // Ground Segment & Mission Operations (Program AF). Reuses organizations, tracking
+  // networks, and missions; these are the new operational types.
+  "mission_operations_center",
+  "operations_function",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1045,4 +1049,6 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   radiation_environment: "Radiation environment",
   space_hazard: "Space hazard",
   geomagnetic_index: "Geomagnetic index",
+  mission_operations_center: "Mission operations center",
+  operations_function: "Operations function",
 };

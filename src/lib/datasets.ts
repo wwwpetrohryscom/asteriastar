@@ -84,6 +84,8 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "radiation-environments", title: "Radiation Environments", description: "The Van Allen belts, galactic cosmic rays, and solar energetic particles.", entityTypes: ["radiation_environment"], sources: ["nasa"] },
   { slug: "space-hazards", title: "Space Hazards", description: "Physical hazards to spacecraft — orbital debris, micrometeoroids, charging, and atomic oxygen.", entityTypes: ["space_hazard"], sources: ["nasa", "esa"] },
   { slug: "geomagnetic-indices", title: "Geomagnetic Indices", description: "Space-weather indices and scales — Kp, Dst, and the NOAA G/S/R scales.", entityTypes: ["geomagnetic_index"], sources: ["noaa"] },
+  { slug: "operations-centers", title: "Mission Operations Centres", description: "The control centres that fly spacecraft — JPL's SFOF, ESA's ESOC, Houston's Mission Control, and more.", entityTypes: ["mission_operations_center"], sources: ["nasa", "esa"] },
+  { slug: "operations-functions", title: "Operations Functions", description: "The functions of mission operations — mission control, flight dynamics, navigation, telemetry, fault protection, and the operations lifecycle.", entityTypes: ["operations_function"], sources: ["nasa", "esa"] },
 ];
 
 export interface Dataset extends DatasetDef {

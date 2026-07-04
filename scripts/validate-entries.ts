@@ -360,6 +360,22 @@ async function main() {
     `✓ Space environment valid — ${envCat.ENV_STATS.phenomena} phenomena, ${envCat.ENV_STATS.radiation} radiation environments, ${envCat.ENV_STATS.hazards} hazards, ${envCat.ENV_STATS.indices} indices, ${envCat.ENV_STATS.monitors} monitors · ${envCat.ENV_STATS.newEntities} new entities, ${envCat.ENV_STATS.relations} relations (reused Sun/planets/moons/solar missions/NOAA; no fabricated data)`,
   );
 
+  const opsCat = await import("../src/knowledge-graph/data/mission-operations-catalog");
+  const opsIssues = opsCat.validateMissionOperations();
+  const { getEntityById: getOpsEnt } = await import("../src/knowledge-graph");
+  for (const r of opsCat.relations) {
+    if (!getOpsEnt(r.from)) opsIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getOpsEnt(r.to)) opsIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (opsIssues.length > 0) {
+    console.error(`\n✗ ${opsIssues.length} mission-operations issue(s):`);
+    for (const i of opsIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Mission operations valid — ${opsCat.OPS_STATS.centers} operations centres, ${opsCat.OPS_STATS.functions} operations functions · ${opsCat.OPS_STATS.newEntities} new entities, ${opsCat.OPS_STATS.relations} relations (reused agencies/networks/missions; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

@@ -18,6 +18,7 @@ import { validateInterstellarObjects } from "@/knowledge-graph/data/interstellar
 import { validateSmallBodyMissions } from "@/knowledge-graph/data/small-body-missions-catalog";
 import { validateDeepSpaceCommunications } from "@/knowledge-graph/data/deep-space-comms-catalog";
 import { validateSpaceEnvironment } from "@/knowledge-graph/data/space-environment-catalog";
+import { validateMissionOperations } from "@/knowledge-graph/data/mission-operations-catalog";
 import { validateHumanSpaceflight } from "@/knowledge-graph/data/human-spaceflight-catalog";
 import { validateObservatories } from "@/knowledge-graph/data/observatory-catalog";
 import { validateExoplanets } from "@/knowledge-graph/data/exoplanet-catalog";
@@ -117,6 +118,7 @@ export const validationEngine = {
   smallBodyMissions: (): string[] => validateSmallBodyMissions(),
   deepSpaceCommunications: (): string[] => validateDeepSpaceCommunications(),
   spaceEnvironment: (): string[] => validateSpaceEnvironment(),
+  missionOperations: (): string[] => validateMissionOperations(),
   humanSpaceflight: (): string[] => validateHumanSpaceflight(),
   observatories: (): string[] => validateObservatories(),
   exoplanets: (): string[] => validateExoplanets(),
@@ -150,6 +152,7 @@ export const validationEngine = {
       { category: "smallBodyMissions", issues: this.smallBodyMissions() },
       { category: "deepSpaceCommunications", issues: this.deepSpaceCommunications() },
       { category: "spaceEnvironment", issues: this.spaceEnvironment() },
+      { category: "missionOperations", issues: this.missionOperations() },
       { category: "humanSpaceflight", issues: this.humanSpaceflight() },
       { category: "observatories", issues: this.observatories() },
       { category: "exoplanets", issues: this.exoplanets() },
