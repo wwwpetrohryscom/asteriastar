@@ -1105,6 +1105,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["mission_operations_center:jpl-sfof", "operations_function:mission-control", "operations_function:flight-dynamics", "operations_function:navigation-operations"],
     next: ["understanding-deep-space-communications", "understanding-small-body-missions"],
   },
+  {
+    slug: "understanding-spacecraft-systems",
+    title: "Understanding Spacecraft Systems",
+    description: "The engineering of spacecraft — the subsystems and components that make a machine work in space for years without repair. Built on real NASA and ESA engineering; nothing is fabricated.",
+    accent: "comet",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "What makes up a spacecraft?", href: "/spacecraft-systems", blurb: "The subsystems that must all work together for years." },
+          { title: "Electrical power", href: "/spacecraft-systems/discover/power", blurb: "Solar arrays, batteries, and RTGs for deep space." },
+          { title: "Thermal control", href: "/spacecraft-systems/thermal-control", blurb: "Staying warm in the cold and cool in the Sun." },
+          { title: "Structure", href: "/spacecraft-systems/structure", blurb: "The frame that survives launch and holds everything." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Propulsion", href: "/spacecraft-systems/discover/propulsion", blurb: "Chemical, ion, and Hall-effect thrusters." },
+          { title: "Ion propulsion", href: "/spacecraft-systems/ion-thruster", blurb: "Gentle but ultra-efficient — how Dawn reached two worlds." },
+          { title: "Attitude control", href: "/spacecraft-systems/discover/attitude-control", blurb: "Pointing a spacecraft with reaction wheels and gyros." },
+          { title: "Reaction wheels", href: "/spacecraft-systems/reaction-wheel", blurb: "Turning a spacecraft using no fuel at all." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Avionics and flight software", href: "/spacecraft-systems/discover/avionics", blurb: "The radiation-hardened computers that fly the mission." },
+          { title: "Fault management", href: "/spacecraft-systems/fault-management", blurb: "How spacecraft protect themselves far from home." },
+          { title: "Entry, descent, and landing", href: "/spacecraft-systems/discover/entry-landing", blurb: "Heat shields, parachutes, and the seven minutes of terror." },
+          { title: "Robotics", href: "/spacecraft-systems/robotic-arm", blurb: "The arms that build stations and sample worlds." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["spacecraft_subsystem:electrical-power", "spacecraft_component:ion-thruster", "spacecraft_component:reaction-wheel", "spacecraft_component:rtg"],
+    next: ["understanding-mission-operations", "understanding-launch-vehicles"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

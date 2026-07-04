@@ -163,6 +163,10 @@ export const ENTITY_TYPES = [
   // networks, and missions; these are the new operational types.
   "mission_operations_center",
   "operations_function",
+  // Spacecraft Systems & Engineering (Program AG). Reuses docking_system, life_support_system,
+  // antenna, and navigation_system; these are the new engineering types.
+  "spacecraft_subsystem",
+  "spacecraft_component",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1051,4 +1055,6 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   geomagnetic_index: "Geomagnetic index",
   mission_operations_center: "Mission operations center",
   operations_function: "Operations function",
+  spacecraft_subsystem: "Spacecraft subsystem",
+  spacecraft_component: "Spacecraft component",
 };

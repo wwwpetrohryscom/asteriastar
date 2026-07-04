@@ -66,6 +66,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Deep Space Network", href: ROUTES.deepSpaceNetwork, description: "Communication & navigation infrastructure — antennas, tracking stations, signal bands, DSN & Estrack" },
             { name: "Space Environment & Hazards", href: ROUTES.spaceEnvironment, description: "Space weather, radiation belts, cosmic rays, orbital debris & the missions that monitor them" },
             { name: "Mission Operations", href: ROUTES.missionOperations, description: "Ground segment: operations centres, flight dynamics, navigation ops, command & control" },
+            { name: "Spacecraft Systems & Engineering", href: ROUTES.spacecraftSystems, description: "Subsystems & components: power, propulsion, avionics, thermal, attitude control, EDL" },
             { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Observatories", href: ROUTES.observatories, description: "Telescopes, surveys, bands" },
             { name: "Exoplanets", href: ROUTES.exoplanets, description: "Worlds beyond the Sun" },

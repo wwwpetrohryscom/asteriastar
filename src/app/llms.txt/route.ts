@@ -242,6 +242,14 @@ export function GET(): Response {
   lines.push(`- Centres: ${absoluteUrl("/mission-operations/discover/operations-centers")} · Flight dynamics: ${absoluteUrl("/mission-operations/discover/flight-dynamics")} · Lifecycle: ${absoluteUrl("/mission-operations/discover/mission-lifecycle")}`);
   lines.push("");
 
+  lines.push("## Spacecraft Systems & Engineering Encyclopedia");
+  lines.push(
+    `${engine.spacecraftSystems.subsystems().length} spacecraft subsystems and ${engine.spacecraftSystems.components().length} components (engine.spacecraftSystems) — the engineering layer of spacecraft: structure, thermal, power, propulsion, attitude control, avionics, telecommunications, EDL, and robotics. Curated from NASA, ESA, and engineering references. The docking systems, life-support systems (ECLSS), antennas, and attitude sensors are REUSED, never duplicated. No fabricated data.`,
+  );
+  lines.push(`- [Spacecraft Systems & Engineering](${absoluteUrl("/spacecraft-systems")})`);
+  lines.push(`- Power: ${absoluteUrl("/spacecraft-systems/discover/power")} · Propulsion: ${absoluteUrl("/spacecraft-systems/discover/propulsion")} · Avionics: ${absoluteUrl("/spacecraft-systems/discover/avionics")}`);
+  lines.push("");
+
   lines.push("## Space Stations & Human Spaceflight");
   lines.push(
     `How humans live and work in space: ${engine.humanSpaceflight.byKind("station").length} space stations (ISS, Mir, Skylab, Salyut, Tiangong, and planned stations) plus crewed and cargo spacecraft, ISS modules, expeditions, spacewalks, programs, and astronauts â ${engine.humanSpaceflight.count} interconnected entities. Curated from NASA, ESA, Roscosmos, JAXA, CSA, and Smithsonian sources. No fabricated crew, dates, EVAs, or modules; planned stations are clearly marked.`,

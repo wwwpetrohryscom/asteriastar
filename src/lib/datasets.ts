@@ -86,6 +86,8 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "geomagnetic-indices", title: "Geomagnetic Indices", description: "Space-weather indices and scales — Kp, Dst, and the NOAA G/S/R scales.", entityTypes: ["geomagnetic_index"], sources: ["noaa"] },
   { slug: "operations-centers", title: "Mission Operations Centres", description: "The control centres that fly spacecraft — JPL's SFOF, ESA's ESOC, Houston's Mission Control, and more.", entityTypes: ["mission_operations_center"], sources: ["nasa", "esa"] },
   { slug: "operations-functions", title: "Operations Functions", description: "The functions of mission operations — mission control, flight dynamics, navigation, telemetry, fault protection, and the operations lifecycle.", entityTypes: ["operations_function"], sources: ["nasa", "esa"] },
+  { slug: "spacecraft-subsystems", title: "Spacecraft Subsystems", description: "The major spacecraft subsystems — structure, thermal, power, propulsion, attitude control, avionics, and more.", entityTypes: ["spacecraft_subsystem"], sources: ["nasa", "esa"] },
+  { slug: "spacecraft-components", title: "Spacecraft Components", description: "Components within spacecraft subsystems — solar arrays, RTGs, ion thrusters, reaction wheels, flight computers, heat shields, and more.", entityTypes: ["spacecraft_component"], sources: ["nasa", "esa"] },
 ];
 
 export interface Dataset extends DatasetDef {
