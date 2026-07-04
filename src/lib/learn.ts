@@ -1364,6 +1364,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["infrastructure_domain:in-situ-resource-utilisation", "isru_technique:oxygen-production", "space_manufacturing_process:additive-manufacturing", "space_infrastructure:propellant-depot"],
     next: ["understanding-humans-in-space", "the-solar-system"],
   },
+  {
+    slug: "understanding-the-future-of-exploration",
+    title: "Understanding the Future of Exploration",
+    description: "What comes next in space — the missions being built and the concepts being studied, from the Artemis return to the Moon to the search for life around other stars. Only official or credible missions, with honest status and open questions.",
+    accent: "ember",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "What comes next", href: "/future-exploration", blurb: "The missions and concepts shaping the coming decades." },
+          { title: "Return to the Moon", href: "/future-exploration/discover/human-and-lunar", blurb: "The Artemis missions and Gateway." },
+          { title: "Artemis III", href: "/future-exploration/artemis-iii", blurb: "The first crewed Moon landing since Apollo." },
+          { title: "Planetary missions", href: "/future-exploration/discover/planetary-missions", blurb: "The next robotic missions across the Solar System." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "A drone on Titan", href: "/future-exploration/dragonfly", blurb: "Flying across an ocean world's organic chemistry." },
+          { title: "The Venus fleet", href: "/future-exploration/davinci", blurb: "DAVINCI, VERITAS, and EnVision return to Venus." },
+          { title: "Planetary defence", href: "/future-exploration/neo-surveyor", blurb: "Finding hazardous asteroids before they find us." },
+          { title: "Bringing Mars home", href: "/human-spaceflight", blurb: "Mars Sample Return, caching rocks for Earth." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Future observatories", href: "/future-exploration/discover/future-observatories", blurb: "The great telescopes of the coming decades." },
+          { title: "Searching for other Earths", href: "/future-exploration/habitable-worlds-observatory", blurb: "Directly imaging potentially habitable worlds." },
+          { title: "Gravitational waves from space", href: "/future-exploration/lisa", blurb: "A detector millions of kilometres across." },
+          { title: "To the ice giants", href: "/future-exploration/uranus-orbiter-and-probe", blurb: "The top flagship priority of the decadal survey." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["exploration_theme:lunar-exploration", "mission_concept:dragonfly", "mission_concept:habitable-worlds-observatory", "mission_concept:artemis-iii"],
+    next: ["understanding-building-in-space", "the-solar-system"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

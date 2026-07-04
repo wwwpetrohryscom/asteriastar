@@ -198,6 +198,11 @@ export const ENTITY_TYPES = [
   "isru_technique",
   "space_manufacturing_process",
   "space_infrastructure",
+  // Future Space Exploration & Mission Concepts (Program AN). Reuses in-development missions,
+  // agencies, and target bodies; these are the new future-exploration types — themes and the
+  // planned mission concepts not yet modelled.
+  "exploration_theme",
+  "mission_concept",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1110,4 +1115,6 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   isru_technique: "ISRU technique",
   space_manufacturing_process: "Space manufacturing process",
   space_infrastructure: "Space infrastructure",
+  exploration_theme: "Exploration theme",
+  mission_concept: "Mission concept",
 };

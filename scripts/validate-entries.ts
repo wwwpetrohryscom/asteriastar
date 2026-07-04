@@ -488,6 +488,22 @@ async function main() {
     `✓ Space infrastructure valid — ${infraCat.INFRA_STATS.domains} domains, ${infraCat.INFRA_STATS.isru} ISRU techniques, ${infraCat.INFRA_STATS.manufacturing} manufacturing processes, ${infraCat.INFRA_STATS.infrastructure} systems · ${infraCat.INFRA_STATS.newEntities} new entities, ${infraCat.INFRA_STATS.relations} relations (reused bodies/stations/propellants/components; no fabricated data)`,
   );
 
+  const futureCat = await import("../src/knowledge-graph/data/future-missions-catalog");
+  const futureIssues = futureCat.validateFutureMissions();
+  const { getEntityById: getFutureEnt } = await import("../src/knowledge-graph");
+  for (const r of futureCat.relations) {
+    if (!getFutureEnt(r.from)) futureIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getFutureEnt(r.to)) futureIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (futureIssues.length > 0) {
+    console.error(`\n✗ ${futureIssues.length} future-missions issue(s):`);
+    for (const i of futureIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Future missions valid — ${futureCat.CONCEPT_STATS.themes} themes, ${futureCat.CONCEPT_STATS.concepts} new concepts (${futureCat.CONCEPT_STATS.reusedConcepts} existing reused) · ${futureCat.CONCEPT_STATS.newEntities} new entities, ${futureCat.CONCEPT_STATS.relations} relations (reused missions/agencies/targets; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

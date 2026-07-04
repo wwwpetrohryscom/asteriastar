@@ -290,6 +290,14 @@ export function GET(): Response {
   lines.push(`- ISRU: ${absoluteUrl("/space-infrastructure/discover/resource-utilisation")} · Manufacturing: ${absoluteUrl("/space-infrastructure/discover/manufacturing")} · Infrastructure: ${absoluteUrl("/space-infrastructure/discover/infrastructure-systems")}`);
   lines.push("");
 
+  lines.push("## Future Space Exploration & Mission Concepts Encyclopedia");
+  lines.push(
+    `${engine.futureMissions.themes().length} themes and ${engine.futureMissions.conceptCount} planned missions and concepts (engine.futureMissions) — a future-exploration authority: the Artemis return to the Moon (Artemis II & III), Mars Sample Return, the Venus fleet (DAVINCI, VERITAS, EnVision), the ocean worlds (Dragonfly, plus the reused Europa Clipper and JUICE), the next great observatories (the reused Roman plus Habitable Worlds Observatory, LISA, Athena), planetary defence (NEO Surveyor), and the outer Solar System (a Uranus orbiter, Interstellar Probe). Only official or credible concepts are included. Each states its status, agency, timeline, goals, target, technology, and uncertainties HONESTLY — dates only when publicly stated. Reuses the in-development missions, agencies, and target bodies already in the graph; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Future Space Exploration & Mission Concepts](${absoluteUrl("/future-exploration")})`);
+  lines.push(`- Human & lunar: ${absoluteUrl("/future-exploration/discover/human-and-lunar")} · Planetary: ${absoluteUrl("/future-exploration/discover/planetary-missions")} · Observatories: ${absoluteUrl("/future-exploration/discover/future-observatories")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,
