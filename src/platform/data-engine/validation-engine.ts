@@ -15,6 +15,7 @@ import { validateAsteroids } from "@/knowledge-graph/data/asteroids-catalog";
 import { validateComets } from "@/knowledge-graph/data/comets-catalog";
 import { validateMeteorites } from "@/knowledge-graph/data/meteorites-catalog";
 import { validateInterstellarObjects } from "@/knowledge-graph/data/interstellar-catalog";
+import { validateSmallBodyMissions } from "@/knowledge-graph/data/small-body-missions-catalog";
 import { validateHumanSpaceflight } from "@/knowledge-graph/data/human-spaceflight-catalog";
 import { validateObservatories } from "@/knowledge-graph/data/observatory-catalog";
 import { validateExoplanets } from "@/knowledge-graph/data/exoplanet-catalog";
@@ -111,6 +112,7 @@ export const validationEngine = {
   comets: (): string[] => validateComets(),
   meteorites: (): string[] => validateMeteorites(),
   interstellarObjects: (): string[] => validateInterstellarObjects(),
+  smallBodyMissions: (): string[] => validateSmallBodyMissions(),
   humanSpaceflight: (): string[] => validateHumanSpaceflight(),
   observatories: (): string[] => validateObservatories(),
   exoplanets: (): string[] => validateExoplanets(),
@@ -141,6 +143,7 @@ export const validationEngine = {
       { category: "comets", issues: this.comets() },
       { category: "meteorites", issues: this.meteorites() },
       { category: "interstellarObjects", issues: this.interstellarObjects() },
+      { category: "smallBodyMissions", issues: this.smallBodyMissions() },
       { category: "humanSpaceflight", issues: this.humanSpaceflight() },
       { category: "observatories", issues: this.observatories() },
       { category: "exoplanets", issues: this.exoplanets() },

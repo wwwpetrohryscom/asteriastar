@@ -210,6 +210,15 @@ export function GET(): Response {
   lines.push(`- Objects/comets resolve at /interstellar-objects/{slug}; detection methods at /interstellar-objects/detection/{slug}; trajectory classes at /interstellar-objects/trajectory/{slug}.`);
   lines.push("");
 
+  lines.push("## Small-Body Missions & Sample Return Encyclopedia");
+  lines.push(
+    `${engine.smallBodyMissions.count} small-body missions (${engine.smallBodyMissions.completedMissions().length} completed/extended, ${engine.smallBodyMissions.activeSmallBodyMissions().length} active, ${engine.smallBodyMissions.futureMissions().length} planned/concept) plus ${engine.smallBodyMissions.classes().length} mission classes, ${engine.smallBodyMissions.returnedSamples().length} returned samples, ${engine.smallBodyMissions.capsules().length} sample-return capsules, ${engine.smallBodyMissions.phases().length} lifecycle phases, and 1 science campaign (engine.smallBodyMissions) — the engineering bridge across the small-body arc (asteroids/comets/meteorites/interstellar). Timelines, targets, launch vehicles, and sample masses come from NASA/JPL, ESA, and JAXA. The existing space missions (Hayabusa, OSIRIS-REx, Rosetta, DART, Lucy…), their rockets (Program V), and target asteroids/comets (Programs Y/Z) are REUSED and enriched, never duplicated — reused missions keep their canonical page, so their /small-body-missions view is excluded from the sitemap. HONEST TENSE: a planned/concept/cancelled mission asserts no past-tense encounter and no returned sample. No fabricated timelines, targets, or outcomes.`,
+  );
+  lines.push(`- [Small-Body Missions & Sample Return](${absoluteUrl("/small-body-missions")})`);
+  lines.push(`- Sample return: ${absoluteUrl("/small-body-missions/discover/sample-return")} · Planetary defense: ${absoluteUrl("/small-body-missions/discover/planetary-defense")} · Comet missions: ${absoluteUrl("/small-body-missions/discover/comet-missions")} · Timeline: ${absoluteUrl("/small-body-missions/discover/mission-timeline")}`);
+  lines.push(`- Missions resolve at /small-body-missions/{slug} (reused ones canonical to their main page); mission classes at /small-body-missions/type/{slug}; returned samples at /small-body-missions/sample/{slug}.`);
+  lines.push("");
+
   lines.push("## Space Stations & Human Spaceflight");
   lines.push(
     `How humans live and work in space: ${engine.humanSpaceflight.byKind("station").length} space stations (ISS, Mir, Skylab, Salyut, Tiangong, and planned stations) plus crewed and cargo spacecraft, ISS modules, expeditions, spacewalks, programs, and astronauts — ${engine.humanSpaceflight.count} interconnected entities. Curated from NASA, ESA, Roscosmos, JAXA, CSA, and Smithsonian sources. No fabricated crew, dates, EVAs, or modules; planned stations are clearly marked.`,

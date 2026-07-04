@@ -69,6 +69,11 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "hyperbolic-comets", title: "Hyperbolic Comets", description: "Solar-System comets on hyperbolic or near-parabolic orbits — not interstellar.", entityTypes: ["hyperbolic_comet"], sources: ["mpc", "jpl"] },
   { slug: "trajectory-classes", title: "Trajectory Classes", description: "Orbital-trajectory classes by eccentricity — bound, near-parabolic, hyperbolic, and interstellar.", entityTypes: ["trajectory_class"], sources: ["jpl", "nasa"] },
   { slug: "interstellar-detection-methods", title: "Interstellar Detection Methods", description: "The methods used to identify objects originating beyond the Solar System.", entityTypes: ["interstellar_detection_method"], sources: ["jpl", "nasa"] },
+  { slug: "mission-classes", title: "Mission Classes", description: "The classes of small-body mission — flyby, rendezvous, orbiter, lander, impactor, and sample return.", entityTypes: ["mission_class"], sources: ["nasa", "esa"] },
+  { slug: "returned-samples", title: "Returned Samples", description: "Material returned to Earth from asteroids and comets — Itokawa, Ryugu, Bennu, and Wild 2.", entityTypes: ["returned_sample"], sources: ["nasa", "jaxa"] },
+  { slug: "sample-return-capsules", title: "Sample-Return Capsules", description: "The reentry capsules that carried returned small-body samples back through the atmosphere.", entityTypes: ["sample_return_capsule"], sources: ["nasa", "jaxa"] },
+  { slug: "mission-phases", title: "Mission Phases", description: "The generic lifecycle stages of a small-body mission, from launch and cruise to return and reentry.", entityTypes: ["mission_phase"], sources: ["nasa", "esa"] },
+  { slug: "science-campaigns", title: "Science Campaigns", description: "Joint multi-mission science campaigns, such as the AIDA asteroid-deflection collaboration.", entityTypes: ["science_campaign"], sources: ["nasa", "esa"] },
 ];
 
 export interface Dataset extends DatasetDef {

@@ -20,6 +20,7 @@ import { ASTEROID_DISCOVERIES } from "@/app/asteroids/discovery";
 import { COMET_DISCOVERIES } from "@/app/comets/discovery";
 import { METEORITE_DISCOVERIES } from "@/app/meteorites/discovery";
 import { INTERSTELLAR_DISCOVERIES } from "@/app/interstellar-objects/discovery";
+import { MISSION_DISCOVERIES } from "@/app/small-body-missions/discovery";
 import { HSF_DISCOVERIES } from "@/app/human-spaceflight/discovery";
 import { OBS_DISCOVERIES } from "@/app/observatories/discovery";
 import { EXO_DISCOVERIES } from "@/app/exoplanets/discovery";
@@ -104,6 +105,10 @@ import {
   interstellarDiscoveryPath,
   interstellarDetectionPath,
   interstellarTrajectoryPath,
+  smallBodyMissionPath,
+  smallBodyDiscoveryPath,
+  smallBodyTypePath,
+  smallBodySamplePath,
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
@@ -316,6 +321,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...engine.interstellarObjects.trajectoryClasses().map((c) => ({ url: absoluteUrl(interstellarTrajectoryPath(c.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
   ];
 
+  const smallBodyMissionRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.smallBodyMissions), changeFrequency: "weekly", priority: 0.8 },
+    // Only NEW missions are listed here; reused missions keep their canonical home page,
+    // so their /small-body-missions/{slug} view is excluded to avoid duplicate content.
+    ...engine.smallBodyMissions.missions().filter((m) => !m.existing).map((r) => ({ url: absoluteUrl(smallBodyMissionPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...MISSION_DISCOVERIES.map((d) => ({ url: absoluteUrl(smallBodyDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...engine.smallBodyMissions.classes().map((c) => ({ url: absoluteUrl(smallBodyTypePath(c.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...engine.smallBodyMissions.samples().map((s) => ({ url: absoluteUrl(smallBodySamplePath(s.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+  ];
+
   const deepSkyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
     ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -360,6 +375,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...cometRoutes,
     ...meteoriteRoutes,
     ...interstellarRoutes,
+    ...smallBodyMissionRoutes,
     ...hsfRoutes,
     ...obsRoutes,
     ...exoRoutes,
