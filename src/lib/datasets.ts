@@ -90,6 +90,8 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "spacecraft-components", title: "Spacecraft Components", description: "Components within spacecraft subsystems — solar arrays, RTGs, ion thrusters, reaction wheels, flight computers, heat shields, and more.", entityTypes: ["spacecraft_component"], sources: ["nasa", "esa"] },
   { slug: "instrument-classes", title: "Instrument Classes", description: "The classes of scientific instrument — cameras, spectrometers, magnetometers, radars, altimeters, seismometers, and more.", entityTypes: ["instrument_class"], sources: ["nasa", "esa"] },
   { slug: "scientific-instruments", title: "Scientific Instruments", description: "Scientific instruments and payloads across missions and telescopes.", entityTypes: ["scientific_instrument"], sources: ["nasa", "esa"] },
+  { slug: "geological-feature-types", title: "Geological Feature Types", description: "The classes of geological feature — craters, volcanoes, canyons, dunes, chaos terrain, and more.", entityTypes: ["geological_feature_type"], sources: ["nasa"] },
+  { slug: "surface-features", title: "Surface Features", description: "Named surface features across the planets, moons, and dwarf planets.", entityTypes: ["surface_feature"], sources: ["nasa", "jpl"] },
 ];
 
 export interface Dataset extends DatasetDef {

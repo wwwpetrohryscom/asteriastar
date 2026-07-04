@@ -408,6 +408,22 @@ async function main() {
     `✓ Instruments valid — ${instCat.INST_STATS.classes} instrument classes, ${instCat.INST_STATS.newInstruments} new instruments (${instCat.INST_STATS.reusedInstruments} existing enriched) · ${instCat.INST_STATS.newEntities} new entities, ${instCat.INST_STATS.relations} relations (reused instruments + host missions; no fabricated data)`,
   );
 
+  const geoCat = await import("../src/knowledge-graph/data/planetary-geology-catalog");
+  const geoIssues = geoCat.validatePlanetaryGeology();
+  const { getEntityById: getGeoEnt } = await import("../src/knowledge-graph");
+  for (const r of geoCat.relations) {
+    if (!getGeoEnt(r.from)) geoIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getGeoEnt(r.to)) geoIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (geoIssues.length > 0) {
+    console.error(`\n✗ ${geoIssues.length} planetary-geology issue(s):`);
+    for (const i of geoIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Planetary geology valid — ${geoCat.GEO_STATS.featureTypes} feature types, ${geoCat.GEO_STATS.newFeatures} new features (${geoCat.GEO_STATS.reusedFeatures} existing enriched) · ${geoCat.GEO_STATS.newEntities} new entities, ${geoCat.GEO_STATS.relations} relations (reused bodies + surface features; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

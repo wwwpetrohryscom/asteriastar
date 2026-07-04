@@ -1179,6 +1179,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["instrument_class:optical-camera", "instrument_class:spectrometer", "scientific_instrument:insight-seis", "scientific_instrument:lorri"],
     next: ["understanding-spacecraft-systems", "understanding-the-universe"],
   },
+  {
+    slug: "understanding-planetary-geology",
+    title: "Understanding Planetary Geology",
+    description: "How to read the surface of a world — the craters, volcanoes, canyons, dunes, and ice plains that record a planet's history. Built on real NASA/JPL planetary data across the Solar System; nothing is fabricated.",
+    accent: "plasma",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Reading a planet's surface", href: "/planetary-geology", blurb: "Every solid world tells its story in its landforms." },
+          { title: "Impact craters", href: "/planetary-geology/impact-crater", blurb: "The most common landform, and a clock for dating surfaces." },
+          { title: "Volcanoes", href: "/planetary-geology/shield-volcano", blurb: "From Olympus Mons to the ice volcanoes of the outer worlds." },
+          { title: "Feature types", href: "/planetary-geology/discover/feature-types", blurb: "The families of landform across the Solar System." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Canyons and tectonics", href: "/planetary-geology/canyon", blurb: "How a world's crust cracks, faults, and folds." },
+          { title: "Volcanic features", href: "/planetary-geology/discover/volcanic", blurb: "Lava plains, shield volcanoes, and cryovolcanoes." },
+          { title: "Water on Mars", href: "/planetary-geology/jezero-crater", blurb: "Ancient river deltas and the search for past life." },
+          { title: "The surface of Venus", href: "/planetary-geology/discover/tectonic", blurb: "Tesserae, coronae, and the highest mountains on Venus." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "The icy worlds", href: "/planetary-geology/discover/icy", blurb: "Chaos terrain, ice plains, and hydrocarbon lakes." },
+          { title: "Cryovolcanism", href: "/planetary-geology/cryovolcano", blurb: "Volcanoes that erupt ice, from Ceres to Enceladus." },
+          { title: "Pluto's nitrogen glaciers", href: "/planetary-geology/sputnik-planitia", blurb: "A churning, flowing plain of nitrogen ice." },
+          { title: "Titan's methane seas", href: "/planetary-geology/kraken-mare", blurb: "The only other world with stable surface liquid." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["geological_feature_type:impact-crater", "geological_feature_type:shield-volcano", "surface_feature:sputnik-planitia", "surface_feature:occator-crater"],
+    next: ["the-solar-system", "understanding-scientific-instruments"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

@@ -258,6 +258,14 @@ export function GET(): Response {
   lines.push(`- Classes: ${absoluteUrl("/instruments/discover/classes")} · Imaging: ${absoluteUrl("/instruments/discover/imaging")} · Spectroscopy: ${absoluteUrl("/instruments/discover/spectroscopy")}`);
   lines.push("");
 
+  lines.push("## Planetary Geology & Surface Features Encyclopedia");
+  lines.push(
+    `${engine.planetaryGeology.featureTypes().length} geological feature types and ${engine.planetaryGeology.featureCount} named surface features (engine.planetaryGeology) — the geology of the Solar System: impact craters and basins, volcanoes and cryovolcanoes, canyons, dunes, chaos terrain, ice plains, and hydrocarbon lakes across Mars, the Moon, Mercury, Venus, Ceres, Vesta, the icy moons, and Pluto. Curated from NASA/JPL. The planets, moons, dwarf planets, and existing surface_feature entities are REUSED and enriched, never duplicated. No fabricated data.`,
+  );
+  lines.push(`- [Planetary Geology & Surface Features](${absoluteUrl("/planetary-geology")})`);
+  lines.push(`- Impact: ${absoluteUrl("/planetary-geology/discover/impact")} · Volcanic: ${absoluteUrl("/planetary-geology/discover/volcanic")} · Icy: ${absoluteUrl("/planetary-geology/discover/icy")}`);
+  lines.push("");
+
   lines.push("## Space Stations & Human Spaceflight");
   lines.push(
     `How humans live and work in space: ${engine.humanSpaceflight.byKind("station").length} space stations (ISS, Mir, Skylab, Salyut, Tiangong, and planned stations) plus crewed and cargo spacecraft, ISS modules, expeditions, spacewalks, programs, and astronauts â ${engine.humanSpaceflight.count} interconnected entities. Curated from NASA, ESA, Roscosmos, JAXA, CSA, and Smithsonian sources. No fabricated crew, dates, EVAs, or modules; planned stations are clearly marked.`,

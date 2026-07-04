@@ -170,6 +170,9 @@ export const ENTITY_TYPES = [
   // Scientific Instruments & Payloads (Program AH). Reuses scientific_instrument and the
   // host missions and telescopes; instrument_class is the new grouping type.
   "instrument_class",
+  // Planetary Geology & Surface Features (Program AI). Reuses surface_feature and the
+  // planets, moons, and dwarf planets; geological_feature_type is the new grouping type.
+  "geological_feature_type",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1061,4 +1064,5 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   spacecraft_subsystem: "Spacecraft subsystem",
   spacecraft_component: "Spacecraft component",
   instrument_class: "Instrument class",
+  geological_feature_type: "Geological feature type",
 };

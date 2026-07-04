@@ -51,10 +51,11 @@ import { spaceEnvironmentEngine } from "@/platform/data-engine/space-environment
 import { missionOperationsEngine } from "@/platform/data-engine/mission-operations-engine";
 import { spacecraftSystemsEngine } from "@/platform/data-engine/spacecraft-systems-engine";
 import { instrumentsEngine } from "@/platform/data-engine/instruments-engine";
+import { planetaryGeologyEngine } from "@/platform/data-engine/planetary-geology-engine";
 import { validationEngine } from "@/platform/data-engine/validation-engine";
 import { contributionsEngine } from "@/platform/contributions";
 
-/** The unified engine surface — the forty-one modules of the data engine. */
+/** The unified engine surface — the forty-two modules of the data engine. */
 export const engine = {
   entity: entityEngine,
   relationship: relationshipEngine,
@@ -95,6 +96,7 @@ export const engine = {
   missionOperations: missionOperationsEngine,
   spacecraftSystems: spacecraftSystemsEngine,
   instruments: instrumentsEngine,
+  planetaryGeology: planetaryGeologyEngine,
   contributions: contributionsEngine,
   validation: validationEngine,
 } as const;
@@ -106,7 +108,7 @@ export const ENGINE_MODULES = Object.keys(engine) as (keyof typeof engine)[];
 export { entityEngine, relationshipEngine, traversalEngine, queryEngine };
 export { recommendationEngine, timelineEngine, comparisonEngine, learningEngine };
 export { discoveryEngine, metadataEngine, sourceEngine, citationEngine };
-export { datasetEngine, authorityEngine, localizationEngine, starEngine, solarEngine, deepSkyEngine, explorationEngine, humanSpaceflightEngine, observatoryEngine, exoplanetEngine, historyEngine, cosmologyEngine, liveSkyEngine, imagesEngine, launchVehicleEngine, constellationEngine, satelliteEngine, asteroidEngine, cometEngine, meteoriteEngine, interstellarEngine, smallBodyMissionsEngine, deepSpaceCommunicationsEngine, spaceEnvironmentEngine, missionOperationsEngine, spacecraftSystemsEngine, instrumentsEngine, contributionsEngine, validationEngine };
+export { datasetEngine, authorityEngine, localizationEngine, starEngine, solarEngine, deepSkyEngine, explorationEngine, humanSpaceflightEngine, observatoryEngine, exoplanetEngine, historyEngine, cosmologyEngine, liveSkyEngine, imagesEngine, launchVehicleEngine, constellationEngine, satelliteEngine, asteroidEngine, cometEngine, meteoriteEngine, interstellarEngine, smallBodyMissionsEngine, deepSpaceCommunicationsEngine, spaceEnvironmentEngine, missionOperationsEngine, spacecraftSystemsEngine, instrumentsEngine, planetaryGeologyEngine, contributionsEngine, validationEngine };
 export type { ResolvedLaunchVehicle } from "@/platform/data-engine/launch-vehicle-engine";
 export type { ResolvedConstellation } from "@/platform/data-engine/constellation-engine";
 export type { ResolvedSatellite, ResolvedConstellationSat, ResolvedOperator, ResolvedOrbit, ResolvedNetwork, ResolvedProgram } from "@/platform/data-engine/satellite-engine";
@@ -120,6 +122,7 @@ export type { ResolvedEnv } from "@/platform/data-engine/space-environment-engin
 export type { ResolvedOps } from "@/platform/data-engine/mission-operations-engine";
 export type { ResolvedSys } from "@/platform/data-engine/spacecraft-systems-engine";
 export type { ResolvedInstrument } from "@/platform/data-engine/instruments-engine";
+export type { ResolvedGeo } from "@/platform/data-engine/planetary-geology-engine";
 export type { ResolvedStar } from "@/platform/data-engine/star-engine";
 export type { ResolvedBody } from "@/platform/data-engine/solar-engine";
 export type { ResolvedDeepSky } from "@/platform/data-engine/deepsky-engine";

@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Planetary Geology & Surface Features Encyclopedia (Program AI)**
+
+- [Planetary Geology](docs/PLANETARY_GEOLOGY.md) — the geology of the Solar System's surfaces: the classes of geological feature (impact craters and basins, shield volcanoes and cryovolcanoes, canyons, dunes, chaos terrain, ice plains, hydrocarbon lakes) and named features (Tharsis, Hellas, Caloris, Maxwell Montes, Occator, Sputnik Planitia, and more) across Mars, the Moon, Mercury, Venus, Ceres, Vesta, the icy moons, and Pluto. Reuses the platform's planets, moons, and surface features; no fabricated data
+
 **Scientific Instruments & Payloads Encyclopedia (Program AH)**
 
 - [Scientific Instruments](docs/INSTRUMENTS.md) — the science-payload layer: the classes of instrument (cameras, spectrometers, magnetometers, particle and dust detectors, radars, laser altimeters, seismometers, radio science) and notable instruments (LORRI, JunoCam, SEIS, Magellan SAR, and more), linked to their host missions. Reuses and enriches the platform's existing instruments (Mars, JWST, Hubble, Juno, ground telescopes), never duplicating them; no fabricated data
