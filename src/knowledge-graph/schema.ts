@@ -173,6 +173,10 @@ export const ENTITY_TYPES = [
   // Planetary Geology & Surface Features (Program AI). Reuses surface_feature and the
   // planets, moons, and dwarf planets; geological_feature_type is the new grouping type.
   "geological_feature_type",
+  // Space Agencies, Institutions & Laboratories (Program AJ). Reuses the many organization
+  // entities (agencies, commercial companies, observatory operators); institution_type is
+  // the new grouping type that classifies them.
+  "institution_type",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1065,4 +1069,5 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   spacecraft_component: "Spacecraft component",
   instrument_class: "Instrument class",
   geological_feature_type: "Geological feature type",
+  institution_type: "Institution type",
 };

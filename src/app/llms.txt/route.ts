@@ -266,6 +266,14 @@ export function GET(): Response {
   lines.push(`- Impact: ${absoluteUrl("/planetary-geology/discover/impact")} · Volcanic: ${absoluteUrl("/planetary-geology/discover/volcanic")} · Icy: ${absoluteUrl("/planetary-geology/discover/icy")}`);
   lines.push("");
 
+  lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
+  lines.push(
+    `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,
+  );
+  lines.push(`- [Space Agencies, Institutions & Laboratories](${absoluteUrl("/institutions")})`);
+  lines.push(`- Agencies: ${absoluteUrl("/institutions/discover/space-agencies")} · Field centers: ${absoluteUrl("/institutions/discover/field-centers")} · Laboratories: ${absoluteUrl("/institutions/discover/laboratories")}`);
+  lines.push("");
+
   lines.push("## Space Stations & Human Spaceflight");
   lines.push(
     `How humans live and work in space: ${engine.humanSpaceflight.byKind("station").length} space stations (ISS, Mir, Skylab, Salyut, Tiangong, and planned stations) plus crewed and cargo spacecraft, ISS modules, expeditions, spacewalks, programs, and astronauts â ${engine.humanSpaceflight.count} interconnected entities. Curated from NASA, ESA, Roscosmos, JAXA, CSA, and Smithsonian sources. No fabricated crew, dates, EVAs, or modules; planned stations are clearly marked.`,

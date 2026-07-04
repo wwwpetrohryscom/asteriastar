@@ -69,6 +69,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Spacecraft Systems & Engineering", href: ROUTES.spacecraftSystems, description: "Subsystems & components: power, propulsion, avionics, thermal, attitude control, EDL" },
             { name: "Scientific Instruments & Payloads", href: ROUTES.instruments, description: "Cameras, spectrometers, magnetometers, radars, altimeters & seismometers by class" },
             { name: "Planetary Geology & Surface Features", href: ROUTES.planetaryGeology, description: "Craters, volcanoes, canyons, dunes & ice plains across Mars, the Moon, Venus, Titan & Pluto" },
+            { name: "Space Agencies, Institutions & Laboratories", href: ROUTES.institutions, description: "Agencies, field centers, laboratories & commercial companies — NASA, ESA, JAXA, JPL, APL, SpaceX" },
             { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Observatories", href: ROUTES.observatories, description: "Telescopes, surveys, bands" },
             { name: "Exoplanets", href: ROUTES.exoplanets, description: "Worlds beyond the Sun" },
