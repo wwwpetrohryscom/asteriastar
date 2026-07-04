@@ -250,6 +250,14 @@ export function GET(): Response {
   lines.push(`- Power: ${absoluteUrl("/spacecraft-systems/discover/power")} · Propulsion: ${absoluteUrl("/spacecraft-systems/discover/propulsion")} · Avionics: ${absoluteUrl("/spacecraft-systems/discover/avionics")}`);
   lines.push("");
 
+  lines.push("## Scientific Instruments & Payloads Encyclopedia");
+  lines.push(
+    `${engine.instruments.classes().length} instrument classes and ${engine.instruments.newInstrumentCount} notable instruments (engine.instruments) — the science-payload layer: cameras, spectrometers, magnetometers, particle/dust detectors, radar, laser altimeters, seismometers, and radio science. Curated from NASA and ESA. The many scientific_instrument entities already in the graph (Mars, JWST, Hubble, Juno, ground telescopes) are REUSED and enriched with their class, never duplicated; new instruments link to their reused host missions. No fabricated data.`,
+  );
+  lines.push(`- [Scientific Instruments & Payloads](${absoluteUrl("/instruments")})`);
+  lines.push(`- Classes: ${absoluteUrl("/instruments/discover/classes")} · Imaging: ${absoluteUrl("/instruments/discover/imaging")} · Spectroscopy: ${absoluteUrl("/instruments/discover/spectroscopy")}`);
+  lines.push("");
+
   lines.push("## Space Stations & Human Spaceflight");
   lines.push(
     `How humans live and work in space: ${engine.humanSpaceflight.byKind("station").length} space stations (ISS, Mir, Skylab, Salyut, Tiangong, and planned stations) plus crewed and cargo spacecraft, ISS modules, expeditions, spacewalks, programs, and astronauts â ${engine.humanSpaceflight.count} interconnected entities. Curated from NASA, ESA, Roscosmos, JAXA, CSA, and Smithsonian sources. No fabricated crew, dates, EVAs, or modules; planned stations are clearly marked.`,

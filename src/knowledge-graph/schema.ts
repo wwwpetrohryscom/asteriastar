@@ -167,6 +167,9 @@ export const ENTITY_TYPES = [
   // antenna, and navigation_system; these are the new engineering types.
   "spacecraft_subsystem",
   "spacecraft_component",
+  // Scientific Instruments & Payloads (Program AH). Reuses scientific_instrument and the
+  // host missions and telescopes; instrument_class is the new grouping type.
+  "instrument_class",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1057,4 +1060,5 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   operations_function: "Operations function",
   spacecraft_subsystem: "Spacecraft subsystem",
   spacecraft_component: "Spacecraft component",
+  instrument_class: "Instrument class",
 };

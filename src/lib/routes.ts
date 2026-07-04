@@ -58,6 +58,7 @@ export const ROUTES = {
   spaceEnvironment: "/space-environment",
   missionOperations: "/mission-operations",
   spacecraftSystems: "/spacecraft-systems",
+  instruments: "/instruments",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -429,4 +430,12 @@ export function spacecraftSystemsPath(slug: string): string {
 }
 export function spacecraftSystemsDiscoveryPath(slug: string): string {
   return `/spacecraft-systems/discover/${slug}`;
+}
+
+/** Scientific Instruments & Payloads Encyclopedia (Program AH). */
+export function instrumentsPath(slug: string): string {
+  return `/instruments/${slug}`;
+}
+export function instrumentsDiscoveryPath(slug: string): string {
+  return `/instruments/discover/${slug}`;
 }

@@ -25,6 +25,7 @@ import { DSCOMM_DISCOVERIES } from "@/app/deep-space-network/discovery";
 import { ENV_DISCOVERIES } from "@/app/space-environment/discovery";
 import { OPS_DISCOVERIES } from "@/app/mission-operations/discovery";
 import { SYS_DISCOVERIES } from "@/app/spacecraft-systems/discovery";
+import { INST_DISCOVERIES } from "@/app/instruments/discovery";
 import { HSF_DISCOVERIES } from "@/app/human-spaceflight/discovery";
 import { OBS_DISCOVERIES } from "@/app/observatories/discovery";
 import { EXO_DISCOVERIES } from "@/app/exoplanets/discovery";
@@ -125,6 +126,8 @@ import {
   missionOperationsDiscoveryPath,
   spacecraftSystemsPath,
   spacecraftSystemsDiscoveryPath,
+  instrumentsPath,
+  instrumentsDiscoveryPath,
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
@@ -376,6 +379,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...SYS_DISCOVERIES.map((d) => ({ url: absoluteUrl(spacecraftSystemsDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const instrumentsRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.instruments), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.instruments.all().map((r) => ({ url: absoluteUrl(instrumentsPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...INST_DISCOVERIES.map((d) => ({ url: absoluteUrl(instrumentsDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const deepSkyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
     ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -425,6 +434,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...spaceEnvironmentRoutes,
     ...missionOperationsRoutes,
     ...spacecraftSystemsRoutes,
+    ...instrumentsRoutes,
     ...hsfRoutes,
     ...obsRoutes,
     ...exoRoutes,
