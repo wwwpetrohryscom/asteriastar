@@ -21,6 +21,7 @@ import { COMET_DISCOVERIES } from "@/app/comets/discovery";
 import { METEORITE_DISCOVERIES } from "@/app/meteorites/discovery";
 import { INTERSTELLAR_DISCOVERIES } from "@/app/interstellar-objects/discovery";
 import { MISSION_DISCOVERIES } from "@/app/small-body-missions/discovery";
+import { DSCOMM_DISCOVERIES } from "@/app/deep-space-network/discovery";
 import { HSF_DISCOVERIES } from "@/app/human-spaceflight/discovery";
 import { OBS_DISCOVERIES } from "@/app/observatories/discovery";
 import { EXO_DISCOVERIES } from "@/app/exoplanets/discovery";
@@ -109,6 +110,12 @@ import {
   smallBodyDiscoveryPath,
   smallBodyTypePath,
   smallBodySamplePath,
+  dsnNetworkPath,
+  dsnStationPath,
+  dsnAntennaPath,
+  dsnBandPath,
+  dsnNavigationPath,
+  dsnDiscoveryPath,
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
@@ -331,6 +338,17 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...engine.smallBodyMissions.samples().map((s) => ({ url: absoluteUrl(smallBodySamplePath(s.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
   ];
 
+  const deepSpaceNetworkRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.deepSpaceNetwork), changeFrequency: "weekly", priority: 0.8 },
+    // Reused networks keep their canonical home; only NEW networks are listed here.
+    ...engine.deepSpaceCommunications.networks().filter((n) => !n.existing).map((r) => ({ url: absoluteUrl(dsnNetworkPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...DSCOMM_DISCOVERIES.map((d) => ({ url: absoluteUrl(dsnDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...engine.deepSpaceCommunications.allStations().map((s) => ({ url: absoluteUrl(dsnStationPath(s.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...engine.deepSpaceCommunications.antennas().map((a) => ({ url: absoluteUrl(dsnAntennaPath(a.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...engine.deepSpaceCommunications.signalBands().map((b) => ({ url: absoluteUrl(dsnBandPath(b.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+    ...engine.deepSpaceCommunications.navigationMethods().map((m) => ({ url: absoluteUrl(dsnNavigationPath(m.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
+  ];
+
   const deepSkyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
     ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -376,6 +394,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...meteoriteRoutes,
     ...interstellarRoutes,
     ...smallBodyMissionRoutes,
+    ...deepSpaceNetworkRoutes,
     ...hsfRoutes,
     ...obsRoutes,
     ...exoRoutes,

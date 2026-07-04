@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Deep Space Communications & Navigation Encyclopedia (Program AD)**
+
+- [Deep Space Communications](docs/DEEP_SPACE_COMMUNICATIONS.md) — the infrastructure that lets us talk to and navigate spacecraft across the Solar System: NASA's Deep Space Network, ESA's Estrack, the tracking and ground stations, giant antennas, signal bands (S/X/Ka/optical), and radiometric, Delta-DOR, optical, and autonomous navigation — the layer beneath nearly every space program. The DSN, Estrack, and Near Space Network are reused and enriched (never duplicated); signal light-time is real physics, not a fabricated delay; no fabricated capabilities, antenna sizes, or coverage
+
 **Small-Body Missions & Sample Return Encyclopedia (Program AC)**
 
 - [Small-Body Missions](docs/SMALL_BODY_MISSIONS.md) — the flybys, orbiters, landers, impactors, and sample-return missions that explored asteroids and comets (Hayabusa, OSIRIS-REx, Rosetta, DART, Lucy…), with their mission classes, returned samples, capsules, lifecycle phases, and the AIDA campaign — the engineering bridge across the small-body arc. Existing missions, rockets, asteroids, and comets are reused and enriched (never duplicated); reused missions keep their canonical page; planned missions assert no results they have not achieved; no fabricated data
