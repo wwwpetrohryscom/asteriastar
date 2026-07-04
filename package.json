@@ -4,11 +4,14 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "tsx scripts/generate-indexnow-key.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
     "check:arch": "tsx scripts/check-architecture.ts",
     "exports:generate": "tsx scripts/generate-open-data-exports.ts",
+    "indexnow:key": "tsx scripts/generate-indexnow-key.ts",
+    "indexnow:submit": "tsx scripts/indexnow-submit.ts",
     "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts"
   },
   "dependencies": {
