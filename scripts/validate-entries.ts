@@ -344,6 +344,22 @@ async function main() {
     `✓ Deep-space communications valid — ${dsCommCat.DSCOMM_STATS.networks} networks (${dsCommCat.DSCOMM_STATS.reusedNetworks} reused + ${dsCommCat.DSCOMM_STATS.newNetworks} new), ${dsCommCat.DSCOMM_STATS.trackingStations} tracking + ${dsCommCat.DSCOMM_STATS.groundStations} ground stations, ${dsCommCat.DSCOMM_STATS.antennas} antennas, ${dsCommCat.DSCOMM_STATS.bands} signal bands, ${dsCommCat.DSCOMM_STATS.navigation} navigation systems, ${dsCommCat.DSCOMM_STATS.timeStandards} time standards, ${dsCommCat.DSCOMM_STATS.commSystems} comm systems · ${dsCommCat.DSCOMM_STATS.newEntities} new entities, ${dsCommCat.DSCOMM_STATS.relations} relations (reused DSN/Estrack/NSN, missions, agencies; no fabricated data)`,
   );
 
+  const envCat = await import("../src/knowledge-graph/data/space-environment-catalog");
+  const envIssues = envCat.validateSpaceEnvironment();
+  const { getEntityById: getEnvEnt } = await import("../src/knowledge-graph");
+  for (const r of envCat.relations) {
+    if (!getEnvEnt(r.from)) envIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getEnvEnt(r.to)) envIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (envIssues.length > 0) {
+    console.error(`\n✗ ${envIssues.length} space-environment issue(s):`);
+    for (const i of envIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Space environment valid — ${envCat.ENV_STATS.phenomena} phenomena, ${envCat.ENV_STATS.radiation} radiation environments, ${envCat.ENV_STATS.hazards} hazards, ${envCat.ENV_STATS.indices} indices, ${envCat.ENV_STATS.monitors} monitors · ${envCat.ENV_STATS.newEntities} new entities, ${envCat.ENV_STATS.relations} relations (reused Sun/planets/moons/solar missions/NOAA; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
