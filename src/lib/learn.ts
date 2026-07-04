@@ -1290,6 +1290,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["historic_space_event:the-space-race", "timeline_event:apollo-11-first-humans-on-the-moon", "mission_milestone:first-human-in-space", "record:most-distant-human-made-object"],
     next: ["understanding-space-institutions", "history-of-astronomy"],
   },
+  {
+    slug: "understanding-humans-in-space",
+    title: "Understanding Humans in Space",
+    description: "What spaceflight does to the human body, how a crew is kept alive, and how their health is protected on the way to the Moon and Mars. Built on real NASA/ESA human research; quantitative figures are omitted unless well established.",
+    accent: "aurora",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The human factor", href: "/space-medicine", blurb: "Why the body needs help to live and work in space." },
+          { title: "Effects of microgravity", href: "/space-medicine/discover/physiological-effects", blurb: "Bone and muscle loss, fluid shift, vision changes, and more." },
+          { title: "Bone density loss", href: "/human-spaceflight/bone-density-loss", blurb: "One of the best-documented risks of long missions." },
+          { title: "Keeping a crew alive", href: "/space-medicine/discover/life-support-technologies", blurb: "Oxygen, CO2 removal, water recovery, and food." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Countermeasures", href: "/space-medicine/discover/countermeasures", blurb: "How crew health is protected in flight." },
+          { title: "Exercise in orbit", href: "/space-medicine/resistive-exercise", blurb: "The primary defence against bone and muscle loss." },
+          { title: "Recycling water and air", href: "/space-medicine/water-recovery", blurb: "Closing the loop for missions that cannot resupply." },
+          { title: "Radiation biology", href: "/space-medicine/space-radiation-biology", blurb: "The defining health challenge of deep space." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Fluid shift & vision changes", href: "/human-spaceflight/fluid-shift", blurb: "A leading unknown for long Mars missions." },
+          { title: "Closed ecosystems", href: "/space-medicine/closed-loop-life-support", blurb: "The self-sufficient life support a Mars base will need." },
+          { title: "The mind in space", href: "/space-medicine/space-psychology-and-human-factors", blurb: "Isolation, confinement, and behavioural health." },
+          { title: "Artificial gravity", href: "/space-medicine/artificial-gravity", blurb: "Could counter many effects at once — not yet operational." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["space_biology_topic:space-medicine", "space_medicine_topic:bone-density-loss", "countermeasure:resistive-exercise", "life_support_technology:water-recovery"],
+    next: ["understanding-spacecraft-systems", "understanding-the-history-of-spaceflight"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

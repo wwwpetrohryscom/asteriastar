@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Life Support, Space Biology & Space Medicine Encyclopedia (Program AL)**
+
+- [Space Medicine](docs/SPACE_MEDICINE.md) — the human-in-space scientific layer: the disciplines (space medicine, radiation biology, psychology & human factors, life support), the physiological effects of spaceflight (bone and muscle loss, fluid shift, SANS vision changes, immune and radiation effects), the ECLSS life-support technologies (oxygen, CO₂ removal, water recovery, food, closed ecosystems), and the countermeasures that mitigate them. Reuses the platform's ECLSS system, radiation environments, stations, and astronauts; no fabricated data
+
 **Space Missions Timeline & Historical Events Encyclopedia (Program AK)**
 
 - [Space Missions Timeline](docs/SPACEFLIGHT_TIMELINE.md) — the chronological history of spaceflight: the eras (Space Race, golden age of planetary exploration, Shuttle, ISS, commercial, Artemis), the dated timeline events (Sputnik, Gagarin, Apollo 11, the Voyagers, Cassini, New Horizons, JWST, DART, Chandrayaan-3), the milestone firsts, and the standing records. Reuses the platform's missions, mission programs, astronauts, agencies, stations, telescopes, and worlds, linking every event to what it concerns; no fabricated events or dates

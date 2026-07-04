@@ -274,6 +274,14 @@ export function GET(): Response {
   lines.push(`- Master timeline: ${absoluteUrl("/timeline/discover/master-timeline")} · Firsts: ${absoluteUrl("/timeline/discover/firsts-and-milestones")} · Records: ${absoluteUrl("/timeline/discover/records")}`);
   lines.push("");
 
+  lines.push("## Life Support, Space Biology & Space Medicine Encyclopedia");
+  lines.push(
+    `${engine.spaceMedicine.topics().length} disciplines and ${engine.spaceMedicine.effectCount} physiological effects plus life-support technologies and countermeasures (engine.spaceMedicine) — the human-in-space layer: how microgravity and radiation change the body (bone and muscle loss, fluid shift, SANS vision changes, immune and radiation effects), the ECLSS technologies that keep a crew alive (oxygen, CO2 removal, water recovery, food, closed ecosystems), and the countermeasures (exercise, nutrition, shielding, lighting, psychological support). Curated from NASA and ESA human-research sources. Reuses the ECLSS life-support system, the radiation environments, the space stations, and the astronauts already in the graph; countermeasures link to the effects they mitigate. Quantitative figures are omitted unless well established. No fabricated data.`,
+  );
+  lines.push(`- [Life Support, Space Biology & Space Medicine](${absoluteUrl("/space-medicine")})`);
+  lines.push(`- Effects: ${absoluteUrl("/space-medicine/discover/physiological-effects")} · Countermeasures: ${absoluteUrl("/space-medicine/discover/countermeasures")} · Life support: ${absoluteUrl("/space-medicine/discover/life-support-technologies")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,
