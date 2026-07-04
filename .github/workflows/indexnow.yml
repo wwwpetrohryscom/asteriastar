@@ -1,0 +1,44 @@
+name: IndexNow submit
+
+# Notify IndexNow (Bing, Yandex, Seznam, Naver, …) of updated URLs after every
+# production deployment. Runs on pushes to the production branch and can be run
+# manually. The submission script fetches the live sitemap and retries, so it
+# tolerates the deploy taking a short while to go live.
+
+on:
+  push:
+    branches: [main]
+    # Only re-notify when content, routes, or the sitemap actually change.
+    paths:
+      - "src/**"
+      - "public/**"
+      - "scripts/indexnow-submit.ts"
+  workflow_dispatch:
+    inputs:
+      urls:
+        description: "Optional space-separated URLs to submit instead of the full sitemap"
+        required: false
+        default: ""
+
+concurrency:
+  group: indexnow-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  submit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      # Give the production deployment a moment to publish before we submit.
+      - name: Wait for deployment to publish
+        run: sleep 60
+      - name: Submit URLs to IndexNow
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+          NEXT_PUBLIC_SITE_URL: ${{ vars.NEXT_PUBLIC_SITE_URL || 'https://asteriastar.com' }}
+        run: npm run indexnow:submit -- ${{ github.event.inputs.urls }}
