@@ -203,6 +203,11 @@ export const ENTITY_TYPES = [
   // planned mission concepts not yet modelled.
   "exploration_theme",
   "mission_concept",
+  // Astronomy Methods, Measurements & Scientific Techniques (Program AO). Reuses the
+  // exoplanet-detection methods, cosmology concepts, and observing bands; these are the new
+  // methods layer — method categories and the measurement/observation techniques.
+  "method_category",
+  "astronomy_method",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1117,4 +1122,6 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   space_infrastructure: "Space infrastructure",
   exploration_theme: "Exploration theme",
   mission_concept: "Mission concept",
+  method_category: "Method category",
+  astronomy_method: "Astronomy method",
 };

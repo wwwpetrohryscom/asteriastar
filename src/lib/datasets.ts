@@ -103,6 +103,8 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "space-infrastructure", title: "Space Infrastructure", description: "The infrastructure of a spacefaring economy — depots, habitats, power stations, tugs, and megastructure concepts.", entityTypes: ["space_infrastructure"], sources: ["nasa"] },
   { slug: "exploration-themes", title: "Future Exploration Themes", description: "The themes of future exploration — the Moon, Mars, Venus, ocean worlds, small bodies, observatories, and the outer Solar System.", entityTypes: ["exploration_theme"], sources: ["nasa"] },
   { slug: "mission-concepts", title: "Mission Concepts", description: "Official and credible planned missions and mission concepts, each with its status, goals, target, and uncertainties.", entityTypes: ["mission_concept"], sources: ["nasa", "esa"] },
+  { slug: "method-categories", title: "Astronomy Method Categories", description: "The families of astronomical technique — astrometry, photometry, spectroscopy, the distance ladder, exoplanet detection, and more.", entityTypes: ["method_category"], sources: ["nasa"] },
+  { slug: "astronomy-methods", title: "Astronomy Methods & Techniques", description: "The measurement and observation techniques of astronomy — parallax, spectroscopy, standard candles, gravitational lensing, and more.", entityTypes: ["astronomy_method"], sources: ["nasa", "esa"] },
 ];
 
 export interface Dataset extends DatasetDef {

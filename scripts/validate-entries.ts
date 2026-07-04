@@ -504,6 +504,22 @@ async function main() {
     `✓ Future missions valid — ${futureCat.CONCEPT_STATS.themes} themes, ${futureCat.CONCEPT_STATS.concepts} new concepts (${futureCat.CONCEPT_STATS.reusedConcepts} existing reused) · ${futureCat.CONCEPT_STATS.newEntities} new entities, ${futureCat.CONCEPT_STATS.relations} relations (reused missions/agencies/targets; no fabricated data)`,
   );
 
+  const methodsCat = await import("../src/knowledge-graph/data/astronomy-methods-catalog");
+  const methodsIssues = methodsCat.validateAstronomyMethods();
+  const { getEntityById: getMethodEnt } = await import("../src/knowledge-graph");
+  for (const r of methodsCat.relations) {
+    if (!getMethodEnt(r.from)) methodsIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getMethodEnt(r.to)) methodsIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (methodsIssues.length > 0) {
+    console.error(`\n✗ ${methodsIssues.length} astronomy-methods issue(s):`);
+    for (const i of methodsIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Astronomy methods valid — ${methodsCat.METHOD_STATS.categories} categories, ${methodsCat.METHOD_STATS.methods} techniques (${methodsCat.METHOD_STATS.reusedMethods} existing reused) · ${methodsCat.METHOD_STATS.newEntities} new entities, ${methodsCat.METHOD_STATS.relations} relations (reused detection methods/cosmology/bands/Gaia; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

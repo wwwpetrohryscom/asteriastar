@@ -1401,6 +1401,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["exploration_theme:lunar-exploration", "mission_concept:dragonfly", "mission_concept:habitable-worlds-observatory", "mission_concept:artemis-iii"],
     next: ["understanding-building-in-space", "the-solar-system"],
   },
+  {
+    slug: "understanding-how-astronomy-works",
+    title: "Understanding How Astronomy Works",
+    description: "The methods behind the science — how astronomers measure a distance, read a spectrum, weigh a black hole, and detect a ripple in spacetime, and how uncertainty is measured rather than hidden. Built on real techniques; nothing is fabricated.",
+    accent: "nebula",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "How astronomy works", href: "/methods", blurb: "Everything astronomy knows, it knows through a method." },
+          { title: "Measuring distances", href: "/methods/discover/the-distance-ladder", blurb: "Parallax, standard candles, and redshift." },
+          { title: "Parallax", href: "/methods/parallax", blurb: "The one direct, geometric distance measurement." },
+          { title: "The magnitude system", href: "/methods/the-magnitude-system", blurb: "Astronomy's backwards brightness scale." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Light & spectra", href: "/methods/discover/light-and-spectra", blurb: "Photometry, imaging, and spectroscopy." },
+          { title: "Spectroscopy", href: "/methods/spectroscopy", blurb: "The most powerful single tool in astronomy." },
+          { title: "The Cepheid distance scale", href: "/methods/cepheid-distance-scale", blurb: "Leavitt's law and the size of the universe." },
+          { title: "Finding exoplanets", href: "/methods/discover/finding-exoplanets", blurb: "Transit, radial velocity, and more." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Beyond light", href: "/methods/discover/beyond-light", blurb: "Lensing, gravitational waves, and neutrinos." },
+          { title: "Gravitational lensing", href: "/methods/gravitational-lensing", blurb: "Weighing matter directly, including dark matter." },
+          { title: "Gravitational-wave detection", href: "/methods/gravitational-wave-detection", blurb: "Hearing the mergers of black holes." },
+          { title: "Error analysis & calibration", href: "/methods/error-analysis-and-calibration", blurb: "Why a measurement needs an error bar." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["method_category:the-cosmic-distance-ladder", "astronomy_method:spectroscopy", "astronomy_method:parallax", "astronomy_method:gravitational-wave-detection"],
+    next: ["understanding-the-universe", "the-solar-system"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

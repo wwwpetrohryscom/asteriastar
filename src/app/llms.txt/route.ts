@@ -298,6 +298,14 @@ export function GET(): Response {
   lines.push(`- Human & lunar: ${absoluteUrl("/future-exploration/discover/human-and-lunar")} · Planetary: ${absoluteUrl("/future-exploration/discover/planetary-missions")} · Observatories: ${absoluteUrl("/future-exploration/discover/future-observatories")}`);
   lines.push("");
 
+  lines.push("## Astronomy Methods, Measurements & Scientific Techniques Encyclopedia");
+  lines.push(
+    `${engine.astronomyMethods.categories().length} categories and ${engine.astronomyMethods.methodCount} techniques (engine.astronomyMethods) — how astronomy actually works: astrometry and parallax, photometry and the magnitude system, spectroscopy and spectral classification, interferometry and adaptive optics, the cosmic distance ladder (Cepheids, standard candles, redshift and the Hubble–Lemaître law), helioseismology and asteroseismology, gravitational lensing, gravitational-wave detection, neutrino and multi-messenger astronomy, CMB measurements, galaxy rotation curves and black-hole mass measurement, and the error analysis, calibration, and honest uncertainty that make a measurement science. Curated from NASA and ESA. Reuses the exoplanet-detection methods, cosmology concepts, observing bands, Gaia, and the Harvard classification already in the graph; nothing duplicated or fabricated. Uncertainty is part of the method, not hidden.`,
+  );
+  lines.push(`- [Astronomy Methods, Measurements & Techniques](${absoluteUrl("/methods")})`);
+  lines.push(`- Distances: ${absoluteUrl("/methods/discover/the-distance-ladder")} · Light & spectra: ${absoluteUrl("/methods/discover/light-and-spectra")} · Beyond light: ${absoluteUrl("/methods/discover/beyond-light")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,
