@@ -80,6 +80,10 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "signal-bands", title: "Signal Bands", description: "Communication signal bands — S, X, Ka, UHF, and optical (laser).", entityTypes: ["signal_band"], sources: ["nasa", "jpl"] },
   { slug: "navigation-methods", title: "Navigation Methods", description: "Deep-space navigation systems — radiometric tracking, Delta-DOR, optical, and autonomous navigation.", entityTypes: ["navigation_system"], sources: ["nasa", "jpl"] },
   { slug: "communication-technologies", title: "Communication Technologies", description: "Communication and timing systems — optical relays, TDRS, telemetry/tracking/command, and time standards.", entityTypes: ["communication_system", "time_standard"], sources: ["nasa", "jpl"] },
+  { slug: "space-weather-phenomena", title: "Space-Weather Phenomena", description: "Solar wind, flares, coronal mass ejections, geomagnetic storms, and auroras.", entityTypes: ["space_weather_phenomenon"], sources: ["nasa", "noaa"] },
+  { slug: "radiation-environments", title: "Radiation Environments", description: "The Van Allen belts, galactic cosmic rays, and solar energetic particles.", entityTypes: ["radiation_environment"], sources: ["nasa"] },
+  { slug: "space-hazards", title: "Space Hazards", description: "Physical hazards to spacecraft — orbital debris, micrometeoroids, charging, and atomic oxygen.", entityTypes: ["space_hazard"], sources: ["nasa", "esa"] },
+  { slug: "geomagnetic-indices", title: "Geomagnetic Indices", description: "Space-weather indices and scales — Kp, Dst, and the NOAA G/S/R scales.", entityTypes: ["geomagnetic_index"], sources: ["noaa"] },
 ];
 
 export interface Dataset extends DatasetDef {
