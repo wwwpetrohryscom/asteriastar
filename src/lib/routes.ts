@@ -70,6 +70,7 @@ export const ROUTES = {
   galaxies: "/galaxies",
   astrobiology: "/astrobiology",
   planetaryDefense: "/planetary-defense",
+  dataArchives: "/data-archives",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -537,4 +538,10 @@ export function planetaryDefensePath(slug: string): string {
 }
 export function planetaryDefenseDiscoveryPath(slug: string): string {
   return `/planetary-defense/discover/${slug}`;
+}
+export function dataArchivesPath(slug: string): string {
+  return `/data-archives/${slug}`;
+}
+export function dataArchivesDiscoveryPath(slug: string): string {
+  return `/data-archives/discover/${slug}`;
 }

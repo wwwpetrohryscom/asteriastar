@@ -235,6 +235,14 @@ export const ENTITY_TYPES = [
   "defense_stage",
   "risk_scale",
   "deflection_method",
+  // Space data archives & open science (Program AT) — REUSES the archive-operating organisations,
+  // the telescopes and surveys whose data the archives hold, the calibration method, the Harvard
+  // classification, and VOEvent; these are the new data-archives types.
+  "data_archive",
+  "data_standard",
+  "vo_framework",
+  "vo_protocol",
+  "open_science_practice",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1166,4 +1174,9 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   defense_stage: "NEO pipeline stage",
   risk_scale: "Impact-risk scale",
   deflection_method: "Deflection method",
+  data_archive: "Data archive",
+  data_standard: "Data standard",
+  vo_framework: "Virtual Observatory framework",
+  vo_protocol: "Virtual Observatory protocol",
+  open_science_practice: "Open-science practice",
 };

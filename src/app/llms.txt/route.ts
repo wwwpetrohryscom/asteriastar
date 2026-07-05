@@ -338,6 +338,14 @@ export function GET(): Response {
   lines.push(`- NEO pipeline: ${absoluteUrl("/planetary-defense/discover/the-neo-pipeline")} · Risk scales: ${absoluteUrl("/planetary-defense/discover/risk-scales")} · Deflection: ${absoluteUrl("/planetary-defense/discover/deflection-methods")}`);
   lines.push("");
 
+  lines.push("## Space Data Archives & Open Science Infrastructure Encyclopedia");
+  lines.push(
+    `The ${engine.dataArchives.archiveCount} great science archives plus data standards, Virtual Observatory protocols, and open-science practices (engine.dataArchives) — where astronomy's data lives and how it is shared. Archives: MAST (Hubble, JWST, TESS, Kepler — STScI), the ESA science archives, IRSA (Spitzer, WISE, 2MASS — Caltech/IPAC), HEASARC (Chandra, Swift, Fermi), NED, and the Strasbourg CDS with SIMBAD and VizieR; plus the ESO and ALMA archives. Data standards: FITS, VOTable, ASDF. Virtual Observatory: the IVOA framework, TAP, Cone Search, Simple Image Access, Simple Spectral Access. Open science: data pipelines and calibration, cross-matching, the ADS literature service, persistent identifiers (DOIs, ORCID, bibcodes), and FAIR reproducibility. Curated from NASA, ESA, ESO, and the archive operators. REUSES the operating organisations (STScI, ESO, Caltech/IPAC, NASA, NRAO, NAOJ), the telescopes and surveys whose data the archives hold, the calibration method, the Harvard classification, and VOEvent; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Space Data Archives & Open Science](${absoluteUrl("/data-archives")})`);
+  lines.push(`- Archives: ${absoluteUrl("/data-archives/discover/the-archives")} · Data standards: ${absoluteUrl("/data-archives/discover/data-standards")} · Virtual Observatory: ${absoluteUrl("/data-archives/discover/the-virtual-observatory")} · Open science: ${absoluteUrl("/data-archives/discover/open-science")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

@@ -1586,6 +1586,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["defense_stage:neo-discovery", "risk_scale:torino-scale", "deflection_method:kinetic-impactor", "defense_stage:deflection"],
     next: ["understanding-the-future-of-exploration", "the-solar-system"],
   },
+  {
+    slug: "understanding-data-archives",
+    title: "Understanding Space Data Archives & Open Science",
+    description: "Where astronomy's data lives and how it is shared — the archives that hold the observations of the world's telescopes, the formats that let the data be shared, the Virtual Observatory that makes them searchable as one, and the open-science practices that make results findable, citable, and reusable. Curated from NASA, ESA, ESO, and the archive operators; nothing is fabricated.",
+    accent: "nebula",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Where the data lives", href: "/data-archives", blurb: "The hidden infrastructure beneath every discovery." },
+          { title: "The science archives", href: "/data-archives/discover/the-archives", blurb: "The great archives that hold the sky's data." },
+          { title: "MAST", href: "/data-archives/mast", blurb: "The home of Hubble and JWST data." },
+          { title: "Data standards", href: "/data-archives/discover/data-standards", blurb: "The formats that let data be shared." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "FITS", href: "/data-archives/fits", blurb: "The universal file format of astronomy." },
+          { title: "The Strasbourg CDS", href: "/data-archives/cds", blurb: "A cornerstone of open astronomy." },
+          { title: "SIMBAD", href: "/data-archives/simbad", blurb: "Looking up any object beyond the Solar System." },
+          { title: "The Virtual Observatory", href: "/data-archives/discover/the-virtual-observatory", blurb: "The world's archives, searchable as one." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "The Virtual Observatory framework", href: "/data-archives/the-virtual-observatory", blurb: "The IVOA standards that tie the archives together." },
+          { title: "Data pipelines & calibration", href: "/data-archives/data-pipelines-and-calibration", blurb: "Raw detector counts become science-ready data." },
+          { title: "The ADS literature service", href: "/data-archives/the-ads-literature-service", blurb: "The digital library that indexes all of astronomy." },
+          { title: "Reproducibility & FAIR data", href: "/data-archives/reproducibility-and-fair", blurb: "Findable, Accessible, Interoperable, Reusable." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["data_archive:mast", "data_standard:fits", "vo_framework:the-virtual-observatory", "open_science_practice:reproducibility-and-fair"],
+    next: ["understanding-planetary-defense", "the-solar-system"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
