@@ -46,6 +46,7 @@ export interface AstrobiologyRecord {
   relatedKeys?: string[]; // full ids of REUSED entities (associated_with)
 
   /* display */
+  kindLabel?: string; // overrides KIND_LABEL[kind] — e.g. a technosignature is not a biosignature
   definition?: string;
   highlights?: string[];
 }

@@ -38,7 +38,7 @@ export function AbDetail({ d }: { d: ResolvedAstrobiology }) {
     <>
       <JsonLd data={[breadcrumbSchema(crumbs), jsonLd]} />
       <Container className="pt-8"><Breadcrumbs crumbs={crumbs} /></Container>
-      <HeroSection compact accent="aurora" eyebrow={<span>{KIND_LABEL[r.kind]}{d.topic ? ` · ${d.topic.name}` : ""}</span>} title={r.name} lead={r.description}>
+      <HeroSection compact accent="aurora" eyebrow={<span>{r.kindLabel ?? KIND_LABEL[r.kind]}{d.topic ? ` · ${d.topic.name}` : ""}</span>} title={r.name} lead={r.description}>
         <div className="mt-4 flex flex-wrap gap-2">
           {d.topic ? <Link href={d.topic.href ?? "#"} className="rounded-full border border-white/15 bg-white/[0.03] px-2.5 py-0.5 text-xs text-aurora hover:border-white/30">{d.topic.name}</Link> : null}
         </div>

@@ -52,7 +52,8 @@ function resolveRecord(r: AstrobiologyRecord): ResolvedAstrobiology {
 
 export const astrobiologyEngine = {
   count: AB_RECORDS.length,
-  biosignatureCount: biosignatures.length,
+  /** True biosignatures only — excludes the technosignature and the false-positive entries. */
+  biosignatureCount: biosignatures.filter((b) => !b.kindLabel).length,
   all: (): AstrobiologyRecord[] => AB_RECORDS.slice(),
   get: (slug: string): AstrobiologyRecord | undefined => AB_BY_SLUG.get(slug),
   topics: (): AstrobiologyRecord[] => topics.slice(),
