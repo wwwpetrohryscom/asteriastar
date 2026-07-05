@@ -111,6 +111,8 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "extragalactic-structures", title: "Galactic Processes & Cosmic Structures", description: "The processes that shape galaxies and the large-scale structures they build — mergers, starbursts, feedback, the Local Group, clusters, superclusters, and voids.", entityTypes: ["galactic_process", "cosmic_structure"], sources: ["nasa"] },
   { slug: "biosignatures-and-habitability", title: "Biosignatures & Habitability", description: "The signs of life and the factors of planetary habitability — atmospheric, surface, chemical, and geological biosignatures, technosignatures, liquid water, energy, and extremophiles.", entityTypes: ["biosignature", "habitability_factor"], sources: ["nasa", "esa"] },
   { slug: "astrobiology-disciplines", title: "Astrobiology & Planetary Protection", description: "The disciplines of astrobiology and the planetary-protection measures that keep the search for life honest.", entityTypes: ["astrobiology_topic", "planetary_protection"], sources: ["nasa"] },
+  { slug: "neo-operations", title: "NEO Operations & Risk Scales", description: "The near-Earth-object operations pipeline — discovery, orbit determination, characterization, impact monitoring, risk assessment — and the Torino and Palermo risk scales.", entityTypes: ["defense_stage", "risk_scale"], sources: ["nasa"] },
+  { slug: "deflection-methods", title: "Asteroid Deflection Methods", description: "The methods of changing an asteroid's orbit — from the demonstrated kinetic impactor to theoretical nuclear concepts.", entityTypes: ["deflection_method"], sources: ["nasa"] },
 ];
 
 export interface Dataset extends DatasetDef {

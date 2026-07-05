@@ -330,6 +330,14 @@ export function GET(): Response {
   lines.push(`- Biosignatures: ${absoluteUrl("/astrobiology/discover/biosignatures")} · Habitability: ${absoluteUrl("/astrobiology/discover/habitability")} · Planetary protection: ${absoluteUrl("/astrobiology/discover/planetary-protection")}`);
   lines.push("");
 
+  lines.push("## Planetary Defense & NEO Operations Encyclopedia");
+  lines.push(
+    `A ${engine.planetaryDefense.stageCount}-stage NEO operations pipeline plus impact-risk scales and deflection methods (engine.planetaryDefense) — the end-to-end system to find, track, assess, and deflect a hazardous near-Earth object. Pipeline: discovery → orbit determination → characterization → impact monitoring → risk assessment → risk communication → decision & planning → deflection. Risk scales: the Torino and Palermo scales. Deflection methods with honest maturity: kinetic impactor (DEMONSTRATED by DART on Dimorphos in 2022), gravity tractor and ion-beam (concepts), nuclear (THEORETICAL, never tested, last resort). Curated from NASA, ESA, and the Minor Planet Center. REUSES the survey telescopes (Catalina, Pan-STARRS, ATLAS, LSST, Rubin), the Minor Planet Center and CNEOS, the DART and Hera missions and the NEO Surveyor concept, the near-Earth-object classes, and the asteroids Apophis and Bennu; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Planetary Defense & NEO Operations](${absoluteUrl("/planetary-defense")})`);
+  lines.push(`- NEO pipeline: ${absoluteUrl("/planetary-defense/discover/the-neo-pipeline")} · Risk scales: ${absoluteUrl("/planetary-defense/discover/risk-scales")} · Deflection: ${absoluteUrl("/planetary-defense/discover/deflection-methods")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

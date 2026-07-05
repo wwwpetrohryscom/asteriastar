@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Planetary Defense & NEO Operations Encyclopedia (Program AS)**
+
+- [Planetary Defense](docs/PLANETARY_DEFENSE.md) — the operational system that finds, tracks, assesses, and could deflect a hazardous near-Earth object: the NEO pipeline (discovery → orbit determination → characterization → impact monitoring → risk assessment & communication → decision → deflection), the Torino and Palermo risk scales, and the deflection methods from the DART-demonstrated kinetic impactor to theoretical nuclear concepts. Reuses the platform's survey telescopes, the Minor Planet Center & CNEOS, the DART & Hera missions, and the near-Earth objects; deflection maturity stated honestly; nothing duplicated or fabricated
+
 **Astrobiology, Biosignatures & the Search for Life Encyclopedia (Program AR)**
 
 - [Astrobiology](docs/ASTROBIOLOGY.md) — the science of life beyond Earth: origins of life, planetary habitability (liquid water, energy, chemical building blocks, extremophiles, subsurface oceans), the ocean worlds (Europa, Enceladus, Titan), biosignatures (atmospheric, surface, chemical, geological) and the false positives that must be ruled out, technosignatures & SETI, and planetary protection. Reuses the platform's ocean-world moons, Mars, the habitable-zone concept, the SETI Institute, and the life-search missions; no claim of extraterrestrial life is asserted; nothing duplicated or fabricated

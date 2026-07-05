@@ -568,6 +568,22 @@ async function main() {
     `✓ Astrobiology valid — ${abCat.AB_STATS.topics} disciplines, ${abCat.AB_STATS.biosignatures} biosignatures, ${abCat.AB_STATS.factors} habitability factors, ${abCat.AB_STATS.protection} protection measures · ${abCat.AB_STATS.newEntities} new entities, ${abCat.AB_STATS.relations} relations (reused ocean-worlds/Mars/SETI/missions; no fabricated data)`,
   );
 
+  const pdCat = await import("../src/knowledge-graph/data/planetary-defense-catalog");
+  const pdIssues = pdCat.validatePlanetaryDefense();
+  const { getEntityById: getPdEnt } = await import("../src/knowledge-graph");
+  for (const r of pdCat.relations) {
+    if (!getPdEnt(r.from)) pdIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getPdEnt(r.to)) pdIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (pdIssues.length > 0) {
+    console.error(`\n✗ ${pdIssues.length} planetary-defense issue(s):`);
+    for (const i of pdIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Planetary defense valid — ${pdCat.PD_STATS.stages}-stage NEO pipeline, ${pdCat.PD_STATS.scales} risk scales, ${pdCat.PD_STATS.methods} deflection methods · ${pdCat.PD_STATS.newEntities} new entities, ${pdCat.PD_STATS.relations} relations (reused surveys/MPC/CNEOS/DART/Hera/NEOs; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
