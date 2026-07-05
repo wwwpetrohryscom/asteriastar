@@ -73,6 +73,7 @@ export const ROUTES = {
   dataArchives: "/data-archives",
   observatoryFrontier: "/observatory-frontier",
   distanceLadder: "/distance-ladder",
+  heliophysics: "/heliophysics",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -558,4 +559,10 @@ export function distanceLadderPath(slug: string): string {
 }
 export function distanceLadderDiscoveryPath(slug: string): string {
   return `/distance-ladder/discover/${slug}`;
+}
+export function heliophysicsPath(slug: string): string {
+  return `/heliophysics/${slug}`;
+}
+export function heliophysicsDiscoveryPath(slug: string): string {
+  return `/heliophysics/discover/${slug}`;
 }

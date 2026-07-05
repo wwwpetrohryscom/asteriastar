@@ -362,6 +362,14 @@ export function GET(): Response {
   lines.push(`- The ladder: ${absoluteUrl("/distance-ladder/discover/the-distance-ladder")} · Parameters: ${absoluteUrl("/distance-ladder/discover/cosmological-parameters")} · The Hubble tension: ${absoluteUrl("/distance-ladder/discover/the-hubble-tension")}`);
   lines.push("");
 
+  lines.push("## Heliophysics & Space Weather Operations Encyclopedia");
+  lines.push(
+    `The operational layer of heliophysics — how the Sun drives space weather and how that weather reaches technology and people (engine.heliophysics). Solar sources (created with the existing space-weather-phenomenon type): the solar cycle, sunspots, active regions, coronal holes, and the ionosphere. Operational impacts (a new type): satellites, GPS and navigation, aviation, human spaceflight, power grids, and radio communications. Forecasting: ESA's Space Weather Service Network (created with the existing organization type, matching NOAA's SWPC), the European counterpart to NOAA's SWPC. Curated from NOAA SWPC, NASA, and ESA. REUSES the space-weather phenomena (solar flares, CMEs, the solar wind, the heliosphere, geomagnetic storms, the magnetosphere, the aurora), the NOAA G/S/R scales, the solar-energetic-particle and Van Allen radiation environments, the Parker Solar Probe, Solar Orbiter, DSCOVR and ACE missions, and the SWPC; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Heliophysics & Space Weather Operations](${absoluteUrl("/heliophysics")})`);
+  lines.push(`- Solar sources: ${absoluteUrl("/heliophysics/discover/solar-sources")} · Operational impacts: ${absoluteUrl("/heliophysics/discover/operational-impacts")} · Forecasting: ${absoluteUrl("/heliophysics/discover/forecasting")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

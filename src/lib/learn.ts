@@ -1697,6 +1697,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["distance_indicator:standard-sirens", "distance_indicator:tip-of-the-red-giant-branch", "observational_program:sh0es", "cosmological_parameter:matter-density"],
     next: ["understanding-the-observatory-frontier", "the-solar-system"],
   },
+  {
+    slug: "understanding-space-weather",
+    title: "Understanding Space Weather",
+    description: "How the Sun's weather is made and how it reaches the Earth — the solar cycle and its storms, and their impacts on satellites, navigation, aviation, astronauts, and power grids — and the operational forecasting that watches for it. Built on documented effects and real forecasting services; nothing is fabricated.",
+    accent: "aurora",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The Sun's weather", href: "/heliophysics", blurb: "Watching the Sun and defending against it." },
+          { title: "Solar sources", href: "/heliophysics/discover/solar-sources", blurb: "The solar cycle, sunspots, and active regions." },
+          { title: "The solar cycle", href: "/heliophysics/solar-cycle", blurb: "The ~11-year heartbeat of solar activity." },
+          { title: "Operational impacts", href: "/heliophysics/discover/operational-impacts", blurb: "How solar activity reaches technology and people." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Active regions", href: "/heliophysics/active-region", blurb: "The magnetic launch sites of flares and CMEs." },
+          { title: "Coronal holes", href: "/heliophysics/coronal-hole", blurb: "The source of the fast solar wind." },
+          { title: "The ionosphere", href: "/heliophysics/ionosphere", blurb: "Where radio blackouts and GPS errors happen." },
+          { title: "Power grids", href: "/heliophysics/power-grids", blurb: "Geomagnetically induced currents in the grid." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Satellites", href: "/heliophysics/satellites", blurb: "Charging, upsets, and increased orbital drag." },
+          { title: "Human spaceflight", href: "/heliophysics/human-spaceflight", blurb: "Radiation, the central hazard beyond low orbit." },
+          { title: "Radio communications", href: "/heliophysics/radio-communications", blurb: "HF blackouts across the sunlit Earth." },
+          { title: "Forecasting services", href: "/heliophysics/discover/forecasting", blurb: "Watching the Sun and warning the world." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["space_weather_phenomenon:solar-cycle", "space_weather_impact:power-grids", "space_weather_impact:satellites", "organization:esa-space-weather-service-network"],
+    next: ["understanding-the-distance-ladder", "the-solar-system"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

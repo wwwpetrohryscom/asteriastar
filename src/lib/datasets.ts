@@ -119,6 +119,7 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "interferometry-observing-techniques", title: "Interferometry & Observing Techniques", description: "Combining separated apertures for the sharpest vision in astronomy (radio, optical, and continent-spanning VLBI, plus aperture synthesis) and the ground techniques that beat the atmosphere — lucky imaging, speckle imaging, stacking, and fringe tracking.", entityTypes: ["interferometry_technique", "observing_technique"], sources: ["eso", "noirlab"] },
   { slug: "distance-indicators", title: "Cosmic Distance Indicators", description: "The rungs of the distance ladder — RR Lyrae, the tip of the red giant branch, surface brightness fluctuations, the Tully–Fisher and Faber–Jackson relations, water megamasers, and standard sirens.", entityTypes: ["distance_indicator"], sources: ["nasa", "ligo"] },
   { slug: "cosmological-parameters", title: "Cosmological Parameters", description: "The numbers that describe the universe as a whole — the matter density (Ωm), the dark-energy density (ΩΛ), the amplitude of fluctuations (σ8), and the scalar spectral index (ns).", entityTypes: ["cosmological_parameter"], sources: ["planck"] },
+  { slug: "space-weather-impacts", title: "Space Weather Operational Impacts", description: "How solar activity reaches technology and people — the impacts on satellites, GPS and navigation, aviation, human spaceflight, power grids, and radio communications.", entityTypes: ["space_weather_impact"], sources: ["swpc", "noaa"] },
 ];
 
 export interface Dataset extends DatasetDef {

@@ -258,6 +258,12 @@ export const ENTITY_TYPES = [
   // two new distance-ladder types.
   "distance_indicator",
   "cosmological_parameter",
+  // Heliophysics & space weather operations (Program AW) — REUSES the space-weather phenomena,
+  // the NOAA G/S/R scales, the radiation environments, the heliophysics missions, and the SWPC/
+  // NOAA/ESA organisations; the solar-source phenomena reuse the space-weather-phenomenon type and
+  // ESA's forecasting service the organization type (matching NOAA SWPC). This is the new
+  // operational-impact type.
+  "space_weather_impact",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1200,4 +1206,5 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   observing_technique: "Observing technique",
   distance_indicator: "Distance indicator",
   cosmological_parameter: "Cosmological parameter",
+  space_weather_impact: "Space-weather impact",
 };
