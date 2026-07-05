@@ -426,6 +426,14 @@ export function GET(): Response {
   lines.push(`- Histories: ${absoluteUrl("/discovery-history/discover/histories")} · Methodology: ${absoluteUrl("/discovery-history/discover/methodology")} · Philosophy: ${absoluteUrl("/discovery-history/discover/philosophy")}`);
   lines.push("");
 
+  lines.push("## Celestial Mechanics & Timekeeping Encyclopedia");
+  lines.push(
+    `The mathematical foundation of how bodies move and how time is kept (engine.celestialMechanics). Orbital mechanics (building on the reused Kepler's laws): the restricted three-body problem, N-body dynamics, Lagrange points, the Hill sphere, the Roche limit, orbital perturbations, mean-motion and secular resonances, tidal evolution, spin-orbit coupling, orbital elements. Reference frames & epochs: the ICRS, BCRS, GCRS, the ecliptic, J2000, B1950. Ephemeris systems: the JPL Development Ephemeris, the SPICE toolkit, JPL Horizons. Time standards (created with the existing time-standard type): Terrestrial Time (TAI + 32.184 s), Barycentric Dynamical Time, UT1, the leap second, sidereal time, apparent solar time. Curated from JPL, the IAU, and the US Naval Observatory; only well-established constants are stated. REUSES universal gravitation, gravity, Kepler's laws, Kepler and Newton, JPL, the Jupiter orbital resonances, the TAI and UTC standards, the precession discovery, the planets, and JWST; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Celestial Mechanics & Timekeeping](${absoluteUrl("/celestial-mechanics")})`);
+  lines.push(`- Orbital mechanics: ${absoluteUrl("/celestial-mechanics/discover/orbital-mechanics")} · Reference frames: ${absoluteUrl("/celestial-mechanics/discover/reference-frames")} · Ephemerides: ${absoluteUrl("/celestial-mechanics/discover/ephemerides")} · Timekeeping: ${absoluteUrl("/celestial-mechanics/discover/timekeeping")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

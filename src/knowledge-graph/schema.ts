@@ -317,6 +317,13 @@ export const ENTITY_TYPES = [
   "discovery_methodology",
   "philosophy_of_science",
   "history_theme",
+  // Celestial mechanics & timekeeping (Program BE) — REUSES universal gravitation, gravity, Kepler
+  // and Newton, JPL, the Jupiter resonances, the TAI/UTC time standards, the precession discovery,
+  // the planets, and JWST; the six additional time standards reuse the time-standard type. These are
+  // the new orbital-mechanics, reference-frame, and ephemeris types.
+  "orbital_mechanics_concept",
+  "reference_frame",
+  "ephemeris_system",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1282,4 +1289,7 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   discovery_methodology: "Discovery methodology",
   philosophy_of_science: "Philosophy of science",
   history_theme: "History of discovery",
+  orbital_mechanics_concept: "Orbital mechanics concept",
+  reference_frame: "Reference frame",
+  ephemeris_system: "Ephemeris system",
 };

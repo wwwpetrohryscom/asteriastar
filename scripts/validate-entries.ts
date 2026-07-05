@@ -760,6 +760,22 @@ async function main() {
     `✓ Discovery history valid — ${bdCat.BD_STATS.themes} histories of discovery, ${bdCat.BD_STATS.methodology} discovery methodologies, ${bdCat.BD_STATS.philosophy} philosophy concepts · ${bdCat.BD_STATS.newEntities} new entities, ${bdCat.BD_STATS.relations} relations (reused astronomers/eras/methods/objects/reproducibility; no fabricated data)`,
   );
 
+  const beCat = await import("../src/knowledge-graph/data/celestial-mechanics-catalog");
+  const beIssues = beCat.validateCelestialMechanics();
+  const { getEntityById: getBeEnt } = await import("../src/knowledge-graph");
+  for (const r of beCat.relations) {
+    if (!getBeEnt(r.from)) beIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBeEnt(r.to)) beIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (beIssues.length > 0) {
+    console.error(`\n✗ ${beIssues.length} celestial-mechanics issue(s):`);
+    for (const i of beIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Celestial mechanics valid — ${beCat.BE_STATS.dynamics} orbital-mechanics concepts, ${beCat.BE_STATS.frames} reference frames, ${beCat.BE_STATS.ephemerides} ephemeris systems, ${beCat.BE_STATS.timekeeping} time standards · ${beCat.BE_STATS.newEntities} new entities, ${beCat.BE_STATS.relations} relations (reused gravitation/Kepler/JPL/planets/resonances/TAI-UTC/precession/JWST; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
