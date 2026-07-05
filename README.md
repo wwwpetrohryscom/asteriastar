@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Astrobiology, Biosignatures & the Search for Life Encyclopedia (Program AR)**
+
+- [Astrobiology](docs/ASTROBIOLOGY.md) — the science of life beyond Earth: origins of life, planetary habitability (liquid water, energy, chemical building blocks, extremophiles, subsurface oceans), the ocean worlds (Europa, Enceladus, Titan), biosignatures (atmospheric, surface, chemical, geological) and the false positives that must be ruled out, technosignatures & SETI, and planetary protection. Reuses the platform's ocean-world moons, Mars, the habitable-zone concept, the SETI Institute, and the life-search missions; no claim of extraterrestrial life is asserted; nothing duplicated or fabricated
+
 **Galaxies, AGN & the Extragalactic Universe Encyclopedia (Program AQ)**
 
 - [Galaxies](docs/GALAXIES.md) — the extragalactic universe: galaxy morphology (spiral, barred, elliptical, lenticular, irregular, ring, dwarf, peculiar), active galactic nuclei (Seyfert, LINER, radio galaxy, BL Lac, and the unified model), galaxy-evolution processes (mergers, interactions, starbursts, black-hole feedback, quenching), and named large-scale structures (the Local Group, the Virgo & Coma clusters, Laniakea, the Sloan Great Wall, the Boötes Void). Reuses the platform's galaxies, astrophysical object classes, and cosmology concepts; nothing duplicated or fabricated

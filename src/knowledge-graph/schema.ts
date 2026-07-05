@@ -222,6 +222,13 @@ export const ENTITY_TYPES = [
   "agn_model",
   "galactic_process",
   "cosmic_structure",
+  // Astrobiology, Biosignatures & the Search for Life (Program AR). Reuses the ocean-world
+  // moons, Mars, the habitable-zone concept, the SETI Institute, and the life-search missions;
+  // these are the new astrobiology types.
+  "astrobiology_topic",
+  "biosignature",
+  "habitability_factor",
+  "planetary_protection",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1146,4 +1153,8 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   agn_model: "AGN model",
   galactic_process: "Galactic process",
   cosmic_structure: "Cosmic structure",
+  astrobiology_topic: "Astrobiology discipline",
+  biosignature: "Biosignature",
+  habitability_factor: "Habitability factor",
+  planetary_protection: "Planetary protection",
 };

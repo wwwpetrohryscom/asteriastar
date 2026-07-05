@@ -45,6 +45,7 @@ import { relations as futureMissionsCatalog } from "@/knowledge-graph/data/futur
 import { relations as astronomyMethodsCatalog } from "@/knowledge-graph/data/astronomy-methods-catalog";
 import { relations as timeDomainCatalog } from "@/knowledge-graph/data/time-domain-catalog";
 import { relations as galaxiesCatalog } from "@/knowledge-graph/data/galaxies-catalog";
+import { relations as astrobiologyCatalog } from "@/knowledge-graph/data/astrobiology-catalog";
 import { coreRelations } from "@/knowledge-graph/data/core-relations";
 
 /**
@@ -104,4 +105,5 @@ export const relations: GraphRelation[] = [
   ...astronomyMethodsCatalog,
   ...timeDomainCatalog,
   ...galaxiesCatalog,
+  ...astrobiologyCatalog,
 ];

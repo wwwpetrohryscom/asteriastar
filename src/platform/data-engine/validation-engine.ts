@@ -30,6 +30,7 @@ import { validateFutureMissions } from "@/knowledge-graph/data/future-missions-c
 import { validateAstronomyMethods } from "@/knowledge-graph/data/astronomy-methods-catalog";
 import { validateTimeDomain } from "@/knowledge-graph/data/time-domain-catalog";
 import { validateGalaxies } from "@/knowledge-graph/data/galaxies-catalog";
+import { validateAstrobiology } from "@/knowledge-graph/data/astrobiology-catalog";
 import { validateHumanSpaceflight } from "@/knowledge-graph/data/human-spaceflight-catalog";
 import { validateObservatories } from "@/knowledge-graph/data/observatory-catalog";
 import { validateExoplanets } from "@/knowledge-graph/data/exoplanet-catalog";
@@ -141,6 +142,7 @@ export const validationEngine = {
   astronomyMethods: (): string[] => validateAstronomyMethods(),
   timeDomain: (): string[] => validateTimeDomain(),
   galaxies: (): string[] => validateGalaxies(),
+  astrobiology: (): string[] => validateAstrobiology(),
   humanSpaceflight: (): string[] => validateHumanSpaceflight(),
   observatories: (): string[] => validateObservatories(),
   exoplanets: (): string[] => validateExoplanets(),
@@ -186,6 +188,7 @@ export const validationEngine = {
       { category: "astronomyMethods", issues: this.astronomyMethods() },
       { category: "timeDomain", issues: this.timeDomain() },
       { category: "galaxies", issues: this.galaxies() },
+      { category: "astrobiology", issues: this.astrobiology() },
       { category: "humanSpaceflight", issues: this.humanSpaceflight() },
       { category: "observatories", issues: this.observatories() },
       { category: "exoplanets", issues: this.exoplanets() },

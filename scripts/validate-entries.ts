@@ -552,6 +552,22 @@ async function main() {
     `✓ Galaxies valid — ${gxCat.EXG_STATS.morphologies} morphologies, ${gxCat.EXG_STATS.agnTypes} AGN types + ${gxCat.EXG_STATS.agnModels} model, ${gxCat.EXG_STATS.processes} processes, ${gxCat.EXG_STATS.structures} structures · ${gxCat.EXG_STATS.newEntities} new entities, ${gxCat.EXG_STATS.relations} relations (reused galaxies/object-classes/cosmology; no fabricated data)`,
   );
 
+  const abCat = await import("../src/knowledge-graph/data/astrobiology-catalog");
+  const abIssues = abCat.validateAstrobiology();
+  const { getEntityById: getAbEnt } = await import("../src/knowledge-graph");
+  for (const r of abCat.relations) {
+    if (!getAbEnt(r.from)) abIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getAbEnt(r.to)) abIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (abIssues.length > 0) {
+    console.error(`\n✗ ${abIssues.length} astrobiology issue(s):`);
+    for (const i of abIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Astrobiology valid — ${abCat.AB_STATS.topics} disciplines, ${abCat.AB_STATS.biosignatures} biosignatures, ${abCat.AB_STATS.factors} habitability factors, ${abCat.AB_STATS.protection} protection measures · ${abCat.AB_STATS.newEntities} new entities, ${abCat.AB_STATS.relations} relations (reused ocean-worlds/Mars/SETI/missions; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
