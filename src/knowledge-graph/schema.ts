@@ -219,6 +219,7 @@ export const ENTITY_TYPES = [
   // concepts; these are the new extragalactic types.
   "galaxy_morphology",
   "agn_type",
+  "agn_model",
   "galactic_process",
   "cosmic_structure",
 ] as const;
@@ -1142,6 +1143,7 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   observation_stage: "Observation stage",
   galaxy_morphology: "Galaxy morphology",
   agn_type: "AGN type",
+  agn_model: "AGN model",
   galactic_process: "Galactic process",
   cosmic_structure: "Cosmic structure",
 };

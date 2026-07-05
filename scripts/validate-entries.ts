@@ -549,7 +549,7 @@ async function main() {
     process.exit(1);
   }
   console.log(
-    `✓ Galaxies valid — ${gxCat.EXG_STATS.morphologies} morphologies, ${gxCat.EXG_STATS.agnTypes} AGN types, ${gxCat.EXG_STATS.processes} processes, ${gxCat.EXG_STATS.structures} structures · ${gxCat.EXG_STATS.newEntities} new entities, ${gxCat.EXG_STATS.relations} relations (reused galaxies/object-classes/cosmology; no fabricated data)`,
+    `✓ Galaxies valid — ${gxCat.EXG_STATS.morphologies} morphologies, ${gxCat.EXG_STATS.agnTypes} AGN types + ${gxCat.EXG_STATS.agnModels} model, ${gxCat.EXG_STATS.processes} processes, ${gxCat.EXG_STATS.structures} structures · ${gxCat.EXG_STATS.newEntities} new entities, ${gxCat.EXG_STATS.relations} relations (reused galaxies/object-classes/cosmology; no fabricated data)`,
   );
 
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");

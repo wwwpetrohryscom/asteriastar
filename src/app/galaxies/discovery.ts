@@ -13,7 +13,7 @@ const e = engine.galaxies;
 
 export const GX_DISCOVERIES: GxDiscovery[] = [
   { slug: "galaxy-morphology", title: "Galaxy Morphology", description: "The forms of galaxies — spiral, barred, elliptical, lenticular, irregular, ring, dwarf, and peculiar.", get: () => e.morphologies() },
-  { slug: "active-galactic-nuclei", title: "Active Galactic Nuclei", description: "The energetic hearts of galaxies — Seyferts, LINERs, radio galaxies, blazars, and the unified model.", get: () => e.agnTypes() },
+  { slug: "active-galactic-nuclei", title: "Active Galactic Nuclei", description: "The energetic hearts of galaxies — Seyferts, LINERs, radio galaxies, blazars, and the unified model that ties them together.", get: () => [...e.agnTypes(), ...e.agnModels()] },
   { slug: "galaxy-evolution", title: "Galaxy Evolution", description: "How galaxies grow and change — mergers, interactions, starbursts, black-hole feedback, and quenching.", get: () => e.processes() },
   { slug: "cosmic-structures", title: "Cosmic Structures", description: "The large-scale universe — the Local Group, the Virgo and Coma clusters, Laniakea, great walls, and voids.", get: () => e.structures() },
 ];

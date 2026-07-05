@@ -14,12 +14,14 @@ import type { EntityType } from "@/knowledge-graph/schema";
 export type ExtragalacticKind =
   | "morphology" // a class of galaxy morphology (the Hubble sequence and beyond)
   | "agn" // a type of active galactic nucleus
+  | "model" // an explanatory model/framework (e.g. AGN unification) — a model, not a type
   | "process" // a galaxy-evolution process or phenomenon
   | "structure"; // a named large-scale structure (group, cluster, supercluster, wall, void)
 
 export const KIND_ENTITY_TYPE: Record<ExtragalacticKind, EntityType> = {
   morphology: "galaxy_morphology",
   agn: "agn_type",
+  model: "agn_model",
   process: "galactic_process",
   structure: "cosmic_structure",
 };
@@ -27,6 +29,7 @@ export const KIND_ENTITY_TYPE: Record<ExtragalacticKind, EntityType> = {
 export const KIND_LABEL: Record<ExtragalacticKind, string> = {
   morphology: "Galaxy morphology",
   agn: "AGN type",
+  model: "AGN model",
   process: "Galactic process",
   structure: "Cosmic structure",
 };

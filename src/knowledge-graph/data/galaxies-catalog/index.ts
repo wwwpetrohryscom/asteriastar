@@ -2,7 +2,7 @@ import { rel, type EntityType, type GraphEntity, type GraphRelation, type Relati
 import { LEGACY_RELATION_IDS } from "@/knowledge-graph/data/galaxies-catalog/legacy-relations";
 import { KIND_ENTITY_TYPE, type ExtragalacticKind, type ExtragalacticRecord } from "@/knowledge-graph/data/galaxies-catalog/types";
 import { morphologies } from "@/knowledge-graph/data/galaxies-catalog/data/morphologies";
-import { agnTypes } from "@/knowledge-graph/data/galaxies-catalog/data/agn";
+import { agnTypes, agnModels } from "@/knowledge-graph/data/galaxies-catalog/data/agn";
 import { processes } from "@/knowledge-graph/data/galaxies-catalog/data/processes";
 import { structures } from "@/knowledge-graph/data/galaxies-catalog/data/structures";
 
@@ -15,7 +15,7 @@ import { structures } from "@/knowledge-graph/data/galaxies-catalog/data/structu
  * an existing edge or whose endpoints don't resolve are dropped. Nothing is fabricated.
  */
 
-export const EXG_RECORDS: ExtragalacticRecord[] = [...morphologies, ...agnTypes, ...processes, ...structures];
+export const EXG_RECORDS: ExtragalacticRecord[] = [...morphologies, ...agnTypes, ...agnModels, ...processes, ...structures];
 export const EXG_BY_ID = new Map(EXG_RECORDS.map((r) => [r.id, r]));
 export const EXG_BY_SLUG = new Map(EXG_RECORDS.map((r) => [r.slug, r]));
 
@@ -56,6 +56,7 @@ export const EXG_STATS = {
   relations: relations.length,
   morphologies: morphologies.length,
   agnTypes: agnTypes.length,
+  agnModels: agnModels.length,
   processes: processes.length,
   structures: structures.length,
 } as const;
@@ -90,4 +91,4 @@ export function validateGalaxies(): string[] {
 
 export type { ExtragalacticRecord, ExtragalacticKind } from "@/knowledge-graph/data/galaxies-catalog/types";
 export { KIND_ENTITY_TYPE, KIND_LABEL } from "@/knowledge-graph/data/galaxies-catalog/types";
-export { morphologies, agnTypes, processes, structures };
+export { morphologies, agnTypes, agnModels, processes, structures };

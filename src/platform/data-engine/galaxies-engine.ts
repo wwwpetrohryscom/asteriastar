@@ -3,6 +3,7 @@ import {
   EXG_BY_SLUG,
   morphologies,
   agnTypes,
+  agnModels,
   processes,
   structures,
   type ExtragalacticRecord,
@@ -53,6 +54,7 @@ export const galaxiesEngine = {
   get: (slug: string): ExtragalacticRecord | undefined => EXG_BY_SLUG.get(slug),
   morphologies: (): ExtragalacticRecord[] => morphologies.slice(),
   agnTypes: (): ExtragalacticRecord[] => agnTypes.slice().sort(byName),
+  agnModels: (): ExtragalacticRecord[] => agnModels.slice(),
   processes: (): ExtragalacticRecord[] => processes.slice().sort(byName),
   structures: (): ExtragalacticRecord[] => structures.slice().sort(byName),
   /** Whether an id belongs to this catalog (a new extragalactic entity). */
