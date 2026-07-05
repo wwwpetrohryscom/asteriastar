@@ -51,6 +51,7 @@ import { entities as dataArchivesCatalog } from "@/knowledge-graph/data/data-arc
 import { entities as observatoryFrontierCatalog } from "@/knowledge-graph/data/observatory-frontier-catalog";
 import { entities as distanceLadderCatalog } from "@/knowledge-graph/data/distance-ladder-catalog";
 import { entities as heliophysicsCatalog } from "@/knowledge-graph/data/heliophysics-catalog";
+import { entities as astroMlCatalog } from "@/knowledge-graph/data/astro-ml-catalog";
 
 /**
  * Knowledge-graph entities.
@@ -309,4 +310,5 @@ export const entities: GraphEntity[] = [
   ...observatoryFrontierCatalog,
   ...distanceLadderCatalog,
   ...heliophysicsCatalog,
+  ...astroMlCatalog,
 ];

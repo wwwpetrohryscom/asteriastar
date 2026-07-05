@@ -1734,6 +1734,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["space_weather_phenomenon:solar-cycle", "space_weather_impact:power-grids", "space_weather_impact:satellites", "organization:esa-space-weather-service-network"],
     next: ["understanding-the-distance-ladder", "the-solar-system"],
   },
+  {
+    slug: "understanding-machine-learning-in-astronomy",
+    title: "Understanding Machine Learning in Astronomy",
+    description: "How astronomy keeps up with the flood of survey data — the machine-learning methods that classify and discover at scale, the applications where they meet the sky, the brokers that triage the alert stream in real time, and the data engineering that keeps it honest. Built on real methods, brokers, and benchmark datasets; nothing is fabricated.",
+    accent: "plasma",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Astronomy at data scale", href: "/astro-ml", blurb: "How astronomy keeps up with the flood of data." },
+          { title: "Machine-learning methods", href: "/astro-ml/discover/ml-methods", blurb: "The techniques astronomy borrows and adapts." },
+          { title: "Classification", href: "/astro-ml/classification", blurb: "Sorting millions of objects into kinds." },
+          { title: "Applications on the sky", href: "/astro-ml/discover/applications", blurb: "Where ML meets real astronomy." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Photometric redshifts", href: "/astro-ml/photometric-redshifts", blurb: "Redshifts for hundreds of millions of galaxies." },
+          { title: "Galaxy morphology", href: "/astro-ml/galaxy-morphology-classification", blurb: "Classifying galaxies by their shape." },
+          { title: "Anomaly detection", href: "/astro-ml/anomaly-detection", blurb: "Finding the objects nobody expected." },
+          { title: "Real-time alert classification", href: "/astro-ml/real-time-alert-classification", blurb: "Millions of alerts a night, classified live." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Alert brokers", href: "/astro-ml/discover/alert-brokers", blurb: "ALeRCE, ANTARES, Fink, and Lasair." },
+          { title: "Self-supervised learning", href: "/astro-ml/self-supervised-learning", blurb: "Learning from abundant data without labels." },
+          { title: "Benchmark datasets", href: "/astro-ml/benchmark-datasets", blurb: "Comparing methods on equal footing." },
+          { title: "Model evaluation", href: "/astro-ml/model-evaluation", blurb: "Completeness, purity, and guarding against overfitting." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["ml_method:classification", "ml_application:real-time-alert-classification", "alert_system:alerce", "ml_workflow:benchmark-datasets"],
+    next: ["understanding-data-archives", "understanding-the-observatory-frontier"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

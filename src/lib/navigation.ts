@@ -83,6 +83,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Observatories & Instrumentation Frontier", href: ROUTES.observatoryFrontier, description: "The giant telescopes of the coming decade — GMT, ngVLA, CTA, adaptive optics, detectors, interferometry & VLBI" },
             { name: "Cosmic Distance Ladder & Tensions", href: ROUTES.distanceLadder, description: "How the universe is measured — RR Lyrae, TRGB, standard sirens, the cosmological parameters & the Hubble tension" },
             { name: "Heliophysics & Space Weather", href: ROUTES.heliophysics, description: "The Sun's weather and its impacts — the solar cycle, coronal holes, satellites, GPS, power grids & forecasting" },
+            { name: "Data Science, AI & ML in Astronomy", href: ROUTES.astroMl, description: "Computational astronomy — classification, anomaly detection, photo-z, alert brokers (ALeRCE, Fink) & benchmarks" },
             { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Observatories", href: ROUTES.observatories, description: "Telescopes, surveys, bands" },
             { name: "Exoplanets", href: ROUTES.exoplanets, description: "Worlds beyond the Sun" },

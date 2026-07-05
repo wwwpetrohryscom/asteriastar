@@ -370,6 +370,14 @@ export function GET(): Response {
   lines.push(`- Solar sources: ${absoluteUrl("/heliophysics/discover/solar-sources")} · Operational impacts: ${absoluteUrl("/heliophysics/discover/operational-impacts")} · Forecasting: ${absoluteUrl("/heliophysics/discover/forecasting")}`);
   lines.push("");
 
+  lines.push("## Data Science, AI & Machine Learning in Astronomy Encyclopedia");
+  lines.push(
+    `The computational layer of modern astronomy (engine.astroMl). ML methods: classification, regression, clustering, representation learning, self-supervised learning, foundation models, anomaly detection. Applications: galaxy morphology classification, supernova classification, photometric redshifts, transit detection, strong-lens finding, source extraction, real-time alert classification. Community alert brokers (created with the existing alert-system type): ALeRCE, ANTARES, Fink, Lasair. Data engineering: training datasets, benchmark datasets, feature extraction, model evaluation. Curated from NASA, NOIRLab, and the Rubin/LSST community; benchmark datasets and brokers are named only where real. REUSES the Rubin Observatory and its alert stream, the Transient Name Server, the photometry, gravitational-lensing and spectral-classification methods, the galaxy morphologies, the transit exoplanet method, the Type Ia supernova class, the redshift concept, and the reproducibility, data-pipeline and cross-matching practices; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Data Science, AI & Machine Learning in Astronomy](${absoluteUrl("/astro-ml")})`);
+  lines.push(`- ML methods: ${absoluteUrl("/astro-ml/discover/ml-methods")} · Applications: ${absoluteUrl("/astro-ml/discover/applications")} · Alert brokers: ${absoluteUrl("/astro-ml/discover/alert-brokers")} · Data engineering: ${absoluteUrl("/astro-ml/discover/data-engineering")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

@@ -264,6 +264,14 @@ export const ENTITY_TYPES = [
   // ESA's forecasting service the organization type (matching NOAA SWPC). This is the new
   // operational-impact type.
   "space_weather_impact",
+  // Data science, AI & machine learning in astronomy (Program AX) — REUSES the Rubin Observatory
+  // and alert stream, the alert systems, the photometry/lensing methods, the galaxy morphologies,
+  // the transit method, the Type Ia supernova class, the redshift concept, and the open-science
+  // practices; the community alert brokers reuse the alert-system type. These are the new
+  // machine-learning types.
+  "ml_method",
+  "ml_application",
+  "ml_workflow",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1207,4 +1215,7 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   distance_indicator: "Distance indicator",
   cosmological_parameter: "Cosmological parameter",
   space_weather_impact: "Space-weather impact",
+  ml_method: "Machine-learning method",
+  ml_application: "Astronomical ML application",
+  ml_workflow: "Data-engineering workflow",
 };
