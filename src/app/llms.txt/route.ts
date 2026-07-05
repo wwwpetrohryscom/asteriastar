@@ -354,6 +354,14 @@ export function GET(): Response {
   lines.push(`- Facilities: ${absoluteUrl("/observatory-frontier/discover/next-generation-facilities")} · Instrumentation: ${absoluteUrl("/observatory-frontier/discover/instrumentation")} · Detectors: ${absoluteUrl("/observatory-frontier/discover/detectors")} · Interferometry: ${absoluteUrl("/observatory-frontier/discover/interferometry")} · Techniques: ${absoluteUrl("/observatory-frontier/discover/observing-techniques")}`);
   lines.push("");
 
+  lines.push("## Cosmic Distance Ladder & Cosmological Tensions Encyclopedia");
+  lines.push(
+    `The complete distance-measurement layer of modern cosmology plus the cosmological parameters and the Hubble tension (engine.distanceLadder). Distance indicators (the rungs still missing from the graph): RR Lyrae, tip of the red giant branch, surface brightness fluctuations, the Tully–Fisher and Faber–Jackson relations, water megamaser distances, and standard sirens — reusing parallax, the Cepheid scale, Type Ia supernovae, BAO, and the CMB. Cosmological parameters: matter density (Ωm), dark-energy density (ΩΛ), the amplitude of fluctuations (σ8), and the scalar spectral index (ns) — the Hubble constant (H0) is reused. The Hubble tension: the SH0ES local-ladder programme (created with the existing observational-programme type) versus the early-universe (Planck) value, and early dark energy (created with the existing cosmology-concept type) as one proposed, unconfirmed resolution. Curated from Planck, SH0ES, and the gravitational-wave observatories; measured values are not invented. REUSES the Hubble constant and tension, dark energy and dark matter, and the Planck, Gaia, Hubble, and JWST facilities; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Cosmic Distance Ladder & Cosmological Tensions](${absoluteUrl("/distance-ladder")})`);
+  lines.push(`- The ladder: ${absoluteUrl("/distance-ladder/discover/the-distance-ladder")} · Parameters: ${absoluteUrl("/distance-ladder/discover/cosmological-parameters")} · The Hubble tension: ${absoluteUrl("/distance-ladder/discover/the-hubble-tension")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

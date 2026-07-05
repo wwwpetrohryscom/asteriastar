@@ -81,6 +81,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Planetary Defense & NEO Operations", href: ROUTES.planetaryDefense, description: "The NEO pipeline — discovery, tracking, impact risk (Torino/Palermo), DART & deflection methods" },
             { name: "Space Data Archives & Open Science", href: ROUTES.dataArchives, description: "Where the data lives — MAST, CDS, SIMBAD & VizieR, FITS, the Virtual Observatory & FAIR open science" },
             { name: "Observatories & Instrumentation Frontier", href: ROUTES.observatoryFrontier, description: "The giant telescopes of the coming decade — GMT, ngVLA, CTA, adaptive optics, detectors, interferometry & VLBI" },
+            { name: "Cosmic Distance Ladder & Tensions", href: ROUTES.distanceLadder, description: "How the universe is measured — RR Lyrae, TRGB, standard sirens, the cosmological parameters & the Hubble tension" },
             { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Observatories", href: ROUTES.observatories, description: "Telescopes, surveys, bands" },
             { name: "Exoplanets", href: ROUTES.exoplanets, description: "Worlds beyond the Sun" },

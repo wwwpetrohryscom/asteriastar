@@ -616,6 +616,22 @@ async function main() {
     `✓ Observatory frontier valid — ${auCat.AU_STATS.facilities} next-gen facilities, ${auCat.AU_STATS.instruments} instrumentation, ${auCat.AU_STATS.detectors} detectors, ${auCat.AU_STATS.interferometry} interferometry, ${auCat.AU_STATS.techniques} observing techniques · ${auCat.AU_STATS.newEntities} new entities, ${auCat.AU_STATS.relations} relations (reused observatories/AO/interferometry/spectroscopy/instruments/bands; no fabricated data)`,
   );
 
+  const avCat = await import("../src/knowledge-graph/data/distance-ladder-catalog");
+  const avIssues = avCat.validateDistanceLadder();
+  const { getEntityById: getAvEnt } = await import("../src/knowledge-graph");
+  for (const r of avCat.relations) {
+    if (!getAvEnt(r.from)) avIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getAvEnt(r.to)) avIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (avIssues.length > 0) {
+    console.error(`\n✗ ${avIssues.length} distance-ladder issue(s):`);
+    for (const i of avIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Distance ladder valid — ${avCat.AV_STATS.indicators} distance indicators, ${avCat.AV_STATS.parameters} cosmological parameters, ${avCat.AV_STATS.programs} programme (SH0ES), ${avCat.AV_STATS.concepts} concept (early dark energy) · ${avCat.AV_STATS.newEntities} new entities, ${avCat.AV_STATS.relations} relations (reused parallax/Cepheids/SNe Ia/BAO/CMB/H0/tension/Planck; no fabricated values)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

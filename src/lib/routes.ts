@@ -72,6 +72,7 @@ export const ROUTES = {
   planetaryDefense: "/planetary-defense",
   dataArchives: "/data-archives",
   observatoryFrontier: "/observatory-frontier",
+  distanceLadder: "/distance-ladder",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -551,4 +552,10 @@ export function observatoryFrontierPath(slug: string): string {
 }
 export function observatoryFrontierDiscoveryPath(slug: string): string {
   return `/observatory-frontier/discover/${slug}`;
+}
+export function distanceLadderPath(slug: string): string {
+  return `/distance-ladder/${slug}`;
+}
+export function distanceLadderDiscoveryPath(slug: string): string {
+  return `/distance-ladder/discover/${slug}`;
 }

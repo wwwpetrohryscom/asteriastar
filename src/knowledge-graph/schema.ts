@@ -251,6 +251,13 @@ export const ENTITY_TYPES = [
   "detector_technology",
   "interferometry_technique",
   "observing_technique",
+  // Cosmic distance ladder & cosmological tensions (Program AV) — REUSES the parallax/Cepheid/
+  // standard-candle/distance-ladder methods, Type Ia supernovae, the Hubble constant and tension,
+  // dark energy and dark matter, and the Planck/Gaia/HST/DESI facilities; SH0ES reuses the
+  // observational-programme type and early dark energy the cosmology-concept type. These are the
+  // two new distance-ladder types.
+  "distance_indicator",
+  "cosmological_parameter",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1191,4 +1198,6 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   detector_technology: "Detector technology",
   interferometry_technique: "Interferometry technique",
   observing_technique: "Observing technique",
+  distance_indicator: "Distance indicator",
+  cosmological_parameter: "Cosmological parameter",
 };

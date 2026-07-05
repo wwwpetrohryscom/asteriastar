@@ -1660,6 +1660,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["telescope:giant-magellan-telescope", "instrument_technique:laser-guide-star", "interferometry_technique:very-long-baseline-interferometry", "detector_technology:ccd"],
     next: ["understanding-data-archives", "the-solar-system"],
   },
+  {
+    slug: "understanding-the-distance-ladder",
+    title: "Understanding the Cosmic Distance Ladder",
+    description: "How the universe is measured, rung by rung — from the geometry of parallax to the exploding stars that reach across the cosmos — and how following the ladder to its top revealed the Hubble tension. Built on real methods and measurements; values are not invented and proposed resolutions are labelled unconfirmed.",
+    accent: "halo",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Measuring the universe", href: "/distance-ladder", blurb: "A ladder of distances, each rung on the one below." },
+          { title: "The distance ladder", href: "/distance-ladder/discover/the-distance-ladder", blurb: "The rungs, from parallax to standard sirens." },
+          { title: "The tip of the red giant branch", href: "/distance-ladder/tip-of-the-red-giant-branch", blurb: "An independent calibration of supernovae." },
+          { title: "Cosmological parameters", href: "/distance-ladder/discover/cosmological-parameters", blurb: "The numbers that describe the whole universe." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "The Tully–Fisher relation", href: "/distance-ladder/tully-fisher-relation", blurb: "Rotation speed reveals a spiral's true brightness." },
+          { title: "Water megamaser distances", href: "/distance-ladder/water-megamaser-distances", blurb: "A one-step geometric distance." },
+          { title: "Standard sirens", href: "/distance-ladder/standard-sirens", blurb: "A distance straight from a gravitational wave." },
+          { title: "The matter density", href: "/distance-ladder/matter-density", blurb: "How much of the universe is matter." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "The Hubble tension", href: "/distance-ladder/discover/the-hubble-tension", blurb: "A crack between the local and early universe." },
+          { title: "The SH0ES programme", href: "/distance-ladder/sh0es", blurb: "The local-ladder measurement of the expansion rate." },
+          { title: "Early dark energy", href: "/distance-ladder/early-dark-energy", blurb: "One proposed, unconfirmed resolution." },
+          { title: "The spectral index", href: "/distance-ladder/scalar-spectral-index", blurb: "The tilt inflation left in the primordial spectrum." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["distance_indicator:standard-sirens", "distance_indicator:tip-of-the-red-giant-branch", "observational_program:sh0es", "cosmological_parameter:matter-density"],
+    next: ["understanding-the-observatory-frontier", "the-solar-system"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

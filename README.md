@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Cosmic Distance Ladder & Cosmological Tensions Encyclopedia (Program AV)**
+
+- [Distance Ladder](docs/DISTANCE_LADDER.md) — the complete distance-measurement layer of modern cosmology and the tension it revealed: the distance indicators (RR Lyrae, the tip of the red giant branch, surface brightness fluctuations, the Tully–Fisher and Faber–Jackson relations, water megamasers, standard sirens), the cosmological parameters (Ωm, ΩΛ, σ8, ns), the SH0ES programme, and early dark energy. Reuses parallax, the Cepheid scale, Type Ia supernovae, BAO, the CMB, the Hubble constant & tension, dark energy & dark matter, and the Planck, Gaia, Hubble, JWST & DESI facilities; measured values are not invented; proposed resolutions are labelled unconfirmed; nothing duplicated or fabricated
+
 **Ground-Based Observatories & Instrumentation Frontier Encyclopedia (Program AU)**
 
 - [Observatory Frontier](docs/OBSERVATORY_FRONTIER.md) — the modern frontier of professional ground-based astronomy: the next-generation facilities still rising (the Giant Magellan Telescope, the ngVLA, and the Cherenkov Telescope Array), the adaptive-optics chain (laser guide stars, wavefront sensors, deformable mirrors), the spectrographs, coronagraphs and starshades, the detectors from the CCD to superconducting MKIDs and bolometers, the interferometry (radio, optical, VLBI, aperture synthesis), and the ground observing techniques (lucky imaging, speckle imaging, stacking, fringe tracking). Reuses the platform's ground observatories, the adaptive-optics/interferometry/spectroscopy methods, the SPHERE, MUSE & HIRES instruments, and the wavelength bands; facilities under construction stated as such; nothing duplicated or fabricated
