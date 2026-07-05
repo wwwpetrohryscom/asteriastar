@@ -394,6 +394,14 @@ export function GET(): Response {
   lines.push(`- Observatories: ${absoluteUrl("/multi-messenger/discover/observatories")} · Source classes: ${absoluteUrl("/multi-messenger/discover/source-classes")} · Multi-messenger: ${absoluteUrl("/multi-messenger/discover/multi-messenger")} · Follow-up: ${absoluteUrl("/multi-messenger/discover/follow-up")}`);
   lines.push("");
 
+  lines.push("## Comparative Planetology & Planetary Atmospheres Encyclopedia");
+  lines.push(
+    `How planets and moons evolve, compared across the Solar System and beyond (engine.comparativePlanetology). Interior layers: core, mantle, crust. Planetary processes: differentiation, plate tectonics (known for certain only on Earth), volcanism, cryovolcanism, atmospheric escape, climate evolution, the greenhouse effect, atmospheric circulation, magnetospheric shielding, impact cratering. World-types (created with the existing planetary-class type): ocean worlds, lava worlds, and the proposed hycean planets. Curated from NASA and the planetary-science community; hypothetical world-types labelled as proposed. REUSES the planets (Mercury–Neptune), the moons (Titan, Europa, Enceladus, Io, Triton), Pluto, the super-Earth/mini-Neptune/hot-Jupiter classes, the magnetosphere, the cryovolcano feature, the habitable zone, and the ocean-worlds theme; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Comparative Planetology & Planetary Atmospheres](${absoluteUrl("/comparative-planetology")})`);
+  lines.push(`- Interiors: ${absoluteUrl("/comparative-planetology/discover/planetary-interiors")} · Processes: ${absoluteUrl("/comparative-planetology/discover/planetary-processes")} · World types: ${absoluteUrl("/comparative-planetology/discover/world-types")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

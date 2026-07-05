@@ -44,6 +44,7 @@ import { AW_DISCOVERIES } from "@/app/heliophysics/discovery";
 import { AX_DISCOVERIES } from "@/app/astro-ml/discovery";
 import { AY_DISCOVERIES } from "@/app/citizen-astronomy/discovery";
 import { AZ_DISCOVERIES } from "@/app/multi-messenger/discovery";
+import { BA_DISCOVERIES } from "@/app/comparative-planetology/discovery";
 import { HSF_DISCOVERIES } from "@/app/human-spaceflight/discovery";
 import { OBS_DISCOVERIES } from "@/app/observatories/discovery";
 import { EXO_DISCOVERIES } from "@/app/exoplanets/discovery";
@@ -182,6 +183,8 @@ import {
   citizenAstronomyDiscoveryPath,
   multiMessengerPath,
   multiMessengerDiscoveryPath,
+  comparativePlanetologyPath,
+  comparativePlanetologyDiscoveryPath,
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
@@ -547,6 +550,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...AZ_DISCOVERIES.map((d) => ({ url: absoluteUrl(multiMessengerDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const comparativePlanetologyRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.comparativePlanetology), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.comparativePlanetology.all().map((r) => ({ url: absoluteUrl(comparativePlanetologyPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...BA_DISCOVERIES.map((d) => ({ url: absoluteUrl(comparativePlanetologyDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const deepSkyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
     ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -615,6 +624,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...astroMlRoutes,
     ...citizenAstronomyRoutes,
     ...multiMessengerRoutes,
+    ...comparativePlanetologyRoutes,
     ...hsfRoutes,
     ...obsRoutes,
     ...exoRoutes,

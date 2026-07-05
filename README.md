@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Comparative Planetology & Planetary Atmospheres Encyclopedia (Program BA)**
+
+- [Comparative Planetology](docs/COMPARATIVE_PLANETOLOGY.md) — how planets and moons evolve, compared across the Solar System and beyond: the interior layers (core, mantle, crust), the planetary processes (differentiation, plate tectonics, volcanism & cryovolcanism, atmospheric escape, climate evolution, the greenhouse effect, atmospheric circulation, magnetospheric shielding, impact cratering), and the world-types (ocean worlds, lava worlds, and the proposed hycean planets). Reuses the platform's planets (Mercury–Neptune), moons (Titan, Europa, Enceladus, Io, Triton), Pluto, the super-Earth/mini-Neptune/hot-Jupiter classes, the magnetosphere, the cryovolcano feature, the habitable zone, and the ocean-worlds theme; hypothetical world-types labelled as proposed; nothing duplicated or fabricated
+
 **Multi-Messenger & Gravitational-Wave Operations Encyclopedia (Program AZ)**
 
 - [Multi-Messenger Astronomy](docs/MULTI_MESSENGER.md) — the knowledge layer of the new astronomy: the gravitational-wave detectors new to the graph (the operating GEO600 testbed, the proposed next-generation Einstein Telescope & Cosmic Explorer, and the space missions DECIGO, Taiji, TianQin), the detection methods (ground & space laser interferometry, pulsar timing arrays), the compact-binary-merger source classes (binary black hole, binary neutron star, black hole–neutron star), the alert systems (LVK public alerts, SCiMMA), the multi-messenger channels (GW with light, neutrinos, gamma rays, radio, optical), the follow-up workflow, and the data products (skymaps, waveforms, parameter estimation, the GWTC catalog). Reuses the platform's LIGO/Virgo/KAGRA detectors & the LISA concept, the GW/multi-messenger/neutrino methods, the transient classes, the alert systems, the standard-siren indicator, and the bands; nothing duplicated or fabricated

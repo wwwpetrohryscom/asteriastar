@@ -77,6 +77,7 @@ export const ROUTES = {
   astroMl: "/astro-ml",
   citizenAstronomy: "/citizen-astronomy",
   multiMessenger: "/multi-messenger",
+  comparativePlanetology: "/comparative-planetology",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -586,4 +587,10 @@ export function multiMessengerPath(slug: string): string {
 }
 export function multiMessengerDiscoveryPath(slug: string): string {
   return `/multi-messenger/discover/${slug}`;
+}
+export function comparativePlanetologyPath(slug: string): string {
+  return `/comparative-planetology/${slug}`;
+}
+export function comparativePlanetologyDiscoveryPath(slug: string): string {
+  return `/comparative-planetology/discover/${slug}`;
 }
