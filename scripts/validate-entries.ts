@@ -648,6 +648,22 @@ async function main() {
     `✓ Heliophysics valid — ${awCat.AW_STATS.phenomena} solar-source phenomena, ${awCat.AW_STATS.impacts} operational impacts, ${awCat.AW_STATS.services} forecasting service (ESA) · ${awCat.AW_STATS.newEntities} new entities, ${awCat.AW_STATS.relations} relations (reused phenomena/G-S-R scales/radiation/missions/SWPC; no fabricated data)`,
   );
 
+  const axCat = await import("../src/knowledge-graph/data/astro-ml-catalog");
+  const axIssues = axCat.validateAstroMl();
+  const { getEntityById: getAxEnt } = await import("../src/knowledge-graph");
+  for (const r of axCat.relations) {
+    if (!getAxEnt(r.from)) axIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getAxEnt(r.to)) axIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (axIssues.length > 0) {
+    console.error(`\n✗ ${axIssues.length} astro-ml issue(s):`);
+    for (const i of axIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Astro-ML valid — ${axCat.AX_STATS.methods} ML methods, ${axCat.AX_STATS.applications} applications, ${axCat.AX_STATS.workflows} data-engineering workflows, ${axCat.AX_STATS.brokers} alert brokers · ${axCat.AX_STATS.newEntities} new entities, ${axCat.AX_STATS.relations} relations (reused Rubin/alert-stream/methods/morphologies/transit/SNe/redshift/practices; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

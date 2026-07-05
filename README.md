@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Data Science, AI & Machine Learning in Astronomy Encyclopedia (Program AX)**
+
+- [Astronomy & Machine Learning](docs/ASTRO_ML.md) — the computational layer of modern astronomy: the machine-learning methods (classification, regression, clustering, representation & self-supervised learning, foundation models, anomaly detection), the applications (galaxy morphology, supernova classification, photometric redshifts, transit & lens finding, source extraction, real-time alert classification), the community alert brokers (ALeRCE, ANTARES, Fink, Lasair), and the data engineering (training & benchmark datasets, feature extraction, model evaluation). Reuses the platform's Rubin Observatory & alert stream, the alert systems, the photometry & lensing methods, the galaxy morphologies, the transit method, the Type Ia supernova class, the redshift concept, and the reproducibility & data-pipeline practices; nothing duplicated or fabricated
+
 **Heliophysics & Space Weather Operations Encyclopedia (Program AW)**
 
 - [Heliophysics](docs/HELIOPHYSICS.md) — the operational layer of heliophysics: how the Sun drives space weather and how it reaches technology and people. The solar sources (the solar cycle, sunspots, active regions, coronal holes, the ionosphere), the operational impacts (satellites, GPS & navigation, aviation, human spaceflight, power grids, radio communications), and the forecasting (ESA's Space Weather Service Network, the counterpart to NOAA's SWPC). Reuses the platform's space-weather phenomena, the NOAA G/S/R scales, the SEP & Van Allen radiation environments, the Parker Solar Probe, Solar Orbiter, DSCOVR & ACE missions, and the SWPC; nothing duplicated or fabricated
