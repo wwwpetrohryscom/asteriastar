@@ -297,6 +297,12 @@ export const ENTITY_TYPES = [
   // planetary-class type. These are the new interior-layer and process types.
   "planetary_interior",
   "planetary_process",
+  // Astrochemistry & the molecular universe (Program BB) — REUSES the spectroscopy method, ALMA/APEX,
+  // JWST, the Orion Nebula, the origins-of-life topic, the Murchison/Allende meteorites, and the
+  // infrared/radio/submillimetre/ultraviolet bands. These are the new astrochemistry types.
+  "interstellar_environment",
+  "interstellar_molecule",
+  "astrochemical_process",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1253,4 +1259,7 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   gw_data_product: "GW data product",
   planetary_interior: "Planetary interior layer",
   planetary_process: "Planetary process",
+  interstellar_environment: "Interstellar environment",
+  interstellar_molecule: "Interstellar molecule",
+  astrochemical_process: "Astrochemical process",
 };

@@ -712,6 +712,22 @@ async function main() {
     `✓ Comparative planetology valid — ${baCat.BA_STATS.interiors} interior layers, ${baCat.BA_STATS.processes} planetary processes, ${baCat.BA_STATS.worldtypes} world-types · ${baCat.BA_STATS.newEntities} new entities, ${baCat.BA_STATS.relations} relations (reused planets/moons/Pluto/planetary-classes/magnetosphere/cryovolcano/habitable-zone; no fabricated data)`,
   );
 
+  const bbCat = await import("../src/knowledge-graph/data/astrochemistry-catalog");
+  const bbIssues = bbCat.validateAstrochemistry();
+  const { getEntityById: getBbEnt } = await import("../src/knowledge-graph");
+  for (const r of bbCat.relations) {
+    if (!getBbEnt(r.from)) bbIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBbEnt(r.to)) bbIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (bbIssues.length > 0) {
+    console.error(`\n✗ ${bbIssues.length} astrochemistry issue(s):`);
+    for (const i of bbIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Astrochemistry valid — ${bbCat.BB_STATS.environments} interstellar environments, ${bbCat.BB_STATS.molecules} molecules, ${bbCat.BB_STATS.processes} astrochemical processes · ${bbCat.BB_STATS.newEntities} new entities, ${bbCat.BB_STATS.relations} relations (reused spectroscopy/ALMA/APEX/JWST/Orion/origins-of-life/meteorites/bands; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

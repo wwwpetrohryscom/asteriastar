@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Astrochemistry & the Molecular Universe Encyclopedia (Program BB)**
+
+- [Astrochemistry](docs/ASTROCHEMISTRY.md) — how chemistry builds stars, planets, and the ingredients of life: the interstellar environments (the diffuse medium, molecular clouds, star-forming regions, protoplanetary disks, interstellar dust), the molecules of space (water, CO, CO₂, ammonia, HCN, methanol, PAHs, amino-acid precursors), and the astrochemical processes (gas-phase & grain-surface chemistry, photochemistry, shocks, prebiotic, planet-formation, cometary & meteoritic chemistry). Reuses the platform's spectroscopy method, ALMA & APEX, the JWST, the Orion Nebula, the origins-of-life topic, the Murchison & Allende meteorites, and the infrared/radio/submillimetre/ultraviolet bands; nothing duplicated or fabricated
+
 **Comparative Planetology & Planetary Atmospheres Encyclopedia (Program BA)**
 
 - [Comparative Planetology](docs/COMPARATIVE_PLANETOLOGY.md) — how planets and moons evolve, compared across the Solar System and beyond: the interior layers (core, mantle, crust), the planetary processes (differentiation, plate tectonics, volcanism & cryovolcanism, atmospheric escape, climate evolution, the greenhouse effect, atmospheric circulation, magnetospheric shielding, impact cratering), and the world-types (ocean worlds, lava worlds, and the proposed hycean planets). Reuses the platform's planets (Mercury–Neptune), moons (Titan, Europa, Enceladus, Io, Triton), Pluto, the super-Earth/mini-Neptune/hot-Jupiter classes, the magnetosphere, the cryovolcano feature, the habitable zone, and the ocean-worlds theme; hypothetical world-types labelled as proposed; nothing duplicated or fabricated
