@@ -728,6 +728,22 @@ async function main() {
     `✓ Astrochemistry valid — ${bbCat.BB_STATS.environments} interstellar environments, ${bbCat.BB_STATS.molecules} molecules, ${bbCat.BB_STATS.processes} astrochemical processes · ${bbCat.BB_STATS.newEntities} new entities, ${bbCat.BB_STATS.relations} relations (reused spectroscopy/ALMA/APEX/JWST/Orion/origins-of-life/meteorites/bands; no fabricated data)`,
   );
 
+  const bcCat = await import("../src/knowledge-graph/data/space-policy-catalog");
+  const bcIssues = bcCat.validateSpacePolicy();
+  const { getEntityById: getBcEnt } = await import("../src/knowledge-graph");
+  for (const r of bcCat.relations) {
+    if (!getBcEnt(r.from)) bcIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBcEnt(r.to)) bcIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (bcIssues.length > 0) {
+    console.error(`\n✗ ${bcIssues.length} space-policy issue(s):`);
+    for (const i of bcIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Space policy valid — ${bcCat.BC_STATS.treaties} treaties, ${bcCat.BC_STATS.topics} policy topics, ${bcCat.BC_STATS.economy} economy topics, ${bcCat.BC_STATS.organizations} organisations · ${bcCat.BC_STATS.newEntities} new entities, ${bcCat.BC_STATS.relations} relations (reused on-orbit-servicing/ISRU/planetary-protection/satellites/NASA; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

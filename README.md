@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Space Policy, Sustainability & Space Economy Encyclopedia (Program BC)**
+
+- [Space Policy](docs/SPACE_POLICY.md) — the institutional and operational layer of modern space activity: the space-law treaties (the Outer Space Treaty and the Liability, Registration & Moon agreements, and the Artemis Accords), the policy & sustainability topics (orbital debris, the Kessler syndrome, situational awareness & traffic management, debris mitigation, mega-constellations, launch licensing, spectrum allocation, export control, space-resource & planetary-protection policy), the space-economy topics (commercial launch, the satellite economy, insurance, the space economy), and the governing bodies (UNOOSA, COSPAR, ITU, IAF). Reuses the platform's on-orbit-servicing process, the ISRU domain, the planetary-protection topic & contamination measures, the satellite impact, and NASA; nothing duplicated or fabricated
+
 **Astrochemistry & the Molecular Universe Encyclopedia (Program BB)**
 
 - [Astrochemistry](docs/ASTROCHEMISTRY.md) — how chemistry builds stars, planets, and the ingredients of life: the interstellar environments (the diffuse medium, molecular clouds, star-forming regions, protoplanetary disks, interstellar dust), the molecules of space (water, CO, CO₂, ammonia, HCN, methanol, PAHs, amino-acid precursors), and the astrochemical processes (gas-phase & grain-surface chemistry, photochemistry, shocks, prebiotic, planet-formation, cometary & meteoritic chemistry). Reuses the platform's spectroscopy method, ALMA & APEX, the JWST, the Orion Nebula, the origins-of-life topic, the Murchison & Allende meteorites, and the infrared/radio/submillimetre/ultraviolet bands; nothing duplicated or fabricated

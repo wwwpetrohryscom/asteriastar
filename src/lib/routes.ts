@@ -79,6 +79,7 @@ export const ROUTES = {
   multiMessenger: "/multi-messenger",
   comparativePlanetology: "/comparative-planetology",
   astrochemistry: "/astrochemistry",
+  spacePolicy: "/space-policy",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -600,4 +601,10 @@ export function astrochemistryPath(slug: string): string {
 }
 export function astrochemistryDiscoveryPath(slug: string): string {
   return `/astrochemistry/discover/${slug}`;
+}
+export function spacePolicyPath(slug: string): string {
+  return `/space-policy/${slug}`;
+}
+export function spacePolicyDiscoveryPath(slug: string): string {
+  return `/space-policy/discover/${slug}`;
 }

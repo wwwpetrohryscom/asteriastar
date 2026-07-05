@@ -1,0 +1,12 @@
+import type { PolicyRecord } from "@/knowledge-graph/data/space-policy-catalog/types";
+
+/** Space-economy topics — the industries and markets of modern space activity. Each links to the
+ *  REUSED satellite-impact and on-orbit-servicing entities and to the policy topics it relates to. */
+const ec = (r: Omit<PolicyRecord, "kind" | "id" | "sources"> & { slug: string; sources?: PolicyRecord["sources"] }): PolicyRecord => ({ sources: ["nasa"], ...r, kind: "economy", id: `space_economy_topic:${r.slug}` });
+
+export const economy: PolicyRecord[] = [
+  ec({ slug: "commercial-launch", name: "Commercial Launch", tagLabel: "Economy", relatedKeys: ["space_policy_topic:launch-licensing"], description: "The private launch industry that has driven the cost of reaching orbit down by an order of magnitude — through reusable rockets and competition — and opened space to companies, universities, and nations that could never before afford it.", sources: ["nasa"], highlights: ["Reusable rockets and the falling cost of orbit"] }),
+  ec({ slug: "the-satellite-economy", name: "The Satellite Economy", tagLabel: "Economy", relatedKeys: ["space_policy_topic:mega-constellations", "space_weather_impact:satellites"], description: "The largest part of the space economy — the industry built on satellites for communications, navigation, and Earth observation, whose services underpin the modern economy on the ground, from banking timestamps to weather forecasts to global positioning.", sources: ["nasa"] }),
+  ec({ slug: "space-insurance", name: "Space Insurance", tagLabel: "Economy", relatedKeys: ["space_economy_topic:commercial-launch"], description: "The specialised insurance market that underwrites the risk of launching and operating satellites — covering the moments when a rocket can fail and the years a satellite must survive the hazards of space. It is a small but essential enabler of commercial space.", sources: ["nasa"] }),
+  ec({ slug: "the-space-economy", name: "The Space Economy", tagLabel: "Economy", relatedKeys: ["space_economy_topic:the-satellite-economy", "space_economy_topic:commercial-launch", "space_manufacturing_process:on-orbit-servicing"], description: "The whole economic system of space activity — launch, satellites, ground systems, services, and the emerging markets in resources and on-orbit servicing — and the far larger value it creates on Earth. Increasingly it is driven by private capital as much as by governments.", sources: ["nasa"], highlights: ["From launch and satellites to services, resources, and value on Earth"] }),
+];
