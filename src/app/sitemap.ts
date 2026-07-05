@@ -42,6 +42,7 @@ import { AU_DISCOVERIES } from "@/app/observatory-frontier/discovery";
 import { AV_DISCOVERIES } from "@/app/distance-ladder/discovery";
 import { AW_DISCOVERIES } from "@/app/heliophysics/discovery";
 import { AX_DISCOVERIES } from "@/app/astro-ml/discovery";
+import { AY_DISCOVERIES } from "@/app/citizen-astronomy/discovery";
 import { HSF_DISCOVERIES } from "@/app/human-spaceflight/discovery";
 import { OBS_DISCOVERIES } from "@/app/observatories/discovery";
 import { EXO_DISCOVERIES } from "@/app/exoplanets/discovery";
@@ -176,6 +177,8 @@ import {
   heliophysicsDiscoveryPath,
   astroMlPath,
   astroMlDiscoveryPath,
+  citizenAstronomyPath,
+  citizenAstronomyDiscoveryPath,
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
@@ -529,6 +532,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...AX_DISCOVERIES.map((d) => ({ url: absoluteUrl(astroMlDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const citizenAstronomyRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.citizenAstronomy), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.citizenAstronomy.all().map((r) => ({ url: absoluteUrl(citizenAstronomyPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...AY_DISCOVERIES.map((d) => ({ url: absoluteUrl(citizenAstronomyDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const deepSkyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
     ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -595,6 +604,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...distanceLadderRoutes,
     ...heliophysicsRoutes,
     ...astroMlRoutes,
+    ...citizenAstronomyRoutes,
     ...hsfRoutes,
     ...obsRoutes,
     ...exoRoutes,

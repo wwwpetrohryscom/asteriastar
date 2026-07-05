@@ -1771,6 +1771,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["ml_method:classification", "ml_application:real-time-alert-classification", "alert_system:alerce", "ml_workflow:benchmark-datasets"],
     next: ["understanding-data-archives", "understanding-the-observatory-frontier"],
   },
+  {
+    slug: "understanding-citizen-astronomy",
+    title: "Understanding Citizen & Amateur Astronomy",
+    description: "How anyone can take part in astronomy — from classifying galaxies online to timing an occultation from the backyard — and how amateurs still contribute to the research frontier. Built on real projects, organisations, and equipment; nothing is fabricated.",
+    accent: "stone",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The sky belongs to everyone", href: "/citizen-astronomy", blurb: "How anyone can take part in astronomy." },
+          { title: "Citizen science", href: "/citizen-astronomy/discover/citizen-science", blurb: "Where the public does real research." },
+          { title: "Galaxy Zoo", href: "/citizen-astronomy/galaxy-zoo", blurb: "Classifying galaxies at a scale no team could." },
+          { title: "Backyard observing", href: "/citizen-astronomy/backyard-observing", blurb: "Where almost every astronomer begins." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Binoculars", href: "/citizen-astronomy/binoculars", blurb: "The best first instrument in astronomy." },
+          { title: "The Dobsonian telescope", href: "/citizen-astronomy/dobsonian-telescope", blurb: "The most aperture for the money." },
+          { title: "Variable-star observing", href: "/citizen-astronomy/variable-star-observing", blurb: "Amateur light curves professionals rely on." },
+          { title: "The AAVSO", href: "/citizen-astronomy/aavso", blurb: "A century of amateur observations." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Occultation timing", href: "/citizen-astronomy/occultation-timing", blurb: "Professional-grade data from amateurs." },
+          { title: "Meteor observing", href: "/citizen-astronomy/meteor-observing", blurb: "Real science with nothing but your eyes." },
+          { title: "Dark-sky parks", href: "/citizen-astronomy/dark-sky-park", blurb: "Protecting the vanishing dark sky." },
+          { title: "Star parties", href: "/citizen-astronomy/star-party", blurb: "Many people's first look through a telescope." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["citizen_science_project:galaxy-zoo", "amateur_activity:variable-star-observing", "organization:aavso", "observing_equipment:binoculars"],
+    next: ["understanding-machine-learning-in-astronomy", "the-solar-system"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

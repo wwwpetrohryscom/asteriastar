@@ -121,6 +121,7 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "cosmological-parameters", title: "Cosmological Parameters", description: "The numbers that describe the universe as a whole — the matter density (Ωm), the dark-energy density (ΩΛ), the amplitude of fluctuations (σ8), and the scalar spectral index (ns).", entityTypes: ["cosmological_parameter"], sources: ["planck"] },
   { slug: "space-weather-impacts", title: "Space Weather Operational Impacts", description: "How solar activity reaches technology and people — the impacts on satellites, GPS and navigation, aviation, human spaceflight, power grids, and radio communications.", entityTypes: ["space_weather_impact"], sources: ["swpc", "noaa"] },
   { slug: "astronomy-machine-learning", title: "Machine Learning in Astronomy", description: "The computational layer of astronomy — the machine-learning methods, the astronomical applications (galaxy morphology, photometric redshifts, real-time alert classification), and the data-engineering workflows.", entityTypes: ["ml_method", "ml_application", "ml_workflow"], sources: ["nasa", "noirlab"] },
+  { slug: "citizen-science-and-amateur-astronomy", title: "Citizen Science & Amateur Astronomy", description: "The public participation layer of astronomy — the citizen-science projects, the amateur observing activities, the observing equipment, and the public-outreach activities.", entityTypes: ["citizen_science_project", "amateur_activity", "observing_equipment", "outreach_activity"], sources: ["nasa"] },
 ];
 
 export interface Dataset extends DatasetDef {

@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Citizen Science, Amateur Astronomy & Public Observing Encyclopedia (Program AY)**
+
+- [Citizen & Amateur Astronomy](docs/CITIZEN_ASTRONOMY.md) — the public participation layer of astronomy: the citizen-science projects (Zooniverse, Galaxy Zoo, Planet Hunters, Globe at Night, Aurorasaurus, Stardust@home), the amateur observing activities (backyard, variable-star, asteroid & comet observing, occultation timing, meteor observing), the equipment (binoculars, Dobsonian, equatorial mount, star tracker, camera, filters), the public outreach (star parties, public observatories, dark-sky parks, education), and the amateur organisations (AAVSO, IMO, ALPO). Reuses the platform's aurora, the occultation & photometry methods, the meteor showers & constellations, the eruptive-variable-star class, the Stardust mission, the transit method, the galaxy-morphology-classification application, the Rubin Observatory, and the MAST archive; nothing duplicated or fabricated
+
 **Data Science, AI & Machine Learning in Astronomy Encyclopedia (Program AX)**
 
 - [Astronomy & Machine Learning](docs/ASTRO_ML.md) — the computational layer of modern astronomy: the machine-learning methods (classification, regression, clustering, representation & self-supervised learning, foundation models, anomaly detection), the applications (galaxy morphology, supernova classification, photometric redshifts, transit & lens finding, source extraction, real-time alert classification), the community alert brokers (ALeRCE, ANTARES, Fink, Lasair), and the data engineering (training & benchmark datasets, feature extraction, model evaluation). Reuses the platform's Rubin Observatory & alert stream, the alert systems, the photometry & lensing methods, the galaxy morphologies, the transit method, the Type Ia supernova class, the redshift concept, and the reproducibility & data-pipeline practices; nothing duplicated or fabricated

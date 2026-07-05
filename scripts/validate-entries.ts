@@ -664,6 +664,22 @@ async function main() {
     `✓ Astro-ML valid — ${axCat.AX_STATS.methods} ML methods, ${axCat.AX_STATS.applications} applications, ${axCat.AX_STATS.workflows} data-engineering workflows, ${axCat.AX_STATS.brokers} alert brokers · ${axCat.AX_STATS.newEntities} new entities, ${axCat.AX_STATS.relations} relations (reused Rubin/alert-stream/methods/morphologies/transit/SNe/redshift/practices; no fabricated data)`,
   );
 
+  const ayCat = await import("../src/knowledge-graph/data/citizen-astronomy-catalog");
+  const ayIssues = ayCat.validateCitizenAstronomy();
+  const { getEntityById: getAyEnt } = await import("../src/knowledge-graph");
+  for (const r of ayCat.relations) {
+    if (!getAyEnt(r.from)) ayIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getAyEnt(r.to)) ayIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (ayIssues.length > 0) {
+    console.error(`\n✗ ${ayIssues.length} citizen-astronomy issue(s):`);
+    for (const i of ayIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Citizen astronomy valid — ${ayCat.AY_STATS.projects} citizen-science projects, ${ayCat.AY_STATS.activities} amateur activities, ${ayCat.AY_STATS.equipment} equipment, ${ayCat.AY_STATS.outreach} outreach, ${ayCat.AY_STATS.organizations} organisations · ${ayCat.AY_STATS.newEntities} new entities, ${ayCat.AY_STATS.relations} relations (reused aurora/occultations/photometry/meteor-showers/constellations/variables/Stardust/transit/Rubin/MAST; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
