@@ -418,6 +418,14 @@ export function GET(): Response {
   lines.push(`- Space law: ${absoluteUrl("/space-policy/discover/space-law")} · Sustainability: ${absoluteUrl("/space-policy/discover/sustainability")} · Space economy: ${absoluteUrl("/space-policy/discover/space-economy")} · Organisations: ${absoluteUrl("/space-policy/discover/organisations")}`);
   lines.push("");
 
+  lines.push("## History & Philosophy of Astronomical Discovery Encyclopedia");
+  lines.push(
+    `How astronomy became modern science, and how it knows what it knows (engine.discoveryHistory). Histories of discovery: the Copernican Revolution and the histories of the telescope, spectroscopy, radio astronomy, cosmology, exoplanets, gravitational waves, and black holes. Discovery methodologies: the scientific method, paradigm shifts, scientific revolutions, instrumentation-driven discovery, observational bias, theory & observation, Big Science, the data & AI revolution. Philosophy of science: scientific realism, falsifiability, the nature of evidence, measurement uncertainty, replication & reproducibility, open science. Curated from the history and philosophy of science and NASA. REUSES the astronomers (Copernicus, Galileo, Kepler, Newton, Herschel, Hubble), the astronomy eras, the spectroscopy/gravitational-wave/error-analysis methods, the transit method, the Hubble tension, Sagittarius A*, the radio band, and the reproducibility practice; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [History & Philosophy of Astronomical Discovery](${absoluteUrl("/discovery-history")})`);
+  lines.push(`- Histories: ${absoluteUrl("/discovery-history/discover/histories")} · Methodology: ${absoluteUrl("/discovery-history/discover/methodology")} · Philosophy: ${absoluteUrl("/discovery-history/discover/philosophy")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

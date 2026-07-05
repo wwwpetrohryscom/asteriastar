@@ -744,6 +744,22 @@ async function main() {
     `✓ Space policy valid — ${bcCat.BC_STATS.treaties} treaties, ${bcCat.BC_STATS.topics} policy topics, ${bcCat.BC_STATS.economy} economy topics, ${bcCat.BC_STATS.organizations} organisations · ${bcCat.BC_STATS.newEntities} new entities, ${bcCat.BC_STATS.relations} relations (reused on-orbit-servicing/ISRU/planetary-protection/satellites/NASA; no fabricated data)`,
   );
 
+  const bdCat = await import("../src/knowledge-graph/data/discovery-history-catalog");
+  const bdIssues = bdCat.validateDiscoveryHistory();
+  const { getEntityById: getBdEnt } = await import("../src/knowledge-graph");
+  for (const r of bdCat.relations) {
+    if (!getBdEnt(r.from)) bdIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBdEnt(r.to)) bdIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (bdIssues.length > 0) {
+    console.error(`\n✗ ${bdIssues.length} discovery-history issue(s):`);
+    for (const i of bdIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Discovery history valid — ${bdCat.BD_STATS.themes} histories of discovery, ${bdCat.BD_STATS.methodology} discovery methodologies, ${bdCat.BD_STATS.philosophy} philosophy concepts · ${bdCat.BD_STATS.newEntities} new entities, ${bdCat.BD_STATS.relations} relations (reused astronomers/eras/methods/objects/reproducibility; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
