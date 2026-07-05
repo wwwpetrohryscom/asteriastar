@@ -69,6 +69,7 @@ export const ROUTES = {
   timeDomain: "/time-domain",
   galaxies: "/galaxies",
   astrobiology: "/astrobiology",
+  planetaryDefense: "/planetary-defense",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -528,4 +529,12 @@ export function astrobiologyPath(slug: string): string {
 }
 export function astrobiologyDiscoveryPath(slug: string): string {
   return `/astrobiology/discover/${slug}`;
+}
+
+/** Planetary Defense & NEO Operations encyclopedia (Program AS). */
+export function planetaryDefensePath(slug: string): string {
+  return `/planetary-defense/${slug}`;
+}
+export function planetaryDefenseDiscoveryPath(slug: string): string {
+  return `/planetary-defense/discover/${slug}`;
 }

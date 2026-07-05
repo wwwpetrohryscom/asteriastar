@@ -229,6 +229,12 @@ export const ENTITY_TYPES = [
   "biosignature",
   "habitability_factor",
   "planetary_protection",
+  // Planetary Defense & NEO Operations (Program AS). Reuses the survey telescopes, the Minor
+  // Planet Center and CNEOS, the DART and Hera missions, and the near-Earth-object classes;
+  // these are the new planetary-defense types.
+  "defense_stage",
+  "risk_scale",
+  "deflection_method",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1157,4 +1163,7 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   biosignature: "Biosignature",
   habitability_factor: "Habitability factor",
   planetary_protection: "Planetary protection",
+  defense_stage: "NEO pipeline stage",
+  risk_scale: "Impact-risk scale",
+  deflection_method: "Deflection method",
 };

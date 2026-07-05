@@ -1549,6 +1549,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["astrobiology_topic:ocean-worlds-astrobiology", "biosignature:atmospheric-biosignature", "habitability_factor:liquid-water", "planetary_protection:forward-contamination"],
     next: ["understanding-humans-in-space", "understanding-the-future-of-exploration"],
   },
+  {
+    slug: "understanding-planetary-defense",
+    title: "Understanding Planetary Defense",
+    description: "How humanity would find and, if necessary, deflect a hazardous asteroid — the surveys, the risk scales, and the missions like DART that have shown an asteroid can be moved. Built on real programs; speculative methods are marked as such.",
+    accent: "ember",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Defending the Earth", href: "/planetary-defense", blurb: "The one natural disaster we could prevent." },
+          { title: "The NEO pipeline", href: "/planetary-defense/discover/the-neo-pipeline", blurb: "From discovery to deflection, step by step." },
+          { title: "Finding the asteroids", href: "/planetary-defense/neo-discovery", blurb: "The surveys that scan the sky every night." },
+          { title: "Impact-risk scales", href: "/planetary-defense/discover/risk-scales", blurb: "The Torino and Palermo scales." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "The Torino Scale", href: "/planetary-defense/torino-scale", blurb: "Apophis reached level 4 — the highest ever." },
+          { title: "Tracking and monitoring", href: "/planetary-defense/impact-monitoring", blurb: "Every orbit propagated a century ahead." },
+          { title: "Deflection methods", href: "/planetary-defense/discover/deflection-methods", blurb: "From kinetic impactors to nuclear concepts." },
+          { title: "The kinetic impactor", href: "/planetary-defense/kinetic-impactor", blurb: "DART moved an asteroid in 2022." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Characterizing a target", href: "/planetary-defense/characterization", blurb: "Size, spin, and composition — and Hera's follow-up." },
+          { title: "The gravity tractor", href: "/planetary-defense/gravity-tractor", blurb: "Towing an asteroid with a spacecraft's gravity." },
+          { title: "Nuclear deflection", href: "/planetary-defense/nuclear-deflection", blurb: "A theoretical last resort — never tested." },
+          { title: "Decision & planning", href: "/planetary-defense/decision-and-planning", blurb: "How a response would be decided." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["defense_stage:neo-discovery", "risk_scale:torino-scale", "deflection_method:kinetic-impactor", "defense_stage:deflection"],
+    next: ["understanding-the-future-of-exploration", "the-solar-system"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
