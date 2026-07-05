@@ -84,6 +84,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Cosmic Distance Ladder & Tensions", href: ROUTES.distanceLadder, description: "How the universe is measured — RR Lyrae, TRGB, standard sirens, the cosmological parameters & the Hubble tension" },
             { name: "Heliophysics & Space Weather", href: ROUTES.heliophysics, description: "The Sun's weather and its impacts — the solar cycle, coronal holes, satellites, GPS, power grids & forecasting" },
             { name: "Data Science, AI & ML in Astronomy", href: ROUTES.astroMl, description: "Computational astronomy — classification, anomaly detection, photo-z, alert brokers (ALeRCE, Fink) & benchmarks" },
+            { name: "Citizen Science & Amateur Astronomy", href: ROUTES.citizenAstronomy, description: "The public participation layer — Zooniverse, Galaxy Zoo, the AAVSO, backyard observing, equipment & dark-sky parks" },
             { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Observatories", href: ROUTES.observatories, description: "Telescopes, surveys, bands" },
             { name: "Exoplanets", href: ROUTES.exoplanets, description: "Worlds beyond the Sun" },

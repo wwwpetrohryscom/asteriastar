@@ -37,6 +37,7 @@ import { validateObservatoryFrontier } from "@/knowledge-graph/data/observatory-
 import { validateDistanceLadder } from "@/knowledge-graph/data/distance-ladder-catalog";
 import { validateHeliophysics } from "@/knowledge-graph/data/heliophysics-catalog";
 import { validateAstroMl } from "@/knowledge-graph/data/astro-ml-catalog";
+import { validateCitizenAstronomy } from "@/knowledge-graph/data/citizen-astronomy-catalog";
 import { validateHumanSpaceflight } from "@/knowledge-graph/data/human-spaceflight-catalog";
 import { validateObservatories } from "@/knowledge-graph/data/observatory-catalog";
 import { validateExoplanets } from "@/knowledge-graph/data/exoplanet-catalog";
@@ -155,6 +156,7 @@ export const validationEngine = {
   distanceLadder: (): string[] => validateDistanceLadder(),
   heliophysics: (): string[] => validateHeliophysics(),
   astroMl: (): string[] => validateAstroMl(),
+  citizenAstronomy: (): string[] => validateCitizenAstronomy(),
   humanSpaceflight: (): string[] => validateHumanSpaceflight(),
   observatories: (): string[] => validateObservatories(),
   exoplanets: (): string[] => validateExoplanets(),
@@ -207,6 +209,7 @@ export const validationEngine = {
       { category: "distanceLadder", issues: this.distanceLadder() },
       { category: "heliophysics", issues: this.heliophysics() },
       { category: "astroMl", issues: this.astroMl() },
+      { category: "citizenAstronomy", issues: this.citizenAstronomy() },
       { category: "humanSpaceflight", issues: this.humanSpaceflight() },
       { category: "observatories", issues: this.observatories() },
       { category: "exoplanets", issues: this.exoplanets() },

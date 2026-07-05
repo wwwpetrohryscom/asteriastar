@@ -272,6 +272,15 @@ export const ENTITY_TYPES = [
   "ml_method",
   "ml_application",
   "ml_workflow",
+  // Citizen science, amateur astronomy & public observing (Program AY) — REUSES the aurora, the
+  // occultation and photometry methods, the meteor showers and constellations, the
+  // eruptive-variable-star class, the Stardust mission, the transit method, the
+  // galaxy-morphology-classification application, the Rubin Observatory, and the MAST archive; the
+  // amateur organisations reuse the organization type. These are the new public-astronomy types.
+  "citizen_science_project",
+  "amateur_activity",
+  "observing_equipment",
+  "outreach_activity",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1218,4 +1227,8 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   ml_method: "Machine-learning method",
   ml_application: "Astronomical ML application",
   ml_workflow: "Data-engineering workflow",
+  citizen_science_project: "Citizen-science project",
+  amateur_activity: "Amateur activity",
+  observing_equipment: "Observing equipment",
+  outreach_activity: "Public-outreach activity",
 };

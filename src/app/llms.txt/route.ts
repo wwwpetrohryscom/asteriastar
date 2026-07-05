@@ -378,6 +378,14 @@ export function GET(): Response {
   lines.push(`- ML methods: ${absoluteUrl("/astro-ml/discover/ml-methods")} · Applications: ${absoluteUrl("/astro-ml/discover/applications")} · Alert brokers: ${absoluteUrl("/astro-ml/discover/alert-brokers")} · Data engineering: ${absoluteUrl("/astro-ml/discover/data-engineering")}`);
   lines.push("");
 
+  lines.push("## Citizen Science, Amateur Astronomy & Public Observing Encyclopedia");
+  lines.push(
+    `The public participation layer of astronomy — how anyone can take part, and how amateurs still do real science (engine.citizenAstronomy). Citizen-science projects: Zooniverse, Galaxy Zoo, Planet Hunters, Globe at Night, Aurorasaurus, Stardust@home. Amateur activities: backyard observing, variable-star observing, asteroid and comet observing, occultation timing, meteor observing. Observing equipment: binoculars, Dobsonian telescope, equatorial mount, star tracker, camera, astronomical filter. Public outreach: star parties, public observatories, dark-sky parks, astronomy education. Amateur organisations (created with the existing organization type): the AAVSO, the International Meteor Organization, and ALPO. Curated from NASA and the citizen-science and amateur-astronomy communities; projects and organisations are named only where real. REUSES the aurora, the stellar-occultation and photometry methods, the meteor showers and constellations, the eruptive-variable-star class, the Stardust mission, the transit exoplanet method, the galaxy-morphology-classification ML application, the Rubin Observatory, and the MAST archive; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Citizen Science, Amateur Astronomy & Public Observing](${absoluteUrl("/citizen-astronomy")})`);
+  lines.push(`- Citizen science: ${absoluteUrl("/citizen-astronomy/discover/citizen-science")} · Amateur observing: ${absoluteUrl("/citizen-astronomy/discover/amateur-observing")} · Equipment: ${absoluteUrl("/citizen-astronomy/discover/equipment")} · Outreach: ${absoluteUrl("/citizen-astronomy/discover/public-outreach")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,
