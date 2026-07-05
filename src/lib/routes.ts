@@ -67,6 +67,7 @@ export const ROUTES = {
   futureExploration: "/future-exploration",
   methods: "/methods",
   timeDomain: "/time-domain",
+  galaxies: "/galaxies",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -510,4 +511,12 @@ export function timeDomainPath(slug: string): string {
 }
 export function timeDomainDiscoveryPath(slug: string): string {
   return `/time-domain/discover/${slug}`;
+}
+
+/** Galaxies, AGN & the Extragalactic Universe encyclopedia (Program AQ). */
+export function galaxiesPath(slug: string): string {
+  return `/galaxies/${slug}`;
+}
+export function galaxiesDiscoveryPath(slug: string): string {
+  return `/galaxies/discover/${slug}`;
 }

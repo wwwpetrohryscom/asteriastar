@@ -1,0 +1,15 @@
+import type { ExtragalacticRecord } from "@/knowledge-graph/data/galaxies-catalog/types";
+
+/** Galaxy-evolution processes and phenomena. Each is associated_with the REUSED galaxies and
+ *  object classes, and the new morphologies it transforms. */
+const pr = (r: Omit<ExtragalacticRecord, "kind" | "id" | "sources"> & { slug: string; sources?: ExtragalacticRecord["sources"] }): ExtragalacticRecord => ({ sources: ["nasa"], ...r, kind: "process", id: `galactic_process:${r.slug}` });
+const M = (m: string) => `galaxy_morphology:${m}`;
+
+export const processes: ExtragalacticRecord[] = [
+  pr({ slug: "galaxy-evolution", name: "Galaxy Evolution", relatedKeys: [M("spiral"), M("elliptical"), "cosmology_concept:large-scale-structure"], description: "How galaxies grow and change over cosmic time — assembling from smaller pieces, forming stars, exhausting or losing their gas, and transforming from blue, star-forming disks into red, quiescent ellipticals.", sources: ["nasa"], highlights: ["From blue star-forming disks to red-and-dead ellipticals"] }),
+  pr({ slug: "galaxy-merger", name: "Galaxy Merger", relatedKeys: ["galaxy:ngc-4038", M("elliptical"), M("peculiar")], description: "The collision and coalescence of two galaxies. Mergers trigger bursts of star formation, funnel gas to the central black hole, and can turn two spirals into a single elliptical — a driving force of galaxy evolution.", sources: ["nasa"], highlights: ["Two spirals can merge into one elliptical"] }),
+  pr({ slug: "galaxy-interaction", name: "Galaxy Interaction", relatedKeys: [M("ring"), "galaxy:ngc-4038"], description: "The gravitational give-and-take of galaxies passing close without fully merging — drawing out tidal tails and bridges, triggering star formation, and, in a direct hit, punching out a ring galaxy.", sources: ["nasa"] }),
+  pr({ slug: "black-hole-feedback", name: "Black-Hole Feedback", altNames: ["AGN feedback"], relatedKeys: ["astrophysical_object_class:active-galactic-nucleus", "astrophysical_object_class:supermassive-black-hole"], description: "The way an active central black hole regulates its galaxy — its winds and jets heating and expelling gas, quenching star formation, and explaining the tight link between a galaxy's black-hole mass and its bulge.", sources: ["nasa"], highlights: ["A black hole shaping its whole galaxy"] }),
+  pr({ slug: "starburst", name: "Starburst", relatedKeys: ["galaxy:messier-82", M("irregular")], description: "A phase of exceptionally intense star formation, forming stars far faster than a galaxy can sustain — often triggered by a merger or interaction and driving powerful galactic winds. M82 is the archetype.", sources: ["nasa"], highlights: ["M82, forming stars at a furious rate"] }),
+  pr({ slug: "galaxy-quenching", name: "Galaxy Quenching", relatedKeys: [M("elliptical"), M("lenticular")], description: "The shutdown of star formation in a galaxy, as it loses or is stripped of its cold gas, or has it heated by feedback — leaving a red, passively-evolving elliptical or lenticular of ageing stars.", sources: ["nasa"] }),
+];

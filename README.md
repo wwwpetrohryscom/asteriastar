@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Galaxies, AGN & the Extragalactic Universe Encyclopedia (Program AQ)**
+
+- [Galaxies](docs/GALAXIES.md) — the extragalactic universe: galaxy morphology (spiral, barred, elliptical, lenticular, irregular, ring, dwarf, peculiar), active galactic nuclei (Seyfert, LINER, radio galaxy, BL Lac, and the unified model), galaxy-evolution processes (mergers, interactions, starbursts, black-hole feedback, quenching), and named large-scale structures (the Local Group, the Virgo & Coma clusters, Laniakea, the Sloan Great Wall, the Boötes Void). Reuses the platform's galaxies, astrophysical object classes, and cosmology concepts; nothing duplicated or fabricated
+
 **Multi-Wavelength & Time-Domain Astronomy Atlas (Program AP)**
 
 - [Time-Domain Astronomy](docs/TIME_DOMAIN.md) — how the dynamic universe is observed across every wavelength (radio → gamma-ray) and messenger (gravitational waves, neutrinos, cosmic rays): the transient classes (Type Ia and core-collapse supernovae, hypernovae, novae, gamma-ray bursts, magnetar flares, kilonovae, compact-binary mergers, tidal disruption events, fast radio bursts, variables), the alert infrastructure (GCN, VOEvent, TNS, ATel, the Rubin stream), and the discovery→publication workflow. Reuses the platform's observing bands, multi-messenger methods, surveys, and observatories; nothing duplicated or fabricated

@@ -536,6 +536,22 @@ async function main() {
     `✓ Time-domain valid — ${tdCat.TD_STATS.transients} transient classes, ${tdCat.TD_STATS.alerts} alert systems, ${tdCat.TD_STATS.stages} workflow stages · ${tdCat.TD_STATS.newEntities} new entities, ${tdCat.TD_STATS.relations} relations (reused bands/methods/surveys/observatories; no fabricated data)`,
   );
 
+  const gxCat = await import("../src/knowledge-graph/data/galaxies-catalog");
+  const gxIssues = gxCat.validateGalaxies();
+  const { getEntityById: getGxEnt } = await import("../src/knowledge-graph");
+  for (const r of gxCat.relations) {
+    if (!getGxEnt(r.from)) gxIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getGxEnt(r.to)) gxIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (gxIssues.length > 0) {
+    console.error(`\n✗ ${gxIssues.length} galaxies issue(s):`);
+    for (const i of gxIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Galaxies valid — ${gxCat.EXG_STATS.morphologies} morphologies, ${gxCat.EXG_STATS.agnTypes} AGN types + ${gxCat.EXG_STATS.agnModels} model, ${gxCat.EXG_STATS.processes} processes, ${gxCat.EXG_STATS.structures} structures · ${gxCat.EXG_STATS.newEntities} new entities, ${gxCat.EXG_STATS.relations} relations (reused galaxies/object-classes/cosmology; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
