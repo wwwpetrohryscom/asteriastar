@@ -696,6 +696,22 @@ async function main() {
     `✓ Multi-messenger valid — ${azCat.AZ_STATS.facilities} GW detectors, ${azCat.AZ_STATS.detectionMethods} detection methods, ${azCat.AZ_STATS.sources} merger source classes, ${azCat.AZ_STATS.alerts} alert systems, ${azCat.AZ_STATS.channels} channels, ${azCat.AZ_STATS.followupStages} follow-up stages, ${azCat.AZ_STATS.dataProducts} data products · ${azCat.AZ_STATS.newEntities} new entities, ${azCat.AZ_STATS.relations} relations (reused LIGO/Virgo/KAGRA/LISA/GW-methods/transients/alerts/standard-sirens/bands; no fabricated data)`,
   );
 
+  const baCat = await import("../src/knowledge-graph/data/comparative-planetology-catalog");
+  const baIssues = baCat.validateComparativePlanetology();
+  const { getEntityById: getBaEnt } = await import("../src/knowledge-graph");
+  for (const r of baCat.relations) {
+    if (!getBaEnt(r.from)) baIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBaEnt(r.to)) baIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (baIssues.length > 0) {
+    console.error(`\n✗ ${baIssues.length} comparative-planetology issue(s):`);
+    for (const i of baIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Comparative planetology valid — ${baCat.BA_STATS.interiors} interior layers, ${baCat.BA_STATS.processes} planetary processes, ${baCat.BA_STATS.worldtypes} world-types · ${baCat.BA_STATS.newEntities} new entities, ${baCat.BA_STATS.relations} relations (reused planets/moons/Pluto/planetary-classes/magnetosphere/cryovolcano/habitable-zone; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

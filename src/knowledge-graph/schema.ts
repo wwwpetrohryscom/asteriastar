@@ -291,6 +291,12 @@ export const ENTITY_TYPES = [
   "mm_channel",
   "gw_followup_stage",
   "gw_data_product",
+  // Comparative planetology & planetary atmospheres (Program BA) — REUSES the planets, moons,
+  // Pluto, the super-Earth/mini-Neptune/hot-Jupiter classes, the magnetosphere, the cryovolcano
+  // feature, the habitable zone, and the ocean-worlds theme; three exoplanet world-types reuse the
+  // planetary-class type. These are the new interior-layer and process types.
+  "planetary_interior",
+  "planetary_process",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1245,4 +1251,6 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   mm_channel: "Multi-messenger channel",
   gw_followup_stage: "GW follow-up stage",
   gw_data_product: "GW data product",
+  planetary_interior: "Planetary interior layer",
+  planetary_process: "Planetary process",
 };

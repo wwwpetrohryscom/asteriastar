@@ -1845,6 +1845,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["transient_class:binary-neutron-star-merger", "gw_detection_method:laser-interferometry", "gw_data_product:parameter-estimation", "mm_channel:gravitational-waves-and-light"],
     next: ["understanding-the-observatory-frontier", "understanding-the-dynamic-universe"],
   },
+  {
+    slug: "understanding-comparative-planetology",
+    title: "Understanding Comparative Planetology",
+    description: "Why Venus is a furnace, Mars a frozen desert, and Earth alive — the handful of processes, of interiors and atmospheres and magnetic fields, that play out to wildly different ends across the worlds. Built on real planetary science; hypothetical world-types are labelled as proposed.",
+    accent: "ember",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Comparing the worlds", href: "/comparative-planetology", blurb: "The same processes, wildly different ends." },
+          { title: "Planetary interiors", href: "/comparative-planetology/discover/planetary-interiors", blurb: "Core, mantle, and crust." },
+          { title: "Planetary differentiation", href: "/comparative-planetology/planetary-differentiation", blurb: "How a molten planet sorts itself." },
+          { title: "Planetary processes", href: "/comparative-planetology/discover/planetary-processes", blurb: "The mechanisms that shape worlds." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Plate tectonics", href: "/comparative-planetology/plate-tectonics", blurb: "Known for certain only on Earth." },
+          { title: "The greenhouse effect", href: "/comparative-planetology/the-greenhouse-effect", blurb: "Modest on Earth, extreme on Venus." },
+          { title: "Atmospheric escape", href: "/comparative-planetology/atmospheric-escape", blurb: "Why Mars lost most of its air." },
+          { title: "Magnetospheric shielding", href: "/comparative-planetology/magnetospheric-shielding", blurb: "The magnetic field that protects an atmosphere." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Cryovolcanism", href: "/comparative-planetology/cryovolcanism", blurb: "Volcanoes that erupt water and ice." },
+          { title: "World types", href: "/comparative-planetology/discover/world-types", blurb: "Ocean, lava, and hycean worlds." },
+          { title: "Ocean worlds", href: "/comparative-planetology/ocean-world", blurb: "Global oceans beneath ice." },
+          { title: "Hycean planets", href: "/comparative-planetology/hycean-planet", blurb: "A proposed, unconfirmed habitable class." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["planetary_process:plate-tectonics", "planetary_process:atmospheric-escape", "planetary_class:ocean-world", "planetary_interior:core"],
+    next: ["the-solar-system", "understanding-the-search-for-life"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
