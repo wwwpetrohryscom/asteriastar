@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Heliophysics & Space Weather Operations Encyclopedia (Program AW)**
+
+- [Heliophysics](docs/HELIOPHYSICS.md) — the operational layer of heliophysics: how the Sun drives space weather and how it reaches technology and people. The solar sources (the solar cycle, sunspots, active regions, coronal holes, the ionosphere), the operational impacts (satellites, GPS & navigation, aviation, human spaceflight, power grids, radio communications), and the forecasting (ESA's Space Weather Service Network, the counterpart to NOAA's SWPC). Reuses the platform's space-weather phenomena, the NOAA G/S/R scales, the SEP & Van Allen radiation environments, the Parker Solar Probe, Solar Orbiter, DSCOVR & ACE missions, and the SWPC; nothing duplicated or fabricated
+
 **Cosmic Distance Ladder & Cosmological Tensions Encyclopedia (Program AV)**
 
 - [Distance Ladder](docs/DISTANCE_LADDER.md) — the complete distance-measurement layer of modern cosmology and the tension it revealed: the distance indicators (RR Lyrae, the tip of the red giant branch, surface brightness fluctuations, the Tully–Fisher and Faber–Jackson relations, water megamasers, standard sirens), the cosmological parameters (Ωm, ΩΛ, σ8, ns), the SH0ES programme, and early dark energy. Reuses parallax, the Cepheid scale, Type Ia supernovae, BAO, the CMB, the Hubble constant & tension, dark energy & dark matter, and the Planck, Gaia, Hubble, JWST & DESI facilities; measured values are not invented; proposed resolutions are labelled unconfirmed; nothing duplicated or fabricated

@@ -632,6 +632,22 @@ async function main() {
     `✓ Distance ladder valid — ${avCat.AV_STATS.indicators} distance indicators, ${avCat.AV_STATS.parameters} cosmological parameters, ${avCat.AV_STATS.programs} programme (SH0ES), ${avCat.AV_STATS.concepts} concept (early dark energy) · ${avCat.AV_STATS.newEntities} new entities, ${avCat.AV_STATS.relations} relations (reused parallax/Cepheids/SNe Ia/BAO/CMB/H0/tension/Planck; no fabricated values)`,
   );
 
+  const awCat = await import("../src/knowledge-graph/data/heliophysics-catalog");
+  const awIssues = awCat.validateHeliophysics();
+  const { getEntityById: getAwEnt } = await import("../src/knowledge-graph");
+  for (const r of awCat.relations) {
+    if (!getAwEnt(r.from)) awIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getAwEnt(r.to)) awIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (awIssues.length > 0) {
+    console.error(`\n✗ ${awIssues.length} heliophysics issue(s):`);
+    for (const i of awIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Heliophysics valid — ${awCat.AW_STATS.phenomena} solar-source phenomena, ${awCat.AW_STATS.impacts} operational impacts, ${awCat.AW_STATS.services} forecasting service (ESA) · ${awCat.AW_STATS.newEntities} new entities, ${awCat.AW_STATS.relations} relations (reused phenomena/G-S-R scales/radiation/missions/SWPC; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
