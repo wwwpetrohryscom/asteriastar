@@ -109,6 +109,8 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "alert-infrastructure", title: "Transient Alert Infrastructure", description: "The alert systems and observation-workflow stages that turn a transient discovery into science — GCN, VOEvent, TNS, ATel, and the Rubin stream.", entityTypes: ["alert_system", "observation_stage"], sources: ["nasa"] },
   { slug: "galaxy-morphology-and-agn", title: "Galaxy Morphology & AGN", description: "The forms of galaxies, the types of active galactic nucleus, and the AGN unification model — spiral, elliptical, Seyfert, radio galaxy, blazar, and more.", entityTypes: ["galaxy_morphology", "agn_type", "agn_model"], sources: ["nasa", "esa"] },
   { slug: "extragalactic-structures", title: "Galactic Processes & Cosmic Structures", description: "The processes that shape galaxies and the large-scale structures they build — mergers, starbursts, feedback, the Local Group, clusters, superclusters, and voids.", entityTypes: ["galactic_process", "cosmic_structure"], sources: ["nasa"] },
+  { slug: "biosignatures-and-habitability", title: "Biosignatures & Habitability", description: "The signs of life and the factors of planetary habitability — atmospheric, surface, chemical, and geological biosignatures, technosignatures, liquid water, energy, and extremophiles.", entityTypes: ["biosignature", "habitability_factor"], sources: ["nasa", "esa"] },
+  { slug: "astrobiology-disciplines", title: "Astrobiology & Planetary Protection", description: "The disciplines of astrobiology and the planetary-protection measures that keep the search for life honest.", entityTypes: ["astrobiology_topic", "planetary_protection"], sources: ["nasa"] },
 ];
 
 export interface Dataset extends DatasetDef {

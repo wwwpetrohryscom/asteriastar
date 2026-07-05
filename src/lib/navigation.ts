@@ -77,6 +77,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Astronomy Methods, Measurements & Techniques", href: ROUTES.methods, description: "How astronomy works — parallax, spectroscopy, the distance ladder, lensing, gravitational waves & measurement" },
             { name: "Multi-Wavelength & Time-Domain Astronomy", href: ROUTES.timeDomain, description: "The dynamic universe — supernovae, gamma-ray bursts, kilonovae, FRBs, multi-messenger events & alert networks" },
             { name: "Galaxies, AGN & the Extragalactic Universe", href: ROUTES.galaxies, description: "Galaxy morphology, active galactic nuclei, mergers & starbursts, clusters, superclusters & the cosmic web" },
+            { name: "Astrobiology, Biosignatures & the Search for Life", href: ROUTES.astrobiology, description: "Habitability, ocean worlds, biosignatures & false positives, technosignatures & SETI, planetary protection" },
             { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Observatories", href: ROUTES.observatories, description: "Telescopes, surveys, bands" },
             { name: "Exoplanets", href: ROUTES.exoplanets, description: "Worlds beyond the Sun" },

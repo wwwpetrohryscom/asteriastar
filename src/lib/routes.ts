@@ -68,6 +68,7 @@ export const ROUTES = {
   methods: "/methods",
   timeDomain: "/time-domain",
   galaxies: "/galaxies",
+  astrobiology: "/astrobiology",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -519,4 +520,12 @@ export function galaxiesPath(slug: string): string {
 }
 export function galaxiesDiscoveryPath(slug: string): string {
   return `/galaxies/discover/${slug}`;
+}
+
+/** Astrobiology, Biosignatures & the Search for Life encyclopedia (Program AR). */
+export function astrobiologyPath(slug: string): string {
+  return `/astrobiology/${slug}`;
+}
+export function astrobiologyDiscoveryPath(slug: string): string {
+  return `/astrobiology/discover/${slug}`;
 }

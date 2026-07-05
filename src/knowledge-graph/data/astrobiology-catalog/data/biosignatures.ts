@@ -1,0 +1,16 @@
+import type { AstrobiologyRecord } from "@/knowledge-graph/data/astrobiology-catalog/types";
+
+/** Classes of biosignature and technosignature. Each is member_of_group its discipline and
+ *  associated_with the REUSED methods, worlds, and institutions involved. False positives are
+ *  treated as a first-class part of the science. */
+const bs = (topicSlug: string) => (r: Omit<AstrobiologyRecord, "kind" | "id" | "topicSlug" | "sources"> & { slug: string; sources?: AstrobiologyRecord["sources"] }): AstrobiologyRecord => ({ sources: ["nasa"], ...r, kind: "biosignature", id: `biosignature:${r.slug}`, topicSlug });
+const sci = bs("biosignature-science");
+
+export const biosignatures: AstrobiologyRecord[] = [
+  sci({ slug: "atmospheric-biosignature", name: "Atmospheric Biosignature", relatedKeys: ["astronomy_method:spectroscopy"], description: "Gases in a planet's atmosphere that life could produce and maintain — especially a chemical disequilibrium, like oxygen and methane together, that non-living chemistry would quickly erase. Detected by the spectroscopy of a planet's light.", sources: ["nasa"], highlights: ["Oxygen and methane together — a chemical disequilibrium"] }),
+  sci({ slug: "surface-biosignature", name: "Surface Biosignature", relatedKeys: ["planet:mars"], description: "Signs of life on a surface — pigments, the 'red edge' reflectance of vegetation, or patterns and textures a biosphere leaves behind — sought both on exoplanets and on the surface of Mars.", sources: ["nasa"] }),
+  sci({ slug: "chemical-biosignature", name: "Chemical Biosignature", relatedKeys: ["planet:mars", "space_mission:mars-2020"], description: "Chemical fingerprints of life in rock or ice — the isotopic ratios life prefers, the handedness (chirality) of its molecules, and specific organic byproducts — the kind of evidence the Perseverance rover seeks and caches on Mars.", sources: ["nasa"] }),
+  sci({ slug: "geological-biosignature", name: "Geological Biosignature", relatedKeys: ["planet:mars", "space_mission:mars-2020"], description: "Structures preserved in rock that life can build — layered stromatolites, biominerals, and microfossils. Perseverance is exploring an ancient Martian river delta where such signs might be preserved.", sources: ["nasa"] }),
+  bs("technosignatures-and-seti")({ slug: "technosignature", name: "Technosignature", relatedKeys: ["organization:seti-institute"], description: "A sign not of life but of technology — a radio or optical signal, an artificial light, an industrial pollutant, or a megastructure. The search for technosignatures is the search for intelligence, led by SETI and Breakthrough Listen.", sources: ["nasa"], highlights: ["Signs of technology, not just biology"] }),
+  sci({ slug: "biosignature-false-positive", name: "Biosignature False Positive", relatedKeys: ["astronomy_method:spectroscopy", "planet:venus"], description: "A signal that mimics life but is made by non-living processes — abiotic oxygen from water splitting, geological methane, or a mis-measured spectral feature. Ruling out false positives is the hardest and most important part of any claim of life; the Venus phosphine debate is a recent lesson.", sources: ["nasa"], highlights: ["Ruling these out is the hardest part of the search"] }),
+];

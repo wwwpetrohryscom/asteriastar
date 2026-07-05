@@ -1512,6 +1512,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["galaxy_morphology:spiral", "agn_type:radio-galaxy", "galactic_process:galaxy-merger", "cosmic_structure:local-group"],
     next: ["understanding-the-dynamic-universe", "understanding-the-universe"],
   },
+  {
+    slug: "understanding-the-search-for-life",
+    title: "Understanding the Search for Life",
+    description: "How science asks whether we are alone — how life might begin, where it could survive, and how we would recognise its signs without being fooled. Built on real astrobiology; no claim of alien life is asserted.",
+    accent: "aurora",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The search for life", href: "/astrobiology", blurb: "Turning an ancient question into science." },
+          { title: "What makes a world habitable", href: "/astrobiology/discover/habitability", blurb: "Water, energy, chemistry, and stability." },
+          { title: "Liquid water", href: "/astrobiology/liquid-water", blurb: "The one requirement all known life shares." },
+          { title: "Ocean worlds", href: "/astrobiology/ocean-worlds-astrobiology", blurb: "Europa, Enceladus, and Titan." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Biosignatures", href: "/astrobiology/discover/biosignatures", blurb: "The potential signs of life." },
+          { title: "Atmospheric biosignatures", href: "/astrobiology/atmospheric-biosignature", blurb: "Gases in disequilibrium, like oxygen and methane." },
+          { title: "Extremophiles", href: "/astrobiology/extremophiles", blurb: "Life on Earth in conditions once thought lethal." },
+          { title: "Subsurface oceans", href: "/astrobiology/subsurface-ocean", blurb: "Oceans hidden beneath the ice." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "False positives", href: "/astrobiology/biosignature-false-positive", blurb: "Ruling these out is the hardest part." },
+          { title: "Technosignatures & SETI", href: "/astrobiology/technosignatures-and-seti", blurb: "The search for signs of intelligence." },
+          { title: "Planetary protection", href: "/astrobiology/discover/planetary-protection", blurb: "Keeping the search honest, in both directions." },
+          { title: "Backward contamination", href: "/astrobiology/backward-contamination", blurb: "Protecting Earth from returned samples." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["astrobiology_topic:ocean-worlds-astrobiology", "biosignature:atmospheric-biosignature", "habitability_factor:liquid-water", "planetary_protection:forward-contamination"],
+    next: ["understanding-humans-in-space", "understanding-the-future-of-exploration"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

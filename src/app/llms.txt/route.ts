@@ -322,6 +322,14 @@ export function GET(): Response {
   lines.push(`- Morphology: ${absoluteUrl("/galaxies/discover/galaxy-morphology")} · AGN: ${absoluteUrl("/galaxies/discover/active-galactic-nuclei")} · Structures: ${absoluteUrl("/galaxies/discover/cosmic-structures")}`);
   lines.push("");
 
+  lines.push("## Astrobiology, Biosignatures & the Search for Life Encyclopedia");
+  lines.push(
+    `${engine.astrobiology.topics().length} disciplines, ${engine.astrobiology.biosignatureCount} biosignatures, and habitability factors and planetary-protection measures (engine.astrobiology) — the science of life beyond Earth: origins of life, planetary habitability (liquid water, energy, chemical building blocks, extremophiles, subsurface oceans), the ocean worlds (Europa, Enceladus, Titan), biosignatures (atmospheric, surface, chemical, geological) and the FALSE POSITIVES that must be ruled out, technosignatures and SETI, and planetary protection (forward/backward contamination, sample handling). Curated from NASA and ESA. REUSES the ocean-world moons, Mars, the habitable-zone concept, the SETI Institute, the Europa Clipper/Dragonfly/Perseverance missions, and spectroscopy already in the graph. No claim of extraterrestrial life is asserted; biosignatures are potential and false positives are treated seriously. Nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Astrobiology, Biosignatures & the Search for Life](${absoluteUrl("/astrobiology")})`);
+  lines.push(`- Biosignatures: ${absoluteUrl("/astrobiology/discover/biosignatures")} · Habitability: ${absoluteUrl("/astrobiology/discover/habitability")} · Planetary protection: ${absoluteUrl("/astrobiology/discover/planetary-protection")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,
