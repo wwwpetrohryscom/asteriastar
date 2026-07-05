@@ -1919,6 +1919,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["interstellar_environment:molecular-cloud", "interstellar_molecule:methanol", "astrochemical_process:prebiotic-chemistry", "interstellar_molecule:carbon-monoxide"],
     next: ["understanding-the-search-for-life", "understanding-comparative-planetology"],
   },
+  {
+    slug: "understanding-space-policy",
+    title: "Understanding Space Policy & Sustainability",
+    description: "The rules that govern a crowded, commercial, contested domain — the treaties that keep space peaceful, the sustainability of orbits filling with satellites and debris, and the economy that launches it all. Built on real treaties and policy; treaty years are historical facts.",
+    accent: "stone",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The rules of space", href: "/space-policy", blurb: "A crowded, commercial, contested domain." },
+          { title: "Space law & treaties", href: "/space-policy/discover/space-law", blurb: "The agreements that govern space." },
+          { title: "The Outer Space Treaty", href: "/space-policy/outer-space-treaty", blurb: "The constitution of outer space." },
+          { title: "Policy & sustainability", href: "/space-policy/discover/sustainability", blurb: "The challenges of a crowded orbit." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Orbital debris", href: "/space-policy/orbital-debris", blurb: "Millions of fragments circling the Earth." },
+          { title: "The Kessler syndrome", href: "/space-policy/kessler-syndrome", blurb: "A runaway cascade of collisions." },
+          { title: "Mega-constellations", href: "/space-policy/mega-constellations", blurb: "Thousands of satellites, a brighter sky." },
+          { title: "Space traffic management", href: "/space-policy/space-traffic-management", blurb: "An urgent, unsolved governance problem." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "The space economy", href: "/space-policy/discover/space-economy", blurb: "The industries and markets of space." },
+          { title: "Commercial launch", href: "/space-policy/commercial-launch", blurb: "Reusable rockets and the falling cost of orbit." },
+          { title: "Space-resource policy", href: "/space-policy/space-resource-policy", blurb: "Who may mine the Moon and asteroids?" },
+          { title: "Planetary-protection policy", href: "/space-policy/planetary-protection-policy", blurb: "Keeping worlds — and Earth — uncontaminated." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["space_treaty:outer-space-treaty", "space_policy_topic:orbital-debris", "space_policy_topic:kessler-syndrome", "space_economy_topic:the-space-economy"],
+    next: ["understanding-planetary-defense", "understanding-the-future-of-exploration"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

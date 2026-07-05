@@ -303,6 +303,13 @@ export const ENTITY_TYPES = [
   "interstellar_environment",
   "interstellar_molecule",
   "astrochemical_process",
+  // Space policy, sustainability & space economy (Program BC) — REUSES the on-orbit-servicing
+  // process, the ISRU domain, the planetary-protection topic and contamination measures, the
+  // satellite-impact, and NASA; the governing bodies (UNOOSA, COSPAR, ITU, IAF) reuse the
+  // organization type. These are the new policy types.
+  "space_treaty",
+  "space_policy_topic",
+  "space_economy_topic",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1262,4 +1269,7 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   interstellar_environment: "Interstellar environment",
   interstellar_molecule: "Interstellar molecule",
   astrochemical_process: "Astrochemical process",
+  space_treaty: "Space treaty",
+  space_policy_topic: "Space-policy topic",
+  space_economy_topic: "Space-economy topic",
 };

@@ -410,6 +410,14 @@ export function GET(): Response {
   lines.push(`- Environments: ${absoluteUrl("/astrochemistry/discover/interstellar-environments")} · Molecules: ${absoluteUrl("/astrochemistry/discover/molecules")} · Processes: ${absoluteUrl("/astrochemistry/discover/processes")}`);
   lines.push("");
 
+  lines.push("## Space Policy, Sustainability & the Space Economy Encyclopedia");
+  lines.push(
+    `The institutional and operational layer of modern space activity (engine.spacePolicy). Space-law treaties: the Outer Space Treaty (1967), the Liability Convention (1972), the Registration Convention (1975), the Moon Agreement (1979), and the Artemis Accords (2020). Policy & sustainability topics: orbital debris, the Kessler syndrome, space situational awareness, space traffic management, debris mitigation, mega-constellations, launch licensing, spectrum & orbital-slot allocation, export control & dual-use, space-resource policy, and planetary-protection policy. Space-economy topics: commercial launch, the satellite economy, space insurance, and the space economy. Governing bodies (created with the existing organization type): UNOOSA, COSPAR, the ITU, and the IAF. Curated from the UN space treaties, UNOOSA, COSPAR, and NASA; treaty years are historical facts. REUSES the on-orbit-servicing process, the in-situ-resource-utilisation domain, the planetary-protection topic and its contamination measures, the space-weather satellite impact, and NASA; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Space Policy, Sustainability & the Space Economy](${absoluteUrl("/space-policy")})`);
+  lines.push(`- Space law: ${absoluteUrl("/space-policy/discover/space-law")} · Sustainability: ${absoluteUrl("/space-policy/discover/sustainability")} · Space economy: ${absoluteUrl("/space-policy/discover/space-economy")} · Organisations: ${absoluteUrl("/space-policy/discover/organisations")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

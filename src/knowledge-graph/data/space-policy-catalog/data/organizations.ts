@@ -1,0 +1,12 @@
+import type { PolicyRecord } from "@/knowledge-graph/data/space-policy-catalog/types";
+
+/** The governing and coordinating organisations of space activity — created with the EXISTING
+ *  organization type (like NASA and ESA). Each links to the treaties and topics it governs. */
+const org = (r: Omit<PolicyRecord, "kind" | "id" | "sources"> & { slug: string; sources?: PolicyRecord["sources"] }): PolicyRecord => ({ sources: ["nasa"], ...r, kind: "organization", id: `organization:${r.slug}` });
+
+export const organizations: PolicyRecord[] = [
+  org({ slug: "unoosa", name: "UNOOSA", altNames: ["UN Office for Outer Space Affairs"], tagLabel: "UN body", relatedKeys: ["space_treaty:outer-space-treaty", "space_treaty:registration-convention"], description: "The United Nations Office for Outer Space Affairs, which promotes international cooperation in the peaceful use of space, supports the development of space law, and maintains the United Nations register of objects launched into space.", sources: ["nasa"], highlights: ["Keeper of the UN register of space objects"] }),
+  org({ slug: "cospar", name: "COSPAR", altNames: ["Committee on Space Research"], tagLabel: "Scientific body", relatedKeys: ["space_policy_topic:planetary-protection-policy", "astrobiology_topic:planetary-protection"], description: "The Committee on Space Research, an international scientific body that coordinates space research across nations and maintains the planetary-protection policy that keeps missions from contaminating other worlds and Earth from returned samples.", sources: ["nasa"] }),
+  org({ slug: "international-telecommunication-union", name: "International Telecommunication Union", altNames: ["ITU"], tagLabel: "UN agency", relatedKeys: ["space_policy_topic:spectrum-allocation"], description: "The United Nations agency that allocates the global radio-frequency spectrum and the geostationary and other orbital slots that satellites use, coordinating between nations and operators to prevent harmful interference.", sources: ["nasa"] }),
+  org({ slug: "international-astronautical-federation", name: "International Astronautical Federation", altNames: ["IAF"], tagLabel: "Advocacy body", relatedKeys: ["space_economy_topic:the-space-economy"], description: "A global space-advocacy organisation that connects space agencies, companies, and societies worldwide and runs the annual International Astronautical Congress, the largest gathering of the space community.", sources: ["nasa"] }),
+];
