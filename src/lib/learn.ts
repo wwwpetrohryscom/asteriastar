@@ -1956,6 +1956,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["space_treaty:outer-space-treaty", "space_policy_topic:orbital-debris", "space_policy_topic:kessler-syndrome", "space_economy_topic:the-space-economy"],
     next: ["understanding-planetary-defense", "understanding-the-future-of-exploration"],
   },
+  {
+    slug: "understanding-the-history-of-discovery",
+    title: "Understanding the History & Philosophy of Discovery",
+    description: "How astronomy became modern science, and how it knows what it knows — the revolutions that remade our picture of the cosmos, the instruments that opened each new window, and the philosophy that tells us when a claim about the sky is really knowledge. Built on real history and philosophy of science.",
+    accent: "comet",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "How astronomy earned its confidence", href: "/discovery-history", blurb: "The oldest and most audacious science." },
+          { title: "Histories of discovery", href: "/discovery-history/discover/histories", blurb: "The great arcs of astronomical discovery." },
+          { title: "The Copernican Revolution", href: "/discovery-history/the-copernican-revolution", blurb: "Moving the Earth from the centre." },
+          { title: "How discovery works", href: "/discovery-history/discover/methodology", blurb: "The ways astronomy makes progress." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Instrumentation-driven discovery", href: "/discovery-history/instrumentation-driven-discovery", blurb: "A new instrument opens a new window." },
+          { title: "The history of spectroscopy", href: "/discovery-history/the-history-of-spectroscopy", blurb: "The birth of astrophysics." },
+          { title: "Paradigm shifts", href: "/discovery-history/paradigm-shifts", blurb: "When one framework gives way to another." },
+          { title: "Philosophy of science", href: "/discovery-history/discover/philosophy", blurb: "How astronomy knows what it knows." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Falsifiability", href: "/discovery-history/falsifiability", blurb: "A claim that cannot be tested is not science." },
+          { title: "Measurement uncertainty", href: "/discovery-history/measurement-uncertainty", blurb: "A number without an error bar is not a measurement." },
+          { title: "The history of gravitational waves", href: "/discovery-history/the-history-of-gravitational-waves", blurb: "A century from prediction to detection." },
+          { title: "The data & AI revolution", href: "/discovery-history/the-data-and-ai-revolution", blurb: "Astronomy becomes a data science." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["history_theme:the-copernican-revolution", "discovery_methodology:instrumentation-driven-discovery", "philosophy_of_science:falsifiability", "history_theme:the-history-of-gravitational-waves"],
+    next: ["understanding-machine-learning-in-astronomy", "the-solar-system"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

@@ -80,6 +80,7 @@ export const ROUTES = {
   comparativePlanetology: "/comparative-planetology",
   astrochemistry: "/astrochemistry",
   spacePolicy: "/space-policy",
+  discoveryHistory: "/discovery-history",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -607,4 +608,10 @@ export function spacePolicyPath(slug: string): string {
 }
 export function spacePolicyDiscoveryPath(slug: string): string {
   return `/space-policy/discover/${slug}`;
+}
+export function discoveryHistoryPath(slug: string): string {
+  return `/discovery-history/${slug}`;
+}
+export function discoveryHistoryDiscoveryPath(slug: string): string {
+  return `/discovery-history/discover/${slug}`;
 }

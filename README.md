@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**History & Philosophy of Astronomical Discovery Encyclopedia (Program BD)**
+
+- [History & Philosophy of Discovery](docs/DISCOVERY_HISTORY.md) — how astronomy became modern science, and how it knows what it knows: the thematic histories of discovery (the Copernican Revolution and the histories of the telescope, spectroscopy, radio astronomy, cosmology, exoplanets, gravitational waves & black holes), the methodologies of discovery (the scientific method, paradigm shifts & revolutions, instrumentation-driven discovery, observational bias, theory & observation, Big Science, the data & AI revolution), and the philosophy of science (realism, falsifiability, evidence, measurement uncertainty, replication, open science). Reuses the platform's astronomers, the astronomy eras, the spectroscopy/GW/error-analysis methods, the transit method, the Hubble tension, Sagittarius A*, the radio band & the reproducibility practice; nothing duplicated or fabricated
+
 **Space Policy, Sustainability & Space Economy Encyclopedia (Program BC)**
 
 - [Space Policy](docs/SPACE_POLICY.md) — the institutional and operational layer of modern space activity: the space-law treaties (the Outer Space Treaty and the Liability, Registration & Moon agreements, and the Artemis Accords), the policy & sustainability topics (orbital debris, the Kessler syndrome, situational awareness & traffic management, debris mitigation, mega-constellations, launch licensing, spectrum allocation, export control, space-resource & planetary-protection policy), the space-economy topics (commercial launch, the satellite economy, insurance, the space economy), and the governing bodies (UNOOSA, COSPAR, ITU, IAF). Reuses the platform's on-orbit-servicing process, the ISRU domain, the planetary-protection topic & contamination measures, the satellite impact, and NASA; nothing duplicated or fabricated

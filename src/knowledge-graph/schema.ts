@@ -310,6 +310,13 @@ export const ENTITY_TYPES = [
   "space_treaty",
   "space_policy_topic",
   "space_economy_topic",
+  // History & philosophy of astronomical discovery (Program BD) — REUSES the astronomers, the
+  // astronomy eras, the spectroscopy/gravitational-wave/error-analysis methods, the transit method,
+  // the Hubble tension, Sagittarius A*, the radio band, and the reproducibility practice. These are
+  // the new methodology, philosophy, and history-theme types.
+  "discovery_methodology",
+  "philosophy_of_science",
+  "history_theme",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1272,4 +1279,7 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   space_treaty: "Space treaty",
   space_policy_topic: "Space-policy topic",
   space_economy_topic: "Space-economy topic",
+  discovery_methodology: "Discovery methodology",
+  philosophy_of_science: "Philosophy of science",
+  history_theme: "History of discovery",
 };

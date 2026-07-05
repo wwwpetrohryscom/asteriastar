@@ -42,6 +42,7 @@ import { validateMultiMessenger } from "@/knowledge-graph/data/multi-messenger-c
 import { validateComparativePlanetology } from "@/knowledge-graph/data/comparative-planetology-catalog";
 import { validateAstrochemistry } from "@/knowledge-graph/data/astrochemistry-catalog";
 import { validateSpacePolicy } from "@/knowledge-graph/data/space-policy-catalog";
+import { validateDiscoveryHistory } from "@/knowledge-graph/data/discovery-history-catalog";
 import { validateHumanSpaceflight } from "@/knowledge-graph/data/human-spaceflight-catalog";
 import { validateObservatories } from "@/knowledge-graph/data/observatory-catalog";
 import { validateExoplanets } from "@/knowledge-graph/data/exoplanet-catalog";
@@ -165,6 +166,7 @@ export const validationEngine = {
   comparativePlanetology: (): string[] => validateComparativePlanetology(),
   astrochemistry: (): string[] => validateAstrochemistry(),
   spacePolicy: (): string[] => validateSpacePolicy(),
+  discoveryHistory: (): string[] => validateDiscoveryHistory(),
   humanSpaceflight: (): string[] => validateHumanSpaceflight(),
   observatories: (): string[] => validateObservatories(),
   exoplanets: (): string[] => validateExoplanets(),
@@ -222,6 +224,7 @@ export const validationEngine = {
       { category: "comparativePlanetology", issues: this.comparativePlanetology() },
       { category: "astrochemistry", issues: this.astrochemistry() },
       { category: "spacePolicy", issues: this.spacePolicy() },
+      { category: "discoveryHistory", issues: this.discoveryHistory() },
       { category: "humanSpaceflight", issues: this.humanSpaceflight() },
       { category: "observatories", issues: this.observatories() },
       { category: "exoplanets", issues: this.exoplanets() },
