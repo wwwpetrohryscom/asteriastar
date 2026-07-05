@@ -2030,6 +2030,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["astronomical_theory:keplers-laws", "orbital_mechanics_concept:lagrange-points", "reference_frame:icrs", "ephemeris_system:jpl-development-ephemeris"],
     next: ["the-solar-system", "understanding-the-future-of-exploration"],
   },
+  {
+    slug: "understanding-stellar-astrophysics",
+    title: "Understanding Stellar Astrophysics",
+    description: "How a star is born from a collapsing cloud, forges the elements of the periodic table in its core, and ends as a white dwarf, neutron star, or black hole. Built on well-established astrophysics; nothing is fabricated.",
+    accent: "plasma",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The lives of stars", href: "/stellar-astrophysics", blurb: "How stars form, live, and die." },
+          { title: "Star formation", href: "/stellar-astrophysics/star-formation", blurb: "From a collapsing cloud to a new star." },
+          { title: "The main sequence", href: "/stellar-astrophysics/main-sequence-evolution", blurb: "The long, stable middle age of a star." },
+          { title: "The HR diagram", href: "/stellar-astrophysics/hertzsprung-russell-diagram", blurb: "The map of stellar lives." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Forging the elements", href: "/stellar-astrophysics/discover/nucleosynthesis", blurb: "How stars build the periodic table." },
+          { title: "The proton–proton chain", href: "/stellar-astrophysics/proton-proton-chain", blurb: "How the Sun shines." },
+          { title: "The red-giant branch", href: "/stellar-astrophysics/red-giant-branch", blurb: "When a star swells and cools." },
+          { title: "Planetary-nebula ejection", href: "/stellar-astrophysics/planetary-nebula-ejection", blurb: "The glowing shell a dying Sun leaves behind." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Massive-star core collapse", href: "/stellar-astrophysics/massive-star-core-collapse", blurb: "The catastrophic end of a massive star." },
+          { title: "The r-process", href: "/stellar-astrophysics/r-process", blurb: "Where gold and uranium are made." },
+          { title: "Electron degeneracy pressure", href: "/stellar-astrophysics/electron-degeneracy-pressure", blurb: "What holds up a white dwarf — up to the Chandrasekhar limit." },
+          { title: "Stellar populations & clusters", href: "/stellar-astrophysics/stellar-populations-and-clusters", blurb: "From the young Pleiades to ancient Omega Centauri." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["stellar_process:star-formation", "stellar_physics_concept:hertzsprung-russell-diagram", "nucleosynthesis_process:r-process", "stellar_physics_concept:electron-degeneracy-pressure"],
+    next: ["understanding-celestial-mechanics", "the-solar-system"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

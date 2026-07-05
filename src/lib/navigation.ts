@@ -91,6 +91,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Space Policy, Sustainability & Economy", href: ROUTES.spacePolicy, description: "The rules of space — the Outer Space Treaty, orbital debris & Kessler, traffic management, mega-constellations & the space economy" },
             { name: "History & Philosophy of Discovery", href: ROUTES.discoveryHistory, description: "How astronomy became science — the Copernican Revolution, paradigm shifts, falsifiability & the histories of the telescope, cosmology & gravitational waves" },
             { name: "Celestial Mechanics & Timekeeping", href: ROUTES.celestialMechanics, description: "The mathematics of motion & time — Kepler's laws, Lagrange points, resonances, reference frames, ephemerides & leap seconds" },
+            { name: "Stellar Astrophysics Deep-Dive", href: ROUTES.stellarAstrophysics, description: "How stars form, live, forge the elements & die — the HR diagram, stellar evolution, nucleosynthesis, degeneracy pressure, populations & binaries" },
             { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Observatories", href: ROUTES.observatories, description: "Telescopes, surveys, bands" },
             { name: "Exoplanets", href: ROUTES.exoplanets, description: "Worlds beyond the Sun" },
