@@ -1882,6 +1882,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["planetary_process:plate-tectonics", "planetary_process:atmospheric-escape", "planetary_class:ocean-world", "planetary_interior:core"],
     next: ["the-solar-system", "understanding-the-search-for-life"],
   },
+  {
+    slug: "understanding-astrochemistry",
+    title: "Understanding Astrochemistry",
+    description: "How the rich chemistry of the cold clouds between the stars — water, alcohols, and the rings of carbon that carry the galaxy's soot — is built atom by atom and inherited by every new star, planet, and comet. Built on real molecules and observations; nothing is fabricated.",
+    accent: "halo",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The molecular universe", href: "/astrochemistry", blurb: "Space is not empty, and not simple." },
+          { title: "Interstellar environments", href: "/astrochemistry/discover/interstellar-environments", blurb: "Where cosmic chemistry happens." },
+          { title: "Molecular clouds", href: "/astrochemistry/molecular-cloud", blurb: "The galaxy's richest chemical factories." },
+          { title: "The molecules of space", href: "/astrochemistry/discover/molecules", blurb: "The chemical inventory of the cosmos." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Carbon monoxide", href: "/astrochemistry/carbon-monoxide", blurb: "The tracer that maps the molecular universe." },
+          { title: "Methanol", href: "/astrochemistry/methanol", blurb: "Built atom by atom on icy grains." },
+          { title: "PAHs", href: "/astrochemistry/polycyclic-aromatic-hydrocarbons", blurb: "The rings of carbon that carry the galaxy's soot." },
+          { title: "Astrochemical processes", href: "/astrochemistry/discover/processes", blurb: "How molecules are built and destroyed." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Grain-surface chemistry", href: "/astrochemistry/grain-surface-chemistry", blurb: "Where the gas phase fails, the ice succeeds." },
+          { title: "Prebiotic chemistry", href: "/astrochemistry/prebiotic-chemistry", blurb: "The cosmic chemistry that precedes biology." },
+          { title: "Planet-formation chemistry", href: "/astrochemistry/planet-formation-chemistry", blurb: "What new planets are made of." },
+          { title: "Amino-acid precursors", href: "/astrochemistry/amino-acid-precursors", blurb: "The interstellar link to the building blocks of life." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["interstellar_environment:molecular-cloud", "interstellar_molecule:methanol", "astrochemical_process:prebiotic-chemistry", "interstellar_molecule:carbon-monoxide"],
+    next: ["understanding-the-search-for-life", "understanding-comparative-planetology"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

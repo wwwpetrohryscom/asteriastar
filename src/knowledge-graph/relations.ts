@@ -55,6 +55,7 @@ import { relations as astroMlCatalog } from "@/knowledge-graph/data/astro-ml-cat
 import { relations as citizenAstronomyCatalog } from "@/knowledge-graph/data/citizen-astronomy-catalog";
 import { relations as multiMessengerCatalog } from "@/knowledge-graph/data/multi-messenger-catalog";
 import { relations as comparativePlanetologyCatalog } from "@/knowledge-graph/data/comparative-planetology-catalog";
+import { relations as astrochemistryCatalog } from "@/knowledge-graph/data/astrochemistry-catalog";
 import { coreRelations } from "@/knowledge-graph/data/core-relations";
 
 /**
@@ -124,4 +125,5 @@ export const relations: GraphRelation[] = [
   ...citizenAstronomyCatalog,
   ...multiMessengerCatalog,
   ...comparativePlanetologyCatalog,
+  ...astrochemistryCatalog,
 ];

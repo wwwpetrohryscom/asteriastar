@@ -87,6 +87,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Citizen Science & Amateur Astronomy", href: ROUTES.citizenAstronomy, description: "The public participation layer — Zooniverse, Galaxy Zoo, the AAVSO, backyard observing, equipment & dark-sky parks" },
             { name: "Multi-Messenger & Gravitational Waves", href: ROUTES.multiMessenger, description: "The new astronomy — LIGO/Virgo/KAGRA, next-gen detectors, compact-binary mergers, alerts & counterpart follow-up" },
             { name: "Comparative Planetology", href: ROUTES.comparativePlanetology, description: "How worlds evolve — interiors, tectonics, atmospheric escape, climate, magnetospheres, ocean & lava worlds" },
+            { name: "Astrochemistry & the Molecular Universe", href: ROUTES.astrochemistry, description: "The chemistry of space — molecular clouds, protoplanetary disks, water, PAHs, methanol & prebiotic chemistry" },
             { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Observatories", href: ROUTES.observatories, description: "Telescopes, surveys, bands" },
             { name: "Exoplanets", href: ROUTES.exoplanets, description: "Worlds beyond the Sun" },

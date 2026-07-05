@@ -402,6 +402,14 @@ export function GET(): Response {
   lines.push(`- Interiors: ${absoluteUrl("/comparative-planetology/discover/planetary-interiors")} · Processes: ${absoluteUrl("/comparative-planetology/discover/planetary-processes")} · World types: ${absoluteUrl("/comparative-planetology/discover/world-types")}`);
   lines.push("");
 
+  lines.push("## Astrochemistry & the Molecular Universe Encyclopedia");
+  lines.push(
+    `How chemistry builds stars, planets, and the ingredients of life (engine.astrochemistry). Interstellar environments: the diffuse interstellar medium, molecular clouds, star-forming regions, protoplanetary disks, interstellar dust. Molecules: water, carbon monoxide (the tracer of molecular gas), carbon dioxide, ammonia, hydrogen cyanide, methanol, polycyclic aromatic hydrocarbons (PAHs), and amino-acid precursors. Astrochemical processes: gas-phase chemistry, grain-surface chemistry, photochemistry, shock chemistry, prebiotic chemistry, planet-formation chemistry, and cometary & meteoritic chemistry. Curated from NASA, ESO/ALMA, and the astrochemistry community. REUSES the spectroscopy method, ALMA and APEX, the James Webb Space Telescope, the Orion Nebula, the origins-of-life topic, the Murchison and Allende meteorites, and the infrared/radio/submillimetre/ultraviolet bands; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Astrochemistry & the Molecular Universe](${absoluteUrl("/astrochemistry")})`);
+  lines.push(`- Environments: ${absoluteUrl("/astrochemistry/discover/interstellar-environments")} · Molecules: ${absoluteUrl("/astrochemistry/discover/molecules")} · Processes: ${absoluteUrl("/astrochemistry/discover/processes")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,
