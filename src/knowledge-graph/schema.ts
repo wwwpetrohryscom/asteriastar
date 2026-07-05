@@ -327,6 +327,8 @@ export const ENTITY_TYPES = [
   "stellar_process",
   "nucleosynthesis_process",
   "stellar_physics_concept",
+  "galactic_structure",
+  "galactic_dynamics",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1298,4 +1300,6 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   stellar_process: "Stellar process",
   nucleosynthesis_process: "Nucleosynthesis process",
   stellar_physics_concept: "Stellar physics concept",
+  galactic_structure: "Galactic structure",
+  galactic_dynamics: "Galactic dynamics",
 };

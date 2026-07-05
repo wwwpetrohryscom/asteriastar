@@ -2067,6 +2067,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["stellar_process:star-formation", "stellar_physics_concept:hertzsprung-russell-diagram", "nucleosynthesis_process:r-process", "stellar_physics_concept:electron-degeneracy-pressure"],
     next: ["understanding-celestial-mechanics", "the-solar-system"],
   },
+  {
+    slug: "understanding-the-milky-way",
+    title: "Understanding the Milky Way",
+    description: "The anatomy of the galaxy we live in — its discs, bulge, bar and spiral arms, the black hole at its heart, how it turns and reveals its dark matter, and how it will one day merge with Andromeda. Built on well-established galactic astronomy; nothing is fabricated.",
+    accent: "aurora",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The anatomy of the Galaxy", href: "/galactic-astronomy", blurb: "The Milky Way, part by part." },
+          { title: "Galactic structure", href: "/galactic-astronomy/discover/galactic-structure", blurb: "The discs, bulge, bar and halo." },
+          { title: "The thin disk", href: "/galactic-astronomy/galactic-thin-disk", blurb: "Where the Sun and the spiral arms live." },
+          { title: "The Galactic Centre", href: "/galactic-astronomy/galactic-center", blurb: "The crowded core and Sagittarius A*." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "The spiral arms", href: "/galactic-astronomy/spiral-arms", blurb: "Density waves that trigger star formation." },
+          { title: "The stellar halo", href: "/galactic-astronomy/stellar-halo", blurb: "The Galaxy's oldest stars and its deep archive." },
+          { title: "Galactic rotation", href: "/galactic-astronomy/galactic-rotation", blurb: "The flat rotation curve — evidence for dark matter." },
+          { title: "Stellar streams", href: "/galactic-astronomy/stellar-streams", blurb: "The shredded remains of the Galaxy's victims." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Dynamics, archaeology & fate", href: "/galactic-astronomy/discover/galactic-dynamics", blurb: "How the Galaxy turns, remembers, and grows." },
+          { title: "Galactic archaeology", href: "/galactic-astronomy/galactic-archaeology", blurb: "Reading the Galaxy's history in its stars, with Gaia." },
+          { title: "Satellite galaxies & accretion", href: "/galactic-astronomy/satellite-galaxies-and-accretion", blurb: "How a big galaxy grows by eating small ones." },
+          { title: "The Milky Way–Andromeda collision", href: "/galactic-astronomy/the-milky-way-andromeda-collision", blurb: "The merger that awaits our Galaxy." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["galactic_structure:galactic-center", "galactic_dynamics:galactic-rotation", "galactic_dynamics:stellar-streams", "galactic_dynamics:the-milky-way-andromeda-collision"],
+    next: ["understanding-stellar-astrophysics", "understanding-the-universe"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
