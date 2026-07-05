@@ -792,6 +792,22 @@ async function main() {
     `✓ Stellar astrophysics valid — ${bfCat.BF_STATS.processes} stellar processes, ${bfCat.BF_STATS.nucleosynthesis} nucleosynthesis pathways, ${bfCat.BF_STATS.concepts} physics concepts · ${bfCat.BF_STATS.newEntities} new entities, ${bfCat.BF_STATS.relations} relations (reused end-states/supernovae/kilonova/spectral-classification/asteroseismology/BBN/clusters; no fabricated data)`,
   );
 
+  const bgCat = await import("../src/knowledge-graph/data/galactic-astronomy-catalog");
+  const bgIssues = bgCat.validateGalacticAstronomy();
+  const { getEntityById: getBgEnt } = await import("../src/knowledge-graph");
+  for (const r of bgCat.relations) {
+    if (!getBgEnt(r.from)) bgIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBgEnt(r.to)) bgIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (bgIssues.length > 0) {
+    console.error(`\n✗ ${bgIssues.length} galactic-astronomy issue(s):`);
+    for (const i of bgIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Galactic astronomy valid — ${bgCat.BG_STATS.structure} galactic structures, ${bgCat.BG_STATS.dynamics} dynamical phenomena · ${bgCat.BG_STATS.newEntities} new entities, ${bgCat.BG_STATS.relations} relations (reused Milky-Way/Sgr-A*/Local-Group/Magellanic/Andromeda/dark-matter/Gaia/ISM; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

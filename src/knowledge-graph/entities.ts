@@ -60,6 +60,7 @@ import { entities as spacePolicyCatalog } from "@/knowledge-graph/data/space-pol
 import { entities as discoveryHistoryCatalog } from "@/knowledge-graph/data/discovery-history-catalog";
 import { entities as celestialMechanicsCatalog } from "@/knowledge-graph/data/celestial-mechanics-catalog";
 import { entities as stellarAstrophysicsCatalog } from "@/knowledge-graph/data/stellar-astrophysics-catalog";
+import { entities as galacticAstronomyCatalog } from "@/knowledge-graph/data/galactic-astronomy-catalog";
 
 /**
  * Knowledge-graph entities.
@@ -327,4 +328,5 @@ export const entities: GraphEntity[] = [
   ...discoveryHistoryCatalog,
   ...celestialMechanicsCatalog,
   ...stellarAstrophysicsCatalog,
+  ...galacticAstronomyCatalog,
 ];

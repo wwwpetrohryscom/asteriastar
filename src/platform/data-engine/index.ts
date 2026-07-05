@@ -74,6 +74,7 @@ import { spacePolicyEngine } from "@/platform/data-engine/space-policy-engine";
 import { discoveryHistoryEngine } from "@/platform/data-engine/discovery-history-engine";
 import { celestialMechanicsEngine } from "@/platform/data-engine/celestial-mechanics-engine";
 import { stellarAstrophysicsEngine } from "@/platform/data-engine/stellar-astrophysics-engine";
+import { galacticAstronomyEngine } from "@/platform/data-engine/galactic-astronomy-engine";
 import { planetaryGeologyEngine } from "@/platform/data-engine/planetary-geology-engine";
 import { validationEngine } from "@/platform/data-engine/validation-engine";
 import { contributionsEngine } from "@/platform/contributions";
@@ -143,6 +144,7 @@ export const engine = {
   discoveryHistory: discoveryHistoryEngine,
   celestialMechanics: celestialMechanicsEngine,
   stellarAstrophysics: stellarAstrophysicsEngine,
+  galacticAstronomy: galacticAstronomyEngine,
   contributions: contributionsEngine,
   validation: validationEngine,
 } as const;
@@ -154,7 +156,7 @@ export const ENGINE_MODULES = Object.keys(engine) as (keyof typeof engine)[];
 export { entityEngine, relationshipEngine, traversalEngine, queryEngine };
 export { recommendationEngine, timelineEngine, comparisonEngine, learningEngine };
 export { discoveryEngine, metadataEngine, sourceEngine, citationEngine };
-export { datasetEngine, authorityEngine, localizationEngine, starEngine, solarEngine, deepSkyEngine, explorationEngine, humanSpaceflightEngine, observatoryEngine, exoplanetEngine, historyEngine, cosmologyEngine, liveSkyEngine, imagesEngine, launchVehicleEngine, constellationEngine, satelliteEngine, asteroidEngine, cometEngine, meteoriteEngine, interstellarEngine, smallBodyMissionsEngine, deepSpaceCommunicationsEngine, spaceEnvironmentEngine, missionOperationsEngine, spacecraftSystemsEngine, instrumentsEngine, planetaryGeologyEngine, institutionsEngine, spaceflightHistoryEngine, spaceMedicineEngine, spaceInfrastructureEngine, futureMissionsEngine, astronomyMethodsEngine, timeDomainEngine, galaxiesEngine, astrobiologyEngine, planetaryDefenseEngine, dataArchivesEngine, observatoryFrontierEngine, distanceLadderEngine, heliophysicsEngine, astroMlEngine, citizenAstronomyEngine, multiMessengerEngine, comparativePlanetologyEngine, astrochemistryEngine, spacePolicyEngine, discoveryHistoryEngine, celestialMechanicsEngine, stellarAstrophysicsEngine, contributionsEngine, validationEngine };
+export { datasetEngine, authorityEngine, localizationEngine, starEngine, solarEngine, deepSkyEngine, explorationEngine, humanSpaceflightEngine, observatoryEngine, exoplanetEngine, historyEngine, cosmologyEngine, liveSkyEngine, imagesEngine, launchVehicleEngine, constellationEngine, satelliteEngine, asteroidEngine, cometEngine, meteoriteEngine, interstellarEngine, smallBodyMissionsEngine, deepSpaceCommunicationsEngine, spaceEnvironmentEngine, missionOperationsEngine, spacecraftSystemsEngine, instrumentsEngine, planetaryGeologyEngine, institutionsEngine, spaceflightHistoryEngine, spaceMedicineEngine, spaceInfrastructureEngine, futureMissionsEngine, astronomyMethodsEngine, timeDomainEngine, galaxiesEngine, astrobiologyEngine, planetaryDefenseEngine, dataArchivesEngine, observatoryFrontierEngine, distanceLadderEngine, heliophysicsEngine, astroMlEngine, citizenAstronomyEngine, multiMessengerEngine, comparativePlanetologyEngine, astrochemistryEngine, spacePolicyEngine, discoveryHistoryEngine, celestialMechanicsEngine, stellarAstrophysicsEngine, galacticAstronomyEngine, contributionsEngine, validationEngine };
 export type { ResolvedLaunchVehicle } from "@/platform/data-engine/launch-vehicle-engine";
 export type { ResolvedConstellation } from "@/platform/data-engine/constellation-engine";
 export type { ResolvedSatellite, ResolvedConstellationSat, ResolvedOperator, ResolvedOrbit, ResolvedNetwork, ResolvedProgram } from "@/platform/data-engine/satellite-engine";
@@ -192,6 +194,7 @@ export type { ResolvedPolicy } from "@/platform/data-engine/space-policy-engine"
 export type { ResolvedDiscoveryHistory } from "@/platform/data-engine/discovery-history-engine";
 export type { ResolvedMechanics } from "@/platform/data-engine/celestial-mechanics-engine";
 export type { ResolvedStellarPhysics } from "@/platform/data-engine/stellar-astrophysics-engine";
+export type { ResolvedGalacticAstronomy } from "@/platform/data-engine/galactic-astronomy-engine";
 export type { ResolvedStar } from "@/platform/data-engine/star-engine";
 export type { ResolvedBody } from "@/platform/data-engine/solar-engine";
 export type { ResolvedDeepSky } from "@/platform/data-engine/deepsky-engine";

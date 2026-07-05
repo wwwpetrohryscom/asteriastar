@@ -442,6 +442,14 @@ export function GET(): Response {
   lines.push(`- The lives of stars: ${absoluteUrl("/stellar-astrophysics/discover/stellar-lives")} · Forging the elements: ${absoluteUrl("/stellar-astrophysics/discover/nucleosynthesis")} · The physics of stars: ${absoluteUrl("/stellar-astrophysics/discover/stellar-physics")}`);
   lines.push("");
 
+  lines.push("## Galactic Astronomy & the Milky Way Encyclopedia");
+  lines.push(
+    `The anatomy and life of our Galaxy (engine.galacticAstronomy). The structure of the Milky Way: the thin and thick discs, the bulge and the bar, the stellar halo, the spiral arms, the galactic warp, the Galactic Centre and its central molecular zone, the hot galactic corona, and the solar neighbourhood. The dynamics, archaeology, and fate: galactic rotation and the flat rotation curve (evidence for dark matter), stellar streams, galactic archaeology with Gaia, radial migration, the galactic magnetic field, the proposed galactic habitable zone, satellite galaxies and accretion, the galactic fountain, and the predicted Milky Way–Andromeda collision. Curated from NASA, ESO, and the galactic-astronomy literature; only well-established astronomy is stated. REUSES the Milky Way galaxy, Sagittarius A*, the Local Group, the Magellanic Clouds, Andromeda and Triangulum, the dark-matter halo and dark-matter concept, the galaxy-rotation-curve method, the galaxy-merger and galaxy-evolution processes, Gaia and its DR3 survey, the interstellar medium, and the stellar-populations concept; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Galactic Astronomy & the Milky Way](${absoluteUrl("/galactic-astronomy")})`);
+  lines.push(`- The anatomy of the Galaxy: ${absoluteUrl("/galactic-astronomy/discover/galactic-structure")} · Dynamics, archaeology & fate: ${absoluteUrl("/galactic-astronomy/discover/galactic-dynamics")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

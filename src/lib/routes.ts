@@ -83,6 +83,7 @@ export const ROUTES = {
   discoveryHistory: "/discovery-history",
   celestialMechanics: "/celestial-mechanics",
   stellarAstrophysics: "/stellar-astrophysics",
+  galacticAstronomy: "/galactic-astronomy",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -628,4 +629,10 @@ export function stellarAstrophysicsPath(slug: string): string {
 }
 export function stellarAstrophysicsDiscoveryPath(slug: string): string {
   return `/stellar-astrophysics/discover/${slug}`;
+}
+export function galacticAstronomyPath(slug: string): string {
+  return `/galactic-astronomy/${slug}`;
+}
+export function galacticAstronomyDiscoveryPath(slug: string): string {
+  return `/galactic-astronomy/discover/${slug}`;
 }
