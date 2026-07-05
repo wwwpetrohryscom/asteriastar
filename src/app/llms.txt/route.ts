@@ -314,6 +314,14 @@ export function GET(): Response {
   lines.push(`- Explosive: ${absoluteUrl("/time-domain/discover/explosive-transients")} · Relativistic & mergers: ${absoluteUrl("/time-domain/discover/relativistic-and-mergers")} · Alerts: ${absoluteUrl("/time-domain/discover/alert-infrastructure")}`);
   lines.push("");
 
+  lines.push("## Galaxies, AGN & the Extragalactic Universe Encyclopedia");
+  lines.push(
+    `${engine.galaxies.morphologyCount} galaxy morphologies, ${engine.galaxies.agnTypes().length} AGN types, ${engine.galaxies.processes().length} galactic processes, and ${engine.galaxies.structures().length} named cosmic structures (engine.galaxies) — the extragalactic universe: galaxy morphology (spiral, barred, elliptical, lenticular, irregular, ring, dwarf, peculiar); active galactic nuclei (Seyfert, LINER, radio galaxy, BL Lac, and the unified model); galaxy evolution (mergers, interactions, starbursts, black-hole feedback, quenching); and large-scale structure (the Local Group, the Virgo and Coma clusters, Laniakea, the Sloan Great Wall, the Boötes Void). Curated from NASA and ESA. REUSES the platform's galaxies (Andromeda, M87, M82, Centaurus A, the Antennae, the Magellanic Clouds), the astrophysical object classes (AGN, quasar, blazar, galaxy cluster, supercluster, cosmic filament, void, dark-matter halo, supermassive black hole), and the cosmology concepts (the cosmic web, large-scale structure, dark matter); nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Galaxies, AGN & the Extragalactic Universe](${absoluteUrl("/galaxies")})`);
+  lines.push(`- Morphology: ${absoluteUrl("/galaxies/discover/galaxy-morphology")} · AGN: ${absoluteUrl("/galaxies/discover/active-galactic-nuclei")} · Structures: ${absoluteUrl("/galaxies/discover/cosmic-structures")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

@@ -214,6 +214,13 @@ export const ENTITY_TYPES = [
   "transient_class",
   "alert_system",
   "observation_stage",
+  // Galaxies, AGN & the Extragalactic Universe (Program AQ). Reuses the galaxies, the
+  // astrophysical object classes (AGN, quasar, blazar, clusters, voids), and the cosmology
+  // concepts; these are the new extragalactic types.
+  "galaxy_morphology",
+  "agn_type",
+  "galactic_process",
+  "cosmic_structure",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1133,4 +1140,8 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   transient_class: "Transient class",
   alert_system: "Alert system",
   observation_stage: "Observation stage",
+  galaxy_morphology: "Galaxy morphology",
+  agn_type: "AGN type",
+  galactic_process: "Galactic process",
+  cosmic_structure: "Cosmic structure",
 };

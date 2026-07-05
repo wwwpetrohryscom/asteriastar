@@ -107,6 +107,8 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "astronomy-methods", title: "Astronomy Methods & Techniques", description: "The measurement and observation techniques of astronomy — parallax, spectroscopy, standard candles, gravitational lensing, and more.", entityTypes: ["astronomy_method"], sources: ["nasa", "esa"] },
   { slug: "transient-classes", title: "Transient & Time-Domain Classes", description: "The classes of transient phenomenon — supernovae, gamma-ray bursts, kilonovae, fast radio bursts, tidal disruption events, and more.", entityTypes: ["transient_class"], sources: ["nasa", "esa"] },
   { slug: "alert-infrastructure", title: "Transient Alert Infrastructure", description: "The alert systems and observation-workflow stages that turn a transient discovery into science — GCN, VOEvent, TNS, ATel, and the Rubin stream.", entityTypes: ["alert_system", "observation_stage"], sources: ["nasa"] },
+  { slug: "galaxy-morphology-and-agn", title: "Galaxy Morphology & AGN", description: "The forms of galaxies and the types of active galactic nucleus — spiral, elliptical, Seyfert, radio galaxy, blazar, and more.", entityTypes: ["galaxy_morphology", "agn_type"], sources: ["nasa", "esa"] },
+  { slug: "extragalactic-structures", title: "Galactic Processes & Cosmic Structures", description: "The processes that shape galaxies and the large-scale structures they build — mergers, starbursts, feedback, the Local Group, clusters, superclusters, and voids.", entityTypes: ["galactic_process", "cosmic_structure"], sources: ["nasa"] },
 ];
 
 export interface Dataset extends DatasetDef {

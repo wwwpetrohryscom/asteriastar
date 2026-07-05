@@ -1475,6 +1475,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["transient_class:type-ia-supernova", "transient_class:kilonova", "transient_class:fast-radio-burst", "alert_system:rubin-alert-stream"],
     next: ["understanding-how-astronomy-works", "understanding-the-universe"],
   },
+  {
+    slug: "understanding-galaxies",
+    title: "Understanding Galaxies",
+    description: "The extragalactic universe — the forms of galaxies, the active nuclei at their hearts, how they evolve, and the great structures they build. Built on real galaxies and object classes; nothing is fabricated.",
+    accent: "halo",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The extragalactic universe", href: "/galaxies", blurb: "Hundreds of billions of galaxies, strung along the cosmic web." },
+          { title: "Galaxy morphology", href: "/galaxies/discover/galaxy-morphology", blurb: "The forms of galaxies — the Hubble sequence and beyond." },
+          { title: "Spiral galaxies", href: "/galaxies/spiral", blurb: "Rotating disks of ongoing star formation." },
+          { title: "Elliptical galaxies", href: "/galaxies/elliptical", blurb: "Old stars, built by mergers." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Active galactic nuclei", href: "/galaxies/discover/active-galactic-nuclei", blurb: "The energetic hearts of galaxies." },
+          { title: "Radio galaxies", href: "/galaxies/radio-galaxy", blurb: "Jets and lobes larger than the galaxy itself." },
+          { title: "How galaxies evolve", href: "/galaxies/discover/galaxy-evolution", blurb: "Mergers, starbursts, and quenching." },
+          { title: "Galaxy mergers", href: "/galaxies/galaxy-merger", blurb: "Two spirals can merge into one elliptical." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Cosmic structures", href: "/galaxies/discover/cosmic-structures", blurb: "Groups, clusters, superclusters, and voids." },
+          { title: "The Local Group", href: "/galaxies/local-group", blurb: "Our home group of galaxies." },
+          { title: "Laniakea", href: "/galaxies/laniakea-supercluster", blurb: "Our home supercluster, defined by galaxy flows." },
+          { title: "Black-hole feedback", href: "/galaxies/black-hole-feedback", blurb: "A black hole shaping its whole galaxy." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["galaxy_morphology:spiral", "agn_type:radio-galaxy", "galactic_process:galaxy-merger", "cosmic_structure:local-group"],
+    next: ["understanding-the-dynamic-universe", "understanding-the-universe"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

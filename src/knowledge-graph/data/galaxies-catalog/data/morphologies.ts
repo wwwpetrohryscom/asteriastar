@@ -1,0 +1,17 @@
+import type { ExtragalacticRecord } from "@/knowledge-graph/data/galaxies-catalog/types";
+
+/** Classes of galaxy morphology — the Hubble sequence and beyond. Each is associated_with the
+ *  REUSED galaxies that exemplify it. */
+const mo = (r: Omit<ExtragalacticRecord, "kind" | "id" | "sources"> & { slug: string; sources?: ExtragalacticRecord["sources"] }): ExtragalacticRecord => ({ sources: ["nasa"], ...r, kind: "morphology", id: `galaxy_morphology:${r.slug}` });
+const G = (g: string) => `galaxy:${g}`;
+
+export const morphologies: ExtragalacticRecord[] = [
+  mo({ slug: "spiral", name: "Spiral Galaxy", hubbleType: "Sa–Sc", relatedKeys: [G("andromeda-galaxy"), G("whirlpool-galaxy"), G("triangulum-galaxy")], description: "A flattened, rotating disk of stars, gas, and dust wound into spiral arms, with a central bulge. The arms are where new stars form, tracing waves of star formation sweeping through the disk.", sources: ["nasa"], highlights: ["Disks of ongoing star formation"] }),
+  mo({ slug: "barred-spiral", name: "Barred Spiral Galaxy", hubbleType: "SBa–SBc", relatedKeys: [G("milky-way")], description: "A spiral galaxy whose arms wind out from the ends of a straight bar of stars crossing the centre. The bar channels gas inward, feeding star formation and the central black hole. The Milky Way is one.", sources: ["nasa"], highlights: ["The Milky Way is a barred spiral"] }),
+  mo({ slug: "elliptical", name: "Elliptical Galaxy", hubbleType: "E0–E7", relatedKeys: [G("messier-87")], description: "A smooth, featureless ellipsoid of mostly old stars, with little gas and little ongoing star formation. The largest ellipticals sit at the centres of galaxy clusters and are thought to be built by mergers.", sources: ["nasa"], highlights: ["Old stars, built by mergers"] }),
+  mo({ slug: "lenticular", name: "Lenticular Galaxy", hubbleType: "S0", description: "A disk galaxy with a prominent bulge but no spiral arms — a transitional form between spirals and ellipticals, with an old stellar population and little cold gas left to form stars.", sources: ["nasa"] }),
+  mo({ slug: "irregular", name: "Irregular Galaxy", hubbleType: "Irr", relatedKeys: [G("large-magellanic-cloud"), G("messier-82")], description: "A galaxy with no regular spiral or elliptical structure, often small and gas-rich with vigorous star formation. Many are shaped by the gravitational pull of larger neighbours, like the Magellanic Clouds beside the Milky Way.", sources: ["nasa"] }),
+  mo({ slug: "ring", name: "Ring Galaxy", description: "A galaxy with a bright ring of stars and gas around a comparatively empty centre, usually formed when a smaller galaxy plunges through the disk of a larger one, sending a wave of star formation outward.", sources: ["nasa"] }),
+  mo({ slug: "dwarf", name: "Dwarf Galaxy", relatedKeys: [G("small-magellanic-cloud")], description: "A small galaxy with far fewer stars than a giant like the Milky Way. Dwarfs are by far the most numerous galaxies, and many orbit larger ones as satellites; they are dominated by dark matter.", sources: ["nasa"], highlights: ["The most numerous galaxies of all"] }),
+  mo({ slug: "peculiar", name: "Peculiar & Interacting Galaxy", relatedKeys: [G("ngc-4038")], description: "A galaxy distorted from any regular form — by a close encounter, an ongoing merger, or an active nucleus. The tidal tails and bridges of interacting pairs, like the Antennae, are the clearest signs of galaxies in collision.", sources: ["nasa"] }),
+];
