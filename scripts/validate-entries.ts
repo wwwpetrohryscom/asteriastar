@@ -776,6 +776,22 @@ async function main() {
     `✓ Celestial mechanics valid — ${beCat.BE_STATS.dynamics} orbital-mechanics concepts, ${beCat.BE_STATS.frames} reference frames, ${beCat.BE_STATS.ephemerides} ephemeris systems, ${beCat.BE_STATS.timekeeping} time standards · ${beCat.BE_STATS.newEntities} new entities, ${beCat.BE_STATS.relations} relations (reused gravitation/Kepler/JPL/planets/resonances/TAI-UTC/precession/JWST; no fabricated data)`,
   );
 
+  const bfCat = await import("../src/knowledge-graph/data/stellar-astrophysics-catalog");
+  const bfIssues = bfCat.validateStellarAstrophysics();
+  const { getEntityById: getBfEnt } = await import("../src/knowledge-graph");
+  for (const r of bfCat.relations) {
+    if (!getBfEnt(r.from)) bfIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBfEnt(r.to)) bfIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (bfIssues.length > 0) {
+    console.error(`\n✗ ${bfIssues.length} stellar-astrophysics issue(s):`);
+    for (const i of bfIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Stellar astrophysics valid — ${bfCat.BF_STATS.processes} stellar processes, ${bfCat.BF_STATS.nucleosynthesis} nucleosynthesis pathways, ${bfCat.BF_STATS.concepts} physics concepts · ${bfCat.BF_STATS.newEntities} new entities, ${bfCat.BF_STATS.relations} relations (reused end-states/supernovae/kilonova/spectral-classification/asteroseismology/BBN/clusters; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

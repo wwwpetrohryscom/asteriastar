@@ -324,6 +324,9 @@ export const ENTITY_TYPES = [
   "orbital_mechanics_concept",
   "reference_frame",
   "ephemeris_system",
+  "stellar_process",
+  "nucleosynthesis_process",
+  "stellar_physics_concept",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1292,4 +1295,7 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   orbital_mechanics_concept: "Orbital mechanics concept",
   reference_frame: "Reference frame",
   ephemeris_system: "Ephemeris system",
+  stellar_process: "Stellar process",
+  nucleosynthesis_process: "Nucleosynthesis process",
+  stellar_physics_concept: "Stellar physics concept",
 };
