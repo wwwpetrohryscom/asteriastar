@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Celestial Mechanics & Timekeeping Encyclopedia (Program BE)**
+
+- [Celestial Mechanics & Timekeeping](docs/CELESTIAL_MECHANICS.md) — the exacting mathematics beneath every orbit, eclipse and star chart: the orbital-mechanics concepts (the restricted three-body problem, N-body dynamics, Lagrange points, the Hill sphere, the Roche limit, orbital perturbations, mean-motion & secular resonances, tidal evolution, spin-orbit coupling, orbital elements), the reference frames & epochs (the ICRS, BCRS, GCRS, the ecliptic, J2000, B1950), the ephemeris systems (the JPL Development Ephemeris, the SPICE toolkit, JPL Horizons), and the time standards (Terrestrial Time, Barycentric Dynamical Time, UT1, the leap second, sidereal time, apparent solar time). Reuses universal gravitation, Kepler's laws, Kepler & Newton, the JPL organization, the Jupiter orbital resonances, the TAI & UTC standards, the precession discovery, the planets & JWST; nothing duplicated or fabricated
+
 **History & Philosophy of Astronomical Discovery Encyclopedia (Program BD)**
 
 - [History & Philosophy of Discovery](docs/DISCOVERY_HISTORY.md) — how astronomy became modern science, and how it knows what it knows: the thematic histories of discovery (the Copernican Revolution and the histories of the telescope, spectroscopy, radio astronomy, cosmology, exoplanets, gravitational waves & black holes), the methodologies of discovery (the scientific method, paradigm shifts & revolutions, instrumentation-driven discovery, observational bias, theory & observation, Big Science, the data & AI revolution), and the philosophy of science (realism, falsifiability, evidence, measurement uncertainty, replication, open science). Reuses the platform's astronomers, the astronomy eras, the spectroscopy/GW/error-analysis methods, the transit method, the Hubble tension, Sagittarius A*, the radio band & the reproducibility practice; nothing duplicated or fabricated

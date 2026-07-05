@@ -1993,6 +1993,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["history_theme:the-copernican-revolution", "discovery_methodology:instrumentation-driven-discovery", "philosophy_of_science:falsifiability", "history_theme:the-history-of-gravitational-waves"],
     next: ["understanding-machine-learning-in-astronomy", "the-solar-system"],
   },
+  {
+    slug: "understanding-celestial-mechanics",
+    title: "Understanding Celestial Mechanics & Timekeeping",
+    description: "The exacting mathematics beneath every predicted eclipse, spacecraft trajectory, and star chart — the laws of how bodies fall around one another, and the conventions that pin down where a thing is and when. Built on well-established mechanics and standards; only real constants are stated.",
+    accent: "halo",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Computing the moving sky", href: "/celestial-mechanics", blurb: "The mathematics beneath every orbit." },
+          { title: "Orbital mechanics", href: "/celestial-mechanics/discover/orbital-mechanics", blurb: "How bodies move under gravity." },
+          { title: "Kepler's laws", href: "/history/keplers-laws", blurb: "The three laws behind every orbit." },
+          { title: "Timekeeping", href: "/celestial-mechanics/discover/timekeeping", blurb: "The scales of astronomical time." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Lagrange points", href: "/celestial-mechanics/lagrange-points", blurb: "The five gravitational parking spots — home to JWST." },
+          { title: "The Roche limit", href: "/celestial-mechanics/roche-limit", blurb: "Where tides tear a moon into rings." },
+          { title: "Mean-motion resonance", href: "/celestial-mechanics/mean-motion-resonance", blurb: "The Kirkwood gaps and locked moons." },
+          { title: "The leap second", href: "/celestial-mechanics/leap-second", blurb: "Keeping the clock in step with the spinning Earth." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Reference frames & epochs", href: "/celestial-mechanics/discover/reference-frames", blurb: "The coordinate systems positions are measured against." },
+          { title: "The ICRS", href: "/celestial-mechanics/icrs", blurb: "The sky's frame, fixed to distant quasars." },
+          { title: "Ephemerides", href: "/celestial-mechanics/discover/ephemerides", blurb: "The positions of Solar System bodies." },
+          { title: "The JPL Development Ephemeris", href: "/celestial-mechanics/jpl-development-ephemeris", blurb: "The standard positions of the planets and Moon." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["astronomical_theory:keplers-laws", "orbital_mechanics_concept:lagrange-points", "reference_frame:icrs", "ephemeris_system:jpl-development-ephemeris"],
+    next: ["the-solar-system", "understanding-the-future-of-exploration"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
