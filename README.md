@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Multi-Messenger & Gravitational-Wave Operations Encyclopedia (Program AZ)**
+
+- [Multi-Messenger Astronomy](docs/MULTI_MESSENGER.md) — the knowledge layer of the new astronomy: the gravitational-wave detectors new to the graph (the operating GEO600 testbed, the proposed next-generation Einstein Telescope & Cosmic Explorer, and the space missions DECIGO, Taiji, TianQin), the detection methods (ground & space laser interferometry, pulsar timing arrays), the compact-binary-merger source classes (binary black hole, binary neutron star, black hole–neutron star), the alert systems (LVK public alerts, SCiMMA), the multi-messenger channels (GW with light, neutrinos, gamma rays, radio, optical), the follow-up workflow, and the data products (skymaps, waveforms, parameter estimation, the GWTC catalog). Reuses the platform's LIGO/Virgo/KAGRA detectors & the LISA concept, the GW/multi-messenger/neutrino methods, the transient classes, the alert systems, the standard-siren indicator, and the bands; nothing duplicated or fabricated
+
 **Citizen Science, Amateur Astronomy & Public Observing Encyclopedia (Program AY)**
 
 - [Citizen & Amateur Astronomy](docs/CITIZEN_ASTRONOMY.md) — the public participation layer of astronomy: the citizen-science projects (Zooniverse, Galaxy Zoo, Planet Hunters, Globe at Night, Aurorasaurus, Stardust@home), the amateur observing activities (backyard, variable-star, asteroid & comet observing, occultation timing, meteor observing), the equipment (binoculars, Dobsonian, equatorial mount, star tracker, camera, filters), the public outreach (star parties, public observatories, dark-sky parks, education), and the amateur organisations (AAVSO, IMO, ALPO). Reuses the platform's aurora, the occultation & photometry methods, the meteor showers & constellations, the eruptive-variable-star class, the Stardust mission, the transit method, the galaxy-morphology-classification application, the Rubin Observatory, and the MAST archive; nothing duplicated or fabricated
