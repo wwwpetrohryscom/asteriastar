@@ -38,6 +38,7 @@ import { GX_DISCOVERIES } from "@/app/galaxies/discovery";
 import { AB_DISCOVERIES } from "@/app/astrobiology/discovery";
 import { PD_DISCOVERIES } from "@/app/planetary-defense/discovery";
 import { AT_DISCOVERIES } from "@/app/data-archives/discovery";
+import { AU_DISCOVERIES } from "@/app/observatory-frontier/discovery";
 import { HSF_DISCOVERIES } from "@/app/human-spaceflight/discovery";
 import { OBS_DISCOVERIES } from "@/app/observatories/discovery";
 import { EXO_DISCOVERIES } from "@/app/exoplanets/discovery";
@@ -164,6 +165,8 @@ import {
   planetaryDefenseDiscoveryPath,
   dataArchivesPath,
   dataArchivesDiscoveryPath,
+  observatoryFrontierPath,
+  observatoryFrontierDiscoveryPath,
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
@@ -493,6 +496,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...AT_DISCOVERIES.map((d) => ({ url: absoluteUrl(dataArchivesDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const observatoryFrontierRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.observatoryFrontier), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.observatoryFrontier.all().map((r) => ({ url: absoluteUrl(observatoryFrontierPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...AU_DISCOVERIES.map((d) => ({ url: absoluteUrl(observatoryFrontierDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const deepSkyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
     ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -555,6 +564,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...astrobiologyRoutes,
     ...planetaryDefenseRoutes,
     ...dataArchivesRoutes,
+    ...observatoryFrontierRoutes,
     ...hsfRoutes,
     ...obsRoutes,
     ...exoRoutes,

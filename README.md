@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Ground-Based Observatories & Instrumentation Frontier Encyclopedia (Program AU)**
+
+- [Observatory Frontier](docs/OBSERVATORY_FRONTIER.md) — the modern frontier of professional ground-based astronomy: the next-generation facilities still rising (the Giant Magellan Telescope, the ngVLA, and the Cherenkov Telescope Array), the adaptive-optics chain (laser guide stars, wavefront sensors, deformable mirrors), the spectrographs, coronagraphs and starshades, the detectors from the CCD to superconducting MKIDs and bolometers, the interferometry (radio, optical, VLBI, aperture synthesis), and the ground observing techniques (lucky imaging, speckle imaging, stacking, fringe tracking). Reuses the platform's ground observatories, the adaptive-optics/interferometry/spectroscopy methods, the SPHERE, MUSE & HIRES instruments, and the wavelength bands; facilities under construction stated as such; nothing duplicated or fabricated
+
 **Space Data Archives & Open Science Infrastructure Encyclopedia (Program AT)**
 
 - [Space Data Archives](docs/DATA_ARCHIVES.md) — where astronomy's data lives and how it is shared: the great science archives (MAST, the ESA archives, IRSA, HEASARC, NED, and the Strasbourg CDS with SIMBAD and VizieR, plus ESO and ALMA), the data standards astronomy is built on (FITS, VOTable, ASDF), the Virtual Observatory protocols that make the world's archives searchable as one (TAP, Cone Search, SIA, SSA), and the open-science practices — data pipelines and calibration, cross-matching, the ADS literature service, persistent identifiers, and FAIR reproducibility. Reuses the platform's operating organisations, the telescopes and surveys whose data the archives hold, the calibration method, the Harvard classification, and VOEvent; nothing duplicated or fabricated

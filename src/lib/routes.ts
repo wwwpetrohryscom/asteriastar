@@ -71,6 +71,7 @@ export const ROUTES = {
   astrobiology: "/astrobiology",
   planetaryDefense: "/planetary-defense",
   dataArchives: "/data-archives",
+  observatoryFrontier: "/observatory-frontier",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -544,4 +545,10 @@ export function dataArchivesPath(slug: string): string {
 }
 export function dataArchivesDiscoveryPath(slug: string): string {
   return `/data-archives/discover/${slug}`;
+}
+export function observatoryFrontierPath(slug: string): string {
+  return `/observatory-frontier/${slug}`;
+}
+export function observatoryFrontierDiscoveryPath(slug: string): string {
+  return `/observatory-frontier/discover/${slug}`;
 }
