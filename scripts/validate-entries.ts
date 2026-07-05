@@ -584,6 +584,22 @@ async function main() {
     `✓ Planetary defense valid — ${pdCat.PD_STATS.stages}-stage NEO pipeline, ${pdCat.PD_STATS.scales} risk scales, ${pdCat.PD_STATS.methods} deflection methods · ${pdCat.PD_STATS.newEntities} new entities, ${pdCat.PD_STATS.relations} relations (reused surveys/MPC/CNEOS/DART/Hera/NEOs; no fabricated data)`,
   );
 
+  const atCat = await import("../src/knowledge-graph/data/data-archives-catalog");
+  const atIssues = atCat.validateDataArchives();
+  const { getEntityById: getAtEnt } = await import("../src/knowledge-graph");
+  for (const r of atCat.relations) {
+    if (!getAtEnt(r.from)) atIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getAtEnt(r.to)) atIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (atIssues.length > 0) {
+    console.error(`\n✗ ${atIssues.length} data-archives issue(s):`);
+    for (const i of atIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Data archives valid — ${atCat.AT_STATS.archives} archives, ${atCat.AT_STATS.standards} data standards, the VO framework + ${atCat.AT_STATS.protocols} VO access protocols, ${atCat.AT_STATS.practices} open-science practices · ${atCat.AT_STATS.newEntities} new entities, ${atCat.AT_STATS.relations} relations (reused orgs/telescopes/surveys/calibration/Harvard/VOEvent; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

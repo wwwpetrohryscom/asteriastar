@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Space Data Archives & Open Science Infrastructure Encyclopedia (Program AT)**
+
+- [Space Data Archives](docs/DATA_ARCHIVES.md) — where astronomy's data lives and how it is shared: the great science archives (MAST, the ESA archives, IRSA, HEASARC, NED, and the Strasbourg CDS with SIMBAD and VizieR, plus ESO and ALMA), the data standards astronomy is built on (FITS, VOTable, ASDF), the Virtual Observatory protocols that make the world's archives searchable as one (TAP, Cone Search, SIA, SSA), and the open-science practices — data pipelines and calibration, cross-matching, the ADS literature service, persistent identifiers, and FAIR reproducibility. Reuses the platform's operating organisations, the telescopes and surveys whose data the archives hold, the calibration method, the Harvard classification, and VOEvent; nothing duplicated or fabricated
+
 **Planetary Defense & NEO Operations Encyclopedia (Program AS)**
 
 - [Planetary Defense](docs/PLANETARY_DEFENSE.md) — the operational system that finds, tracks, assesses, and could deflect a hazardous near-Earth object: the NEO pipeline (discovery → orbit determination → characterization → impact monitoring → risk assessment & communication → decision → deflection), the Torino and Palermo risk scales, and the deflection methods from the DART-demonstrated kinetic impactor to theoretical nuclear concepts. Reuses the platform's survey telescopes, the Minor Planet Center & CNEOS, the DART & Hera missions, and the near-Earth objects; deflection maturity stated honestly; nothing duplicated or fabricated
