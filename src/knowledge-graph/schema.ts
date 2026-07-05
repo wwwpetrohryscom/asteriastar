@@ -243,6 +243,14 @@ export const ENTITY_TYPES = [
   "vo_framework",
   "vo_protocol",
   "open_science_practice",
+  // Ground-based observatories & instrumentation frontier (Program AU) — REUSES the ground
+  // observatories, the adaptive-optics/interferometry/spectroscopy methods, the exemplar
+  // instruments, and the wavelength bands; the three next-generation facilities (GMT, ngVLA, CTA)
+  // reuse the telescope/observatory types, and these are the new instrumentation/technique types.
+  "instrument_technique",
+  "detector_technology",
+  "interferometry_technique",
+  "observing_technique",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1179,4 +1187,8 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   vo_framework: "Virtual Observatory framework",
   vo_protocol: "Virtual Observatory protocol",
   open_science_practice: "Open-science practice",
+  instrument_technique: "Instrumentation technique",
+  detector_technology: "Detector technology",
+  interferometry_technique: "Interferometry technique",
+  observing_technique: "Observing technique",
 };

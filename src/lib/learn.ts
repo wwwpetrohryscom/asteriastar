@@ -1623,6 +1623,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["data_archive:mast", "data_standard:fits", "vo_framework:the-virtual-observatory", "open_science_practice:reproducibility-and-fair"],
     next: ["understanding-planetary-defense", "the-solar-system"],
   },
+  {
+    slug: "understanding-the-observatory-frontier",
+    title: "Understanding the Observatory Frontier",
+    description: "How the largest telescopes ever built actually see — the giant facilities of the coming decade, the adaptive optics that erase the atmosphere, the detectors that count single photons, and the interferometers that reach the sharpest vision in astronomy. Built on real facilities and techniques; facilities under construction are stated as such.",
+    accent: "comet",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The frontier of ground astronomy", href: "/observatory-frontier", blurb: "The largest eyes humanity has ever built." },
+          { title: "Next-generation facilities", href: "/observatory-frontier/discover/next-generation-facilities", blurb: "GMT, ngVLA, and the Cherenkov Telescope Array." },
+          { title: "The Giant Magellan Telescope", href: "/observatory-frontier/giant-magellan-telescope", blurb: "Seven 8.4-metre mirrors forming one giant." },
+          { title: "Instrumentation", href: "/observatory-frontier/discover/instrumentation", blurb: "The optical systems telescopes are built around." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Laser guide stars", href: "/observatory-frontier/laser-guide-star", blurb: "An artificial star, projected wherever the telescope points." },
+          { title: "Deformable mirrors", href: "/observatory-frontier/deformable-mirror", blurb: "Reshaping a mirror thousands of times a second." },
+          { title: "The echelle spectrograph", href: "/observatory-frontier/echelle-spectrograph", blurb: "Very high resolution on a single detector." },
+          { title: "Detectors", href: "/observatory-frontier/discover/detectors", blurb: "From the CCD to superconducting MKIDs." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Interferometry", href: "/observatory-frontier/discover/interferometry", blurb: "Many apertures acting as one." },
+          { title: "Very Long Baseline Interferometry", href: "/observatory-frontier/very-long-baseline-interferometry", blurb: "Baselines the size of the Earth." },
+          { title: "Aperture synthesis", href: "/observatory-frontier/aperture-synthesis", blurb: "Building an image from the Earth's rotation." },
+          { title: "Fringe tracking", href: "/observatory-frontier/fringe-tracking", blurb: "Holding an interferometer's fringes steady." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["telescope:giant-magellan-telescope", "instrument_technique:laser-guide-star", "interferometry_technique:very-long-baseline-interferometry", "detector_technology:ccd"],
+    next: ["understanding-data-archives", "the-solar-system"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

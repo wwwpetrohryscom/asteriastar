@@ -80,6 +80,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Astrobiology, Biosignatures & the Search for Life", href: ROUTES.astrobiology, description: "Habitability, ocean worlds, biosignatures & false positives, technosignatures & SETI, planetary protection" },
             { name: "Planetary Defense & NEO Operations", href: ROUTES.planetaryDefense, description: "The NEO pipeline — discovery, tracking, impact risk (Torino/Palermo), DART & deflection methods" },
             { name: "Space Data Archives & Open Science", href: ROUTES.dataArchives, description: "Where the data lives — MAST, CDS, SIMBAD & VizieR, FITS, the Virtual Observatory & FAIR open science" },
+            { name: "Observatories & Instrumentation Frontier", href: ROUTES.observatoryFrontier, description: "The giant telescopes of the coming decade — GMT, ngVLA, CTA, adaptive optics, detectors, interferometry & VLBI" },
             { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Observatories", href: ROUTES.observatories, description: "Telescopes, surveys, bands" },
             { name: "Exoplanets", href: ROUTES.exoplanets, description: "Worlds beyond the Sun" },

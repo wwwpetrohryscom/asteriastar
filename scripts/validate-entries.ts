@@ -600,6 +600,22 @@ async function main() {
     `✓ Data archives valid — ${atCat.AT_STATS.archives} archives, ${atCat.AT_STATS.standards} data standards, the VO framework + ${atCat.AT_STATS.protocols} VO access protocols, ${atCat.AT_STATS.practices} open-science practices · ${atCat.AT_STATS.newEntities} new entities, ${atCat.AT_STATS.relations} relations (reused orgs/telescopes/surveys/calibration/Harvard/VOEvent; no fabricated data)`,
   );
 
+  const auCat = await import("../src/knowledge-graph/data/observatory-frontier-catalog");
+  const auIssues = auCat.validateObservatoryFrontier();
+  const { getEntityById: getAuEnt } = await import("../src/knowledge-graph");
+  for (const r of auCat.relations) {
+    if (!getAuEnt(r.from)) auIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getAuEnt(r.to)) auIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (auIssues.length > 0) {
+    console.error(`\n✗ ${auIssues.length} observatory-frontier issue(s):`);
+    for (const i of auIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Observatory frontier valid — ${auCat.AU_STATS.facilities} next-gen facilities, ${auCat.AU_STATS.instruments} instrumentation, ${auCat.AU_STATS.detectors} detectors, ${auCat.AU_STATS.interferometry} interferometry, ${auCat.AU_STATS.techniques} observing techniques · ${auCat.AU_STATS.newEntities} new entities, ${auCat.AU_STATS.relations} relations (reused observatories/AO/interferometry/spectroscopy/instruments/bands; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
