@@ -1808,6 +1808,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["citizen_science_project:galaxy-zoo", "amateur_activity:variable-star-observing", "organization:aavso", "observing_equipment:binoculars"],
     next: ["understanding-machine-learning-in-astronomy", "the-solar-system"],
   },
+  {
+    slug: "understanding-multi-messenger-astronomy",
+    title: "Understanding Multi-Messenger Astronomy",
+    description: "How the universe is now observed in gravitational waves, neutrinos, and light at once — the detectors that feel a merger a billion light-years away, the sources that ring spacetime, and the race from alert to counterpart. Built on real detectors and events; proposed detectors are stated as such.",
+    accent: "nebula",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The new astronomy", href: "/multi-messenger", blurb: "Hearing and seeing the same event at once." },
+          { title: "Source classes", href: "/multi-messenger/discover/source-classes", blurb: "The compact-binary mergers that ring spacetime." },
+          { title: "Binary neutron star mergers", href: "/multi-messenger/binary-neutron-star-merger", blurb: "Seen in gravitational waves and light — GW170817." },
+          { title: "Detection methods", href: "/multi-messenger/discover/detection-methods", blurb: "How gravitational waves are caught." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Laser interferometry", href: "/multi-messenger/laser-interferometry", blurb: "Measuring a change smaller than a proton's width." },
+          { title: "Pulsar timing arrays", href: "/multi-messenger/pulsar-timing-array", blurb: "A detector the size of the galaxy." },
+          { title: "Multi-messenger channels", href: "/multi-messenger/discover/multi-messenger", blurb: "Gravitational waves with light, neutrinos, and more." },
+          { title: "GW + light", href: "/multi-messenger/gravitational-waves-and-light", blurb: "The channel that founded the field." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Follow-up & data products", href: "/multi-messenger/discover/follow-up", blurb: "From an alert to a counterpart." },
+          { title: "Localization", href: "/multi-messenger/localization", blurb: "Turning three detectors into a position on the sky." },
+          { title: "Parameter estimation", href: "/multi-messenger/parameter-estimation", blurb: "From a chirp to masses, spins, and distance." },
+          { title: "The GWTC catalog", href: "/multi-messenger/gravitational-wave-transient-catalog", blurb: "The open census of every confident detection." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["transient_class:binary-neutron-star-merger", "gw_detection_method:laser-interferometry", "gw_data_product:parameter-estimation", "mm_channel:gravitational-waves-and-light"],
+    next: ["understanding-the-observatory-frontier", "understanding-the-dynamic-universe"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

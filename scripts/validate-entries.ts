@@ -680,6 +680,22 @@ async function main() {
     `✓ Citizen astronomy valid — ${ayCat.AY_STATS.projects} citizen-science projects, ${ayCat.AY_STATS.activities} amateur activities, ${ayCat.AY_STATS.equipment} equipment, ${ayCat.AY_STATS.outreach} outreach, ${ayCat.AY_STATS.organizations} organisations · ${ayCat.AY_STATS.newEntities} new entities, ${ayCat.AY_STATS.relations} relations (reused aurora/occultations/photometry/meteor-showers/constellations/variables/Stardust/transit/Rubin/MAST; no fabricated data)`,
   );
 
+  const azCat = await import("../src/knowledge-graph/data/multi-messenger-catalog");
+  const azIssues = azCat.validateMultiMessenger();
+  const { getEntityById: getAzEnt } = await import("../src/knowledge-graph");
+  for (const r of azCat.relations) {
+    if (!getAzEnt(r.from)) azIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getAzEnt(r.to)) azIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (azIssues.length > 0) {
+    console.error(`\n✗ ${azIssues.length} multi-messenger issue(s):`);
+    for (const i of azIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Multi-messenger valid — ${azCat.AZ_STATS.facilities} GW detectors, ${azCat.AZ_STATS.detectionMethods} detection methods, ${azCat.AZ_STATS.sources} merger source classes, ${azCat.AZ_STATS.alerts} alert systems, ${azCat.AZ_STATS.channels} channels, ${azCat.AZ_STATS.followupStages} follow-up stages, ${azCat.AZ_STATS.dataProducts} data products · ${azCat.AZ_STATS.newEntities} new entities, ${azCat.AZ_STATS.relations} relations (reused LIGO/Virgo/KAGRA/LISA/GW-methods/transients/alerts/standard-sirens/bands; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

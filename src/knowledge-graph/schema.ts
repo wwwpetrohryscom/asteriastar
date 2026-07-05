@@ -281,6 +281,16 @@ export const ENTITY_TYPES = [
   "amateur_activity",
   "observing_equipment",
   "outreach_activity",
+  // Multi-messenger & gravitational-wave operations (Program AZ) — REUSES the LIGO/Virgo/KAGRA
+  // detectors and LISA concept, the gravitational-wave/multi-messenger/neutrino methods, the
+  // transient classes, the alert systems, the standard-siren indicator, and the bands; the
+  // next-generation detectors reuse the observatory/mission-concept types, the merger source classes
+  // the transient-class type, and the SCiMMA/LVK alerts the alert-system type. These are the new
+  // gravitational-wave types.
+  "gw_detection_method",
+  "mm_channel",
+  "gw_followup_stage",
+  "gw_data_product",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1231,4 +1241,8 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   amateur_activity: "Amateur activity",
   observing_equipment: "Observing equipment",
   outreach_activity: "Public-outreach activity",
+  gw_detection_method: "GW detection method",
+  mm_channel: "Multi-messenger channel",
+  gw_followup_stage: "GW follow-up stage",
+  gw_data_product: "GW data product",
 };
