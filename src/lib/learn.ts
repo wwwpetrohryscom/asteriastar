@@ -2252,6 +2252,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["scientific_calculator:escape-velocity", "scientific_calculator:orbital-period", "scientific_calculator:stellar-luminosity", "scientific_calculator:schwarzschild-radius"],
     next: ["understanding-celestial-mechanics", "understanding-stellar-astrophysics"],
   },
+  {
+    slug: "planning-a-night-of-observing",
+    title: "Planning a Night of Observing",
+    description: "How to plan a night under the stars with the observatory suite — finding the dark hours, tracking the Moon and planets, choosing targets at their highest, and matching them to your gear. Built on the platform's real computed sky data; observing conditions come only from connected providers.",
+    accent: "comet",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The planning suite", href: "/observing", blurb: "From catalogue to eyepiece." },
+          { title: "The planners", href: "/observing/discover/observing-planners", blurb: "Tonight, the Moon, the planets, and more." },
+          { title: "Tonight planner", href: "/observing/tonight-planner", blurb: "What is worth seeing tonight." },
+          { title: "Moon planner", href: "/observing/moon-planner", blurb: "The biggest factor in deep-sky observing." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Darkness planner", href: "/observing/darkness-planner", blurb: "The truly dark hours." },
+          { title: "Visibility planner", href: "/observing/visibility-planner", blurb: "When a target clears the horizon." },
+          { title: "Altitude chart planner", href: "/observing/altitude-chart-planner", blurb: "Catch a target near the meridian." },
+          { title: "Deep-sky planner", href: "/observing/deep-sky-planner", blurb: "The deep sky, night by night." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Astrophotography planner", href: "/observing/astrophotography-planner", blurb: "Framing, darkness, and capture technique." },
+          { title: "Session planner", href: "/observing/session-planner", blurb: "A whole night, target by target." },
+          { title: "Data integrations", href: "/observing/discover/data-integrations", blurb: "Weather, seeing & Bortle — provider-fed only." },
+          { title: "Bortle integration", href: "/observing/bortle-integration", blurb: "Light pollution & sky brightness." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["observing_planner:tonight-planner", "observing_planner:moon-planner", "observing_planner:session-planner", "observing_integration:bortle-integration"],
+    next: ["navigating-the-sky-atlas", "understanding-constellations"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
