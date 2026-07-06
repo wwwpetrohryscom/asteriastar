@@ -474,6 +474,14 @@ export function GET(): Response {
   lines.push(`- Maps of the sky: ${absoluteUrl("/sky-atlas/discover/sky-maps")} · Explorers of the universe: ${absoluteUrl("/sky-atlas/discover/universe-explorers")} · Data overlays: ${absoluteUrl("/sky-atlas/discover/overlays")}`);
   lines.push("");
 
+  lines.push("## Scientific Calculators & Simulation Platform");
+  lines.push(
+    `Every astronomy calculator under one platform (engine.scientificCalculators). Each calculator is a knowledge-graph entity carrying its published formula and a pure compute function over the CODATA 2018 and IAU 2015 constants. Orbital mechanics: escape velocity, circular orbital velocity, orbital period (Kepler III), surface gravity, Schwarzschild radius, mean density, Hill sphere, Roche limit, synodic period. Stellar physics: Stefan–Boltzmann luminosity, blackbody flux, Wien peak wavelength, mass–luminosity relation, main-sequence lifetime. Photometry & distance: absolute magnitude, distance modulus, parallax distance, angular diameter, angular separation. Exoplanets: equilibrium temperature, equal-insolation distance, transit probability. Cosmology: redshift recession velocity (low-z approximation), Hubble distance (H₀ an input, not asserted). Instruments: angular resolution / diffraction limit, magnification, image scale, field of view, limiting magnitude, photon shot-noise SNR. Results are COMPUTED from real constants and the user's inputs — nothing fabricated — and every formula is validated against a known textbook value on each build. REUSES the gravitation, Kepler, Roche/Hill, HR-diagram, parallax, redshift, transit and habitable-zone concepts; nothing duplicated.`,
+  );
+  lines.push(`- [Scientific Calculators & Simulation Platform](${absoluteUrl("/calculators")})`);
+  lines.push(`- Orbits & gravity: ${absoluteUrl("/calculators/discover/orbital-and-gravity")} · Stars & the cosmos: ${absoluteUrl("/calculators/discover/stars-and-cosmos")} · Telescopes & observing: ${absoluteUrl("/calculators/discover/telescopes-and-observing")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,
