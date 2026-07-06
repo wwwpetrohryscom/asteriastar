@@ -2289,6 +2289,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["observing_planner:tonight-planner", "observing_planner:moon-planner", "observing_planner:session-planner", "observing_integration:bortle-integration"],
     next: ["navigating-the-sky-atlas", "understanding-constellations"],
   },
+  {
+    slug: "exploring-the-knowledge-graph",
+    title: "Exploring the Knowledge Graph",
+    description: "How to explore everything AsteriaStar knows as one connected graph — reading its statistics, walking an entity's neighbourhood, and tracing the shortest chain of relations between any two things in the cosmos. Every number is counted live from the real graph.",
+    accent: "halo",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The graph explorer", href: "/graph", blurb: "Everything AsteriaStar knows, connected." },
+          { title: "Graph statistics", href: "/graph/graph-statistics", blurb: "The knowledge graph in live numbers." },
+          { title: "Entity explorer", href: "/graph/entity-explorer", blurb: "Every entity, by type and domain." },
+          { title: "Graph search", href: "/graph/graph-search", blurb: "From a word to a node." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Neighbourhood explorer", href: "/graph/neighborhood-explorer", blurb: "Walk an entity's real neighbourhood." },
+          { title: "Shortest-path finder", href: "/graph/shortest-path-finder", blurb: "A real chain of relations between any two things." },
+          { title: "Taxonomy explorer", href: "/graph/taxonomy-explorer", blurb: "The types and how they link." },
+          { title: "Cross-domain explorer", href: "/graph/cross-domain-explorer", blurb: "Where science, culture and astrology meet." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Lenses & visualisations", href: "/graph/discover/lenses", blurb: "Force-directed, hierarchical and cluster views." },
+          { title: "Mission graph", href: "/graph/mission-graph", blurb: "A mission as a network." },
+          { title: "Discovery graph", href: "/graph/discovery-graph", blurb: "A discovery in its full context." },
+          { title: "Scientific lineage", href: "/graph/scientific-lineage", blurb: "The descent of ideas." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["graph_view:graph-statistics", "graph_view:neighborhood-explorer", "graph_view:shortest-path-finder", "graph_view:scientific-lineage"],
+    next: ["navigating-the-sky-atlas", "using-the-scientific-calculators"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
