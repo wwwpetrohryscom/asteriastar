@@ -498,6 +498,14 @@ export function GET(): Response {
   lines.push(`- Explore the graph: ${absoluteUrl("/graph/discover/explore")} · Lenses & visualisations: ${absoluteUrl("/graph/discover/lenses")}`);
   lines.push("");
 
+  lines.push("## Scientific AI Research Assistant Platform");
+  lines.push(
+    `Turn the knowledge graph into an explainable, grounded research assistant (engine.scientificAssistant). The grounded capabilities are backed by REAL retrieval over the graph today (src/lib/assistant/retrieval.ts) — scientific search, object explanation, concept comparison (the real shared connections of two entities, e.g. Mars and Venus share atmospheric escape and climate evolution), relationship explanation, evidence chains (a real shortest path of relations, e.g. Edwin Hubble → the expansion of the universe → dark energy), provenance- and citation-aware answers, related concepts, reading recommendations, scientific summaries, learning-path generation, cross-domain reasoning, and the no-hallucination layer. They surface ONLY facts already in the graph, each with its provenance and a traceable chain of relations. There is NO language model in this layer; nothing is generated or invented. The architecture capabilities — the educational/research/expert answer modes, RAG-ready interfaces, prompt orchestration, conversation memory, and LLM integration — are interfaces prepared for a future model that would phrase these grounded facts and never add to them. Reuses example entities across the graph; adds only the capability definitions.`,
+  );
+  lines.push(`- [Scientific AI Research Assistant Platform](${absoluteUrl("/assistant")})`);
+  lines.push(`- Grounded capabilities: ${absoluteUrl("/assistant/discover/grounded-capabilities")} · Architecture for a future model: ${absoluteUrl("/assistant/discover/architecture")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

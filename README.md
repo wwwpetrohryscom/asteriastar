@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Scientific AI Research Assistant Platform (Program BS)**
+
+- [Scientific AI Research Assistant Platform](docs/SCIENTIFIC_ASSISTANT.md) — turn the graph into an explainable, grounded assistant (`engine.scientificAssistant`): 18 capabilities, 13 **grounded** — backed by real retrieval over the graph today (scientific search, object explanation, concept comparison, relationship explanation, evidence chains, provenance- & citation-aware answers, related concepts, reading recommendations, scientific summaries, learning-path generation, cross-domain reasoning, the no-hallucination layer) that surface **only facts already in the graph**, each with its provenance and a traceable chain of relations — and 5 **architecture-ready** (the educational/research/expert answer modes, RAG-ready interfaces, prompt orchestration, conversation memory, LLM integration) prepared for a future model that would phrase these grounded facts and never add to them. There is no language model in this layer; nothing is generated
+
 **Scientific Knowledge Graph Explorer (Program BR)**
 
 - [Scientific Knowledge Graph Explorer](docs/GRAPH_EXPLORER.md) — explore the complete graph visually (`engine.graphExplorer`): 17 views, the computed ones running **real breadth-first algorithms over the actual graph** (7,000+ entities, 11,000+ relations) — live statistics & knowledge metrics (counts, degree distribution, most-connected hubs), the entity & relation explorers, neighbourhood expansion, the shortest-path finder (a genuine chain of relations between any two entities), the taxonomy & cross-domain explorers, graph search, and the mission/institution/discovery/scientific-lineage graphs — plus the force-directed/hierarchical/cluster visualisation modes and the architecture-ready graph API. Every number is counted live and every path is a real chain of relations; nothing is fabricated

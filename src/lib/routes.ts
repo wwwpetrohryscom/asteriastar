@@ -90,6 +90,7 @@ export const ROUTES = {
   calculators: "/calculators",
   observing: "/observing",
   graph: "/graph",
+  assistant: "/assistant",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -677,4 +678,10 @@ export function graphViewPath(slug: string): string {
 }
 export function graphDiscoveryPath(slug: string): string {
   return `/graph/discover/${slug}`;
+}
+export function assistantPath(slug: string): string {
+  return `/assistant/${slug}`;
+}
+export function assistantDiscoveryPath(slug: string): string {
+  return `/assistant/discover/${slug}`;
 }
