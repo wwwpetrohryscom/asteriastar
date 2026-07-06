@@ -450,6 +450,14 @@ export function GET(): Response {
   lines.push(`- The anatomy of the Galaxy: ${absoluteUrl("/galactic-astronomy/discover/galactic-structure")} · Dynamics, archaeology & fate: ${absoluteUrl("/galactic-astronomy/discover/galactic-dynamics")}`);
   lines.push("");
 
+  lines.push("## Astroinformatics & Virtual Research Ecosystem Encyclopedia");
+  lines.push(
+    `The software, computing, and data practices that turn astronomical data into science (engine.astroinformatics). Research software: the scientific Python ecosystem (NumPy, SciPy), Astropy, SunPy, Jupyter notebooks, Astroquery, and scientific visualisation. Research computing: high-performance computing, GPU computing, cloud computing, distributed computing, science platforms (the Rubin Science Platform), and containerisation. Astroinformatics concepts: scientific workflows, data provenance, the astronomical query languages (ADQL), big-data astronomy, the virtual research environment, and research software engineering. Curated from NASA, STScI, and NOIRLab; only well-established practice is stated. REUSES the Virtual Observatory and its TAP protocol, the FITS and VOTable standards, the MAST/VizieR/SIMBAD archives, the reproducibility-and-FAIR / persistent-identifiers / data-pipelines / cross-matching open-science practices, the machine-learning methods and workflows, the Rubin Observatory, and the LSST, SKA and Gaia facilities; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Astroinformatics & the Virtual Research Ecosystem](${absoluteUrl("/astroinformatics")})`);
+  lines.push(`- Research software: ${absoluteUrl("/astroinformatics/discover/research-software")} · Research computing: ${absoluteUrl("/astroinformatics/discover/research-computing")} · Data-intensive astronomy: ${absoluteUrl("/astroinformatics/discover/astroinformatics-concepts")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

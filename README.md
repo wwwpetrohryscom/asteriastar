@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Astroinformatics & Virtual Research Ecosystem Encyclopedia (Program BH)**
+
+- [Astroinformatics & the Virtual Research Ecosystem](docs/ASTROINFORMATICS.md) — the software, computing, and data practices that turn astronomical data into science: the research software (the scientific Python ecosystem, Astropy, SunPy, Jupyter notebooks, Astroquery, scientific visualisation), the research computing (high-performance, GPU, cloud & distributed computing, science platforms, containerisation), and the astroinformatics concepts (scientific workflows, data provenance, the astronomical query languages, big-data astronomy, the virtual research environment, research software engineering). Reuses the platform's Virtual Observatory & TAP protocol, the FITS & VOTable standards, the MAST/VizieR/SIMBAD archives, the reproducibility, persistent-identifier & data-pipeline practices, the machine-learning methods, and the Rubin, LSST, SKA & Gaia facilities; nothing duplicated or fabricated
+
 **Galactic Astronomy & the Milky Way Encyclopedia (Program BG)**
 
 - [Galactic Astronomy & the Milky Way](docs/GALACTIC_ASTRONOMY.md) — the anatomy and life of our Galaxy: the structural components (the thin & thick discs, the bulge & bar, the stellar halo, the spiral arms, the galactic warp, the Galactic Centre & its central molecular zone, the hot corona, the solar neighbourhood) and the dynamical & archaeological phenomena (galactic rotation & the dark-matter-revealing rotation curve, stellar streams, galactic archaeology with Gaia, radial migration, the galactic magnetic field, the proposed galactic habitable zone, satellite accretion, the galactic fountain, the predicted Milky Way–Andromeda collision). Reuses the platform's Milky Way, Sagittarius A*, the Local Group, the Magellanic Clouds, Andromeda & Triangulum, the dark-matter halo, the galaxy-rotation-curve method, the galaxy-merger process, Gaia & DR3, and the interstellar medium; nothing duplicated or fabricated

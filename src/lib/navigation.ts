@@ -93,6 +93,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Celestial Mechanics & Timekeeping", href: ROUTES.celestialMechanics, description: "The mathematics of motion & time — Kepler's laws, Lagrange points, resonances, reference frames, ephemerides & leap seconds" },
             { name: "Stellar Astrophysics Deep-Dive", href: ROUTES.stellarAstrophysics, description: "How stars form, live, forge the elements & die — the HR diagram, stellar evolution, nucleosynthesis, degeneracy pressure, populations & binaries" },
             { name: "Galactic Astronomy & the Milky Way", href: ROUTES.galacticAstronomy, description: "The anatomy & life of our Galaxy — the discs, bulge, bar, halo & spiral arms, the Galactic Centre, rotation & dark matter, stellar streams, archaeology & the Andromeda collision" },
+            { name: "Astroinformatics & the Virtual Research Ecosystem", href: ROUTES.astroinformatics, description: "The software, computing & data practices of modern astronomy — the scientific Python ecosystem, Astropy, science platforms, HPC & GPU computing, workflows, provenance & big-data astronomy" },
             { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Observatories", href: ROUTES.observatories, description: "Telescopes, surveys, bands" },
             { name: "Exoplanets", href: ROUTES.exoplanets, description: "Worlds beyond the Sun" },
