@@ -2363,6 +2363,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["assistant_capability:evidence-chains", "assistant_capability:concept-comparison", "assistant_capability:no-hallucination-layer", "assistant_capability:provenance-aware-answers"],
     next: ["exploring-the-knowledge-graph", "using-the-scientific-calculators"],
   },
+  {
+    slug: "reading-live-scientific-data",
+    title: "Reading Live Scientific Data",
+    description: "How AsteriaStar connects to real external data providers — space weather, solar activity, near-Earth objects — and how its honesty envelope tells you exactly what is connected, what is not, and why no value is ever fabricated.",
+    accent: "aurora",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The live data platform", href: "/live", blurb: "Connections to the real, changing sky." },
+          { title: "Provider status", href: "/live/data-status", blurb: "What is connected, and what is not." },
+          { title: "Space weather", href: "/live/discover/space-weather", blurb: "Solar wind, Kp & the storm scales." },
+          { title: "NOAA SWPC", href: "/live/noaa-swpc", blurb: "The Space Weather Prediction Center." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Solar activity", href: "/live/discover/solar-activity", blurb: "Flares, CMEs & particle events." },
+          { title: "NASA DONKI", href: "/live/nasa-donki", blurb: "The solar-event database." },
+          { title: "Near-Earth objects", href: "/live/discover/near-earth-objects", blurb: "Close approaches of asteroids & comets." },
+          { title: "The Minor Planet Center", href: "/live/minor-planet-center", blurb: "Designations & close approaches." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "JPL / CNEOS", href: "/live/jpl-cneos", blurb: "Close-approach & impact-risk data." },
+          { title: "Orbital elements", href: "/live/celestrak-tle", blurb: "ISS TLEs & SGP4 passes — architecture-ready." },
+          { title: "Atmospheric conditions", href: "/live/atmospheric-conditions", blurb: "Weather, seeing & Bortle — awaiting a provider." },
+          { title: "The honesty envelope", href: "/transparency/source-quality", blurb: "Status, provenance & limitations for every source." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["live_data_source:noaa-swpc", "live_data_source:nasa-donki", "live_data_source:minor-planet-center", "live_data_source:jpl-cneos"],
+    next: ["planning-a-night-of-observing", "exploring-the-knowledge-graph"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

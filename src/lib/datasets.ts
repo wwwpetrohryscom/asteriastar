@@ -21,6 +21,9 @@ export interface DatasetDef {
   description: string;
   entityTypes: EntityType[];
   sources: SourceKey[];
+  /** Optional narrowing: restrict the type-resolved entities to a specific subset (by entity id),
+   *  when a dataset describes a named subset of a shared entity type rather than the whole type. */
+  entityIds?: string[];
 }
 
 const DATASET_DEFS: DatasetDef[] = [
@@ -137,6 +140,10 @@ const DATASET_DEFS: DatasetDef[] = [
   { slug: "observing-suite", title: "Professional Observatory Planning Suite", description: "The observing planners (tonight, visibility, target, Moon, planet, deep-sky, season, twilight, darkness, altitude, meridian-transit, equipment, astrophotography, session) built on the platform's real computed live-sky data and its observing equipment, sites and techniques, and the architecture-ready data integrations (weather, seeing, transparency, cloud cover, Bortle sky brightness) that await connected providers.", entityTypes: ["observing_planner", "observing_integration"], sources: ["nasa"] },
   { slug: "graph-explorer", title: "Scientific Knowledge Graph Explorer", description: "The graph-explorer views (statistics, knowledge metrics, entity & relation explorers, neighbourhood expansion, shortest-path finder, taxonomy explorer, cross-domain explorer, graph search, mission/institution/discovery/scientific-lineage graphs, force-directed/hierarchical/cluster visualisations, and the graph API). The computed views run real breadth-first algorithms over the actual knowledge graph.", entityTypes: ["graph_view"], sources: ["nasa"] },
   { slug: "scientific-assistant", title: "Scientific AI Research Assistant Platform", description: "The assistant capabilities — grounded (scientific search, object explanation, concept comparison, relationship explanation, evidence chains, provenance- & citation-aware answers, related concepts, reading recommendations, scientific summaries, learning-path generation, cross-domain reasoning, the no-hallucination layer) and architecture-ready (answer modes, RAG interfaces, prompt orchestration, conversation memory, LLM integration). The grounded capabilities run real retrieval over the actual graph and surface only real facts.", entityTypes: ["assistant_capability"], sources: ["nasa"] },
+  { slug: "live-provider-registry", title: "Live Provider Registry", description: "The registry of real external scientific-data providers modelled with the honesty envelope — NOAA SWPC (space weather), NASA DONKI (solar activity), the Minor Planet Center and JPL/CNEOS (near-Earth objects), CelesTrak (orbital elements), and atmospheric conditions — each with its endpoint, licence, data kinds, and honest connection status.", entityTypes: ["live_data_source"], sources: ["nasa", "noaa"] },
+  { slug: "space-weather-provider-status", title: "Space-Weather Provider Status", description: "The honest connection status of the space-weather and solar-activity providers (NOAA SWPC, NASA DONKI). No provider is connected in this deployment, so no solar-wind, Kp, flare, or CME value is served — every provider reports its real status and limitations.", entityTypes: ["live_data_source"], entityIds: ["live_data_source:noaa-swpc", "live_data_source:nasa-donki"], sources: ["nasa", "noaa"] },
+  { slug: "near-earth-object-provider-status", title: "Near-Earth-Object Provider Status", description: "The honest connection status of the near-Earth-object providers (IAU Minor Planet Center, JPL/CNEOS). No provider is connected in this deployment, so no close-approach distance or date is served — every provider reports its real status and limitations.", entityTypes: ["live_data_source"], entityIds: ["live_data_source:minor-planet-center", "live_data_source:jpl-cneos"], sources: ["nasa", "jpl"] },
+  { slug: "live-data-limitations", title: "Live-Data Limitations", description: "The stated limitations of every live-data integration — which are architecture-ready, which await a licence-safe provider, and what would be required to connect each. A transparency record: no live value, timestamp, or provider response is ever fabricated.", entityTypes: ["live_data_source"], sources: ["nasa"] },
 ];
 
 export interface Dataset extends DatasetDef {
@@ -175,9 +182,11 @@ export function getDataset(slug: string): Dataset | undefined {
 }
 
 export function getDatasetEntities(def: DatasetDef): GraphEntity[] {
-  return def.entityTypes
-    .flatMap((t) => getGraphEntitiesByType(t))
-    .sort((a, b) => a.name.localeCompare(b.name));
+  const resolved = def.entityTypes.flatMap((t) => getGraphEntitiesByType(t));
+  const narrowed = def.entityIds
+    ? resolved.filter((e) => def.entityIds!.includes(e.id))
+    : resolved;
+  return narrowed.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 /** Plain-object rows for export (no graph data duplicated beyond this view). */

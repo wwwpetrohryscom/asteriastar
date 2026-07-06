@@ -506,6 +506,14 @@ export function GET(): Response {
   lines.push(`- Grounded capabilities: ${absoluteUrl("/assistant/discover/grounded-capabilities")} · Architecture for a future model: ${absoluteUrl("/assistant/discover/architecture")}`);
   lines.push("");
 
+  lines.push("## Live Scientific Data Platform");
+  lines.push(
+    `AsteriaStar's connections to real external scientific data providers, modelled with the full honesty envelope (engine.liveScientificData). Providers: NOAA Space Weather Prediction Center (solar wind, Kp, the G/S/R scales, alerts), NASA DONKI (solar flares, CMEs, SEP events), the IAU Minor Planet Center and JPL/CNEOS (near-Earth-object close approaches), CelesTrak (ISS/satellite orbital elements via SGP4), and atmospheric conditions. Each provider exposes its endpoint, licence, data kinds, status, and limitations. HONESTY: no provider is connected in this deployment, so no live value, timestamp, or provider response is shown — every provider reports its real status (planned / architecture-ready), and NOTHING is fabricated. The honest status is at /api/v0/live/status. REUSES the existing live-sky provider registry, the NASA/NOAA/SWPC/JPL/MPC organisations, and the space-weather phenomena; nothing duplicated.`,
+  );
+  lines.push(`- [Live Scientific Data Platform](${absoluteUrl("/live")})`);
+  lines.push(`- Space weather: ${absoluteUrl("/live/discover/space-weather")} · Solar activity: ${absoluteUrl("/live/discover/solar-activity")} · Near-Earth objects: ${absoluteUrl("/live/discover/near-earth-objects")} · Data status: ${absoluteUrl("/live/data-status")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

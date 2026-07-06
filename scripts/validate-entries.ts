@@ -920,6 +920,28 @@ async function main() {
     `✓ Scientific assistant valid — ${bsCat.BS_STATS.records} capabilities (${bsCat.BS_STATS.byGrounding.grounded} grounded, ${bsCat.BS_STATS.byGrounding.architecture} architecture) · ${bsCat.BS_STATS.newEntities} new entities, ${bsCat.BS_STATS.relations} relations (grounded retrieval over the actual graph; no LLM, nothing fabricated)`,
   );
 
+  const btCat = await import("../src/knowledge-graph/data/live-data-catalog");
+  const btIssues = btCat.validateLiveData();
+  const { getEntityById: getBtEnt } = await import("../src/knowledge-graph");
+  for (const r of btCat.relations) {
+    if (!getBtEnt(r.from)) btIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBtEnt(r.to)) btIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  const { liveSkyEngine } = await import("../src/platform/data-engine/live-sky-engine");
+  const realProviderKeys = new Set<string>(liveSkyEngine.providers().map((p) => String(p.key)));
+  for (const s of btCat.sources) {
+    if (s.providerKey && !realProviderKeys.has(s.providerKey)) btIssues.push(`live source ${s.id}: providerKey "${s.providerKey}" is not a real live-sky provider`);
+    if (s.status === "connected") btIssues.push(`live source ${s.id}: claims 'connected' but no provider is actually connected in this build`);
+  }
+  if (btIssues.length > 0) {
+    console.error(`\n✗ ${btIssues.length} live-data issue(s):`);
+    for (const i of btIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Live scientific data valid — ${btCat.BT_STATS.records} providers (${btCat.BT_STATS.connected} connected, ${btCat.BT_STATS.planned} architecture-ready) · ${btCat.BT_STATS.newEntities} new entities, ${btCat.BT_STATS.relations} relations (reused live-sky registry/orgs/phenomena; provider keys verified real; no live value fabricated)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
