@@ -2141,6 +2141,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["research_software:astropy", "research_computing:science-platforms", "astroinformatics_concept:big-data-astronomy", "astroinformatics_concept:the-virtual-research-environment"],
     next: ["understanding-machine-learning-in-astronomy", "understanding-data-archives"],
   },
+  {
+    slug: "understanding-deep-space-exploration",
+    title: "Understanding Deep-Space Human Exploration",
+    description: "What it takes to send people beyond Earth to stay — the bases, transit habitats, power and propulsion of the Moon-to-Mars campaign, and the hard human challenges of radiation, isolation, and self-sufficiency far from home. Built on well-established plans and physics; nothing is fabricated.",
+    accent: "ember",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Living beyond Earth", href: "/deep-space-exploration", blurb: "The architecture of human deep-space exploration." },
+          { title: "Architectures of exploration", href: "/deep-space-exploration/discover/exploration-architecture", blurb: "How humans will live and work beyond Earth." },
+          { title: "The Moon-to-Mars architecture", href: "/deep-space-exploration/moon-to-mars-architecture", blurb: "The Moon as a proving ground for Mars." },
+          { title: "The lunar surface base", href: "/space-infrastructure/lunar-surface-base", blurb: "A sustained foothold at the lunar south pole." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "The deep-space transit habitat", href: "/deep-space-exploration/the-deep-space-transit-habitat", blurb: "Home for the months-long cruise to Mars." },
+          { title: "Space construction for habitats", href: "/deep-space-exploration/space-construction-for-habitats", blurb: "Building shelter from local resources." },
+          { title: "Mars entry, descent & landing", href: "/deep-space-exploration/mars-entry-descent-and-landing", blurb: "Landing heavy crews through a thin atmosphere." },
+          { title: "The challenges of deep space", href: "/deep-space-exploration/discover/deep-space-challenges", blurb: "The problems that sharpen far from home." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "The deep-space radiation challenge", href: "/deep-space-exploration/the-deep-space-radiation-challenge", blurb: "The hardest unsolved problem of a Mars mission." },
+          { title: "Long-duration life support", href: "/deep-space-exploration/long-duration-life-support", blurb: "Closing the loop for a voyage with no resupply." },
+          { title: "Earth independence & crew autonomy", href: "/deep-space-exploration/earth-independence-and-crew-autonomy", blurb: "Making decisions without waiting for Earth." },
+          { title: "Behavioural health & crew cohesion", href: "/deep-space-exploration/behavioral-health-and-crew-cohesion", blurb: "Keeping a small crew healthy and working together." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["exploration_architecture:moon-to-mars-architecture", "exploration_architecture:the-deep-space-transit-habitat", "deep_space_challenge:the-deep-space-radiation-challenge", "deep_space_challenge:long-duration-life-support"],
+    next: ["understanding-humans-in-space", "understanding-building-in-space"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
