@@ -70,6 +70,7 @@ import { entities as graphExplorerCatalog } from "@/knowledge-graph/data/graph-e
 import { entities as scientificAssistantCatalog } from "@/knowledge-graph/data/scientific-assistant-catalog";
 import { entities as liveDataCatalog } from "@/knowledge-graph/data/live-data-catalog";
 import { entities as webglUniverseCatalog } from "@/knowledge-graph/data/webgl-universe-catalog";
+import { entities as workspaceCatalog } from "@/knowledge-graph/data/workspace-catalog";
 
 /**
  * Knowledge-graph entities.
@@ -347,4 +348,5 @@ export const entities: GraphEntity[] = [
   ...scientificAssistantCatalog,
   ...liveDataCatalog,
   ...webglUniverseCatalog,
+  ...workspaceCatalog,
 ];

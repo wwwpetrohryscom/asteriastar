@@ -983,6 +983,41 @@ async function main() {
     `✓ 3D Universe valid — ${buCat.WU_STATS.records} scenes (${buCat.WU_STATS.interactive} interactive, ${buCat.WU_STATS.records - buCat.WU_STATS.interactive} descriptive) · ${buCat.WU_STATS.newEntities} new entities, ${buCat.WU_STATS.relations} relations (real measured coordinates only; no fabricated position)`,
   );
 
+  const bvCat = await import("../src/knowledge-graph/data/workspace-catalog");
+  const bvIssues = bvCat.validateWorkspace();
+  const { getEntityById: getBvEnt } = await import("../src/knowledge-graph");
+  for (const r of bvCat.relations) {
+    if (!getBvEnt(r.from)) bvIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBvEnt(r.to)) bvIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  // Privacy honesty: the workspace store must be local-only — no module in src/lib/workspace may make a
+  // network request or touch cookies. Grep the source and fail the gate if any banned API appears.
+  const { readFileSync, readdirSync } = await import("node:fs");
+  const wsDir = "src/lib/workspace";
+  for (const f of readdirSync(wsDir)) {
+    if (!f.endsWith(".ts")) continue;
+    const src = readFileSync(`${wsDir}/${f}`, "utf8");
+    for (const banned of ["fetch(", "XMLHttpRequest", "navigator.sendBeacon", "document.cookie", "new WebSocket"]) {
+      if (src.includes(banned)) bvIssues.push(`workspace privacy violation: ${wsDir}/${f} references "${banned}" (the workspace must be local-only)`);
+    }
+  }
+  for (const feat of bvCat.features) {
+    if (feat.storage !== "local-only") bvIssues.push(`workspace feature ${feat.id}: storage must be local-only, got "${feat.storage}"`);
+  }
+  // Every feature entity's entryPath must resolve to a page that actually exists (no 404 canonical URLs).
+  const realWorkspaceRoutes = new Set(["/workspace", "/workspace/collections", "/workspace/notes", "/workspace/citations", "/workspace/exports", "/workspace/privacy"]);
+  for (const e of bvCat.entities) {
+    if (!e.entryPath || !realWorkspaceRoutes.has(e.entryPath)) bvIssues.push(`workspace entity ${e.id}: entryPath "${e.entryPath}" has no matching page (would 404)`);
+  }
+  if (bvIssues.length > 0) {
+    console.error(`\n✗ ${bvIssues.length} workspace issue(s):`);
+    for (const i of bvIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Research Workspace valid — ${bvCat.BV_STATS.records} features (local-only, privacy-first) · ${bvCat.BV_STATS.newEntities} new entities, ${bvCat.BV_STATS.relations} relations (no network/cookie in the store; citations reuse the real citation engine; nothing fabricated)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

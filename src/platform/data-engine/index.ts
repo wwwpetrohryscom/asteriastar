@@ -84,6 +84,7 @@ import { graphExplorerEngine } from "@/platform/data-engine/graph-explorer-engin
 import { scientificAssistantEngine } from "@/platform/data-engine/scientific-assistant-engine";
 import { liveScientificDataEngine } from "@/platform/data-engine/live-data-engine";
 import { webglUniverseEngine } from "@/platform/data-engine/webgl-universe-engine";
+import { researchWorkspaceEngine } from "@/platform/data-engine/workspace-engine";
 import { planetaryGeologyEngine } from "@/platform/data-engine/planetary-geology-engine";
 import { validationEngine } from "@/platform/data-engine/validation-engine";
 import { contributionsEngine } from "@/platform/contributions";
@@ -163,6 +164,7 @@ export const engine = {
   scientificAssistant: scientificAssistantEngine,
   liveScientificData: liveScientificDataEngine,
   webglUniverse: webglUniverseEngine,
+  researchWorkspace: researchWorkspaceEngine,
   contributions: contributionsEngine,
   validation: validationEngine,
 } as const;
@@ -174,7 +176,7 @@ export const ENGINE_MODULES = Object.keys(engine) as (keyof typeof engine)[];
 export { entityEngine, relationshipEngine, traversalEngine, queryEngine };
 export { recommendationEngine, timelineEngine, comparisonEngine, learningEngine };
 export { discoveryEngine, metadataEngine, sourceEngine, citationEngine };
-export { datasetEngine, authorityEngine, localizationEngine, starEngine, solarEngine, deepSkyEngine, explorationEngine, humanSpaceflightEngine, observatoryEngine, exoplanetEngine, historyEngine, cosmologyEngine, liveSkyEngine, imagesEngine, launchVehicleEngine, constellationEngine, satelliteEngine, asteroidEngine, cometEngine, meteoriteEngine, interstellarEngine, smallBodyMissionsEngine, deepSpaceCommunicationsEngine, spaceEnvironmentEngine, missionOperationsEngine, spacecraftSystemsEngine, instrumentsEngine, planetaryGeologyEngine, institutionsEngine, spaceflightHistoryEngine, spaceMedicineEngine, spaceInfrastructureEngine, futureMissionsEngine, astronomyMethodsEngine, timeDomainEngine, galaxiesEngine, astrobiologyEngine, planetaryDefenseEngine, dataArchivesEngine, observatoryFrontierEngine, distanceLadderEngine, heliophysicsEngine, astroMlEngine, citizenAstronomyEngine, multiMessengerEngine, comparativePlanetologyEngine, astrochemistryEngine, spacePolicyEngine, discoveryHistoryEngine, celestialMechanicsEngine, stellarAstrophysicsEngine, galacticAstronomyEngine, astroinformaticsEngine, deepSpaceExplorationEngine, skyAtlasEngine, scientificCalculatorsEngine, observingSuiteEngine, graphExplorerEngine, scientificAssistantEngine, liveScientificDataEngine, webglUniverseEngine, contributionsEngine, validationEngine };
+export { datasetEngine, authorityEngine, localizationEngine, starEngine, solarEngine, deepSkyEngine, explorationEngine, humanSpaceflightEngine, observatoryEngine, exoplanetEngine, historyEngine, cosmologyEngine, liveSkyEngine, imagesEngine, launchVehicleEngine, constellationEngine, satelliteEngine, asteroidEngine, cometEngine, meteoriteEngine, interstellarEngine, smallBodyMissionsEngine, deepSpaceCommunicationsEngine, spaceEnvironmentEngine, missionOperationsEngine, spacecraftSystemsEngine, instrumentsEngine, planetaryGeologyEngine, institutionsEngine, spaceflightHistoryEngine, spaceMedicineEngine, spaceInfrastructureEngine, futureMissionsEngine, astronomyMethodsEngine, timeDomainEngine, galaxiesEngine, astrobiologyEngine, planetaryDefenseEngine, dataArchivesEngine, observatoryFrontierEngine, distanceLadderEngine, heliophysicsEngine, astroMlEngine, citizenAstronomyEngine, multiMessengerEngine, comparativePlanetologyEngine, astrochemistryEngine, spacePolicyEngine, discoveryHistoryEngine, celestialMechanicsEngine, stellarAstrophysicsEngine, galacticAstronomyEngine, astroinformaticsEngine, deepSpaceExplorationEngine, skyAtlasEngine, scientificCalculatorsEngine, observingSuiteEngine, graphExplorerEngine, scientificAssistantEngine, liveScientificDataEngine, webglUniverseEngine, researchWorkspaceEngine, contributionsEngine, validationEngine };
 export type { ResolvedLaunchVehicle } from "@/platform/data-engine/launch-vehicle-engine";
 export type { ResolvedConstellation } from "@/platform/data-engine/constellation-engine";
 export type { ResolvedSatellite, ResolvedConstellationSat, ResolvedOperator, ResolvedOrbit, ResolvedNetwork, ResolvedProgram } from "@/platform/data-engine/satellite-engine";
@@ -222,6 +224,7 @@ export type { ResolvedGraphView } from "@/platform/data-engine/graph-explorer-en
 export type { ResolvedAssistant } from "@/platform/data-engine/scientific-assistant-engine";
 export type { ResolvedLiveSource } from "@/platform/data-engine/live-data-engine";
 export type { ResolvedScene } from "@/platform/data-engine/webgl-universe-engine";
+export type { ResolvedWorkspaceFeature } from "@/platform/data-engine/workspace-engine";
 export type { ResolvedStar } from "@/platform/data-engine/star-engine";
 export type { ResolvedBody } from "@/platform/data-engine/solar-engine";
 export type { ResolvedDeepSky } from "@/platform/data-engine/deepsky-engine";

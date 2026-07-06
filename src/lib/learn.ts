@@ -2436,6 +2436,42 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["universe_scene:solar-system", "universe_scene:stars", "universe_scene:constellations", "universe_scene:milky-way"],
     next: ["observing-the-night-sky", "exploring-the-knowledge-graph"],
   },
+  {
+    slug: "building-a-research-workspace",
+    title: "Building a Research Workspace",
+    description: "How to use AsteriaStar's private, local-only workspace — saving entities, organising collections and reading lists, taking notes, collecting real citations, and exporting your work — without an account and without your data ever leaving your browser.",
+    accent: "halo",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The workspace", href: "/workspace", blurb: "Save any entity to a private, local workspace." },
+          { title: "Collections", href: "/workspace/collections", blurb: "Group saved entities, build reading lists and observing projects." },
+          { title: "Notes", href: "/workspace/notes", blurb: "Attach your own notes to entities." },
+          { title: "Privacy by construction", href: "/workspace/privacy", blurb: "No account, no server, no cookie, no tracking." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "The citation folder", href: "/workspace/citations", blurb: "Collect real, source-backed citations." },
+          { title: "How citations work", href: "/transparency/source-quality", blurb: "Every reference is verifiable — nothing invented." },
+          { title: "Exports & printable packet", href: "/workspace/exports", blurb: "JSON, Markdown, BibTeX, CSV — or print." },
+          { title: "Exploring the graph", href: "/graph", blurb: "Find entities worth saving." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "BibTeX for a paper", href: "/workspace/citations", blurb: "Export standard reference formats." },
+          { title: "Move your workspace yourself", href: "/workspace/exports", blurb: "Export JSON and re-import on another device." },
+          { title: "Pair with the observing suite", href: "/observing", blurb: "Turn an observation project into a night's plan." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["workspace_feature:saved-entities", "workspace_feature:collections", "workspace_feature:citation-folder", "workspace_feature:privacy"],
+    next: ["exploring-the-knowledge-graph", "reading-live-scientific-data"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

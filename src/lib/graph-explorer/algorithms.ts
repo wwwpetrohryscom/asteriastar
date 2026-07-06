@@ -26,6 +26,8 @@ const META_PREFIXES = [
   "scientific_calculator:",
   "observing_planner:",
   "observing_integration:",
+  "universe_scene:",
+  "workspace_feature:",
 ];
 export function isMetaNode(id: string): boolean {
   return META_PREFIXES.some((p) => id.startsWith(p));
