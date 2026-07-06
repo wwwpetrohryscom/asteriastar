@@ -342,6 +342,7 @@ export const ENTITY_TYPES = [
   "graph_view",
   "assistant_capability",
   "live_data_source",
+  "universe_scene",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1328,4 +1329,5 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   graph_view: "Graph view",
   assistant_capability: "Assistant capability",
   live_data_source: "Live data source",
+  universe_scene: "Universe scene",
 };

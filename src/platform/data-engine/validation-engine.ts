@@ -54,6 +54,7 @@ import { validateObservingSuite } from "@/knowledge-graph/data/observing-suite-c
 import { validateGraphExplorer } from "@/knowledge-graph/data/graph-explorer-catalog";
 import { validateScientificAssistant } from "@/knowledge-graph/data/scientific-assistant-catalog";
 import { validateLiveData } from "@/knowledge-graph/data/live-data-catalog";
+import { validateWebglUniverse } from "@/knowledge-graph/data/webgl-universe-catalog";
 import { validateHumanSpaceflight } from "@/knowledge-graph/data/human-spaceflight-catalog";
 import { validateObservatories } from "@/knowledge-graph/data/observatory-catalog";
 import { validateExoplanets } from "@/knowledge-graph/data/exoplanet-catalog";
@@ -189,6 +190,7 @@ export const validationEngine = {
   graphExplorer: (): string[] => validateGraphExplorer(),
   scientificAssistant: (): string[] => validateScientificAssistant(),
   liveScientificData: (): string[] => validateLiveData(),
+  webglUniverse: (): string[] => validateWebglUniverse(),
   humanSpaceflight: (): string[] => validateHumanSpaceflight(),
   observatories: (): string[] => validateObservatories(),
   exoplanets: (): string[] => validateExoplanets(),

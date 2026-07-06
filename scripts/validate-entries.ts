@@ -942,6 +942,47 @@ async function main() {
     `✓ Live scientific data valid — ${btCat.BT_STATS.records} providers (${btCat.BT_STATS.connected} connected, ${btCat.BT_STATS.planned} architecture-ready) · ${btCat.BT_STATS.newEntities} new entities, ${btCat.BT_STATS.relations} relations (reused live-sky registry/orgs/phenomena; provider keys verified real; no live value fabricated)`,
   );
 
+  const buCat = await import("../src/knowledge-graph/data/webgl-universe-catalog");
+  const buIssues = buCat.validateWebglUniverse();
+  const { getEntityById: getBuEnt } = await import("../src/knowledge-graph");
+  for (const r of buCat.relations) {
+    if (!getBuEnt(r.from)) buIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBuEnt(r.to)) buIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  // Honesty: every reused reference (completesAtlasView + relatedKeys) must resolve to a real graph entity.
+  for (const s of buCat.scenes) {
+    for (const k of [s.completesAtlasView, ...(s.relatedKeys ?? [])]) {
+      if (k && !getBuEnt(k)) buIssues.push(`scene ${s.id}: reference "${k}" does not resolve to a real entity`);
+    }
+  }
+  // Honesty: every interactive scene must produce REAL, finite points from measured data; a descriptive
+  // scene must NOT have an interactive builder. This is the "no fabricated position" gate at runtime.
+  const { buildSolarSystemScene, buildStellarNeighborhoodScene, buildFeaturedConstellationScene } = await import("../src/lib/universe-3d/scene-data");
+  const interactiveBuilders: Record<string, () => { points: { x: number; y: number; z: number }[] }> = {
+    "solar-system": () => buildSolarSystemScene(),
+    stars: () => buildStellarNeighborhoodScene(160),
+    constellations: () => buildFeaturedConstellationScene().scene,
+  };
+  for (const s of buCat.scenes) {
+    if (s.interactive) {
+      const build = interactiveBuilders[s.slug];
+      if (!build) { buIssues.push(`interactive scene ${s.id}: no real scene builder is wired`); continue; }
+      const pts = build().points;
+      if (!pts.length) buIssues.push(`interactive scene ${s.id}: builder produced no points (a scene must render real measured data)`);
+      if (pts.some((p) => ![p.x, p.y, p.z].every((v) => Number.isFinite(v)))) buIssues.push(`interactive scene ${s.id}: a point has a non-finite coordinate (no fabricated/NaN position allowed)`);
+    } else if (interactiveBuilders[s.slug]) {
+      buIssues.push(`descriptive scene ${s.id}: has an interactive builder but is marked descriptive`);
+    }
+  }
+  if (buIssues.length > 0) {
+    console.error(`\n✗ ${buIssues.length} 3D-universe issue(s):`);
+    for (const i of buIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ 3D Universe valid — ${buCat.WU_STATS.records} scenes (${buCat.WU_STATS.interactive} interactive, ${buCat.WU_STATS.records - buCat.WU_STATS.interactive} descriptive) · ${buCat.WU_STATS.newEntities} new entities, ${buCat.WU_STATS.relations} relations (real measured coordinates only; no fabricated position)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
