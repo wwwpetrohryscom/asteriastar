@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Live Scientific Data Platform (Program BT)**
+
+- [Live Scientific Data Platform](docs/LIVE_DATA.md) — AsteriaStar's connections to real external scientific data providers (`engine.liveScientificData`), modelled with the full honesty envelope: NOAA Space Weather Prediction Center (space weather), NASA DONKI (solar activity), the IAU Minor Planet Center & JPL/CNEOS (near-Earth objects), CelesTrak (orbital elements), and atmospheric conditions. Each provider is a first-class graph node exposing its endpoint, licence, data kinds, status, and limitations, with a `/live` section, a `/live/data-status` dashboard, and an `/api/v0/live/status` endpoint. **No provider is connected in this deployment, so no live value, timestamp, or provider response is shown — every provider reports its real status (planned / architecture-ready) and nothing is fabricated.** Reuses the existing live-sky provider registry, the NASA/NOAA/SWPC/JPL/MPC organisations, and the space-weather phenomena; provider keys are validated against the real registry
+
 **Scientific AI Research Assistant Platform (Program BS)**
 
 - [Scientific AI Research Assistant Platform](docs/SCIENTIFIC_ASSISTANT.md) — turn the graph into an explainable, grounded assistant (`engine.scientificAssistant`): 18 capabilities, 13 **grounded** — backed by real retrieval over the graph today (scientific search, object explanation, concept comparison, relationship explanation, evidence chains, provenance- & citation-aware answers, related concepts, reading recommendations, scientific summaries, learning-path generation, cross-domain reasoning, the no-hallucination layer) that surface **only facts already in the graph**, each with its provenance and a traceable chain of relations — and 5 **architecture-ready** (the educational/research/expert answer modes, RAG-ready interfaces, prompt orchestration, conversation memory, LLM integration) prepared for a future model that would phrase these grounded facts and never add to them. There is no language model in this layer; nothing is generated
