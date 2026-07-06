@@ -2400,6 +2400,42 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["live_data_source:noaa-swpc", "live_data_source:nasa-donki", "live_data_source:minor-planet-center", "live_data_source:jpl-cneos"],
     next: ["planning-a-night-of-observing", "exploring-the-knowledge-graph"],
   },
+  {
+    slug: "seeing-the-universe-in-3d",
+    title: "Seeing the Universe in 3D",
+    description: "How AsteriaStar builds an interactive three-dimensional universe from real measured coordinates — true parallax distances, to-scale orbits, and the celestial sphere — and how it stays honest about what can, and cannot, be placed in true 3D.",
+    accent: "nebula",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The universe in 3D", href: "/universe-3d", blurb: "A cosmos you can turn in your hands — measured, not invented." },
+          { title: "The Solar System to scale", href: "/universe-3d/solar-system", blurb: "Real orbit radii — the true spacing of the planets." },
+          { title: "The nearest stars in 3D", href: "/universe-3d/stars", blurb: "The depth a flat star chart cannot show." },
+          { title: "What can be shown in true 3D", href: "/universe-3d/data-coverage", blurb: "Which objects have measured positions — and which do not." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Constellations as illusions", href: "/universe-3d/constellations", blurb: "The familiar pattern is a line-of-sight effect." },
+          { title: "The 2D all-sky atlas", href: "/sky-atlas/all-sky-star-atlas", blurb: "The flat chart the 3D scene completes." },
+          { title: "The star catalogue", href: "/stars", blurb: "The measured stars behind the scenes." },
+          { title: "The Solar System", href: "/solar-system", blurb: "The bodies and their real orbital data." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "The Milky Way", href: "/universe-3d/milky-way", blurb: "Honest about scale — descriptive where no numeric geometry exists." },
+          { title: "The Local Group", href: "/universe-3d/local-group", blurb: "Our galactic neighbourhood, by its descriptive scale labels." },
+          { title: "How positions are sourced", href: "/transparency/source-quality", blurb: "Measured coordinates, never fabricated ones." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["universe_scene:solar-system", "universe_scene:stars", "universe_scene:constellations", "universe_scene:milky-way"],
+    next: ["observing-the-night-sky", "exploring-the-knowledge-graph"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

@@ -514,6 +514,15 @@ export function GET(): Response {
   lines.push(`- Space weather: ${absoluteUrl("/live/discover/space-weather")} · Solar activity: ${absoluteUrl("/live/discover/solar-activity")} · Near-Earth objects: ${absoluteUrl("/live/discover/near-earth-objects")} · Data status: ${absoluteUrl("/live/data-status")}`);
   lines.push("");
 
+  lines.push("## The Universe in 3D");
+  lines.push(
+    `An interactive 3D/Canvas view of the universe built ONLY from real measured coordinates (engine.webglUniverse), completing the Sky Atlas's "3D-ready" views. Interactive scenes: the Solar System to scale (real semi-major axes), the local stellar neighbourhood at true parallax distances (${engine.star.count} catalogued stars, those with a measured distance placed in true 3D), and a constellation on the celestial sphere (real directions — the familiar pattern shown to be a line-of-sight illusion, with no invented connecting lines). HONESTY: a star with no measured distance is never placed in a distance-true scene; the Milky Way and Local Group scenes are DESCRIPTIVE because the catalogue carries no numeric galaxy-scale geometry — no position, distance, or coordinate is fabricated. Rendering is a build-safe 2D canvas (no WebGL dependency) with a server-rendered static image and a data table as the no-JavaScript / accessibility fallback. Coverage is documented at /universe-3d/data-coverage. REUSES the star, solar-system, constellation, galaxy and galactic-structure data already in the graph; nothing duplicated.`,
+  );
+  lines.push(`- [The Universe in 3D](${absoluteUrl("/universe-3d")})`);
+  lines.push(`- Scenes: ${engine.webglUniverse.all().map((r) => absoluteUrl(`/universe-3d/${r.slug}`)).join(" · ")}`);
+  lines.push(`- Data coverage: ${absoluteUrl("/universe-3d/data-coverage")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,
