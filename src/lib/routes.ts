@@ -93,6 +93,7 @@ export const ROUTES = {
   assistant: "/assistant",
   live: "/live",
   universe3d: "/universe-3d",
+  workspace: "/workspace",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -695,4 +696,7 @@ export function liveDiscoveryPath(slug: string): string {
 }
 export function universeScenePath(slug: string): string {
   return `/universe-3d/${slug}`;
+}
+export function workspaceFeaturePath(slug: string): string {
+  return `/workspace/${slug}`;
 }

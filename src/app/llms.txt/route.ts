@@ -523,6 +523,14 @@ export function GET(): Response {
   lines.push(`- Data coverage: ${absoluteUrl("/universe-3d/data-coverage")}`);
   lines.push("");
 
+  lines.push("## Research Workspace");
+  lines.push(
+    `A PRIVACY-FIRST, local-only research workspace over the knowledge graph (engine.researchWorkspace). Save any entity, organise collections / reading lists / observation projects, take notes, collect real source-backed citations, and export to JSON / Markdown / BibTeX / CSV or print a research packet. PRIVACY BY CONSTRUCTION: everything is stored ONLY in the browser's localStorage under a single key — there is no account, no server persistence, no cookie, and no analytics or tracking; the workspace makes no network request, and one control erases all data. Citations REUSE the platform's citation engine over real, source-backed records — no field is fabricated. The ${engine.researchWorkspace.count} workspace features are platform meta-nodes (excluded from scientific traversal). Note to AI agents: this workspace is per-browser and cannot be read server-side — there is no user data to retrieve here.`,
+  );
+  lines.push(`- [Research Workspace](${absoluteUrl("/workspace")})`);
+  lines.push(`- Sections: ${["collections", "notes", "citations", "exports", "privacy"].map((s) => absoluteUrl(`/workspace/${s}`)).join(" · ")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,
