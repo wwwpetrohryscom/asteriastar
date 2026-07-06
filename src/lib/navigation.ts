@@ -94,6 +94,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Stellar Astrophysics Deep-Dive", href: ROUTES.stellarAstrophysics, description: "How stars form, live, forge the elements & die — the HR diagram, stellar evolution, nucleosynthesis, degeneracy pressure, populations & binaries" },
             { name: "Galactic Astronomy & the Milky Way", href: ROUTES.galacticAstronomy, description: "The anatomy & life of our Galaxy — the discs, bulge, bar, halo & spiral arms, the Galactic Centre, rotation & dark matter, stellar streams, archaeology & the Andromeda collision" },
             { name: "Astroinformatics & the Virtual Research Ecosystem", href: ROUTES.astroinformatics, description: "The software, computing & data practices of modern astronomy — the scientific Python ecosystem, Astropy, science platforms, HPC & GPU computing, workflows, provenance & big-data astronomy" },
+            { name: "Deep-Space Human Exploration & Habitation", href: ROUTES.deepSpaceExploration, description: "Sending humans beyond Earth to stay — the Moon-to-Mars architecture, lunar & Mars bases, transit habitats, surface power & mobility, and the challenges of radiation, isolation & Earth independence" },
             { name: "Human Spaceflight", href: ROUTES.humanSpaceflight, description: "Stations, crews, spacewalks" },
             { name: "Observatories", href: ROUTES.observatories, description: "Telescopes, surveys, bands" },
             { name: "Exoplanets", href: ROUTES.exoplanets, description: "Worlds beyond the Sun" },

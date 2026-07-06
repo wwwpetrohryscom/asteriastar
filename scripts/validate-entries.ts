@@ -824,6 +824,22 @@ async function main() {
     `✓ Astroinformatics valid — ${bhCat.BH_STATS.software} software packages, ${bhCat.BH_STATS.computing} computing infrastructures, ${bhCat.BH_STATS.concepts} concepts · ${bhCat.BH_STATS.newEntities} new entities, ${bhCat.BH_STATS.relations} relations (reused VO/TAP/FITS/archives/open-science/ML/Rubin/LSST/SKA/Gaia; no fabricated data)`,
   );
 
+  const biCat = await import("../src/knowledge-graph/data/deep-space-exploration-catalog");
+  const biIssues = biCat.validateDeepSpaceExploration();
+  const { getEntityById: getBiEnt } = await import("../src/knowledge-graph");
+  for (const r of biCat.relations) {
+    if (!getBiEnt(r.from)) biIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBiEnt(r.to)) biIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (biIssues.length > 0) {
+    console.error(`\n✗ ${biIssues.length} deep-space-exploration issue(s):`);
+    for (const i of biIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Deep-space exploration valid — ${biCat.BI_STATS.architecture} exploration architectures, ${biCat.BI_STATS.challenges} deep-space challenges · ${biCat.BI_STATS.newEntities} new entities, ${biCat.BI_STATS.relations} relations (reused Artemis/Gateway/ISRU/habitats/countermeasures/ECLSS/planetary-protection/DSN; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
