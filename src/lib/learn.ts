@@ -2472,6 +2472,42 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["workspace_feature:saved-entities", "workspace_feature:collections", "workspace_feature:citation-folder", "workspace_feature:privacy"],
     next: ["exploring-the-knowledge-graph", "reading-live-scientific-data"],
   },
+  {
+    slug: "using-the-grounded-assistant",
+    title: "Using the Grounded Assistant",
+    description: "How AsteriaStar's grounded assistant answers from the knowledge graph alone — explaining entities, comparing concepts, tracing evidence paths, and building learning paths — and how it stays honest: it returns only real facts and citations, never generates prose, and says 'not enough graph evidence' rather than guess.",
+    accent: "plasma",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The assistant", href: "/assistant", blurb: "Grounded, not generated — answers from the graph alone." },
+          { title: "Explain an entity", href: "/assistant/entity", blurb: "Its description, real relations, and cited sources." },
+          { title: "Compare two entities", href: "/assistant/compare", blurb: "Their real common ground." },
+          { title: "What it will not do", href: "/assistant/limitations", blurb: "No prose, no invented facts, no fake AI." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Evidence paths", href: "/assistant/evidence-path", blurb: "The chain of relations linking two entities." },
+          { title: "Learning paths", href: "/assistant/learning", blurb: "A curriculum built from the graph." },
+          { title: "The no-hallucination layer", href: "/assistant/no-hallucination-layer", blurb: "Only real facts, always checkable." },
+          { title: "Source quality", href: "/transparency/source-quality", blurb: "Where the cited facts come from." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "The deterministic API", href: "/developers/api", blurb: "explain, compare & path endpoints." },
+          { title: "RAG architecture, unwired", href: "/assistant/limitations", blurb: "The citation-forced packet a model would receive." },
+          { title: "Exploring the graph", href: "/graph", blurb: "The graph the assistant reasons over." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["assistant_capability:object-explanation", "assistant_capability:concept-comparison", "assistant_capability:evidence-chains", "assistant_capability:no-hallucination-layer"],
+    next: ["exploring-the-knowledge-graph", "building-a-research-workspace"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

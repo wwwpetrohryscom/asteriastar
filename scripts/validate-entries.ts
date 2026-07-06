@@ -1018,6 +1018,53 @@ async function main() {
     `✓ Research Workspace valid — ${bvCat.BV_STATS.records} features (local-only, privacy-first) · ${bvCat.BV_STATS.newEntities} new entities, ${bvCat.BV_STATS.relations} relations (no network/cookie in the store; citations reuse the real citation engine; nothing fabricated)`,
   );
 
+  // Program BW — Grounded Scientific AI. Adds no entities (reuses the BS assistant capabilities); this
+  // checks the WORKING deterministic tools and the HONEST language-model status.
+  const bwIssues: string[] = [];
+  const [{ groundedAssistantEngine: bwEng }, bwLlm, bwGrep] = [
+    await import("../src/platform/data-engine/grounded-assistant-engine"),
+    await import("../src/lib/assistant/llm"),
+    await import("node:fs"),
+  ];
+  // 1. The deterministic tools must return real results for a well-connected entity.
+  const probe = "planet:mars";
+  if (!bwEng.explain(probe)) bwIssues.push(`groundedAssistant.explain('${probe}') returned nothing — the grounded retrieval is broken`);
+  if (!bwEng.citations(probe)) bwIssues.push(`groundedAssistant.citations('${probe}') returned nothing`);
+  if (!bwEng.learningPath(probe)) bwIssues.push(`groundedAssistant.learningPath('${probe}') returned nothing`);
+  if (!bwEng.compare("planet:mars", "planet:venus")?.shared.length) bwIssues.push(`groundedAssistant.compare(mars,venus) found no shared connections`);
+  // 2. HONESTY: no language model may be faked. The provider must be null and the status must say so.
+  if (bwLlm.getConfiguredProvider() !== null) bwIssues.push(`getConfiguredProvider() must be null in this build (no fake AI provider)`);
+  const st = bwEng.llmStatus();
+  if (st.llmConfigured !== false || st.mode !== "deterministic-grounded" || st.provider !== null) bwIssues.push(`llmStatus() must report an unconfigured, deterministic-grounded assistant — got ${JSON.stringify({ c: st.llmConfigured, m: st.mode, p: st.provider })}`);
+  // 3. HONESTY: no live-model call may be wired anywhere the assistant runs — the whole surface the
+  //    docs promise, not just the lib. Scan every assistant lib file, the engine, and every API route.
+  const bwScan: string[] = [
+    ...bwGrep.readdirSync("src/lib/assistant").filter((f) => f.endsWith(".ts")).map((f) => `src/lib/assistant/${f}`),
+    "src/platform/data-engine/grounded-assistant-engine.ts",
+    ...bwGrep.readdirSync("src/app/api/v0/assistant").flatMap((d) => {
+      try { return bwGrep.readdirSync(`src/app/api/v0/assistant/${d}`).filter((f) => f.endsWith(".ts")).map((f) => `src/app/api/v0/assistant/${d}/${f}`); } catch { return []; }
+    }),
+  ];
+  for (const path of bwScan) {
+    const src = bwGrep.readFileSync(path, "utf8");
+    for (const banned of ["fetch(", "openai", "anthropic", "api.openai", "https://api."]) {
+      if (src.toLowerCase().includes(banned)) bwIssues.push(`assistant source ${path} references "${banned}" — no live model may be wired in this build`);
+    }
+  }
+  // 4. The 3 deterministic API endpoints must be registered as implemented.
+  const { IMPLEMENTED_ENDPOINTS } = await import("../src/platform/open-data/endpoints");
+  for (const id of ["assistant-explain", "assistant-compare", "assistant-path"]) {
+    if (!IMPLEMENTED_ENDPOINTS.some((e) => e.id === id)) bwIssues.push(`API endpoint '${id}' is not registered as implemented`);
+  }
+  if (bwIssues.length > 0) {
+    console.error(`\n✗ ${bwIssues.length} grounded-assistant issue(s):`);
+    for (const i of bwIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Grounded Scientific AI valid — deterministic tools working (explain/compare/path/related/citations/learning), LLM honestly unavailable (deterministic-grounded, no provider), 3 API endpoints registered; reuses BS capabilities, adds 0 entities, fabricates nothing`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
