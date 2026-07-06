@@ -466,6 +466,14 @@ export function GET(): Response {
   lines.push(`- Architectures of exploration: ${absoluteUrl("/deep-space-exploration/discover/exploration-architecture")} · The challenges of deep space: ${absoluteUrl("/deep-space-exploration/discover/deep-space-challenges")}`);
   lines.push("");
 
+  lines.push("## Interactive Sky Atlas & 3D Universe Platform");
+  lines.push(
+    `The visual layer over the knowledge graph (engine.skyAtlas). Atlas views: the all-sky star atlas, the constellation atlas, the Messier and deep-sky atlases, the bright-star map, and the Solar System, Milky Way, Local Group, galaxy, planet, moon, exoplanet, and distance-scale explorers. Data overlays: constellation lines, observation conditions, and the JWST, Hubble, Gaia, and telescope-field-of-view overlays. Positional maps are rendered as scalable vector graphics directly from the REAL measured right ascension and declination already stored in the star and deep-sky catalogues — no position is fabricated, object counts are computed from the live collections, and three-dimensional views are prepared as architecture rather than invented scenes. REUSES the real stars, deep-sky objects, planets, moons, galaxies, exoplanets, constellations, and the JWST/Hubble/Gaia facilities in the graph; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Interactive Sky Atlas & 3D Universe](${absoluteUrl("/sky-atlas")})`);
+  lines.push(`- Maps of the sky: ${absoluteUrl("/sky-atlas/discover/sky-maps")} · Explorers of the universe: ${absoluteUrl("/sky-atlas/discover/universe-explorers")} · Data overlays: ${absoluteUrl("/sky-atlas/discover/overlays")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

@@ -2178,6 +2178,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["exploration_architecture:moon-to-mars-architecture", "exploration_architecture:the-deep-space-transit-habitat", "deep_space_challenge:the-deep-space-radiation-challenge", "deep_space_challenge:long-duration-life-support"],
     next: ["understanding-humans-in-space", "understanding-building-in-space"],
   },
+  {
+    slug: "navigating-the-sky-atlas",
+    title: "Navigating the Sky Atlas",
+    description: "How to read the visual layer of AsteriaStar — the all-sky star charts drawn from real coordinates, the constellation and deep-sky atlases, and the explorers that browse the Solar System, the Milky Way, and the Local Group. Every map is drawn from measured positions; nothing is invented.",
+    accent: "nebula",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The visual layer", href: "/sky-atlas", blurb: "Turning the catalogue into a navigable sky." },
+          { title: "Maps of the sky", href: "/sky-atlas/discover/sky-maps", blurb: "Charts drawn from real coordinates." },
+          { title: "The all-sky star atlas", href: "/sky-atlas/all-sky-star-atlas", blurb: "Every catalogued star at its real position." },
+          { title: "The constellation atlas", href: "/sky-atlas/constellation-atlas", blurb: "The 88 patterns of the night sky." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "The Messier atlas", href: "/sky-atlas/messier-atlas", blurb: "The classic deep-sky target list." },
+          { title: "The deep-sky atlas", href: "/sky-atlas/deep-sky-atlas", blurb: "Galaxies, nebulae & clusters, mapped." },
+          { title: "Explorers of the universe", href: "/sky-atlas/discover/universe-explorers", blurb: "From the Solar System to the Local Group." },
+          { title: "The exoplanet explorer", href: "/sky-atlas/exoplanet-explorer", blurb: "The confirmed worlds of other stars." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "The Local Group explorer", href: "/sky-atlas/local-group-explorer", blurb: "Our galactic neighbourhood." },
+          { title: "The distance & scale explorer", href: "/sky-atlas/distance-scale-explorer", blurb: "From the nearest star to the cosmic horizon." },
+          { title: "Data overlays", href: "/sky-atlas/discover/overlays", blurb: "Constellation lines, observing conditions & telescope fields." },
+          { title: "The Gaia survey overlay", href: "/sky-atlas/gaia-survey-overlay", blurb: "The astrometry behind the star catalogue." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["atlas_view:all-sky-star-atlas", "atlas_view:deep-sky-atlas", "atlas_view:local-group-explorer", "atlas_overlay:gaia-survey-overlay"],
+    next: ["understanding-constellations", "understanding-the-milky-way"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
