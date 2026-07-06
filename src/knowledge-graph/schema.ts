@@ -344,6 +344,7 @@ export const ENTITY_TYPES = [
   "live_data_source",
   "universe_scene",
   "workspace_feature",
+  "platform_capability",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1332,4 +1333,5 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   live_data_source: "Live data source",
   universe_scene: "Universe scene",
   workspace_feature: "Workspace feature",
+  platform_capability: "Platform capability",
 };

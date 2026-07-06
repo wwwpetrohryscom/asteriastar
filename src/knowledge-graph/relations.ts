@@ -71,6 +71,7 @@ import { relations as scientificAssistantCatalog } from "@/knowledge-graph/data/
 import { relations as liveDataCatalog } from "@/knowledge-graph/data/live-data-catalog";
 import { relations as webglUniverseCatalog } from "@/knowledge-graph/data/webgl-universe-catalog";
 import { relations as workspaceCatalog } from "@/knowledge-graph/data/workspace-catalog";
+import { relations as openPlatformCatalog } from "@/knowledge-graph/data/open-platform-catalog";
 import { coreRelations } from "@/knowledge-graph/data/core-relations";
 
 /**
@@ -156,4 +157,5 @@ export const relations: GraphRelation[] = [
   ...liveDataCatalog,
   ...webglUniverseCatalog,
   ...workspaceCatalog,
+  ...openPlatformCatalog,
 ];

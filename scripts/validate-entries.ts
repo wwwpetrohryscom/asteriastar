@@ -1065,6 +1065,51 @@ async function main() {
     `✓ Grounded Scientific AI valid — deterministic tools working (explain/compare/path/related/citations/learning), LLM honestly unavailable (deterministic-grounded, no provider), 3 API endpoints registered; reuses BS capabilities, adds 0 entities, fabricates nothing`,
   );
 
+  const bxCat = await import("../src/knowledge-graph/data/open-platform-catalog");
+  const bxIssues = bxCat.validateOpenPlatform();
+  const { getEntityById: getBxEnt } = await import("../src/knowledge-graph");
+  for (const r of bxCat.relations) {
+    if (!getBxEnt(r.from)) bxIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBxEnt(r.to)) bxIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  for (const c of bxCat.capabilities) {
+    for (const k of c.relatedKeys ?? []) if (!getBxEnt(k)) bxIssues.push(`capability ${c.id}: relatedKey "${k}" does not resolve to a real entity`);
+  }
+  // HONESTY: no fake downloads. Every download's checksum must be a real SHA-256 of the EXACT bytes the
+  // export route serves, and its byte size must match. Recompute both from the served content and compare.
+  const { computeDownloadManifest } = await import("../src/lib/open-platform/downloads");
+  const { GET: graphJsonGet } = await import("../src/app/data/graph.json/route");
+  const { GET: graphLdGet } = await import("../src/app/data/graph.jsonld/route");
+  const { createHash } = await import("node:crypto");
+  const served: Record<string, string> = {
+    "/data/graph.json": await (graphJsonGet() as Response).text(),
+    "/data/graph.jsonld": await (graphLdGet() as Response).text(),
+  };
+  for (const d of computeDownloadManifest()) {
+    if (!/^[a-f0-9]{64}$/.test(d.sha256)) bxIssues.push(`download ${d.path}: sha256 is not a valid 64-hex digest`);
+    if (!(d.bytes > 0)) bxIssues.push(`download ${d.path}: byte size must be > 0`);
+    const content = served[d.path];
+    if (content == null) { bxIssues.push(`download ${d.path}: no served route to verify against`); continue; }
+    const realHash = createHash("sha256").update(content).digest("hex");
+    if (realHash !== d.sha256) bxIssues.push(`download ${d.path}: advertised checksum does NOT match the served bytes (fabricated checksum)`);
+    if (Buffer.byteLength(content, "utf8") !== d.bytes) bxIssues.push(`download ${d.path}: advertised size does NOT match the served bytes`);
+  }
+  // HONESTY: only implemented endpoints may be advertised as live; sparql/graphql must stay planned.
+  const { ENDPOINTS: BX_ENDPOINTS } = await import("../src/platform/open-data/endpoints");
+  if (!BX_ENDPOINTS.some((e) => e.id === "sources-list" && e.status === "implemented")) bxIssues.push(`the /api/v0/sources endpoint must be registered as implemented`);
+  for (const id of ["graph-sparql", "graph-graphql"]) {
+    const e = BX_ENDPOINTS.find((x) => x.id === id);
+    if (!e || e.status !== "planned") bxIssues.push(`architecture-ready endpoint '${id}' must be registered as 'planned', not advertised as live`);
+  }
+  if (bxIssues.length > 0) {
+    console.error(`\n✗ ${bxIssues.length} open-platform issue(s):`);
+    for (const i of bxIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Open Platform valid — ${bxCat.BX_STATS.records} capabilities (${bxCat.BX_STATS.available} available, ${bxCat.BX_STATS.byStatus["architecture-ready"]} architecture-ready) · ${bxCat.BX_STATS.newEntities} new entities, ${bxCat.BX_STATS.relations} relations; download checksums verified real against served bytes; no fake endpoint or download`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

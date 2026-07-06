@@ -2508,6 +2508,42 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["assistant_capability:object-explanation", "assistant_capability:concept-comparison", "assistant_capability:evidence-chains", "assistant_capability:no-hallucination-layer"],
     next: ["exploring-the-knowledge-graph", "building-a-research-workspace"],
   },
+  {
+    slug: "building-on-the-open-platform",
+    title: "Building on the Open Platform",
+    description: "How to build on AsteriaStar as an open, research-grade data platform — the public Graph API, the JSON and JSON-LD/RDF exports, bulk downloads with verifiable checksums, and the licensing — and how it stays honest about the standards it is architecture-ready for but does not yet host.",
+    accent: "ember",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The open platform", href: "/open-platform", blurb: "The whole graph, open — what is available now." },
+          { title: "For developers", href: "/developers/platform", blurb: "Quick start: API, exports, downloads, licences." },
+          { title: "Downloads & checksums", href: "/open-platform/downloads", blurb: "Real SHA-256 checksums you can verify." },
+          { title: "Licensing", href: "/open-platform/licenses", blurb: "CC BY-SA 4.0 + per-source terms." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "The public API", href: "/open-platform/api", blurb: "Entities, relations, search, traversal, paths." },
+          { title: "OpenAPI 3.1 spec", href: "/api/v0/openapi.json", blurb: "The machine-readable API contract." },
+          { title: "Graph as linked data", href: "/open-platform/graph", blurb: "RDF-compatible JSON-LD, SPARQL-ready." },
+          { title: "Dataset exports", href: "/open-platform/datasets", blurb: "Focused JSON/CSV slices." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "The roadmap", href: "/open-platform/roadmap", blurb: "SPARQL, GraphQL, SDKs, DOI, VO — architecture-ready." },
+          { title: "Federation & the VO", href: "/open-platform/federation", blurb: "Resolvable IRIs; TAP/ADQL prepared." },
+          { title: "The sources API", href: "/api/v0/sources", blurb: "Every source, its licence & scope." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["platform_capability:public-graph-api", "platform_capability:graph-jsonld", "platform_capability:bulk-downloads", "platform_capability:licensing-matrix"],
+    next: ["exploring-the-knowledge-graph", "using-the-grounded-assistant"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
