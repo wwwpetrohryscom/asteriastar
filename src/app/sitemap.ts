@@ -56,6 +56,7 @@ import { BI_DISCOVERIES } from "@/app/deep-space-exploration/discovery";
 import { BO_DISCOVERIES } from "@/app/sky-atlas/discovery";
 import { BP_DISCOVERIES } from "@/app/calculators/discovery";
 import { BQ_DISCOVERIES } from "@/app/observing/discovery";
+import { BR_DISCOVERIES } from "@/app/graph/discovery";
 import { HSF_DISCOVERIES } from "@/app/human-spaceflight/discovery";
 import { OBS_DISCOVERIES } from "@/app/observatories/discovery";
 import { EXO_DISCOVERIES } from "@/app/exoplanets/discovery";
@@ -218,6 +219,8 @@ import {
   calculatorsDiscoveryPath,
   observingPath,
   observingDiscoveryPath,
+  graphViewPath,
+  graphDiscoveryPath,
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
@@ -655,6 +658,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...BQ_DISCOVERIES.map((d) => ({ url: absoluteUrl(observingDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const graphRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.graph), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.graphExplorer.all().map((r) => ({ url: absoluteUrl(graphViewPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...BR_DISCOVERIES.map((d) => ({ url: absoluteUrl(graphDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const deepSkyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
     ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -735,6 +744,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...skyAtlasRoutes,
     ...calculatorRoutes,
     ...observingRoutes,
+    ...graphRoutes,
     ...hsfRoutes,
     ...obsRoutes,
     ...exoRoutes,

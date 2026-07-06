@@ -108,6 +108,10 @@ automatically.
 - [Editorial Policy](docs/EDITORIAL_POLICY.md)
 - [Sources Policy](docs/SOURCES_POLICY.md)
 
+**Scientific Knowledge Graph Explorer (Program BR)**
+
+- [Scientific Knowledge Graph Explorer](docs/GRAPH_EXPLORER.md) — explore the complete graph visually (`engine.graphExplorer`): 17 views, the computed ones running **real breadth-first algorithms over the actual graph** (7,000+ entities, 11,000+ relations) — live statistics & knowledge metrics (counts, degree distribution, most-connected hubs), the entity & relation explorers, neighbourhood expansion, the shortest-path finder (a genuine chain of relations between any two entities), the taxonomy & cross-domain explorers, graph search, and the mission/institution/discovery/scientific-lineage graphs — plus the force-directed/hierarchical/cluster visualisation modes and the architecture-ready graph API. Every number is counted live and every path is a real chain of relations; nothing is fabricated
+
 **Professional Observatory Planning Suite (Program BQ)**
 
 - [Professional Observatory Planning Suite](docs/OBSERVING_SUITE.md) — an observing platform built on the graph (`engine.observingSuite`): the 14 planners (tonight, visibility, target, Moon, planet, deep-sky, season, twilight, darkness, altitude-chart, meridian-transit, equipment, astrophotography, session) organise the platform's real computed live-sky data (twilight, the Moon, the planets) and its observing equipment, sites & techniques into an observing workflow — no ephemeris is re-implemented — and the 5 architecture-ready data integrations (weather, seeing, transparency, cloud cover, Bortle sky brightness) are wired into the planners and await connected providers, so no observing conditions are ever fabricated. Privacy-first: an observer's location stays on their device. Reuses the platform's live-sky computations, observing equipment/sites/techniques, and the Moon, Sun, planets, meteor showers & deep-sky objects

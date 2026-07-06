@@ -490,6 +490,14 @@ export function GET(): Response {
   lines.push(`- The planners: ${absoluteUrl("/observing/discover/observing-planners")} · Data integrations: ${absoluteUrl("/observing/discover/data-integrations")}`);
   lines.push("");
 
+  lines.push("## Scientific Knowledge Graph Explorer");
+  lines.push(
+    `Explore the complete scientific knowledge graph visually (engine.graphExplorer). The computed views run REAL graph algorithms over the actual graph — live statistics and knowledge metrics (entity/relation/type counts, degree distribution, most-connected hubs), the entity and relation explorers, breadth-first neighbourhood expansion, the shortest-path finder (a genuine chain of relations between any two entities), the taxonomy explorer, the cross-domain explorer, and graph search — plus the mission, institution, discovery, and scientific-lineage graphs. The rendering views (force-directed, hierarchical, cluster) are visualisation modes, and the graph API is an architecture-ready interface. Every number is counted live from the graph and every path is a real chain of relations; nothing is fabricated. Reuses example entities across the graph; adds only the view definitions.`,
+  );
+  lines.push(`- [Scientific Knowledge Graph Explorer](${absoluteUrl("/graph")})`);
+  lines.push(`- Explore the graph: ${absoluteUrl("/graph/discover/explore")} · Lenses & visualisations: ${absoluteUrl("/graph/discover/lenses")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

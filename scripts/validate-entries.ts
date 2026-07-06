@@ -888,6 +888,22 @@ async function main() {
     `✓ Observing suite valid — ${bqCat.BQ_STATS.planners} planners, ${bqCat.BQ_STATS.integrations} architecture-ready integrations · ${bqCat.BQ_STATS.newEntities} new entities, ${bqCat.BQ_STATS.relations} relations (reused live-sky/equipment/sites/techniques/Moon/planets/showers; no ephemeris re-implemented, no conditions fabricated)`,
   );
 
+  const brCat = await import("../src/knowledge-graph/data/graph-explorer-catalog");
+  const brIssues = brCat.validateGraphExplorer();
+  const { getEntityById: getBrEnt } = await import("../src/knowledge-graph");
+  for (const r of brCat.relations) {
+    if (!getBrEnt(r.from)) brIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBrEnt(r.to)) brIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (brIssues.length > 0) {
+    console.error(`\n✗ ${brIssues.length} graph-explorer issue(s):`);
+    for (const i of brIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Graph explorer valid — ${brCat.BR_STATS.records} views (${brCat.BR_STATS.byBacking.computed} computed, ${brCat.BR_STATS.byBacking.rendering} rendering, ${brCat.BR_STATS.byBacking.architecture} architecture) · ${brCat.BR_STATS.newEntities} new entities, ${brCat.BR_STATS.relations} relations (real algorithms over the actual graph; nothing fabricated)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

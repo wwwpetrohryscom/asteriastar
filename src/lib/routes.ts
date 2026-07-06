@@ -89,6 +89,7 @@ export const ROUTES = {
   skyAtlas: "/sky-atlas",
   calculators: "/calculators",
   observing: "/observing",
+  graph: "/graph",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -670,4 +671,10 @@ export function observingPath(slug: string): string {
 }
 export function observingDiscoveryPath(slug: string): string {
   return `/observing/discover/${slug}`;
+}
+export function graphViewPath(slug: string): string {
+  return `/graph/${slug}`;
+}
+export function graphDiscoveryPath(slug: string): string {
+  return `/graph/discover/${slug}`;
 }
