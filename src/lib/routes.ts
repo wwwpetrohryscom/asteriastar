@@ -87,6 +87,7 @@ export const ROUTES = {
   astroinformatics: "/astroinformatics",
   deepSpaceExploration: "/deep-space-exploration",
   skyAtlas: "/sky-atlas",
+  calculators: "/calculators",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -656,4 +657,10 @@ export function skyAtlasPath(slug: string): string {
 }
 export function skyAtlasDiscoveryPath(slug: string): string {
   return `/sky-atlas/discover/${slug}`;
+}
+export function calculatorPath(slug: string): string {
+  return `/calculators/${slug}`;
+}
+export function calculatorsDiscoveryPath(slug: string): string {
+  return `/calculators/discover/${slug}`;
 }

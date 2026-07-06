@@ -2215,6 +2215,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["atlas_view:all-sky-star-atlas", "atlas_view:deep-sky-atlas", "atlas_view:local-group-explorer", "atlas_overlay:gaia-survey-overlay"],
     next: ["understanding-constellations", "understanding-the-milky-way"],
   },
+  {
+    slug: "using-the-scientific-calculators",
+    title: "Using the Scientific Calculators",
+    description: "How to compute the numbers of astronomy yourself — orbital speeds and periods, stellar luminosities and lifetimes, distances from magnitudes, exoplanet temperatures, and telescope optics. Each calculator evaluates its published formula from real constants; every one is validated against a known result.",
+    accent: "ember",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The calculator platform", href: "/calculators", blurb: "Every astronomy calculator, unified and honest." },
+          { title: "Orbits & gravity", href: "/calculators/discover/orbital-and-gravity", blurb: "The mechanics of motion and gravity." },
+          { title: "Escape velocity", href: "/calculators/escape-velocity", blurb: "The speed to break free of gravity." },
+          { title: "Orbital period (Kepler)", href: "/calculators/orbital-period", blurb: "How long an orbit takes." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Stars & the cosmos", href: "/calculators/discover/stars-and-cosmos", blurb: "The physics of stars and the universe." },
+          { title: "Stellar luminosity", href: "/calculators/stellar-luminosity", blurb: "A star's power from its size and temperature." },
+          { title: "Parallax distance", href: "/calculators/parallax-distance", blurb: "The most direct distance measurement." },
+          { title: "Planet equilibrium temperature", href: "/calculators/equilibrium-temperature", blurb: "How warm a planet is from its star." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "The Schwarzschild radius", href: "/calculators/schwarzschild-radius", blurb: "The size of a black hole's horizon." },
+          { title: "Telescopes & observing", href: "/calculators/discover/telescopes-and-observing", blurb: "The optics of observing." },
+          { title: "Angular resolution", href: "/calculators/angular-resolution", blurb: "The finest detail a telescope can see." },
+          { title: "Hubble distance", href: "/calculators/hubble-distance", blurb: "Distance from redshift and the Hubble constant." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["scientific_calculator:escape-velocity", "scientific_calculator:orbital-period", "scientific_calculator:stellar-luminosity", "scientific_calculator:schwarzschild-radius"],
+    next: ["understanding-celestial-mechanics", "understanding-stellar-astrophysics"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

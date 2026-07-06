@@ -336,6 +336,7 @@ export const ENTITY_TYPES = [
   "deep_space_challenge",
   "atlas_view",
   "atlas_overlay",
+  "scientific_calculator",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1316,4 +1317,5 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   deep_space_challenge: "Deep-space challenge",
   atlas_view: "Atlas view",
   atlas_overlay: "Atlas overlay",
+  scientific_calculator: "Scientific calculator",
 };

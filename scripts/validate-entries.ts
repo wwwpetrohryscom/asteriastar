@@ -856,6 +856,22 @@ async function main() {
     `✓ Sky atlas valid — ${boCat.BO_STATS.views} atlas views, ${boCat.BO_STATS.overlays} overlays · ${boCat.BO_STATS.newEntities} new entities, ${boCat.BO_STATS.relations} relations (reused stars/deep-sky/planets/galaxies/exoplanets/telescopes; positions from real coordinates, none fabricated)`,
   );
 
+  const bpCat = await import("../src/knowledge-graph/data/scientific-calculators-catalog");
+  const bpIssues = bpCat.validateScientificCalculators();
+  const { getEntityById: getBpEnt } = await import("../src/knowledge-graph");
+  for (const r of bpCat.relations) {
+    if (!getBpEnt(r.from)) bpIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBpEnt(r.to)) bpIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (bpIssues.length > 0) {
+    console.error(`\n✗ ${bpIssues.length} scientific-calculators issue(s):`);
+    for (const i of bpIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Scientific calculators valid — ${bpCat.BP_STATS.records} calculators (${bpCat.BP_STATS.byCategory.orbital} orbital, ${bpCat.BP_STATS.byCategory.stellar} stellar, ${bpCat.BP_STATS.byCategory.observational} photometry, ${bpCat.BP_STATS.byCategory.exoplanet} exoplanet, ${bpCat.BP_STATS.byCategory.cosmology} cosmology, ${bpCat.BP_STATS.byCategory.instrument} instrument) · ${bpCat.BP_STATS.newEntities} new entities, ${bpCat.BP_STATS.relations} relations · all formulae validated against known values (CODATA/IAU constants; nothing fabricated)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
