@@ -2104,6 +2104,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["galactic_structure:galactic-center", "galactic_dynamics:galactic-rotation", "galactic_dynamics:stellar-streams", "galactic_dynamics:the-milky-way-andromeda-collision"],
     next: ["understanding-stellar-astrophysics", "understanding-the-universe"],
   },
+  {
+    slug: "understanding-astroinformatics",
+    title: "Understanding Astroinformatics",
+    description: "The software, computing, and data infrastructure behind modern astronomy — the open-source tools researchers compute with, the platforms that bring analysis to petabytes of survey data, and the practices that keep it all reproducible. Built on well-established practice; nothing is fabricated.",
+    accent: "stone",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The virtual research ecosystem", href: "/astroinformatics", blurb: "How astronomers turn data into science." },
+          { title: "Research software", href: "/astroinformatics/discover/research-software", blurb: "The tools astronomers compute with." },
+          { title: "The scientific Python ecosystem", href: "/astroinformatics/scientific-python-ecosystem", blurb: "The common language of analysis." },
+          { title: "Astropy", href: "/astroinformatics/astropy", blurb: "The community core package for astronomy." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Research computing", href: "/astroinformatics/discover/research-computing", blurb: "The machines that do the heavy lifting." },
+          { title: "Science platforms", href: "/astroinformatics/science-platforms", blurb: "Bringing the analysis to the data." },
+          { title: "Astroquery", href: "/astroinformatics/astroquery", blurb: "Programmatic access to the archives." },
+          { title: "Jupyter notebooks", href: "/astroinformatics/jupyter-notebooks", blurb: "Interactive, shareable analysis." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Data-intensive astronomy", href: "/astroinformatics/discover/astroinformatics-concepts", blurb: "The ideas behind big-data astronomy." },
+          { title: "Big-data astronomy", href: "/astroinformatics/big-data-astronomy", blurb: "Astronomy in the petabyte era." },
+          { title: "Scientific workflows", href: "/astroinformatics/scientific-workflows", blurb: "Turning scripts into repeatable pipelines." },
+          { title: "Data provenance", href: "/astroinformatics/data-provenance", blurb: "The recorded lineage of a data product." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["research_software:astropy", "research_computing:science-platforms", "astroinformatics_concept:big-data-astronomy", "astroinformatics_concept:the-virtual-research-environment"],
+    next: ["understanding-machine-learning-in-astronomy", "understanding-data-archives"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

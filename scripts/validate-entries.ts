@@ -808,6 +808,22 @@ async function main() {
     `✓ Galactic astronomy valid — ${bgCat.BG_STATS.structure} galactic structures, ${bgCat.BG_STATS.dynamics} dynamical phenomena · ${bgCat.BG_STATS.newEntities} new entities, ${bgCat.BG_STATS.relations} relations (reused Milky-Way/Sgr-A*/Local-Group/Magellanic/Andromeda/dark-matter/Gaia/ISM; no fabricated data)`,
   );
 
+  const bhCat = await import("../src/knowledge-graph/data/astroinformatics-catalog");
+  const bhIssues = bhCat.validateAstroinformatics();
+  const { getEntityById: getBhEnt } = await import("../src/knowledge-graph");
+  for (const r of bhCat.relations) {
+    if (!getBhEnt(r.from)) bhIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBhEnt(r.to)) bhIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (bhIssues.length > 0) {
+    console.error(`\n✗ ${bhIssues.length} astroinformatics issue(s):`);
+    for (const i of bhIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Astroinformatics valid — ${bhCat.BH_STATS.software} software packages, ${bhCat.BH_STATS.computing} computing infrastructures, ${bhCat.BH_STATS.concepts} concepts · ${bhCat.BH_STATS.newEntities} new entities, ${bhCat.BH_STATS.relations} relations (reused VO/TAP/FITS/archives/open-science/ML/Rubin/LSST/SKA/Gaia; no fabricated data)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
