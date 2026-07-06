@@ -539,6 +539,15 @@ export function GET(): Response {
   lines.push(`- Tools: ${["entity", "compare", "evidence-path", "learning", "limitations"].map((s) => absoluteUrl(`/assistant/${s}`)).join(" · ")}`);
   lines.push("");
 
+  lines.push("## Open Astronomy Platform");
+  lines.push(
+    `AsteriaStar as an open, research-grade data platform (engine.openPlatform), with ${engine.openPlatform.stats.available} capabilities AVAILABLE today and ${engine.openPlatform.stats.byStatus["architecture-ready"]} ARCHITECTURE-READY. Available now: a read-only public Graph API (entities, relationships, search, traversal, shortest paths, sources, citations), the OpenAPI 3.1 spec, JSON and RDF-compatible JSON-LD graph exports (/data/graph.json, /data/graph.jsonld), per-dataset JSON/CSV exports, bulk downloads with REAL SHA-256 checksums and byte sizes computed from the exact bytes served, versioned releases (data ${engine.openPlatform.version.graphVersion}), and a licensing matrix (CC BY-SA 4.0 + per-source terms). HONESTY: the linked-data standards a research platform is measured by — a hosted SPARQL endpoint, a GraphQL API, Python/JS SDKs, DOI-minted releases, federation metadata, and Virtual-Observatory TAP/ADQL — are ARCHITECTURE-READY: their interfaces are defined and built on the live data, but they serve NO data yet and are labelled as such. No download, checksum, or endpoint is fabricated; an architecture-ready capability advertises no live endpoint. New API: ${absoluteUrl("/api/v0/sources")}. Every API response carries a provenance envelope.`,
+  );
+  lines.push(`- [Open Astronomy Platform](${absoluteUrl("/open-platform")})`);
+  lines.push(`- Sections: ${["api", "graph", "datasets", "downloads", "licenses", "sdk", "federation", "roadmap"].map((s) => absoluteUrl(`/open-platform/${s}`)).join(" · ")}`);
+  lines.push(`- Developers: ${absoluteUrl("/developers/platform")} · OpenAPI: ${absoluteUrl("/api/v0/openapi.json")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

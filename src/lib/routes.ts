@@ -94,6 +94,7 @@ export const ROUTES = {
   live: "/live",
   universe3d: "/universe-3d",
   workspace: "/workspace",
+  openPlatform: "/open-platform",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -699,4 +700,7 @@ export function universeScenePath(slug: string): string {
 }
 export function workspaceFeaturePath(slug: string): string {
   return `/workspace/${slug}`;
+}
+export function openPlatformPath(slug: string): string {
+  return `/open-platform/${slug}`;
 }

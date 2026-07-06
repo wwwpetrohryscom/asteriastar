@@ -229,6 +229,7 @@ import {
   liveDiscoveryPath,
   universeScenePath,
   workspaceFeaturePath,
+  openPlatformPath,
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
@@ -697,6 +698,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...["collections", "notes", "citations", "exports", "privacy"].map((s) => ({ url: absoluteUrl(workspaceFeaturePath(s)), changeFrequency: "monthly" as const, priority: 0.5 })),
   ];
 
+  const openPlatformRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.openPlatform), changeFrequency: "monthly", priority: 0.8 },
+    ...["api", "graph", "datasets", "downloads", "licenses", "sdk", "federation", "roadmap"].map((s) => ({ url: absoluteUrl(openPlatformPath(s)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    { url: absoluteUrl("/developers/platform"), changeFrequency: "monthly", priority: 0.6 },
+  ];
+
   const deepSkyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.deepSky), changeFrequency: "weekly", priority: 0.8 },
     ...engine.deepSky.all().map((d) => ({ url: absoluteUrl(deepSkyPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
@@ -782,6 +789,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...liveRoutes,
     ...universe3dRoutes,
     ...workspaceRoutes,
+    ...openPlatformRoutes,
     ...hsfRoutes,
     ...obsRoutes,
     ...exoRoutes,
