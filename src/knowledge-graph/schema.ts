@@ -334,6 +334,8 @@ export const ENTITY_TYPES = [
   "astroinformatics_concept",
   "exploration_architecture",
   "deep_space_challenge",
+  "atlas_view",
+  "atlas_overlay",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1312,4 +1314,6 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   astroinformatics_concept: "Astroinformatics concept",
   exploration_architecture: "Exploration architecture",
   deep_space_challenge: "Deep-space challenge",
+  atlas_view: "Atlas view",
+  atlas_overlay: "Atlas overlay",
 };

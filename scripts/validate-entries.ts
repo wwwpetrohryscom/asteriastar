@@ -840,6 +840,22 @@ async function main() {
     `✓ Deep-space exploration valid — ${biCat.BI_STATS.architecture} exploration architectures, ${biCat.BI_STATS.challenges} deep-space challenges · ${biCat.BI_STATS.newEntities} new entities, ${biCat.BI_STATS.relations} relations (reused Artemis/Gateway/ISRU/habitats/countermeasures/ECLSS/planetary-protection/DSN; no fabricated data)`,
   );
 
+  const boCat = await import("../src/knowledge-graph/data/sky-atlas-catalog");
+  const boIssues = boCat.validateSkyAtlas();
+  const { getEntityById: getBoEnt } = await import("../src/knowledge-graph");
+  for (const r of boCat.relations) {
+    if (!getBoEnt(r.from)) boIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBoEnt(r.to)) boIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (boIssues.length > 0) {
+    console.error(`\n✗ ${boIssues.length} sky-atlas issue(s):`);
+    for (const i of boIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Sky atlas valid — ${boCat.BO_STATS.views} atlas views, ${boCat.BO_STATS.overlays} overlays · ${boCat.BO_STATS.newEntities} new entities, ${boCat.BO_STATS.relations} relations (reused stars/deep-sky/planets/galaxies/exoplanets/telescopes; positions from real coordinates, none fabricated)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
