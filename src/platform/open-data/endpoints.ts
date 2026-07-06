@@ -98,6 +98,36 @@ export const ENDPOINTS: EndpointDef[] = [
     returns: "{ start, nodes[], edges[], truncated, warnings[] }",
   },
   {
+    id: "assistant-explain", group: "assistant", method: "GET", path: "/api/v0/assistant/explain",
+    summary: "Grounded entity explanation", status: "implemented",
+    description: "A grounded explanation of an entity — its description, its real graph relations, and its cited sources. Deterministic; no language model. Nothing is generated or invented.",
+    params: [{ name: "id", in: "query", required: true, type: "string", description: "Entity id to explain.", example: "planet:mars" }],
+    example: "/api/v0/assistant/explain?id=planet:mars",
+    returns: "{ entity, description?, sources?, links[], citations[] }",
+  },
+  {
+    id: "assistant-compare", group: "assistant", method: "GET", path: "/api/v0/assistant/compare",
+    summary: "Grounded concept comparison", status: "implemented",
+    description: "Compares two entities by the real common ground between them — the entities they both connect to in the graph. Deterministic; no language model.",
+    params: [
+      { name: "a", in: "query", required: true, type: "string", description: "First entity id.", example: "planet:mars" },
+      { name: "b", in: "query", required: true, type: "string", description: "Second entity id.", example: "planet:venus" },
+    ],
+    example: "/api/v0/assistant/compare?a=planet:mars&b=planet:venus",
+    returns: "{ a, b, shared: Ref[] }",
+  },
+  {
+    id: "assistant-path", group: "assistant", method: "GET", path: "/api/v0/assistant/path",
+    summary: "Shortest evidence path", status: "implemented",
+    description: "The shortest evidence path between two entities — a real chain of graph relations. Deterministic; no language model. 404 with an honest message when no path exists.",
+    params: [
+      { name: "from", in: "query", required: true, type: "string", description: "Start entity id.", example: "astronomer:edwin-hubble" },
+      { name: "to", in: "query", required: true, type: "string", description: "Target entity id.", example: "cosmology_concept:dark-energy" },
+    ],
+    example: "/api/v0/assistant/path?from=astronomer:edwin-hubble&to=cosmology_concept:dark-energy",
+    returns: "{ from, to, length, path: NeighborNode[] }",
+  },
+  {
     id: "datasets-list", group: "datasets", method: "GET", path: "/api/v0/datasets",
     summary: "List datasets", status: "implemented",
     description: "The full open-data catalogue — domain datasets and graph-level datasets — with real record counts, licenses, formats, and status.",

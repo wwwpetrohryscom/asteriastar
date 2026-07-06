@@ -531,6 +531,14 @@ export function GET(): Response {
   lines.push(`- Sections: ${["collections", "notes", "citations", "exports", "privacy"].map((s) => absoluteUrl(`/workspace/${s}`)).join(" · ")}`);
   lines.push("");
 
+  lines.push("## Grounded Scientific AI");
+  lines.push(
+    `A WORKING, deterministic grounded assistant over the knowledge graph (engine.groundedAssistant), building on the Scientific Assistant capability catalogue. Live tools: explain an entity (its real relations + cited sources), compare two entities (their shared graph neighbours), the shortest evidence path between two entities, a learning path from an entity (real relations + curated paths), and a citation summary. CRITICAL HONESTY: NO language model is configured in this deployment — llmStatus() reports mode "deterministic-grounded", provider null. The assistant returns ONLY real facts, relations, evidence chains, and citations from the graph; it generates no prose and FABRICATES NOTHING. When the graph cannot answer it says "not enough graph evidence". The optional language-model layer is architecture-ready (provider interface, RAG packet builder, citation-forced prompt, guardrails) but unwired: a future model could only phrase the grounded facts it is handed, never add a fact. No chat is persisted. Deterministic API: ${absoluteUrl("/api/v0/assistant/explain")} · ${absoluteUrl("/api/v0/assistant/compare")} · ${absoluteUrl("/api/v0/assistant/path")}. Limitations: ${absoluteUrl("/assistant/limitations")}.`,
+  );
+  lines.push(`- [Grounded Assistant tools](${absoluteUrl("/assistant")})`);
+  lines.push(`- Tools: ${["entity", "compare", "evidence-path", "learning", "limitations"].map((s) => absoluteUrl(`/assistant/${s}`)).join(" · ")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

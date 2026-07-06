@@ -37,6 +37,26 @@ export default function AssistantHubPage() {
             <div className="mt-4"><ComparePanel a={cmp.a} b={cmp.b} shared={cmp.shared} /></div>
           </section>
         ) : null}
+        <section aria-labelledby="tools-heading">
+          <h2 id="tools-heading" className="font-display text-2xl font-bold">Try the tools</h2>
+          <p className="mt-1 text-sm text-muted">The grounded capabilities, running live over the graph — deterministic, no language model. Pick a real entity and see the evidence.</p>
+          <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+            {[
+              { href: `${ROUTES.assistant}/entity`, label: "Explain", blurb: "An entity, its relations & sources" },
+              { href: `${ROUTES.assistant}/compare`, label: "Compare", blurb: "Two entities' common ground" },
+              { href: `${ROUTES.assistant}/evidence-path`, label: "Evidence path", blurb: "The chain linking two entities" },
+              { href: `${ROUTES.assistant}/learning`, label: "Learning path", blurb: "A curriculum from the graph" },
+              { href: `${ROUTES.assistant}/limitations`, label: "Limitations", blurb: "What it will not do" },
+            ].map((t) => (
+              <li key={t.href}>
+                <Link href={t.href} className="flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-4 hover:border-plasma/40">
+                  <span className="font-display text-base font-semibold text-fg">{t.label}</span>
+                  <span className="mt-1 text-xs text-faint">{t.blurb}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </section>
         <section aria-labelledby="explore-heading">
           <h2 id="explore-heading" className="font-display text-2xl font-bold">Explore the assistant</h2>
           <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

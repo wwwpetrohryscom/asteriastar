@@ -674,6 +674,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const assistantRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.assistant), changeFrequency: "weekly", priority: 0.8 },
+    ...["entity", "compare", "evidence-path", "learning", "limitations"].map((s) => ({ url: absoluteUrl(`${ROUTES.assistant}/${s}`), changeFrequency: "monthly" as const, priority: 0.6 })),
     ...engine.scientificAssistant.all().map((r) => ({ url: absoluteUrl(assistantPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
     ...BS_DISCOVERIES.map((d) => ({ url: absoluteUrl(assistantDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
