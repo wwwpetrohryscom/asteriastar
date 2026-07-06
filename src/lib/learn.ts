@@ -2326,6 +2326,43 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["graph_view:graph-statistics", "graph_view:neighborhood-explorer", "graph_view:shortest-path-finder", "graph_view:scientific-lineage"],
     next: ["navigating-the-sky-atlas", "using-the-scientific-calculators"],
   },
+  {
+    slug: "using-the-research-assistant",
+    title: "Using the Research Assistant",
+    description: "How to get grounded, explainable answers from AsteriaStar's research assistant — comparing concepts by their real connections, tracing evidence chain by chain, and following the provenance of every fact. The assistant answers from the knowledge graph alone and never makes things up.",
+    accent: "plasma",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The research assistant", href: "/assistant", blurb: "An assistant that never makes things up." },
+          { title: "Grounded capabilities", href: "/assistant/discover/grounded-capabilities", blurb: "Real answers from the graph alone." },
+          { title: "Scientific search", href: "/assistant/scientific-search", blurb: "From a question to real entities." },
+          { title: "Object explanation", href: "/assistant/object-explanation", blurb: "What it is, and where the knowledge comes from." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Concept comparison", href: "/assistant/concept-comparison", blurb: "Common ground, drawn from real relations." },
+          { title: "Related concepts", href: "/assistant/related-concepts", blurb: "Real neighbours, not guesses." },
+          { title: "Evidence chains", href: "/assistant/evidence-chains", blurb: "Reasoning you can follow, link by link." },
+          { title: "Provenance-aware answers", href: "/assistant/provenance-aware-answers", blurb: "No answer without its provenance." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "The no-hallucination layer", href: "/assistant/no-hallucination-layer", blurb: "Only real facts, always checkable." },
+          { title: "Cross-domain reasoning", href: "/assistant/cross-domain-reasoning", blurb: "Bridges across science, culture & history." },
+          { title: "Architecture for a future model", href: "/assistant/discover/architecture", blurb: "Interfaces ready for a language model." },
+          { title: "LLM integration", href: "/assistant/llm-integration", blurb: "The model seam — defined, not yet filled." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["assistant_capability:evidence-chains", "assistant_capability:concept-comparison", "assistant_capability:no-hallucination-layer", "assistant_capability:provenance-aware-answers"],
+    next: ["exploring-the-knowledge-graph", "using-the-scientific-calculators"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

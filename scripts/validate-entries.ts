@@ -904,6 +904,22 @@ async function main() {
     `✓ Graph explorer valid — ${brCat.BR_STATS.records} views (${brCat.BR_STATS.byBacking.computed} computed, ${brCat.BR_STATS.byBacking.rendering} rendering, ${brCat.BR_STATS.byBacking.architecture} architecture) · ${brCat.BR_STATS.newEntities} new entities, ${brCat.BR_STATS.relations} relations (real algorithms over the actual graph; nothing fabricated)`,
   );
 
+  const bsCat = await import("../src/knowledge-graph/data/scientific-assistant-catalog");
+  const bsIssues = bsCat.validateScientificAssistant();
+  const { getEntityById: getBsEnt } = await import("../src/knowledge-graph");
+  for (const r of bsCat.relations) {
+    if (!getBsEnt(r.from)) bsIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBsEnt(r.to)) bsIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (bsIssues.length > 0) {
+    console.error(`\n✗ ${bsIssues.length} scientific-assistant issue(s):`);
+    for (const i of bsIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Scientific assistant valid — ${bsCat.BS_STATS.records} capabilities (${bsCat.BS_STATS.byGrounding.grounded} grounded, ${bsCat.BS_STATS.byGrounding.architecture} architecture) · ${bsCat.BS_STATS.newEntities} new entities, ${bsCat.BS_STATS.relations} relations (grounded retrieval over the actual graph; no LLM, nothing fabricated)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {

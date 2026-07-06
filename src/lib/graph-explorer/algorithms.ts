@@ -12,11 +12,23 @@ type Adj = Map<string, Set<string>>;
 let _adj: Adj | null = null;
 let _degree: Map<string, number> | null = null;
 
-/** The graph explorer traverses the KNOWLEDGE graph, not its own catalogue of views. Its `graph_view`
- *  meta-nodes are excluded from adjacency so they never appear in a neighbourhood or on a shortest
- *  path — which would otherwise let a path route trivially through the very view demonstrating it. */
-function isMetaNode(id: string): boolean {
-  return id.startsWith("graph_view:");
+/** The explorer and the assistant traverse the KNOWLEDGE graph, not the platform's own feature
+ *  catalogue. The interactive-platform meta-nodes (the graph views, atlas views/overlays, calculators,
+ *  observing planners/integrations, and assistant capabilities) are excluded from adjacency so they
+ *  never appear in a neighbourhood or on a shortest path — which would otherwise let a path route
+ *  trivially through the very tool demonstrating it, or surface a platform feature as if it were a
+ *  scientific fact. */
+const META_PREFIXES = [
+  "graph_view:",
+  "assistant_capability:",
+  "atlas_view:",
+  "atlas_overlay:",
+  "scientific_calculator:",
+  "observing_planner:",
+  "observing_integration:",
+];
+export function isMetaNode(id: string): boolean {
+  return META_PREFIXES.some((p) => id.startsWith(p));
 }
 
 function build(): { adj: Adj; degree: Map<string, number> } {
@@ -156,6 +168,7 @@ export function searchEntities(query: string, limit = 20): { id: string; name: s
   if (!q) return [];
   const out: { id: string; name: string; type: string; href: string }[] = [];
   for (const e of entities) {
+    if (isMetaNode(e.id)) continue;
     if ((e.name ?? "").toLowerCase().includes(q)) {
       out.push({ id: e.id, name: e.name, type: e.type, href: entPath(e) });
       if (out.length >= limit) break;
