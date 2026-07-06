@@ -337,6 +337,8 @@ export const ENTITY_TYPES = [
   "atlas_view",
   "atlas_overlay",
   "scientific_calculator",
+  "observing_planner",
+  "observing_integration",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1318,4 +1320,6 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   atlas_view: "Atlas view",
   atlas_overlay: "Atlas overlay",
   scientific_calculator: "Scientific calculator",
+  observing_planner: "Observing planner",
+  observing_integration: "Observing integration",
 };

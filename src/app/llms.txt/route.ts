@@ -482,6 +482,14 @@ export function GET(): Response {
   lines.push(`- Orbits & gravity: ${absoluteUrl("/calculators/discover/orbital-and-gravity")} · Stars & the cosmos: ${absoluteUrl("/calculators/discover/stars-and-cosmos")} · Telescopes & observing: ${absoluteUrl("/calculators/discover/telescopes-and-observing")}`);
   lines.push("");
 
+  lines.push("## Professional Observatory Planning Suite");
+  lines.push(
+    `An observing platform built on the graph (engine.observingSuite). The planners — tonight, visibility, target, Moon, planet, deep-sky, season, twilight, darkness, altitude-chart, meridian-transit, equipment, astrophotography, and session — organise the platform's REAL computed live-sky data (twilight, the Moon, the planets via engine.liveSky) and the existing observing equipment, sites, and techniques into an observing workflow; no ephemeris is re-implemented. The data integrations — weather, seeing, transparency, cloud cover, and Bortle sky brightness — are architecture-ready interfaces wired into the planners, each awaiting a connected provider: no observing conditions are ever fabricated, following the same honesty envelope as the live-sky providers. Privacy-first: an observer's location stays on their device; plans can be exported as calendar (ICS) or printable form. REUSES the live-sky computations, the observing equipment/sites/techniques, the Moon, Sun, planets, meteor showers and deep-sky objects; nothing duplicated or fabricated.`,
+  );
+  lines.push(`- [Professional Observatory Planning Suite](${absoluteUrl("/observing")})`);
+  lines.push(`- The planners: ${absoluteUrl("/observing/discover/observing-planners")} · Data integrations: ${absoluteUrl("/observing/discover/data-integrations")}`);
+  lines.push("");
+
   lines.push("## Space Agencies, Institutions & Laboratories Encyclopedia");
   lines.push(
     `${engine.institutions.types().length} institution types and ${engine.institutions.orgCount} newly-modelled field centers and laboratories (engine.institutions) — the institutional structure of spaceflight: space agencies, agency field centers (NASA's Goddard, Johnson, Marshall, Kennedy; ESA's ESTEC, ESAC; JAXA's Tsukuba), research laboratories (JPL, APL), science institutes (SwRI, SETI), commercial companies, and observatory operators. Curated from NASA, ESA, and JAXA. The many organization entities already in the graph (the agencies, commercial companies, and observatory operators) are REUSED and enriched with their institution type and parent, never duplicated. No fabricated founding dates or figures.`,

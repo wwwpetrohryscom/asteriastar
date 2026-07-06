@@ -872,6 +872,22 @@ async function main() {
     `✓ Scientific calculators valid — ${bpCat.BP_STATS.records} calculators (${bpCat.BP_STATS.byCategory.orbital} orbital, ${bpCat.BP_STATS.byCategory.stellar} stellar, ${bpCat.BP_STATS.byCategory.observational} photometry, ${bpCat.BP_STATS.byCategory.exoplanet} exoplanet, ${bpCat.BP_STATS.byCategory.cosmology} cosmology, ${bpCat.BP_STATS.byCategory.instrument} instrument) · ${bpCat.BP_STATS.newEntities} new entities, ${bpCat.BP_STATS.relations} relations · all formulae validated against known values (CODATA/IAU constants; nothing fabricated)`,
   );
 
+  const bqCat = await import("../src/knowledge-graph/data/observing-suite-catalog");
+  const bqIssues = bqCat.validateObservingSuite();
+  const { getEntityById: getBqEnt } = await import("../src/knowledge-graph");
+  for (const r of bqCat.relations) {
+    if (!getBqEnt(r.from)) bqIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBqEnt(r.to)) bqIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  if (bqIssues.length > 0) {
+    console.error(`\n✗ ${bqIssues.length} observing-suite issue(s):`);
+    for (const i of bqIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Observing suite valid — ${bqCat.BQ_STATS.planners} planners, ${bqCat.BQ_STATS.integrations} architecture-ready integrations · ${bqCat.BQ_STATS.newEntities} new entities, ${bqCat.BQ_STATS.relations} relations (reused live-sky/equipment/sites/techniques/Moon/planets/showers; no ephemeris re-implemented, no conditions fabricated)`,
+  );
+
   const hsf = await import("../src/knowledge-graph/data/human-spaceflight-catalog");
   const hsfIssues = hsf.validateHumanSpaceflight();
   if (hsfIssues.length > 0) {
