@@ -349,6 +349,8 @@ export const ENTITY_TYPES = [
   "solar_region",
   "solar_feature",
   "heliosphere_structure",
+  // Program BZ — Black Holes, Neutron Stars & Compact Objects
+  "neutron_star",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1341,4 +1343,5 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   solar_region: "Solar region",
   solar_feature: "Solar feature",
   heliosphere_structure: "Heliosphere structure",
+  neutron_star: "Neutron star",
 };

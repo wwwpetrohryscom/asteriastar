@@ -2580,6 +2580,42 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["solar_region:corona", "solar_region:solar-core", "stellar_physics_concept:solar-dynamo", "heliosphere_structure:parker-spiral"],
     next: ["exploring-the-knowledge-graph", "observing-the-night-sky"],
   },
+  {
+    slug: "black-holes-and-neutron-stars",
+    title: "Black Holes & Neutron Stars",
+    description: "The end-states of gravity — the geometry of a black hole from its horizon to its singularity, the jets it launches, and the neutron star: a Sun crushed into a city, spinning as a pulsar and holding matter denser than an atomic nucleus. From the physics to the real objects in the sky.",
+    accent: "plasma",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Compact objects", href: "/compact-objects", blurb: "Black holes & neutron stars — the end-states of gravity." },
+          { title: "Black-hole physics", href: "/compact-objects/discover/black-hole-physics", blurb: "Horizon, ergosphere, photon sphere & ISCO." },
+          { title: "Cygnus X-1", href: "/compact-objects/cygnus-x-1", blurb: "The first widely accepted black hole." },
+          { title: "The photon sphere", href: "/compact-objects/photon-sphere", blurb: "Where light itself orbits." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Neutron stars & pulsars", href: "/compact-objects/discover/neutron-stars-and-pulsars", blurb: "Degeneracy, the pulsar mechanism, magnetars." },
+          { title: "The Crab Pulsar", href: "/compact-objects/crab-pulsar", blurb: "Born in the supernova of 1054." },
+          { title: "The first pulsar", href: "/compact-objects/psr-b1919-21", blurb: "Bell Burnell's 1967 discovery." },
+          { title: "The Event Horizon Telescope", href: "/cosmology/event-horizon-telescope", blurb: "Imaging a black hole's shadow." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Relativistic jets", href: "/compact-objects/relativistic-jet", blurb: "Plasma beamed at near light speed." },
+          { title: "The equation of state", href: "/compact-objects/neutron-star-equation-of-state", blurb: "The uncertain physics of ultra-dense matter." },
+          { title: "Gravitational waves", href: "/multi-messenger", blurb: "Hearing black holes and neutron stars merge." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["cosmology_concept:ergosphere", "black_hole:cygnus-x-1", "neutron_star:crab-pulsar", "astrophysical_object_class:pulsar"],
+    next: ["exploring-the-knowledge-graph", "understanding-the-sun"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

@@ -96,6 +96,7 @@ export const ROUTES = {
   workspace: "/workspace",
   openPlatform: "/open-platform",
   solarPhysics: "/solar-physics",
+  compactObjects: "/compact-objects",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -710,4 +711,10 @@ export function solarPhysicsPath(slug: string): string {
 }
 export function solarPhysicsDiscoveryPath(slug: string): string {
   return `/solar-physics/discover/${slug}`;
+}
+export function compactObjectsPath(slug: string): string {
+  return `/compact-objects/${slug}`;
+}
+export function compactObjectsDiscoveryPath(slug: string): string {
+  return `/compact-objects/discover/${slug}`;
 }
