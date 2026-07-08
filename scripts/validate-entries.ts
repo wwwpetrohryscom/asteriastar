@@ -816,6 +816,29 @@ async function main() {
     `✓ Solar physics valid — ${byCat.BY_STATS.byKind.interior + byCat.BY_STATS.byKind.atmosphere} solar regions, ${byCat.BY_STATS.byKind.feature} features, ${byCat.BY_STATS.byKind.physics + byCat.BY_STATS.byKind.cycle + byCat.BY_STATS.byKind.wind} physics/cycle/wind concepts, ${byCat.BY_STATS.byKind.heliosphere} heliosphere structures · ${byCat.BY_STATS.newEntities} new entities, ${byCat.BY_STATS.relations} relations (reused Sun/phenomena/helioseismology/observatories/Voyagers; only well-established solar physics, nothing fabricated)`,
   );
 
+  const bzCat = await import("../src/knowledge-graph/data/compact-objects-catalog");
+  const bzIssues = bzCat.validateCompactObjects();
+  const { getEntityById: getBzEnt } = await import("../src/knowledge-graph");
+  for (const r of bzCat.relations) {
+    if (!getBzEnt(r.from)) bzIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getBzEnt(r.to)) bzIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  // Reuse honesty: every relatedKey must resolve to a real entity (a new BZ entity or an existing one).
+  const bzNewIds = new Set(bzCat.entities.map((e) => e.id));
+  for (const r of bzCat.BZ_RECORDS) {
+    for (const k of r.relatedKeys ?? []) {
+      if (!bzNewIds.has(k) && !getBzEnt(k)) bzIssues.push(`compact-object entity ${r.id}: relatedKey "${k}" does not resolve to a real entity`);
+    }
+  }
+  if (bzIssues.length > 0) {
+    console.error(`\n✗ ${bzIssues.length} compact-objects issue(s):`);
+    for (const i of bzIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Compact objects valid — ${bzCat.BZ_STATS.byKind["bh-physics"] + bzCat.BZ_STATS.byKind["bh-process"]} black-hole physics, ${bzCat.BZ_STATS.byKind["ns-physics"] + bzCat.BZ_STATS.byKind["ns-class"]} neutron-star physics/classes, ${bzCat.BZ_STATS.byKind["bh-object"] + bzCat.BZ_STATS.byKind["ns-object"]} named objects · ${bzCat.BZ_STATS.newEntities} new entities, ${bzCat.BZ_STATS.relations} relations (reused BH/NS classes/Sgr A*/M87*/event-horizon/transients/EHT; only well-established astrophysics, nothing fabricated)`,
+  );
+
   const bgCat = await import("../src/knowledge-graph/data/galactic-astronomy-catalog");
   const bgIssues = bgCat.validateGalacticAstronomy();
   const { getEntityById: getBgEnt } = await import("../src/knowledge-graph");

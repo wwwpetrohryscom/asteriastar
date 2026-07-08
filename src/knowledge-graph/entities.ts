@@ -73,6 +73,7 @@ import { entities as webglUniverseCatalog } from "@/knowledge-graph/data/webgl-u
 import { entities as workspaceCatalog } from "@/knowledge-graph/data/workspace-catalog";
 import { entities as openPlatformCatalog } from "@/knowledge-graph/data/open-platform-catalog";
 import { entities as solarPhysicsCatalog } from "@/knowledge-graph/data/solar-physics-catalog";
+import { entities as compactObjectsCatalog } from "@/knowledge-graph/data/compact-objects-catalog";
 
 /**
  * Knowledge-graph entities.
@@ -353,4 +354,5 @@ export const entities: GraphEntity[] = [
   ...workspaceCatalog,
   ...openPlatformCatalog,
   ...solarPhysicsCatalog,
+  ...compactObjectsCatalog,
 ];
