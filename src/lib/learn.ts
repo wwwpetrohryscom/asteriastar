@@ -2544,6 +2544,42 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["platform_capability:public-graph-api", "platform_capability:graph-jsonld", "platform_capability:bulk-downloads", "platform_capability:licensing-matrix"],
     next: ["exploring-the-knowledge-graph", "using-the-grounded-assistant"],
   },
+  {
+    slug: "understanding-the-sun",
+    title: "Understanding the Sun",
+    description: "A tour of the nearest star from the inside out — the fusion core, the radiative and convective interior, the visible surface and the million-degree corona, the magnetic activity and the eleven-year cycle, and the solar wind that blows the heliosphere out to the Voyagers.",
+    accent: "ember",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Solar physics", href: "/solar-physics", blurb: "The Sun from core to heliosphere." },
+          { title: "The Sun", href: "/explore/entity/star/sun", blurb: "Our G2V star, up close." },
+          { title: "The photosphere", href: "/solar-physics/photosphere", blurb: "The visible surface, at ~5,772 K." },
+          { title: "The corona", href: "/solar-physics/corona", blurb: "A million-degree outer atmosphere." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Inside the Sun", href: "/solar-physics/discover/solar-interior", blurb: "Core, radiative zone, convection zone, tachocline." },
+          { title: "The solar dynamo", href: "/solar-physics/solar-dynamo", blurb: "How the Sun makes its magnetic field." },
+          { title: "Activity & the cycle", href: "/solar-physics/discover/solar-activity", blurb: "Reconnection, the butterfly diagram, grand minima." },
+          { title: "The solar cycle", href: "/heliophysics/discover/solar-sources", blurb: "Sunspots, coronal holes & space weather." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "The coronal-heating problem", href: "/solar-physics/coronal-heating-problem", blurb: "Why is the corona hotter than the surface?" },
+          { title: "The solar wind & heliosphere", href: "/solar-physics/discover/solar-wind-and-heliosphere", blurb: "Parker spiral, termination shock, heliosheath." },
+          { title: "Helioseismology", href: "/methods/helioseismology", blurb: "Reading the Sun's interior from its oscillations." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["solar_region:corona", "solar_region:solar-core", "stellar_physics_concept:solar-dynamo", "heliosphere_structure:parker-spiral"],
+    next: ["exploring-the-knowledge-graph", "observing-the-night-sky"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

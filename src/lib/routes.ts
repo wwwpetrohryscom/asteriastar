@@ -95,6 +95,7 @@ export const ROUTES = {
   universe3d: "/universe-3d",
   workspace: "/workspace",
   openPlatform: "/open-platform",
+  solarPhysics: "/solar-physics",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -703,4 +704,10 @@ export function workspaceFeaturePath(slug: string): string {
 }
 export function openPlatformPath(slug: string): string {
   return `/open-platform/${slug}`;
+}
+export function solarPhysicsPath(slug: string): string {
+  return `/solar-physics/${slug}`;
+}
+export function solarPhysicsDiscoveryPath(slug: string): string {
+  return `/solar-physics/discover/${slug}`;
 }
