@@ -792,6 +792,30 @@ async function main() {
     `✓ Stellar astrophysics valid — ${bfCat.BF_STATS.processes} stellar processes, ${bfCat.BF_STATS.nucleosynthesis} nucleosynthesis pathways, ${bfCat.BF_STATS.concepts} physics concepts · ${bfCat.BF_STATS.newEntities} new entities, ${bfCat.BF_STATS.relations} relations (reused end-states/supernovae/kilonova/spectral-classification/asteroseismology/BBN/clusters; no fabricated data)`,
   );
 
+  const byCat = await import("../src/knowledge-graph/data/solar-physics-catalog");
+  const byIssues = byCat.validateSolarPhysics();
+  const { getEntityById: getByEnt } = await import("../src/knowledge-graph");
+  for (const r of byCat.relations) {
+    if (!getByEnt(r.from)) byIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getByEnt(r.to)) byIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  // Reuse honesty: every relatedKey must resolve to a real entity (a new BY entity or an existing one) —
+  // catches a fabricated reference to a non-existent Sun/observatory/phenomenon.
+  const byNewIds = new Set(byCat.entities.map((e) => e.id));
+  for (const r of byCat.BY_RECORDS) {
+    for (const k of r.relatedKeys ?? []) {
+      if (!byNewIds.has(k) && !getByEnt(k)) byIssues.push(`solar entity ${r.id}: relatedKey "${k}" does not resolve to a real entity`);
+    }
+  }
+  if (byIssues.length > 0) {
+    console.error(`\n✗ ${byIssues.length} solar-physics issue(s):`);
+    for (const i of byIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Solar physics valid — ${byCat.BY_STATS.byKind.interior + byCat.BY_STATS.byKind.atmosphere} solar regions, ${byCat.BY_STATS.byKind.feature} features, ${byCat.BY_STATS.byKind.physics + byCat.BY_STATS.byKind.cycle + byCat.BY_STATS.byKind.wind} physics/cycle/wind concepts, ${byCat.BY_STATS.byKind.heliosphere} heliosphere structures · ${byCat.BY_STATS.newEntities} new entities, ${byCat.BY_STATS.relations} relations (reused Sun/phenomena/helioseismology/observatories/Voyagers; only well-established solar physics, nothing fabricated)`,
+  );
+
   const bgCat = await import("../src/knowledge-graph/data/galactic-astronomy-catalog");
   const bgIssues = bgCat.validateGalacticAstronomy();
   const { getEntityById: getBgEnt } = await import("../src/knowledge-graph");

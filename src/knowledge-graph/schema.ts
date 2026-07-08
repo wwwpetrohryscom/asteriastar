@@ -345,6 +345,10 @@ export const ENTITY_TYPES = [
   "universe_scene",
   "workspace_feature",
   "platform_capability",
+  // Program BY — Solar Physics, Heliosphere & Solar Observatory
+  "solar_region",
+  "solar_feature",
+  "heliosphere_structure",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1334,4 +1338,7 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   universe_scene: "Universe scene",
   workspace_feature: "Workspace feature",
   platform_capability: "Platform capability",
+  solar_region: "Solar region",
+  solar_feature: "Solar feature",
+  heliosphere_structure: "Heliosphere structure",
 };
