@@ -6,6 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
 import { HeroSearch } from "@/components/site/HeroSearch";
 import { KnowledgeGraphPreview } from "@/components/graph/KnowledgeGraphPreview";
+import { StarChartAccent, ConstellationDivider } from "@/components/cosmos/Cosmos";
 import { getAllSections, REGISTRY_STATS } from "@/lib/content/registry";
 import { ENTRY_STATS } from "@/content/entries";
 import { GRAPH_STATS } from "@/knowledge-graph";
@@ -54,8 +55,9 @@ export default function HomePage() {
   return (
     <>
       <HeroSection
-        accent="nebula"
-        eyebrow={<span>A global knowledge platform for the sky</span>}
+        accent="halo"
+        backdrop
+        eyebrow={<span className="text-halo/90">A global knowledge platform for the sky</span>}
         title={
           <>
             Everything <span className="accent-text">Above Earth</span>.
@@ -92,8 +94,8 @@ export default function HomePage() {
       {/* The defining principle: science vs. tradition, side by side. */}
       <Container className="mt-6">
         <div className="grid gap-4 md:grid-cols-2">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
-            <p className="text-xs font-semibold uppercase tracking-wider text-nebula">
+          <div className="rounded-2xl border border-halo/20 bg-halo/[0.04] p-6">
+            <p className="text-xs font-semibold uppercase tracking-wider text-halo">
               Astronomy — Science
             </p>
             <p className="mt-3 leading-relaxed text-muted">
@@ -113,11 +115,13 @@ export default function HomePage() {
         </div>
       </Container>
 
+      <ConstellationDivider idKey="hubs" className="mt-16" />
+
       {/* The seven hubs. */}
-      <Container className="mt-20">
+      <Container className="mt-8">
         <div className="mb-6">
-          <h2 className="font-display text-2xl font-bold sm:text-3xl">
-            Explore the platform
+          <h2 className="flex items-center gap-2.5 font-display text-2xl font-bold sm:text-3xl">
+            <StarChartAccent /> Explore the platform
           </h2>
           <p className="mt-2 max-w-2xl text-muted">
             Seven hubs organize everything from stars and spacecraft to sky
@@ -131,8 +135,8 @@ export default function HomePage() {
       <Container className="mt-20">
         <div className="mb-6 flex items-end justify-between gap-4">
           <div>
-            <h2 className="font-display text-2xl font-bold sm:text-3xl">
-              The knowledge graph
+            <h2 className="flex items-center gap-2.5 font-display text-2xl font-bold sm:text-3xl">
+              <StarChartAccent /> The knowledge graph
             </h2>
             <p className="mt-2 max-w-2xl text-muted">
               Every object, mission, and myth is connected — with scientific,
@@ -171,9 +175,11 @@ export default function HomePage() {
         <SectionGrid items={featured} columns={3} />
       </Container>
 
+      <ConstellationDivider idKey="ways" className="mt-16" />
+
       {/* Ways to explore — the intelligent layer. */}
-      <Container className="mt-20">
-        <h2 className="font-display text-2xl font-bold sm:text-3xl">Ways to explore</h2>
+      <Container className="mt-8">
+        <h2 className="flex items-center gap-2.5 font-display text-2xl font-bold sm:text-3xl"><StarChartAccent /> Ways to explore</h2>
         <p className="mt-2 max-w-2xl text-muted">
           The knowledge graph powers more than articles — explore, compare, learn,
           and trace the history of the universe.
@@ -181,6 +187,7 @@ export default function HomePage() {
         <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[
             { href: ROUTES.explore, title: "Explore", desc: "Navigate the graph by topic and connection." },
+            { href: ROUTES.gallery, title: "Gallery", desc: "Webb, Hubble & the deep sky — openly-licensed imagery." },
             { href: ROUTES.compare, title: "Compare", desc: "Objects and ideas, side by side." },
             { href: ROUTES.learn, title: "Learn", desc: "Guided paths from beginner to advanced." },
             { href: ROUTES.timelines, title: "Timelines", desc: "The history of astronomy and spaceflight." },
