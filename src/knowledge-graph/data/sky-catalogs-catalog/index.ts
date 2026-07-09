@@ -10,10 +10,10 @@ import { designations } from "@/knowledge-graph/data/sky-catalogs-catalog/data/d
  * catalogues that were previously carried only as designation fields (Caldwell, Barnard, Sharpless,
  * Abell, PGC, UGC, Gliese, Tycho-2, SAO, GCVS, WDS, LHS, Wolf, the Bonner Durchmusterung) as first-class
  * `catalog` entities, the `catalog_family` groupings, and the stellar `designation_system` schemes
- * (Bayer, Flamsteed, variable-star naming). It REUSES the eleven existing catalogue entities (Messier,
- * NGC, IC, Henry Draper, Hipparcos, Gaia…), the data archives (CDS, SIMBAD, VizieR, NED), the compiling
- * astronomers, ESA, and the Gaia telescope via relatedKeys. Only well-established catalogue facts are
- * stated; unknown counts and epochs are left empty and nothing is fabricated.
+ * (Bayer, Flamsteed, variable-star naming). It REUSES six of the existing catalogue entities (Messier,
+ * NGC, IC, Henry Draper, Hipparcos, Gaia), the data archives CDS, VizieR and NED, three compiling
+ * astronomers, ESA, the Smithsonian, and the Gaia telescope via relatedKeys. Only well-established
+ * catalogue facts are stated; unknown counts and epochs are left empty and nothing is fabricated.
  */
 
 export const CD_RECORDS: CdRecord[] = [...catalogs, ...families, ...designations];
