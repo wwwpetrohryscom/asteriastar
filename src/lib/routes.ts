@@ -104,6 +104,7 @@ export const ROUTES = {
   deepSkyEncyclopedia: "/deep-sky-encyclopedia",
   referenceSystems: "/reference-systems",
   observationTechniques: "/observation-techniques",
+  astronomySoftware: "/astronomy-software",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -766,4 +767,10 @@ export function observationTechniquesPath(slug: string): string {
 }
 export function observationTechniquesDiscoveryPath(slug: string): string {
   return `/observation-techniques/discover/${slug}`;
+}
+export function astronomySoftwarePath(slug: string): string {
+  return `/astronomy-software/${slug}`;
+}
+export function astronomySoftwareDiscoveryPath(slug: string): string {
+  return `/astronomy-software/discover/${slug}`;
 }

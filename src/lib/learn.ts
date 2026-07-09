@@ -2756,6 +2756,40 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["observing_technique:astrophotography", "observing_technique:deep-sky-imaging", "observing_technique:calibration-frames", "observing_technique:imaging-workflow"],
     next: ["the-deep-sky-menagerie", "observing-the-night-sky"],
   },
+  {
+    slug: "the-astronomers-toolkit",
+    title: "The Astronomer's Toolkit",
+    description: "Modern astronomy runs on software. A path through the ecosystem — the planetariums that show the sky, the suites that automate a night of imaging and process the results, the professional tools that calibrate and analyse data, and the libraries that compute positions and orbits.",
+    accent: "plasma",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Desktop & planetarium", href: "/astronomy-software/discover/desktop-planetariums", blurb: "Software for exploring the sky on screen." },
+          { title: "Stellarium", href: "/astronomy-software/stellarium", blurb: "A photorealistic real-time sky." },
+          { title: "KStars", href: "/astronomy-software/kstars", blurb: "Planetarium, planner, and imaging suite." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Imaging & acquisition", href: "/astronomy-software/discover/imaging-and-acquisition", blurb: "Capture and process astrophotos." },
+          { title: "Siril", href: "/astronomy-software/siril", blurb: "Free calibration, stacking, and processing." },
+          { title: "PHD2 Guiding", href: "/astronomy-software/phd2", blurb: "The de-facto standard autoguider." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Scientific tools", href: "/astronomy-software/discover/scientific-tools", blurb: "Professional analysis software." },
+          { title: "TOPCAT", href: "/astronomy-software/topcat", blurb: "Exploring and cross-matching big tables." },
+          { title: "Skyfield", href: "/astronomy-software/skyfield", blurb: "Precise positions in Python." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["astronomy_software:stellarium", "research_software:astropy", "research_software:topcat", "astronomy_software:phd2"],
+    next: ["from-telescope-to-image", "exploring-the-knowledge-graph"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
