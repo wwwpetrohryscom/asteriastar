@@ -355,6 +355,8 @@ export const ENTITY_TYPES = [
   "physics_concept",
   // Program CB — Space Engineering & Launch Systems Deep Dive
   "space_engineering_concept",
+  // Program CC — Exoplanet Science & Characterization
+  "exoplanet_science_concept",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1350,4 +1352,5 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   neutron_star: "Neutron star",
   physics_concept: "Physics concept",
   space_engineering_concept: "Space-engineering concept",
+  exoplanet_science_concept: "Exoplanet-science concept",
 };
