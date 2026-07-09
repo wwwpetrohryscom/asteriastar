@@ -357,6 +357,9 @@ export const ENTITY_TYPES = [
   "space_engineering_concept",
   // Program CC — Exoplanet Science & Characterization
   "exoplanet_science_concept",
+  // Program CD — Astronomical Catalogs & Professional Sky Databases
+  "catalog_family",
+  "designation_system",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1353,4 +1356,6 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   physics_concept: "Physics concept",
   space_engineering_concept: "Space-engineering concept",
   exoplanet_science_concept: "Exoplanet-science concept",
+  catalog_family: "Catalog family",
+  designation_system: "Designation system",
 };
