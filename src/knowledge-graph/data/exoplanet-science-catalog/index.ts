@@ -7,9 +7,10 @@ import { formation } from "@/knowledge-graph/data/exoplanet-science-catalog/data
 import { missions } from "@/knowledge-graph/data/exoplanet-science-catalog/data/missions";
 
 /**
- * Exoplanet Science & Characterization catalog (Program CC). It CREATES the atmospheric-characterization
- * methods (transmission & emission spectroscopy, the secondary eclipse, phase curves, atmospheric
- * retrieval, high-resolution cross-correlation spectroscopy, the Rossiter–McLaughlin effect), the
+ * Exoplanet Science & Characterization catalog (Program CC). It CREATES the characterization methods —
+ * the atmospheric ones (transmission & emission spectroscopy, the secondary eclipse, phase curves,
+ * atmospheric retrieval, high-resolution cross-correlation spectroscopy) and the spin–orbit
+ * Rossiter–McLaughlin effect — the
  * atmosphere concepts (clouds & hazes, thermal inversion, equilibrium temperature, atmospheric
  * metallicity & C/O), the planet-formation concepts (core accretion, disk instability, migration, the
  * snow line, pebble accretion) — all under one new exoplanet_science_concept type — plus the two absent
