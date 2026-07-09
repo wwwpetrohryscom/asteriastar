@@ -29,7 +29,7 @@ export const KIND_LABEL: Record<PhysicsKind, string> = {
   quantum: "Quantum physics",
   particle: "Particle physics",
   relativity: "Relativity",
-  cosmo: "Quantum cosmology",
+  cosmo: "High-energy & quantum cosmology",
 };
 
 export interface PhysicsRecord {

@@ -60,6 +60,7 @@ import { validateOpenPlatform } from "@/knowledge-graph/data/open-platform-catal
 import { validateSolarPhysics } from "@/knowledge-graph/data/solar-physics-catalog";
 import { validateCompactObjects } from "@/knowledge-graph/data/compact-objects-catalog";
 import { validateFundamentalPhysics } from "@/knowledge-graph/data/fundamental-physics-catalog";
+import { validateSpaceEngineering } from "@/knowledge-graph/data/space-engineering-catalog";
 import { validateHumanSpaceflight } from "@/knowledge-graph/data/human-spaceflight-catalog";
 import { validateObservatories } from "@/knowledge-graph/data/observatory-catalog";
 import { validateExoplanets } from "@/knowledge-graph/data/exoplanet-catalog";
@@ -201,6 +202,7 @@ export const validationEngine = {
   solarPhysics: (): string[] => validateSolarPhysics(),
   compactObjects: (): string[] => validateCompactObjects(),
   fundamentalPhysics: (): string[] => validateFundamentalPhysics(),
+  spaceEngineering: (): string[] => validateSpaceEngineering(),
   humanSpaceflight: (): string[] => validateHumanSpaceflight(),
   observatories: (): string[] => validateObservatories(),
   exoplanets: (): string[] => validateExoplanets(),

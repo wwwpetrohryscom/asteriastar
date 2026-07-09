@@ -98,6 +98,7 @@ export const ROUTES = {
   solarPhysics: "/solar-physics",
   compactObjects: "/compact-objects",
   fundamentalPhysics: "/fundamental-physics",
+  spaceEngineering: "/space-engineering",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -724,4 +725,10 @@ export function fundamentalPhysicsPath(slug: string): string {
 }
 export function fundamentalPhysicsDiscoveryPath(slug: string): string {
   return `/fundamental-physics/discover/${slug}`;
+}
+export function spaceEngineeringPath(slug: string): string {
+  return `/space-engineering/${slug}`;
+}
+export function spaceEngineeringDiscoveryPath(slug: string): string {
+  return `/space-engineering/discover/${slug}`;
 }

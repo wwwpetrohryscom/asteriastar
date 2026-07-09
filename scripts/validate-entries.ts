@@ -863,6 +863,30 @@ async function main() {
     `✓ Fundamental physics valid — ${caCat.CA_STATS.byKind.quantum} quantum, ${caCat.CA_STATS.byKind.particle} particle, ${caCat.CA_STATS.byKind.relativity} relativity, ${caCat.CA_STATS.byKind.cosmo} quantum-cosmology concepts · ${caCat.CA_STATS.newEntities} new entities, ${caCat.CA_STATS.relations} relations (reused special/general relativity/spacetime/inflation/dark-sector/Standard-Model/neutrino/IceCube/cosmic-rays/CMB/Sun; only well-established physics, nothing fabricated)`,
   );
 
+  const cbCat = await import("../src/knowledge-graph/data/space-engineering-catalog");
+  const cbIssues = cbCat.validateSpaceEngineering();
+  const { getEntityById: getCbEnt } = await import("../src/knowledge-graph");
+  for (const r of cbCat.relations) {
+    if (!getCbEnt(r.from)) cbIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getCbEnt(r.to)) cbIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  // Reuse honesty: every relatedKey must resolve to a real entity (a new CB entity or an existing one) —
+  // catches a fabricated reference to a non-existent engine, stage, subsystem, or system.
+  const cbNewIds = new Set(cbCat.entities.map((e) => e.id));
+  for (const r of cbCat.CB_RECORDS) {
+    for (const k of r.relatedKeys ?? []) {
+      if (!cbNewIds.has(k) && !getCbEnt(k)) cbIssues.push(`space-engineering entity ${r.id}: relatedKey "${k}" does not resolve to a real entity`);
+    }
+  }
+  if (cbIssues.length > 0) {
+    console.error(`\n✗ ${cbIssues.length} space-engineering issue(s):`);
+    for (const i of cbIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Space engineering valid — ${cbCat.CB_STATS.byKind.propulsion} propulsion methods, ${cbCat.CB_STATS.byKind.performance} rocketry principles, ${cbCat.CB_STATS.byKind.maneuver} flight maneuvers · ${cbCat.CB_STATS.newEntities} new entities, ${cbCat.CB_STATS.relations} relations (reused rocket engines/stages/propellants, spacecraft subsystems/components, docking/navigation systems, operations functions; only well-established engineering, nothing fabricated)`,
+  );
+
   const bgCat = await import("../src/knowledge-graph/data/galactic-astronomy-catalog");
   const bgIssues = bgCat.validateGalacticAstronomy();
   const { getEntityById: getBgEnt } = await import("../src/knowledge-graph");
