@@ -3,10 +3,10 @@ import type { EntityType } from "@/knowledge-graph/schema";
 
 /**
  * Astronomical Catalogs & Professional Sky Databases data model (Program CD) — the professional catalog
- * layer. It REUSES the eleven catalogue entities already in the graph (Messier, NGC, IC, Henry Draper,
- * Hipparcos, Gaia, the Harvard/Yerkes classifications, the historical star catalogues), the sky surveys
- * (SDSS, 2MASS, WISE, Gaia DR3, Pan-STARRS, LSST…), the data archives (CDS, SIMBAD, VizieR, NED, MAST…),
- * the compiling astronomers, and the Gaia telescope. CD adds only what was missing: the professional
+ * layer. It REUSES six of the catalogue entities already in the graph (Messier, NGC, IC, Henry Draper,
+ * Hipparcos, Gaia; the graph also holds the Harvard/Yerkes classifications and the historical star
+ * catalogues), the Gaia DR3 sky survey, the data archives CDS, VizieR and NED, the compiling astronomers,
+ * ESA, the Smithsonian, and the Gaia telescope via relatedKeys. CD adds only what was missing: the professional
  * catalogs that were carried only as designation *fields* (Caldwell, Barnard, Sharpless, Abell, PGC, UGC,
  * Gliese, Tycho-2, SAO, GCVS, WDS, LHS, Wolf, the Bonner Durchmusterung) as first-class `catalog`
  * entities, the `catalog_family` groupings, and the stellar `designation_system` schemes (Bayer,

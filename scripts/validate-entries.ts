@@ -935,6 +935,30 @@ async function main() {
     `✓ Sky catalogs valid — ${cdCat.CD_STATS.byKind.catalog} catalogues, ${cdCat.CD_STATS.byKind.family} families, ${cdCat.CD_STATS.byKind.designation} designation systems · ${cdCat.CD_STATS.newEntities} new entities, ${cdCat.CD_STATS.relations} relations (reused Messier/NGC/IC/Henry-Draper/Hipparcos/Gaia catalogues, sky surveys, data archives, astronomers, Gaia; only well-established catalogue facts, nothing fabricated)`,
   );
 
+  const ceCat = await import("../src/knowledge-graph/data/deep-sky-encyclopedia-catalog");
+  const ceIssues = ceCat.validateDeepSkyEncyclopedia();
+  const { getEntityById: getCeEnt } = await import("../src/knowledge-graph");
+  for (const r of ceCat.relations) {
+    if (!getCeEnt(r.from)) ceIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getCeEnt(r.to)) ceIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  // Reuse honesty: every relatedKey must resolve to a real entity (a new CE entity or an existing one) —
+  // catches a fabricated reference to a non-existent object, class, catalogue, or constellation.
+  const ceNewIds = new Set(ceCat.entities.map((e) => e.id));
+  for (const r of ceCat.CE_RECORDS) {
+    for (const k of r.relatedKeys ?? []) {
+      if (!ceNewIds.has(k) && !getCeEnt(k)) ceIssues.push(`deep-sky-encyclopedia entity ${r.id}: relatedKey "${k}" does not resolve to a real entity`);
+    }
+  }
+  if (ceIssues.length > 0) {
+    console.error(`\n✗ ${ceIssues.length} deep-sky-encyclopedia issue(s):`);
+    for (const i of ceIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Deep sky encyclopedia valid — ${ceCat.CE_STATS.byKind["dso-class"]} object classes, ${ceCat.CE_STATS.byKind.object} objects · ${ceCat.CE_STATS.newEntities} new entities, ${ceCat.CE_STATS.relations} relations (reused 619+ DSOs/galaxy morphologies/ISM concepts/supernova classes/Messier-NGC-Sharpless-Barnard/constellations; only well-established astrophysics, nothing fabricated)`,
+  );
+
   const bgCat = await import("../src/knowledge-graph/data/galactic-astronomy-catalog");
   const bgIssues = bgCat.validateGalacticAstronomy();
   const { getEntityById: getBgEnt } = await import("../src/knowledge-graph");

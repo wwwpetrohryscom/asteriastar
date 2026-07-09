@@ -2651,6 +2651,41 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["catalog:messier", "catalog:ngc", "catalog_family:astrometric-star-catalogs", "designation_system:bayer-designation"],
     next: ["exploring-the-knowledge-graph", "observing-the-night-sky"],
   },
+  {
+    slug: "the-deep-sky-menagerie",
+    title: "The Deep-Sky Menagerie",
+    description: "Beyond the Solar System lies a menagerie of clusters, nebulae, and galaxies. A path through the classes of deep-sky object — from the young open clusters and glowing HII regions to the cast-off shells of dying stars and the wreckage of supernovae — each tied to real objects you can find in the sky.",
+    accent: "nebula",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Deep-sky object classes", href: "/deep-sky-encyclopedia/discover/object-classes", blurb: "The taxonomy of clusters, nebulae, and remnants." },
+          { title: "Open clusters", href: "/deep-sky-encyclopedia/open-cluster", blurb: "Young sibling stars — e.g. the Pleiades." },
+          { title: "Emission nebulae", href: "/deep-sky-encyclopedia/emission-nebula", blurb: "Gas glowing red where hot stars ionise it." },
+          { title: "HII regions", href: "/deep-sky-encyclopedia/hii-region", blurb: "Ionised hydrogen around newborn massive stars." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Globular clusters", href: "/deep-sky-encyclopedia/globular-cluster", blurb: "Ancient million-star swarms in the halo." },
+          { title: "Dark nebulae", href: "/deep-sky-encyclopedia/dark-nebula", blurb: "Opaque dust silhouetted against the light behind." },
+          { title: "The Horsehead Nebula", href: "/deep-sky-encyclopedia/horsehead-nebula", blurb: "A dark dust column against IC 434." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Planetary nebulae", href: "/deep-sky-encyclopedia/planetary-nebula", blurb: "The cast-off shell of a dying Sun-like star." },
+          { title: "Supernova remnants", href: "/deep-sky-encyclopedia/supernova-remnant", blurb: "The shock-heated wreckage of an exploded star." },
+          { title: "The Crab Pulsar", href: "/compact-objects/crab-pulsar", blurb: "A remnant with a pulsar at its heart." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["astrophysical_object_class:globular-cluster", "astrophysical_object_class:planetary-nebula", "nebula:horsehead-nebula", "nebula:orion-nebula"],
+    next: ["how-the-sky-is-catalogued", "exploring-the-knowledge-graph"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

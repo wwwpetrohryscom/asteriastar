@@ -101,6 +101,7 @@ export const ROUTES = {
   spaceEngineering: "/space-engineering",
   exoplanetScience: "/exoplanet-science",
   skyCatalogs: "/sky-catalogs",
+  deepSkyEncyclopedia: "/deep-sky-encyclopedia",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -745,4 +746,10 @@ export function skyCatalogsPath(slug: string): string {
 }
 export function skyCatalogsDiscoveryPath(slug: string): string {
   return `/sky-catalogs/discover/${slug}`;
+}
+export function deepSkyEncyclopediaPath(slug: string): string {
+  return `/deep-sky-encyclopedia/${slug}`;
+}
+export function deepSkyEncyclopediaDiscoveryPath(slug: string): string {
+  return `/deep-sky-encyclopedia/discover/${slug}`;
 }

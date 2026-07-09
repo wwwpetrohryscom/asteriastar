@@ -42,8 +42,8 @@ export const families: CdRecord[] = [
     slug: "astrometric-star-catalogs",
     name: "Astrometric Star Catalogues",
     description:
-      "The positional and photometric catalogues that pin down where the stars are — from Argelander's pre-photographic Bonner Durchmusterung and the Smithsonian's SAO catalogue, through the Henry Draper spectral survey, to the space-based precision of Hipparcos, Tycho-2, and Gaia.",
-    relatedKeys: ["catalog:hipparcos-catalogue", "catalog:gaia-catalogue", "catalog:henry-draper-catalogue", "catalog:tycho-catalogue", "catalog:sao-catalogue", "catalog:bonner-durchmusterung", "space_telescope:gaia"],
+      "The positional catalogues that pin down where the stars are — from Argelander's pre-photographic Bonner Durchmusterung and the Smithsonian's SAO catalogue to the space-based precision of Hipparcos, Tycho-2, and Gaia.",
+    relatedKeys: ["catalog:hipparcos-catalogue", "catalog:gaia-catalogue", "catalog:tycho-catalogue", "catalog:sao-catalogue", "catalog:bonner-durchmusterung", "space_telescope:gaia"],
     highlights: ["From the Durchmusterung to Gaia — where the stars are"],
   }),
   cd("family", {
