@@ -13,6 +13,7 @@
     "indexnow:key": "tsx scripts/generate-indexnow-key.ts",
     "indexnow:submit": "tsx scripts/indexnow-submit.ts",
     "brand": "tsx scripts/generate-brand.ts",
+    "cosmos:bg": "tsx scripts/generate-cosmos-bg.ts",
     "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts"
   },
   "dependencies": {

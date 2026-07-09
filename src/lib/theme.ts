@@ -8,15 +8,16 @@ import type { AccentToken } from "@/lib/content/types";
  * them in components with arbitrary-value utilities like `text-[var(--accent)]`.
  */
 export const ACCENTS: Record<AccentToken, { from: string; to: string; solid: string }> = {
-  // Monochrome starlight — every accent is a shade of silver/white so nothing
-  // reads as colour. Kept faintly distinct (cool/warm/neutral) for legibility.
-  nebula: { from: "#e6ecf8", to: "#aeb9d2", solid: "#c6d0e6" },
-  aurora: { from: "#e2e9f0", to: "#a9b6c6", solid: "#c2ccd8" },
-  ember: { from: "#efe7d6", to: "#c6bba4", solid: "#d8cdb8" },
-  plasma: { from: "#e8e4ee", to: "#b4adc4", solid: "#cbc6d6" },
-  stone: { from: "#cbd3e0", to: "#8f9bb2", solid: "#9aa6c0" },
-  halo: { from: "#eff3fa", to: "#c2cbdd", solid: "#d7deec" },
-  comet: { from: "#e3ecea", to: "#a7bcb8", solid: "#bfccc9" },
+  // NASA/ESA scientific palette — deep navy, NASA blue, steel, silver, and a
+  // reserved soft gold. No purple. Each hub reads as a distinct but restrained
+  // blue/steel/silver/gold tint so the platform stays premium, not a rainbow.
+  nebula: { from: "#9cc4ff", to: "#3f74c9", solid: "#6ba1f0" }, // NASA blue
+  aurora: { from: "#c3d6ea", to: "#6f92b8", solid: "#8fb0d4" }, // steel blue
+  ember: { from: "#f4e2b8", to: "#caa858", solid: "#e6c987" }, // soft gold
+  plasma: { from: "#b6c6e4", to: "#586f9e", solid: "#7f9bd0" }, // slate blue
+  stone: { from: "#c2ccdd", to: "#828ea6", solid: "#9aa6be" }, // silver-slate
+  halo: { from: "#eaf1fb", to: "#b7c8e2", solid: "#d4e0f4" }, // starlight
+  comet: { from: "#cfe6f2", to: "#6fa2c2", solid: "#a3c6de" }, // ice blue
 };
 
 /** Inline CSS variables for a given accent, applied on a wrapping element. */

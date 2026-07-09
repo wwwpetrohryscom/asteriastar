@@ -17,24 +17,47 @@ export const OG_CONTENT_TYPE = "image/png";
 export function socialCard(): ImageResponse {
   const mark = readFileSync(join(process.cwd(), "public/brand/mark-512.png"));
   const markSrc = `data:image/png;base64,${mark.toString("base64")}`;
+  const bg = readFileSync(join(process.cwd(), "public/brand/cosmos-og.jpg"));
+  const bgSrc = `data:image/jpeg;base64,${bg.toString("base64")}`;
   return new ImageResponse(
     (
       <div
         style={{
+          position: "relative",
           width: "100%",
           height: "100%",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px",
-          backgroundColor: "#05060f",
-          backgroundImage:
-            "radial-gradient(900px 620px at 85% -12%, rgba(246,210,122,0.28), transparent), radial-gradient(760px 520px at 0% 112%, rgba(52,134,207,0.28), transparent)",
+          backgroundColor: "#040711",
           color: "#e9ebf8",
           fontFamily: "sans-serif",
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "24px" }}>
+        {/* The real-space cosmos photograph behind the card. */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={bgSrc}
+          width={1200}
+          height={630}
+          alt=""
+          style={{ position: "absolute", top: 0, left: 0, width: "1200px", height: "630px", objectFit: "cover" }}
+        />
+        {/* Dark scrim for text contrast. */}
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "1200px",
+            height: "630px",
+            display: "flex",
+            backgroundImage:
+              "linear-gradient(120deg, rgba(4,7,17,0.86) 0%, rgba(4,7,17,0.62) 55%, rgba(4,7,17,0.4) 100%)",
+          }}
+        />
+        <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "24px" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={markSrc} width={104} height={104} alt="" />
           <div style={{ display: "flex", fontSize: "40px", fontWeight: 700, letterSpacing: "1px" }}>
@@ -43,16 +66,16 @@ export function socialCard(): ImageResponse {
           </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column" }}>
+        <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: "78px", fontWeight: 700, lineHeight: 1.05, letterSpacing: "-2px", maxWidth: "900px" }}>
             {SITE.tagline}
           </div>
-          <div style={{ marginTop: "26px", fontSize: "30px", color: "#a6abce", maxWidth: "920px" }}>
+          <div style={{ marginTop: "26px", fontSize: "30px", color: "#ccd6ef", maxWidth: "920px" }}>
             Astronomy, space, the night sky, mythology — and astrology as a separate cultural tradition.
           </div>
         </div>
 
-        <div style={{ display: "flex", fontSize: "26px", color: "#767ca3" }}>{SITE.domain}</div>
+        <div style={{ position: "relative", zIndex: 1, display: "flex", fontSize: "26px", color: "#9aa6c8" }}>{SITE.domain}</div>
       </div>
     ),
     { ...OG_SIZE },

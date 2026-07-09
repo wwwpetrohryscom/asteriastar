@@ -4,7 +4,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { WebmasterId } from "@/components/site/WebmasterId";
-import { CosmicBackdrop } from "@/components/cosmos/Cosmos";
+import { PhotoBackdrop } from "@/components/cosmos/PhotoBackdrop";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/seo/jsonld";
 import { defaultTitle } from "@/lib/seo/metadata";
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#05060f",
+  themeColor: "#040711",
   colorScheme: "dark",
 };
 
@@ -56,7 +56,8 @@ export default function RootLayout({
     <html lang="en" className={`${display.variable} ${sans.variable} h-full antialiased`}>
       <body className="cosmos flex min-h-full flex-col">
         <JsonLd data={[websiteSchema(), organizationSchema()]} />
-        <CosmicBackdrop uid="bg" variant="subtle" fixed fade={false} />
+        {/* The real-space photograph, fixed behind every page as the ambient layer. */}
+        <PhotoBackdrop variant="ambient" fixed priority />
 
         <a
           href="#main"

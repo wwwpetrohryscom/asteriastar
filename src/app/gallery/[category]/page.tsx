@@ -37,8 +37,6 @@ export default async function GalleryCategoryPage({ params }: PageProps<"/galler
     <>
       <JsonLd data={[breadcrumbSchema(crumbs), collectionPageSchema({ name: `${theme.title} — Gallery`, description: theme.tagline, url: galleryPath(category) })]} />
       <HeroSection
-        backdrop
-        backdropVariant="section"
         accent="halo"
         compact
         eyebrow={<span className="text-halo/90">Gallery · {images.length} images</span>}
