@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import type { AccentToken } from "@/lib/content/types";
 import { accentVars } from "@/lib/theme";
 import { Container } from "@/components/ui/Container";
+import { CosmicBackdrop } from "@/components/cosmos/Cosmos";
 
 /**
  * Page hero / header. `compact` switches between the large homepage hero and
@@ -14,6 +15,8 @@ export function HeroSection({
   actions,
   accent = "nebula",
   compact = false,
+  backdrop = false,
+  backdropVariant = "hero",
   children,
 }: {
   eyebrow?: ReactNode;
@@ -22,13 +25,16 @@ export function HeroSection({
   actions?: ReactNode;
   accent?: AccentToken;
   compact?: boolean;
+  backdrop?: boolean;
+  backdropVariant?: "hero" | "section" | "subtle";
   children?: ReactNode;
 }) {
   return (
     <section
       style={accentVars(accent)}
-      className={compact ? "pt-10 pb-2" : "pt-16 pb-10 sm:pt-24 sm:pb-14"}
+      className={`${backdrop ? "relative isolate overflow-hidden" : ""} ${compact ? "pt-10 pb-2" : "pt-16 pb-10 sm:pt-24 sm:pb-14"}`}
     >
+      {backdrop && <CosmicBackdrop variant={backdropVariant} />}
       <Container>
         {eyebrow && (
           <div className="mb-4 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-faint">
