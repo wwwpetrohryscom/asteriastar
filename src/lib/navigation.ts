@@ -121,6 +121,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Cosmology & Universe", href: ROUTES.cosmology, description: "The scientific model of the cosmos" },
             { name: "Night Sky", href: ROUTES.sky, description: "What to observe — meteor showers, eclipses, the Moon" },
             { name: "Image Archive", href: ROUTES.images, description: "Scientific imagery with verified provenance" },
+            { name: "Gallery", href: ROUTES.gallery, description: "Webb, Hubble, the Solar System & the deep sky — curated, openly-licensed cosmic imagery" },
             { name: "Explore", href: ROUTES.explore, description: "Topics, entities, and connections" },
             { name: "Discover", href: ROUTES.discover, description: "Curated entry points" },
             { name: "Entity Index", href: ROUTES.entityIndex, description: "Every entity, A–Z" },

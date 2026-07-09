@@ -104,6 +104,7 @@ export const ROUTES = {
   deepSkyEncyclopedia: "/deep-sky-encyclopedia",
   referenceSystems: "/reference-systems",
   observationTechniques: "/observation-techniques",
+  gallery: "/gallery",
   astronomySoftware: "/astronomy-software",
 } as const;
 
@@ -281,6 +282,10 @@ export function exoplanetPath(slug: string): string {
 
 export function exoplanetDiscoveryPath(slug: string): string {
   return `/exoplanets/discover/${slug}`;
+}
+
+export function galleryPath(slug: string): string {
+  return `/gallery/${slug}`;
 }
 
 export function imagePath(slug: string): string {
