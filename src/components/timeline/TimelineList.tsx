@@ -12,7 +12,7 @@ export function TimelineList({ events }: { events: TimelineEvent[] }) {
         <li key={`${event.date}-${i}`} className="relative">
           <span
             aria-hidden
-            className="absolute -left-[1.65rem] top-1 h-2.5 w-2.5 rounded-full bg-[var(--accent,#56b6f6)] ring-4 ring-bg"
+            className="absolute -left-[1.65rem] top-1 h-2.5 w-2.5 rounded-full bg-[var(--accent,#c8d2e6)] ring-4 ring-bg"
           />
           <p className="text-xs font-medium uppercase tracking-wider text-faint">{event.date}</p>
           {event.href ? (

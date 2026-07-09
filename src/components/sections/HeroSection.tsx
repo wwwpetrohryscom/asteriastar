@@ -17,6 +17,7 @@ export function HeroSection({
   compact = false,
   backdrop = false,
   backdropVariant = "hero",
+  backdropBody = "none",
   children,
 }: {
   eyebrow?: ReactNode;
@@ -27,6 +28,7 @@ export function HeroSection({
   compact?: boolean;
   backdrop?: boolean;
   backdropVariant?: "hero" | "section" | "subtle";
+  backdropBody?: "none" | "saturn" | "moon" | "sun";
   children?: ReactNode;
 }) {
   return (
@@ -34,7 +36,7 @@ export function HeroSection({
       style={accentVars(accent)}
       className={`${backdrop ? "relative isolate overflow-hidden" : ""} ${compact ? "pt-10 pb-2" : "pt-16 pb-10 sm:pt-24 sm:pb-14"}`}
     >
-      {backdrop && <CosmicBackdrop variant={backdropVariant} />}
+      {backdrop && <CosmicBackdrop uid="hero" variant={backdropVariant} body={backdropBody} />}
       <Container>
         {eyebrow && (
           <div className="mb-4 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-faint">
