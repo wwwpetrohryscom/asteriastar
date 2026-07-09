@@ -55,6 +55,7 @@ import { BZ_DISCOVERIES } from "@/app/compact-objects/discovery";
 import { CA_DISCOVERIES } from "@/app/fundamental-physics/discovery";
 import { CB_DISCOVERIES } from "@/app/space-engineering/discovery";
 import { CC_DISCOVERIES } from "@/app/exoplanet-science/discovery";
+import { CD_DISCOVERIES } from "@/app/sky-catalogs/discovery";
 import { BG_DISCOVERIES } from "@/app/galactic-astronomy/discovery";
 import { BH_DISCOVERIES } from "@/app/astroinformatics/discovery";
 import { BI_DISCOVERIES } from "@/app/deep-space-exploration/discovery";
@@ -224,6 +225,8 @@ import {
   spaceEngineeringDiscoveryPath,
   exoplanetSciencePath,
   exoplanetScienceDiscoveryPath,
+  skyCatalogsPath,
+  skyCatalogsDiscoveryPath,
   galacticAstronomyPath,
   galacticAstronomyDiscoveryPath,
   astroinformaticsPath,
@@ -676,6 +679,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...CC_DISCOVERIES.map((d) => ({ url: absoluteUrl(exoplanetScienceDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const skyCatalogsRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.skyCatalogs), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.skyCatalogs.all().map((r) => ({ url: absoluteUrl(skyCatalogsPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...CD_DISCOVERIES.map((d) => ({ url: absoluteUrl(skyCatalogsDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const galacticAstronomyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.galacticAstronomy), changeFrequency: "weekly", priority: 0.8 },
     ...engine.galacticAstronomy.all().map((r) => ({ url: absoluteUrl(galacticAstronomyPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
@@ -828,6 +837,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...fundamentalPhysicsRoutes,
     ...spaceEngineeringRoutes,
     ...exoplanetScienceRoutes,
+    ...skyCatalogsRoutes,
     ...galacticAstronomyRoutes,
     ...astroinformaticsRoutes,
     ...deepSpaceExplorationRoutes,

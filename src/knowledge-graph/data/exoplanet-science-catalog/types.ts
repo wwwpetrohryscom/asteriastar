@@ -15,7 +15,7 @@ import type { EntityType } from "@/knowledge-graph/schema";
  */
 
 export type CcKind =
-  | "characterization" // an atmospheric-characterization method
+  | "characterization" // a planet/system characterization method
   | "atmosphere" // an exoplanet-atmosphere concept
   | "formation" // a planet-formation concept
   | "mission"; // a dedicated exoplanet space telescope (not yet launched)

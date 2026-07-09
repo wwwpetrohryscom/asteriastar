@@ -2616,6 +2616,41 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["cosmology_concept:ergosphere", "black_hole:cygnus-x-1", "neutron_star:crab-pulsar", "astrophysical_object_class:pulsar"],
     next: ["exploring-the-knowledge-graph", "understanding-the-sun"],
   },
+  {
+    slug: "how-the-sky-is-catalogued",
+    title: "How the Sky Is Catalogued",
+    description: "Every object in the sky has a name — usually many. A path through the professional catalogue layer: the great reference lists from the Bonner Durchmusterung to Gaia, the families they fall into, and the designation systems, from Bayer letters to variable-star names, that let astronomers point unambiguously at any star, cluster, or galaxy.",
+    accent: "halo",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "The catalogue layer", href: "/sky-catalogs", blurb: "How the sky is named and indexed." },
+          { title: "Professional catalogues", href: "/sky-catalogs/discover/professional-catalogues", blurb: "Caldwell, Barnard, Sharpless, Gliese and more." },
+          { title: "The Caldwell Catalogue", href: "/sky-catalogs/caldwell", blurb: "109 showpieces Messier left out." },
+          { title: "The Bonner Durchmusterung", href: "/sky-catalogs/bonner-durchmusterung", blurb: "The greatest survey before photography." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Catalog families", href: "/sky-catalogs/discover/catalog-families", blurb: "How catalogues group by what they list." },
+          { title: "Astrometric star catalogues", href: "/sky-catalogs/astrometric-star-catalogs", blurb: "From the Durchmusterung to Gaia." },
+          { title: "Nebula catalogues", href: "/sky-catalogs/nebula-catalogs", blurb: "Sharpless, Barnard, and Abell." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Designation systems", href: "/sky-catalogs/discover/designation-systems", blurb: "How the stars themselves are named." },
+          { title: "Bayer designations", href: "/sky-catalogs/bayer-designation", blurb: "Greek letter + constellation, e.g. α Orionis." },
+          { title: "Variable-star names", href: "/sky-catalogs/variable-star-designation", blurb: "R, S, T… then RR… then V335 onward." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["catalog:messier", "catalog:ngc", "catalog_family:astrometric-star-catalogs", "designation_system:bayer-designation"],
+    next: ["exploring-the-knowledge-graph", "observing-the-night-sky"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
