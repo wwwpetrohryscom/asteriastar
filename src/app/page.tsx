@@ -57,7 +57,6 @@ export default function HomePage() {
       <HeroSection
         accent="halo"
         backdrop
-        backdropBody="saturn"
         eyebrow={<span className="text-silver/90">A global knowledge platform for the sky</span>}
         title={
           <>

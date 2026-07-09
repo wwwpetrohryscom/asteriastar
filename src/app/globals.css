@@ -9,28 +9,31 @@
  */
 
 @theme {
-  /* Surfaces — the black of deep space. */
-  --color-bg: #030409;
-  --color-bg-elevated: #090b12;
-  --color-surface: #0d1019;
+  /* Surfaces — the deep navy-black of space, matched to the photo background. */
+  --color-bg: #040711;
+  --color-bg-elevated: #0a1120;
+  --color-surface: #0e1626;
 
   /* Text — starlight white to faint silver. */
   --color-fg: #f3f6fc;
-  --color-muted: #a7afc0;
-  --color-faint: #6b7386;
+  --color-muted: #a9b2c6;
+  --color-faint: #6e7893;
 
-  /* Palette — monochrome starlight. Black, white, and silver only; no colour.
-   * Accents differ only by the faintest cool/warm silver so hubs stay legible
-   * without ever reading as purple, teal, or amber. Gold is reserved for the
-   * brand emblem and the astrology-as-tradition distinction. */
+  /* Palette — NASA/ESA scientific: deep navy, black, white, silver, soft gold,
+   * and NASA blue. No purple. `--color-nasa` is the bright accent (links, glows);
+   * `--color-nasa-deep` is the institutional flag blue. Gold stays reserved for
+   * the brand emblem and the astrology-as-tradition distinction. Hub accents are
+   * subtle blue/steel/silver/gold tints so hubs stay legible without a rainbow. */
+  --color-nasa: #4f8ff0;
+  --color-nasa-deep: #0b3d91;
   --color-gold: #e7c98a;
-  --color-nebula: #c6d0e6;
-  --color-aurora: #c2ccd8;
-  --color-ember: #d8cdb8;
-  --color-plasma: #cbc6d6;
-  --color-stone: #9aa6c0;
-  --color-halo: #d7deec;
-  --color-comet: #bfccc9;
+  --color-nebula: #6ba1f0;
+  --color-aurora: #8fb0d4;
+  --color-ember: #e6c987;
+  --color-plasma: #7f9bd0;
+  --color-stone: #9aa6be;
+  --color-halo: #d4e0f4;
+  --color-comet: #a3c6de;
   --color-silver: #c8d2e6;
 
   /* Typography */
@@ -76,50 +79,19 @@
   }
 
   ::selection {
-    background-color: rgba(230, 236, 247, 0.28);
+    background-color: rgba(79, 143, 240, 0.32);
     color: #fff;
   }
 }
 
 @layer components {
   /*
-   * The cosmic backdrop: two soft nebula glows over the base color, plus a
-   * sparse, deterministic starfield. Pure CSS — no images, no hydration risk.
-   */
-  /*
-   * The cosmic backdrop — deliberately restrained for a scientific-institution
-   * feel: faint, cool glows over the base color rather than vivid gradients.
+   * Base surface colour. The real-space photograph (PhotoBackdrop) is fixed
+   * behind every page as the visible backdrop; this deep navy-black is the
+   * fallback painted before the image loads and behind its dark scrim.
    */
   .cosmos {
     background-color: var(--color-bg);
-    /* Deep space: near-black, with only the faintest cool starlight wash — like
-     * the glow of a distant galaxy. No colour. */
-    background-image:
-      radial-gradient(
-        75rem 60rem at 82% -16%,
-        rgba(210, 222, 245, 0.06),
-        transparent 60%
-      ),
-      radial-gradient(
-        50rem 42rem at 2% 6%,
-        rgba(150, 166, 192, 0.05),
-        transparent 58%
-      );
-    background-attachment: fixed;
-  }
-
-  .starfield {
-    background-image:
-      radial-gradient(1px 1px at 20% 30%, rgba(255, 255, 255, 0.7), transparent),
-      radial-gradient(1px 1px at 75% 16%, rgba(255, 255, 255, 0.6), transparent),
-      radial-gradient(1.5px 1.5px at 46% 62%, rgba(255, 255, 255, 0.55), transparent),
-      radial-gradient(1px 1px at 88% 70%, rgba(255, 255, 255, 0.5), transparent),
-      radial-gradient(1px 1px at 12% 82%, rgba(255, 255, 255, 0.55), transparent),
-      radial-gradient(1.5px 1.5px at 62% 38%, rgba(255, 255, 255, 0.45), transparent),
-      radial-gradient(1px 1px at 33% 12%, rgba(255, 255, 255, 0.5), transparent),
-      radial-gradient(1px 1px at 92% 44%, rgba(255, 255, 255, 0.4), transparent);
-    background-repeat: repeat;
-    background-size: 320px 320px;
   }
 
   /* Frosted card surface with a subtle top-down sheen. */

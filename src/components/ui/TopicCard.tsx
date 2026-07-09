@@ -32,7 +32,7 @@ export function TopicCard({
     <Link
       href={href}
       style={accent ? accentVars(accent) : undefined}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--accent,#c8d2e6)_45%,transparent)] hover:bg-white/[0.04]"
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-bg-elevated/45 p-5 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--accent,#4f8ff0)_50%,transparent)] hover:bg-bg-elevated/70"
     >
       <span
         aria-hidden

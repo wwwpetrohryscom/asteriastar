@@ -2,11 +2,13 @@ import type { ReactNode } from "react";
 import type { AccentToken } from "@/lib/content/types";
 import { accentVars } from "@/lib/theme";
 import { Container } from "@/components/ui/Container";
-import { CosmicBackdrop } from "@/components/cosmos/Cosmos";
+import { PhotoBackdrop } from "@/components/cosmos/PhotoBackdrop";
 
 /**
  * Page hero / header. `compact` switches between the large homepage hero and
- * the lighter header used at the top of hub and category pages.
+ * the lighter header used at the top of hub and category pages. When `backdrop`
+ * is set the hero becomes a photo showcase — the real-space cosmos image with
+ * Earth's limb along the bottom edge — sitting above the global ambient layer.
  */
 export function HeroSection({
   eyebrow,
@@ -16,8 +18,6 @@ export function HeroSection({
   accent = "nebula",
   compact = false,
   backdrop = false,
-  backdropVariant = "hero",
-  backdropBody = "none",
   children,
 }: {
   eyebrow?: ReactNode;
@@ -26,17 +26,20 @@ export function HeroSection({
   actions?: ReactNode;
   accent?: AccentToken;
   compact?: boolean;
+  /** Show the cosmos photograph as a showcase backdrop for this hero. */
   backdrop?: boolean;
-  backdropVariant?: "hero" | "section" | "subtle";
-  backdropBody?: "none" | "saturn" | "moon" | "sun";
   children?: ReactNode;
 }) {
   return (
     <section
       style={accentVars(accent)}
-      className={`${backdrop ? "relative isolate overflow-hidden" : ""} ${compact ? "pt-10 pb-2" : "pt-16 pb-10 sm:pt-24 sm:pb-14"}`}
+      className={[
+        backdrop ? "relative isolate overflow-hidden" : "",
+        backdrop && !compact ? "flex min-h-[520px] flex-col justify-end sm:min-h-[600px]" : "",
+        compact ? "pt-10 pb-2" : "pt-16 pb-10 sm:pt-24 sm:pb-14",
+      ].join(" ")}
     >
-      {backdrop && <CosmicBackdrop uid="hero" variant={backdropVariant} body={backdropBody} />}
+      {backdrop && <PhotoBackdrop variant="hero" priority={!compact} />}
       <Container>
         {eyebrow && (
           <div className="mb-4 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-faint">

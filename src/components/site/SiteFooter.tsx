@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "@/components/site/Logo";
+import { PhotoBackdrop } from "@/components/cosmos/PhotoBackdrop";
 import { getAllSections } from "@/lib/content/registry";
 import { categoryPath, sectionPath, ROUTES } from "@/lib/routes";
 import { SITE } from "@/lib/site";
@@ -13,7 +14,9 @@ export function SiteFooter() {
   const sections = getAllSections();
 
   return (
-    <footer className="mt-24 border-t border-white/10 bg-bg-elevated/40">
+    <footer className="relative isolate mt-24 overflow-hidden border-t border-white/10">
+      {/* Faint star-field atmosphere fading in from the page. */}
+      <PhotoBackdrop variant="footer" />
       <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8">
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
