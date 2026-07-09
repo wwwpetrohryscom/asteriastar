@@ -31,12 +31,22 @@ npm run lint      # ESLint
 npm run validate  # validate the entry registry (boundary, sources, links)
 ```
 
-Set the canonical origin for metadata/sitemap in production:
+Configuration lives in environment variables — copy [`.env.example`](.env.example)
+to `.env.local`. All are optional; defaults keep dev/CI green:
 
 ```bash
-# .env (optional; defaults to https://asteriastar.com)
+# Canonical origin for metadata/sitemap (defaults to https://asteriastar.com)
 NEXT_PUBLIC_SITE_URL=https://asteriastar.com
+
+# IndexNow key — the prebuild step writes public/<INDEXNOW_KEY>.txt from this.
+# The literal key lives only in that generated verification file.
+INDEXNOW_KEY=c292fa58c74f45f9ad982e152b4f7c1c
 ```
+
+Branding: the official AsteriaStar logo is a single source of truth — the
+`<Emblem/>` component in [`src/lib/brand/logo.tsx`](src/lib/brand/logo.tsx). Every
+static asset (favicon, Apple touch icon, PWA icons, `favicon.ico`, social cards,
+`public/logo.svg`) is regenerated from it with `npx tsx scripts/generate-brand.ts`.
 
 ## Structure
 

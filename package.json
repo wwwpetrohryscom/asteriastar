@@ -12,6 +12,7 @@
     "exports:generate": "tsx scripts/generate-open-data-exports.ts",
     "indexnow:key": "tsx scripts/generate-indexnow-key.ts",
     "indexnow:submit": "tsx scripts/indexnow-submit.ts",
+    "brand": "tsx scripts/generate-brand.ts",
     "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts"
   },
   "dependencies": {
@@ -26,6 +27,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "tsx": "^4.22.4",
     "typescript": "^5"

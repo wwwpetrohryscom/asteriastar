@@ -30,7 +30,9 @@ export function organizationSchema(): JsonLd {
     description: SITE.description,
     logo: {
       "@type": "ImageObject",
-      url: absoluteUrl("/logo.svg"),
+      url: absoluteUrl("/icons/icon-512.png"),
+      width: 512,
+      height: 512,
     },
     foundingDate: SITE.founded,
   };
