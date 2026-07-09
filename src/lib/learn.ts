@@ -2686,6 +2686,41 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["astrophysical_object_class:globular-cluster", "astrophysical_object_class:planetary-nebula", "nebula:horsehead-nebula", "nebula:orion-nebula"],
     next: ["how-the-sky-is-catalogued", "exploring-the-knowledge-graph"],
   },
+  {
+    slug: "where-and-when-in-the-sky",
+    title: "Where & When in the Sky",
+    description: "Pointing at a star precisely takes more than a name. A path through the astrometric foundation — the coordinate systems that give a position, the reference frames and epochs that anchor it, the time scales that say when, and the corrections, from precession to refraction, for every way the measured place differs from the true one.",
+    accent: "comet",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Coordinate systems", href: "/reference-systems/discover/coordinate-systems", blurb: "How positions on the sky are measured." },
+          { title: "Right ascension", href: "/reference-systems/right-ascension", blurb: "Celestial longitude, in hours." },
+          { title: "Declination", href: "/reference-systems/declination", blurb: "Celestial latitude, +90° to −90°." },
+          { title: "The equatorial system", href: "/reference-systems/equatorial-coordinate-system", blurb: "RA and Dec, tied to an epoch." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Reference frames", href: "/reference-systems/discover/reference-frames", blurb: "FK4, FK5, and the quasar-based ICRF3." },
+          { title: "The ICRF", href: "/reference-systems/icrf3", blurb: "Quasar positions realising the ICRS." },
+          { title: "Julian date", href: "/reference-systems/julian-date", blurb: "A running day-count for observations." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Astrometric effects", href: "/reference-systems/discover/astrometric-effects", blurb: "Why the measured place isn't the true one." },
+          { title: "Precession", href: "/reference-systems/precession", blurb: "The ~25,772-year wobble of the axis." },
+          { title: "Aberration of light", href: "/reference-systems/aberration-of-light", blurb: "A yearly shift from the Earth's motion." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["coordinate_system:equatorial-coordinate-system", "reference_frame:icrf3", "astrometric_effect:precession", "reference_frame:icrs"],
+    next: ["how-the-sky-is-catalogued", "observing-the-night-sky"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));

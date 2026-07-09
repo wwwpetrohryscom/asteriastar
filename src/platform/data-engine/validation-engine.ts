@@ -64,6 +64,7 @@ import { validateSpaceEngineering } from "@/knowledge-graph/data/space-engineeri
 import { validateExoplanetScience } from "@/knowledge-graph/data/exoplanet-science-catalog";
 import { validateSkyCatalogs } from "@/knowledge-graph/data/sky-catalogs-catalog";
 import { validateDeepSkyEncyclopedia } from "@/knowledge-graph/data/deep-sky-encyclopedia-catalog";
+import { validateReferenceSystems } from "@/knowledge-graph/data/reference-systems-catalog";
 import { validateHumanSpaceflight } from "@/knowledge-graph/data/human-spaceflight-catalog";
 import { validateObservatories } from "@/knowledge-graph/data/observatory-catalog";
 import { validateExoplanets } from "@/knowledge-graph/data/exoplanet-catalog";
@@ -209,6 +210,7 @@ export const validationEngine = {
   exoplanetScience: (): string[] => validateExoplanetScience(),
   skyCatalogs: (): string[] => validateSkyCatalogs(),
   deepSkyEncyclopedia: (): string[] => validateDeepSkyEncyclopedia(),
+  referenceSystems: (): string[] => validateReferenceSystems(),
   humanSpaceflight: (): string[] => validateHumanSpaceflight(),
   observatories: (): string[] => validateObservatories(),
   exoplanets: (): string[] => validateExoplanets(),
