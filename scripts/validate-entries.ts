@@ -887,6 +887,30 @@ async function main() {
     `✓ Space engineering valid — ${cbCat.CB_STATS.byKind.propulsion} propulsion methods, ${cbCat.CB_STATS.byKind.performance} rocketry principles, ${cbCat.CB_STATS.byKind.maneuver} flight maneuvers · ${cbCat.CB_STATS.newEntities} new entities, ${cbCat.CB_STATS.relations} relations (reused rocket engines/stages/propellants, spacecraft subsystems/components, docking/navigation systems, operations functions; only well-established engineering, nothing fabricated)`,
   );
 
+  const ccCat = await import("../src/knowledge-graph/data/exoplanet-science-catalog");
+  const ccIssues = ccCat.validateExoplanetScience();
+  const { getEntityById: getCcEnt } = await import("../src/knowledge-graph");
+  for (const r of ccCat.relations) {
+    if (!getCcEnt(r.from)) ccIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getCcEnt(r.to)) ccIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  // Reuse honesty: every relatedKey must resolve to a real entity (a new CC entity or an existing one) —
+  // catches a fabricated reference to a non-existent detection method, class, process, or facility.
+  const ccNewIds = new Set(ccCat.entities.map((e) => e.id));
+  for (const r of ccCat.CC_RECORDS) {
+    for (const k of r.relatedKeys ?? []) {
+      if (!ccNewIds.has(k) && !getCcEnt(k)) ccIssues.push(`exoplanet-science entity ${r.id}: relatedKey "${k}" does not resolve to a real entity`);
+    }
+  }
+  if (ccIssues.length > 0) {
+    console.error(`\n✗ ${ccIssues.length} exoplanet-science issue(s):`);
+    for (const i of ccIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Exoplanet science valid — ${ccCat.CC_STATS.byKind.characterization} characterization methods, ${ccCat.CC_STATS.byKind.atmosphere} atmosphere concepts, ${ccCat.CC_STATS.byKind.formation} formation concepts, ${ccCat.CC_STATS.byKind.mission} missions · ${ccCat.CC_STATS.newEntities} new entities, ${ccCat.CC_STATS.relations} relations (reused detection methods/planetary classes/habitable zone/biosignatures/atmospheric processes/protoplanetary disk/JWST/Kepler/TESS/Roman/HWO/ELT/GMT/TMT; only well-established science, nothing fabricated)`,
+  );
+
   const bgCat = await import("../src/knowledge-graph/data/galactic-astronomy-catalog");
   const bgIssues = bgCat.validateGalacticAstronomy();
   const { getEntityById: getBgEnt } = await import("../src/knowledge-graph");
