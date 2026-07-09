@@ -29,8 +29,9 @@ export default function GalleryPage() {
       <JsonLd data={[breadcrumbSchema(crumbs), collectionPageSchema({ name: "Gallery", description: DESCRIPTION, url: ROUTES.gallery })]} />
       <HeroSection
         backdrop
+        backdropBody="moon"
         accent="halo"
-        eyebrow={<span className="text-halo/90">Openly-licensed cosmic imagery</span>}
+        eyebrow={<span className="text-silver/90">Openly-licensed cosmic imagery</span>}
         title={<>The <span className="accent-text">Gallery</span></>}
         lead="Webb and Hubble, the Solar System, the deep sky, and the Earth from space — every image credited, licensed, and linked to its official archive."
       >

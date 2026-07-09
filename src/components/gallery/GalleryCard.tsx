@@ -10,13 +10,14 @@ import { imagePath } from "@/lib/routes";
  * image — and the card carries the real provenance (object, credit, licence)
  * and links to the image's page, which links on to the official archive.
  */
+// Monochrome poster tints — greys of deep space, no colour.
 const PALETTES = [
-  ["#0a1f44", "#12386e", "#0a1226"],
-  ["#0d1030", "#2a1c52", "#0a0e22"],
-  ["#04121f", "#0b3550", "#061019"],
-  ["#160a1e", "#3a1338", "#0c0714"],
-  ["#0a1a12", "#123a2c", "#07120d"],
-  ["#1a1204", "#3a2a0c", "#100a04"],
+  ["#0c1018", "#1b2230", "#05070c"],
+  ["#0a0d13", "#232a36", "#04050a"],
+  ["#0e121a", "#2a313d", "#06080d"],
+  ["#090b11", "#1e2531", "#04060b"],
+  ["#0d1119", "#252c39", "#05070d"],
+  ["#0b0e15", "#202634", "#04060b"],
 ];
 
 function hash(s: string): number {
@@ -47,10 +48,10 @@ function Poster({ img }: { img: ImageRecord }) {
         {dots.map((d, i) => (
           <circle key={i} cx={d.x} cy={d.y} r={d.rr} fill="#eaf2ff" opacity={d.o} />
         ))}
-        <circle cx="232" cy="52" r="30" fill="none" stroke="#f6d27a" strokeWidth="0.6" opacity="0.35" />
+        <circle cx="232" cy="52" r="30" fill="none" stroke="#c9d3e6" strokeWidth="0.6" opacity="0.35" />
       </svg>
       <div className="absolute inset-0 flex items-end bg-gradient-to-t from-bg/85 via-bg/25 to-transparent p-4">
-        <span className="text-xs font-medium uppercase tracking-wider text-halo/90">{img.objectName}</span>
+        <span className="text-xs font-medium uppercase tracking-wider text-silver/90">{img.objectName}</span>
       </div>
     </div>
   );

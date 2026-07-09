@@ -23,7 +23,7 @@ export function EntryBody({ sections }: { sections: EntrySection[] }) {
                 <li key={item} className="flex gap-3 text-muted">
                   <span
                     aria-hidden
-                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent,#56b6f6)]"
+                    className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent,#c8d2e6)]"
                   />
                   <span className="leading-relaxed">{item}</span>
                 </li>

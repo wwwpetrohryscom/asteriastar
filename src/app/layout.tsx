@@ -56,8 +56,7 @@ export default function RootLayout({
     <html lang="en" className={`${display.variable} ${sans.variable} h-full antialiased`}>
       <body className="cosmos flex min-h-full flex-col">
         <JsonLd data={[websiteSchema(), organizationSchema()]} />
-        <CosmicBackdrop variant="subtle" fixed fade={false} />
-        <div aria-hidden className="starfield pointer-events-none fixed inset-0 -z-10 opacity-30" />
+        <CosmicBackdrop uid="bg" variant="subtle" fixed fade={false} />
 
         <a
           href="#main"

@@ -39,6 +39,55 @@ export function starField(count: number, w = 1000, h = 600, seed = 20260709): St
   return stars;
 }
 
+export type BrightStar = { x: number; y: number; r: number; spike: number; o: number };
+
+/**
+ * A handful of prominent stars, each with a soft halo and four diffraction
+ * spikes (the cross-glint real telescope images show). `spike` is the ray
+ * half-length in viewBox units.
+ */
+export function brightStars(count: number, w = 1000, h = 600, seed = 424242): BrightStar[] {
+  const rand = mulberry32(seed);
+  const out: BrightStar[] = [];
+  for (let i = 0; i < count; i++) {
+    const mag = rand();
+    out.push({
+      x: Math.round(rand() * w),
+      y: Math.round(rand() * h),
+      r: Math.round((1.3 + mag * 1.8) * 10) / 10,
+      spike: Math.round(10 + mag * 26),
+      o: Math.round((0.65 + mag * 0.3) * 100) / 100,
+    });
+  }
+  return out;
+}
+
+/**
+ * A soft band of faint stars concentrated along a diagonal — the Milky Way.
+ * Density falls off away from the band centre-line so it reads as a luminous
+ * river of stars rather than a uniform field.
+ */
+export function milkyWay(count: number, w = 1000, h = 600, seed = 71717): Star[] {
+  const rand = mulberry32(seed);
+  const stars: Star[] = [];
+  for (let i = 0; i < count; i++) {
+    const t = rand();
+    const bandX = t * w;
+    // band runs from lower-left to upper-right; scatter perpendicular with a bias to the centre
+    const centre = h * 0.72 - t * h * 0.5;
+    const spread = (rand() - 0.5) * (rand() - 0.5) * h * 1.4; // narrow, centre-weighted
+    const y = centre + spread;
+    if (y < 0 || y > h) continue;
+    stars.push({
+      x: Math.round(bandX + (rand() - 0.5) * 40),
+      y: Math.round(y),
+      r: Math.round((0.25 + rand() * 0.6) * 10) / 10,
+      o: Math.round((0.1 + rand() * 0.3) * 100) / 100,
+    });
+  }
+  return stars;
+}
+
 /**
  * A handful of real constellations as normalised line figures (0..1 in x and y),
  * to be scaled into a background. Stick figures only — the recognisable joins.

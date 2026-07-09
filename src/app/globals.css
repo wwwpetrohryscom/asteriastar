@@ -9,27 +9,28 @@
  */
 
 @theme {
-  /* Surfaces */
-  --color-bg: #05060f;
-  --color-bg-elevated: #0a0d20;
-  --color-surface: #10142e;
+  /* Surfaces — the black of deep space. */
+  --color-bg: #030409;
+  --color-bg-elevated: #090b12;
+  --color-surface: #0d1019;
 
-  /* Text */
-  --color-fg: #e9ebf8;
-  --color-muted: #a6abce;
-  --color-faint: #767ca3;
+  /* Text — starlight white to faint silver. */
+  --color-fg: #f3f6fc;
+  --color-muted: #a7afc0;
+  --color-faint: #6b7386;
 
-  /* Brand — a restrained, observatory-grade palette: navy, silver, NASA blue,
-   * subtle gold. The former violet "nebula" accent is now a blue-leaning indigo
-   * so astronomy reads as scientific blue, not purple. */
-  --color-gold: #f6d27a;
-  --color-nebula: #7c9bf0;
-  --color-aurora: #34d3d3;
-  --color-ember: #fb9a4b;
-  --color-plasma: #c471e6;
+  /* Palette — monochrome starlight. Black, white, and silver only; no colour.
+   * Accents differ only by the faintest cool/warm silver so hubs stay legible
+   * without ever reading as purple, teal, or amber. Gold is reserved for the
+   * brand emblem and the astrology-as-tradition distinction. */
+  --color-gold: #e7c98a;
+  --color-nebula: #c6d0e6;
+  --color-aurora: #c2ccd8;
+  --color-ember: #d8cdb8;
+  --color-plasma: #cbc6d6;
   --color-stone: #9aa6c0;
-  --color-halo: #56b6f6;
-  --color-comet: #36cfb0;
+  --color-halo: #d7deec;
+  --color-comet: #bfccc9;
   --color-silver: #c8d2e6;
 
   /* Typography */
@@ -75,7 +76,7 @@
   }
 
   ::selection {
-    background-color: color-mix(in oklab, var(--color-halo) 42%, transparent);
+    background-color: rgba(230, 236, 247, 0.28);
     color: #fff;
   }
 }
@@ -91,23 +92,18 @@
    */
   .cosmos {
     background-color: var(--color-bg);
-    /* Deep-navy, observatory-grade wash: NASA-style blue up top, a cold navy
-     * pool at the corner, and the faintest gold near the horizon. No purple. */
+    /* Deep space: near-black, with only the faintest cool starlight wash — like
+     * the glow of a distant galaxy. No colour. */
     background-image:
       radial-gradient(
-        70rem 58rem at 82% -14%,
-        color-mix(in oklab, var(--color-halo) 12%, transparent),
+        75rem 60rem at 82% -16%,
+        rgba(210, 222, 245, 0.06),
         transparent 60%
       ),
       radial-gradient(
-        48rem 40rem at 4% 8%,
-        color-mix(in oklab, #16345f 26%, transparent),
+        50rem 42rem at 2% 6%,
+        rgba(150, 166, 192, 0.05),
         transparent 58%
-      ),
-      radial-gradient(
-        54rem 44rem at 50% 124%,
-        color-mix(in oklab, var(--color-gold) 6%, transparent),
-        transparent 60%
       );
     background-attachment: fixed;
   }

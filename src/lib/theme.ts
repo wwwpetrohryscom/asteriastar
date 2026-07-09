@@ -8,13 +8,15 @@ import type { AccentToken } from "@/lib/content/types";
  * them in components with arbitrary-value utilities like `text-[var(--accent)]`.
  */
 export const ACCENTS: Record<AccentToken, { from: string; to: string; solid: string }> = {
-  nebula: { from: "#6d8fe8", to: "#56b6f6", solid: "#7c9bf0" },
-  aurora: { from: "#22d3ee", to: "#2dd4bf", solid: "#34d3d3" },
-  ember: { from: "#fbbf24", to: "#fb7185", solid: "#fb9a4b" },
-  plasma: { from: "#d68bf0", to: "#9a7cf0", solid: "#c471e6" },
-  stone: { from: "#94a3b8", to: "#7c8aa8", solid: "#9aa6c0" },
-  halo: { from: "#38bdf8", to: "#818cf8", solid: "#56b6f6" },
-  comet: { from: "#34d399", to: "#22d3ee", solid: "#36cfb0" },
+  // Monochrome starlight — every accent is a shade of silver/white so nothing
+  // reads as colour. Kept faintly distinct (cool/warm/neutral) for legibility.
+  nebula: { from: "#e6ecf8", to: "#aeb9d2", solid: "#c6d0e6" },
+  aurora: { from: "#e2e9f0", to: "#a9b6c6", solid: "#c2ccd8" },
+  ember: { from: "#efe7d6", to: "#c6bba4", solid: "#d8cdb8" },
+  plasma: { from: "#e8e4ee", to: "#b4adc4", solid: "#cbc6d6" },
+  stone: { from: "#cbd3e0", to: "#8f9bb2", solid: "#9aa6c0" },
+  halo: { from: "#eff3fa", to: "#c2cbdd", solid: "#d7deec" },
+  comet: { from: "#e3ecea", to: "#a7bcb8", solid: "#bfccc9" },
 };
 
 /** Inline CSS variables for a given accent, applied on a wrapping element. */

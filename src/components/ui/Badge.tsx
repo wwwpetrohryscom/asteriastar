@@ -13,7 +13,7 @@ export function Badge({
   const tones = {
     neutral: "border-white/12 bg-white/[0.04] text-muted",
     accent:
-      "border-[color-mix(in_oklab,var(--accent,#56b6f6)_45%,transparent)] bg-[color-mix(in_oklab,var(--accent,#56b6f6)_14%,transparent)] text-fg",
+      "border-[color-mix(in_oklab,var(--accent,#c8d2e6)_45%,transparent)] bg-[color-mix(in_oklab,var(--accent,#c8d2e6)_14%,transparent)] text-fg",
     tradition: "border-gold/30 bg-gold/10 text-gold",
   } as const;
 
