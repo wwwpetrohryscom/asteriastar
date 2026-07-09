@@ -839,6 +839,30 @@ async function main() {
     `✓ Compact objects valid — ${bzCat.BZ_STATS.byKind["bh-physics"] + bzCat.BZ_STATS.byKind["bh-process"]} black-hole physics, ${bzCat.BZ_STATS.byKind["ns-physics"] + bzCat.BZ_STATS.byKind["ns-class"]} neutron-star physics/classes, ${bzCat.BZ_STATS.byKind["bh-object"] + bzCat.BZ_STATS.byKind["ns-object"]} named objects · ${bzCat.BZ_STATS.newEntities} new entities, ${bzCat.BZ_STATS.relations} relations (reused BH/NS classes/Sgr A*/M87*/event-horizon/transients/EHT; only well-established astrophysics, nothing fabricated)`,
   );
 
+  const caCat = await import("../src/knowledge-graph/data/fundamental-physics-catalog");
+  const caIssues = caCat.validateFundamentalPhysics();
+  const { getEntityById: getCaEnt } = await import("../src/knowledge-graph");
+  for (const r of caCat.relations) {
+    if (!getCaEnt(r.from)) caIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getCaEnt(r.to)) caIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  // Reuse honesty: every relatedKey must resolve to a real entity (a new CA entity or an existing one) —
+  // catches a fabricated reference to a non-existent physics concept, method, or object.
+  const caNewIds = new Set(caCat.entities.map((e) => e.id));
+  for (const r of caCat.CA_RECORDS) {
+    for (const k of r.relatedKeys ?? []) {
+      if (!caNewIds.has(k) && !getCaEnt(k)) caIssues.push(`fundamental-physics entity ${r.id}: relatedKey "${k}" does not resolve to a real entity`);
+    }
+  }
+  if (caIssues.length > 0) {
+    console.error(`\n✗ ${caIssues.length} fundamental-physics issue(s):`);
+    for (const i of caIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Fundamental physics valid — ${caCat.CA_STATS.byKind.quantum} quantum, ${caCat.CA_STATS.byKind.particle} particle, ${caCat.CA_STATS.byKind.relativity} relativity, ${caCat.CA_STATS.byKind.cosmo} quantum-cosmology concepts · ${caCat.CA_STATS.newEntities} new entities, ${caCat.CA_STATS.relations} relations (reused special/general relativity/spacetime/inflation/dark-sector/Standard-Model/neutrino/IceCube/cosmic-rays/CMB/Sun; only well-established physics, nothing fabricated)`,
+  );
+
   const bgCat = await import("../src/knowledge-graph/data/galactic-astronomy-catalog");
   const bgIssues = bgCat.validateGalacticAstronomy();
   const { getEntityById: getBgEnt } = await import("../src/knowledge-graph");
