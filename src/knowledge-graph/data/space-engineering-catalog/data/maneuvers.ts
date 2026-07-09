@@ -6,7 +6,7 @@ export const maneuvers: EngRecord[] = [
     slug: "orbital-rendezvous",
     name: "Orbital Rendezvous",
     description:
-      "The guided approach of two spacecraft to the same orbit and position so they can dock or berth — a delicate dance governed by orbital mechanics, where slowing down can raise an orbit and speeding up can lower the closing rate. First achieved by Gemini in 1965, rendezvous is the foundation of space-station crew and cargo flights and of in-space assembly.",
+      "The guided approach of two spacecraft to the same orbit and position so they can dock or berth — a delicate dance governed by orbital mechanics, where firing to speed up raises the orbit and paradoxically slows the chase down on a target ahead, while slowing down drops into a lower, faster orbit that catches up. First achieved by Gemini in 1965, rendezvous is the foundation of space-station crew and cargo flights and of in-space assembly.",
     relatedKeys: ["space_engineering_concept:station-keeping", "docking_system:idss", "navigation_system:autonomous-navigation"],
     highlights: ["The orbital-mechanics dance before docking"],
   }),
