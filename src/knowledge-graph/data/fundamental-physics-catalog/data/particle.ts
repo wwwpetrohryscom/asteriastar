@@ -22,7 +22,6 @@ export const particle: PhysicsRecord[] = [
   physics("particle", {
     slug: "higgs-boson",
     name: "The Higgs Boson",
-    symbolLabel: "discovered 2012, CERN",
     description:
       "The particle associated with the Higgs field, which gives many elementary particles their mass. Predicted in the 1960s and discovered at CERN's Large Hadron Collider in 2012, it completed the Standard Model; the origin of mass it explains is fundamental to why matter — and therefore stars and galaxies — exists as it does.",
     relatedKeys: ["cosmology_concept:standard-model-of-particle-physics", "physics_concept:elementary-particle", "physics_concept:fundamental-forces"],
