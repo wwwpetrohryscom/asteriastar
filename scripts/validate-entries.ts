@@ -911,6 +911,30 @@ async function main() {
     `✓ Exoplanet science valid — ${ccCat.CC_STATS.byKind.characterization} characterization methods, ${ccCat.CC_STATS.byKind.atmosphere} atmosphere concepts, ${ccCat.CC_STATS.byKind.formation} formation concepts, ${ccCat.CC_STATS.byKind.mission} missions · ${ccCat.CC_STATS.newEntities} new entities, ${ccCat.CC_STATS.relations} relations (reused detection methods/planetary classes/habitable zone/biosignatures/atmospheric processes/protoplanetary disk/JWST/Kepler/TESS/Roman/HWO/ELT/GMT/TMT; only well-established science, nothing fabricated)`,
   );
 
+  const cdCat = await import("../src/knowledge-graph/data/sky-catalogs-catalog");
+  const cdIssues = cdCat.validateSkyCatalogs();
+  const { getEntityById: getCdEnt } = await import("../src/knowledge-graph");
+  for (const r of cdCat.relations) {
+    if (!getCdEnt(r.from)) cdIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getCdEnt(r.to)) cdIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  // Reuse honesty: every relatedKey must resolve to a real entity (a new CD entity or an existing one) —
+  // catches a fabricated reference to a non-existent catalogue, archive, survey, or astronomer.
+  const cdNewIds = new Set(cdCat.entities.map((e) => e.id));
+  for (const r of cdCat.CD_RECORDS) {
+    for (const k of r.relatedKeys ?? []) {
+      if (!cdNewIds.has(k) && !getCdEnt(k)) cdIssues.push(`sky-catalog entity ${r.id}: relatedKey "${k}" does not resolve to a real entity`);
+    }
+  }
+  if (cdIssues.length > 0) {
+    console.error(`\n✗ ${cdIssues.length} sky-catalog issue(s):`);
+    for (const i of cdIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Sky catalogs valid — ${cdCat.CD_STATS.byKind.catalog} catalogues, ${cdCat.CD_STATS.byKind.family} families, ${cdCat.CD_STATS.byKind.designation} designation systems · ${cdCat.CD_STATS.newEntities} new entities, ${cdCat.CD_STATS.relations} relations (reused Messier/NGC/IC/Henry-Draper/Hipparcos/Gaia catalogues, sky surveys, data archives, astronomers, Gaia; only well-established catalogue facts, nothing fabricated)`,
+  );
+
   const bgCat = await import("../src/knowledge-graph/data/galactic-astronomy-catalog");
   const bgIssues = bgCat.validateGalacticAstronomy();
   const { getEntityById: getBgEnt } = await import("../src/knowledge-graph");
