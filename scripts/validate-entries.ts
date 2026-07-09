@@ -959,6 +959,30 @@ async function main() {
     `✓ Deep sky encyclopedia valid — ${ceCat.CE_STATS.byKind["dso-class"]} object classes, ${ceCat.CE_STATS.byKind.object} objects · ${ceCat.CE_STATS.newEntities} new entities, ${ceCat.CE_STATS.relations} relations (reused 619+ DSOs/galaxy morphologies/ISM concepts/supernova classes/Messier-NGC-Sharpless-Barnard/constellations; only well-established astrophysics, nothing fabricated)`,
   );
 
+  const cfCat = await import("../src/knowledge-graph/data/reference-systems-catalog");
+  const cfIssues = cfCat.validateReferenceSystems();
+  const { getEntityById: getCfEnt } = await import("../src/knowledge-graph");
+  for (const r of cfCat.relations) {
+    if (!getCfEnt(r.from)) cfIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getCfEnt(r.to)) cfIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  // Reuse honesty: every relatedKey must resolve to a real entity (a new CF entity or an existing one) —
+  // catches a fabricated reference to a non-existent frame, timescale, method, or anchor.
+  const cfNewIds = new Set(cfCat.entities.map((e) => e.id));
+  for (const r of cfCat.CF_RECORDS) {
+    for (const k of r.relatedKeys ?? []) {
+      if (!cfNewIds.has(k) && !getCfEnt(k)) cfIssues.push(`reference-system entity ${r.id}: relatedKey "${k}" does not resolve to a real entity`);
+    }
+  }
+  if (cfIssues.length > 0) {
+    console.error(`\n✗ ${cfIssues.length} reference-system issue(s):`);
+    for (const i of cfIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Reference systems valid — ${cfCat.CF_STATS.byKind.coordinate} coordinate systems, ${cfCat.CF_STATS.byKind.frame} frames, ${cfCat.CF_STATS.byKind.timescale} time scale, ${cfCat.CF_STATS.byKind.effect} astrometric effects, ${cfCat.CF_STATS.byKind.body} bodies · ${cfCat.CF_STATS.newEntities} new entities, ${cfCat.CF_STATS.relations} relations (reused ICRS/BCRS/GCRS/J2000/B1950/ecliptic frames, TAI/UTC/UT1/TT/TDB/sidereal timescales, parallax/proper-motion methods, ephemerides, Gaia/Hipparcos; only well-established definitions, nothing fabricated)`,
+  );
+
   const bgCat = await import("../src/knowledge-graph/data/galactic-astronomy-catalog");
   const bgIssues = bgCat.validateGalacticAstronomy();
   const { getEntityById: getBgEnt } = await import("../src/knowledge-graph");
