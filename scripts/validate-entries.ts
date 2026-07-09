@@ -1007,6 +1007,30 @@ async function main() {
     `✓ Observation techniques valid — ${cgCat.CG_STATS.byKind.visual} visual, ${cgCat.CG_STATS.byKind.imaging} imaging, ${cgCat.CG_STATS.byKind.processing} processing, ${cgCat.CG_STATS.byKind.workflow} workflow · ${cgCat.CG_STATS.newEntities} new entities, ${cgCat.CG_STATS.relations} relations (reused lucky/speckle imaging, image stacking, CCD/CMOS, adaptive optics, photometry/spectroscopy/astrometry/calibration methods, equipment & planners; only well-established practice, nothing fabricated)`,
   );
 
+  const chCat = await import("../src/knowledge-graph/data/astronomy-software-catalog");
+  const chIssues = chCat.validateAstronomySoftware();
+  const { getEntityById: getChEnt } = await import("../src/knowledge-graph");
+  for (const r of chCat.relations) {
+    if (!getChEnt(r.from)) chIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getChEnt(r.to)) chIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  // Reuse honesty: every relatedKey must resolve to a real entity (a new CH entity or an existing one) —
+  // catches a fabricated reference to a non-existent archive, technique, ephemeris, or sibling package.
+  const chNewIds = new Set(chCat.entities.map((e) => e.id));
+  for (const r of chCat.CH_RECORDS) {
+    for (const k of r.relatedKeys ?? []) {
+      if (!chNewIds.has(k) && !getChEnt(k)) chIssues.push(`astronomy-software entity ${r.id}: relatedKey "${k}" does not resolve to a real entity`);
+    }
+  }
+  if (chIssues.length > 0) {
+    console.error(`\n✗ ${chIssues.length} astronomy-software issue(s):`);
+    for (const i of chIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Astronomy software valid — ${chCat.CH_STATS.byKind.desktop} desktop, ${chCat.CH_STATS.byKind.imaging} imaging, ${chCat.CH_STATS.byKind.acquisition} acquisition, ${chCat.CH_STATS.byKind.scientific} scientific, ${chCat.CH_STATS.byKind.library} libraries · ${chCat.CH_STATS.newEntities} new entities, ${chCat.CH_STATS.relations} relations (reused Astropy/SPICE/JPL-Horizons, VizieR/SIMBAD/MAST/CDS, FITS/VOTable/VO, observing techniques, ALMA/VLA, equipment; only well-established facts, nothing fabricated)`,
+  );
+
   const bgCat = await import("../src/knowledge-graph/data/galactic-astronomy-catalog");
   const bgIssues = bgCat.validateGalacticAstronomy();
   const { getEntityById: getBgEnt } = await import("../src/knowledge-graph");

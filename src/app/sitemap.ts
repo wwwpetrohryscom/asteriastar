@@ -59,6 +59,7 @@ import { CD_DISCOVERIES } from "@/app/sky-catalogs/discovery";
 import { CE_DISCOVERIES } from "@/app/deep-sky-encyclopedia/discovery";
 import { CF_DISCOVERIES } from "@/app/reference-systems/discovery";
 import { CG_DISCOVERIES } from "@/app/observation-techniques/discovery";
+import { CH_DISCOVERIES } from "@/app/astronomy-software/discovery";
 import { BG_DISCOVERIES } from "@/app/galactic-astronomy/discovery";
 import { BH_DISCOVERIES } from "@/app/astroinformatics/discovery";
 import { BI_DISCOVERIES } from "@/app/deep-space-exploration/discovery";
@@ -236,6 +237,8 @@ import {
   referenceSystemsDiscoveryPath,
   observationTechniquesPath,
   observationTechniquesDiscoveryPath,
+  astronomySoftwarePath,
+  astronomySoftwareDiscoveryPath,
   galacticAstronomyPath,
   galacticAstronomyDiscoveryPath,
   astroinformaticsPath,
@@ -712,6 +715,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...CG_DISCOVERIES.map((d) => ({ url: absoluteUrl(observationTechniquesDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const astronomySoftwareRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.astronomySoftware), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.astronomySoftware.all().map((r) => ({ url: absoluteUrl(astronomySoftwarePath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...CH_DISCOVERIES.map((d) => ({ url: absoluteUrl(astronomySoftwareDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const galacticAstronomyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.galacticAstronomy), changeFrequency: "weekly", priority: 0.8 },
     ...engine.galacticAstronomy.all().map((r) => ({ url: absoluteUrl(galacticAstronomyPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
@@ -868,6 +877,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...deepSkyEncyclopediaRoutes,
     ...referenceSystemsRoutes,
     ...observationTechniquesRoutes,
+    ...astronomySoftwareRoutes,
     ...galacticAstronomyRoutes,
     ...astroinformaticsRoutes,
     ...deepSpaceExplorationRoutes,

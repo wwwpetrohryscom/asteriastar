@@ -66,6 +66,7 @@ import { validateSkyCatalogs } from "@/knowledge-graph/data/sky-catalogs-catalog
 import { validateDeepSkyEncyclopedia } from "@/knowledge-graph/data/deep-sky-encyclopedia-catalog";
 import { validateReferenceSystems } from "@/knowledge-graph/data/reference-systems-catalog";
 import { validateObservationTechniques } from "@/knowledge-graph/data/observation-techniques-catalog";
+import { validateAstronomySoftware } from "@/knowledge-graph/data/astronomy-software-catalog";
 import { validateHumanSpaceflight } from "@/knowledge-graph/data/human-spaceflight-catalog";
 import { validateObservatories } from "@/knowledge-graph/data/observatory-catalog";
 import { validateExoplanets } from "@/knowledge-graph/data/exoplanet-catalog";
@@ -213,6 +214,7 @@ export const validationEngine = {
   deepSkyEncyclopedia: (): string[] => validateDeepSkyEncyclopedia(),
   referenceSystems: (): string[] => validateReferenceSystems(),
   observationTechniques: (): string[] => validateObservationTechniques(),
+  astronomySoftware: (): string[] => validateAstronomySoftware(),
   humanSpaceflight: (): string[] => validateHumanSpaceflight(),
   observatories: (): string[] => validateObservatories(),
   exoplanets: (): string[] => validateExoplanets(),
