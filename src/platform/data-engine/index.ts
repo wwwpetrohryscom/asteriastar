@@ -93,6 +93,7 @@ import { fundamentalPhysicsEngine } from "@/platform/data-engine/fundamental-phy
 import { spaceEngineeringEngine } from "@/platform/data-engine/space-engineering-engine";
 import { exoplanetScienceEngine } from "@/platform/data-engine/exoplanet-science-engine";
 import { skyCatalogsEngine } from "@/platform/data-engine/sky-catalogs-engine";
+import { deepSkyEncyclopediaEngine } from "@/platform/data-engine/deep-sky-encyclopedia-engine";
 import { planetaryGeologyEngine } from "@/platform/data-engine/planetary-geology-engine";
 import { validationEngine } from "@/platform/data-engine/validation-engine";
 import { contributionsEngine } from "@/platform/contributions";
@@ -181,6 +182,7 @@ export const engine = {
   spaceEngineering: spaceEngineeringEngine,
   exoplanetScience: exoplanetScienceEngine,
   skyCatalogs: skyCatalogsEngine,
+  deepSkyEncyclopedia: deepSkyEncyclopediaEngine,
   contributions: contributionsEngine,
   validation: validationEngine,
 } as const;
@@ -192,7 +194,7 @@ export const ENGINE_MODULES = Object.keys(engine) as (keyof typeof engine)[];
 export { entityEngine, relationshipEngine, traversalEngine, queryEngine };
 export { recommendationEngine, timelineEngine, comparisonEngine, learningEngine };
 export { discoveryEngine, metadataEngine, sourceEngine, citationEngine };
-export { datasetEngine, authorityEngine, localizationEngine, starEngine, solarEngine, deepSkyEngine, explorationEngine, humanSpaceflightEngine, observatoryEngine, exoplanetEngine, historyEngine, cosmologyEngine, liveSkyEngine, imagesEngine, launchVehicleEngine, constellationEngine, satelliteEngine, asteroidEngine, cometEngine, meteoriteEngine, interstellarEngine, smallBodyMissionsEngine, deepSpaceCommunicationsEngine, spaceEnvironmentEngine, missionOperationsEngine, spacecraftSystemsEngine, instrumentsEngine, planetaryGeologyEngine, institutionsEngine, spaceflightHistoryEngine, spaceMedicineEngine, spaceInfrastructureEngine, futureMissionsEngine, astronomyMethodsEngine, timeDomainEngine, galaxiesEngine, astrobiologyEngine, planetaryDefenseEngine, dataArchivesEngine, observatoryFrontierEngine, distanceLadderEngine, heliophysicsEngine, astroMlEngine, citizenAstronomyEngine, multiMessengerEngine, comparativePlanetologyEngine, astrochemistryEngine, spacePolicyEngine, discoveryHistoryEngine, celestialMechanicsEngine, stellarAstrophysicsEngine, galacticAstronomyEngine, astroinformaticsEngine, deepSpaceExplorationEngine, skyAtlasEngine, scientificCalculatorsEngine, observingSuiteEngine, graphExplorerEngine, scientificAssistantEngine, liveScientificDataEngine, webglUniverseEngine, researchWorkspaceEngine, groundedAssistantEngine, openPlatformEngine, solarPhysicsEngine, compactObjectsEngine, fundamentalPhysicsEngine, spaceEngineeringEngine, exoplanetScienceEngine, skyCatalogsEngine, contributionsEngine, validationEngine };
+export { datasetEngine, authorityEngine, localizationEngine, starEngine, solarEngine, deepSkyEngine, explorationEngine, humanSpaceflightEngine, observatoryEngine, exoplanetEngine, historyEngine, cosmologyEngine, liveSkyEngine, imagesEngine, launchVehicleEngine, constellationEngine, satelliteEngine, asteroidEngine, cometEngine, meteoriteEngine, interstellarEngine, smallBodyMissionsEngine, deepSpaceCommunicationsEngine, spaceEnvironmentEngine, missionOperationsEngine, spacecraftSystemsEngine, instrumentsEngine, planetaryGeologyEngine, institutionsEngine, spaceflightHistoryEngine, spaceMedicineEngine, spaceInfrastructureEngine, futureMissionsEngine, astronomyMethodsEngine, timeDomainEngine, galaxiesEngine, astrobiologyEngine, planetaryDefenseEngine, dataArchivesEngine, observatoryFrontierEngine, distanceLadderEngine, heliophysicsEngine, astroMlEngine, citizenAstronomyEngine, multiMessengerEngine, comparativePlanetologyEngine, astrochemistryEngine, spacePolicyEngine, discoveryHistoryEngine, celestialMechanicsEngine, stellarAstrophysicsEngine, galacticAstronomyEngine, astroinformaticsEngine, deepSpaceExplorationEngine, skyAtlasEngine, scientificCalculatorsEngine, observingSuiteEngine, graphExplorerEngine, scientificAssistantEngine, liveScientificDataEngine, webglUniverseEngine, researchWorkspaceEngine, groundedAssistantEngine, openPlatformEngine, solarPhysicsEngine, compactObjectsEngine, fundamentalPhysicsEngine, spaceEngineeringEngine, exoplanetScienceEngine, skyCatalogsEngine, deepSkyEncyclopediaEngine, contributionsEngine, validationEngine };
 export type { ResolvedLaunchVehicle } from "@/platform/data-engine/launch-vehicle-engine";
 export type { ResolvedConstellation } from "@/platform/data-engine/constellation-engine";
 export type { ResolvedSatellite, ResolvedConstellationSat, ResolvedOperator, ResolvedOrbit, ResolvedNetwork, ResolvedProgram } from "@/platform/data-engine/satellite-engine";
