@@ -360,6 +360,9 @@ export const ENTITY_TYPES = [
   // Program CD — Astronomical Catalogs & Professional Sky Databases
   "catalog_family",
   "designation_system",
+  // Program CF — Astronomical Coordinates, Time & Reference Systems
+  "coordinate_system",
+  "astrometric_effect",
 ] as const;
 export type EntityType = (typeof ENTITY_TYPES)[number];
 
@@ -1358,4 +1361,6 @@ export const ENTITY_TYPE_LABELS: Record<EntityType, string> = {
   exoplanet_science_concept: "Exoplanet-science concept",
   catalog_family: "Catalog family",
   designation_system: "Designation system",
+  coordinate_system: "Coordinate system",
+  astrometric_effect: "Astrometric effect",
 };
