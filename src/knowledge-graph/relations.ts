@@ -74,6 +74,7 @@ import { relations as workspaceCatalog } from "@/knowledge-graph/data/workspace-
 import { relations as openPlatformCatalog } from "@/knowledge-graph/data/open-platform-catalog";
 import { relations as solarPhysicsCatalog } from "@/knowledge-graph/data/solar-physics-catalog";
 import { relations as compactObjectsCatalog } from "@/knowledge-graph/data/compact-objects-catalog";
+import { relations as fundamentalPhysicsCatalog } from "@/knowledge-graph/data/fundamental-physics-catalog";
 import { coreRelations } from "@/knowledge-graph/data/core-relations";
 
 /**
@@ -162,4 +163,5 @@ export const relations: GraphRelation[] = [
   ...openPlatformCatalog,
   ...solarPhysicsCatalog,
   ...compactObjectsCatalog,
+  ...fundamentalPhysicsCatalog,
 ];
