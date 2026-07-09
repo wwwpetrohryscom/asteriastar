@@ -52,6 +52,7 @@ import { BE_DISCOVERIES } from "@/app/celestial-mechanics/discovery";
 import { BF_DISCOVERIES } from "@/app/stellar-astrophysics/discovery";
 import { BY_DISCOVERIES } from "@/app/solar-physics/discovery";
 import { BZ_DISCOVERIES } from "@/app/compact-objects/discovery";
+import { CA_DISCOVERIES } from "@/app/fundamental-physics/discovery";
 import { BG_DISCOVERIES } from "@/app/galactic-astronomy/discovery";
 import { BH_DISCOVERIES } from "@/app/astroinformatics/discovery";
 import { BI_DISCOVERIES } from "@/app/deep-space-exploration/discovery";
@@ -215,6 +216,8 @@ import {
   solarPhysicsDiscoveryPath,
   compactObjectsPath,
   compactObjectsDiscoveryPath,
+  fundamentalPhysicsPath,
+  fundamentalPhysicsDiscoveryPath,
   galacticAstronomyPath,
   galacticAstronomyDiscoveryPath,
   astroinformaticsPath,
@@ -649,6 +652,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...BZ_DISCOVERIES.map((d) => ({ url: absoluteUrl(compactObjectsDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const fundamentalPhysicsRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.fundamentalPhysics), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.fundamentalPhysics.all().map((r) => ({ url: absoluteUrl(fundamentalPhysicsPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...CA_DISCOVERIES.map((d) => ({ url: absoluteUrl(fundamentalPhysicsDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const galacticAstronomyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.galacticAstronomy), changeFrequency: "weekly", priority: 0.8 },
     ...engine.galacticAstronomy.all().map((r) => ({ url: absoluteUrl(galacticAstronomyPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
@@ -798,6 +807,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...stellarAstrophysicsRoutes,
     ...solarPhysicsRoutes,
     ...compactObjectsRoutes,
+    ...fundamentalPhysicsRoutes,
     ...galacticAstronomyRoutes,
     ...astroinformaticsRoutes,
     ...deepSpaceExplorationRoutes,
