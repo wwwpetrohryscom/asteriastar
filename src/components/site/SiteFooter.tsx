@@ -17,7 +17,7 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-5 py-14 sm:px-8">
         <div className="grid gap-10 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <Logo />
+            <Logo idSuffix="footer" />
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted">
               {SITE.description}
             </p>
