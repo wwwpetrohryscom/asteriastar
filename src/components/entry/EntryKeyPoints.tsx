@@ -24,7 +24,7 @@ export function EntryKeyPoints({
               viewBox="0 0 24 24"
               fill="none"
               aria-hidden
-              className="mt-0.5 shrink-0 text-[var(--accent,#a78bfa)]"
+              className="mt-0.5 shrink-0 text-[var(--accent,#56b6f6)]"
             >
               <path
                 d="M20 6 9 17l-5-5"

@@ -19,15 +19,18 @@
   --color-muted: #a6abce;
   --color-faint: #767ca3;
 
-  /* Brand */
-  --color-gold: #ffd27d;
-  --color-nebula: #a78bfa;
+  /* Brand — a restrained, observatory-grade palette: navy, silver, NASA blue,
+   * subtle gold. The former violet "nebula" accent is now a blue-leaning indigo
+   * so astronomy reads as scientific blue, not purple. */
+  --color-gold: #f6d27a;
+  --color-nebula: #7c9bf0;
   --color-aurora: #34d3d3;
   --color-ember: #fb9a4b;
-  --color-plasma: #d06bf2;
+  --color-plasma: #c471e6;
   --color-stone: #9aa6c0;
   --color-halo: #56b6f6;
   --color-comet: #36cfb0;
+  --color-silver: #c8d2e6;
 
   /* Typography */
   --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
@@ -72,7 +75,7 @@
   }
 
   ::selection {
-    background-color: color-mix(in oklab, var(--color-nebula) 40%, transparent);
+    background-color: color-mix(in oklab, var(--color-halo) 42%, transparent);
     color: #fff;
   }
 }
@@ -88,20 +91,22 @@
    */
   .cosmos {
     background-color: var(--color-bg);
+    /* Deep-navy, observatory-grade wash: NASA-style blue up top, a cold navy
+     * pool at the corner, and the faintest gold near the horizon. No purple. */
     background-image:
       radial-gradient(
-        62rem 62rem at 80% -12%,
-        color-mix(in oklab, var(--color-nebula) 13%, transparent),
+        70rem 58rem at 82% -14%,
+        color-mix(in oklab, var(--color-halo) 12%, transparent),
         transparent 60%
       ),
       radial-gradient(
-        56rem 56rem at 6% 6%,
-        color-mix(in oklab, var(--color-halo) 9%, transparent),
-        transparent 55%
+        48rem 40rem at 4% 8%,
+        color-mix(in oklab, #16345f 26%, transparent),
+        transparent 58%
       ),
       radial-gradient(
-        52rem 42rem at 50% 122%,
-        color-mix(in oklab, var(--color-aurora) 7%, transparent),
+        54rem 44rem at 50% 124%,
+        color-mix(in oklab, var(--color-gold) 6%, transparent),
         transparent 60%
       );
     background-attachment: fixed;

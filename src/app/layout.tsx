@@ -4,6 +4,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { WebmasterId } from "@/components/site/WebmasterId";
+import { CosmicBackdrop } from "@/components/cosmos/Cosmos";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/seo/jsonld";
 import { defaultTitle } from "@/lib/seo/metadata";
@@ -55,7 +56,8 @@ export default function RootLayout({
     <html lang="en" className={`${display.variable} ${sans.variable} h-full antialiased`}>
       <body className="cosmos flex min-h-full flex-col">
         <JsonLd data={[websiteSchema(), organizationSchema()]} />
-        <div aria-hidden className="starfield pointer-events-none fixed inset-0 -z-10 opacity-60" />
+        <CosmicBackdrop variant="subtle" fixed fade={false} />
+        <div aria-hidden className="starfield pointer-events-none fixed inset-0 -z-10 opacity-30" />
 
         <a
           href="#main"

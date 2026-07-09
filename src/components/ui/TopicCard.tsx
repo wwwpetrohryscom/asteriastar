@@ -32,14 +32,14 @@ export function TopicCard({
     <Link
       href={href}
       style={accent ? accentVars(accent) : undefined}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--accent,#a78bfa)_45%,transparent)] hover:bg-white/[0.04]"
+      className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--accent,#56b6f6)_45%,transparent)] hover:bg-white/[0.04]"
     >
       <span
         aria-hidden
         className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-100"
         style={{
           backgroundImage:
-            "radial-gradient(circle, var(--accent, #a78bfa), transparent 70%)",
+            "radial-gradient(circle, var(--accent, #56b6f6), transparent 70%)",
         }}
       />
       <div className="relative flex items-start justify-between gap-3">
@@ -53,7 +53,7 @@ export function TopicCard({
         </div>
         <span
           aria-hidden
-          className="mt-1 shrink-0 text-faint transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-[var(--accent,#a78bfa)]"
+          className="mt-1 shrink-0 text-faint transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-[var(--accent,#56b6f6)]"
         >
           →
         </span>

@@ -210,7 +210,7 @@ export default async function CategoryPage({
                   >
                     <span
                       aria-hidden
-                      className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent,#a78bfa)]"
+                      className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent,#56b6f6)]"
                     />
                     {topic}
                   </li>

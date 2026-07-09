@@ -8,10 +8,10 @@ import type { AccentToken } from "@/lib/content/types";
  * them in components with arbitrary-value utilities like `text-[var(--accent)]`.
  */
 export const ACCENTS: Record<AccentToken, { from: string; to: string; solid: string }> = {
-  nebula: { from: "#8b8cf0", to: "#c084fc", solid: "#a78bfa" },
+  nebula: { from: "#6d8fe8", to: "#56b6f6", solid: "#7c9bf0" },
   aurora: { from: "#22d3ee", to: "#2dd4bf", solid: "#34d3d3" },
   ember: { from: "#fbbf24", to: "#fb7185", solid: "#fb9a4b" },
-  plasma: { from: "#e879f9", to: "#a855f7", solid: "#d06bf2" },
+  plasma: { from: "#d68bf0", to: "#9a7cf0", solid: "#c471e6" },
   stone: { from: "#94a3b8", to: "#7c8aa8", solid: "#9aa6c0" },
   halo: { from: "#38bdf8", to: "#818cf8", solid: "#56b6f6" },
   comet: { from: "#34d399", to: "#22d3ee", solid: "#36cfb0" },
