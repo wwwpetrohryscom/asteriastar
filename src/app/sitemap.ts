@@ -56,6 +56,7 @@ import { CA_DISCOVERIES } from "@/app/fundamental-physics/discovery";
 import { CB_DISCOVERIES } from "@/app/space-engineering/discovery";
 import { CC_DISCOVERIES } from "@/app/exoplanet-science/discovery";
 import { CD_DISCOVERIES } from "@/app/sky-catalogs/discovery";
+import { CE_DISCOVERIES } from "@/app/deep-sky-encyclopedia/discovery";
 import { BG_DISCOVERIES } from "@/app/galactic-astronomy/discovery";
 import { BH_DISCOVERIES } from "@/app/astroinformatics/discovery";
 import { BI_DISCOVERIES } from "@/app/deep-space-exploration/discovery";
@@ -227,6 +228,8 @@ import {
   exoplanetScienceDiscoveryPath,
   skyCatalogsPath,
   skyCatalogsDiscoveryPath,
+  deepSkyEncyclopediaPath,
+  deepSkyEncyclopediaDiscoveryPath,
   galacticAstronomyPath,
   galacticAstronomyDiscoveryPath,
   astroinformaticsPath,
@@ -685,6 +688,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...CD_DISCOVERIES.map((d) => ({ url: absoluteUrl(skyCatalogsDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  const deepSkyEncyclopediaRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.deepSkyEncyclopedia), changeFrequency: "weekly", priority: 0.8 },
+    ...engine.deepSkyEncyclopedia.all().map((r) => ({ url: absoluteUrl(deepSkyEncyclopediaPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...CE_DISCOVERIES.map((d) => ({ url: absoluteUrl(deepSkyEncyclopediaDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+  ];
+
   const galacticAstronomyRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.galacticAstronomy), changeFrequency: "weekly", priority: 0.8 },
     ...engine.galacticAstronomy.all().map((r) => ({ url: absoluteUrl(galacticAstronomyPath(r.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
@@ -838,6 +847,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...spaceEngineeringRoutes,
     ...exoplanetScienceRoutes,
     ...skyCatalogsRoutes,
+    ...deepSkyEncyclopediaRoutes,
     ...galacticAstronomyRoutes,
     ...astroinformaticsRoutes,
     ...deepSpaceExplorationRoutes,
