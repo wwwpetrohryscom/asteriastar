@@ -983,6 +983,30 @@ async function main() {
     `✓ Reference systems valid — ${cfCat.CF_STATS.byKind.coordinate} coordinate systems, ${cfCat.CF_STATS.byKind.frame} frames, ${cfCat.CF_STATS.byKind.timescale} time scale, ${cfCat.CF_STATS.byKind.effect} astrometric effects, ${cfCat.CF_STATS.byKind.body} bodies · ${cfCat.CF_STATS.newEntities} new entities, ${cfCat.CF_STATS.relations} relations (reused ICRS/BCRS/GCRS/J2000/B1950/ecliptic frames, TAI/UTC/UT1/TT/TDB/sidereal timescales, parallax/proper-motion methods, ephemerides, Gaia/Hipparcos; only well-established definitions, nothing fabricated)`,
   );
 
+  const cgCat = await import("../src/knowledge-graph/data/observation-techniques-catalog");
+  const cgIssues = cgCat.validateObservationTechniques();
+  const { getEntityById: getCgEnt } = await import("../src/knowledge-graph");
+  for (const r of cgCat.relations) {
+    if (!getCgEnt(r.from)) cgIssues.push(`relation ${r.id}: 'from' endpoint missing in graph: ${r.from}`);
+    if (!getCgEnt(r.to)) cgIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
+  }
+  // Reuse honesty: every relatedKey must resolve to a real entity (a new CG entity or an existing one) —
+  // catches a fabricated reference to a non-existent technique, detector, method, or equipment.
+  const cgNewIds = new Set(cgCat.entities.map((e) => e.id));
+  for (const r of cgCat.CG_RECORDS) {
+    for (const k of r.relatedKeys ?? []) {
+      if (!cgNewIds.has(k) && !getCgEnt(k)) cgIssues.push(`observation-technique entity ${r.id}: relatedKey "${k}" does not resolve to a real entity`);
+    }
+  }
+  if (cgIssues.length > 0) {
+    console.error(`\n✗ ${cgIssues.length} observation-technique issue(s):`);
+    for (const i of cgIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(
+    `✓ Observation techniques valid — ${cgCat.CG_STATS.byKind.visual} visual, ${cgCat.CG_STATS.byKind.imaging} imaging, ${cgCat.CG_STATS.byKind.processing} processing, ${cgCat.CG_STATS.byKind.workflow} workflow · ${cgCat.CG_STATS.newEntities} new entities, ${cgCat.CG_STATS.relations} relations (reused lucky/speckle imaging, image stacking, CCD/CMOS, adaptive optics, photometry/spectroscopy/astrometry/calibration methods, equipment & planners; only well-established practice, nothing fabricated)`,
+  );
+
   const bgCat = await import("../src/knowledge-graph/data/galactic-astronomy-catalog");
   const bgIssues = bgCat.validateGalacticAstronomy();
   const { getEntityById: getBgEnt } = await import("../src/knowledge-graph");

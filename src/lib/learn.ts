@@ -2721,6 +2721,41 @@ export const LEARNING_PATHS: LearningPath[] = [
     relatedEntityIds: ["coordinate_system:equatorial-coordinate-system", "reference_frame:icrf3", "astrometric_effect:precession", "reference_frame:icrs"],
     next: ["how-the-sky-is-catalogued", "observing-the-night-sky"],
   },
+  {
+    slug: "from-telescope-to-image",
+    title: "From Telescope to Image",
+    description: "Between a telescope and a finished picture lies a craft. A path through the techniques of observing — seeing by eye, capturing light with a camera, freezing the atmosphere for planetary detail, tracking faint galaxies for hours, and calibrating, stacking, and processing the raw frames into a faithful image.",
+    accent: "aurora",
+    stages: [
+      {
+        level: "Beginner",
+        steps: [
+          { title: "Visual astronomy", href: "/observation-techniques/visual-astronomy", blurb: "Seeing the sky by eye." },
+          { title: "Astrophotography", href: "/observation-techniques/astrophotography", blurb: "Capturing light a camera can gather." },
+          { title: "Planetary imaging", href: "/observation-techniques/planetary-imaging", blurb: "Thousands of frames, keeping the sharpest." },
+          { title: "Deep-sky imaging", href: "/observation-techniques/deep-sky-imaging", blurb: "Hours of tracked exposure on faint targets." },
+        ],
+      },
+      {
+        level: "Intermediate",
+        steps: [
+          { title: "Autoguiding", href: "/observation-techniques/autoguiding", blurb: "Locking on a guide star to cancel drift." },
+          { title: "Calibration frames", href: "/observation-techniques/calibration-frames", blurb: "Bias, dark, and flat frames." },
+          { title: "Narrowband imaging", href: "/observation-techniques/narrowband-imaging", blurb: "Isolating emission lines to reveal nebulae." },
+        ],
+      },
+      {
+        level: "Advanced",
+        steps: [
+          { title: "Image processing", href: "/observation-techniques/image-processing", blurb: "Stretching and sharpening real signal." },
+          { title: "Plate solving", href: "/observation-techniques/plate-solving", blurb: "Matching stars to a catalogue for coordinates." },
+          { title: "The imaging workflow", href: "/observation-techniques/imaging-workflow", blurb: "Acquire → calibrate → stack → process." },
+        ],
+      },
+    ],
+    relatedEntityIds: ["observing_technique:astrophotography", "observing_technique:deep-sky-imaging", "observing_technique:calibration-frames", "observing_technique:imaging-workflow"],
+    next: ["the-deep-sky-menagerie", "observing-the-night-sky"],
+  },
 ];
 
 const BY_SLUG = new Map(LEARNING_PATHS.map((p) => [p.slug, p]));
