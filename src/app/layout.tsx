@@ -3,6 +3,7 @@ import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
+import { WebmasterId } from "@/components/site/WebmasterId";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/seo/jsonld";
 import { defaultTitle } from "@/lib/seo/metadata";
@@ -68,6 +69,7 @@ export default function RootLayout({
           {children}
         </main>
         <SiteFooter />
+        <WebmasterId />
       </body>
     </html>
   );
