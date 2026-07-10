@@ -105,6 +105,41 @@ export function articleSchema(input: {
   };
 }
 
+/**
+ * A Schema.org ImageObject for a real, licensed observation image. Emitted on
+ * entity pages that show a hero image so search/AI surfaces can cite it with
+ * correct credit and license.
+ */
+export function imageObjectSchema(input: {
+  url: string;
+  contentUrl: string;
+  caption?: string;
+  alt: string;
+  credit: string;
+  license: string;
+  acquireLicensePage?: string;
+  width?: number;
+  height?: number;
+  dateCreated?: string;
+}): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ImageObject",
+    contentUrl: absoluteUrl(input.contentUrl),
+    url: absoluteUrl(input.contentUrl),
+    caption: input.caption ?? input.alt,
+    name: input.alt,
+    creditText: input.credit,
+    creator: { "@id": ORG_ID },
+    copyrightNotice: input.credit,
+    license: input.license,
+    ...(input.acquireLicensePage ? { acquireLicensePage: input.acquireLicensePage } : {}),
+    ...(input.width ? { width: input.width } : {}),
+    ...(input.height ? { height: input.height } : {}),
+    ...(input.dateCreated ? { dateCreated: input.dateCreated } : {}),
+  };
+}
+
 export interface FaqItem {
   question: string;
   answer: string;

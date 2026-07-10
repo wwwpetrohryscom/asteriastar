@@ -1,4 +1,5 @@
 import type { ImageAsset } from "@/lib/media/types";
+import { OBSERVATION_IMAGES } from "@/lib/media/data/observations";
 
 /**
  * Image asset registry.
@@ -6,8 +7,12 @@ import type { ImageAsset } from "@/lib/media/types";
  * Verified, openly-licensed/public-domain editorial image assets. Every record
  * stores credit, license, source page, original archive URL, and local optimized
  * dimensions. No fabricated imagery is ever added here.
+ *
+ * `EDITORIAL_IMAGES` are the hand-curated brand/editorial assets; the generated
+ * `OBSERVATION_IMAGES` are the per-entity observation library. They are merged
+ * into `IMAGES` (editorial first so hand-curated heroes win on ties).
  */
-export const IMAGES: ImageAsset[] = [
+const EDITORIAL_IMAGES: ImageAsset[] = [
   {
     id: "webb-cosmic-cliffs",
     entityId: "nebula:ngc-3372",
@@ -142,7 +147,7 @@ export const IMAGES: ImageAsset[] = [
   },
   {
     id: "trumpler-14-hubble",
-    entityId: "star_cluster:trumpler-14",
+    entityId: "nebula:ngc-3372",
     entryPath: "/astronomy/stars",
     title: "Trumpler 14 Star Cluster",
     alt: "A dense Hubble star field with bright blue-white stars and surrounding gas in the Trumpler 14 cluster.",
@@ -208,6 +213,18 @@ export const IMAGES: ImageAsset[] = [
   },
 ];
 
+/** All displayable image assets: hand-curated editorial + generated observations. */
+export const IMAGES: ImageAsset[] = [...EDITORIAL_IMAGES, ...OBSERVATION_IMAGES];
+
+const OPEN_LICENSES = new Set([
+  "public-domain",
+  "cc-by",
+  "cc-by-sa",
+  "cc0",
+  "nasa-media",
+  "esa-cc-by-sa",
+]);
+
 /** Validate image records (used by `npm run validate`). */
 export function validateImages(): string[] {
   const issues: string[] = [];
@@ -217,10 +234,14 @@ export function validateImages(): string[] {
     seen.add(img.id);
     if (img.published) {
       if (!img.url) issues.push(`${img.id}: published image has no url`);
+      else if (!img.url.startsWith("/")) issues.push(`${img.id}: url must be a local path (no hotlinking): ${img.url}`);
+      if (!img.alt || img.alt.trim().length < 8) issues.push(`${img.id}: published image has no meaningful alt text`);
       if (!img.credit) issues.push(`${img.id}: published image has no credit`);
       if (!img.sourceUrl) issues.push(`${img.id}: published image has no sourceUrl`);
       if (!img.originalUrl) issues.push(`${img.id}: published image has no originalUrl`);
+      if (!OPEN_LICENSES.has(img.license)) issues.push(`${img.id}: license is not an open/PD license: ${img.license}`);
       if (!img.author && !img.photographer) issues.push(`${img.id}: published image has no author/photographer`);
+      if ((!img.width || !img.height)) issues.push(`${img.id}: published image is missing width/height (CLS risk)`);
     }
   }
   return issues;
@@ -230,9 +251,36 @@ export function getImageAsset(id: string): ImageAsset | undefined {
   return IMAGES.find((i) => i.id === id && i.published && i.url);
 }
 
-/** Published, displayable images for a graph entity id. */
+/**
+ * Published, displayable images for a graph entity id. Insertion order is
+ * intentional: hand-curated EDITORIAL images come first (they are the iconic
+ * hero portraits), then each entity's generated observation hero, then its
+ * observation gallery — so the first item is always the best hero available.
+ */
 export function getImagesForEntity(entityId: string): ImageAsset[] {
   return IMAGES.filter((i) => i.published && i.url && i.entityId === entityId);
+}
+
+/** The single best (hero) image for an entity, if any. */
+export function getHeroImageForEntity(entityId: string): ImageAsset | undefined {
+  return getImagesForEntity(entityId)[0];
+}
+
+/** Count of entities that have at least one displayable image. */
+export function entitiesWithImagesCount(): number {
+  return new Set(IMAGES.filter((i) => i.published && i.url && i.entityId).map((i) => i.entityId)).size;
+}
+
+/** For the image sitemap: each imaged entity id with its local image url(s). */
+export function imagedEntities(): { entityId: string; imageUrls: string[] }[] {
+  const map = new Map<string, string[]>();
+  for (const i of IMAGES) {
+    if (!i.published || !i.url || !i.entityId) continue;
+    const list = map.get(i.entityId) ?? [];
+    list.push(i.url);
+    map.set(i.entityId, list);
+  }
+  return [...map].map(([entityId, imageUrls]) => ({ entityId, imageUrls }));
 }
 
 /** Published, displayable images for a content entry path. */

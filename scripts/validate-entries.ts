@@ -56,6 +56,20 @@ async function main() {
     for (const i of imageIssues) console.error(`  • ${i}`);
     process.exit(1);
   }
+  // Every attached image must depict a real graph entity (no orphan media).
+  const { getEntityById: getImgEnt } = await import("../src/knowledge-graph");
+  const orphanImageIssues: string[] = [];
+  for (const img of media.IMAGES) {
+    if (img.published && img.url && img.entityId && !getImgEnt(img.entityId)) {
+      orphanImageIssues.push(`image ${img.id}: entityId does not resolve to a graph entity: ${img.entityId}`);
+    }
+  }
+  if (orphanImageIssues.length > 0) {
+    console.error(`\n✗ ${orphanImageIssues.length} orphan image(s):`);
+    for (const i of orphanImageIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(`✓ Media valid — ${media.IMAGE_STATS.published} displayable images, ${media.entitiesWithImagesCount()} entities imaged, all licensed + attributed`);
 
   // Community architecture (reference integrity; no user data exists yet).
   const community = await import("../src/lib/community");

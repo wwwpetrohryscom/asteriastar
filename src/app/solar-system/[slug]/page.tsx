@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { EntityImagery } from "@/components/media/EntityImagery";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Badge } from "@/components/ui/Badge";
@@ -133,6 +134,8 @@ export default async function SolarBodyPage({ params }: PageProps<"/solar-system
       >
         <div className="mt-4"><Badge tone="accent">Solar System</Badge></div>
       </HeroSection>
+
+      <Container className="mt-6"><EntityImagery entityId={r.id} /></Container>
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
