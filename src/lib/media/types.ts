@@ -66,6 +66,12 @@ export interface ImageAsset {
   photographer?: string;
   /** Human-readable object name depicted. */
   object?: string;
+  /** One-sentence descriptive caption shown under the image. */
+  caption?: string;
+  /** Tiny base64 preview (data URI) for a blur-up placeholder (no CLS). */
+  blurDataURL?: string;
+  /** Role hint: a `hero` is preferred as the entity's lead image. */
+  role?: "hero" | "gallery";
   /** Only `true` assets with a `url` are ever rendered. */
   published?: boolean;
 }

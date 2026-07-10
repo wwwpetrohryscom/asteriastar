@@ -1,7 +1,8 @@
 import type { MetadataRoute } from "next";
 import { getAllCategories, getAllSections } from "@/lib/content/registry";
 import { getAllEntries } from "@/content/entries";
-import { getStandaloneEntities, entityGraphPath } from "@/knowledge-graph";
+import { getStandaloneEntities, entityGraphPath, getEntityById } from "@/knowledge-graph";
+import { imagedEntities } from "@/lib/media/registry";
 import { TOPICS, RELATIONSHIP_PAGES } from "@/lib/discovery";
 import { COMPARISONS } from "@/lib/compare";
 import { LEARNING_PATHS } from "@/lib/learn";
@@ -825,6 +826,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.5,
   }));
 
+  // Image sitemap: map each imaged entity's local image URLs onto the page(s)
+  // that render them, so <image:image> extensions attach to real pages only.
+  const imageByUrl = new Map<string, string[]>();
+  for (const { entityId, imageUrls } of imagedEntities()) {
+    const type = entityId.split(":")[0];
+    const slug = entityId.split(":").slice(1).join(":");
+    const ent = getEntityById(entityId);
+    const abs = imageUrls.map((u) => absoluteUrl(u));
+    const candidates: string[] = [];
+    if (ent?.entryPath) candidates.push(absoluteUrl(ent.entryPath));
+    if (ent) candidates.push(absoluteUrl(entityGraphPath(ent)));
+    if (["planet", "dwarf_planet", "moon", "surface_feature"].includes(type)) candidates.push(absoluteUrl(solarBodyPath(bodySlug(entityId))));
+    if (["nebula", "star_cluster", "galaxy", "supernova_remnant"].includes(type)) {
+      candidates.push(absoluteUrl(deepSkyPath(slug)), absoluteUrl(`/galaxies/${slug}`), absoluteUrl(`/deep-sky-encyclopedia/${slug}`));
+    }
+    if (type === "comet") candidates.push(absoluteUrl(cometPath(slug)));
+    if (type === "asteroid") candidates.push(absoluteUrl(asteroidPath(slug)));
+    for (const c of candidates) imageByUrl.set(c, [...new Set([...(imageByUrl.get(c) ?? []), ...abs])]);
+  }
+
   return [
     ...staticRoutes,
     ...sectionRoutes,
@@ -901,8 +922,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...cosmologyRoutes,
     ...skyRoutes,
     ...imageRoutes,
-  ].map((entry) => ({
-    lastModified: now,
-    ...entry,
-  }));
+  ].map((entry) => {
+    const images = imageByUrl.get(entry.url);
+    return {
+      lastModified: now,
+      ...entry,
+      ...(images && images.length ? { images } : {}),
+    };
+  });
 }

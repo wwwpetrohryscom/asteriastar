@@ -18,6 +18,7 @@ import { EntityQualityPanel } from "@/components/authority/EntityQualityPanel";
 import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePanel";
 import { engine } from "@/platform/data-engine";
 import { EntryGallery } from "@/components/entry/EntryGallery";
+import { EntityImagery } from "@/components/media/EntityImagery";
 import { EntryTimeline } from "@/components/entry/EntryTimeline";
 import { EntryRelatedMissions } from "@/components/entry/EntryRelatedMissions";
 import {
@@ -122,11 +123,13 @@ export default async function EntryPage({
         <div className="grid gap-12 lg:grid-cols-3">
           <div className="space-y-10 lg:col-span-2">
             <EntryDisclaimer entry={entry} />
+            {graphEntity ? (
+              <EntityImagery entityId={graphEntity.id} />
+            ) : (
+              section.slug === "astronomy" && <EntryGallery name={entry.title} entryPath={entry.path} />
+            )}
             <EntryBody sections={entry.body} />
             <KnowledgeConnections entry={entry} />
-            {section.slug === "astronomy" && (
-              <EntryGallery name={entry.title} entryPath={entry.path} />
-            )}
             <EntryTimeline items={entry.timeline} />
             <EntryRelatedGrid
               entries={related}

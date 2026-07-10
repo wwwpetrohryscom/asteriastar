@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/Badge";
 import { SourceList } from "@/components/ui/SourceList";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { GraphConnections } from "@/components/graph/GraphConnections";
+import { EntityImagery } from "@/components/media/EntityImagery";
 import { EntityCard } from "@/components/graph/EntityCard";
 import { EntityRecommendations } from "@/components/graph/EntityRecommendations";
 import { EntityDataPanel } from "@/components/graph/EntityDataPanel";
@@ -96,6 +97,8 @@ export default async function GraphEntityPage({
       </HeroSection>
 
       <Container className="mt-8 mb-12 space-y-12">
+        <EntityImagery entityId={resolved.id} />
+
         <div className="grid gap-6 lg:grid-cols-2">
           <EntityDataPanel resolved={resolved} />
           <EntityQualityPanel resolved={resolved} />

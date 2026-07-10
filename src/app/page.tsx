@@ -125,6 +125,9 @@ export default function HomePage() {
 
   return (
     <>
+      {/* The homepage keeps the photographic ambient layer (approved design);
+          every other page uses the quiet ScientificBackdrop from the layout. */}
+      <PhotoBackdrop variant="ambient" fixed priority />
       <section className="relative isolate overflow-hidden">
         <PhotoBackdrop variant="hero" priority />
         <Container className="grid min-h-[calc(100svh-4.25rem)] items-end gap-10 pb-10 pt-16 lg:grid-cols-[minmax(0,0.96fr)_minmax(360px,0.74fr)] lg:pb-16 lg:pt-24">

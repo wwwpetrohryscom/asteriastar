@@ -4,7 +4,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { WebmasterId } from "@/components/site/WebmasterId";
-import { PhotoBackdrop } from "@/components/cosmos/PhotoBackdrop";
+import { ScientificBackdrop } from "@/components/cosmos/ScientificBackdrop";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/seo/jsonld";
 import { defaultTitle } from "@/lib/seo/metadata";
@@ -56,8 +56,10 @@ export default function RootLayout({
     <html lang="en" className={`${display.variable} ${sans.variable} h-full antialiased`}>
       <body className="cosmos flex min-h-full flex-col">
         <JsonLd data={[websiteSchema(), organizationSchema()]} />
-        {/* The real-space photograph, fixed behind every page as the ambient layer. */}
-        <PhotoBackdrop variant="ambient" fixed />
+        {/* Premium deep-space black with barely-visible scientific decoration.
+            The homepage re-adds the photographic ambient layer over this; every
+            other page keeps this quiet backdrop so content stays the focus. */}
+        <ScientificBackdrop />
 
         <a
           href="#main"

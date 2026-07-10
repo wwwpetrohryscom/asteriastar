@@ -14,6 +14,7 @@
     "indexnow:submit": "tsx scripts/indexnow-submit.ts",
     "brand": "tsx scripts/generate-brand.ts",
     "cosmos:bg": "tsx scripts/generate-cosmos-bg.ts",
+    "media:ingest": "tsx scripts/ingest-nasa-images.ts",
     "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts"
   },
   "dependencies": {

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { EntityImagery } from "@/components/media/EntityImagery";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { SourceList } from "@/components/ui/SourceList";
@@ -39,6 +40,7 @@ export function DsoDetail({ d }: { d: ResolvedCe }) {
       <JsonLd data={[breadcrumbSchema(crumbs), jsonLd]} />
       <Container className="pt-8"><Breadcrumbs crumbs={crumbs} /></Container>
       <HeroSection compact accent="nebula" eyebrow={<span>{eyebrow}</span>} title={r.name} lead={r.description} />
+      <Container className="mt-6"><EntityImagery entityId={r.id} /></Container>
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
           <div className="space-y-10">
