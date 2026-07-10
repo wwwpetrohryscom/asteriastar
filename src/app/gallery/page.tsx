@@ -28,7 +28,6 @@ export default function GalleryPage() {
     <>
       <JsonLd data={[breadcrumbSchema(crumbs), collectionPageSchema({ name: "Gallery", description: DESCRIPTION, url: ROUTES.gallery })]} />
       <HeroSection
-        backdrop
         accent="halo"
         eyebrow={<span className="text-silver/90">Openly-licensed cosmic imagery</span>}
         title={<>The <span className="accent-text">Gallery</span></>}

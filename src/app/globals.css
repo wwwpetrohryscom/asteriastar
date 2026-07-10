@@ -16,8 +16,8 @@
 
   /* Text — starlight white to faint silver. */
   --color-fg: #f5f7fb;
-  --color-muted: #b6bfce;
-  --color-faint: #7c8799;
+  --color-muted: #c2cad8;
+  --color-faint: #929cad;
 
   /* Palette — NASA/ESA scientific: deep navy, black, white, silver, soft gold,
    * and NASA blue. No purple. `--color-nasa` is the bright accent for links;
@@ -69,6 +69,7 @@
     font-family: var(--font-display);
     letter-spacing: 0;
     text-wrap: balance;
+    color: #ffffff;
   }
 
   /* Visible, on-brand focus state for keyboard users. */
@@ -119,9 +120,10 @@
     will-change: transform, opacity;
   }
 
-  /* Long-form editorial content (policy/about pages). */
+  /* Long-form editorial content (policy/about pages). Body copy is kept near
+     pure white for magazine-grade readability (NASA/ESA/Nature Astronomy). */
   .prose-cosmos {
-    color: var(--color-muted);
+    color: #eaeef6;
     line-height: 1.75;
   }
   .prose-cosmos > p {
