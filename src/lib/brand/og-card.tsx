@@ -7,8 +7,8 @@ import { SITE } from "@/lib/site";
  * Shared builder for the Open Graph / Twitter social card (1200×630), used by
  * the root opengraph-image and twitter-image routes. Renders the official
  * AsteriaStar emblem (read from the generated PNG) beside the wordmark, the
- * tagline, and the domain, over the official deep-space background. Self-
- * contained: no remote fonts or images, so builds stay deterministic.
+ * tagline, and the domain, over the real NASA/Webb deep-space background.
+ * Self-contained: no remote fonts or images, so builds stay deterministic.
  */
 export const OG_SIZE = { width: 1200, height: 630 } as const;
 export const OG_ALT = `${SITE.name} — ${SITE.tagline}`;
@@ -35,7 +35,7 @@ export function socialCard(): ImageResponse {
           fontFamily: "sans-serif",
         }}
       >
-        {/* The real-space cosmos photograph behind the card. */}
+        {/* The sourced NASA/Webb photograph behind the card. */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={bgSrc}

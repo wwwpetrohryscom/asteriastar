@@ -30,7 +30,7 @@ const mustImage = (id: string): ImageAsset => {
   return image;
 };
 
-const HERO_IMAGE = mustImage("webb-cosmic-cliffs");
+const HERO_IMAGE = mustImage("jupiter-hubble");
 
 const EDITORIAL_FEATURES = [
   {
@@ -41,18 +41,25 @@ const EDITORIAL_FEATURES = [
     href: "/astronomy/space-missions/james-webb-space-telescope",
   },
   {
-    image: mustImage("hubble-pillars-creation"),
-    kicker: "Iconic Hubble",
-    title: "Images as scientific evidence",
-    description: "Every image is treated as a sourced record: mission, instrument, license, credit, and original archive.",
-    href: ROUTES.images,
+    image: mustImage("trumpler-14-hubble"),
+    kicker: "Stellar field",
+    title: "Real stars, not decorative noise",
+    description: "Hubble star fields carry the platform's observatory-grade visual language.",
+    href: "/astronomy/stars",
   },
   {
-    image: mustImage("blue-marble-viirs"),
-    kicker: "Planetary perspective",
-    title: "From Earth outward",
-    description: "The platform connects planets, missions, telescopes, discoveries, and observing guides into one graph.",
-    href: "/astronomy/planets/earth",
+    image: mustImage("saturn-cassini"),
+    kicker: "Planetary science",
+    title: "Solar System imagery with provenance",
+    description: "Mission images keep their credits, archive links, instruments, and source institutions.",
+    href: "/solar-system/saturn",
+  },
+  {
+    image: mustImage("mars-marathon-valley"),
+    kicker: "Surface record",
+    title: "From telescope to terrain",
+    description: "AsteriaStar connects distant observations with planetary mission records.",
+    href: "/solar-system/mars",
   },
 ] as const;
 
@@ -168,7 +175,7 @@ export default function HomePage() {
       </section>
 
       <Container className="mt-10">
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
           {EDITORIAL_FEATURES.map((feature) => (
             <Link
               key={feature.title}

@@ -7,8 +7,7 @@ import { PhotoBackdrop } from "@/components/cosmos/PhotoBackdrop";
 /**
  * Page hero / header. `compact` switches between the large homepage hero and
  * the lighter header used at the top of hub and category pages. When `backdrop`
- * is set the hero becomes a photo showcase — the real-space cosmos image with
- * Earth's limb along the bottom edge — sitting above the global ambient layer.
+ * is set the hero becomes a real-photo showcase above the global ambient layer.
  */
 export function HeroSection({
   eyebrow,

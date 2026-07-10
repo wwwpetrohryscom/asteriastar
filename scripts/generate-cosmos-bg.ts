@@ -1,47 +1,72 @@
 /**
- * Generate the optimized responsive variants of the official AsteriaStar cosmos
- * background from the single committed master (assets/brand/cosmos-source.jpg,
- * a brand-supplied deep-space image — used as decorative site chrome, not as a
- * catalogued scientific photograph). Run after replacing the master:
+ * Generate optimized responsive variants for the official AsteriaStar real
+ * space background system. Every master image below is catalogued in
+ * `src/lib/media/registry.ts` with credit, license, source URL, and original
+ * archive URL. Run after adding or replacing an editorial master:
  *
  *   npx tsx scripts/generate-cosmos-bg.ts
  *
  * Outputs (all committed, served from /brand/):
- *   public/brand/cosmos-{640,1024,1536}.avif   — modern, smallest
- *   public/brand/cosmos-{640,1024,1536}.webp   — wide support
- *   public/brand/cosmos-{640,1024,1536}.jpg    — universal fallback
- *   public/brand/cosmos-og.jpg                 — 1200×630 crop for social cards
+ *   public/brand/backgrounds/{id}-{640,1024,1536}.{avif,webp,jpg}
+ *   public/brand/cosmos-{640,1024,1536}.{avif,webp,jpg} — primary fallback
+ *   public/brand/cosmos-og.jpg                         — 1200×630 social crop
  *
- * The image is never recolored or regenerated — only re-encoded and resized, so
- * the stars, Milky Way, constellation lines and Earth's limb are preserved.
+ * The images are never recolored or regenerated. They are only cropped,
+ * resized, and re-encoded from official NASA/JWST/Hubble/Cassini/SDO/MER
+ * observations so the backgrounds remain visually faithful and performant.
  */
 import { mkdirSync } from "node:fs";
 import { join } from "node:path";
 import sharp from "sharp";
 
 const ROOT = join(import.meta.dirname, "..");
-const SRC = join(ROOT, "assets/brand/cosmos-source.jpg");
 const OUT = join(ROOT, "public/brand");
+const BACKGROUNDS_OUT = join(OUT, "backgrounds");
 
 const WIDTHS = [640, 1024, 1536] as const;
+const ASPECT = 10 / 16;
+
+const BACKGROUNDS = [
+  ["webb-cosmic-cliffs", "public/editorial/cosmic-cliffs.jpg"],
+  ["webb-first-deep-field", "public/editorial/webb-deep-field.jpg"],
+  ["hubble-pillars-creation", "public/editorial/pillars-hubble.jpg"],
+  ["trumpler-14-hubble", "public/editorial/trumpler-14-hubble.jpg"],
+  ["sun-sdo", "public/editorial/sun-sdo.jpg"],
+  ["blue-marble-viirs", "public/editorial/blue-marble.jpg"],
+  ["jupiter-hubble", "public/editorial/jupiter-hubble.jpg"],
+  ["saturn-cassini", "public/editorial/saturn-cassini.jpg"],
+  ["mars-marathon-valley", "public/editorial/mars-marathon-valley.jpg"],
+] as const;
+
+async function generateSet(src: string, dir: string, prefix: string) {
+  for (const w of WIDTHS) {
+    const h = Math.round(w * ASPECT);
+    const base = sharp(src).resize(w, h, { fit: "cover", position: "centre" });
+    await base.clone().avif({ quality: 48, effort: 5 }).toFile(join(dir, `${prefix}-${w}.avif`));
+    await base.clone().webp({ quality: 72 }).toFile(join(dir, `${prefix}-${w}.webp`));
+    await base.clone().jpeg({ quality: 72, mozjpeg: true }).toFile(join(dir, `${prefix}-${w}.jpg`));
+  }
+}
 
 async function main() {
   mkdirSync(OUT, { recursive: true });
+  mkdirSync(BACKGROUNDS_OUT, { recursive: true });
 
-  for (const w of WIDTHS) {
-    const base = sharp(SRC).resize(w, null, { withoutEnlargement: true });
-    await base.clone().avif({ quality: 52, effort: 5 }).toFile(join(OUT, `cosmos-${w}.avif`));
-    await base.clone().webp({ quality: 74 }).toFile(join(OUT, `cosmos-${w}.webp`));
-    await base.clone().jpeg({ quality: 74, mozjpeg: true }).toFile(join(OUT, `cosmos-${w}.jpg`));
+  for (const [id, relativeSrc] of BACKGROUNDS) {
+    await generateSet(join(ROOT, relativeSrc), BACKGROUNDS_OUT, id);
   }
 
-  // Social-card crop (1200×630). Anchor low so Earth's limb stays in frame.
-  await sharp(SRC)
-    .resize(1200, 630, { fit: "cover", position: "bottom" })
+  const primary = join(ROOT, BACKGROUNDS[0][1]);
+  await generateSet(primary, OUT, "cosmos");
+
+  // Social-card crop (1200×630). Keep the nebular ridge and blue star field as
+  // the stable brand fallback for existing metadata and OG rendering.
+  await sharp(primary)
+    .resize(1200, 630, { fit: "cover", position: "centre" })
     .jpeg({ quality: 80, mozjpeg: true })
     .toFile(join(OUT, "cosmos-og.jpg"));
 
-  console.log(`[cosmos-bg] generated ${WIDTHS.length * 3 + 1} assets in public/brand/`);
+  console.log(`[cosmos-bg] generated ${BACKGROUNDS.length} real-photo background sets in public/brand/`);
 }
 
 main().catch((e) => {

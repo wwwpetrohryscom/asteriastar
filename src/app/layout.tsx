@@ -57,7 +57,7 @@ export default function RootLayout({
       <body className="cosmos flex min-h-full flex-col">
         <JsonLd data={[websiteSchema(), organizationSchema()]} />
         {/* The real-space photograph, fixed behind every page as the ambient layer. */}
-        <PhotoBackdrop variant="ambient" fixed priority />
+        <PhotoBackdrop variant="ambient" fixed />
 
         <a
           href="#main"

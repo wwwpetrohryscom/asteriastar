@@ -1,28 +1,98 @@
 import type { CSSProperties } from "react";
 
 /**
- * The official AsteriaStar cosmos photograph, used as the site's real-space
- * background (homepage hero, landing heroes, the global ambient layer, and the
- * footer atmosphere). One optimized asset serves every placement — the same
- * responsive `/brand/cosmos-*` files are reused, so the browser fetches the
- * chosen width once and shares it across layers.
+ * Real NASA/ESA/JWST/Hubble/Cassini/SDO/MER photography used as the site's
+ * atmospheric background (homepage hero, landing heroes, global ambient layer,
+ * and footer). The responsive `/brand/backgrounds/*` files are generated from
+ * sourced editorial image registry assets, not from AI artwork.
  *
  * Server Component, `aria-hidden`, absolutely/fixed positioned (never shifts
  * layout). A dark scrim tuned per placement keeps foreground text readable
- * while the stars, Milky Way, constellation lines and Earth's limb stay visible.
+ * while the real observations remain visible as credible scientific imagery.
  */
 
 const WIDTHS = [640, 1024, 1536] as const;
-const srcSet = (ext: string) => WIDTHS.map((w) => `/brand/cosmos-${w}.${ext} ${w}w`).join(", ");
 
 export type PhotoVariant = "hero" | "ambient" | "footer";
 
-/** Where the image is anchored, per placement. */
-const OBJECT_POSITION: Record<PhotoVariant, string> = {
-  hero: "50% 100%", // Earth's limb pinned to the bottom of the hero
-  ambient: "50% 26%", // the Milky Way band sits behind the content
-  footer: "50% 6%", // upper star-field behind the footer
+type BackgroundPhoto = {
+  id: string;
+  base: `/brand/backgrounds/${string}`;
+  positions: Record<PhotoVariant, string>;
 };
+
+const BACKGROUND_PHOTOS = [
+  {
+    id: "webb-cosmic-cliffs",
+    base: "/brand/backgrounds/webb-cosmic-cliffs",
+    positions: { hero: "50% 58%", ambient: "50% 44%", footer: "50% 46%" },
+  },
+  {
+    id: "webb-first-deep-field",
+    base: "/brand/backgrounds/webb-first-deep-field",
+    positions: { hero: "50% 50%", ambient: "50% 46%", footer: "50% 48%" },
+  },
+  {
+    id: "hubble-pillars-creation",
+    base: "/brand/backgrounds/hubble-pillars-creation",
+    positions: { hero: "50% 42%", ambient: "50% 50%", footer: "50% 48%" },
+  },
+  {
+    id: "trumpler-14-hubble",
+    base: "/brand/backgrounds/trumpler-14-hubble",
+    positions: { hero: "48% 46%", ambient: "50% 50%", footer: "50% 50%" },
+  },
+  {
+    id: "sun-sdo",
+    base: "/brand/backgrounds/sun-sdo",
+    positions: { hero: "47% 50%", ambient: "50% 50%", footer: "50% 50%" },
+  },
+  {
+    id: "blue-marble-viirs",
+    base: "/brand/backgrounds/blue-marble-viirs",
+    positions: { hero: "42% 50%", ambient: "50% 50%", footer: "44% 50%" },
+  },
+  {
+    id: "jupiter-hubble",
+    base: "/brand/backgrounds/jupiter-hubble",
+    positions: { hero: "63% 50%", ambient: "50% 50%", footer: "52% 50%" },
+  },
+  {
+    id: "saturn-cassini",
+    base: "/brand/backgrounds/saturn-cassini",
+    positions: { hero: "56% 50%", ambient: "50% 50%", footer: "50% 52%" },
+  },
+  {
+    id: "mars-marathon-valley",
+    base: "/brand/backgrounds/mars-marathon-valley",
+    positions: { hero: "50% 48%", ambient: "50% 50%", footer: "50% 46%" },
+  },
+] as const satisfies readonly BackgroundPhoto[];
+
+const byId = (id: string) => {
+  const photo = BACKGROUND_PHOTOS.find((item) => item.id === id);
+  if (!photo) throw new Error(`Missing background photo: ${id}`);
+  return photo;
+};
+
+const HERO_FRAMES = [
+  byId("webb-cosmic-cliffs"),
+  byId("webb-first-deep-field"),
+  byId("hubble-pillars-creation"),
+  byId("trumpler-14-hubble"),
+  byId("sun-sdo"),
+  byId("jupiter-hubble"),
+  byId("saturn-cassini"),
+  byId("mars-marathon-valley"),
+] as const;
+
+const STATIC_FRAME: Record<PhotoVariant, BackgroundPhoto> = {
+  hero: byId("webb-cosmic-cliffs"),
+  ambient: byId("webb-first-deep-field"),
+  footer: byId("blue-marble-viirs"),
+};
+
+const srcSet = (base: string, ext: string) => WIDTHS.map((w) => `${base}-${w}.${ext} ${w}w`).join(", ");
 
 /**
  * Darkening scrim per placement. Heroes stay open so the photo sings; the
@@ -31,12 +101,12 @@ const OBJECT_POSITION: Record<PhotoVariant, string> = {
  */
 const OVERLAY: Record<PhotoVariant, string> = {
   hero:
-    "linear-gradient(90deg, rgba(2,5,11,0.70) 0%, rgba(2,5,11,0.36) 46%, rgba(2,5,11,0.10) 100%)," +
-    "linear-gradient(180deg, rgba(2,5,11,0.34) 0%, rgba(2,5,11,0.05) 32%, rgba(2,5,11,0.62) 80%, var(--color-bg) 100%)",
+    "linear-gradient(90deg, rgba(2,5,11,0.78) 0%, rgba(2,5,11,0.50) 48%, rgba(2,5,11,0.24) 100%)," +
+    "linear-gradient(180deg, rgba(2,5,11,0.38) 0%, rgba(2,5,11,0.12) 34%, rgba(2,5,11,0.68) 82%, var(--color-bg) 100%)",
   ambient:
-    "linear-gradient(180deg, rgba(2,5,11,0.84) 0%, rgba(2,5,11,0.9) 55%, rgba(2,5,11,0.94) 100%)",
+    "linear-gradient(180deg, rgba(2,5,11,0.90) 0%, rgba(2,5,11,0.93) 55%, rgba(2,5,11,0.96) 100%)",
   footer:
-    "linear-gradient(180deg, var(--color-bg) 0%, rgba(2,5,11,0.87) 42%, rgba(2,5,11,0.76) 100%)",
+    "linear-gradient(180deg, var(--color-bg) 0%, rgba(2,5,11,0.90) 42%, rgba(2,5,11,0.82) 100%)",
 };
 
 export function PhotoBackdrop({
@@ -54,27 +124,49 @@ export function PhotoBackdrop({
   className?: string;
   style?: CSSProperties;
 }) {
+  const frames = variant === "hero" ? HERO_FRAMES : [STATIC_FRAME[variant]];
+  const shouldCycle = variant === "hero" && frames.length > 1;
+  const duration = frames.length * 12;
+
   return (
     <div
       aria-hidden
       className={`pointer-events-none ${fixed ? "fixed" : "absolute"} inset-0 -z-10 overflow-hidden ${className}`}
       style={style}
     >
-      <picture>
-        <source type="image/avif" srcSet={srcSet("avif")} sizes="100vw" />
-        <source type="image/webp" srcSet={srcSet("webp")} sizes="100vw" />
-        <img
-          src="/brand/cosmos-1536.jpg"
-          srcSet={srcSet("jpg")}
-          sizes="100vw"
-          alt=""
-          decoding="async"
-          loading={priority ? "eager" : "lazy"}
-          fetchPriority={priority ? "high" : "auto"}
-          className="h-full w-full object-cover"
-          style={{ objectPosition: OBJECT_POSITION[variant] }}
-        />
-      </picture>
+      {frames.map((photo, index) => {
+        const imagePriority = priority && index === 0;
+        return (
+          <picture
+            key={photo.id}
+            data-background-photo={photo.id}
+            className={`absolute inset-0 block ${shouldCycle ? "photo-backdrop-frame-cycle" : ""}`}
+            style={
+              shouldCycle
+                ? ({
+                    animationDelay: `${index * 12}s`,
+                    animationDuration: `${duration}s`,
+                    "--photo-drift-duration": `${duration + index * 4}s`,
+                  } as CSSProperties)
+                : undefined
+            }
+          >
+            <source type="image/avif" srcSet={srcSet(photo.base, "avif")} sizes="100vw" />
+            <source type="image/webp" srcSet={srcSet(photo.base, "webp")} sizes="100vw" />
+            <img
+              src={`${photo.base}-1536.jpg`}
+              srcSet={srcSet(photo.base, "jpg")}
+              sizes="100vw"
+              alt=""
+              decoding="async"
+              loading={imagePriority ? "eager" : "lazy"}
+              fetchPriority={imagePriority ? "high" : "low"}
+              className="photo-backdrop-image h-full w-full object-cover"
+              style={{ objectPosition: photo.positions[variant] }}
+            />
+          </picture>
+        );
+      })}
       <div className="absolute inset-0" style={{ backgroundImage: OVERLAY[variant] }} />
     </div>
   );
