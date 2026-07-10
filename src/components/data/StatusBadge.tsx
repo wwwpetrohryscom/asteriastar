@@ -15,7 +15,7 @@ const STYLES: Record<PortalStatus, string> = {
   available: "text-emerald-300 border-emerald-400/30 bg-emerald-400/10",
   prepared: "text-amber-300 border-amber-400/30 bg-amber-400/10",
   planned: "text-sky-300 border-sky-400/30 bg-sky-400/10",
-  architecture: "text-violet-300 border-violet-400/30 bg-violet-400/10",
+  architecture: "text-slate-200 border-slate-300/30 bg-slate-300/10",
   deprecated: "text-rose-300 border-rose-400/30 bg-rose-400/10",
 };
 

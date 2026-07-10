@@ -9,22 +9,22 @@
  */
 
 @theme {
-  /* Surfaces — the deep navy-black of space, matched to the photo background. */
-  --color-bg: #040711;
-  --color-bg-elevated: #0a1120;
-  --color-surface: #0e1626;
+  /* Surfaces — observatory-black and deep NASA editorial blues. */
+  --color-bg: #02050b;
+  --color-bg-elevated: #07111c;
+  --color-surface: #0a1728;
 
   /* Text — starlight white to faint silver. */
-  --color-fg: #f3f6fc;
-  --color-muted: #a9b2c6;
-  --color-faint: #6e7893;
+  --color-fg: #f5f7fb;
+  --color-muted: #b6bfce;
+  --color-faint: #7c8799;
 
   /* Palette — NASA/ESA scientific: deep navy, black, white, silver, soft gold,
-   * and NASA blue. No purple. `--color-nasa` is the bright accent (links, glows);
+   * and NASA blue. No purple. `--color-nasa` is the bright accent for links;
    * `--color-nasa-deep` is the institutional flag blue. Gold stays reserved for
    * the brand emblem and the astrology-as-tradition distinction. Hub accents are
    * subtle blue/steel/silver/gold tints so hubs stay legible without a rainbow. */
-  --color-nasa: #4f8ff0;
+  --color-nasa: #5d95df;
   --color-nasa-deep: #0b3d91;
   --color-gold: #e7c98a;
   --color-nebula: #6ba1f0;
@@ -67,7 +67,7 @@
   h3,
   h4 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
     text-wrap: balance;
   }
 
@@ -94,16 +94,12 @@
     background-color: var(--color-bg);
   }
 
-  /* Frosted card surface with a subtle top-down sheen. */
+  /* Premium surface: solid, quiet, and readable over the telescope backdrop. */
   .panel {
-    background:
-      linear-gradient(
-        180deg,
-        rgba(255, 255, 255, 0.05),
-        rgba(255, 255, 255, 0.015)
-      );
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(8px);
+    background: rgba(7, 17, 28, 0.72);
+    border: 1px solid rgba(200, 210, 230, 0.14);
+    box-shadow: 0 18px 70px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(14px);
   }
 
   /* Long-form editorial content (policy/about pages). */
@@ -119,7 +115,7 @@
     font-family: var(--font-display);
     font-size: 1.35rem;
     font-weight: 600;
-    letter-spacing: -0.02em;
+    letter-spacing: 0;
     margin-top: 2.5rem;
     margin-bottom: 0.75rem;
   }
@@ -153,16 +149,9 @@
     font-weight: 600;
   }
 
-  /* Text rendered with the active accent gradient. */
+  /* Accent text is solid, not gradient-driven. */
   .accent-text {
-    background-image: linear-gradient(
-      120deg,
-      var(--accent-from, var(--color-nebula)),
-      var(--accent-to, var(--color-halo))
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+    color: var(--accent, var(--color-halo));
   }
 }
 

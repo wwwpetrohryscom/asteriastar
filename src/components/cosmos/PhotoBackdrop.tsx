@@ -31,12 +31,12 @@ const OBJECT_POSITION: Record<PhotoVariant, string> = {
  */
 const OVERLAY: Record<PhotoVariant, string> = {
   hero:
-    "linear-gradient(90deg, rgba(4,7,17,0.66) 0%, rgba(4,7,17,0.30) 46%, rgba(4,7,17,0.08) 100%)," +
-    "linear-gradient(180deg, rgba(4,7,17,0.30) 0%, rgba(4,7,17,0.05) 32%, rgba(4,7,17,0.58) 80%, var(--color-bg) 100%)",
+    "linear-gradient(90deg, rgba(2,5,11,0.70) 0%, rgba(2,5,11,0.36) 46%, rgba(2,5,11,0.10) 100%)," +
+    "linear-gradient(180deg, rgba(2,5,11,0.34) 0%, rgba(2,5,11,0.05) 32%, rgba(2,5,11,0.62) 80%, var(--color-bg) 100%)",
   ambient:
-    "linear-gradient(180deg, rgba(4,7,17,0.82) 0%, rgba(4,7,17,0.88) 55%, rgba(4,7,17,0.93) 100%)",
+    "linear-gradient(180deg, rgba(2,5,11,0.84) 0%, rgba(2,5,11,0.9) 55%, rgba(2,5,11,0.94) 100%)",
   footer:
-    "linear-gradient(180deg, var(--color-bg) 0%, rgba(4,7,17,0.86) 42%, rgba(4,7,17,0.74) 100%)",
+    "linear-gradient(180deg, var(--color-bg) 0%, rgba(2,5,11,0.87) 42%, rgba(2,5,11,0.76) 100%)",
 };
 
 export function PhotoBackdrop({

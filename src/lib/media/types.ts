@@ -45,19 +45,24 @@ export interface ImageAsset {
   title: string;
   /** Accessible alt text (required). */
   alt: string;
-  /** Remote, licensed image URL. Absent until an asset is cleared. */
+  /** Local optimized path or remote licensed image URL. Absent until an asset is cleared. */
   url?: string;
+  width?: number;
+  height?: number;
   /** Required attribution string. */
   credit: string;
   provider: ImageProvider;
   /** Link to the original on the provider's site. */
   sourceUrl: string;
+  /** Exact original binary/archive URL, when distinct from the source page. */
+  originalUrl?: string;
   license: ImageLicense;
   /** Optional source key for cross-referencing the source registry. */
   source?: SourceKey;
   captureDate?: string;
   instrument?: string;
   mission?: string;
+  author?: string;
   photographer?: string;
   /** Human-readable object name depicted. */
   object?: string;

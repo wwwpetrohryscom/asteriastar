@@ -5,9 +5,9 @@ type Variant = "primary" | "secondary" | "ghost";
 
 const VARIANTS: Record<Variant, string> = {
   primary:
-    "bg-white text-bg hover:bg-white/90 shadow-[0_0_34px_-8px_rgba(79,143,240,0.65)]",
+    "bg-white text-bg shadow-[0_12px_34px_rgba(0,0,0,0.28)] hover:bg-silver",
   secondary:
-    "border border-white/15 bg-white/[0.03] text-fg hover:border-nasa/50 hover:bg-white/[0.06]",
+    "border border-silver/20 bg-surface/70 text-fg hover:border-gold/45 hover:bg-surface",
   ghost: "text-muted hover:text-fg",
 };
 
@@ -24,7 +24,7 @@ export function Button({
   className?: string;
 }) {
   const external = href.startsWith("http");
-  const classes = `inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-medium transition-all duration-200 ${VARIANTS[variant]} ${className}`;
+  const classes = `inline-flex items-center justify-center gap-2 rounded-lg px-5 py-2.5 text-sm font-medium transition-all duration-200 ${VARIANTS[variant]} ${className}`;
 
   if (external) {
     return (

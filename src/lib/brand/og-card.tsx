@@ -7,8 +7,8 @@ import { SITE } from "@/lib/site";
  * Shared builder for the Open Graph / Twitter social card (1200×630), used by
  * the root opengraph-image and twitter-image routes. Renders the official
  * AsteriaStar emblem (read from the generated PNG) beside the wordmark, the
- * tagline, and the domain, on the deep-space brand gradient. Self-contained —
- * no remote fonts or images — so builds stay deterministic.
+ * tagline, and the domain, over the official deep-space background. Self-
+ * contained: no remote fonts or images, so builds stay deterministic.
  */
 export const OG_SIZE = { width: 1200, height: 630 } as const;
 export const OG_ALT = `${SITE.name} — ${SITE.tagline}`;
@@ -30,7 +30,7 @@ export function socialCard(): ImageResponse {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px",
-          backgroundColor: "#040711",
+          backgroundColor: "#02050B",
           color: "#e9ebf8",
           fontFamily: "sans-serif",
         }}
@@ -54,7 +54,7 @@ export function socialCard(): ImageResponse {
             height: "630px",
             display: "flex",
             backgroundImage:
-              "linear-gradient(120deg, rgba(4,7,17,0.86) 0%, rgba(4,7,17,0.62) 55%, rgba(4,7,17,0.4) 100%)",
+              "linear-gradient(120deg, rgba(2,5,11,0.88) 0%, rgba(2,5,11,0.66) 55%, rgba(2,5,11,0.42) 100%)",
           }}
         />
         <div style={{ position: "relative", zIndex: 1, display: "flex", alignItems: "center", gap: "24px" }}>
@@ -71,7 +71,7 @@ export function socialCard(): ImageResponse {
             {SITE.tagline}
           </div>
           <div style={{ marginTop: "26px", fontSize: "30px", color: "#ccd6ef", maxWidth: "920px" }}>
-            Astronomy, space, the night sky, mythology — and astrology as a separate cultural tradition.
+            Astronomy, space missions, observatories, sky events, and image provenance.
           </div>
         </div>
 

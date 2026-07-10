@@ -53,7 +53,7 @@ export const CONSENSUS: Record<ConsensusLevel, ConsensusMeta> = {
   speculative: {
     level: "speculative", label: "Speculative Hypothesis", order: 5,
     description: "A theoretical possibility with limited or no direct observational support.",
-    classes: "border-violet-400/30 bg-violet-400/10 text-violet-300", dot: "bg-violet-400",
+    classes: "border-amber-300/30 bg-amber-300/10 text-amber-200", dot: "bg-amber-300",
   },
 };
 

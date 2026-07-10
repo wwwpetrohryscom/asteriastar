@@ -12,7 +12,7 @@ const TYPE_ACCENT: Record<string, string> = {
   dataset: "text-sky-300 border-sky-400/30 bg-sky-400/10",
   catalogue: "text-sky-300 border-sky-400/30 bg-sky-400/10",
   archive_page: "text-sky-300 border-sky-400/30 bg-sky-400/10",
-  image_archive: "text-violet-300 border-violet-400/30 bg-violet-400/10",
+  image_archive: "text-blue-200 border-blue-300/30 bg-blue-300/10",
   historical_reference: "text-amber-300 border-amber-400/30 bg-amber-400/10",
   press_release: "text-amber-300 border-amber-400/30 bg-amber-400/10",
   standards_reference: "text-amber-300 border-amber-400/30 bg-amber-400/10",

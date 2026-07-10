@@ -27,7 +27,7 @@ export function MediaGallery({
     );
   }
   return (
-    <div className="flex flex-col items-center rounded-2xl border border-white/10 bg-white/[0.02] p-8 text-center">
+    <div className="flex flex-col items-center rounded-lg border border-silver/12 bg-bg-elevated/70 p-8 text-center shadow-[0_14px_50px_rgba(0,0,0,0.18)]">
       <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden className="text-faint">
         <rect x="3" y="5" width="18" height="14" rx="2" stroke="currentColor" strokeWidth="1.6" />
         <circle cx="8.5" cy="10" r="1.5" fill="currentColor" />
@@ -40,7 +40,7 @@ export function MediaGallery({
       </p>
       <Link
         href="/sources-policy"
-        className="mt-4 text-sm font-medium text-nebula underline-offset-4 transition hover:underline"
+        className="mt-4 text-sm font-medium text-halo underline-offset-4 transition hover:underline"
       >
         Our sources &amp; licensing policy →
       </Link>
