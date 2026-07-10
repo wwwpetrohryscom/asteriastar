@@ -35,29 +35,29 @@ export function HeroSection({
       style={accentVars(accent)}
       className={[
         backdrop ? "relative isolate overflow-hidden" : "",
-        backdrop && !compact ? "flex min-h-[520px] flex-col justify-end sm:min-h-[600px]" : "",
-        compact ? "pt-10 pb-2" : "pt-16 pb-10 sm:pt-24 sm:pb-14",
+        backdrop && !compact ? "flex min-h-[560px] flex-col justify-end sm:min-h-[680px]" : "",
+        compact ? "pt-12 pb-3" : "pt-[4.5rem] pb-12 sm:pt-28 sm:pb-16",
       ].join(" ")}
     >
       {backdrop && <PhotoBackdrop variant="hero" priority={!compact} />}
       <Container>
         {eyebrow && (
-          <div className="mb-4 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.2em] text-faint">
+          <div className="mb-5 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-faint">
             {eyebrow}
           </div>
         )}
         <h1
           className={
             compact
-              ? "max-w-4xl font-display text-3xl font-bold sm:text-4xl"
-              : "max-w-4xl font-display text-4xl font-bold leading-[1.05] sm:text-6xl"
+              ? "max-w-4xl font-display text-3xl font-semibold leading-tight sm:text-4xl"
+              : "max-w-5xl font-display text-5xl font-semibold leading-[1.02] sm:text-7xl"
           }
         >
           {title}
         </h1>
         {lead && (
           <p
-            className={`mt-5 max-w-2xl leading-relaxed text-muted ${compact ? "text-base" : "text-lg sm:text-xl"}`}
+            className={`mt-6 max-w-2xl leading-relaxed text-muted ${compact ? "text-base" : "text-lg sm:text-xl"}`}
           >
             {lead}
           </p>

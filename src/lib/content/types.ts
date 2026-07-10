@@ -84,16 +84,16 @@ export interface Section {
   description: string;
   /** Longer intro paragraph shown on the hub page. */
   intro: string;
-  /** Theme accent token used for gradients/badges (see globals.css). */
+  /** Theme accent token used for badges, borders, and editorial highlights. */
   accent: AccentToken;
   categories: Category[];
 }
 
 export type AccentToken =
-  | "nebula" // indigo/violet — astronomy
-  | "aurora" // teal/cyan — sky guide
+  | "nebula" // NASA blue — astronomy
+  | "aurora" // steel blue — sky guide
   | "ember" // amber/rose — astrology
-  | "plasma" // fuchsia — calculators
+  | "plasma" // slate blue — calculators
   | "stone" // slate — encyclopedia
   | "halo" // sky blue — observatory
   | "comet"; // green/teal — guides

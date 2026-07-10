@@ -17,8 +17,7 @@ export interface TopicCardProps {
 
 /**
  * The primary navigational card used across hubs, grids, and related links.
- * The whole card is a link, with an accent-tinted hover glow and a moving
- * arrow affordance.
+ * The whole card is a link with a quiet editorial hover state.
  */
 export function TopicCard({
   title,
@@ -32,16 +31,8 @@ export function TopicCard({
     <Link
       href={href}
       style={accent ? accentVars(accent) : undefined}
-      className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-bg-elevated/45 p-5 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--accent,#4f8ff0)_50%,transparent)] hover:bg-bg-elevated/70"
+      className="group relative flex flex-col overflow-hidden rounded-lg border border-silver/12 bg-bg-elevated/72 p-5 shadow-[0_14px_50px_rgba(0,0,0,0.18)] backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[color-mix(in_oklab,var(--accent,#c8d2e6)_38%,transparent)] hover:bg-surface/82"
     >
-      <span
-        aria-hidden
-        className="pointer-events-none absolute -right-16 -top-16 h-40 w-40 rounded-full opacity-0 blur-3xl transition-opacity duration-300 group-hover:opacity-100"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle, var(--accent, #c8d2e6), transparent 70%)",
-        }}
-      />
       <div className="relative flex items-start justify-between gap-3">
         <div>
           {eyebrow && (

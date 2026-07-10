@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 import type { AccentToken } from "@/lib/content/types";
 
 /**
- * Accent palette. Each section has an accent used for gradients, badges, and
+ * Accent palette. Each section has an accent used for badges, borders, and
  * hover glows. Because Tailwind cannot generate class names dynamically, we
  * expose accent colors as CSS custom properties via `accentVars()` and read
  * them in components with arbitrary-value utilities like `text-[var(--accent)]`.

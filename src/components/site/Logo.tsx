@@ -15,13 +15,8 @@ export function Logo({ className = "", idSuffix = "header" }: { className?: stri
         id={`logo-${idSuffix}`}
         className="shrink-0 rounded-lg transition-transform duration-500 group-hover:scale-105"
       />
-      <span className="font-display text-lg font-semibold uppercase tracking-[0.04em] text-fg">
-        Asteria<span
-          className="accent-text"
-          style={{ ["--accent-from" as string]: "#f8dd96", ["--accent-to" as string]: "#b8860b" }}
-        >
-          Star
-        </span>
+      <span className="font-display text-lg font-semibold uppercase tracking-[0.08em] text-fg">
+        Asteria<span className="text-gold">Star</span>
       </span>
     </Link>
   );

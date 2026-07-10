@@ -67,11 +67,11 @@ export function PlatformNav({ groups }: { groups: NavGroup[] }) {
               </button>
 
               <div
-                className={`absolute left-0 top-full z-50 pt-2 transition duration-150 ${
-                  openId === group.id ? "visible opacity-100" : "invisible opacity-0"
+                className={`absolute right-0 top-full z-50 pt-2 transition duration-150 ${
+                  openId === group.id ? "block opacity-100" : "hidden opacity-0"
                 }`}
               >
-                <div className="flex gap-8 rounded-2xl border border-white/10 bg-bg-elevated/95 p-5 shadow-2xl shadow-black/40 backdrop-blur-xl">
+                <div className="flex gap-8 rounded-lg border border-silver/12 bg-bg-elevated/95 p-5 shadow-[0_22px_80px_rgba(0,0,0,0.34)] backdrop-blur-xl">
                   {group.columns?.map((col) => (
                     <div key={col.title} className="min-w-44">
                       <p className="px-2 pb-2 text-[0.7rem] font-medium uppercase tracking-[0.14em] text-faint">{col.title}</p>

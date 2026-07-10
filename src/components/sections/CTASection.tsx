@@ -8,7 +8,7 @@ interface CTAAction {
   variant?: "primary" | "secondary";
 }
 
-/** A closing call-to-action band with a soft accent glow. */
+/** A closing call-to-action band with a quiet editorial surface. */
 export function CTASection({
   title,
   description,
@@ -22,15 +22,7 @@ export function CTASection({
 }) {
   return (
     <Container className="my-20">
-      <div className="panel relative overflow-hidden rounded-3xl px-6 py-12 text-center sm:px-12 sm:py-16">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute inset-x-0 -top-24 mx-auto h-48 w-[36rem] max-w-full rounded-full opacity-40 blur-3xl"
-          style={{
-            backgroundImage:
-              "radial-gradient(circle, var(--color-nebula), transparent 70%)",
-          }}
-        />
+      <div className="panel relative overflow-hidden rounded-lg px-6 py-12 text-center sm:px-12 sm:py-16">
         <div className="relative">
           <h2 className="mx-auto max-w-2xl font-display text-2xl font-bold sm:text-3xl">
             {title}

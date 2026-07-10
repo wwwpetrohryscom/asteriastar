@@ -10,7 +10,7 @@ const ACCENT_CLASS: Record<string, string> = {
   comet: "text-emerald-300 border-emerald-400/30 bg-emerald-400/10",
   ember: "text-amber-300 border-amber-400/30 bg-amber-400/10",
   gold: "text-yellow-300 border-yellow-400/30 bg-yellow-400/10",
-  plasma: "text-fuchsia-300 border-fuchsia-400/30 bg-fuchsia-400/10",
+  plasma: "text-blue-200 border-blue-300/30 bg-blue-300/10",
 };
 
 export function ContributionStateBadge({ state, className = "" }: { state: ContributionState; className?: string }) {

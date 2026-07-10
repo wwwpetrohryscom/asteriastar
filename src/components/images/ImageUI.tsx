@@ -32,7 +32,7 @@ export function LicenseBadge({ slug }: { slug: string }) {
 export function ImagePlaceholder({ img, aspect = "aspect-[16/10]" }: { img: ImageRecord; aspect?: string }) {
   const source = SOURCE_BY_SLUG.get(img.sourceSlug);
   return (
-    <div className={`relative w-full overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-halo/15 via-nebula/10 to-transparent ${aspect}`}>
+    <div className={`relative w-full overflow-hidden rounded-lg border border-silver/12 bg-bg-elevated/72 ${aspect}`}>
       {/* The curated alt text describes the image for assistive technology, since the binary lives at the source archive. */}
       <span className="sr-only">{img.altText}</span>
       <div className="absolute inset-0 flex flex-col items-center justify-center p-6 text-center">
@@ -51,7 +51,7 @@ export function ImagePlaceholder({ img, aspect = "aspect-[16/10]" }: { img: Imag
 export function ImageCard({ img }: { img: ImageRecord }) {
   return (
     <Link href={imagePath(img.slug)} className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:-translate-y-0.5 hover:border-white/25">
-      <div className="relative aspect-[16/10] w-full bg-gradient-to-br from-halo/15 via-nebula/10 to-transparent">
+      <div className="relative aspect-[16/10] w-full bg-bg-elevated/72">
         <span className="sr-only">{img.altText}</span>
         <div className="absolute inset-0 flex items-center justify-center p-4 text-center">
           <span aria-hidden className="text-xs font-medium uppercase tracking-[0.18em] text-faint">{img.objectName}</span>

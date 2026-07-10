@@ -14,8 +14,8 @@ export function SiteHeader() {
   const groups = getNavGroups();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-white/10 bg-bg/70 backdrop-blur-xl">
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
+    <header className="sticky top-0 z-50 border-b border-silver/12 bg-bg/82 backdrop-blur-xl">
+      <div className="mx-auto flex h-[4.25rem] max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
         <Logo />
 
         <PlatformNav groups={groups} />
