@@ -71,6 +71,42 @@ async function main() {
   }
   console.log(`✓ Media valid — ${media.IMAGE_STATS.published} displayable images, ${media.entitiesWithImagesCount()} entities imaged, all licensed + attributed`);
 
+  // Solar-system characteristic integrity. Fails only on IMPOSSIBLE or
+  // contradictory values — never on legitimate absence. Ranges are chosen to
+  // avoid false positives: icy-moon *geometric* albedo legitimately exceeds 1
+  // (Enceladus ≈ 1.375), and retrograde rotation is a negative period.
+  const { engine: solarRangeEng } = await import("../src/platform/data-engine");
+  const solarRangeBodies = solarRangeEng.solar.all();
+  const solarRangeIssues: string[] = [];
+  const solarNowYear = new Date().getFullYear();
+  for (const b of solarRangeBodies) {
+    const r = (b as unknown as { record?: Record<string, number | undefined> }).record ?? (b as unknown as Record<string, number | undefined>);
+    const id = String((r as { id?: string }).id ?? "solar-body");
+    const pos = (v: number | undefined, f: string) => { if (v != null && v <= 0) solarRangeIssues.push(`${id}: ${f} must be > 0 (got ${v})`); };
+    // Mass is stored in the coarse ×10²⁴ kg unit; a value of exactly 0 is an
+    // underflow for tiny bodies (treated as unknown, not displayed). Only a
+    // negative mass is physically impossible.
+    if (r.mass1e24Kg != null && r.mass1e24Kg < 0) solarRangeIssues.push(`${id}: mass < 0 (${r.mass1e24Kg})`);
+    pos(r.radiusKm, "radius"); pos(r.diameterKm, "diameter");
+    pos(r.densityGCm3, "density"); pos(r.gravityMs2, "surface gravity"); pos(r.escapeVelocityKms, "escape velocity");
+    pos(r.semiMajorAxisAu, "semi-major axis"); pos(r.orbitalPeriodDays, "orbital period (days)");
+    if (r.eccentricity != null && r.eccentricity < 0) solarRangeIssues.push(`${id}: eccentricity < 0 (${r.eccentricity})`);
+    if (r.albedo != null && r.albedo < 0) solarRangeIssues.push(`${id}: albedo < 0 (${r.albedo})`);
+    if (r.inclinationDeg != null && (r.inclinationDeg < 0 || r.inclinationDeg > 180)) solarRangeIssues.push(`${id}: orbital inclination out of [0,180]° (${r.inclinationDeg})`);
+    if (r.obliquityDeg != null && (r.obliquityDeg < 0 || r.obliquityDeg > 360)) solarRangeIssues.push(`${id}: axial tilt out of [0,360]° (${r.obliquityDeg})`);
+    if (r.densityGCm3 != null && r.densityGCm3 > 30) solarRangeIssues.push(`${id}: density implausibly high (${r.densityGCm3} g/cm³)`);
+    if (r.meanTemperatureC != null && r.meanTemperatureC < -273.15) solarRangeIssues.push(`${id}: temperature below absolute zero (${r.meanTemperatureC}°C)`);
+    if (r.perihelion1e6Km != null && r.aphelion1e6Km != null && r.perihelion1e6Km > r.aphelion1e6Km) solarRangeIssues.push(`${id}: perihelion > aphelion (${r.perihelion1e6Km} > ${r.aphelion1e6Km})`);
+    if (r.discoveryYear != null && (r.discoveryYear > solarNowYear + 1 || r.discoveryYear < -3000)) solarRangeIssues.push(`${id}: implausible discovery year (${r.discoveryYear})`);
+    if (r.rotationPeriodHours != null && r.rotationPeriodHours === 0) solarRangeIssues.push(`${id}: rotation period is exactly zero`);
+  }
+  if (solarRangeIssues.length > 0) {
+    console.error(`\n✗ ${solarRangeIssues.length} solar-body integrity issue(s):`);
+    for (const i of solarRangeIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(`✓ Solar-body integrity valid — ${solarRangeBodies.length} bodies, no impossible or contradictory values`);
+
   // Community architecture (reference integrity; no user data exists yet).
   const community = await import("../src/lib/community");
   const communityIssues = community.validateCommunity(community.COMMUNITY_DATA);
