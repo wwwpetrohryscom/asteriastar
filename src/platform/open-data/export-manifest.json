@@ -6,33 +6,41 @@
   "exports": {
     "entities-index": {
       "file": "/exports/entities-index.json",
-      "bytes": 964321,
-      "sha256": "c901cbe3689902ccce0a812ddc1319b876ebbae53ee197160e769ba94652b1fb",
-      "recordCount": 5802,
+      "bytes": 1285130,
+      "sha256": "a9a3edf7671559d0c80e55d08530ed2ff69a227dc4086849a7d6cc291d6376d9",
+      "recordCount": 7351,
       "format": "JSON",
       "license": "cc-by-sa-4.0"
     },
     "relationships-index": {
       "file": "/exports/relationships-index.json",
-      "bytes": 2466027,
-      "sha256": "f48235559a7cf0628d0c497b316d0125d8eaa5dc23ede78d94c45bf278789e02",
-      "recordCount": 9009,
+      "bytes": 3583876,
+      "sha256": "f2af3f02194272a1f6d49fb477105af2188b74ae32ad296ccfff7084476fa95d",
+      "recordCount": 12867,
       "format": "JSON",
       "license": "cc-by-sa-4.0"
     },
     "dataset-catalogue": {
       "file": "/exports/dataset-catalogue.json",
-      "bytes": 5392,
-      "sha256": "872349c81b887a9003e597f71d1ebb8170c3b82ccf0c4e462dbc860ae7c612ab",
-      "recordCount": 18,
+      "bytes": 52471,
+      "sha256": "a60912f126f1e5e74c8e7cd4c00cce2de6911655388874aef28ca41435c93c95",
+      "recordCount": 127,
+      "format": "JSON",
+      "license": "cc-by-sa-4.0"
+    },
+    "field-provenance": {
+      "file": "/exports/field-provenance.json",
+      "bytes": 82280,
+      "sha256": "569d5ce30cde54a0afee1c693792fc6ea57ba601b8b8af98a3f35e20c259f057",
+      "recordCount": 200,
       "format": "JSON",
       "license": "cc-by-sa-4.0"
     },
     "source-registry": {
       "file": "/exports/source-registry.json",
-      "bytes": 11822,
-      "sha256": "08737edd4b412f4ee6b61c796a86c6039da2cbcbd7ad20e8e5395b12c3201eb2",
-      "recordCount": 35,
+      "bytes": 14695,
+      "sha256": "eb8cac6bc9cd010079b8aa9c8e33586ea6a36ac08355f5e7e570169f8fcc0d67",
+      "recordCount": 43,
       "format": "JSON",
       "license": "cc-by-sa-4.0"
     },

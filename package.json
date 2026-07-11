@@ -22,6 +22,7 @@
     "precision:small-bodies": "tsx scripts/precision/ingest-sbdb.ts",
     "precision:missions": "tsx scripts/precision/ingest-wikidata-missions.ts",
     "precision:report": "tsx scripts/precision/report.ts",
+    "provenance:validate": "tsx scripts/precision/validate-provenance.ts",
     "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts"
   },
   "dependencies": {

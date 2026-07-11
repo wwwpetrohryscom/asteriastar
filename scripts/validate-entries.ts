@@ -298,6 +298,21 @@ async function main() {
     );
   }
 
+  // Program 5 — unified cross-domain field-level provenance gate.
+  const provenance = await import("../src/lib/provenance/registry");
+  const provenanceIssues = provenance.validateAllProvenance();
+  if (provenanceIssues.length > 0) {
+    console.error(`\n✗ ${provenanceIssues.length} field-provenance issue(s):`);
+    for (const i of provenanceIssues.slice(0, 40)) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  {
+    const s = provenance.provenanceStats();
+    console.log(
+      `✓ Field-level provenance valid — ${s.total.toLocaleString()} source-traced values across ${s.entities.toLocaleString()} entities, ${s.distinctBibcodes} distinct bibcodes; every value has a known source and truthful status`,
+    );
+  }
+
   const exploration = await import("../src/knowledge-graph/data/exploration-catalog");
   const expIssues = exploration.validateExploration();
   if (expIssues.length > 0) {
