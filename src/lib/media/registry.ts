@@ -229,6 +229,8 @@ const OPEN_LICENSES = new Set([
 export function validateImages(): string[] {
   const issues: string[] = [];
   const seen = new Set<string>();
+  const seenUrl = new Map<string, string>(); // local file path -> first record id
+  const seenOriginal = new Map<string, string>(); // source binary -> first entity id
   for (const img of IMAGES) {
     if (seen.has(img.id)) issues.push(`duplicate image id: ${img.id}`);
     seen.add(img.id);
@@ -242,6 +244,17 @@ export function validateImages(): string[] {
       if (!OPEN_LICENSES.has(img.license)) issues.push(`${img.id}: license is not an open/PD license: ${img.license}`);
       if (!img.author && !img.photographer) issues.push(`${img.id}: published image has no author/photographer`);
       if ((!img.width || !img.height)) issues.push(`${img.id}: published image is missing width/height (CLS risk)`);
+      // A local file must back exactly one record; a source binary must depict a
+      // single entity (no reusing one generic image across unrelated entities).
+      if (img.url) {
+        if (seenUrl.has(img.url)) issues.push(`${img.id}: duplicate local file ${img.url} (also ${seenUrl.get(img.url)})`);
+        else seenUrl.set(img.url, img.id);
+      }
+      if (img.originalUrl && img.entityId) {
+        const prev = seenOriginal.get(img.originalUrl);
+        if (prev && prev !== img.entityId) issues.push(`${img.id}: source image reused across entities (${img.entityId} vs ${prev})`);
+        else seenOriginal.set(img.originalUrl, img.entityId);
+      }
     }
   }
   return issues;

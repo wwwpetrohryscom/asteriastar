@@ -15,6 +15,8 @@
     "brand": "tsx scripts/generate-brand.ts",
     "cosmos:bg": "tsx scripts/generate-cosmos-bg.ts",
     "media:ingest": "tsx scripts/ingest-nasa-images.ts",
+    "content:audit": "tsx scripts/content-audit.ts",
+    "content:report": "tsx scripts/content-audit.ts",
     "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts"
   },
   "dependencies": {
