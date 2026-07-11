@@ -21,6 +21,7 @@ import { imagesEngine } from "../src/platform/data-engine/images-engine";
 import { liveSkyEngine } from "../src/platform/data-engine/live-sky-engine";
 import { DATASETS } from "../src/lib/datasets";
 import { DATA_GENERATED_AT } from "../src/platform/open-data/api";
+import { collectProvenance, provenanceStats } from "../src/lib/provenance/registry";
 
 const PUBLIC_DIR = join(process.cwd(), "public", "exports");
 const MANIFEST_TS = join(process.cwd(), "src", "platform", "open-data", "export-manifest.json");
@@ -74,6 +75,48 @@ const SPECS: ExportSpec[] = [
         recordCount: d.entityCount, version: d.version, license: d.license, sources: d.sources,
       })).sort((a, b) => a.id.localeCompare(b.id));
       return { records, body: { ...baseMeta, license: "cc-by-sa-4.0", count: records.length, datasets: records } };
+    },
+  },
+  {
+    // Program 5 — field-level provenance: every source-traced value with its exact
+    // origin. Additive and backward-compatible (a new file); schema-versioned.
+    id: "field-provenance",
+    file: "field-provenance.json",
+    license: "cc-by-sa-4.0",
+    build: () => {
+      const flat = (e: ReturnType<typeof collectProvenance>[number]) => {
+        const v = e.value;
+        return {
+          entityId: e.entityId, domain: e.domain, field: e.field, value: v.value,
+          ...(v.unit ? { unit: v.unit } : {}), ...(v.uncertainty ? { uncertainty: v.uncertainty } : {}),
+          status: v.status, source: v.sourceRef,
+          ...(v.sourceDataset ? { dataset: v.sourceDataset } : {}), ...(v.sourceTable ? { table: v.sourceTable } : {}),
+          ...(v.sourceField ? { column: v.sourceField } : {}), ...(v.sourceRowId ? { rowId: v.sourceRowId } : {}),
+          ...(v.bibcode ? { bibcode: v.bibcode } : {}), ...(v.doi ? { doi: v.doi } : {}),
+          ...(v.epoch ? { epoch: v.epoch } : {}), ...(v.method ? { method: v.method } : {}),
+          ...(v.retrievedAt ? { retrievedAt: v.retrievedAt } : {}),
+        };
+      };
+      const all = collectProvenance();
+      // Summary + a representative sample only — per-entity field provenance is served by
+      // the API / registry, not pre-generated (matching the graph-export convention), so
+      // this stays a small, truthful file rather than a multi-megabyte dump.
+      const sample = all.filter((_, i) => i % Math.ceil(all.length / 200) === 0).map(flat);
+      const records = sample;
+      return {
+        records,
+        body: {
+          ...baseMeta, license: "cc-by-sa-4.0", provenanceSchemaVersion: "1.0.0",
+          schema: {
+            description: "Each value is a ScientificValue: a source-traced measurement/derivation.",
+            fields: ["entityId", "domain", "field", "value", "unit", "uncertainty", "status", "source", "dataset", "table", "column", "rowId", "bibcode", "doi", "epoch", "method", "retrievedAt"],
+            statuses: ["measured", "catalogued", "estimated", "modeled", "calculated", "derived", "disputed", "upper_limit", "lower_limit", "planned", "historical"],
+          },
+          summary: provenanceStats(),
+          note: "Full per-entity field provenance is served by GET /api/v0/entities/{id}/provenance; this file carries the schema, aggregate summary and a representative sample.",
+          sampleCount: sample.length, sample,
+        },
+      };
     },
   },
   {

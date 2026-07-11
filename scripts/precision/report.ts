@@ -92,3 +92,12 @@ console.log(`    international designator (COSPAR)       ${String(M4.withCospar)
 console.log(`    launch mass                             ${String(M4.withMass).padStart(5)}`);
 console.log(`    launch dates cross-confirmed vs catalog ${String(M4.launchDatesConfirmed).padStart(5)}`);
 console.log(`    launch-date discrepancies (catalogue kept authoritative): ${M4.launchDateDiscrepancies}`);
+
+import { provenanceStats } from "../../src/lib/provenance/registry";
+const PR = provenanceStats();
+console.log("\nPROGRAM 5 — UNIFIED FIELD-LEVEL PROVENANCE REGISTRY");
+console.log(`  ${PR.total.toLocaleString()} source-traced values across ${PR.entities.toLocaleString()} entities · ${PR.distinctBibcodes} distinct bibcodes`);
+console.log("  by domain:", PR.byDomain);
+console.log("  by status:", PR.byStatus);
+console.log("  by source:", PR.bySource);
+console.log(`  with uncertainty: ${PR.withUncertainty.toLocaleString()} · with epoch: ${PR.withEpoch.toLocaleString()}`);

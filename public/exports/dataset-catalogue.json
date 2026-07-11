@@ -4,18 +4,89 @@
   "schemaVersion": "1.0.0",
   "source": "Asteria Star — Scientific Data Engine & Knowledge Graph",
   "license": "cc-by-sa-4.0",
-  "count": 18,
+  "count": 127,
   "datasets": [
+    {
+      "id": "alert-infrastructure",
+      "title": "Transient Alert Infrastructure",
+      "description": "The alert systems and observation-workflow stages that turn a transient discovery into science — GCN, VOEvent, TNS, ATel, and the Rubin stream.",
+      "recordCount": 16,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "antennas",
+      "title": "Antennas",
+      "description": "Ground and spacecraft antennas used for deep-space communication, from 70 m dishes to laser terminals.",
+      "recordCount": 8,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jpl"
+      ]
+    },
+    {
+      "id": "asteroid-families",
+      "title": "Asteroid Families",
+      "description": "Collisional families of asteroids sharing a common parent body.",
+      "recordCount": 7,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jpl"
+      ]
+    },
     {
       "id": "asteroids",
       "title": "Asteroids",
       "description": "Notable asteroids and small bodies.",
-      "recordCount": 10,
+      "recordCount": 33,
       "version": "1.0.0",
       "license": "CC BY-SA 4.0",
       "sources": [
         "jpl",
         "mpc"
+      ]
+    },
+    {
+      "id": "astrobiology-disciplines",
+      "title": "Astrobiology & Planetary Protection",
+      "description": "The disciplines of astrobiology and the planetary-protection measures that keep the search for life honest.",
+      "recordCount": 9,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "astrochemistry-and-molecules",
+      "title": "Astrochemistry & the Molecular Universe",
+      "description": "The chemistry of space — the interstellar environments, the interstellar molecules (water, CO, ammonia, methanol, PAHs, prebiotic precursors), and the astrochemical processes that build and destroy them.",
+      "recordCount": 20,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "eso"
+      ]
+    },
+    {
+      "id": "astroinformatics",
+      "title": "Astroinformatics & the Virtual Research Ecosystem",
+      "description": "The software, computing, and data practices of data-intensive astronomy — the research software (scientific Python, Astropy, SunPy, Jupyter, Astroquery, visualisation), the research computing (HPC, GPU, cloud, distributed, science platforms, containers), and the concepts (workflows, provenance, query languages, big-data astronomy, the virtual research environment).",
+      "recordCount": 28,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "stsci",
+        "noirlab"
       ]
     },
     {
@@ -31,15 +102,156 @@
       ]
     },
     {
+      "id": "astronomical-catalogs",
+      "title": "Astronomical Catalogs & Designations",
+      "description": "The professional catalogue layer — the reference catalogues by which astronomers name and index the sky (Messier, NGC, IC, Henry Draper, Hipparcos, Gaia, Caldwell, Barnard, Sharpless, Abell, PGC, UGC, Gliese, Tycho-2, SAO, GCVS, WDS, LHS, Wolf, the Bonner Durchmusterung), their catalog families, and the Bayer, Flamsteed and variable-star designation systems. Only well-established catalogue facts; unknown counts left empty, nothing fabricated.",
+      "recordCount": 35,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "iau",
+        "simbad"
+      ]
+    },
+    {
+      "id": "astronomy-machine-learning",
+      "title": "Machine Learning in Astronomy",
+      "description": "The computational layer of astronomy — the machine-learning methods, the astronomical applications (galaxy morphology, photometric redshifts, real-time alert classification), and the data-engineering workflows.",
+      "recordCount": 18,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "noirlab"
+      ]
+    },
+    {
+      "id": "astronomy-methods",
+      "title": "Astronomy Methods & Techniques",
+      "description": "The measurement and observation techniques of astronomy — parallax, spectroscopy, standard candles, gravitational lensing, and more.",
+      "recordCount": 26,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "astronomy-software",
+      "title": "Astronomy Software",
+      "description": "The astronomy software ecosystem — the desktop planetariums and imaging/acquisition apps added by the Astronomical Software Ecosystem program (astronomy_software) alongside the scientific tools and libraries (IRAF, CASA, TOPCAT, DS9, Aladin, AstroImageJ, Montage, Skyfield, poliastro, Orekit) and the Astropy ecosystem already in research_software. Only well-established facts (purpose, platforms); nothing fabricated.",
+      "recordCount": 29,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "biosignatures-and-habitability",
+      "title": "Biosignatures & Habitability",
+      "description": "The signs of life and the factors of planetary habitability — atmospheric, surface, chemical, and geological biosignatures, technosignatures, liquid water, energy, and extremophiles.",
+      "recordCount": 11,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "celestial-mechanics-and-frames",
+      "title": "Celestial Mechanics & Reference Frames",
+      "description": "The mathematical foundation of motion and time — the orbital-mechanics concepts (Kepler's laws, Lagrange points, resonances, tidal evolution), the reference frames and epochs (ICRS, J2000), and the ephemeris systems (JPL DE, SPICE, Horizons).",
+      "recordCount": 23,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "jpl",
+        "iau"
+      ]
+    },
+    {
+      "id": "citizen-science-and-amateur-astronomy",
+      "title": "Citizen Science & Amateur Astronomy",
+      "description": "The public participation layer of astronomy — the citizen-science projects, the amateur observing activities, the observing equipment, and the public-outreach activities.",
+      "recordCount": 22,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "comet-classes",
+      "title": "Comet Classes",
+      "description": "Dynamical classes of comets — Jupiter-family, Halley-type, long-period, sungrazing, and main-belt.",
+      "recordCount": 5,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jpl"
+      ]
+    },
+    {
+      "id": "comet-families",
+      "title": "Comet Families",
+      "description": "Genetic comet families, such as the Kreutz sungrazers.",
+      "recordCount": 1,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "comet-transition-objects",
+      "title": "Comet Transition Objects",
+      "description": "Objects blurring the asteroid–comet boundary: active asteroids and dormant comets.",
+      "recordCount": 4,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jpl"
+      ]
+    },
+    {
       "id": "comets",
       "title": "Comets",
       "description": "Comets of the Solar System.",
-      "recordCount": 10,
+      "recordCount": 21,
       "version": "1.0.0",
       "license": "CC BY-SA 4.0",
       "sources": [
         "nasa",
         "mpc"
+      ]
+    },
+    {
+      "id": "communication-technologies",
+      "title": "Communication Technologies",
+      "description": "Communication and timing systems — optical relays, TDRS, telemetry/tracking/command, and time standards.",
+      "recordCount": 15,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jpl"
+      ]
+    },
+    {
+      "id": "compact-objects",
+      "title": "Black Holes & Neutron Stars",
+      "description": "The compact objects in the graph — black holes (Sgr A*, M87*, Cygnus X-1, V404 Cygni) and neutron stars (the Crab, Vela, first and most-massive pulsars). The physics of these end-states of gravity — the ergosphere, photon sphere, ISCO, jets, neutron degeneracy, the pulsar mechanism and the equation of state — is modelled alongside as reused cosmology, stellar-physics and object-class concepts. Only well-established astrophysics; nothing fabricated.",
+      "recordCount": 8,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "eso"
       ]
     },
     {
@@ -54,10 +266,45 @@
       ]
     },
     {
+      "id": "coordinate-and-time-systems",
+      "title": "Coordinate & Time Systems",
+      "description": "The astrometry and time foundation — the coordinate systems (RA/Dec, equatorial, galactic, ecliptic, horizontal, supergalactic) and the astrometric effects (precession, nutation, aberration, refraction, light-time, Earth orientation) added by the Coordinates, Time & Reference Systems program. Only well-established, standard definitions; nothing fabricated.",
+      "recordCount": 14,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "iau",
+        "usno"
+      ]
+    },
+    {
+      "id": "cosmological-parameters",
+      "title": "Cosmological Parameters",
+      "description": "The numbers that describe the universe as a whole — the matter density (Ωm), the dark-energy density (ΩΛ), the amplitude of fluctuations (σ8), and the scalar spectral index (ns).",
+      "recordCount": 4,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "planck"
+      ]
+    },
+    {
+      "id": "deep-sky-object-classes",
+      "title": "Deep-Sky Object Classes",
+      "description": "The taxonomy of astrophysical object classes, including the deep-sky classes added by the Deep Sky Objects Encyclopedia (open & globular clusters, stellar associations, the emission/reflection/dark nebula subtypes, HII regions, Bok globules, planetary nebulae, supernova remnants) alongside the compact-object, AGN and large-scale-structure classes. Only well-established astrophysics; nothing fabricated.",
+      "recordCount": 32,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "eso"
+      ]
+    },
+    {
       "id": "deep-sky-objects",
       "title": "Deep-Sky Objects",
       "description": "Galaxies, nebulae, clusters, and black holes beyond the Solar System.",
-      "recordCount": 638,
+      "recordCount": 642,
       "version": "1.0.0",
       "license": "CC BY-SA 4.0",
       "sources": [
@@ -65,6 +312,40 @@
         "esa",
         "noirlab",
         "ned"
+      ]
+    },
+    {
+      "id": "deep-space-exploration",
+      "title": "Deep-Space Human Exploration & Habitation",
+      "description": "The architecture of sending humans beyond low Earth orbit to stay — the exploration architectures (Moon-to-Mars, lunar & Mars surface bases, transit habitats, surface power & mobility, construction, propulsion, Mars EDL) and the integrative human challenges (deep-space radiation, communication delay, Earth independence, long-duration life support, behavioural health, planetary protection, dust).",
+      "recordCount": 15,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "deflection-methods",
+      "title": "Asteroid Deflection Methods",
+      "description": "The methods of changing an asteroid's orbit — from the demonstrated kinetic impactor to theoretical nuclear concepts.",
+      "recordCount": 4,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "distance-indicators",
+      "title": "Cosmic Distance Indicators",
+      "description": "The rungs of the distance ladder — RR Lyrae, the tip of the red giant branch, surface brightness fluctuations, the Tully–Fisher and Faber–Jackson relations, water megamasers, and standard sirens.",
+      "recordCount": 7,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "ligo"
       ]
     },
     {
@@ -93,6 +374,51 @@
       ]
     },
     {
+      "id": "exploration-themes",
+      "title": "Future Exploration Themes",
+      "description": "The themes of future exploration — the Moon, Mars, Venus, ocean worlds, small bodies, observatories, and the outer Solar System.",
+      "recordCount": 7,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "extragalactic-structures",
+      "title": "Galactic Processes & Cosmic Structures",
+      "description": "The processes that shape galaxies and the large-scale structures they build — mergers, starbursts, feedback, the Local Group, clusters, superclusters, and voids.",
+      "recordCount": 12,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "fireballs",
+      "title": "Fireballs",
+      "description": "Bright meteors and bolides that entered the atmosphere.",
+      "recordCount": 2,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "galactic-astronomy",
+      "title": "Galactic Astronomy & the Milky Way",
+      "description": "The anatomy and life of our Galaxy — the structural components (thin & thick discs, bulge, bar, stellar halo, spiral arms, warp, Galactic Centre, central molecular zone, corona) and the dynamical & archaeological phenomena (rotation & dark matter, stellar streams, radial migration, galactic archaeology, magnetic field, satellite accretion, the Andromeda collision).",
+      "recordCount": 20,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "eso"
+      ]
+    },
+    {
       "id": "galaxies",
       "title": "Galaxies",
       "description": "Galaxies in the knowledge graph.",
@@ -106,15 +432,256 @@
       ]
     },
     {
-      "id": "launch-vehicles",
-      "title": "Launch Vehicles",
-      "description": "Rockets that carry missions to orbit and beyond.",
-      "recordCount": 20,
+      "id": "galaxy-morphology-and-agn",
+      "title": "Galaxy Morphology & AGN",
+      "description": "The forms of galaxies, the types of active galactic nucleus, and the AGN unification model — spiral, elliptical, Seyfert, radio galaxy, blazar, and more.",
+      "recordCount": 13,
       "version": "1.0.0",
       "license": "CC BY-SA 4.0",
       "sources": [
         "nasa",
         "esa"
+      ]
+    },
+    {
+      "id": "geological-feature-types",
+      "title": "Geological Feature Types",
+      "description": "The classes of geological feature — craters, volcanoes, canyons, dunes, chaos terrain, and more.",
+      "recordCount": 18,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "geomagnetic-indices",
+      "title": "Geomagnetic Indices",
+      "description": "Space-weather indices and scales — Kp, Dst, and the NOAA G/S/R scales.",
+      "recordCount": 5,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "noaa"
+      ]
+    },
+    {
+      "id": "graph-explorer",
+      "title": "Scientific Knowledge Graph Explorer",
+      "description": "The graph-explorer views (statistics, knowledge metrics, entity & relation explorers, neighbourhood expansion, shortest-path finder, taxonomy explorer, cross-domain explorer, graph search, mission/institution/discovery/scientific-lineage graphs, force-directed/hierarchical/cluster visualisations, and the graph API). The computed views run real breadth-first algorithms over the actual knowledge graph.",
+      "recordCount": 17,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "gravitational-wave-operations",
+      "title": "Gravitational-Wave Operations",
+      "description": "The operational layer of multi-messenger astronomy — the gravitational-wave detection methods, the multi-messenger channels, the follow-up stages, and the scientific data products (skymaps, waveforms, parameter estimation, the GWTC catalog).",
+      "recordCount": 15,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "ligo"
+      ]
+    },
+    {
+      "id": "ground-stations",
+      "title": "Ground Stations",
+      "description": "Near-Earth network ground terminals, including the TDRS gateway at White Sands.",
+      "recordCount": 4,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "history-and-philosophy-of-discovery",
+      "title": "History & Philosophy of Discovery",
+      "description": "How astronomy became modern science — the thematic histories of discovery, the methodologies of discovery (the scientific method, paradigm shifts, instrumentation-driven discovery), and the philosophy of science (realism, falsifiability, evidence, reproducibility).",
+      "recordCount": 22,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "hyperbolic-comets",
+      "title": "Hyperbolic Comets",
+      "description": "Solar-System comets on hyperbolic or near-parabolic orbits — not interstellar.",
+      "recordCount": 4,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "mpc",
+        "jpl"
+      ]
+    },
+    {
+      "id": "impact-events",
+      "title": "Impact Events",
+      "description": "Well-studied terrestrial asteroid and meteoroid impact events.",
+      "recordCount": 3,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "impact-structures",
+      "title": "Impact Structures",
+      "description": "Terrestrial impact craters left by past impacts.",
+      "recordCount": 4,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "institution-types",
+      "title": "Institution Types",
+      "description": "The classes of space institution — space agencies, field centers, research laboratories, science institutes, commercial companies, and observatory operators.",
+      "recordCount": 6,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "instrument-classes",
+      "title": "Instrument Classes",
+      "description": "The classes of scientific instrument — cameras, spectrometers, magnetometers, radars, altimeters, seismometers, and more.",
+      "recordCount": 12,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "interferometry-observing-techniques",
+      "title": "Interferometry & Observing Techniques",
+      "description": "Combining separated apertures for the sharpest vision in astronomy (radio, optical, and continent-spanning VLBI, plus aperture synthesis) and the ground techniques that beat the atmosphere — lucky imaging, speckle imaging, stacking, and fringe tracking.",
+      "recordCount": 19,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "eso",
+        "noirlab"
+      ]
+    },
+    {
+      "id": "interstellar-candidates",
+      "title": "Interstellar Candidates",
+      "description": "Debated and unconfirmed interstellar claims, kept separate from the confirmed objects.",
+      "recordCount": 1,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jpl"
+      ]
+    },
+    {
+      "id": "interstellar-detection-methods",
+      "title": "Interstellar Detection Methods",
+      "description": "The methods used to identify objects originating beyond the Solar System.",
+      "recordCount": 3,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "jpl",
+        "nasa"
+      ]
+    },
+    {
+      "id": "interstellar-objects",
+      "title": "Interstellar Objects",
+      "description": "Confirmed interstellar objects — 1I/ʻOumuamua, 2I/Borisov, and 3I/ATLAS — with their hyperbolic orbits.",
+      "recordCount": 3,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "mpc",
+        "jpl"
+      ]
+    },
+    {
+      "id": "isru-and-manufacturing",
+      "title": "ISRU & In-Space Manufacturing",
+      "description": "In-situ resource-utilisation techniques and in-space manufacturing and construction processes.",
+      "recordCount": 9,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "launch-pads",
+      "title": "Launch Pads",
+      "description": "The pads and complexes where rockets lift off, under their launch sites.",
+      "recordCount": 24,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "launch-vehicles",
+      "title": "Launch Vehicles",
+      "description": "Rockets that carry missions to orbit and beyond.",
+      "recordCount": 55,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "life-support-technologies",
+      "title": "Life-Support Technologies & Countermeasures",
+      "description": "The ECLSS technologies and health countermeasures that keep crews alive and well in space.",
+      "recordCount": 19,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "live-data-limitations",
+      "title": "Live-Data Limitations",
+      "description": "The stated limitations of every live-data integration — which are architecture-ready, which await a licence-safe provider, and what would be required to connect each. A transparency record: no live value, timestamp, or provider response is ever fabricated.",
+      "recordCount": 6,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "live-provider-registry",
+      "title": "Live Provider Registry",
+      "description": "The registry of real external scientific-data providers modelled with the honesty envelope — NOAA SWPC (space weather), NASA DONKI (solar activity), the Minor Planet Center and JPL/CNEOS (near-Earth objects), CelesTrak (orbital elements), and atmospheric conditions — each with its endpoint, licence, data kinds, and honest connection status.",
+      "recordCount": 6,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "noaa"
       ]
     },
     {
@@ -130,10 +697,91 @@
       ]
     },
     {
+      "id": "meteorite-classes",
+      "title": "Meteorite Classes",
+      "description": "The classes and groups of meteorites — chondrites, HED, martian, lunar, pallasites, and more.",
+      "recordCount": 12,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "meteorites",
+      "title": "Meteorites",
+      "description": "Individual meteorites — chondrites, achondrites, irons, and stony-irons.",
+      "recordCount": 20,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "method-categories",
+      "title": "Astronomy Method Categories",
+      "description": "The families of astronomical technique — astrometry, photometry, spectroscopy, the distance ladder, exoplanet detection, and more.",
+      "recordCount": 8,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "minor-planet-populations",
+      "title": "Minor-Planet Populations",
+      "description": "Dynamical populations and orbital resonances — main belt, Hilda, Trojans, Kuiper Belt, and more.",
+      "recordCount": 16,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jpl"
+      ]
+    },
+    {
+      "id": "mission-classes",
+      "title": "Mission Classes",
+      "description": "The classes of small-body mission — flyby, rendezvous, orbiter, lander, impactor, and sample return.",
+      "recordCount": 6,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "mission-concepts",
+      "title": "Mission Concepts",
+      "description": "Official and credible planned missions and mission concepts, each with its status, goals, target, and uncertainties.",
+      "recordCount": 15,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "mission-phases",
+      "title": "Mission Phases",
+      "description": "The generic lifecycle stages of a small-body mission, from launch and cruise to return and reentry.",
+      "recordCount": 5,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
       "id": "missions",
       "title": "Space Missions",
       "description": "Crewed and robotic missions of exploration.",
-      "recordCount": 58,
+      "recordCount": 76,
       "version": "1.0.0",
       "license": "CC BY-SA 4.0",
       "sources": [
@@ -155,10 +803,46 @@
       ]
     },
     {
+      "id": "navigation-methods",
+      "title": "Navigation Methods",
+      "description": "Deep-space navigation systems — radiometric tracking, Delta-DOR, optical, and autonomous navigation.",
+      "recordCount": 7,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jpl"
+      ]
+    },
+    {
+      "id": "near-earth-object-provider-status",
+      "title": "Near-Earth-Object Provider Status",
+      "description": "The honest connection status of the near-Earth-object providers (IAU Minor Planet Center, JPL/CNEOS). No provider is connected in this deployment, so no close-approach distance or date is served — every provider reports its real status and limitations.",
+      "recordCount": 2,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jpl"
+      ]
+    },
+    {
+      "id": "near-earth-objects",
+      "title": "Near-Earth Object Classes",
+      "description": "The Apollo, Aten, Amor, and Atira near-Earth orbital classes.",
+      "recordCount": 4,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jpl"
+      ]
+    },
+    {
       "id": "nebulae",
       "title": "Nebulae",
       "description": "Interstellar clouds — emission, planetary, and supernova remnants.",
-      "recordCount": 119,
+      "recordCount": 121,
       "version": "1.0.0",
       "license": "CC BY-SA 4.0",
       "sources": [
@@ -167,15 +851,108 @@
       ]
     },
     {
+      "id": "neo-operations",
+      "title": "NEO Operations & Risk Scales",
+      "description": "The near-Earth-object operations pipeline — discovery, orbit determination, characterization, impact monitoring, risk assessment — and the Torino and Palermo risk scales.",
+      "recordCount": 10,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "observation-techniques",
+      "title": "Observation Techniques",
+      "description": "The craft of observing — the capture-to-image techniques added by the Professional Observation Techniques program (visual astronomy, astrophotography and its planetary/deep-sky/narrowband variants, autoguiding, calibration frames, image processing, drizzle, plate solving, and the imaging workflow) alongside the frontier lucky/speckle-imaging and image-stacking techniques already in the graph. Only well-established practice; nothing fabricated.",
+      "recordCount": 15,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "noirlab"
+      ]
+    },
+    {
       "id": "observatories",
       "title": "Observatories",
       "description": "Ground-based observatories.",
-      "recordCount": 21,
+      "recordCount": 25,
       "version": "1.0.0",
       "license": "CC BY-SA 4.0",
       "sources": [
         "noirlab",
         "eso",
+        "nasa"
+      ]
+    },
+    {
+      "id": "observatory-instrumentation",
+      "title": "Observatory Instrumentation & Detectors",
+      "description": "The instrumentation frontier of ground-based astronomy — the adaptive-optics chain (laser guide stars, wavefront sensors, deformable mirrors), spectrographs, coronagraphs and starshades, and the detectors from CCDs to superconducting MKIDs and bolometers.",
+      "recordCount": 12,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "eso",
+        "noirlab"
+      ]
+    },
+    {
+      "id": "observing-suite",
+      "title": "Professional Observatory Planning Suite",
+      "description": "The observing planners (tonight, visibility, target, Moon, planet, deep-sky, season, twilight, darkness, altitude, meridian-transit, equipment, astrophotography, session) built on the platform's real computed live-sky data and its observing equipment, sites and techniques, and the architecture-ready data integrations (weather, seeing, transparency, cloud cover, Bortle sky brightness) that await connected providers.",
+      "recordCount": 19,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "operations-centers",
+      "title": "Mission Operations Centres",
+      "description": "The control centres that fly spacecraft — JPL's SFOF, ESA's ESOC, Houston's Mission Control, and more.",
+      "recordCount": 8,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "operations-functions",
+      "title": "Operations Functions",
+      "description": "The functions of mission operations — mission control, flight dynamics, navigation, telemetry, fault protection, and the operations lifecycle.",
+      "recordCount": 16,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "orbit-types",
+      "title": "Orbit Types",
+      "description": "The orbital regimes satellites use — LEO, MEO, GEO, sun-synchronous, polar, and highly elliptical.",
+      "recordCount": 7,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "planetary-interiors-and-processes",
+      "title": "Planetary Interiors & Processes",
+      "description": "How worlds are built and shaped — the interior layers (core, mantle, crust) and the planetary processes (differentiation, plate tectonics, volcanism, cryovolcanism, atmospheric escape, climate evolution, the greenhouse effect, atmospheric circulation, magnetospheric shielding, impact cratering).",
+      "recordCount": 13,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
         "nasa"
       ]
     },
@@ -192,10 +969,397 @@
       ]
     },
     {
+      "id": "platform-capabilities",
+      "title": "Open Platform Capabilities",
+      "description": "The facets of AsteriaStar as an open, research-grade data platform — the public Graph API, JSON & JSON-LD/RDF exports, dataset and bulk downloads, versioned releases, licensing, and the architecture-ready standards (SPARQL, GraphQL, SDKs, DOI, federation, VO/TAP) — each with its honest status. Nothing is faked.",
+      "recordCount": 18,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "propellants",
+      "title": "Rocket Propellants",
+      "description": "Fuel and oxidizer combinations — kerolox, hydrolox, methalox, hypergolics, and solids.",
+      "recordCount": 7,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "radiation-environments",
+      "title": "Radiation Environments",
+      "description": "The Van Allen belts, galactic cosmic rays, and solar energetic particles.",
+      "recordCount": 4,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "recovery-sites",
+      "title": "Recovery Sites",
+      "description": "Strewn fields where meteorite fragments are recovered.",
+      "recordCount": 2,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "returned-samples",
+      "title": "Returned Samples",
+      "description": "Material returned to Earth from asteroids and comets — Itokawa, Ryugu, Bennu, and Wild 2.",
+      "recordCount": 4,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jaxa"
+      ]
+    },
+    {
+      "id": "rocket-engines",
+      "title": "Rocket Engines",
+      "description": "The engines that power the world's rockets, by combustion cycle and propellant.",
+      "recordCount": 26,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "rocket-families",
+      "title": "Rocket Families",
+      "description": "Multi-generation launch-vehicle lineages — Saturn, Atlas, Delta, Falcon, Ariane, Long March, and more.",
+      "recordCount": 10,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "rocket-stages",
+      "title": "Rocket Stages",
+      "description": "First-class booster, core, and upper stages of flagship launch vehicles.",
+      "recordCount": 10,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "sample-return-capsules",
+      "title": "Sample-Return Capsules",
+      "description": "The reentry capsules that carried returned small-body samples back through the atmosphere.",
+      "recordCount": 4,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jaxa"
+      ]
+    },
+    {
+      "id": "satellite-constellations",
+      "title": "Satellite Constellations",
+      "description": "Multi-satellite systems, from GPS and Galileo to Starlink and OneWeb.",
+      "recordCount": 11,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa",
+        "gunters"
+      ]
+    },
+    {
+      "id": "satellites",
+      "title": "Satellites",
+      "description": "Individual artificial satellites — communications, navigation, Earth-observation, weather, and science.",
+      "recordCount": 31,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa",
+        "noaa"
+      ]
+    },
+    {
+      "id": "science-campaigns",
+      "title": "Science Campaigns",
+      "description": "Joint multi-mission science campaigns, such as the AIDA asteroid-deflection collaboration.",
+      "recordCount": 1,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "science-data-archives",
+      "title": "Science Data Archives & Standards",
+      "description": "The archives that hold astronomy's data — MAST, the ESA archives, IRSA, HEASARC, NED, CDS with SIMBAD and VizieR — and the data standards astronomy is built on: FITS, VOTable, and ASDF.",
+      "recordCount": 13,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa",
+        "eso"
+      ]
+    },
+    {
+      "id": "scientific-assistant",
+      "title": "Scientific AI Research Assistant Platform",
+      "description": "The assistant capabilities — grounded (scientific search, object explanation, concept comparison, relationship explanation, evidence chains, provenance- & citation-aware answers, related concepts, reading recommendations, scientific summaries, learning-path generation, cross-domain reasoning, the no-hallucination layer) and architecture-ready (answer modes, RAG interfaces, prompt orchestration, conversation memory, LLM integration). The grounded capabilities run real retrieval over the actual graph and surface only real facts.",
+      "recordCount": 18,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "scientific-calculators",
+      "title": "Scientific Calculators & Simulation Platform",
+      "description": "Interactive astronomy calculators, each carrying its published formula and a pure compute function over the CODATA 2018 and IAU 2015 constants: orbital mechanics (escape/orbital velocity, Kepler period, surface gravity, Schwarzschild radius, Hill & Roche limits, density, synodic period), stellar physics (luminosity, blackbody flux, Wien peak, mass–luminosity, main-sequence lifetime), photometry & distance (absolute magnitude, distance modulus, parallax, angular diameter & separation), exoplanets (equilibrium temperature, equal-insolation distance, transit probability), cosmology (redshift velocity, Hubble distance), and instruments (angular resolution, magnification, image scale, field of view, limiting magnitude, shot-noise SNR).",
+      "recordCount": 30,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "scientific-instruments",
+      "title": "Scientific Instruments",
+      "description": "Scientific instruments and payloads across missions and telescopes.",
+      "recordCount": 33,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "signal-bands",
+      "title": "Signal Bands",
+      "description": "Communication signal bands — S, X, Ka, UHF, and optical (laser).",
+      "recordCount": 5,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jpl"
+      ]
+    },
+    {
+      "id": "sky-atlas",
+      "title": "Interactive Sky Atlas & 3D Universe",
+      "description": "The visual layer over the graph — the atlas views (all-sky star atlas, constellation, Messier & deep-sky maps, plus Solar System, Milky Way, Local Group, galaxy, planet, moon, exoplanet & distance-scale explorers) and the data overlays (constellation lines, observing conditions, JWST, Hubble, Gaia & telescope-field). Positional maps are rendered from the real measured coordinates in the star and deep-sky catalogues.",
+      "recordCount": 20,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "hyg",
+        "openngc",
+        "iau"
+      ]
+    },
+    {
+      "id": "small-body-reservoirs",
+      "title": "Small-Body Reservoirs",
+      "description": "Comet source reservoirs — the Oort cloud and inner Oort cloud.",
+      "recordCount": 2,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "solar-physics",
+      "title": "Solar Physics & Heliosphere",
+      "description": "The Sun from core to heliosphere — the concentric interior zones and atmosphere layers (solar regions), the surface and atmospheric features (granulation, prominences, filaments, plages, spicules, coronal loops, streamers), and the structures of the heliosphere (Parker spiral, termination shock, heliosheath, bow wave). Reuses the Sun, the space-weather phenomena, and the solar observatories. Only well-established solar physics; nothing fabricated.",
+      "recordCount": 21,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
       "id": "space-agencies",
       "title": "Space Agencies",
       "description": "Agencies and institutions of spaceflight and astronomy.",
-      "recordCount": 31,
+      "recordCount": 80,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "space-hazards",
+      "title": "Space Hazards",
+      "description": "Physical hazards to spacecraft — orbital debris, micrometeoroids, charging, and atomic oxygen.",
+      "recordCount": 5,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "space-infrastructure",
+      "title": "Space Infrastructure",
+      "description": "The infrastructure of a spacefaring economy — depots, habitats, power stations, tugs, and megastructure concepts.",
+      "recordCount": 12,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "space-institutions",
+      "title": "Space Agencies & Institutions",
+      "description": "Space agencies, field centers, laboratories, commercial companies, and observatory operators as first-class organizations.",
+      "recordCount": 80,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "space-physiological-effects",
+      "title": "Physiological Effects of Spaceflight",
+      "description": "How spaceflight changes the human body — bone and muscle loss, fluid shift, vision changes, radiation effects, and more.",
+      "recordCount": 5,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "space-policy-and-economy",
+      "title": "Space Policy, Sustainability & Economy",
+      "description": "The institutional layer of space activity — the space-law treaties (Outer Space Treaty, Liability, Registration, Moon, Artemis Accords), the policy and sustainability topics (orbital debris, Kessler syndrome, traffic management, mega-constellations), and the space-economy topics.",
+      "recordCount": 20,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "space-weather-impacts",
+      "title": "Space Weather Operational Impacts",
+      "description": "How solar activity reaches technology and people — the impacts on satellites, GPS and navigation, aviation, human spaceflight, power grids, and radio communications.",
+      "recordCount": 6,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "swpc",
+        "noaa"
+      ]
+    },
+    {
+      "id": "space-weather-phenomena",
+      "title": "Space-Weather Phenomena",
+      "description": "Solar wind, flares, coronal mass ejections, geomagnetic storms, and auroras.",
+      "recordCount": 13,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "noaa"
+      ]
+    },
+    {
+      "id": "space-weather-provider-status",
+      "title": "Space-Weather Provider Status",
+      "description": "The honest connection status of the space-weather and solar-activity providers (NOAA SWPC, NASA DONKI). No provider is connected in this deployment, so no solar-wind, Kp, flare, or CME value is served — every provider reports its real status and limitations.",
+      "recordCount": 2,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "noaa"
+      ]
+    },
+    {
+      "id": "spacecraft-components",
+      "title": "Spacecraft Components",
+      "description": "Components within spacecraft subsystems — solar arrays, RTGs, ion thrusters, reaction wheels, flight computers, heat shields, and more.",
+      "recordCount": 25,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "spacecraft-subsystems",
+      "title": "Spacecraft Subsystems",
+      "description": "The major spacecraft subsystems — structure, thermal, power, propulsion, attitude control, avionics, and more.",
+      "recordCount": 10,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "spaceflight-eras",
+      "title": "Eras of Spaceflight",
+      "description": "The great historic periods of the space age, from the Space Race to the Artemis era.",
+      "recordCount": 7,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "spaceflight-milestones",
+      "title": "Spaceflight Milestones & Records",
+      "description": "Milestone firsts and standing records of spaceflight — first satellite, first human in space, most distant spacecraft, and more.",
+      "recordCount": 22,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "spaceflight-timeline-events",
+      "title": "Spaceflight Timeline Events",
+      "description": "Dated landmark events in the history of spaceflight, from Sputnik to Artemis.",
+      "recordCount": 42,
       "version": "1.0.0",
       "license": "CC BY-SA 4.0",
       "sources": [
@@ -217,15 +1381,122 @@
       ]
     },
     {
+      "id": "stellar-astrophysics",
+      "title": "Stellar Astrophysics",
+      "description": "How stars form, live, forge the elements and die — the stellar processes (formation, main sequence, giant branches, mass loss, core collapse), the nucleosynthesis pathways (pp chain, CNO cycle, triple-alpha, s- and r-process), and the physics concepts (HR diagram, degeneracy pressure, IMF, metallicity, populations, binaries).",
+      "recordCount": 42,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "eso"
+      ]
+    },
+    {
+      "id": "surface-features",
+      "title": "Surface Features",
+      "description": "Named surface features across the planets, moons, and dwarf planets.",
+      "recordCount": 32,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jpl"
+      ]
+    },
+    {
       "id": "telescopes",
       "title": "Space Telescopes",
       "description": "Orbiting observatories.",
-      "recordCount": 18,
+      "recordCount": 20,
       "version": "1.0.0",
       "license": "CC BY-SA 4.0",
       "sources": [
         "nasa",
         "esa"
+      ]
+    },
+    {
+      "id": "tracking-networks",
+      "title": "Tracking Networks",
+      "description": "Ground networks that communicate with satellites and deep-space missions.",
+      "recordCount": 8,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "tracking-stations",
+      "title": "Deep-Space Tracking Stations",
+      "description": "The ground complexes with giant antennas that track deep-space missions — Goldstone, Madrid, Canberra, and more.",
+      "recordCount": 12,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "jpl",
+        "esa"
+      ]
+    },
+    {
+      "id": "trajectory-classes",
+      "title": "Trajectory Classes",
+      "description": "Orbital-trajectory classes by eccentricity — bound, near-parabolic, hyperbolic, and interstellar.",
+      "recordCount": 4,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "jpl",
+        "nasa"
+      ]
+    },
+    {
+      "id": "transient-classes",
+      "title": "Transient & Time-Domain Classes",
+      "description": "The classes of transient phenomenon — supernovae, gamma-ray bursts, kilonovae, fast radio bursts, tidal disruption events, and more.",
+      "recordCount": 15,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "esa"
+      ]
+    },
+    {
+      "id": "universe-3d-scenes",
+      "title": "3D Universe Scenes",
+      "description": "The interactive 3D and Canvas scenes of the universe — the to-scale Solar System, the distance-true local stellar neighbourhood, the celestial-sphere constellations, and the descriptive Milky Way and Local Group — each with its honest coverage mode and the measured coordinates it draws on. No position, distance, or coordinate is fabricated.",
+      "recordCount": 5,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa",
+        "hyg"
+      ]
+    },
+    {
+      "id": "virtual-observatory-open-science",
+      "title": "Virtual Observatory & Open Science",
+      "description": "The Virtual Observatory interoperability framework and the access protocols that make the world's archives searchable as one (TAP, Cone Search, SIA, SSA), plus the open-science practices — pipelines, cross-matching, the ADS, persistent identifiers, and FAIR reproducibility.",
+      "recordCount": 10,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
+      ]
+    },
+    {
+      "id": "workspace-features",
+      "title": "Research Workspace Features",
+      "description": "The capabilities of the privacy-first research workspace — saving entities, collections, reading lists, observation projects, notes, a citation folder, and exports — all held only in the browser. No account, no server, no cookie, no tracking.",
+      "recordCount": 8,
+      "version": "1.0.0",
+      "license": "CC BY-SA 4.0",
+      "sources": [
+        "nasa"
       ]
     }
   ]

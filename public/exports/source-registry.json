@@ -4,7 +4,7 @@
   "schemaVersion": "1.0.0",
   "source": "Asteria Star — Scientific Data Engine & Knowledge Graph",
   "license": "cc-by-sa-4.0",
-  "count": 35,
+  "count": 43,
   "sources": [
     {
       "id": "ads",
@@ -14,6 +14,24 @@
       "country": "United States",
       "authorityType": "literature",
       "scope": "Bibliographic index of peer-reviewed astronomy and astrophysics literature."
+    },
+    {
+      "id": "arianespace",
+      "name": "Arianespace",
+      "organization": "Arianespace SA",
+      "url": "https://www.arianespace.com",
+      "country": "Europe",
+      "authorityType": "reference",
+      "scope": "Ariane and Vega launch-vehicle families — user's manuals and mission data."
+    },
+    {
+      "id": "blueorigin",
+      "name": "Blue Origin",
+      "organization": "Blue Origin, LLC",
+      "url": "https://www.blueorigin.com",
+      "country": "United States",
+      "authorityType": "reference",
+      "scope": "New Shepard, New Glenn, and the BE-3/BE-4 engines — manufacturer specifications."
     },
     {
       "id": "britannica",
@@ -124,6 +142,15 @@
       "scope": "Billion-star astrometry, photometry, and distances (future identifier support)."
     },
     {
+      "id": "gunters",
+      "name": "Gunter's Space Page",
+      "organization": "Gunter Krebs — Gunter's Space Page",
+      "url": "https://space.skyrocket.de",
+      "country": "International",
+      "authorityType": "reference",
+      "scope": "A specialist reference compilation of launch vehicles, stages, and spacecraft across all spacefaring nations."
+    },
+    {
       "id": "hipparcos",
       "name": "Hipparcos",
       "organization": "ESA Hipparcos space astrometry mission",
@@ -223,6 +250,15 @@
       "scope": "Reference database for extragalactic objects (galaxies, quasars)."
     },
     {
+      "id": "noaa",
+      "name": "NOAA Solar Calculator",
+      "organization": "NOAA Global Monitoring Laboratory",
+      "url": "https://gml.noaa.gov/grad/solcalc/",
+      "country": "United States",
+      "authorityType": "observatory",
+      "scope": "Public-domain solar-position geometry: sunrise, sunset, solar noon, twilight, declination, and the equation of time."
+    },
+    {
       "id": "nobel",
       "name": "The Nobel Prize",
       "organization": "The Nobel Foundation",
@@ -259,6 +295,15 @@
       "scope": "Cosmic microwave background maps and the cosmological parameters of the ΛCDM model."
     },
     {
+      "id": "rocketlab",
+      "name": "Rocket Lab",
+      "organization": "Rocket Lab USA, Inc.",
+      "url": "https://www.rocketlabusa.com",
+      "country": "United States / New Zealand",
+      "authorityType": "reference",
+      "scope": "Electron, Neutron, and the Rutherford/Archimedes engines — manufacturer specifications."
+    },
+    {
       "id": "roscosmos",
       "name": "Roscosmos",
       "organization": "State Space Corporation Roscosmos",
@@ -286,6 +331,15 @@
       "scope": "Reference database of astronomical objects, identifiers, and measurements."
     },
     {
+      "id": "spacex",
+      "name": "SpaceX",
+      "organization": "Space Exploration Technologies Corp.",
+      "url": "https://www.spacex.com",
+      "country": "United States",
+      "authorityType": "reference",
+      "scope": "Falcon 9, Falcon Heavy, Starship, and the Merlin/Raptor engines — manufacturer specifications and launch data."
+    },
+    {
       "id": "stsci",
       "name": "STScI",
       "organization": "Space Telescope Science Institute",
@@ -304,6 +358,15 @@
       "scope": "Space-weather forecasts and alerts: aurora (OVATION), the Kp index, and the G1–G5 geomagnetic storm scale."
     },
     {
+      "id": "ula",
+      "name": "ULA",
+      "organization": "United Launch Alliance",
+      "url": "https://www.ulalaunch.com",
+      "country": "United States",
+      "authorityType": "reference",
+      "scope": "Atlas V, Delta IV, and Vulcan Centaur — manufacturer specifications and mission data."
+    },
+    {
       "id": "usno",
       "name": "US Naval Observatory",
       "organization": "United States Naval Observatory",
@@ -311,6 +374,15 @@
       "country": "United States",
       "authorityType": "observatory",
       "scope": "Precise time, almanac data, Sun/Moon rise-set, and phases."
+    },
+    {
+      "id": "wikidata",
+      "name": "Wikidata",
+      "organization": "Wikidata (Wikimedia Foundation) — community-curated structured knowledge base",
+      "url": "https://www.wikidata.org",
+      "country": "International",
+      "authorityType": "database",
+      "scope": "Structured mission/spacecraft facts (international designator, operator, manufacturer, launch mass); statements link to their own citations where provided."
     },
     {
       "id": "wikimedia",
