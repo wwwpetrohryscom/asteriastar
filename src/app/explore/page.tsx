@@ -92,7 +92,7 @@ export default function ExplorePage() {
             <a
               key={item.href}
               href={item.href}
-              className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:border-white/25 hover:bg-white/[0.04]"
+              className="scientific-card p-5 transition hover:border-white/25 hover:bg-white/[0.04]"
             >
               <h3 className="font-display text-lg font-semibold text-fg">{item.title}</h3>
               <p className="mt-1 text-sm text-muted">{item.desc}</p>

@@ -32,7 +32,7 @@ export default function SolarFlaresPage() {
         <SkySection id="what" title="What a solar flare is"><p className="leading-relaxed text-muted">A solar flare is a sudden, intense burst of electromagnetic radiation from the Sun&apos;s atmosphere, often near sunspots. The strongest can disturb radio communications and, with an accompanying coronal mass ejection, trigger geomagnetic storms and aurorae at Earth.</p></SkySection>
         <SkySection id="classes" title="The flare classification (A–X)"><Types items={s.spaceWeather.flareClasses.map((f) => [`Class ${f.flareClass}`, f.meaning])} /></SkySection>
         <PreparedForIntegration providers={providers} envelope={s.spaceWeather.recentFlares()[0]?.envelope} />
-        <p className="text-sm text-muted"><Link href={skyPath("space-weather")} className="text-nebula hover:underline">← Space weather</Link> · <Link href={skyPath("space-weather/geomagnetic-storms")} className="text-nebula hover:underline">Geomagnetic storms →</Link></p>
+        <p className="text-sm text-muted"><Link href={skyPath("space-weather")} className="text-nasa hover:underline">← Space weather</Link> · <Link href={skyPath("space-weather/geomagnetic-storms")} className="text-nasa hover:underline">Geomagnetic storms →</Link></p>
         <SourceList keys={["donki", "swpc"]} title="Sources & references" />
       </Container>
     </>

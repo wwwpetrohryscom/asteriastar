@@ -43,16 +43,16 @@ export function SoftwareDetail({ d }: { d: ResolvedCh }) {
       <HeroSection compact accent="plasma" eyebrow={<span>{eyebrow}</span>} title={r.name} lead={r.description} />
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             {r.highlights?.length ? (
               <section aria-labelledby="highlights">
                 <h2 id="highlights" className="font-display text-2xl font-bold">Highlights</h2>
-                <ul className="mt-3 space-y-1.5 text-sm text-muted">{r.highlights.map((h) => <li key={h} className="flex gap-2"><span className="text-plasma">›</span>{h}</li>)}</ul>
+                <ul className="mt-3 space-y-1.5 text-sm text-muted">{r.highlights.map((h) => <li key={h} className="flex gap-2"><span className="text-nasa">›</span>{h}</li>)}</ul>
               </section>
             ) : null}
 
             {(r.platforms?.length || r.licenseLabel) ? (
-              <section aria-labelledby="facts" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section aria-labelledby="facts" className="scientific-card p-5">
                 <h2 id="facts" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">At a glance</h2>
                 <dl className="mt-2 grid grid-cols-1 gap-1.5 text-sm sm:grid-cols-2">
                   {r.platforms?.length ? (<div className="flex gap-2"><dt className="text-faint">Platforms</dt><dd className="text-muted">{r.platforms.join(", ")}</dd></div>) : null}
@@ -82,7 +82,7 @@ export function SoftwareDetail({ d }: { d: ResolvedCh }) {
                   {science.slice(0, 24).map((cx) => (
                     <li key={cx.relation.id} className="flex items-baseline justify-between gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-sm">
                       <span className="text-faint">{cx.outgoing ? RELATION_LABELS[cx.relation.type] : INVERSE_RELATION_LABELS[cx.relation.type]}</span>
-                      <Link href={entityGraphPath(cx.other)} className="text-right font-medium text-fg hover:text-plasma">{cx.other.name}</Link>
+                      <Link href={entityGraphPath(cx.other)} className="text-right font-medium text-fg hover:text-nasa">{cx.other.name}</Link>
                     </li>
                   ))}
                 </ul>
@@ -95,7 +95,7 @@ export function SoftwareDetail({ d }: { d: ResolvedCh }) {
           <aside className="space-y-6">
             {d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
             {d.quality && (
-              <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section aria-labelledby="quality" className="scientific-card p-5">
                 <div className="flex items-center justify-between gap-2">
                   <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
                   <span className="text-xs text-faint">{d.quality.completenessPercent}%</span>
@@ -109,7 +109,7 @@ export function SoftwareDetail({ d }: { d: ResolvedCh }) {
                     </div>
                   ))}
                 </dl>
-                <p className="mt-3 text-xs leading-relaxed text-faint">Curated from project documentation and the astronomy-software community. Only well-established facts — purpose and platforms — are stated; version numbers are omitted and nothing is fabricated. See{" "}<Link href="/transparency/source-quality" className="text-plasma underline-offset-4 hover:underline">source quality</Link>.</p>
+                <p className="mt-3 text-xs leading-relaxed text-faint">Curated from project documentation and the astronomy-software community. Only well-established facts — purpose and platforms — are stated; version numbers are omitted and nothing is fabricated. See{" "}<Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.</p>
               </section>
             )}
           </aside>

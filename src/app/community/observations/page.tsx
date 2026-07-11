@@ -52,7 +52,7 @@ export default function ObservationsPage() {
           The data model requires a graph entity for every observation
           (<code className="text-faint">objectEntity</code>), so there are no
           orphaned records. Observations enrich the graph; they never duplicate
-          it. See the <Link href="/community" className="text-comet underline-offset-4 hover:underline">community architecture</Link>.
+          it. See the <Link href="/community" className="text-faint underline-offset-4 hover:underline">community architecture</Link>.
         </p>
       </section>
     </CommunityLanding>

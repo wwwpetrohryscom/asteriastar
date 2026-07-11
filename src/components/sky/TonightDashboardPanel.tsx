@@ -42,16 +42,16 @@ interface Tonight {
 type State = { kind: "idle" } | { kind: "loading" } | { kind: "ok"; d: Tonight } | { kind: "error"; msg: string };
 
 const NIGHT_LABEL: Record<string, { text: string; cls: string }> = {
-  normal_night: { text: "Normal night", cls: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300" },
-  short_night: { text: "Short night", cls: "border-amber-400/30 bg-amber-400/10 text-amber-300" },
-  no_darkness: { text: "No true darkness", cls: "border-amber-400/30 bg-amber-400/10 text-amber-300" },
-  polar_day: { text: "Polar day — no night", cls: "border-rose-400/30 bg-rose-400/10 text-rose-300" },
-  polar_night: { text: "Polar night", cls: "border-sky-400/30 bg-sky-400/10 text-sky-300" },
+  normal_night: { text: "Normal night", cls: "border-success/40 bg-success/10 text-success-strong" },
+  short_night: { text: "Short night", cls: "border-nasa/40 bg-nasa/10 text-nasa" },
+  no_darkness: { text: "No true darkness", cls: "border-nasa/40 bg-nasa/10 text-nasa" },
+  polar_day: { text: "Polar day — no night", cls: "border-nasa-red/50 bg-nasa-red/[0.12] text-nasa" },
+  polar_night: { text: "Polar night", cls: "border-white/20 bg-white/[0.045] text-muted" },
 };
 const IMPACT_CLS: Record<string, string> = {
-  low: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
-  moderate: "border-amber-400/30 bg-amber-400/10 text-amber-300",
-  high: "border-rose-400/30 bg-rose-400/10 text-rose-300",
+  low: "border-success/40 bg-success/10 text-success-strong",
+  moderate: "border-nasa/40 bg-nasa/10 text-nasa",
+  high: "border-nasa-red/50 bg-nasa-red/[0.12] text-nasa",
   unknown: "border-white/15 bg-white/[0.03] text-faint",
 };
 
@@ -117,10 +117,10 @@ export function TonightDashboardPanel() {
   }
 
   return (
-    <section aria-labelledby="tonight-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <section aria-labelledby="tonight-heading" className="scientific-card p-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 id="tonight-heading" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Tonight observing dashboard</h2>
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-400/30 bg-sky-400/10 px-2.5 py-0.5 text-xs font-medium text-sky-300">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/[0.045] px-2.5 py-0.5 text-xs font-medium text-muted">
           <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden />
           Computed composite
         </span>
@@ -128,19 +128,19 @@ export function TonightDashboardPanel() {
 
       <form onSubmit={onSubmit} className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <label className="text-xs text-faint">Latitude
-          <input ref={latRef} name="latitude" type="text" inputMode="decimal" placeholder="50.08" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-sky-400/50" />
+          <input ref={latRef} name="latitude" type="text" inputMode="decimal" placeholder="50.08" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-nasa/60" />
         </label>
         <label className="text-xs text-faint">Longitude
-          <input ref={lonRef} name="longitude" type="text" inputMode="decimal" placeholder="14.44" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-sky-400/50" />
+          <input ref={lonRef} name="longitude" type="text" inputMode="decimal" placeholder="14.44" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-nasa/60" />
         </label>
         <label className="text-xs text-faint">Date <span className="text-faint/70">(optional — now)</span>
-          <input ref={dateRef} name="date" type="date" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-sky-400/50" />
+          <input ref={dateRef} name="date" type="date" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-nasa/60" />
         </label>
         <label className="text-xs text-faint">Timezone (IANA)
-          <input ref={tzRef} name="timezone" type="text" placeholder="Europe/Prague" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-sky-400/50" />
+          <input ref={tzRef} name="timezone" type="text" placeholder="Europe/Prague" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-nasa/60" />
         </label>
         <div className="col-span-2 sm:col-span-4">
-          <button type="submit" className="rounded-lg border border-sky-400/30 bg-sky-400/10 px-4 py-2 text-sm font-medium text-sky-200 transition hover:bg-sky-400/20">Show tonight</button>
+          <button type="submit" className="rounded-lg border border-white/20 bg-white/[0.045] px-4 py-2 text-sm font-medium text-white transition hover:bg-nasa/20">Show tonight</button>
         </div>
       </form>
 
@@ -149,14 +149,14 @@ export function TonightDashboardPanel() {
       </p>
 
       {state.kind === "idle" && (
-        <p className="mt-4 rounded-xl border border-white/10 bg-white/[0.02] p-4 text-sm text-muted" role="status">
+        <p className="mt-4 scientific-card p-4 text-sm text-muted" role="status">
           Enter a latitude and longitude to compose tonight&apos;s observing conditions — the twilight and darkness windows, the Moon, and which planets are best placed. Nothing is shown until you do; no location is assumed.
         </p>
       )}
       {state.kind === "loading" && <p className="mt-4 text-sm text-faint" role="status">Composing tonight&apos;s sky…</p>}
       {state.kind === "error" && (
-        <div role="alert" className="mt-4 rounded-xl border border-rose-400/20 bg-rose-400/[0.04] p-4">
-          <p className="text-sm text-rose-200">{state.msg}</p>
+        <div role="alert" className="mt-4 rounded-xl border border-nasa-red/50 bg-nasa-red/[0.12] p-4">
+          <p className="text-sm text-nasa">{state.msg}</p>
         </div>
       )}
       {state.kind === "ok" && <Dashboard d={state.d} />}
@@ -173,7 +173,7 @@ function Dashboard({ d }: { d: Tonight }) {
   return (
     <div className="mt-5 space-y-5">
       {/* Summary */}
-      <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+      <div className="scientific-card p-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${night.cls}`}>{night.text}</span>
           <span className="text-xs text-faint">{d.summary.observingDate} · {tz}</span>
@@ -206,7 +206,7 @@ function Dashboard({ d }: { d: Tonight }) {
 
       {/* Moon */}
       {d.moon && (
-        <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+        <div className="scientific-card p-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <h3 className="font-display text-base font-semibold text-fg">Moon — {d.moon.phaseName}, {d.moon.illuminationPercent}% lit</h3>
             <span className={`inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium ${IMPACT_CLS[d.moon.moonlightImpact] ?? IMPACT_CLS.unknown}`}>Moonlight: {d.moon.moonlightImpact}</span>
@@ -225,22 +225,22 @@ function Dashboard({ d }: { d: Tonight }) {
         <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Planets tonight, best-placed first</h3>
         <ul className="mt-2 space-y-2">
           {[...d.planets].sort((a, b) => (b.visibilityScore ?? -1) - (a.visibilityScore ?? -1)).map((p) => (
-            <li key={p.planetName} className="rounded-xl border border-white/10 bg-white/[0.02] p-3">
+            <li key={p.planetName} className="scientific-card p-3">
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <span className="font-medium text-fg">{p.planetName} <span className="text-xs text-faint">mag {p.apparentMagnitude}</span></span>
                 {p.visibleTonight && p.visibilityScore !== null
-                  ? <span className="inline-flex items-center gap-2 text-xs text-emerald-300"><span className="inline-block h-1.5 w-16 overflow-hidden rounded-full bg-white/10"><span className="block h-full rounded-full bg-emerald-400/70" style={{ width: `${p.visibilityScore}%` }} /></span>score {p.visibilityScore}</span>
+                  ? <span className="inline-flex items-center gap-2 text-xs text-success-strong"><span className="inline-block h-1.5 w-16 overflow-hidden rounded-full bg-white/10"><span className="block h-full rounded-full bg-success/70" style={{ width: `${p.visibilityScore}%` }} /></span>score {p.visibilityScore}</span>
                   : <span className="text-xs text-faint">Not visible tonight</span>}
               </div>
-              {p.limitingFactors.length > 0 && <p className="mt-1 text-xs text-amber-200/80">{p.limitingFactors.join(" ")}</p>}
+              {p.limitingFactors.length > 0 && <p className="mt-1 text-xs text-nasa/80">{p.limitingFactors.join(" ")}</p>}
             </li>
           ))}
         </ul>
       </div>
 
       {/* Recommendations */}
-      <div className="rounded-xl border border-sky-400/20 bg-sky-400/[0.04] p-4 text-sm">
-        <p className="text-xs font-semibold uppercase tracking-wider text-sky-200">Best tonight</p>
+      <div className="rounded-xl border border-white/20 bg-white/[0.045] p-4 text-sm">
+        <p className="text-xs font-semibold uppercase tracking-wider text-white">Best tonight</p>
         <ul className="mt-2 space-y-1 text-muted">
           {d.recommendations.topPlanets.length > 0
             ? <li><strong className="text-fg">Planets:</strong> {d.recommendations.topPlanets.join(", ")}.</li>
@@ -251,13 +251,13 @@ function Dashboard({ d }: { d: Tonight }) {
       </div>
 
       {/* Limitations */}
-      <div className="rounded-xl border border-amber-400/20 bg-amber-400/[0.05] p-4">
-        <p className="text-xs font-semibold uppercase tracking-wider text-amber-200">Limitations &amp; not included</p>
-        <ul className="mt-1 list-disc space-y-0.5 pl-5 text-xs leading-relaxed text-amber-100/90">
+      <div className="rounded-xl border border-nasa/40 bg-nasa/10 p-4">
+        <p className="text-xs font-semibold uppercase tracking-wider text-nasa">Limitations &amp; not included</p>
+        <ul className="mt-1 list-disc space-y-0.5 pl-5 text-xs leading-relaxed text-muted">
           {d.summary.limitations.map((l, i) => <li key={`lim-${i}`}>{l}</li>)}
           <li>Not included: {d.recommendations.notAvailable.join("; ")}.</li>
         </ul>
-        <p className="mt-2 text-xs text-amber-100/80">{d.accuracyNotes}</p>
+        <p className="mt-2 text-xs text-faint">{d.accuracyNotes}</p>
       </div>
 
       <div className="border-t border-white/10 pt-3 text-xs leading-relaxed text-faint">
@@ -265,7 +265,7 @@ function Dashboard({ d }: { d: Tonight }) {
         <p className="mt-1"><strong className="text-muted">Computed at:</strong> {fmtUTC(d.envelope.generatedAt)} · for {d.input.latitude}°, {d.input.longitude}° · Moon &amp; planet positions as of {fmtUTC(d.referenceTimeIso)}.</p>
         <p className="mt-1">
           Programmatic access:{" "}
-          <a href={`/api/v0/live-sky/tonight?latitude=${d.input.latitude}&longitude=${d.input.longitude}&date=${d.input.date}${tz !== "UTC" ? `&timezone=${encodeURIComponent(tz)}` : ""}`} className="text-nebula underline-offset-4 hover:underline">/api/v0/live-sky/tonight</a>.
+          <a href={`/api/v0/live-sky/tonight?latitude=${d.input.latitude}&longitude=${d.input.longitude}&date=${d.input.date}${tz !== "UTC" ? `&timezone=${encodeURIComponent(tz)}` : ""}`} className="text-nasa underline-offset-4 hover:underline">/api/v0/live-sky/tonight</a>.
         </p>
       </div>
     </div>

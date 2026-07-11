@@ -25,7 +25,7 @@ export function ExoplanetTable({ planets, showHost = true }: { planets: Exoplane
           {planets.map((p) => (
             <tr key={p.id} className="transition hover:bg-white/[0.02]">
               <td className="px-4 py-2.5">
-                <Link href={exoplanetPath(p.slug)} className="font-medium text-fg transition hover:text-nebula">{p.name}</Link>
+                <Link href={exoplanetPath(p.slug)} className="font-medium text-fg transition hover:text-nasa">{p.name}</Link>
                 {p.discoveryYear && <span className="block text-xs text-faint">{p.discoveryMethod} · {p.discoveryYear}</span>}
               </td>
               <td className="hidden px-4 py-2.5 text-muted sm:table-cell">{p.classSlug ? CLASS_LABEL.get(p.classSlug) : "—"}</td>

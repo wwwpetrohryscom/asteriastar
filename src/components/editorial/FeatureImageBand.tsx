@@ -35,7 +35,7 @@ export function FeatureImageBand({
           loading="lazy"
           className="object-cover"
         />
-        <div aria-hidden className="absolute inset-0 bg-gradient-to-t from-bg/50 via-transparent to-transparent" />
+        <div aria-hidden className="absolute inset-0 bg-black/18" />
       </div>
       {(caption || credit) && (
         <figcaption className="mx-auto max-w-3xl px-5 pt-3 text-sm text-faint sm:px-8">

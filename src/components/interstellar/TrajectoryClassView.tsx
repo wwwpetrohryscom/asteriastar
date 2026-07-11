@@ -38,7 +38,7 @@ export function TrajectoryClassView({ d }: { d: ResolvedTrajectoryClass }) {
       />
       <Container className="mt-8 mb-14 space-y-10">
         {r.definition ? (
-          <section aria-labelledby="definition" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+          <section aria-labelledby="definition" className="scientific-card p-5">
             <h2 id="definition" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Definition</h2>
             <p className="mt-2 text-sm text-muted">{r.definition}</p>
           </section>
@@ -61,9 +61,9 @@ export function TrajectoryClassView({ d }: { d: ResolvedTrajectoryClass }) {
             <h2 id="members" className="font-display text-2xl font-bold">Objects on this trajectory</h2>
             <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {d.members.map((m) => (
-                <li key={m.id} className="flex items-start justify-between gap-2 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+                <li key={m.id} className="flex items-start justify-between gap-2 scientific-card p-4">
                   <div>
-                    <Link href={interstellarObjectPath(m.slug)} className="font-medium text-fg hover:text-aurora">{m.name}</Link>
+                    <Link href={interstellarObjectPath(m.slug)} className="font-medium text-fg hover:text-nasa">{m.name}</Link>
                     {m.trajectoryLabel ? <div className="mt-0.5 text-xs text-faint">{m.trajectoryLabel}</div> : null}
                   </div>
                   {m.status ? <StatusBadge status={m.status} /> : null}

@@ -22,7 +22,7 @@ export function EntityDataPanel({ resolved }: { resolved: ResolvedEntity }) {
   return (
     <section
       aria-labelledby="data-heading"
-      className="rounded-2xl border border-white/10 bg-white/[0.02] p-5"
+      className="scientific-card p-5"
     >
       <h2 id="data-heading" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">
         Data &amp; provenance
@@ -55,9 +55,9 @@ export function EntityDataPanel({ resolved }: { resolved: ResolvedEntity }) {
         <p className="text-xs uppercase tracking-wider text-faint">Open data</p>
         <p className="mt-2 text-xs leading-relaxed text-muted">
           In the graph export:{" "}
-          <a href="/data/graph.json" className="text-nebula underline-offset-4 hover:underline">graph.json</a>{" "}
+          <a href="/data/graph.json" className="text-nasa underline-offset-4 hover:underline">graph.json</a>{" "}
           ·{" "}
-          <a href="/data/graph.jsonld" className="text-nebula underline-offset-4 hover:underline">graph.jsonld</a>
+          <a href="/data/graph.jsonld" className="text-nasa underline-offset-4 hover:underline">graph.jsonld</a>
         </p>
         <p className="mt-1.5 text-xs text-faint">
           Planned API: <code>GET /api/v0/entities/{resolved.id}</code>

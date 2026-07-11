@@ -40,7 +40,7 @@ export function MediaGallery({
       </p>
       <Link
         href="/sources-policy"
-        className="mt-4 text-sm font-medium text-halo underline-offset-4 transition hover:underline"
+        className="mt-4 text-sm font-medium text-white underline-offset-4 transition hover:underline"
       >
         Our sources &amp; licensing policy →
       </Link>

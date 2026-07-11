@@ -32,8 +32,8 @@ export default function ObservatoryFrontierHubPage() {
           <h2 id="explore-heading" className="font-display text-2xl font-bold">Explore the frontier</h2>
           <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {AU_DISCOVERIES.map((d) => (
-              <li key={d.slug} className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                <Link href={observatoryFrontierDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-comet hover:underline">{d.title}</Link>
+              <li key={d.slug} className="flex flex-col scientific-card p-5">
+                <Link href={observatoryFrontierDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-muted hover:underline">{d.title}</Link>
                 <p className="mt-1 flex-1 text-sm text-muted">{d.description}</p>
                 <span className="mt-3 text-xs text-faint">{d.get().length} entries</span>
               </li>
@@ -44,9 +44,9 @@ export default function ObservatoryFrontierHubPage() {
           <h2 id="facilities-heading" className="font-display text-2xl font-bold">Next-generation facilities</h2>
           <div className="mt-4"><OfCards records={e.facilities()} /></div>
         </section>
-        <section aria-labelledby="data-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="data-heading" className="scientific-card p-5">
           <h2 id="data-heading" className="font-display text-base font-semibold text-fg">Data &amp; provenance</h2>
-          <p className="mt-2 text-sm text-muted">Each facility, instrumentation technique, detector, and observing method is a first-class knowledge-graph entity resolved through the Scientific Data Engine, reusing the ground observatories, the adaptive-optics, interferometry, and spectroscopy methods, the SPHERE, MUSE, and HIRES instruments, and the wavelength bands already in the graph. Curated from ESO, NOIRLab, NRAO, and NASA. Facilities under construction or proposed are stated as such. See{" "}<Link href="/transparency/source-quality" className="text-comet underline-offset-4 hover:underline">source quality</Link>.</p>
+          <p className="mt-2 text-sm text-muted">Each facility, instrumentation technique, detector, and observing method is a first-class knowledge-graph entity resolved through the Scientific Data Engine, reusing the ground observatories, the adaptive-optics, interferometry, and spectroscopy methods, the SPHERE, MUSE, and HIRES instruments, and the wavelength bands already in the graph. Curated from ESO, NOIRLab, NRAO, and NASA. Facilities under construction or proposed are stated as such. See{" "}<Link href="/transparency/source-quality" className="text-faint underline-offset-4 hover:underline">source quality</Link>.</p>
         </section>
       </Container>
     </>

@@ -38,14 +38,14 @@ export function StationDetail({ d }: { d: ResolvedStation }) {
       <HeroSection compact accent="aurora" eyebrow={<span>{KIND_LABEL[s.kind]}{s.countryLabel ? ` · ${s.countryLabel}` : ""}</span>} title={s.name} lead={s.description} />
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             {d.antennas.length ? (
               <section aria-labelledby="antennas">
                 <h2 id="antennas" className="font-display text-2xl font-bold">Antennas</h2>
                 <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {d.antennas.map((a) => (
-                    <li key={a.id} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                      <Link href={hrefForRecord(a)} className="font-medium text-fg hover:text-aurora">{a.name}</Link>
+                    <li key={a.id} className="scientific-card p-4">
+                      <Link href={hrefForRecord(a)} className="font-medium text-fg hover:text-nasa">{a.name}</Link>
                       {a.diameterLabel ? <div className="mt-0.5 text-xs text-faint">{a.diameterLabel}</div> : null}
                     </li>
                   ))}
@@ -60,7 +60,7 @@ export function StationDetail({ d }: { d: ResolvedStation }) {
                   {science.slice(0, 24).map((cx) => (
                     <li key={cx.relation.id} className="flex items-baseline justify-between gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-sm">
                       <span className="text-faint">{cx.outgoing ? RELATION_LABELS[cx.relation.type] : INVERSE_RELATION_LABELS[cx.relation.type]}</span>
-                      <Link href={entityGraphPath(cx.other)} className="text-right font-medium text-fg hover:text-aurora">{cx.other.name}</Link>
+                      <Link href={entityGraphPath(cx.other)} className="text-right font-medium text-fg hover:text-nasa">{cx.other.name}</Link>
                     </li>
                   ))}
                 </ul>
@@ -71,7 +71,7 @@ export function StationDetail({ d }: { d: ResolvedStation }) {
           </div>
 
           <aside className="space-y-6">
-            <section aria-labelledby="quick" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <section aria-labelledby="quick" className="scientific-card p-5">
               <h2 id="quick" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
               <dl className="mt-3 divide-y divide-white/5 text-sm">
                 {d.network ? <FactRow label="Network" value={d.network.name} href={d.network.href} /> : null}

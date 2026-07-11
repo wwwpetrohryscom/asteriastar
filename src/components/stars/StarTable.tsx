@@ -32,7 +32,7 @@ export function StarTable({
           {stars.map((s) => (
             <tr key={s.id} className="transition hover:bg-white/[0.02]">
               <td className="px-4 py-2.5">
-                <Link href={starPath(s.slug)} className="font-medium text-fg transition hover:text-nebula">{s.name}</Link>
+                <Link href={starPath(s.slug)} className="font-medium text-fg transition hover:text-nasa">{s.name}</Link>
                 {s.scientificName && s.scientificName !== s.name && (
                   <span className="block text-xs text-faint">{s.scientificName}</span>
                 )}

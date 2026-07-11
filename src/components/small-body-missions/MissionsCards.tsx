@@ -8,9 +8,9 @@ export function MissionsCards({ records }: { records: SmallBodyRecord[] }) {
   return (
     <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {records.map((r) => (
-        <li key={r.id} className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <li key={r.id} className="flex flex-col scientific-card p-5">
           <div className="flex items-start justify-between gap-2">
-            <Link href={smallBodyMissionPath(r.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-halo hover:underline">{r.name}</Link>
+            <Link href={smallBodyMissionPath(r.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-white hover:underline">{r.name}</Link>
             {r.status ? <MissionStatusBadge status={r.status} /> : null}
           </div>
           {r.agencyLabel ? <div className="mt-0.5 text-xs text-faint">{r.agencyLabel}</div> : null}

@@ -20,7 +20,7 @@ export function MissionsTable({ records }: { records: SmallBodyRecord[] }) {
         <tbody>
           {records.map((r) => (
             <tr key={r.id} className="border-b border-white/5 last:border-0 hover:bg-white/[0.02]">
-              <td className="px-4 py-3"><Link href={smallBodyMissionPath(r.slug)} className="font-medium text-fg hover:text-halo">{r.name}</Link></td>
+              <td className="px-4 py-3"><Link href={smallBodyMissionPath(r.slug)} className="font-medium text-fg hover:text-white">{r.name}</Link></td>
               <td className="px-4 py-3 text-muted">{r.agencyLabel ?? "—"}</td>
               <td className="px-4 py-3 text-muted">{r.missionTypeLabel ?? "—"}</td>
               <td className="px-4 py-3">{r.status ? <MissionStatusBadge status={r.status} /> : "—"}</td>

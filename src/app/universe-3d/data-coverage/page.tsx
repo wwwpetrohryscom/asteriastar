@@ -61,7 +61,7 @@ export default function DataCoveragePage() {
                 {rows.map((r) => (
                   <tr key={r.label} className="border-b border-white/5">
                     <td className="px-4 py-2 text-fg">{r.label}</td>
-                    <td className="px-4 py-2 font-medium text-nebula whitespace-nowrap">{r.value}</td>
+                    <td className="px-4 py-2 font-medium text-nasa whitespace-nowrap">{r.value}</td>
                     <td className="px-4 py-2 text-muted">{r.note}</td>
                   </tr>
                 ))}
@@ -73,11 +73,11 @@ export default function DataCoveragePage() {
           <h2 id="modes" className="font-display text-2xl font-bold">How each scene is drawn</h2>
           <ul className="mt-4 grid gap-3 sm:grid-cols-2">
             {scenes.map((s) => (
-              <li key={s.id} className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+              <li key={s.id} className="scientific-card p-4">
                 <div className="flex items-center gap-2">
-                  <Link href={universeScenePath(s.slug)} className="font-display text-base font-semibold text-fg hover:text-nebula">{s.name}</Link>
+                  <Link href={universeScenePath(s.slug)} className="font-display text-base font-semibold text-fg hover:text-nasa">{s.name}</Link>
                   {s.interactive ? (
-                    <span className="rounded-full border border-nebula/40 px-2 py-0.5 text-[10px] uppercase tracking-wider text-nebula">Interactive</span>
+                    <span className="rounded-full border border-nasa/40 px-2 py-0.5 text-[10px] uppercase tracking-wider text-nasa">Interactive</span>
                   ) : (
                     <span className="rounded-full border border-white/15 px-2 py-0.5 text-[10px] uppercase tracking-wider text-faint">Descriptive</span>
                   )}
@@ -88,11 +88,11 @@ export default function DataCoveragePage() {
             ))}
           </ul>
         </section>
-        <section aria-labelledby="promise" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="promise" className="scientific-card p-5">
           <h2 id="promise" className="font-display text-base font-semibold text-fg">The rule</h2>
           <p className="mt-2 text-sm leading-relaxed text-muted">
             No position, distance, or coordinate is ever fabricated. An object with no measured distance is never placed in a distance-true scene; a structure with only a descriptive scale label is never given invented coordinates. See{" "}
-            <Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link>.
+            <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.
           </p>
         </section>
       </Container>

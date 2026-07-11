@@ -22,8 +22,8 @@ export function ExplorationCards({ records }: { records: ExplorationRecord[] }) 
     <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {records.map((r) => (
         <li key={r.id}>
-          <Link href={explorationPath(r.slug)} className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
-            <h3 className="font-display text-lg font-semibold text-fg group-hover:text-nebula">{r.name}</h3>
+          <Link href={explorationPath(r.slug)} className="group flex h-full flex-col scientific-card p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
+            <h3 className="font-display text-lg font-semibold text-fg group-hover:text-nasa">{r.name}</h3>
             {meta(r) && <p className="mt-1 text-xs uppercase tracking-wide text-faint">{meta(r)}</p>}
             <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-muted">{r.description}</p>
           </Link>

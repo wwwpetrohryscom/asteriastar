@@ -55,8 +55,8 @@ function DescriptiveStructures({ ids, heading }: { ids: string[]; heading: strin
       <h2 id="structures" className="font-display text-2xl font-bold">{heading}</h2>
       <ul className="mt-4 grid gap-3 sm:grid-cols-2">
         {items.map((x) => (
-          <li key={x.id} className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
-            <Link href={x.href} className="font-display text-base font-semibold text-fg hover:text-nebula">{x.name}</Link>
+          <li key={x.id} className="scientific-card p-4">
+            <Link href={x.href} className="font-display text-base font-semibold text-fg hover:text-nasa">{x.name}</Link>
             {x.description ? <p className="mt-1 text-sm leading-relaxed text-muted line-clamp-3">{x.description}</p> : null}
           </li>
         ))}

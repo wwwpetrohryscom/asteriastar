@@ -30,7 +30,7 @@ function bytes(n: number): string {
   if (n < 1024 * 1024) return `${(n / 1024).toFixed(1)} KiB`;
   return `${(n / (1024 * 1024)).toFixed(1)} MiB`;
 }
-const card = "rounded-2xl border border-white/10 bg-white/[0.02] p-5";
+const card = "scientific-card p-5";
 const mono = "rounded-lg border border-white/10 bg-white/[0.02] px-3 py-1.5 font-mono text-xs text-faint";
 
 function Prose({ children }: { children: React.ReactNode }) {
@@ -38,7 +38,7 @@ function Prose({ children }: { children: React.ReactNode }) {
 }
 function ApiLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
-    <Link href={href} className="text-nebula underline-offset-4 hover:underline">
+    <Link href={href} className="text-nasa underline-offset-4 hover:underline">
       {children}
     </Link>
   );
@@ -49,7 +49,7 @@ function Datasets() {
   const meta = CATALOGUE.filter((c) => ["knowledge-graph-entities", "knowledge-graph-relationships", "source-registry", "scientific-images", "live-sky-providers", "citation-registry", "evidence-framework"].includes(c.id));
   const domain = CATALOGUE.filter((c) => !meta.includes(c));
   return (
-    <div className="space-y-10">
+    <div className="min-w-0 space-y-10">
       <Prose>
         The unified catalogue: {CATALOGUE_STATS.total} datasets in total — {CATALOGUE_STATS.stable} stable,
         {" "}{CATALOGUE_STATS.prepared} prepared, {CATALOGUE_STATS.planned} planned, and {CATALOGUE_STATS.architecture} methodology.
@@ -192,7 +192,7 @@ function Schemas() {
               {VERSIONING_POLICY.map((v) => (
                 <tr key={v.name}>
                   <td className="py-2 pr-4 font-medium text-fg">{v.name}</td>
-                  <td className="py-2 pr-4 font-mono text-xs text-nebula">{v.current}</td>
+                  <td className="py-2 pr-4 font-mono text-xs text-nasa">{v.current}</td>
                   <td className="py-2 text-xs text-muted">{v.bumps}</td>
                 </tr>
               ))}
@@ -205,7 +205,7 @@ function Schemas() {
         <ul className="mt-4 space-y-2">
           {RULES.map((r) => (
             <li key={r} className="flex gap-2 text-sm text-muted">
-              <span aria-hidden className="mt-1 text-emerald-300">•</span>
+              <span aria-hidden className="mt-1 text-success-strong">•</span>
               <span>{r}</span>
             </li>
           ))}
@@ -250,7 +250,7 @@ function Exports() {
         {rows.map(([id, m]) => (
           <div key={id} className={card}>
             <div className="flex flex-wrap items-center justify-between gap-2">
-              <a href={m.file} className="font-mono text-sm text-nebula underline-offset-4 hover:underline">{m.file}</a>
+              <a href={m.file} className="font-mono text-sm text-nasa underline-offset-4 hover:underline">{m.file}</a>
               <div className="flex items-center gap-3 text-xs text-faint">
                 <span>{m.recordCount.toLocaleString()} records</span>
                 <span>{bytes(m.bytes)}</span>
@@ -284,7 +284,7 @@ function Changelog() {
           {VERSIONING_POLICY.map((v) => (
             <div key={v.name} className={card}>
               <span className="font-medium text-fg">{v.name}</span>
-              <span className="ml-2 font-mono text-xs text-nebula">{v.current}</span>
+              <span className="ml-2 font-mono text-xs text-nasa">{v.current}</span>
               <p className="mt-1 text-sm text-muted">{v.bumps}</p>
             </div>
           ))}
@@ -327,7 +327,7 @@ function Licensing() {
           <div key={l.id} className={card}>
             <div className="flex flex-wrap items-center justify-between gap-2">
               {l.url ? (
-                <a href={l.url} target="_blank" rel="noreferrer nofollow" className="font-medium text-fg underline-offset-4 hover:text-nebula hover:underline">{l.name}</a>
+                <a href={l.url} target="_blank" rel="noreferrer nofollow" className="font-medium text-fg underline-offset-4 hover:text-nasa hover:underline">{l.name}</a>
               ) : (
                 <span className="font-medium text-fg">{l.name}</span>
               )}
@@ -471,7 +471,7 @@ function Quality() {
         <h2 className="font-display text-xl font-bold">Known limitations</h2>
         <ul className="mt-4 space-y-2">
           {LIMITS.map((l) => (
-            <li key={l} className="flex gap-2 text-sm text-amber-200/80"><span aria-hidden className="mt-1">!</span><span>{l}</span></li>
+            <li key={l} className="flex gap-2 text-sm text-nasa/80"><span aria-hidden className="mt-1">!</span><span>{l}</span></li>
           ))}
         </ul>
       </section>

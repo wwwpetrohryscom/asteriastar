@@ -72,8 +72,8 @@ export default function DataPortalPage() {
       </HeroSection>
 
       <Container className="mt-8 mb-12 space-y-12">
-        <aside className="flex gap-3 rounded-xl border border-emerald-400/20 bg-emerald-400/[0.04] p-4">
-          <span aria-hidden className="mt-0.5 text-emerald-300">
+        <aside className="flex gap-3 rounded-xl border border-success/25 bg-success/[0.06] p-4">
+          <span aria-hidden className="mt-0.5 text-success-strong">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
               <path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -91,7 +91,7 @@ export default function DataPortalPage() {
               <li key={a.href}>
                 <Link
                   href={a.href}
-                  className="block h-full rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:border-white/25 hover:bg-white/[0.04]"
+                  className="block h-full scientific-card p-5 transition hover:border-white/25 hover:bg-white/[0.04]"
                 >
                   <div className="flex items-baseline justify-between gap-2">
                     <span className="font-display text-base font-semibold text-fg">{a.title}</span>
@@ -111,7 +111,7 @@ export default function DataPortalPage() {
               <li key={s.slug}>
                 <Link
                   href={dataPath(s.slug)}
-                  className="block h-full rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:border-white/25 hover:bg-white/[0.04]"
+                  className="block h-full scientific-card p-5 transition hover:border-white/25 hover:bg-white/[0.04]"
                 >
                   <span className="text-[0.65rem] uppercase tracking-wider text-faint">{s.eyebrow}</span>
                   <span className="mt-1 block font-display text-base font-semibold text-fg">{s.title}</span>

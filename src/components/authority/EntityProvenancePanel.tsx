@@ -15,12 +15,12 @@ import { CitationList } from "@/components/authority/CitationList";
  */
 
 const ACCENT_CLASS: Record<string, string> = {
-  halo: "text-sky-300 border-sky-400/30 bg-sky-400/10",
-  comet: "text-emerald-300 border-emerald-400/30 bg-emerald-400/10",
-  gold: "text-amber-300 border-amber-400/30 bg-amber-400/10",
-  stone: "text-slate-300 border-slate-400/30 bg-slate-400/10",
-  plasma: "text-blue-200 border-blue-300/30 bg-blue-300/10",
-  ember: "text-amber-300 border-amber-400/30 bg-amber-400/10",
+  halo: "text-muted border-white/20 bg-white/[0.045]",
+  comet: "text-success-strong border-success/40 bg-success/10",
+  gold: "text-nasa border-nasa/40 bg-nasa/10",
+  stone: "text-muted border-white/20 bg-white/[0.045]",
+  plasma: "text-muted border-white/20 bg-white/[0.045]",
+  ember: "text-nasa border-nasa/40 bg-nasa/10",
 };
 
 function EvidenceBadge({ level }: { level: EvidenceLevel }) {
@@ -44,7 +44,7 @@ export function EntityProvenancePanel({ entityId }: { entityId: string }) {
   return (
     <div className="space-y-6">
     {records.length > 0 && (
-    <section aria-labelledby="provenance-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <section aria-labelledby="provenance-heading" className="scientific-card p-5">
       <div className="flex items-center justify-between gap-3">
         <h2 id="provenance-heading" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">
           Provenance &amp; sources
@@ -78,7 +78,7 @@ export function EntityProvenancePanel({ entityId }: { entityId: string }) {
                 <p className="mt-2 text-xs text-faint">
                   Source:{" "}
                   {srcUrl ? (
-                    <a href={srcUrl} target="_blank" rel="noreferrer nofollow" className="text-nebula underline-offset-4 hover:underline">
+                    <a href={srcUrl} target="_blank" rel="noreferrer nofollow" className="text-nasa underline-offset-4 hover:underline">
                       {src.organization}
                     </a>
                   ) : (
@@ -93,7 +93,7 @@ export function EntityProvenancePanel({ entityId }: { entityId: string }) {
                 <ul className="mt-2 space-y-1">
                   {cites.map((c) => (
                     <li key={c.id} className="text-xs text-faint">
-                      <a href={c.url} target="_blank" rel="noreferrer nofollow" className="text-nebula underline-offset-4 hover:underline">
+                      <a href={c.url} target="_blank" rel="noreferrer nofollow" className="text-nasa underline-offset-4 hover:underline">
                         {c.title}
                       </a>
                       {c.publication ? `, ${c.publication}` : ""}
@@ -105,7 +105,7 @@ export function EntityProvenancePanel({ entityId }: { entityId: string }) {
               )}
 
               {r.editorialNote && (
-                <p className="mt-2 text-xs leading-relaxed text-amber-200/80">
+                <p className="mt-2 text-xs leading-relaxed text-nasa/80">
                   <span className="font-medium">Limitation:</span> {r.editorialNote}
                 </p>
               )}
@@ -116,14 +116,14 @@ export function EntityProvenancePanel({ entityId }: { entityId: string }) {
 
       <p className="mt-4 border-t border-white/10 pt-3 text-xs leading-relaxed text-faint">
         Reviewed by the internal Asteria Scientific Review Process — not an external institutional review. See the{" "}
-        <Link href="/transparency/evidence-framework" className="text-nebula underline-offset-4 hover:underline">evidence framework</Link>{" "}
-        and <Link href="/authority" className="text-nebula underline-offset-4 hover:underline">authority dashboard</Link>.
+        <Link href="/transparency/evidence-framework" className="text-nasa underline-offset-4 hover:underline">evidence framework</Link>{" "}
+        and <Link href="/authority" className="text-nasa underline-offset-4 hover:underline">authority dashboard</Link>.
       </p>
     </section>
     )}
 
     {citations.length > 0 && (
-      <section aria-labelledby="citations-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+      <section aria-labelledby="citations-heading" className="scientific-card p-5">
         <div className="flex items-center justify-between gap-3">
           <h2 id="citations-heading" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">
             Scientific citations

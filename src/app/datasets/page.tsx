@@ -44,10 +44,10 @@ export default function DatasetsPage() {
             <li key={d.slug}>
               <Link
                 href={datasetPath(d.slug)}
-                className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]"
+                className="group flex h-full flex-col scientific-card p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]"
               >
                 <div className="flex items-baseline justify-between gap-2">
-                  <h2 className="font-display text-lg font-semibold text-fg group-hover:text-nebula">{d.title}</h2>
+                  <h2 className="font-display text-lg font-semibold text-fg group-hover:text-nasa">{d.title}</h2>
                   <span className="text-xs text-faint">{d.entityCount}</span>
                 </div>
                 <p className="mt-1.5 text-sm leading-relaxed text-muted">{d.description}</p>

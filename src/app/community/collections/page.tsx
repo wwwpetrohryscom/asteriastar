@@ -34,7 +34,7 @@ export default function CollectionsPage() {
         </p>
         <ul className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {COLLECTION_TEMPLATES.map((c) => (
-            <li key={c.title} className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <li key={c.title} className="scientific-card p-5">
               <h3 className="font-display text-lg font-semibold text-fg">{c.title}</h3>
               <p className="mt-1.5 text-sm leading-relaxed text-muted">{c.description}</p>
             </li>
@@ -49,7 +49,7 @@ export default function CollectionsPage() {
           <code className="text-faint"> star:sirius</code>) and content paths —
           so the knowledge stays in one place and collections always reflect the
           latest data. Start by exploring entities in the{" "}
-          <Link href={ROUTES.explore} className="text-comet underline-offset-4 hover:underline">Knowledge Explorer</Link>.
+          <Link href={ROUTES.explore} className="text-faint underline-offset-4 hover:underline">Knowledge Explorer</Link>.
         </p>
       </section>
     </CommunityLanding>

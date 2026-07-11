@@ -35,7 +35,7 @@ export function ImageFigure({ asset }: { asset: ImageAsset }) {
           href={asset.sourceUrl}
           target="_blank"
           rel="noreferrer nofollow"
-          className="mt-1 inline-block text-xs text-halo underline-offset-4 hover:underline"
+          className="mt-1 inline-block text-xs text-white underline-offset-4 hover:underline"
         >
           Source
         </a>

@@ -71,7 +71,7 @@ export default async function SkyPageRoute({ params }: PageProps<"/sky/[slug]">)
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             {isMoon && <MoonDataPanel />}
             {isMoon && <MoonPositionPanel />}
             {isSunOrTwilight && <SunCalculatorPanel />}
@@ -85,16 +85,16 @@ export default async function SkyPageRoute({ params }: PageProps<"/sky/[slug]">)
           <aside className="space-y-6">
             {!isComputed && skyEnvelope && <EnvelopeCard envelope={skyEnvelope} />}
             {isComputed && !isTonight && (
-              <section className="rounded-2xl border border-sky-400/20 bg-sky-400/[0.04] p-5">
+              <section className="rounded-2xl border border-white/20 bg-white/[0.045] p-5">
                 <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">See it all together</h2>
-                <p className="mt-2 text-sm text-muted">The <Link href={skyPath("night-sky-tonight")} className="text-nebula hover:underline">Tonight Observing Dashboard</Link> composes the Sun, Moon, and planet tools into one view for your location.</p>
+                <p className="mt-2 text-sm text-muted">The <Link href={skyPath("night-sky-tonight")} className="text-nasa hover:underline">Tonight Observing Dashboard</Link> composes the Sun, Moon, and planet tools into one view for your location.</p>
               </section>
             )}
             {locationRelevant && <LocationPlaceholder />}
             {def.learnHref && (
-              <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section className="scientific-card p-5">
                 <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Learn</h2>
-                <p className="mt-2 text-sm text-muted"><Link href={def.learnHref} className="text-nebula hover:underline">Observing the Night Sky →</Link></p>
+                <p className="mt-2 text-sm text-muted"><Link href={def.learnHref} className="text-nasa hover:underline">Observing the Night Sky →</Link></p>
               </section>
             )}
           </aside>
@@ -136,7 +136,7 @@ function ReferenceBlock({ content }: { content: string }) {
           <p className="leading-relaxed text-muted">Sunrise and sunset are the moments the Sun&apos;s centre sits 0.833° below the horizon — allowing for atmospheric refraction and the Sun&apos;s radius. Solar noon is when the Sun crosses your meridian, and day length is the time it spends above that horizon. The <strong className="text-fg">times above are computed</strong> from public-domain solar formulae and timestamped; they assume a flat, sea-level horizon and do not model local terrain.</p>
         </SkySection>
         <SkySection id="twilight-bands" title="The twilight phases">
-          <p className="mb-3 text-sm text-muted">Between day and full darkness the sky passes through three twilight phases. Their times for your location appear in the calculator above; see the <Link href={skyPath("twilight")} className="text-nebula hover:underline">twilight page</Link> for more.</p>
+          <p className="mb-3 text-sm text-muted">Between day and full darkness the sky passes through three twilight phases. Their times for your location appear in the calculator above; see the <Link href={skyPath("twilight")} className="text-nasa hover:underline">twilight page</Link> for more.</p>
           <Definitions items={s.twilight.bands.map((b) => [b.name, b.meaning])} />
         </SkySection>
       </>
@@ -199,7 +199,7 @@ function ReferenceBlock({ content }: { content: string }) {
         <p className="mb-4 text-sm text-muted">Recurring sky events by month. These repeat annually; exact dates and times for your year and location are prepared for a connected almanac provider.</p>
         <div className="space-y-4">
           {byMonth.map(({ m, events }) => (
-            <div key={m} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+            <div key={m} className="scientific-card p-4">
               <h3 className="font-display font-semibold text-fg">{events[0].monthLabel}</h3>
               <ul className="mt-2 space-y-1.5">
                 {events.map((e) => <li key={e.slug} className="text-sm text-muted"><span className="font-medium text-fg">{e.name}</span> — {e.description}</li>)}
@@ -216,7 +216,7 @@ function ReferenceBlock({ content }: { content: string }) {
       <p className="leading-relaxed text-muted">The dashboard above is a <strong className="text-fg">composite</strong> of the computed Sun &amp; Twilight, Moon, and Planet tools — it adds no new astronomy, only aggregates and ranks. It does <strong className="text-fg">not</strong> include weather, cloud cover, seeing, transparency, or light pollution, and it does not show live ISS passes, aurora, meteor showers, or comets. Each underlying tool stands on its own:</p>
       <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
         {[["Sun & twilight", skyPath("sun")], ["Moon phase & position", skyPath("moon")], ["Planet visibility", skyPath("planet-visibility")], ["Meteor showers (reference)", skyPath("meteor-showers")]].map(([label, href]) => (
-          <li key={href}><Link href={href} className="text-nebula hover:underline">{label} →</Link></li>
+          <li key={href}><Link href={href} className="text-nasa hover:underline">{label} →</Link></li>
         ))}
       </ul>
     </SkySection>
@@ -225,7 +225,7 @@ function ReferenceBlock({ content }: { content: string }) {
 
 function Definitions({ items }: { items: [string, string][] }) {
   return (
-    <dl className="divide-y divide-white/5 overflow-hidden rounded-xl border border-white/10 bg-white/[0.02]">
+    <dl className="divide-y divide-white/5 overflow-hidden scientific-card">
       {items.map(([term, def]) => (
         <div key={term} className="grid gap-1 px-4 py-3 sm:grid-cols-[160px_1fr] sm:gap-4">
           <dt className="font-medium text-fg">{term}</dt>

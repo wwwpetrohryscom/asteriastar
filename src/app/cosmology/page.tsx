@@ -33,7 +33,7 @@ export default function CosmologyHub() {
         lead="How the Universe began, how it evolved, and how cosmologists measure it — from the Big Bang and cosmic inflation to dark matter, dark energy, and black holes. Every topic is labelled by its scientific consensus, and established science is never mixed with speculation."
       >
         <p className="mt-6 text-sm text-faint">
-          {c.conceptCount} concepts · {c.modelCount} models · {c.objectCount} object classes · <Link href={timelinePath("universe-timeline")} className="text-nebula hover:underline">the Universe timeline →</Link>
+          {c.conceptCount} concepts · {c.modelCount} models · {c.objectCount} object classes · <Link href={timelinePath("universe-timeline")} className="text-nasa hover:underline">the Universe timeline →</Link>
         </p>
       </HeroSection>
 
@@ -55,8 +55,8 @@ export default function CosmologyHub() {
           <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {COSMO_DISCOVERIES.map((d) => (
               <li key={d.slug}>
-                <Link href={cosmologyDiscoveryPath(d.slug)} className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
-                  <h3 className="font-display text-lg font-semibold text-fg group-hover:text-nebula">{d.title}</h3>
+                <Link href={cosmologyDiscoveryPath(d.slug)} className="group flex h-full flex-col scientific-card p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
+                  <h3 className="font-display text-lg font-semibold text-fg group-hover:text-nasa">{d.title}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted">{d.description}</p>
                 </Link>
               </li>
@@ -89,11 +89,11 @@ export default function CosmologyHub() {
           <p className="mt-3 text-xs text-faint">Times are current best estimates and carry real scientific uncertainty; far-future entries are model-dependent projections, not certainties.</p>
         </section>
 
-        <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-sm text-muted">
+        <section className="scientific-card p-5 text-sm text-muted">
           <h2 className="font-display text-base font-semibold text-fg">Sources &amp; provenance</h2>
           <p className="mt-1.5">
             Cosmological parameters, measurements, and consensus classifications are drawn from authoritative sources — the Planck Collaboration, NASA, ESA, ESO, the LIGO and Event Horizon Telescope collaborations, DESI, SDSS, and peer-reviewed literature. Nothing is fabricated; theories, discoveries, scientists, and observatories already in the graph are reused, not duplicated. See the{" "}
-            <Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link> page.
+            <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link> page.
           </p>
         </section>
       </Container>

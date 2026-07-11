@@ -95,7 +95,7 @@ export default async function ConstellationPage({ params }: PageProps<"/constell
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             <section aria-labelledby="overview">
               <h2 id="overview" className="font-display text-2xl font-bold">Overview</h2>
               <p className="mt-3 leading-relaxed text-muted">{c.description}</p>
@@ -106,7 +106,7 @@ export default async function ConstellationPage({ params }: PageProps<"/constell
                 <h2 id="highlights" className="font-display text-2xl font-bold">Highlights</h2>
                 <ul className="mt-3 space-y-2">
                   {c.highlights.map((h) => (
-                    <li key={h} className="flex gap-3 text-muted"><span className="mt-1 text-amber-300">★</span><span>{h}</span></li>
+                    <li key={h} className="flex gap-3 text-muted"><span className="mt-1 text-nasa">★</span><span>{h}</span></li>
                   ))}
                 </ul>
               </section>
@@ -119,7 +119,7 @@ export default async function ConstellationPage({ params }: PageProps<"/constell
                 <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
                   {topStars.map((s) => (
                     <li key={s.id} className="flex items-baseline justify-between gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-sm">
-                      <Link href={starPath(s.slug)} className="font-medium text-fg hover:text-nebula">{s.name}</Link>
+                      <Link href={starPath(s.slug)} className="font-medium text-fg hover:text-nasa">{s.name}</Link>
                       {s.apparentMagnitude != null && <span className="font-mono text-xs text-faint">mag {s.apparentMagnitude}</span>}
                     </li>
                   ))}
@@ -133,7 +133,7 @@ export default async function ConstellationPage({ params }: PageProps<"/constell
                 <ul className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
                   {d.deepSky.slice(0, 24).map((o) => (
                     <li key={o.id} className="rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-sm">
-                      <Link href={deepSkyPath(o.slug)} className="font-medium text-fg hover:text-nebula">{o.name}</Link>
+                      <Link href={deepSkyPath(o.slug)} className="font-medium text-fg hover:text-nasa">{o.name}</Link>
                     </li>
                   ))}
                 </ul>
@@ -145,7 +145,7 @@ export default async function ConstellationPage({ params }: PageProps<"/constell
                 <h2 id="meteors" className="font-display text-2xl font-bold">Meteor shower radiants</h2>
                 <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
                   {d.meteorShowers.map((m) => (
-                    <Link key={m.slug} href={meteorShowerPath(m.slug)} className="rounded-xl border border-white/10 bg-white/[0.02] p-3 transition hover:border-white/25">
+                    <Link key={m.slug} href={meteorShowerPath(m.slug)} className="scientific-card p-3 transition hover:border-white/25">
                       <div className="font-medium text-fg">{m.name}</div>
                       {m.peakLabel && <div className="text-xs text-faint">Peak {m.peakLabel}</div>}
                     </Link>
@@ -195,7 +195,7 @@ export default async function ConstellationPage({ params }: PageProps<"/constell
                   {science.slice(0, 24).map((cx) => (
                     <li key={cx.relation.id} className="flex items-baseline justify-between gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-sm">
                       <span className="text-faint">{cx.outgoing ? RELATION_LABELS[cx.relation.type] : INVERSE_RELATION_LABELS[cx.relation.type]}</span>
-                      <Link href={entityGraphPath(cx.other)} className="text-right font-medium text-fg hover:text-nebula">{cx.other.name}</Link>
+                      <Link href={entityGraphPath(cx.other)} className="text-right font-medium text-fg hover:text-nasa">{cx.other.name}</Link>
                     </li>
                   ))}
                 </ul>
@@ -206,34 +206,34 @@ export default async function ConstellationPage({ params }: PageProps<"/constell
           </div>
 
           <aside className="space-y-6">
-            <section aria-labelledby="quick" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <section aria-labelledby="quick" className="scientific-card p-5">
               <h2 id="quick" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
               <dl className="mt-3 divide-y divide-white/5">
                 {facts.map((f) => (
                   <div key={f.label} className="flex justify-between gap-3 py-2 text-sm">
                     <dt className="text-faint">{f.label}</dt>
-                    <dd className="text-right font-medium text-fg">{f.href ? <Link href={f.href} className="hover:text-nebula">{f.value}</Link> : f.value}</dd>
+                    <dd className="text-right font-medium text-fg">{f.href ? <Link href={f.href} className="hover:text-nasa">{f.value}</Link> : f.value}</dd>
                   </div>
                 ))}
               </dl>
             </section>
 
             {/* Live Sky — link to the computed tools; constellation visibility is not fabricated. */}
-            <section aria-labelledby="livesky" className="rounded-2xl border border-sky-400/20 bg-sky-400/[0.04] p-5">
+            <section aria-labelledby="livesky" className="rounded-2xl border border-white/20 bg-white/[0.045] p-5">
               <h2 id="livesky" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">See it in the sky</h2>
               <p className="mt-2 text-xs text-muted">Use the computed Live Sky tools for tonight&apos;s conditions at your location — this page states no live visibility itself.</p>
               <ul className="mt-3 space-y-1.5 text-sm">
-                <li><Link href={skyPath("night-sky-tonight")} className="text-nebula hover:underline">Tonight&apos;s observing dashboard →</Link></li>
-                <li><Link href={skyPath("planet-visibility")} className="text-nebula hover:underline">Planet visibility →</Link></li>
-                <li><Link href={skyPath("moon")} className="text-nebula hover:underline">Moon position &amp; phase →</Link></li>
-                {d.meteorShowers.length > 0 && <li><Link href={ROUTES.sky + "/meteor-showers"} className="text-nebula hover:underline">Meteor showers →</Link></li>}
+                <li><Link href={skyPath("night-sky-tonight")} className="text-nasa hover:underline">Tonight&apos;s observing dashboard →</Link></li>
+                <li><Link href={skyPath("planet-visibility")} className="text-nasa hover:underline">Planet visibility →</Link></li>
+                <li><Link href={skyPath("moon")} className="text-nasa hover:underline">Moon position &amp; phase →</Link></li>
+                {d.meteorShowers.length > 0 && <li><Link href={ROUTES.sky + "/meteor-showers"} className="text-nasa hover:underline">Meteor showers →</Link></li>}
               </ul>
             </section>
 
             {d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
 
             {d.quality && (
-              <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section aria-labelledby="quality" className="scientific-card p-5">
                 <div className="flex items-center justify-between gap-2">
                   <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
                   <span className="text-xs text-faint">{d.quality.completenessPercent}%</span>
@@ -247,14 +247,14 @@ export default async function ConstellationPage({ params }: PageProps<"/constell
                     </div>
                   ))}
                 </dl>
-                <p className="mt-3 text-xs leading-relaxed text-faint">Constellation data from the IAU. See{" "}<Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link>.</p>
+                <p className="mt-3 text-xs leading-relaxed text-faint">Constellation data from the IAU. See{" "}<Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.</p>
               </section>
             )}
 
-            <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-sm">
+            <section className="scientific-card p-5 text-sm">
               <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">All catalogued stars</h2>
               <p className="mt-2 text-muted">Browse every catalogued star in {c.name}.</p>
-              <Link href={`/stars/constellations/${slug}`} className="mt-2 inline-block text-nebula hover:underline">Star list →</Link>
+              <Link href={`/stars/constellations/${slug}`} className="mt-2 inline-block text-nasa hover:underline">Star list →</Link>
             </section>
           </aside>
         </div>

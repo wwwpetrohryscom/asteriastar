@@ -30,7 +30,7 @@ export function MissionClassView({ d }: { d: ResolvedMissionClass }) {
       <HeroSection compact accent="halo" eyebrow={<span>Mission class · {d.members.length} missions</span>} title={r.name} lead={r.description} />
       <Container className="mt-8 mb-14 space-y-10">
         {r.definition ? (
-          <section aria-labelledby="definition" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+          <section aria-labelledby="definition" className="scientific-card p-5">
             <h2 id="definition" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Definition</h2>
             <p className="mt-2 text-sm text-muted">{r.definition}</p>
           </section>

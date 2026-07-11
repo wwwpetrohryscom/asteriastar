@@ -194,7 +194,7 @@ export function TransparencyWidgetView({ widget }: { widget: TransparencyWidget 
         <Table
           head={["Source", "Country", "Authority"]}
           rows={getAllSources().map((s) => [
-            <a key="a" href={s.url} target="_blank" rel="noopener noreferrer" className="font-medium text-fg hover:text-nebula">{s.name}</a>,
+            <a key="a" href={s.url} target="_blank" rel="noopener noreferrer" className="font-medium text-fg hover:text-nasa">{s.name}</a>,
             s.country,
             AUTHORITY_TYPE_LABELS[s.authorityType],
           ])}
@@ -234,7 +234,7 @@ export function TransparencyWidgetView({ widget }: { widget: TransparencyWidget 
       return (
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
           {stats.map((m) => (
-            <div key={m.label} className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+            <div key={m.label} className="scientific-card p-4">
               <div className="font-display text-2xl font-bold text-fg">{m.value.toLocaleString()}</div>
               <div className="mt-1 text-xs text-faint">{m.label}</div>
             </div>

@@ -33,7 +33,7 @@ export default function LiveHubPage() {
         <section aria-labelledby="status-heading">
           <div className="flex items-baseline justify-between gap-3">
             <h2 id="status-heading" className="font-display text-2xl font-bold">Provider status</h2>
-            <Link href={`${ROUTES.live}/data-status`} className="text-sm text-aurora hover:underline">Full data-status →</Link>
+            <Link href={`${ROUTES.live}/data-status`} className="text-sm text-nasa hover:underline">Full data-status →</Link>
           </div>
           <div className="mt-4"><LiveStatusPanel report={report} /></div>
         </section>
@@ -41,8 +41,8 @@ export default function LiveHubPage() {
           <h2 id="explore-heading" className="font-display text-2xl font-bold">By category</h2>
           <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {BT_DISCOVERIES.map((d) => (
-              <li key={d.slug} className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                <Link href={liveDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-aurora hover:underline">{d.title}</Link>
+              <li key={d.slug} className="flex flex-col scientific-card p-5">
+                <Link href={liveDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nasa hover:underline">{d.title}</Link>
                 <p className="mt-1 flex-1 text-sm text-muted">{d.description}</p>
                 <span className="mt-3 text-xs text-faint">{d.get().length} providers</span>
               </li>
@@ -53,9 +53,9 @@ export default function LiveHubPage() {
           <h2 id="providers-heading" className="font-display text-2xl font-bold">The providers</h2>
           <div className="mt-4"><LiveCards records={e.all()} /></div>
         </section>
-        <section aria-labelledby="data-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="data-heading" className="scientific-card p-5">
           <h2 id="data-heading" className="font-display text-base font-semibold text-fg">Data &amp; provenance</h2>
-          <p className="mt-2 text-sm text-muted">Each provider is a first-class knowledge-graph entity resolved through the Scientific Data Engine, reusing the operating organisation and the space-weather phenomena already in the graph. The integration reuses the existing live-sky provider registry as its source of truth for status. In this deployment no provider is connected, so no live value is shown — every provider reports its honest status, endpoint, licence, and limitations, and nothing is fabricated. See{" "}<Link href="/transparency/source-quality" className="text-aurora underline-offset-4 hover:underline">source quality</Link>.</p>
+          <p className="mt-2 text-sm text-muted">Each provider is a first-class knowledge-graph entity resolved through the Scientific Data Engine, reusing the operating organisation and the space-weather phenomena already in the graph. The integration reuses the existing live-sky provider registry as its source of truth for status. In this deployment no provider is connected, so no live value is shown — every provider reports its honest status, endpoint, licence, and limitations, and nothing is fabricated. See{" "}<Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.</p>
         </section>
       </Container>
     </>

@@ -10,13 +10,13 @@ import type { PortalStatus } from "@/platform/open-data/portal";
 export type { PortalStatus };
 
 const STYLES: Record<PortalStatus, string> = {
-  implemented: "text-emerald-300 border-emerald-400/30 bg-emerald-400/10",
-  stable: "text-emerald-300 border-emerald-400/30 bg-emerald-400/10",
-  available: "text-emerald-300 border-emerald-400/30 bg-emerald-400/10",
-  prepared: "text-amber-300 border-amber-400/30 bg-amber-400/10",
-  planned: "text-sky-300 border-sky-400/30 bg-sky-400/10",
-  architecture: "text-slate-200 border-slate-300/30 bg-slate-300/10",
-  deprecated: "text-rose-300 border-rose-400/30 bg-rose-400/10",
+  implemented: "text-success-strong border-success/40 bg-success/10",
+  stable: "text-success-strong border-success/40 bg-success/10",
+  available: "text-success-strong border-success/40 bg-success/10",
+  prepared: "text-nasa border-nasa/40 bg-nasa/10",
+  planned: "text-muted border-white/20 bg-white/[0.045]",
+  architecture: "text-muted border-white/20 bg-white/[0.045]",
+  deprecated: "text-nasa border-nasa/40 bg-nasa/[0.12]",
 };
 
 const LABELS: Record<PortalStatus, string> = {

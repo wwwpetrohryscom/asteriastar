@@ -14,8 +14,8 @@ import type { MetaRow } from "@/platform/images/metadata";
  */
 
 const LICENSE_CLASS: Record<string, string> = {
-  "public-domain": "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
-  "cc-by-4-0": "border-sky-400/30 bg-sky-400/10 text-sky-300",
+  "public-domain": "border-success/40 bg-success/10 text-success-strong",
+  "cc-by-4-0": "border-white/20 bg-white/[0.045] text-muted",
 };
 
 export function LicenseBadge({ slug }: { slug: string }) {
@@ -25,6 +25,16 @@ export function LicenseBadge({ slug }: { slug: string }) {
     <a href={lic.url} target="_blank" rel="noreferrer nofollow" className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium ${LICENSE_CLASS[slug] ?? "border-white/15 bg-white/[0.04] text-muted"}`}>
       {lic.shortName}
     </a>
+  );
+}
+
+function LicensePill({ slug }: { slug: string }) {
+  const lic = LICENSE_BY_SLUG.get(slug);
+  if (!lic) return null;
+  return (
+    <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium ${LICENSE_CLASS[slug] ?? "border-white/15 bg-white/[0.04] text-muted"}`}>
+      {lic.shortName}
+    </span>
   );
 }
 
@@ -50,16 +60,16 @@ export function ImagePlaceholder({ img, aspect = "aspect-[16/10]" }: { img: Imag
 
 export function ImageCard({ img }: { img: ImageRecord }) {
   return (
-    <Link href={imagePath(img.slug)} className="group flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/[0.02] transition hover:-translate-y-0.5 hover:border-white/25">
+    <Link href={imagePath(img.slug)} className="group flex flex-col overflow-hidden scientific-card transition hover:-translate-y-0.5 hover:border-white/25">
       <div className="relative aspect-[16/10] w-full bg-bg-elevated/72">
         <span className="sr-only">{img.altText}</span>
         <div className="absolute inset-0 flex items-center justify-center p-4 text-center">
           <span aria-hidden className="text-xs font-medium uppercase tracking-[0.18em] text-faint">{img.objectName}</span>
         </div>
-        <div className="absolute right-2 top-2"><LicenseBadge slug={img.licenseSlug} /></div>
+        <div className="absolute right-2 top-2"><LicensePill slug={img.licenseSlug} /></div>
       </div>
       <div className="flex flex-1 flex-col p-4">
-        <h3 className="font-display font-semibold text-fg group-hover:text-nebula">{img.title}</h3>
+        <h3 className="font-display font-semibold text-fg group-hover:text-nasa">{img.title}</h3>
         <p className="mt-1 text-xs text-faint">{img.credit}</p>
       </div>
     </Link>
@@ -77,7 +87,7 @@ export function ImageGallery({ images }: { images: ImageRecord[] }) {
 
 export function MetadataPanel({ rows, unrecorded }: { rows: MetaRow[]; unrecorded: string[] }) {
   return (
-    <section aria-labelledby="metadata" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <section aria-labelledby="metadata" className="scientific-card p-5">
       <h2 id="metadata" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Image metadata</h2>
       <dl className="mt-3 divide-y divide-white/5">
         {rows.map((r) => (
@@ -99,16 +109,16 @@ export function ProvenancePanel({ provenance }: { provenance: Provenance }) {
   const rows: [string, React.ReactNode][] = [];
   rows.push(["Credit", p.credit]);
   rows.push(["Institution", p.institution]);
-  if (p.source) rows.push(["Source archive", <a key="s" href={p.source.archiveUrl} target="_blank" rel="noreferrer nofollow" className="text-nebula hover:underline">{p.source.name}</a>]);
-  if (p.license) rows.push(["License", <a key="l" href={p.license.url} target="_blank" rel="noreferrer nofollow" className="text-nebula hover:underline">{p.license.name}</a>]);
+  if (p.source) rows.push(["Source archive", <a key="s" href={p.source.archiveUrl} target="_blank" rel="noreferrer nofollow" className="text-nasa hover:underline">{p.source.name}</a>]);
+  if (p.license) rows.push(["License", <a key="l" href={p.license.url} target="_blank" rel="noreferrer nofollow" className="text-nasa hover:underline">{p.license.name}</a>]);
   if (p.copyright) rows.push(["Copyright", p.copyright]);
   if (p.publication) rows.push(["Published", p.publication]);
   rows.push(["Provenance verified", p.lastVerified]);
   return (
-    <section aria-labelledby="provenance" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <section aria-labelledby="provenance" className="scientific-card p-5">
       <div className="flex items-center justify-between gap-2">
         <h2 id="provenance" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Provenance</h2>
-        {p.openlyLicensed && <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-2 py-0.5 text-xs text-emerald-300">Openly licensed</span>}
+        {p.openlyLicensed && <span className="rounded-full border border-success/40 bg-success/10 px-2 py-0.5 text-xs text-success-strong">Openly licensed</span>}
       </div>
       <dl className="mt-3 divide-y divide-white/5">
         {rows.map(([k, v], i) => (
@@ -137,7 +147,7 @@ export function RefCards({ refs }: { refs: { id: string; name: string; href: str
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
       {refs.map((r) => (
-        <Link key={r.id} href={r.href} className="rounded-xl border border-white/10 bg-white/[0.02] p-3 transition hover:border-white/25">
+        <Link key={r.id} href={r.href} className="scientific-card p-3 transition hover:border-white/25">
           <div className="font-medium text-fg">{r.name}</div>
         </Link>
       ))}

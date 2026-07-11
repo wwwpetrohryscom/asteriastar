@@ -8,7 +8,7 @@ export type HeroFact = { label: string; value: ReactNode };
 
 /**
  * A full-width cinematic editorial hero. When the entity has a real image it
- * becomes an immersive image banner (dark gradient overlay, large title,
+ * becomes an immersive image banner (dark readability scrim, large title,
  * subtitle, a row of quick scientific facts, and an image credit). Without an
  * image it falls back to a clean, spacious text hero on the black theme.
  *
@@ -49,8 +49,8 @@ export function EditorialHero({
             blurDataURL={img!.blurDataURL}
             className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/60 to-bg/20" />
-          <div className="absolute inset-0 bg-gradient-to-r from-bg/75 via-bg/20 to-transparent" />
+          <div className="absolute inset-0 bg-black/66" />
+          <div className="absolute inset-y-0 left-0 w-2/3 bg-black/28" />
         </div>
       )}
 

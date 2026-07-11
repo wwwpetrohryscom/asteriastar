@@ -18,7 +18,7 @@ export function TimelineList({ events }: { events: TimelineEvent[] }) {
           {event.href ? (
             <Link
               href={event.href}
-              className="mt-0.5 inline-block font-medium text-fg underline-offset-4 transition hover:text-nebula hover:underline"
+              className="mt-0.5 inline-block font-medium text-fg underline-offset-4 transition hover:text-nasa hover:underline"
             >
               {event.title}
             </Link>

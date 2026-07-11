@@ -16,7 +16,7 @@ export function AssistantToolNav({ active }: { active: string }) {
       {TOOLS.map((t) => {
         const on = t.slug === active;
         return (
-          <Link key={t.slug} href={t.href} aria-current={on ? "page" : undefined} className={`rounded-lg px-3 py-1.5 text-sm ${on ? "bg-nebula/15 text-nebula" : "text-muted hover:bg-white/5 hover:text-fg"}`}>
+          <Link key={t.slug} href={t.href} aria-current={on ? "page" : undefined} className={`rounded-lg px-3 py-1.5 text-sm ${on ? "bg-nasa/15 text-nasa" : "text-muted hover:bg-white/5 hover:text-fg"}`}>
             {t.label}
           </Link>
         );

@@ -21,7 +21,7 @@ export function ConsensusBadge({ level, className = "" }: { level: ConsensusLeve
 /** The full five-level legend, for the hub and detail pages. */
 export function ConsensusLegend() {
   return (
-    <section aria-labelledby="consensus-legend" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <section aria-labelledby="consensus-legend" className="scientific-card p-5">
       <h2 id="consensus-legend" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">How we classify scientific consensus</h2>
       <p className="mt-2 text-sm text-muted">Every topic in this encyclopedia is labelled by how well established it is. Established science, strong evidence, active research, scientific debate, and speculation are kept distinct — never conflated.</p>
       <ul className="mt-4 space-y-2.5">
@@ -54,7 +54,7 @@ export function ConsensusCallout({ level, status }: { level: ConsensusLevel; sta
 export function ConsensusCard({ level }: { level: ConsensusLevel }) {
   const m = CONSENSUS[level];
   return (
-    <section aria-labelledby="consensus" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <section aria-labelledby="consensus" className="scientific-card p-5">
       <h2 id="consensus" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Scientific consensus</h2>
       <div className="mt-3"><ConsensusBadge level={level} /></div>
       <p className="mt-3 text-xs leading-relaxed text-faint">{m.description}</p>

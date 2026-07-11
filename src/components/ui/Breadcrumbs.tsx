@@ -18,7 +18,7 @@ export function Breadcrumbs({ crumbs }: { crumbs: Crumb[] }) {
                   {crumb.name}
                 </span>
               ) : (
-                <Link href={crumb.url} className="transition hover:text-fg">
+                <Link href={crumb.url} className="transition hover:text-nasa">
                   {crumb.name}
                 </Link>
               )}

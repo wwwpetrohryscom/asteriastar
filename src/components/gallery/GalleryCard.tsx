@@ -11,7 +11,7 @@ export function GalleryCard({ img }: { img: GalleryImage }) {
   return (
     <Link
       href={img.href}
-      className="group flex flex-col overflow-hidden rounded-lg border border-silver/12 bg-bg-elevated/80 shadow-[0_14px_50px_rgba(0,0,0,0.2)] transition-all duration-300 hover:-translate-y-0.5 hover:border-nasa/50"
+      className="scientific-card group flex flex-col transition-all duration-300 hover:-translate-y-0.5 hover:border-nasa/50"
     >
       <div className="relative aspect-[16/10] w-full overflow-hidden bg-black">
         <Image
@@ -24,7 +24,7 @@ export function GalleryCard({ img }: { img: GalleryImage }) {
           loading="lazy"
           className="object-cover transition duration-700 group-hover:scale-[1.04]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/55 to-transparent" />
+        <div className="absolute inset-0 bg-black/26" />
         <span className="absolute left-3 top-3 rounded-full border border-white/20 bg-black/50 px-2.5 py-1 text-[11px] font-medium uppercase tracking-wider text-white backdrop-blur-md">
           {img.object}
         </span>

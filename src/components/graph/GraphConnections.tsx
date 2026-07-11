@@ -19,7 +19,7 @@ function ConnectionItem({ connection }: { connection: Connection }) {
       </span>
       <Link
         href={entityGraphPath(other)}
-        className="font-medium text-fg underline-offset-4 transition hover:text-nebula hover:underline"
+        className="font-medium text-fg underline-offset-4 transition hover:text-nasa hover:underline"
       >
         {other.name}
       </Link>
@@ -38,9 +38,9 @@ function Group({
   if (connections.length === 0) return null;
   const astrology = facet === "astrology";
   const head =
-    astrology ? "text-gold" : facet === "cultural" ? "text-comet" : "text-halo";
+    astrology ? "text-nasa" : facet === "cultural" ? "text-faint" : "text-white";
   const box = astrology
-    ? "border-gold/25 bg-gold/[0.05]"
+    ? "border-nasa/25 bg-nasa/[0.05]"
     : "border-white/10 bg-white/[0.02]";
   // Show at most a generous number per group to keep pages readable.
   const shown = connections.slice(0, 24);

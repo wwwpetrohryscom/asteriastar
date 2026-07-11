@@ -25,7 +25,7 @@ export function DeepSkyTable({ objects, showConstellation = true }: { objects: D
           {objects.map((d) => (
             <tr key={d.id} className="transition hover:bg-white/[0.02]">
               <td className="px-4 py-2.5">
-                <Link href={deepSkyPath(d.slug)} className="font-medium text-fg transition hover:text-nebula">{d.name}</Link>
+                <Link href={deepSkyPath(d.slug)} className="font-medium text-fg transition hover:text-nasa">{d.name}</Link>
                 {(d.ids.messier || d.ids.ngc) && (
                   <span className="block text-xs text-faint">{[d.ids.messier, d.ids.caldwell, d.ids.ngc].filter(Boolean).join(" · ")}</span>
                 )}

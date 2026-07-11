@@ -27,12 +27,12 @@ export function CitationsManager() {
   return (
     <div className="space-y-8">
       {addable.length > 0 && (
-        <section aria-labelledby="add-cites" className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+        <section aria-labelledby="add-cites" className="scientific-card p-4">
           <h2 id="add-cites" className="text-sm font-semibold text-fg">Add citations from your saved entities</h2>
           <ul className="mt-3 flex flex-wrap gap-2">
             {addable.map(({ e, count }) => (
               <li key={e.id}>
-                <button type="button" onClick={() => addCitation({ entityId: e.id, label: e.name })} className="rounded-lg border border-halo/40 px-3 py-1.5 text-xs text-halo hover:bg-halo/10">
+                <button type="button" onClick={() => addCitation({ entityId: e.id, label: e.name })} className="rounded-lg border border-white/40 px-3 py-1.5 text-xs text-white hover:bg-white/10">
                   + {e.name} <span className="text-faint">({count})</span>
                 </button>
               </li>
@@ -59,11 +59,11 @@ export function CitationsManager() {
             {collected.map((c) => {
               const ref = state.citations.find((x) => x.citationId === c.id || (x.entityId && citationsForEntity(x.entityId).some((y) => y.id === c.id)));
               return (
-                <li key={c.id} className="rounded-xl border border-white/10 bg-white/[0.02] p-3">
+                <li key={c.id} className="scientific-card p-3">
                   <p className="text-sm text-fg break-words">{formatCitation(c, style)}</p>
                   <div className="mt-2 flex items-center gap-3 text-xs">
-                    {c.url && <a href={c.url} target="_blank" rel="noopener noreferrer" className="text-halo hover:underline">Source ↗</a>}
-                    {ref && <button type="button" onClick={() => removeCitation(ref.id)} className="text-faint hover:text-ember">Remove</button>}
+                    {c.url && <a href={c.url} target="_blank" rel="noopener noreferrer" className="text-white hover:underline">Source ↗</a>}
+                    {ref && <button type="button" onClick={() => removeCitation(ref.id)} className="text-faint hover:text-nasa">Remove</button>}
                   </div>
                 </li>
               );

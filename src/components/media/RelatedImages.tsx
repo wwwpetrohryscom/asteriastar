@@ -50,7 +50,7 @@ export function RelatedImages({
                   loading="lazy"
                   className="object-cover transition duration-500 group-hover:scale-[1.04]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent" />
+                <div className="absolute inset-0 bg-black/30" />
                 <span className="absolute inset-x-0 bottom-0 truncate px-3 py-2 text-xs font-medium text-white">
                   {h.object ?? h.title}
                 </span>

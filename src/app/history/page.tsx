@@ -34,7 +34,7 @@ export default function HistoryHub() {
         lead="From Babylonian sky-watchers and the Almagest to gravitational waves and the first image of a black hole — the people, discoveries, publications, and ideas that built our understanding of the cosmos."
       >
         <p className="mt-6 text-sm text-faint">
-          {h.astronomerCount} astronomers · {h.discoveryCount} discoveries · {h.publicationCount} publications · {h.eraCount} eras · <Link href={timelinePath("history-of-astronomy")} className="text-nebula hover:underline">the full timeline →</Link>
+          {h.astronomerCount} astronomers · {h.discoveryCount} discoveries · {h.publicationCount} publications · {h.eraCount} eras · <Link href={timelinePath("history-of-astronomy")} className="text-nasa hover:underline">the full timeline →</Link>
         </p>
       </HeroSection>
 
@@ -44,9 +44,9 @@ export default function HistoryHub() {
           <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {eras.map((era) => (
               <li key={era.slug}>
-                <Link href={historyPath(era.slug)} className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
+                <Link href={historyPath(era.slug)} className="group flex h-full flex-col scientific-card p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
                   <span className="text-xs uppercase tracking-wide text-faint">{eraRange(era.startYear, era.endYear)}</span>
-                  <h3 className="mt-1 font-display text-lg font-semibold text-fg group-hover:text-nebula">{era.name}</h3>
+                  <h3 className="mt-1 font-display text-lg font-semibold text-fg group-hover:text-nasa">{era.name}</h3>
                 </Link>
               </li>
             ))}
@@ -68,8 +68,8 @@ export default function HistoryHub() {
           <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {HISTORY_DISCOVERIES.map((d) => (
               <li key={d.slug}>
-                <Link href={historyDiscoveryPath(d.slug)} className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
-                  <h3 className="font-display text-lg font-semibold text-fg group-hover:text-nebula">{d.title}</h3>
+                <Link href={historyDiscoveryPath(d.slug)} className="group flex h-full flex-col scientific-card p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
+                  <h3 className="font-display text-lg font-semibold text-fg group-hover:text-nasa">{d.title}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted">{d.description}</p>
                 </Link>
               </li>
@@ -94,11 +94,11 @@ export default function HistoryHub() {
           </ol>
         </section>
 
-        <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-sm text-muted">
+        <section className="scientific-card p-5 text-sm text-muted">
           <h2 className="font-display text-base font-semibold text-fg">Sources &amp; provenance</h2>
           <p className="mt-1.5">
             Every biography, date, discovery, publication, and award is drawn from authoritative reference sources — the IAU, NASA, ESA, ESO, NASA ADS, the Nobel Foundation, and Encyclopaedia Britannica. Nothing is fabricated; astronomers already in the knowledge graph are reused, not duplicated. See the{" "}
-            <Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link> page.
+            <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link> page.
           </p>
         </section>
       </Container>

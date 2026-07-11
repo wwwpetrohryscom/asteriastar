@@ -216,11 +216,11 @@ export function ScientificMap({ entity }: { entity: RuntimeEntity }) {
   return (
     <section className="rounded-[2rem] border border-white/10 bg-bg-elevated/64 p-5 shadow-2xl shadow-black/20 sm:p-7">
       <div className="mb-5 flex items-center gap-3">
-        <span className="flex size-10 items-center justify-center rounded-full border border-halo/20 bg-halo/[0.07] text-halo">
+        <span className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/[0.07] text-white">
           <ScientificIcon name={mode === "trajectory" ? "trajectory" : mode === "earth" ? "atlas" : "orbit"} className="size-5" />
         </span>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-nasa">
             Scientific map
           </p>
           <h3 className="mt-1 text-xl font-semibold">{mode === "orbit" ? "Orbit context" : mode === "trajectory" ? "Mission context" : mode === "earth" ? "Ground context" : "Atlas context"}</h3>

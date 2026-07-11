@@ -32,9 +32,9 @@ export default function OpenPlatformGraphPage() {
         <CapabilityCards records={records} />
         <p className="mt-8 text-sm text-muted">
           The JSON-LD at{" "}
-          <Link href="/data/graph.jsonld" className="text-ember underline-offset-4 hover:underline">/data/graph.jsonld</Link>{" "}
+          <Link href="/data/graph.jsonld" className="text-nasa underline-offset-4 hover:underline">/data/graph.jsonld</Link>{" "}
           loads into any triple store today. A hosted SPARQL endpoint and a GraphQL API are architecture-ready — see the{" "}
-          <Link href={`${ROUTES.openPlatform}/roadmap`} className="text-ember underline-offset-4 hover:underline">roadmap</Link>.
+          <Link href={`${ROUTES.openPlatform}/roadmap`} className="text-nasa underline-offset-4 hover:underline">roadmap</Link>.
         </p>
       </Container>
     </>

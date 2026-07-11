@@ -207,7 +207,7 @@ export function CosmicBackdrop({
           {body === "sun" ? <Sun uid={`${uid}-b`} cx={880} cy={140} r={64} /> : null}
         </svg>
       ) : null}
-      {fade ? <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-b from-transparent to-bg" /> : null}
+      {fade ? <div className="absolute inset-x-0 bottom-0 h-32 bg-black/70" /> : null}
     </div>
   );
 }

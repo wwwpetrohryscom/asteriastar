@@ -107,7 +107,7 @@ export default async function DeepSkyPage({ params }: PageProps<"/deep-sky/[slug
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             <section aria-labelledby="overview">
               <h2 id="overview" className="font-display text-2xl font-bold">Scientific overview</h2>
               <p className="mt-3 leading-relaxed text-muted">{overview}</p>
@@ -132,7 +132,7 @@ export default async function DeepSkyPage({ params }: PageProps<"/deep-sky/[slug
               <h2 id="location" className="font-display text-2xl font-bold">Location in the sky</h2>
               <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {d.constellation && (
-                  <Link href={constellationStarsPath(d.constellation.slug)} className="rounded-xl border border-white/10 bg-white/[0.02] p-3 transition hover:border-white/25">
+                  <Link href={constellationStarsPath(d.constellation.slug)} className="scientific-card p-3 transition hover:border-white/25">
                     <div className="text-xs text-faint">Constellation</div>
                     <div className="font-medium text-fg">{d.constellation.name}</div>
                   </Link>
@@ -156,7 +156,7 @@ export default async function DeepSkyPage({ params }: PageProps<"/deep-sky/[slug
 
           {/* Sidebar */}
           <aside className="space-y-6">
-            <section aria-labelledby="quick" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <section aria-labelledby="quick" className="scientific-card p-5">
               <h2 id="quick" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
               <dl className="mt-3 divide-y divide-white/5">
                 {facts.map((f) => (
@@ -169,7 +169,7 @@ export default async function DeepSkyPage({ params }: PageProps<"/deep-sky/[slug
             </section>
 
             {catalogs.length > 0 && (
-              <section aria-labelledby="catalogs" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section aria-labelledby="catalogs" className="scientific-card p-5">
                 <h2 id="catalogs" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Catalogues</h2>
                 <dl className="mt-3 divide-y divide-white/5">
                   {catalogs.map((c) => (
@@ -185,7 +185,7 @@ export default async function DeepSkyPage({ params }: PageProps<"/deep-sky/[slug
             {d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
 
             {d.quality && (
-              <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section aria-labelledby="quality" className="scientific-card p-5">
                 <div className="flex items-center justify-between gap-2">
                   <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
                   <span className="text-xs text-faint">{d.quality.completenessPercent}%</span>
@@ -201,7 +201,7 @@ export default async function DeepSkyPage({ params }: PageProps<"/deep-sky/[slug
                 </dl>
                 <p className="mt-3 text-xs leading-relaxed text-faint">
                   Catalogue data from OpenNGC (NGC/IC · Messier · Caldwell), CC BY-SA 4.0. See{" "}
-                  <Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link>.
+                  <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.
                 </p>
               </section>
             )}
@@ -214,7 +214,7 @@ export default async function DeepSkyPage({ params }: PageProps<"/deep-sky/[slug
 
 function Fact({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3">
+    <div className="scientific-card p-3">
       <div className="text-xs text-faint">{label}</div>
       <div className="font-medium text-fg">{value}</div>
     </div>

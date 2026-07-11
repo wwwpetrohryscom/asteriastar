@@ -7,11 +7,11 @@ import { STATUS_LABEL } from "@/knowledge-graph/data/interstellar-catalog/types"
  * central honesty requirement of this encyclopedia.
  */
 const STATUS_STYLE: Record<InterstellarStatus, string> = {
-  confirmed_interstellar: "border-emerald-400/40 bg-emerald-400/[0.10] text-emerald-300",
-  candidate_interstellar: "border-amber-400/40 bg-amber-400/[0.10] text-amber-300",
-  debated_origin: "border-amber-500/40 bg-amber-500/[0.10] text-amber-300",
-  hyperbolic_solar_system_object: "border-sky-400/40 bg-sky-400/[0.10] text-sky-300",
-  rejected_or_uncertain: "border-zinc-400/40 bg-zinc-400/[0.10] text-zinc-300",
+  confirmed_interstellar: "border-success/40 bg-success/10 text-success-strong",
+  candidate_interstellar: "border-nasa/40 bg-nasa/10 text-nasa",
+  debated_origin: "border-nasa/40 bg-nasa/10 text-nasa",
+  hyperbolic_solar_system_object: "border-white/20 bg-white/[0.045] text-muted",
+  rejected_or_uncertain: "border-white/20 bg-white/[0.045] text-muted",
 };
 
 export function StatusBadge({ status, className = "" }: { status: InterstellarStatus; className?: string }) {

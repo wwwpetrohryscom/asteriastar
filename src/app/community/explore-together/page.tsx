@@ -52,7 +52,7 @@ export default function ExploreTogetherPage() {
           observe — Jupiter, its place in the Solar System, the telescope used,
           the image captured, the location. Everything references existing graph
           entities; nothing duplicates them. Begin in the{" "}
-          <Link href={ROUTES.explore} className="text-comet underline-offset-4 hover:underline">Knowledge Explorer</Link>.
+          <Link href={ROUTES.explore} className="text-faint underline-offset-4 hover:underline">Knowledge Explorer</Link>.
         </p>
       </section>
     </CommunityLanding>

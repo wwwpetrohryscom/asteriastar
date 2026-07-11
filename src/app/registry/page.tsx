@@ -60,7 +60,7 @@ export default function RegistryPage() {
               { href: ROUTES.developers, title: "API contracts", desc: "Versioned, typed" },
               { href: ROUTES.openData, title: "Open data", desc: "Standards & access" },
             ].map((c) => (
-              <Link key={c.href} href={c.href} className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:border-white/25 hover:bg-white/[0.04]">
+              <Link key={c.href} href={c.href} className="scientific-card p-5 transition hover:border-white/25 hover:bg-white/[0.04]">
                 <h3 className="font-display text-base font-semibold text-fg">{c.title}</h3>
                 <p className="mt-1 text-sm text-muted">{c.desc}</p>
               </Link>

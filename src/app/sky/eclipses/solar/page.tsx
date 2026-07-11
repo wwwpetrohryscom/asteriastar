@@ -29,13 +29,13 @@ export default function SolarEclipsesPage() {
         <div className="mt-4 flex flex-wrap items-center gap-2"><Badge tone="accent">Night Sky</Badge><DataStatusBadge status="reference" /></div>
       </HeroSection>
       <Container className="mt-8 mb-14 max-w-3xl space-y-8">
-        <aside role="note" className="rounded-xl border border-rose-400/25 bg-rose-400/[0.06] p-4">
-          <p className="text-sm font-semibold text-rose-200">Never look at the Sun without certified solar filters</p>
+        <aside role="note" className="rounded-xl border border-nasa-red/50 bg-nasa-red/[0.12] p-4">
+          <p className="text-sm font-semibold text-nasa">Never look at the Sun without certified solar filters</p>
           <p className="mt-1 text-sm leading-relaxed text-muted">Only during the brief total phase of a total solar eclipse is the Sun safe to view with the naked eye. At all other times — including partial and annular eclipses — proper solar filters are essential.</p>
         </aside>
         <SkySection id="types" title="Types of solar eclipse"><Types items={s.eclipses.solarTypes.map((t) => [t.name, t.description])} /></SkySection>
         <PreparedForIntegration providers={provider ? [provider] : []} envelope={s.eclipses.upcoming()[0]?.envelope} />
-        <p className="text-sm text-muted"><Link href={skyPath("eclipses")} className="text-nebula hover:underline">← All eclipses</Link> · <Link href={skyPath("eclipses/lunar")} className="text-nebula hover:underline">Lunar eclipses →</Link></p>
+        <p className="text-sm text-muted"><Link href={skyPath("eclipses")} className="text-nasa hover:underline">← All eclipses</Link> · <Link href={skyPath("eclipses/lunar")} className="text-nasa hover:underline">Lunar eclipses →</Link></p>
         <SourceList keys={["nasa"]} title="Sources & references" />
       </Container>
     </>

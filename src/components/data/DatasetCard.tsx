@@ -20,7 +20,7 @@ const STATUS_MAP: Record<CatalogueEntry["status"], PortalStatus> = {
 export function DatasetCard({ entry }: { entry: CatalogueEntry }) {
   const license = LICENSES[entry.license];
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <div className="scientific-card p-5">
       <div className="flex flex-wrap items-start justify-between gap-2">
         <h3 className="font-display text-base font-semibold text-fg">{entry.title}</h3>
         <StatusBadge status={STATUS_MAP[entry.status]} />
@@ -50,7 +50,7 @@ export function DatasetCard({ entry }: { entry: CatalogueEntry }) {
               <li key={key}>
                 <a
                   href={f.href}
-                  className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.02] px-2.5 py-1 font-mono text-xs text-nebula underline-offset-4 hover:border-white/25 hover:underline"
+                  className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/[0.02] px-2.5 py-1 font-mono text-xs text-nasa underline-offset-4 hover:border-white/25 hover:underline"
                 >
                   {f.format}
                   {f.bytes != null && <span className="text-faint">· {formatBytes(f.bytes)}</span>}
@@ -80,7 +80,7 @@ export function DatasetCard({ entry }: { entry: CatalogueEntry }) {
       )}
 
       {entry.limitations && (
-        <p className="mt-3 text-xs leading-relaxed text-amber-200/80">{entry.limitations}</p>
+        <p className="mt-3 text-xs leading-relaxed text-nasa/80">{entry.limitations}</p>
       )}
     </div>
   );

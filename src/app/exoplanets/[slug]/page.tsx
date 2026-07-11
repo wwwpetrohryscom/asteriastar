@@ -62,7 +62,7 @@ export default async function ExoplanetPage({ params }: PageProps<"/exoplanets/[
       >
         <div className="mt-4 flex flex-wrap items-center gap-2">
           <Badge tone="accent">Exoplanets</Badge>
-          {d.kind === "planet" && d.record.habitableCandidate && <span className="rounded-full border border-emerald-400/20 bg-emerald-400/5 px-2 py-0.5 text-xs text-emerald-300">Habitable-zone candidate</span>}
+          {d.kind === "planet" && d.record.habitableCandidate && <span className="rounded-full border border-success/25 bg-success/10 px-2 py-0.5 text-xs text-success-strong">Habitable-zone candidate</span>}
           {d.kind === "planet" && d.record.discoveryYear && <span className="text-sm text-faint">Discovered {d.record.discoveryYear}</span>}
         </div>
       </HeroSection>
@@ -73,7 +73,7 @@ export default async function ExoplanetPage({ params }: PageProps<"/exoplanets/[
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             {d.kind === "planet" && <PlanetBody d={d} />}
             {d.kind === "host" && <HostBody d={d} />}
             {d.kind === "system" && <SystemBody d={d} />}
@@ -85,7 +85,7 @@ export default async function ExoplanetPage({ params }: PageProps<"/exoplanets/[
             {(d.kind === "planet" || d.kind === "host") && d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
 
             {(d.kind === "planet" || d.kind === "host") && d.quality && (
-              <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section aria-labelledby="quality" className="scientific-card p-5">
                 <div className="flex items-center justify-between gap-2">
                   <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
                   <span className="text-xs text-faint">{d.quality.completenessPercent}%</span>
@@ -99,7 +99,7 @@ export default async function ExoplanetPage({ params }: PageProps<"/exoplanets/[
                     </div>
                   ))}
                 </dl>
-                <p className="mt-3 text-xs leading-relaxed text-faint">Data from the <Link href="/exoplanets" className="text-nebula hover:underline">NASA Exoplanet Archive</Link>. See <Link href="/transparency/source-quality" className="text-nebula hover:underline">source quality</Link>.</p>
+                <p className="mt-3 text-xs leading-relaxed text-faint">Data from the <Link href="/exoplanets" className="text-nasa hover:underline">NASA Exoplanet Archive</Link>. See <Link href="/transparency/source-quality" className="text-nasa hover:underline">source quality</Link>.</p>
               </section>
             )}
           </aside>
@@ -133,7 +133,7 @@ function PlanetBody({ d }: { d: Extract<D, { kind: "planet" }> }) {
       </Section>
       {d.siblings.length ? (
         <Section id="system" title={`Planetary system${d.system ? ` — ${d.system.name}` : ""}`}>
-          {d.system && <p className="mb-3 text-sm text-muted"><Link href={exoplanetPath(d.system.slug)} className="text-nebula hover:underline">View the {d.system.name}</Link> ({d.siblings.length + 1} known planets).</p>}
+          {d.system && <p className="mb-3 text-sm text-muted"><Link href={exoplanetPath(d.system.slug)} className="text-nasa hover:underline">View the {d.system.name}</Link> ({d.siblings.length + 1} known planets).</p>}
           <ExoplanetTable planets={[r, ...d.siblings].sort((a, b) => (a.orbitalPeriodDays ?? 9e9) - (b.orbitalPeriodDays ?? 9e9))} showHost={false} />
         </Section>
       ) : null}
@@ -222,13 +222,13 @@ function QuickFacts({ d }: { d: D }) {
   }
   if (!facts.length) return null;
   return (
-    <section aria-labelledby="quick" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <section aria-labelledby="quick" className="scientific-card p-5">
       <h2 id="quick" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
       <dl className="mt-3 divide-y divide-white/5">
         {facts.map((f) => (
           <div key={f.label} className="flex justify-between gap-3 py-2 text-sm">
             <dt className="text-faint">{f.label}</dt>
-            <dd className="text-right font-medium text-fg">{f.href ? <Link href={f.href} className="hover:text-nebula">{f.value}</Link> : f.value}</dd>
+            <dd className="text-right font-medium text-fg">{f.href ? <Link href={f.href} className="hover:text-nasa">{f.value}</Link> : f.value}</dd>
           </div>
         ))}
       </dl>
@@ -245,7 +245,7 @@ function ConnectionsSection({ id }: { id: string }) {
         {science.slice(0, 20).map((c) => (
           <li key={c.relation.id} className="flex items-baseline justify-between gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-sm">
             <span className="text-faint">{c.outgoing ? RELATION_LABELS[c.relation.type] : INVERSE_RELATION_LABELS[c.relation.type]}</span>
-            <Link href={entityGraphPath(c.other)} className="text-right font-medium text-fg hover:text-nebula">{c.other.name}</Link>
+            <Link href={entityGraphPath(c.other)} className="text-right font-medium text-fg hover:text-nasa">{c.other.name}</Link>
           </li>
         ))}
       </ul>
@@ -264,6 +264,6 @@ function Section({ id, title, children }: { id: string; title: string; children:
 
 function RefCard({ label, name, href }: { label: string; name: string; href?: string }) {
   const body = (<><div className="text-xs text-faint">{label}</div><div className="font-medium text-fg">{name}</div></>);
-  return href ? <Link href={href} className="rounded-xl border border-white/10 bg-white/[0.02] p-3 transition hover:border-white/25">{body}</Link>
-    : <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3">{body}</div>;
+  return href ? <Link href={href} className="scientific-card p-3 transition hover:border-white/25">{body}</Link>
+    : <div className="scientific-card p-3">{body}</div>;
 }

@@ -43,18 +43,18 @@ export default function OpenPlatformHubPage() {
         <section aria-labelledby="arch-heading" className="mt-12">
           <div className="flex items-baseline justify-between gap-3">
             <h2 id="arch-heading" className="font-display text-2xl font-bold">Architecture-ready</h2>
-            <Link href={`${ROUTES.openPlatform}/roadmap`} className="text-sm text-ember hover:underline">The roadmap →</Link>
+            <Link href={`${ROUTES.openPlatform}/roadmap`} className="text-sm text-nasa hover:underline">The roadmap →</Link>
           </div>
           <p className="mt-1 text-sm text-muted">Defined interfaces built on the live data, not yet hosted — and honest about it. No fabricated endpoints.</p>
           <div className="mt-4"><CapabilityCards records={e.byStatus("architecture-ready")} /></div>
         </section>
-        <section aria-labelledby="dev-heading" className="mt-12 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="dev-heading" className="mt-12 scientific-card p-5">
           <h2 id="dev-heading" className="font-display text-base font-semibold text-fg">For developers</h2>
           <p className="mt-2 text-sm text-muted">
             Start at the{" "}
-            <Link href="/developers/platform" className="text-ember underline-offset-4 hover:underline">platform overview for developers</Link>, browse the{" "}
-            <Link href="/api/v0/openapi.json" className="text-ember underline-offset-4 hover:underline">OpenAPI 3.1 spec</Link>, or pull the whole graph from{" "}
-            <Link href="/data/graph.json" className="text-ember underline-offset-4 hover:underline">/data/graph.json</Link>. Every API response carries a provenance envelope; the graph and API are licensed CC BY-SA 4.0.
+            <Link href="/developers/platform" className="text-nasa underline-offset-4 hover:underline">platform overview for developers</Link>, browse the{" "}
+            <Link href="/api/v0/openapi.json" className="text-nasa underline-offset-4 hover:underline">OpenAPI 3.1 spec</Link>, or pull the whole graph from{" "}
+            <Link href="/data/graph.json" className="text-nasa underline-offset-4 hover:underline">/data/graph.json</Link>. Every API response carries a provenance envelope; the graph and API are licensed CC BY-SA 4.0.
           </p>
         </section>
       </Container>

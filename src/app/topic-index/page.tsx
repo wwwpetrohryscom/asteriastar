@@ -53,7 +53,7 @@ export default function TopicIndexPage() {
             {sections.map((section) => (
               <div key={section.slug}>
                 <h3 className="font-display text-sm font-semibold text-fg">
-                  <Link href={sectionPath(section)} className="transition hover:text-nebula">
+                  <Link href={sectionPath(section)} className="transition hover:text-nasa">
                     {section.name}
                   </Link>
                 </h3>

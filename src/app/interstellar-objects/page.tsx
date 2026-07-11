@@ -45,21 +45,21 @@ export default function InterstellarHubPage() {
         <section aria-labelledby="confirmed-heading">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h2 id="confirmed-heading" className="font-display text-2xl font-bold">
-              <span className="inline-block h-2.5 w-2.5 rounded-full bg-emerald-400 align-middle" /> Confirmed interstellar objects
+              <span className="inline-block h-2.5 w-2.5 rounded-full bg-success align-middle" /> Confirmed interstellar objects
             </h2>
-            <Link href={interstellarDiscoveryPath("confirmed")} className="text-sm text-aurora underline-offset-4 hover:underline">All confirmed →</Link>
+            <Link href={interstellarDiscoveryPath("confirmed")} className="text-sm text-nasa underline-offset-4 hover:underline">All confirmed →</Link>
           </div>
           <p className="mt-1 text-sm text-faint">Unambiguously from beyond the Solar System — a strongly hyperbolic orbit and an IAU interstellar (&ldquo;I&rdquo;) designation.</p>
           <div className="mt-4"><InterstellarCards records={confirmed} /></div>
         </section>
 
         {/* Candidate / debated — explicitly separated */}
-        <section aria-labelledby="candidate-heading" className="rounded-2xl border border-amber-400/25 bg-amber-400/[0.03] p-6">
+        <section aria-labelledby="candidate-heading" className="rounded-2xl border border-nasa/40 bg-nasa/10 p-6">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h2 id="candidate-heading" className="font-display text-2xl font-bold">
-              <span className="inline-block h-2.5 w-2.5 rounded-full bg-amber-400 align-middle" /> Candidate &amp; debated claims
+              <span className="inline-block h-2.5 w-2.5 rounded-full bg-nasa align-middle" /> Candidate &amp; debated claims
             </h2>
-            <Link href={interstellarDiscoveryPath("debated")} className="text-sm text-aurora underline-offset-4 hover:underline">Debated claims →</Link>
+            <Link href={interstellarDiscoveryPath("debated")} className="text-sm text-nasa underline-offset-4 hover:underline">Debated claims →</Link>
           </div>
           <p className="mt-1 text-sm text-faint">Proposed but not confirmed. These are never presented as catalogued interstellar objects — each carries an explicit uncertainty note.</p>
           <div className="mt-4"><InterstellarCards records={candidates} /></div>
@@ -69,9 +69,9 @@ export default function InterstellarHubPage() {
         <section aria-labelledby="hyperbolic-heading">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h2 id="hyperbolic-heading" className="font-display text-2xl font-bold">
-              <span className="inline-block h-2.5 w-2.5 rounded-full bg-sky-400 align-middle" /> Hyperbolic Solar-System comets
+              <span className="inline-block h-2.5 w-2.5 rounded-full bg-nasa align-middle" /> Hyperbolic Solar-System comets
             </h2>
-            <Link href={interstellarDiscoveryPath("hyperbolic-comets")} className="text-sm text-aurora underline-offset-4 hover:underline">All hyperbolic comets →</Link>
+            <Link href={interstellarDiscoveryPath("hyperbolic-comets")} className="text-sm text-nasa underline-offset-4 hover:underline">All hyperbolic comets →</Link>
           </div>
           <p className="mt-1 text-sm text-faint">Comets that formed here but were nudged onto hyperbolic or near-parabolic orbits — a small eccentricity above 1 from planetary perturbations, not an interstellar origin.</p>
           <div className="mt-4"><InterstellarCards records={hyperbolic} /></div>
@@ -83,8 +83,8 @@ export default function InterstellarHubPage() {
           <p className="mt-1 text-sm text-faint">The eccentricity ladder, from bound orbits to interstellar trajectories — what makes an interstellar origin legible.</p>
           <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {classes.map((c) => (
-              <li key={c.slug} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                <Link href={interstellarTrajectoryPath(c.slug)} className="font-medium text-fg hover:text-aurora">{c.name}</Link>
+              <li key={c.slug} className="scientific-card p-4">
+                <Link href={interstellarTrajectoryPath(c.slug)} className="font-medium text-fg hover:text-nasa">{c.name}</Link>
                 {c.eccentricityRangeLabel ? <div className="mt-1 text-xs text-faint">{c.eccentricityRangeLabel}</div> : null}
               </li>
             ))}
@@ -96,8 +96,8 @@ export default function InterstellarHubPage() {
           <h2 id="methods-heading" className="font-display text-2xl font-bold">How interstellar objects are detected</h2>
           <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
             {methods.map((m) => (
-              <li key={m.slug} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                <Link href={interstellarDetectionPath(m.slug)} className="font-medium text-fg hover:text-aurora">{m.name}</Link>
+              <li key={m.slug} className="scientific-card p-4">
+                <Link href={interstellarDetectionPath(m.slug)} className="font-medium text-fg hover:text-nasa">{m.name}</Link>
                 {m.definition ? <p className="mt-1 text-xs text-faint">{m.definition}</p> : null}
               </li>
             ))}
@@ -113,18 +113,18 @@ export default function InterstellarHubPage() {
               <li key={s.id}><Link href={s.href ?? "#"} className="rounded-lg border border-white/10 bg-white/[0.02] px-3 py-1.5 text-sm text-fg hover:border-white/25">{s.name}</Link></li>
             ))}
           </ul>
-          <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+          <div className="mt-5 scientific-card p-5">
             <h3 className="font-display text-base font-semibold text-fg">Future interstellar discoveries</h3>
             <p className="mt-2 text-sm text-muted">Only three interstellar objects have been confirmed so far, but wide-field surveys are expected to find many more. The{" "}
-              <Link href="/observatories/lsst" className="text-aurora underline-offset-4 hover:underline">Legacy Survey of Space and Time</Link> at the Vera C. Rubin Observatory, in particular, should sharply increase the detection rate. This page states no predicted counts or dates — none are fabricated.</p>
+              <Link href="/observatories/lsst" className="text-nasa underline-offset-4 hover:underline">Legacy Survey of Space and Time</Link> at the Vera C. Rubin Observatory, in particular, should sharply increase the detection rate. This page states no predicted counts or dates — none are fabricated.</p>
           </div>
         </section>
 
-        <section aria-labelledby="data-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="data-heading" className="scientific-card p-5">
           <h2 id="data-heading" className="font-display text-base font-semibold text-fg">Data &amp; provenance</h2>
           <p className="mt-2 text-sm text-muted">
             Each object, comet, detection method, trajectory class, and survey is a first-class knowledge-graph entity resolved through the Scientific Data Engine. Orbits and designations come from the IAU Minor Planet Center and the NASA/JPL Small-Body Database. Interstellar origin is asserted only for the confirmed objects; candidates carry explicit uncertainty notes and are never labelled confirmed. No &ldquo;alien&rdquo; or artificial-origin claims are made. Unknown values are left blank. See{" "}
-            <Link href="/transparency/source-quality" className="text-aurora underline-offset-4 hover:underline">source quality</Link>.
+            <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.
           </p>
         </section>
       </Container>

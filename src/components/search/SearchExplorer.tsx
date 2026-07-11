@@ -79,9 +79,9 @@ export function SearchExplorer({
                     <li key={it.id}>
                       <Link
                         href={it.href}
-                        className="group flex flex-col rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 transition hover:border-white/25 hover:bg-white/[0.04]"
+                        className="group flex flex-col scientific-card px-4 py-3 transition hover:border-white/25 hover:bg-white/[0.04]"
                       >
-                        <span className="font-medium text-fg group-hover:text-nebula">{it.name}</span>
+                        <span className="font-medium text-fg group-hover:text-nasa">{it.name}</span>
                         <span className="text-xs text-faint">{it.kindLabel}</span>
                       </Link>
                     </li>

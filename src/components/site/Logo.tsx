@@ -16,7 +16,7 @@ export function Logo({ className = "", idSuffix = "header" }: { className?: stri
         className="shrink-0 rounded-lg transition-transform duration-500 group-hover:scale-105"
       />
       <span className="font-display text-lg font-semibold uppercase tracking-[0.08em] text-fg">
-        Asteria<span className="text-gold">Star</span>
+        Asteria<span className="text-nasa">Star</span>
       </span>
     </Link>
   );

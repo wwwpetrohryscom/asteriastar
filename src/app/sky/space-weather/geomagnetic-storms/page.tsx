@@ -32,7 +32,7 @@ export default function GeomagneticStormsPage() {
         <SkySection id="what" title="What a geomagnetic storm is"><p className="leading-relaxed text-muted">A geomagnetic storm is a temporary disturbance of Earth&apos;s magnetosphere caused by the solar wind — especially by coronal mass ejections. Storms drive the aurora to lower latitudes and, when strong, can affect power grids, satellites, and navigation.</p></SkySection>
         <SkySection id="scale" title="The G1–G5 storm scale"><Types items={s.spaceWeather.geomagneticScale.map((g) => [g.gScale, g.meaning])} /></SkySection>
         <PreparedForIntegration providers={provider ? [provider] : []} envelope={s.spaceWeather.geomagneticStorms()[0]?.envelope} />
-        <p className="text-sm text-muted"><Link href={skyPath("space-weather")} className="text-nebula hover:underline">← Space weather</Link> · <Link href={skyPath("aurora")} className="text-nebula hover:underline">Aurora →</Link></p>
+        <p className="text-sm text-muted"><Link href={skyPath("space-weather")} className="text-nasa hover:underline">← Space weather</Link> · <Link href={skyPath("aurora")} className="text-nasa hover:underline">Aurora →</Link></p>
         <SourceList keys={["swpc"]} title="Sources & references" />
       </Container>
     </>

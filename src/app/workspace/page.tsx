@@ -49,7 +49,7 @@ export default function WorkspacePage() {
         <WorkspaceHub items={items} />
         <p className="mt-10 text-xs text-faint">
           The workspace stores data only in this browser. See the{" "}
-          <Link href={`${ROUTES.workspace}/privacy`} className="text-halo underline-offset-4 hover:underline">privacy guarantees</Link>.
+          <Link href={`${ROUTES.workspace}/privacy`} className="text-white underline-offset-4 hover:underline">privacy guarantees</Link>.
         </p>
       </Container>
     </>

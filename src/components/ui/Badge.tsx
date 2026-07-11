@@ -11,10 +11,10 @@ export function Badge({
   className?: string;
 }) {
   const tones = {
-    neutral: "border-white/12 bg-white/[0.04] text-muted",
+    neutral: "border-white/15 bg-white/[0.045] text-muted",
     accent:
-      "border-[color-mix(in_oklab,var(--accent,#c8d2e6)_45%,transparent)] bg-[color-mix(in_oklab,var(--accent,#c8d2e6)_14%,transparent)] text-fg",
-    tradition: "border-gold/30 bg-gold/10 text-gold",
+      "border-[color-mix(in_oklab,var(--accent,#ff2a1a)_48%,transparent)] bg-[color-mix(in_oklab,var(--accent,#ff2a1a)_14%,transparent)] text-fg",
+    tradition: "border-white/20 bg-white/[0.045] text-fg",
   } as const;
 
   return (

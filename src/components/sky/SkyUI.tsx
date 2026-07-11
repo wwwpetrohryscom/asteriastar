@@ -10,11 +10,11 @@ import type { ProviderInfo } from "@/platform/live-sky/providers";
  */
 
 const STATUS_CLASSES: Record<DataStatus, string> = {
-  reference: "border-teal-400/30 bg-teal-400/10 text-teal-300",
-  prepared: "border-amber-400/30 bg-amber-400/10 text-amber-300",
-  computed: "border-sky-400/30 bg-sky-400/10 text-sky-300",
-  live: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
-  stale: "border-rose-400/30 bg-rose-400/10 text-rose-300",
+  reference: "border-success/40 bg-success/10 text-success-strong",
+  prepared: "border-nasa/40 bg-nasa/10 text-nasa",
+  computed: "border-white/20 bg-white/[0.045] text-muted",
+  live: "border-success/40 bg-success/10 text-success-strong",
+  stale: "border-nasa-red/50 bg-nasa-red/[0.12] text-nasa",
 };
 
 /** A small pill stating the honesty status of a datum. */
@@ -47,10 +47,10 @@ export function SourceLabel({ sources }: { sources: readonly SourceKey[] }) {
 /** The prominent, honest panel: this data is prepared for integration, not live. */
 export function PreparedForIntegration({ providers, envelope }: { providers: ProviderInfo[]; envelope?: SkyEnvelope }) {
   return (
-    <aside role="note" className="rounded-2xl border border-amber-400/25 bg-amber-400/[0.06] p-5">
+    <aside role="note" className="rounded-2xl border border-nasa/40 bg-nasa/10 p-5">
       <div className="flex items-center gap-2">
         <DataStatusBadge status="prepared" />
-        <span className="text-sm font-semibold text-amber-200">No live data is shown</span>
+        <span className="text-sm font-semibold text-nasa">No live data is shown</span>
       </div>
       <p className="mt-2 text-sm leading-relaxed text-muted">
         {envelope?.provenance ??
@@ -61,9 +61,9 @@ export function PreparedForIntegration({ providers, envelope }: { providers: Pro
           <p className="text-xs font-semibold uppercase tracking-wider text-faint">Prepared to integrate</p>
           <ul className="mt-2 space-y-2">
             {providers.map((p) => (
-              <li key={p.key} className="rounded-xl border border-white/10 bg-white/[0.02] p-3">
+              <li key={p.key} className="scientific-card p-3">
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <a href={p.url} target="_blank" rel="noreferrer nofollow" className="font-medium text-fg underline-offset-4 hover:text-nebula hover:underline">{p.name}</a>
+                  <a href={p.url} target="_blank" rel="noreferrer nofollow" className="font-medium text-fg underline-offset-4 hover:text-nasa hover:underline">{p.name}</a>
                   <span className="text-xs text-faint">{p.organization}</span>
                 </div>
                 <p className="mt-1 text-sm text-muted">{p.dataKinds.join(" · ")}</p>
@@ -86,7 +86,7 @@ export function EnvelopeCard({ envelope }: { envelope: SkyEnvelope }) {
     ["Confidence", envelope.confidence],
   ];
   return (
-    <section aria-labelledby="provenance" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <section aria-labelledby="provenance" className="scientific-card p-5">
       <div className="flex items-center justify-between gap-2">
         <h2 id="provenance" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Data provenance</h2>
         <DataStatusBadge status={envelope.status} />
@@ -108,7 +108,7 @@ export function EnvelopeCard({ envelope }: { envelope: SkyEnvelope }) {
 /** Honest location placeholder — no geolocation is assumed or fabricated. */
 export function LocationPlaceholder() {
   return (
-    <section aria-labelledby="location" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <section aria-labelledby="location" className="scientific-card p-5">
       <h2 id="location" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Your location</h2>
       <p className="mt-2 text-sm text-muted">Location-aware sky data is prepared for integration. No location is assumed, requested, or inferred yet — sky times depend entirely on where you are, and none are shown until you can set a location.</p>
       <button type="button" disabled aria-disabled className="mt-3 w-full cursor-not-allowed rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2 text-sm text-faint">
@@ -124,7 +124,7 @@ export function RefCards({ refs }: { refs: { id: string; name: string; href: str
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
       {refs.map((r) => (
-        <Link key={r.id} href={r.href} className="rounded-xl border border-white/10 bg-white/[0.02] p-3 transition hover:border-white/25">
+        <Link key={r.id} href={r.href} className="scientific-card p-3 transition hover:border-white/25">
           <div className="font-medium text-fg">{r.name}</div>
         </Link>
       ))}

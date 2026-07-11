@@ -17,7 +17,7 @@ export const SPECTRAL_CLASS_INFO: Record<string, { label: string; color: string;
   W: { label: "Wolf-Rayet", color: "blue", tempK: "≥ 30,000 K", blurb: "Evolved, massive stars shedding their outer layers in powerful stellar winds." },
   D: { label: "White dwarf", color: "white", tempK: "varies", blurb: "The dense, Earth-sized remnant of a Sun-like star, slowly cooling over billions of years." },
   L: { label: "Class L", color: "red", tempK: "1,300–2,400 K", blurb: "Very cool, dim objects on the boundary between the smallest stars and brown dwarfs." },
-  T: { label: "Class T", color: "magenta", tempK: "600–1,300 K", blurb: "Cool brown dwarfs with methane in their atmospheres." },
+  T: { label: "Class T", color: "dim red-brown", tempK: "600–1,300 K", blurb: "Cool brown dwarfs with methane in their atmospheres." },
   C: { label: "Class C (carbon star)", color: "deep red", tempK: "≤ 3,200 K", blurb: "Cool carbon stars — evolved red giants whose atmospheres hold more carbon than oxygen, giving them a striking deep-red, ruby colour." },
   S: { label: "Class S", color: "red", tempK: "≤ 3,500 K", blurb: "Cool giant stars intermediate between class M and the carbon stars, showing zirconium-oxide bands in their spectra." },
 };

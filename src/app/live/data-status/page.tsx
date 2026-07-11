@@ -30,7 +30,7 @@ export default function LiveDataStatusPage() {
       <HeroSection compact accent="aurora" eyebrow={<span>Live Data · Status</span>} title="Live Data Status" lead="Full transparency on every provider — what it is, whether it is connected, and under what licence. This page never shows a value the platform cannot back with a real, connected source." />
       <Container className="mt-8 mb-14 space-y-8">
         <LiveStatusPanel report={report} />
-        <p className="text-sm text-muted">A machine-readable version of this status is available at <Link href="/api/v0/live/status" className="text-aurora hover:underline">/api/v0/live/status</Link>. See also{" "}<Link href="/transparency/source-quality" className="text-aurora hover:underline">source quality</Link>.</p>
+        <p className="text-sm text-muted">A machine-readable version of this status is available at <Link href="/api/v0/live/status" className="text-nasa hover:underline">/api/v0/live/status</Link>. See also{" "}<Link href="/transparency/source-quality" className="text-nasa hover:underline">source quality</Link>.</p>
       </Container>
     </>
   );

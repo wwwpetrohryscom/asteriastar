@@ -10,10 +10,10 @@ export function HistoryCardGrid({ cards }: { cards: HistoryCard[] }) {
         <li key={c.slug}>
           <Link
             href={c.href}
-            className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]"
+            className="group flex h-full flex-col scientific-card p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]"
           >
             <span className="text-xs font-medium uppercase tracking-wide text-faint">{c.kind}</span>
-            <h3 className="mt-1 font-display text-lg font-semibold text-fg group-hover:text-nebula">{c.name}</h3>
+            <h3 className="mt-1 font-display text-lg font-semibold text-fg group-hover:text-nasa">{c.name}</h3>
             {c.meta && <p className="mt-1 text-sm text-muted">{c.meta}</p>}
           </Link>
         </li>

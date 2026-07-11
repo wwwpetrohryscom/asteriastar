@@ -45,8 +45,8 @@ export default function SmallBodyMissionsHubPage() {
           <h2 id="explore-heading" className="font-display text-2xl font-bold">Explore by theme</h2>
           <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {MISSION_DISCOVERIES.map((d) => (
-              <li key={d.slug} className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                <Link href={smallBodyDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-halo hover:underline">{d.title}</Link>
+              <li key={d.slug} className="flex flex-col scientific-card p-5">
+                <Link href={smallBodyDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-white hover:underline">{d.title}</Link>
                 <p className="mt-1 flex-1 text-sm text-muted">{d.description}</p>
                 <span className="mt-3 text-xs text-faint">{d.get().length} missions</span>
               </li>
@@ -59,8 +59,8 @@ export default function SmallBodyMissionsHubPage() {
           <p className="mt-1 text-sm text-faint">The ways a spacecraft can explore a small body — most missions are more than one.</p>
           <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {classes.map((c) => (
-              <li key={c.slug} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                <Link href={smallBodyTypePath(c.slug)} className="font-medium text-fg hover:text-halo">{c.name}</Link>
+              <li key={c.slug} className="scientific-card p-4">
+                <Link href={smallBodyTypePath(c.slug)} className="font-medium text-fg hover:text-white">{c.name}</Link>
                 <div className="text-xs text-faint">{e.byClass(c.slug).length} missions</div>
               </li>
             ))}
@@ -70,7 +70,7 @@ export default function SmallBodyMissionsHubPage() {
         <section aria-labelledby="sample-heading">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h2 id="sample-heading" className="font-display text-2xl font-bold">Sample return</h2>
-            <Link href={smallBodyDiscoveryPath("sample-return")} className="text-sm text-halo underline-offset-4 hover:underline">All sample-return →</Link>
+            <Link href={smallBodyDiscoveryPath("sample-return")} className="text-sm text-white underline-offset-4 hover:underline">All sample-return →</Link>
           </div>
           <p className="mt-1 text-sm text-faint">The missions that brought pieces of other worlds home — and the samples they returned.</p>
           <div className="mt-4"><MissionsCards records={sampleReturn} /></div>
@@ -91,21 +91,21 @@ export default function SmallBodyMissionsHubPage() {
         <section aria-labelledby="timeline-heading">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h2 id="timeline-heading" className="font-display text-2xl font-bold">Mission timeline</h2>
-            <Link href={smallBodyDiscoveryPath("mission-timeline")} className="text-sm text-halo underline-offset-4 hover:underline">Full timeline →</Link>
+            <Link href={smallBodyDiscoveryPath("mission-timeline")} className="text-sm text-white underline-offset-4 hover:underline">Full timeline →</Link>
           </div>
           <div className="mt-4"><MissionsTable records={e.missionTimeline()} /></div>
         </section>
 
-        <section aria-labelledby="tech-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="tech-heading" className="scientific-card p-5">
           <h2 id="tech-heading" className="font-display text-base font-semibold text-fg">Mission technologies</h2>
           <p className="mt-2 text-sm text-muted">Small-body missions pioneered technologies now used across deep space: ion (solar-electric) propulsion (Deep Space 1, Dawn, Hayabusa), autonomous optical navigation for close operations at low gravity, aerogel dust capture (Stardust), touch-and-go sampling (OSIRIS-REx), and kinetic-impactor guidance (DART). Every figure here is source-backed; nothing is fabricated.</p>
         </section>
 
-        <section aria-labelledby="data-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="data-heading" className="scientific-card p-5">
           <h2 id="data-heading" className="font-display text-base font-semibold text-fg">Data &amp; provenance</h2>
           <p className="mt-2 text-sm text-muted">
             Each mission, mission class, returned sample, capsule, phase, and campaign is a first-class knowledge-graph entity resolved through the Scientific Data Engine. Missions reuse the platform&apos;s existing spacecraft, rockets (Program V), asteroids (Program Y), comets (Program Z), and agencies — existing missions are enriched, never duplicated. Timelines, targets, launch vehicles, and sample masses come from NASA/JPL, ESA, and JAXA; planned missions assert no results they have not achieved. Unknown values are left blank. See{" "}
-            <Link href="/transparency/source-quality" className="text-halo underline-offset-4 hover:underline">source quality</Link>.
+            <Link href="/transparency/source-quality" className="text-white underline-offset-4 hover:underline">source quality</Link>.
           </p>
         </section>
       </Container>

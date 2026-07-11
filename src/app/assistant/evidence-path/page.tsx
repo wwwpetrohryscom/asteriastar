@@ -49,7 +49,7 @@ export default async function EvidencePathPage({ searchParams }: PageProps<"/ass
                 return (
                   <li key={n.id} className="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2">
                     <span className="font-mono text-xs text-faint">{i + 1}</span>
-                    <Link href={ent ? entityGraphPath(ent) : "#"} className="text-sm font-medium text-fg hover:text-nebula">{n.name}</Link>
+                    <Link href={ent ? entityGraphPath(ent) : "#"} className="text-sm font-medium text-fg hover:text-nasa">{n.name}</Link>
                     <span className="text-xs text-faint">{n.type}</span>
                   </li>
                 );

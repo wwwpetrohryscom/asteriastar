@@ -67,7 +67,7 @@ export default async function TopicPage({ params }: PageProps<"/explore/[topic]"
 
       <Container className="mt-8 mb-10 space-y-10">
         {entities.length === 0 ? (
-          <p className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-muted">
+          <p className="scientific-card p-6 text-muted">
             This topic is part of the knowledge graph and is being expanded.
             Entities will appear here as they are added.
           </p>
@@ -75,7 +75,7 @@ export default async function TopicPage({ params }: PageProps<"/explore/[topic]"
           groups.map((group) => (
             <section key={group.letter} aria-label={`Entries starting with ${group.letter}`}>
               <div className="mb-4 flex items-center gap-3">
-                <h2 className="font-display text-2xl font-bold text-nebula">{group.letter}</h2>
+                <h2 className="font-display text-2xl font-bold text-nasa">{group.letter}</h2>
                 <span className="h-px flex-1 bg-white/10" />
                 <span className="text-xs text-faint">{group.entities.length}</span>
               </div>

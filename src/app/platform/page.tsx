@@ -105,7 +105,7 @@ export default function PlatformPage() {
           <p className="mt-2 max-w-2xl text-muted">Seven independent layers with an acyclic dependency contract. The Graph layer is the core; it never depends on a layer above it.</p>
           <ol className="mt-5 space-y-2">
             {LAYERS.map((layer) => (
-              <li key={layer.id} className="flex flex-col gap-2 rounded-xl border border-white/10 bg-white/[0.02] p-4 sm:flex-row sm:items-baseline sm:gap-5">
+              <li key={layer.id} className="flex flex-col gap-2 scientific-card p-4 sm:flex-row sm:items-baseline sm:gap-5">
                 <div className="flex w-44 shrink-0 items-baseline gap-2">
                   <span className="font-mono text-xs text-faint">{layer.level}</span>
                   <span className="font-display font-semibold text-fg">{layer.name}</span>
@@ -135,7 +135,7 @@ export default function PlatformPage() {
                   <tr key={r.id} className="transition hover:bg-white/[0.02]">
                     <td className="px-4 py-2.5">
                       {r.href ? (
-                        <Link href={r.href} className="font-medium text-fg transition hover:text-nebula">{r.name}</Link>
+                        <Link href={r.href} className="font-medium text-fg transition hover:text-nasa">{r.name}</Link>
                       ) : (
                         <span className="font-medium text-fg">{r.name}</span>
                       )}
@@ -155,7 +155,7 @@ export default function PlatformPage() {
           <h2 id="runtime-heading" className="font-display text-2xl font-bold">Entity runtime</h2>
           <p className="mt-2 max-w-2xl text-muted">One call — <code>resolveEntity(id)</code> — assembles everything about an entity from every subsystem, so every client sees the same reality.</p>
           {sample && (
-            <div className="mt-5 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <div className="mt-5 scientific-card p-5">
               <p className="text-sm text-faint">Example: <code className="text-fg">{sample.id}</code></p>
               <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
                 {[
@@ -166,7 +166,7 @@ export default function PlatformPage() {
                   { label: "Recommended", value: sample.recommendations.length },
                   { label: "Entries", value: sample.entries.length },
                 ].map((s) => (
-                  <div key={s.label} className="rounded-xl border border-white/10 bg-white/[0.02] p-3 text-center">
+                  <div key={s.label} className="scientific-card p-3 text-center">
                     <div className="font-display text-2xl font-bold text-fg">{s.value}</div>
                     <div className="text-xs text-faint">{s.label}</div>
                   </div>
@@ -217,7 +217,7 @@ export default function PlatformPage() {
             <p className="mt-2 text-muted">{LOCALIZATION_STATS.locales} languages prepared; identifiers are never localized.</p>
             <ul className="mt-4 flex flex-wrap gap-2">
               {LOCALES.map((l) => (
-                <li key={l.code} className={`rounded-full border px-3 py-1.5 text-sm ${l.status === "active" ? "border-halo/40 text-fg" : "border-white/10 text-faint"}`}>
+                <li key={l.code} className={`rounded-full border px-3 py-1.5 text-sm ${l.status === "active" ? "border-white/40 text-fg" : "border-white/10 text-faint"}`}>
                   {l.nativeName}
                   {l.status === "planned" && <span className="ml-1 text-[0.65rem] uppercase tracking-wider">soon</span>}
                 </li>
@@ -229,7 +229,7 @@ export default function PlatformPage() {
         </section>
 
         {/* CTA */}
-        <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+        <section className="scientific-card p-6">
           <h2 className="font-display text-xl font-bold">Build on the platform</h2>
           <p className="mt-1.5 max-w-2xl text-muted">The graph is open and machine-readable. Explore the datasets, registries, and API contracts.</p>
           <div className="mt-4 flex flex-wrap gap-3 text-sm">

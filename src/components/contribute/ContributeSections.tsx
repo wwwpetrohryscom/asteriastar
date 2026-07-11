@@ -21,14 +21,14 @@ import {
 import { EVIDENCE_LEVELS, EVIDENCE_LABELS, EVIDENCE_DESCRIPTIONS } from "@/platform/authority/evidence";
 import { ROUTES } from "@/lib/routes";
 
-const card = "rounded-2xl border border-white/10 bg-white/[0.02] p-5";
+const card = "scientific-card p-5";
 const S = contributionsEngine.stats;
 
 function Prose({ children }: { children: React.ReactNode }) {
   return <p className="max-w-2xl text-sm leading-relaxed text-muted">{children}</p>;
 }
 function A({ href, children }: { href: string; children: React.ReactNode }) {
-  return <Link href={href} className="text-comet underline-offset-4 hover:underline">{children}</Link>;
+  return <Link href={href} className="text-faint underline-offset-4 hover:underline">{children}</Link>;
 }
 function typesForTrack(track: string): ContributionType[] {
   return CONTRIBUTION_TYPES.filter((t) => t.track === track).map((t) => t.id);
@@ -59,7 +59,7 @@ function HowItWorks() {
   ];
   return (
     <div className="space-y-8">
-      <div className="rounded-xl border border-comet/25 bg-comet/[0.05] p-4">
+      <div className="rounded-xl border border-white/25 bg-white/[0.05] p-4">
         <p className="text-sm leading-relaxed text-muted">
           <strong className="text-fg">Core principle.</strong> No contribution changes the knowledge graph directly. Every
           contribution is a proposal that is validated and reviewed before any versioned update. Contributions are proposals,
@@ -112,7 +112,7 @@ function Guidelines() {
       <Prose>A good contribution is small, sourced, attached to a real object, and honest about its domain and evidence. Reviewers check exactly these things. Start from a <A href="/contribute/templates">template</A>.</Prose>
       <ul className="space-y-2">
         {rules.map((r) => (
-          <li key={r} className="flex gap-2 text-sm text-muted"><span aria-hidden className="mt-1 text-comet">✓</span><span>{r}</span></li>
+          <li key={r} className="flex gap-2 text-sm text-muted"><span aria-hidden className="mt-1 text-faint">✓</span><span>{r}</span></li>
         ))}
       </ul>
       <section>
@@ -198,7 +198,7 @@ function Standards() {
 function Templates() {
   return (
     <div className="space-y-6">
-      <div className="rounded-xl border border-amber-400/20 bg-amber-400/[0.04] p-4">
+      <div className="rounded-xl border border-nasa/40 bg-nasa/10 p-4">
         <p className="text-sm leading-relaxed text-muted"><strong className="text-fg">Copy, don&apos;t submit.</strong> These are static templates to help you structure a proposal. There is no submission form, no backend, and nothing is sent. A future review system will accept structured proposals like these.</p>
       </div>
       {CONTRIBUTE_TEMPLATES.map((t) => (
@@ -223,7 +223,7 @@ function Roadmap() {
     <div className="grid gap-6 lg:grid-cols-2">
       <div className={card}>
         <h2 className="font-display text-lg font-semibold text-fg">Today — architecture</h2>
-        <ul className="mt-3 space-y-2">{now.map((x) => <li key={x} className="flex gap-2 text-sm text-muted"><span aria-hidden className="mt-1 text-emerald-300">✓</span><span>{x}</span></li>)}</ul>
+        <ul className="mt-3 space-y-2">{now.map((x) => <li key={x} className="flex gap-2 text-sm text-muted"><span aria-hidden className="mt-1 text-success-strong">✓</span><span>{x}</span></li>)}</ul>
       </div>
       <div className={`${card} border-dashed`}>
         <h2 className="font-display text-lg font-semibold text-fg">Planned</h2>

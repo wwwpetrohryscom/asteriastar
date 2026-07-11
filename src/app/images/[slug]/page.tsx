@@ -65,7 +65,7 @@ export default async function ImagePage({ params }: PageProps<"/images/[slug]">)
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_340px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             <ImageSection id="context" title="Scientific context"><p className="leading-relaxed text-muted">{r.scientificDescription}</p></ImageSection>
             <ImageSection id="subject" title="Subject & instruments">
               <RefCards refs={[

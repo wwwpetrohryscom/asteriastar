@@ -22,7 +22,7 @@ export function CTASection({
 }) {
   return (
     <Container className="my-20">
-      <div className="panel relative overflow-hidden rounded-lg px-6 py-12 text-center sm:px-12 sm:py-16">
+      <div className="scientific-card px-6 py-12 text-center sm:px-12 sm:py-16">
         <div className="relative">
           <h2 className="mx-auto max-w-2xl font-display text-2xl font-bold sm:text-3xl">
             {title}

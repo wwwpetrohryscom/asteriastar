@@ -70,7 +70,7 @@ export default async function SatelliteOrbitPage({ params }: PageProps<"/satelli
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             <section aria-labelledby="overview">
               <h2 id="overview" className="font-display text-2xl font-bold">Overview</h2>
               <p className="mt-3 leading-relaxed text-muted">{o.description}</p>
@@ -96,7 +96,7 @@ export default async function SatelliteOrbitPage({ params }: PageProps<"/satelli
 
           <aside className="space-y-6">
             {facts.length ? (
-              <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section className="scientific-card p-5">
                 <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
                 <dl className="mt-3 divide-y divide-white/5">
                   {facts.map((f) => (
@@ -108,10 +108,10 @@ export default async function SatelliteOrbitPage({ params }: PageProps<"/satelli
 
             {d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
             {d.quality && (
-              <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section className="scientific-card p-5">
                 <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Authority</h2>
                 <div className="mt-3"><ReviewBadge status={d.reviewStatus} /></div>
-                <p className="mt-3 text-xs leading-relaxed text-faint">Altitude ranges and periods are standard reference values. See{" "}<Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link>.</p>
+                <p className="mt-3 text-xs leading-relaxed text-faint">Altitude ranges and periods are standard reference values. See{" "}<Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.</p>
               </section>
             )}
           </aside>

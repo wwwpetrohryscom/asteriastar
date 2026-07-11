@@ -56,8 +56,8 @@ export default function DeepSkyHub() {
           <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {DEEP_SKY_DISCOVERIES.map((d) => (
               <li key={d.slug}>
-                <Link href={deepSkyDiscoveryPath(d.slug)} className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
-                  <h3 className="font-display text-lg font-semibold text-fg group-hover:text-nebula">{d.title}</h3>
+                <Link href={deepSkyDiscoveryPath(d.slug)} className="group flex h-full flex-col scientific-card p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
+                  <h3 className="font-display text-lg font-semibold text-fg group-hover:text-nasa">{d.title}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted">{d.description}</p>
                 </Link>
               </li>
@@ -90,11 +90,11 @@ export default function DeepSkyHub() {
           </ul>
         </section>
 
-        <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-sm text-muted">
+        <section className="scientific-card p-5 text-sm text-muted">
           <h2 className="font-display text-base font-semibold text-fg">Data &amp; provenance</h2>
           <p className="mt-1.5">
-            Objects are generated from the open <a href="https://github.com/mattiaverga/OpenNGC" target="_blank" rel="noopener noreferrer" className="text-nebula underline-offset-4 hover:underline">OpenNGC database</a> — a compilation of the NGC/IC, Messier, and Caldwell catalogues, licensed CC BY-SA 4.0. Every value is real; no measurements or identifiers are invented. See the{" "}
-            <Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link> page.
+            Objects are generated from the open <a href="https://github.com/mattiaverga/OpenNGC" target="_blank" rel="noopener noreferrer" className="text-nasa underline-offset-4 hover:underline">OpenNGC database</a> — a compilation of the NGC/IC, Messier, and Caldwell catalogues, licensed CC BY-SA 4.0. Every value is real; no measurements or identifiers are invented. See the{" "}
+            <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link> page.
           </p>
         </section>
       </Container>

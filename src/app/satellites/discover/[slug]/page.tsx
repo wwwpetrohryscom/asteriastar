@@ -43,7 +43,7 @@ export default async function SatelliteDiscoverPage({ params }: PageProps<"/sate
       <HeroSection compact accent="nebula" eyebrow={<span>Satellites · {records.length}</span>} title={d.title} lead={d.description} />
       <Container className="mt-8 mb-14">
         {records.length === 0 ? (
-          <p className="rounded-xl border border-white/10 bg-white/[0.02] p-6 text-sm text-muted">No satellites match this view yet — values that are not reliably known are left blank, so some filters are intentionally empty.</p>
+          <p className="scientific-card p-6 text-sm text-muted">No satellites match this view yet — values that are not reliably known are left blank, so some filters are intentionally empty.</p>
         ) : d.view === "table" ? (
           <SatellitesTable records={records} />
         ) : (

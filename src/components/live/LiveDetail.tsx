@@ -41,14 +41,14 @@ export function LiveDetail({ d }: { d: ResolvedLiveSource }) {
       <HeroSection compact accent="aurora" eyebrow={<span>{CATEGORY_LABEL[r.category]} · {r.status === "planned" ? "Architecture-ready" : r.status}</span>} title={r.name} lead={r.description} />
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             {/* The honesty envelope — the real, non-fabricated status of this provider. */}
-            <section aria-labelledby="envelope" className="rounded-2xl border border-aurora/25 bg-aurora/[0.06] p-5">
-              <h2 id="envelope" className="font-display text-sm font-semibold uppercase tracking-wider text-aurora">Provider status</h2>
+            <section aria-labelledby="envelope" className="rounded-2xl border border-white/25 bg-white/[0.06] p-5">
+              <h2 id="envelope" className="font-display text-sm font-semibold uppercase tracking-wider text-nasa">Provider status</h2>
               <dl className="mt-3 grid grid-cols-1 gap-y-1.5 text-sm sm:grid-cols-2 sm:gap-x-6">
                 <div className="flex justify-between gap-2"><dt className="text-muted">Status</dt><dd className="font-medium text-fg">{env.status}</dd></div>
                 <div className="flex justify-between gap-2"><dt className="text-muted">Data shown</dt><dd className="font-medium text-fg">{env.data ? "live" : "none (not connected)"}</dd></div>
-                {env.endpoint ? <div className="flex justify-between gap-2"><dt className="text-muted">Endpoint</dt><dd className="truncate"><a href={env.endpoint} className="text-aurora hover:underline" rel="nofollow noopener">{env.endpoint.replace(/^https?:\/\//, "")}</a></dd></div> : null}
+                {env.endpoint ? <div className="flex justify-between gap-2"><dt className="text-muted">Endpoint</dt><dd className="truncate"><a href={env.endpoint} className="text-nasa hover:underline" rel="nofollow noopener">{env.endpoint.replace(/^https?:\/\//, "")}</a></dd></div> : null}
                 {env.license ? <div className="flex justify-between gap-2"><dt className="text-muted">Licence</dt><dd className="text-right text-fg">{env.license}</dd></div> : null}
                 <div className="flex justify-between gap-2"><dt className="text-muted">Fetched at</dt><dd className="text-fg">{env.fetchedAt ?? "—"}</dd></div>
                 <div className="flex justify-between gap-2"><dt className="text-muted">Stale</dt><dd className="text-fg">{env.stale ? "yes" : "no"}</dd></div>
@@ -84,7 +84,7 @@ export function LiveDetail({ d }: { d: ResolvedLiveSource }) {
                   {science.slice(0, 24).map((cx) => (
                     <li key={cx.relation.id} className="flex items-baseline justify-between gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-sm">
                       <span className="text-faint">{cx.outgoing ? RELATION_LABELS[cx.relation.type] : INVERSE_RELATION_LABELS[cx.relation.type]}</span>
-                      <Link href={entityGraphPath(cx.other)} className="text-right font-medium text-fg hover:text-aurora">{cx.other.name}</Link>
+                      <Link href={entityGraphPath(cx.other)} className="text-right font-medium text-fg hover:text-nasa">{cx.other.name}</Link>
                     </li>
                   ))}
                 </ul>
@@ -97,7 +97,7 @@ export function LiveDetail({ d }: { d: ResolvedLiveSource }) {
           <aside className="space-y-6">
             {d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
             {d.quality && (
-              <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section aria-labelledby="quality" className="scientific-card p-5">
                 <div className="flex items-center justify-between gap-2">
                   <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
                   <span className="text-xs text-faint">{d.quality.completenessPercent}%</span>
@@ -111,7 +111,7 @@ export function LiveDetail({ d }: { d: ResolvedLiveSource }) {
                     </div>
                   ))}
                 </dl>
-                <p className="mt-3 text-xs leading-relaxed text-faint">A provider that is not connected shows no data — only its honest status. No live value or timestamp is fabricated. See{" "}<Link href="/transparency/source-quality" className="text-aurora underline-offset-4 hover:underline">source quality</Link>.</p>
+                <p className="mt-3 text-xs leading-relaxed text-faint">A provider that is not connected shows no data — only its honest status. No live value or timestamp is fabricated. See{" "}<Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.</p>
               </section>
             )}
           </aside>

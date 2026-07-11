@@ -8,9 +8,9 @@ import {
 } from "@/knowledge-graph";
 
 const DOMAIN_DOT = {
-  science: "bg-halo",
-  culture: "bg-comet",
-  astrology: "bg-gold",
+  science: "bg-white",
+  culture: "bg-white",
+  astrology: "bg-nasa",
 } as const;
 
 function PreviewCard({ id }: { id: string }) {
@@ -19,7 +19,7 @@ function PreviewCard({ id }: { id: string }) {
   const connections = getConnections(entity.id).slice(0, 5);
 
   return (
-    <div className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+    <div className="flex flex-col scientific-card p-6">
       <p className="text-xs uppercase tracking-wider text-faint">
         {ENTITY_TYPE_LABELS[entity.type]}
       </p>
@@ -32,7 +32,7 @@ function PreviewCard({ id }: { id: string }) {
           <li key={`${c.relation.id}-${c.outgoing}`} className="flex items-baseline gap-2 text-sm">
             <span aria-hidden className={`mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full ${DOMAIN_DOT[c.relation.domain === "editorial" ? "science" : c.relation.domain]}`} />
             <span className="text-faint">{relationLabel(c.relation.type, c.outgoing)}</span>
-            <Link href={entityGraphPath(c.other)} className="text-fg underline-offset-4 transition hover:text-nebula hover:underline">
+            <Link href={entityGraphPath(c.other)} className="text-fg underline-offset-4 transition hover:text-nasa hover:underline">
               {c.other.name}
             </Link>
           </li>
@@ -40,7 +40,7 @@ function PreviewCard({ id }: { id: string }) {
       </ul>
       <Link
         href={entityGraphPath(entity)}
-        className="mt-5 text-sm font-medium text-nebula underline-offset-4 transition hover:underline"
+        className="mt-5 text-sm font-medium text-nasa underline-offset-4 transition hover:underline"
       >
         Explore connections →
       </Link>

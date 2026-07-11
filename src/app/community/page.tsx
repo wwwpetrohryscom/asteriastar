@@ -49,7 +49,7 @@ export default function CommunityPage() {
         <h2 id="philosophy-heading" className="font-display text-2xl font-bold">Our philosophy</h2>
         <div className="mt-5 grid gap-4 sm:grid-cols-3">
           {PHILOSOPHY.map((p, i) => (
-            <div key={p.title} className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+            <div key={p.title} className="scientific-card p-6">
               <p className="font-display text-3xl font-bold text-faint/40">{i + 1}</p>
               <h3 className="mt-2 font-display text-lg font-semibold text-fg">{p.title}</h3>
               <p className="mt-1.5 text-sm leading-relaxed text-muted">{p.description}</p>
@@ -65,9 +65,9 @@ export default function CommunityPage() {
             <li key={s.href}>
               <Link
                 href={s.href}
-                className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]"
+                className="group flex h-full flex-col scientific-card p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]"
               >
-                <h3 className="font-display text-lg font-semibold text-fg group-hover:text-comet">{s.title}</h3>
+                <h3 className="font-display text-lg font-semibold text-fg group-hover:text-muted">{s.title}</h3>
                 <p className="mt-1.5 text-sm leading-relaxed text-muted">{s.desc}</p>
               </Link>
             </li>

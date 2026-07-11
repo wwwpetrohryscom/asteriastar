@@ -106,10 +106,10 @@ export function SunCalculatorPanel() {
   }
 
   return (
-    <section aria-labelledby="sun-calc-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <section aria-labelledby="sun-calc-heading" className="scientific-card p-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 id="sun-calc-heading" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Sun &amp; twilight calculator</h2>
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-400/30 bg-sky-400/10 px-2.5 py-0.5 text-xs font-medium text-sky-300">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/[0.045] px-2.5 py-0.5 text-xs font-medium text-muted">
           <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden />
           Computed
         </span>
@@ -118,22 +118,22 @@ export function SunCalculatorPanel() {
       <form onSubmit={onSubmit} className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <label className="text-xs text-faint">
           Latitude
-          <input ref={latRef} name="latitude" type="text" inputMode="decimal" placeholder="50.08" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-sky-400/50" />
+          <input ref={latRef} name="latitude" type="text" inputMode="decimal" placeholder="50.08" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-nasa/60" />
         </label>
         <label className="text-xs text-faint">
           Longitude
-          <input ref={lonRef} name="longitude" type="text" inputMode="decimal" placeholder="14.44" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-sky-400/50" />
+          <input ref={lonRef} name="longitude" type="text" inputMode="decimal" placeholder="14.44" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-nasa/60" />
         </label>
         <label className="text-xs text-faint">
           Date
-          <input ref={dateRef} name="date" type="date" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-sky-400/50" />
+          <input ref={dateRef} name="date" type="date" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-nasa/60" />
         </label>
         <label className="text-xs text-faint">
           Timezone (IANA, optional)
-          <input ref={tzRef} name="timezone" type="text" placeholder="Europe/Prague" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-sky-400/50" />
+          <input ref={tzRef} name="timezone" type="text" placeholder="Europe/Prague" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-nasa/60" />
         </label>
         <div className="col-span-2 sm:col-span-4">
-          <button type="submit" className="rounded-lg border border-sky-400/30 bg-sky-400/10 px-4 py-2 text-sm font-medium text-sky-200 transition hover:bg-sky-400/20">
+          <button type="submit" className="rounded-lg border border-white/20 bg-white/[0.045] px-4 py-2 text-sm font-medium text-white transition hover:bg-nasa/20">
             Calculate
           </button>
         </div>
@@ -144,7 +144,7 @@ export function SunCalculatorPanel() {
       </p>
 
       {state.kind === "idle" && (
-        <p className="mt-4 rounded-xl border border-white/10 bg-white/[0.02] p-4 text-sm text-muted" role="status">
+        <p className="mt-4 scientific-card p-4 text-sm text-muted" role="status">
           Enter a latitude and longitude to compute sunrise, sunset, solar noon, day length, and the three twilight phases. Nothing is shown until you do — no location is assumed.
         </p>
       )}
@@ -152,8 +152,8 @@ export function SunCalculatorPanel() {
       {state.kind === "loading" && <p className="mt-4 text-sm text-faint" role="status">Computing solar times…</p>}
 
       {state.kind === "error" && (
-        <div role="alert" className="mt-4 rounded-xl border border-rose-400/20 bg-rose-400/[0.04] p-4">
-          <p className="text-sm text-rose-200">{state.msg}</p>
+        <div role="alert" className="mt-4 rounded-xl border border-nasa-red/50 bg-nasa-red/[0.12] p-4">
+          <p className="text-sm text-nasa">{state.msg}</p>
         </div>
       )}
 
@@ -175,8 +175,8 @@ function SunResult({ d }: { d: SunPayload }) {
   return (
     <div className="mt-5 space-y-5">
       {conditions.length > 0 && (
-        <div className="rounded-xl border border-amber-400/25 bg-amber-400/[0.06] p-4">
-          <ul className="space-y-1 text-sm text-amber-100">
+        <div className="rounded-xl border border-nasa/40 bg-nasa/10 p-4">
+          <ul className="space-y-1 text-sm text-muted">
             {conditions.map((s) => (
               <li key={s}><strong>{CONDITION_LABEL[s] ?? s}.</strong> Some events below are shown as “—” because the Sun does not cross that altitude on this date.</li>
             ))}
@@ -224,7 +224,7 @@ function SunResult({ d }: { d: SunPayload }) {
         <p className="mt-1">{d.calculationNotes}</p>
         <p className="mt-1">
           Programmatic access:{" "}
-          <a href={`/api/v0/live-sky/sun?latitude=${d.input.latitude}&longitude=${d.input.longitude}&date=${d.input.date}${tz !== "UTC" ? `&timezone=${tz}` : ""}`} className="text-nebula underline-offset-4 hover:underline">/api/v0/live-sky/sun</a>.
+          <a href={`/api/v0/live-sky/sun?latitude=${d.input.latitude}&longitude=${d.input.longitude}&date=${d.input.date}${tz !== "UTC" ? `&timezone=${tz}` : ""}`} className="text-nasa underline-offset-4 hover:underline">/api/v0/live-sky/sun</a>.
         </p>
       </div>
     </div>
@@ -233,7 +233,7 @@ function SunResult({ d }: { d: SunPayload }) {
 
 function Stat({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+    <div className="scientific-card p-4">
       <div className="font-display text-2xl font-bold text-fg">{value}</div>
       <div className="mt-1 text-xs text-faint">{label}</div>
     </div>
@@ -242,7 +242,7 @@ function Stat({ label, value }: { label: string; value: string }) {
 
 function Mini({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3">
+    <div className="scientific-card p-3">
       <div className="font-mono text-sm text-fg">{value}</div>
       <div className="mt-0.5 text-xs text-faint">{label}</div>
     </div>

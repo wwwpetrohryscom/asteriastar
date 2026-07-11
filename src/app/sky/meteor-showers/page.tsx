@@ -31,8 +31,8 @@ export default function MeteorShowersHub() {
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {showers.map((sh) => (
             <li key={sh.slug}>
-              <Link href={meteorShowerPath(sh.slug)} className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
-                <h3 className="font-display text-lg font-semibold text-fg group-hover:text-nebula">{sh.name}</h3>
+              <Link href={meteorShowerPath(sh.slug)} className="group flex h-full flex-col scientific-card p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
+                <h3 className="font-display text-lg font-semibold text-fg group-hover:text-nasa">{sh.name}</h3>
                 <p className="mt-1 text-xs uppercase tracking-wide text-faint">Peak {sh.peakLabel}</p>
                 <p className="mt-2 text-sm text-muted">Active {sh.activeWindow}. ZHR ≈ {sh.zhr}, {sh.velocityKmS} km/s. Best from the {sh.bestHemisphere === "Both" ? "both hemispheres" : `${sh.bestHemisphere} Hemisphere`}.</p>
               </Link>

@@ -40,8 +40,8 @@ export default function SatellitesHubPage() {
           <h2 id="explore-heading" className="font-display text-2xl font-bold">Explore by theme</h2>
           <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {SATELLITE_DISCOVERIES.map((d) => (
-              <li key={d.slug} className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                <Link href={satelliteDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nebula hover:underline">{d.title}</Link>
+              <li key={d.slug} className="flex flex-col scientific-card p-5">
+                <Link href={satelliteDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nasa hover:underline">{d.title}</Link>
                 <p className="mt-1 flex-1 text-sm text-muted">{d.description}</p>
                 <span className="mt-3 text-xs text-faint">{d.get().length} entries</span>
               </li>
@@ -54,8 +54,8 @@ export default function SatellitesHubPage() {
           <p className="mt-1 text-sm text-faint">Where satellites fly, and why it matters.</p>
           <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {e.orbits().map((o) => (
-              <li key={o.slug} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                <Link href={satelliteOrbitPath(o.slug)} className="font-medium text-fg hover:text-nebula">{o.name}</Link>
+              <li key={o.slug} className="scientific-card p-4">
+                <Link href={satelliteOrbitPath(o.slug)} className="font-medium text-fg hover:text-nasa">{o.name}</Link>
                 <div className="text-xs text-faint">{e.byOrbit(o.slug).length} satellites &amp; constellations</div>
               </li>
             ))}
@@ -67,8 +67,8 @@ export default function SatellitesHubPage() {
           <p className="mt-1 text-sm text-faint">The space agencies, civil bodies, and companies behind the satellites.</p>
           <ul className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {e.operators().map((o) => (
-              <li key={o.slug} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                <Link href={satelliteOperatorPath(o.slug)} className="font-medium text-fg hover:text-nebula">{o.name}</Link>
+              <li key={o.slug} className="scientific-card p-4">
+                <Link href={satelliteOperatorPath(o.slug)} className="font-medium text-fg hover:text-nasa">{o.name}</Link>
                 <div className="text-xs text-faint">{e.byOperator(o.slug).length} in graph</div>
               </li>
             ))}
@@ -79,8 +79,8 @@ export default function SatellitesHubPage() {
           <h2 id="networks-heading" className="font-display text-2xl font-bold">Tracking networks</h2>
           <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-3">
             {e.networks().map((n) => (
-              <li key={n.slug} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                <Link href={satelliteNetworkPath(n.slug)} className="font-medium text-fg hover:text-nebula">{n.name}</Link>
+              <li key={n.slug} className="scientific-card p-4">
+                <Link href={satelliteNetworkPath(n.slug)} className="font-medium text-fg hover:text-nasa">{n.name}</Link>
                 <div className="mt-1 text-xs text-faint">{n.country}</div>
               </li>
             ))}
@@ -90,17 +90,17 @@ export default function SatellitesHubPage() {
         <section aria-labelledby="constellations-heading">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h2 id="constellations-heading" className="font-display text-2xl font-bold">Satellite constellations</h2>
-            <Link href={satelliteDiscoveryPath("all-satellites")} className="text-sm text-nebula underline-offset-4 hover:underline">All satellites →</Link>
+            <Link href={satelliteDiscoveryPath("all-satellites")} className="text-sm text-nasa underline-offset-4 hover:underline">All satellites →</Link>
           </div>
           <div className="mt-4"><SatellitesCards records={engine.satellites.constellations()} /></div>
         </section>
 
-        <section aria-labelledby="data-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="data-heading" className="scientific-card p-5">
           <h2 id="data-heading" className="font-display text-base font-semibold text-fg">Data &amp; provenance</h2>
           <p className="mt-2 text-sm text-muted">
             Each satellite, constellation, orbit type, operator, and tracking network is a first-class knowledge-graph entity resolved through the Scientific Data Engine. Agencies, launch vehicles, and launch sites are the platform&apos;s existing, source-backed entities — reused, never duplicated. This encyclopedia performs no real-time tracking and states no live positions; where a satellite is observable, it links to the computed{" "}
-            <Link href={ROUTES.sky} className="text-nebula underline-offset-4 hover:underline">Live Sky</Link> tools. Unknown values are left blank. See{" "}
-            <Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link>.
+            <Link href={ROUTES.sky} className="text-nasa underline-offset-4 hover:underline">Live Sky</Link> tools. Unknown values are left blank. See{" "}
+            <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.
           </p>
         </section>
       </Container>

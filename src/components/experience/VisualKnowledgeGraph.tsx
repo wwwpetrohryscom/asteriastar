@@ -19,8 +19,8 @@ const NODE_POSITIONS = [
 ] as const;
 
 const DOMAIN_STYLES = {
-  science: { stroke: "#8fb0d4", fill: "#0b3d91", text: "text-halo", chip: "border-halo/20 bg-halo/[0.06]" },
-  culture: { stroke: "#e7c98a", fill: "#5c4a25", text: "text-gold", chip: "border-gold/25 bg-gold/[0.06]" },
+  science: { stroke: "#8fb0d4", fill: "#0b3d91", text: "text-white", chip: "border-white/20 bg-white/[0.06]" },
+  culture: { stroke: "#e7c98a", fill: "#5c4a25", text: "text-nasa", chip: "border-nasa/25 bg-nasa/[0.06]" },
   astrology: { stroke: "#c8d2e6", fill: "#303847", text: "text-silver", chip: "border-silver/20 bg-silver/[0.05]" },
   editorial: { stroke: "#d4e0f4", fill: "#243248", text: "text-silver", chip: "border-silver/20 bg-silver/[0.05]" },
 } as const;
@@ -134,11 +134,11 @@ export function VisualKnowledgeGraph({ entity }: { entity: RuntimeEntity }) {
         </div>
         <div className="p-6 sm:p-8">
           <div className="flex items-center gap-3">
-            <span className="flex size-10 items-center justify-center rounded-full border border-halo/20 bg-halo/[0.07] text-halo">
+            <span className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/[0.07] text-white">
               <ScientificIcon name="graph" className="size-5" />
             </span>
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold">
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-nasa">
                 Visual knowledge graph
               </p>
               <h2 id="visual-knowledge-graph-heading" className="mt-1 text-2xl font-semibold">
@@ -164,7 +164,7 @@ export function VisualKnowledgeGraph({ entity }: { entity: RuntimeEntity }) {
                   </span>
                   <Link
                     href={entityGraphPath(connection.other)}
-                    className="mt-1 block font-display text-base font-semibold text-fg underline-offset-4 transition hover:text-halo hover:underline"
+                    className="mt-1 block font-display text-base font-semibold text-fg underline-offset-4 transition hover:text-white hover:underline"
                   >
                     {connection.other.name}
                   </Link>
@@ -178,7 +178,7 @@ export function VisualKnowledgeGraph({ entity }: { entity: RuntimeEntity }) {
             })}
           </ul>
           {hidden.length > 0 && (
-            <details className="mt-5 rounded-2xl border border-white/10 bg-white/[0.03] p-4">
+            <details className="mt-5 scientific-card p-4">
               <summary className="cursor-pointer font-display text-sm font-semibold text-fg">
                 {hidden.length} more graph link{hidden.length === 1 ? "" : "s"}
               </summary>
@@ -187,7 +187,7 @@ export function VisualKnowledgeGraph({ entity }: { entity: RuntimeEntity }) {
                   <li key={`${connection.relation.id}-hidden`} className="text-sm">
                     <Link
                       href={entityGraphPath(connection.other)}
-                      className="text-muted underline-offset-4 hover:text-halo hover:underline"
+                      className="text-muted underline-offset-4 hover:text-white hover:underline"
                     >
                       {connection.other.name}
                     </Link>

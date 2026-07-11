@@ -33,19 +33,19 @@ export default function ThisMonthPage() {
           <p className="leading-relaxed text-muted">To plan a month of observing: check the Moon&apos;s phase (a bright Moon washes out faint objects and meteors), note any meteor-shower peaks, and find a dark site with a clear horizon in the right direction. The highlights of the year fall in these months:</p>
           <div className="mt-4 space-y-4">
             {highlights.map(({ m, events }) => (
-              <div key={m} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+              <div key={m} className="scientific-card p-4">
                 <h3 className="font-display font-semibold text-fg">{monthName(m)}</h3>
                 <ul className="mt-2 space-y-1.5">
                   {events.map((e) => (
                     <li key={e.slug} className="text-sm text-muted">
-                      <span className="font-medium text-fg">{e.kind === "meteor-shower" ? <Link href={meteorShowerPath(e.slug.replace(/-peak$/, ""))} className="hover:text-nebula">{e.name}</Link> : e.name}</span> — {e.description}
+                      <span className="font-medium text-fg">{e.kind === "meteor-shower" ? <Link href={meteorShowerPath(e.slug.replace(/-peak$/, ""))} className="hover:text-nasa">{e.name}</Link> : e.name}</span> — {e.description}
                     </li>
                   ))}
                 </ul>
               </div>
             ))}
           </div>
-          <p className="mt-4 text-sm text-muted">For the full year, see the <Link href={skyPath("events")} className="text-nebula hover:underline">observing year</Link> and the <Link href={skyPath("observing-calendar")} className="text-nebula hover:underline">observing calendar</Link>.</p>
+          <p className="mt-4 text-sm text-muted">For the full year, see the <Link href={skyPath("events")} className="text-nasa hover:underline">observing year</Link> and the <Link href={skyPath("observing-calendar")} className="text-nasa hover:underline">observing calendar</Link>.</p>
         </SkySection>
       </Container>
     </>

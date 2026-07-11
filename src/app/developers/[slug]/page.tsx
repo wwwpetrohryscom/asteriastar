@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return buildMetadata({ title: doc.title, description: doc.description, path: developerDocPath(slug) });
 }
 
-const card = "rounded-2xl border border-white/10 bg-white/[0.02] p-5";
+const card = "scientific-card p-5";
 
 function OpenApiDoc() {
   const spec = buildOpenApiSpec();
@@ -45,7 +45,7 @@ function OpenApiDoc() {
         The OpenAPI 3.1 document describes every implemented endpoint ({Object.keys(spec.paths).length} paths) and the response
         envelope. Planned endpoints are intentionally excluded, so the spec never advertises anything that is not real.
       </p>
-      <Link href="/api/v0/openapi.json" className="inline-block rounded-lg border border-white/10 bg-white/[0.02] px-4 py-2 font-mono text-sm text-nebula underline-offset-4 hover:border-white/25 hover:underline">
+      <Link href="/api/v0/openapi.json" className="inline-block rounded-lg border border-white/10 bg-white/[0.02] px-4 py-2 font-mono text-sm text-nasa underline-offset-4 hover:border-white/25 hover:underline">
         GET /api/v0/openapi.json
       </Link>
       <p className="text-xs text-faint">Load it into Swagger UI, Redoc, or any OpenAPI 3.1 client. It is static and deterministic.</p>
@@ -91,7 +91,7 @@ function ChangelogDoc() {
         {VERSIONING_POLICY.map((v) => (
           <div key={v.name} className={card}>
             <span className="font-medium text-fg">{v.name}</span>
-            <span className="ml-2 font-mono text-xs text-nebula">{v.current}</span>
+            <span className="ml-2 font-mono text-xs text-nasa">{v.current}</span>
             <p className="mt-1 text-sm text-muted">{v.bumps}</p>
           </div>
         ))}
@@ -122,9 +122,9 @@ function RateLimitsDoc() {
         quota — nothing here pretends a limiter exists that does not.
       </p>
       <ul className="space-y-2 text-sm text-muted">
-        <li className="flex gap-2"><span aria-hidden className="mt-1 text-emerald-300">•</span><span>Responses set <span className="font-mono text-fg">Cache-Control: public, max-age=3600, stale-while-revalidate=86400</span>.</span></li>
-        <li className="flex gap-2"><span aria-hidden className="mt-1 text-emerald-300">•</span><span>Please cache aggressively and prefer the bulk exports for large pulls.</span></li>
-        <li className="flex gap-2"><span aria-hidden className="mt-1 text-emerald-300">•</span><span>If quotas are ever introduced, they will be versioned and documented here first.</span></li>
+        <li className="flex gap-2"><span aria-hidden className="mt-1 text-success-strong">•</span><span>Responses set <span className="font-mono text-fg">Cache-Control: public, max-age=3600, stale-while-revalidate=86400</span>.</span></li>
+        <li className="flex gap-2"><span aria-hidden className="mt-1 text-success-strong">•</span><span>Please cache aggressively and prefer the bulk exports for large pulls.</span></li>
+        <li className="flex gap-2"><span aria-hidden className="mt-1 text-success-strong">•</span><span>If quotas are ever introduced, they will be versioned and documented here first.</span></li>
       </ul>
     </div>
   );
@@ -141,7 +141,7 @@ console.log(data.name, "—", meta.license);`;
         client works today — a typed SDK is planned to wrap the envelope and endpoints.
       </p>
       <pre className="overflow-auto rounded-lg border border-white/10 bg-black/30 p-4 font-mono text-xs leading-relaxed text-faint">{example}</pre>
-      <p className="text-xs text-faint">Until an SDK ships, the <Link href="/api/v0/openapi.json" className="text-nebula underline-offset-4 hover:underline">OpenAPI spec</Link> can generate a client in most languages.</p>
+      <p className="text-xs text-faint">Until an SDK ships, the <Link href="/api/v0/openapi.json" className="text-nasa underline-offset-4 hover:underline">OpenAPI spec</Link> can generate a client in most languages.</p>
     </div>
   );
 }

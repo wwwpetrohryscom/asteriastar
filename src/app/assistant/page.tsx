@@ -49,7 +49,7 @@ export default function AssistantHubPage() {
               { href: `${ROUTES.assistant}/limitations`, label: "Limitations", blurb: "What it will not do" },
             ].map((t) => (
               <li key={t.href}>
-                <Link href={t.href} className="flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-4 hover:border-plasma/40">
+                <Link href={t.href} className="flex h-full flex-col scientific-card p-4 hover:border-white/40">
                   <span className="font-display text-base font-semibold text-fg">{t.label}</span>
                   <span className="mt-1 text-xs text-faint">{t.blurb}</span>
                 </Link>
@@ -61,8 +61,8 @@ export default function AssistantHubPage() {
           <h2 id="explore-heading" className="font-display text-2xl font-bold">Explore the assistant</h2>
           <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {BS_DISCOVERIES.map((d) => (
-              <li key={d.slug} className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                <Link href={assistantDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-plasma hover:underline">{d.title}</Link>
+              <li key={d.slug} className="flex flex-col scientific-card p-5">
+                <Link href={assistantDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nasa hover:underline">{d.title}</Link>
                 <p className="mt-1 flex-1 text-sm text-muted">{d.description}</p>
                 <span className="mt-3 text-xs text-faint">{d.get().length} capabilities</span>
               </li>
@@ -73,9 +73,9 @@ export default function AssistantHubPage() {
           <h2 id="grounded-heading" className="font-display text-2xl font-bold">Grounded capabilities</h2>
           <div className="mt-4"><AsCards records={e.grounded()} /></div>
         </section>
-        <section aria-labelledby="data-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="data-heading" className="scientific-card p-5">
           <h2 id="data-heading" className="font-display text-base font-semibold text-fg">Data &amp; provenance</h2>
-          <p className="mt-2 text-sm text-muted">Each capability is a first-class knowledge-graph entity resolved through the Scientific Data Engine. The grounded capabilities run real retrieval over the actual graph — search, comparison, evidence chains, related concepts, grounded explanations — and surface only facts already in the graph, each with its cited sources. There is no language model in this layer; nothing is generated. The architecture capabilities are interfaces for a future model that would phrase these grounded facts and never add to them. See{" "}<Link href="/transparency/source-quality" className="text-plasma underline-offset-4 hover:underline">source quality</Link>.</p>
+          <p className="mt-2 text-sm text-muted">Each capability is a first-class knowledge-graph entity resolved through the Scientific Data Engine. The grounded capabilities run real retrieval over the actual graph — search, comparison, evidence chains, related concepts, grounded explanations — and surface only facts already in the graph, each with its cited sources. There is no language model in this layer; nothing is generated. The architecture capabilities are interfaces for a future model that would phrase these grounded facts and never add to them. See{" "}<Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.</p>
         </section>
       </Container>
     </>

@@ -42,16 +42,16 @@ export function GxDetail({ d }: { d: ResolvedExtragalactic }) {
       <Container className="mt-6"><EntityImagery entityId={r.id} /></Container>
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             {r.highlights?.length ? (
               <section aria-labelledby="highlights">
                 <h2 id="highlights" className="font-display text-2xl font-bold">Highlights</h2>
-                <ul className="mt-3 space-y-1.5 text-sm text-muted">{r.highlights.map((h) => <li key={h} className="flex gap-2"><span className="text-halo">›</span>{h}</li>)}</ul>
+                <ul className="mt-3 space-y-1.5 text-sm text-muted">{r.highlights.map((h) => <li key={h} className="flex gap-2"><span className="text-white">›</span>{h}</li>)}</ul>
               </section>
             ) : null}
 
             {r.definition ? (
-              <section aria-labelledby="def" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section aria-labelledby="def" className="scientific-card p-5">
                 <h2 id="def" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">In brief</h2>
                 <p className="mt-2 text-sm text-muted">{r.definition}</p>
               </section>
@@ -71,7 +71,7 @@ export function GxDetail({ d }: { d: ResolvedExtragalactic }) {
                   {science.slice(0, 24).map((cx) => (
                     <li key={cx.relation.id} className="flex items-baseline justify-between gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-sm">
                       <span className="text-faint">{cx.outgoing ? RELATION_LABELS[cx.relation.type] : INVERSE_RELATION_LABELS[cx.relation.type]}</span>
-                      <Link href={entityGraphPath(cx.other)} className="text-right font-medium text-fg hover:text-halo">{cx.other.name}</Link>
+                      <Link href={entityGraphPath(cx.other)} className="text-right font-medium text-fg hover:text-white">{cx.other.name}</Link>
                     </li>
                   ))}
                 </ul>
@@ -83,7 +83,7 @@ export function GxDetail({ d }: { d: ResolvedExtragalactic }) {
 
           <aside className="space-y-6">
             {(r.hubbleType || r.scaleLabel) ? (
-              <section aria-labelledby="quick" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section aria-labelledby="quick" className="scientific-card p-5">
                 <h2 id="quick" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
                 <dl className="mt-3 divide-y divide-white/5 text-sm">
                   {r.hubbleType ? <div className="flex justify-between gap-3 py-2"><dt className="text-faint">Hubble type</dt><dd className="text-right font-medium text-fg">{r.hubbleType}</dd></div> : null}
@@ -93,7 +93,7 @@ export function GxDetail({ d }: { d: ResolvedExtragalactic }) {
             ) : null}
             {d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
             {d.quality && (
-              <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section aria-labelledby="quality" className="scientific-card p-5">
                 <div className="flex items-center justify-between gap-2">
                   <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
                   <span className="text-xs text-faint">{d.quality.completenessPercent}%</span>
@@ -107,7 +107,7 @@ export function GxDetail({ d }: { d: ResolvedExtragalactic }) {
                     </div>
                   ))}
                 </dl>
-                <p className="mt-3 text-xs leading-relaxed text-faint">Curated from NASA and ESA. Galaxies and object classes are reused from the graph. See{" "}<Link href="/transparency/source-quality" className="text-halo underline-offset-4 hover:underline">source quality</Link>.</p>
+                <p className="mt-3 text-xs leading-relaxed text-faint">Curated from NASA and ESA. Galaxies and object classes are reused from the graph. See{" "}<Link href="/transparency/source-quality" className="text-white underline-offset-4 hover:underline">source quality</Link>.</p>
               </section>
             )}
           </aside>

@@ -52,7 +52,7 @@ export default async function ExplainPage({ searchParams }: PageProps<"/assistan
                   {result.links.map((l, i) => (
                     <li key={`${l.relation}-${l.other.id}-${i}`} className="flex items-baseline justify-between gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-sm">
                       <span className="text-faint">{RELATION_LABELS[l.relation as keyof typeof RELATION_LABELS] ?? l.relation.replace(/_/g, " ")}</span>
-                      <Link href={l.other.href} className="text-right font-medium text-fg hover:text-nebula">{l.other.name}</Link>
+                      <Link href={l.other.href} className="text-right font-medium text-fg hover:text-nasa">{l.other.name}</Link>
                     </li>
                   ))}
                 </ul>

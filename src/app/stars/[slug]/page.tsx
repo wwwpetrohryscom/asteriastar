@@ -112,7 +112,7 @@ export default async function StarPage({ params }: PageProps<"/stars/[slug]">) {
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             {/* Scientific overview */}
             <section aria-labelledby="overview">
               <h2 id="overview" className="font-display text-2xl font-bold">Scientific overview</h2>
@@ -159,7 +159,7 @@ export default async function StarPage({ params }: PageProps<"/stars/[slug]">) {
               <h2 id="location" className="font-display text-2xl font-bold">Location in the sky</h2>
               <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
                 {s.constellation && (
-                  <Link href={constellationStarsPath(s.constellation.slug)} className="rounded-xl border border-white/10 bg-white/[0.02] p-3 transition hover:border-white/25">
+                  <Link href={constellationStarsPath(s.constellation.slug)} className="scientific-card p-3 transition hover:border-white/25">
                     <div className="text-xs text-faint">Constellation</div>
                     <div className="font-medium text-fg">{s.constellation.name}</div>
                   </Link>
@@ -176,7 +176,7 @@ export default async function StarPage({ params }: PageProps<"/stars/[slug]">) {
                 <h2 id="connections" className="font-display text-2xl font-bold">Knowledge connections</h2>
                 <ul className="mt-4 space-y-2">
                   {sciConnections.map((c) => (
-                    <li key={c.relation.id} className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-2.5">
+                    <li key={c.relation.id} className="flex items-center justify-between gap-3 scientific-card px-4 py-2.5">
                       <span className="text-sm text-faint">{relationLabel(c.relation.type, c.outgoing)}</span>
                       <span className="text-sm font-medium text-fg">{c.other.name}</span>
                     </li>
@@ -192,7 +192,7 @@ export default async function StarPage({ params }: PageProps<"/stars/[slug]">) {
                 <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {s.neighbors.map((n) => (
                     <li key={n.id}>
-                      <Link href={starPath(n.slug)} className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-2.5 transition hover:border-white/25 hover:bg-white/[0.04]">
+                      <Link href={starPath(n.slug)} className="flex items-center justify-between gap-3 scientific-card px-4 py-2.5 transition hover:border-white/25 hover:bg-white/[0.04]">
                         <span className="font-medium text-fg">{n.name}</span>
                         <span className="text-xs text-faint">{n.apparentMagnitude != null ? `mag ${n.apparentMagnitude}` : ""}</span>
                       </Link>
@@ -207,7 +207,7 @@ export default async function StarPage({ params }: PageProps<"/stars/[slug]">) {
 
           {/* Sidebar: quick facts + authority/quality */}
           <aside className="space-y-6">
-            <section aria-labelledby="quickfacts" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <section aria-labelledby="quickfacts" className="scientific-card p-5">
               <h2 id="quickfacts" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
               <dl className="mt-3 divide-y divide-white/5">
                 {quickFacts.map((f) => (
@@ -232,7 +232,7 @@ export default async function StarPage({ params }: PageProps<"/stars/[slug]">) {
             {s.quality && <EntityProvenancePanel entityId={s.quality.entityId} />}
 
             {s.quality && (
-              <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section aria-labelledby="quality" className="scientific-card p-5">
                 <div className="flex items-center justify-between gap-2">
                   <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
                   <span className="text-xs text-faint">{s.quality.completenessPercent}%</span>
@@ -248,7 +248,7 @@ export default async function StarPage({ params }: PageProps<"/stars/[slug]">) {
                 </dl>
                 <p className="mt-3 text-xs leading-relaxed text-faint">
                   Catalogue data from the open HYG database (Hipparcos · Yale BSC · Gliese), CC BY-SA 4.0. See{" "}
-                  <Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link>.
+                  <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.
                 </p>
               </section>
             )}
@@ -261,7 +261,7 @@ export default async function StarPage({ params }: PageProps<"/stars/[slug]">) {
 
 function Fact({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3">
+    <div className="scientific-card p-3">
       <div className="text-xs text-faint">{label}</div>
       <div className="font-medium text-fg">{value}</div>
     </div>

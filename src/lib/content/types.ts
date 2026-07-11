@@ -91,10 +91,10 @@ export interface Section {
 
 export type AccentToken =
   | "nebula" // NASA blue — astronomy
-  | "aurora" // steel blue — sky guide
-  | "ember" // amber/rose — astrology
-  | "plasma" // slate blue — calculators
-  | "stone" // slate — encyclopedia
+  | "aurora" // legacy alias mapped to white/neutral
+  | "ember" // legacy alias mapped to editorial red
+  | "plasma" // legacy alias mapped to silver/neutral
+  | "stone" // legacy alias mapped to silver/neutral
   | "halo" // sky blue — observatory
   | "comet"; // green/teal — guides
 

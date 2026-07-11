@@ -14,17 +14,17 @@ function Fact({ label, value }: { label: string; value?: string | number | null 
 
 export function AsteroidsCards({ records }: { records: MinorBodyRecord[] }) {
   if (records.length === 0) {
-    return <p className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-sm text-muted">No bodies match this view yet.</p>;
+    return <p className="scientific-card p-4 text-sm text-muted">No bodies match this view yet.</p>;
   }
   return (
     <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {records.map((r) => {
         const href = recordHref(r);
         return (
-          <li key={r.id} className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+          <li key={r.id} className="flex flex-col scientific-card p-5">
             <div className="flex items-baseline justify-between gap-2">
-              {href ? <Link href={href} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nebula hover:underline">{r.name}</Link> : <span className="font-display text-base font-semibold text-fg">{r.name}</span>}
-              {r.pha && <span className="shrink-0 rounded bg-amber-400/10 px-1.5 py-0.5 text-[0.6rem] uppercase tracking-wide text-amber-300">PHA</span>}
+              {href ? <Link href={href} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nasa hover:underline">{r.name}</Link> : <span className="font-display text-base font-semibold text-fg">{r.name}</span>}
+              {r.pha && <span className="shrink-0 rounded bg-nasa/10 px-1.5 py-0.5 text-[0.6rem] uppercase tracking-wide text-nasa">PHA</span>}
             </div>
             <p className="mt-1 flex-1 text-sm text-muted">{r.description}</p>
             <div className="mt-3 flex flex-wrap gap-1.5">

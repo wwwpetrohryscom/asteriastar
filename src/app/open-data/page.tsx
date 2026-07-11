@@ -67,7 +67,7 @@ export default function OpenDataPage() {
               { href: "/data/graph.jsonld", title: "graph.jsonld", desc: "JSON-LD (RDF-compatible).", data: true },
             ].map((item) => {
               const className =
-                "rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:border-white/25 hover:bg-white/[0.04]";
+                "scientific-card p-5 transition hover:border-white/25 hover:bg-white/[0.04]";
               const inner = (
                 <>
                   <h3 className="font-display text-lg font-semibold text-fg">{item.title}</h3>
@@ -89,7 +89,7 @@ export default function OpenDataPage() {
           <h2 id="principles-heading" className="font-display text-2xl font-bold">Principles</h2>
           <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {principles.map((p) => (
-              <li key={p.title} className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <li key={p.title} className="scientific-card p-5">
                 <h3 className="font-display text-base font-semibold text-fg">{p.title}</h3>
                 <p className="mt-1.5 text-sm leading-relaxed text-muted">{p.description}</p>
               </li>

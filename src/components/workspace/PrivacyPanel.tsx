@@ -21,17 +21,17 @@ export function PrivacyPanel() {
 
   return (
     <div className="space-y-8">
-      <section aria-labelledby="guarantees" className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+      <section aria-labelledby="guarantees" className="scientific-card p-6">
         <h2 id="guarantees" className="font-display text-lg font-bold text-fg">What is guaranteed</h2>
         <ul className="mt-3 space-y-2 text-sm text-muted">
           {guarantees.map((g) => (
-            <li key={g} className="flex gap-2"><span className="text-comet">✓</span>{g}</li>
+            <li key={g} className="flex gap-2"><span className="text-faint">✓</span>{g}</li>
           ))}
         </ul>
         <p className="mt-4 text-xs leading-relaxed text-faint">These are properties of how the workspace is built — it makes no network request — not a policy that could change.</p>
       </section>
 
-      <section aria-labelledby="held" className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+      <section aria-labelledby="held" className="scientific-card p-6">
         <h2 id="held" className="font-display text-lg font-bold text-fg">What is held in this browser</h2>
         <dl className="mt-3 grid grid-cols-2 gap-3 text-sm sm:grid-cols-4">
           <div><dt className="text-faint">Saved entities</dt><dd className="font-display text-xl font-bold text-fg">{state.savedEntities.length}</dd></div>
@@ -42,14 +42,14 @@ export function PrivacyPanel() {
         <p className="mt-3 text-xs text-faint">Storage key: <code className="rounded bg-white/5 px-1">asteriastar:workspace:v1</code></p>
       </section>
 
-      <section aria-labelledby="erase" className="rounded-2xl border border-ember/30 bg-ember/[0.04] p-6">
+      <section aria-labelledby="erase" className="rounded-2xl border border-nasa/30 bg-nasa/[0.04] p-6">
         <h2 id="erase" className="font-display text-lg font-bold text-fg">Erase everything</h2>
         <p className="mt-2 text-sm text-muted">Permanently delete all {total} items from this browser. This cannot be undone — export first if you want a copy.</p>
         <button
           type="button"
           disabled={total === 0}
           onClick={() => { if (window.confirm("Permanently erase your entire workspace from this browser?")) clearWorkspace(); }}
-          className="mt-4 rounded-lg border border-ember/50 px-4 py-2 text-sm text-ember hover:bg-ember/10 disabled:cursor-not-allowed disabled:border-white/10 disabled:text-faint"
+          className="mt-4 rounded-lg border border-nasa/50 px-4 py-2 text-sm text-nasa hover:bg-nasa/10 disabled:cursor-not-allowed disabled:border-white/10 disabled:text-faint"
         >
           Erase all workspace data
         </button>

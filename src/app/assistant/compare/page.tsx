@@ -39,7 +39,7 @@ export default async function ComparePage({ searchParams }: PageProps<"/assistan
         {result && (
           <div className="mt-8 space-y-6">
             <h2 className="font-display text-2xl font-bold text-fg">
-              <Link href={result.a.href} className="hover:text-nebula">{result.a.name}</Link> &amp; <Link href={result.b.href} className="hover:text-nebula">{result.b.name}</Link>
+              <Link href={result.a.href} className="hover:text-nasa">{result.a.name}</Link> &amp; <Link href={result.b.href} className="hover:text-nasa">{result.b.name}</Link>
             </h2>
             {result.shared.length === 0 ? (
               <p className="rounded-2xl border border-white/15 bg-white/[0.02] p-6 text-sm text-faint">These two entities share no direct graph neighbours — not enough graph evidence for a common-ground comparison.</p>

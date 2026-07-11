@@ -40,7 +40,7 @@ export default async function DSCommDiscoverPage({ params }: PageProps<"/deep-sp
       <HeroSection compact accent="aurora" eyebrow={<span>Deep Space Network · {records.length}</span>} title={d.title} lead={d.description} />
       <Container className="mt-8 mb-14">
         {records.length === 0 ? (
-          <p className="rounded-xl border border-white/10 bg-white/[0.02] p-6 text-sm text-muted">No entries match this view yet.</p>
+          <p className="scientific-card p-6 text-sm text-muted">No entries match this view yet.</p>
         ) : (
           <DSCommCards records={records} />
         )}

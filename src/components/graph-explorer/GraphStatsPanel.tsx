@@ -13,7 +13,7 @@ export function GraphStatsPanel({ stats }: { stats: GraphStatistics }) {
     <div className="space-y-8">
       <ul className="grid grid-cols-2 gap-4 sm:grid-cols-4">
         {cards.map((c) => (
-          <li key={c.label} className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+          <li key={c.label} className="scientific-card p-5">
             <div className="font-display text-3xl font-bold text-fg tabular-nums">{c.value}</div>
             <div className="mt-1 text-xs uppercase tracking-wide text-faint">{c.label}</div>
           </li>
@@ -25,7 +25,7 @@ export function GraphStatsPanel({ stats }: { stats: GraphStatistics }) {
           <ol className="mt-3 space-y-1.5">
             {stats.mostConnected.map((m) => (
               <li key={m.id} className="flex items-baseline justify-between gap-3 text-sm">
-                <Link href={m.href} className="truncate font-medium text-fg hover:text-halo">{m.name}</Link>
+                <Link href={m.href} className="truncate font-medium text-fg hover:text-white">{m.name}</Link>
                 <span className="shrink-0 tabular-nums text-faint">{m.degree.toLocaleString()} links</span>
               </li>
             ))}

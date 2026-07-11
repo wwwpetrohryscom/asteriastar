@@ -7,9 +7,9 @@ export function ObsStatusPill({ status }: { status?: string }) {
   if (!status) return null;
   const planned = /planned/i.test(status);
   const ended = /retired|completed|deorbited|collapsed/i.test(status);
-  const tone = planned ? "text-amber-300 border-amber-400/20 bg-amber-400/5"
-    : ended ? "text-slate-300 border-white/10 bg-white/[0.03]"
-    : "text-emerald-300 border-emerald-400/20 bg-emerald-400/5";
+  const tone = planned ? "text-nasa border-nasa/40 bg-nasa/10"
+    : ended ? "text-muted border-white/10 bg-white/[0.03]"
+    : "text-success-strong border-success/25 bg-success/10";
   return <span className={`inline-block rounded-full border px-2 py-0.5 text-xs ${tone}`}>{status}</span>;
 }
 
@@ -35,9 +35,9 @@ export function ObsCards({ records }: { records: ObsRecord[] }) {
     <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {records.map((r) => (
         <li key={r.id}>
-          <Link href={observatoryPath(r.slug)} className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
+          <Link href={observatoryPath(r.slug)} className="group flex h-full flex-col scientific-card p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
             <div className="flex items-start justify-between gap-2">
-              <h3 className="font-display text-lg font-semibold text-fg group-hover:text-nebula">{r.name}</h3>
+              <h3 className="font-display text-lg font-semibold text-fg group-hover:text-nasa">{r.name}</h3>
               {r.status && <ObsStatusPill status={r.status} />}
             </div>
             {meta(r) && <p className="mt-1 text-xs uppercase tracking-wide text-faint">{meta(r)}</p>}

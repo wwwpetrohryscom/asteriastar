@@ -62,8 +62,8 @@ export default function DevelopersPage() {
       />
 
       <Container className="mt-8 mb-12 space-y-10">
-        <aside className="flex gap-3 rounded-xl border border-emerald-400/20 bg-emerald-400/[0.04] p-4">
-          <span aria-hidden className="mt-0.5 text-emerald-300">
+        <aside className="flex gap-3 rounded-xl border border-success/25 bg-success/[0.06] p-4">
+          <span aria-hidden className="mt-0.5 text-success-strong">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
               <path d="M8.5 12.5l2.5 2.5 4.5-5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
@@ -72,9 +72,9 @@ export default function DevelopersPage() {
           <p className="text-sm leading-relaxed text-muted">
             <strong className="text-fg">The read-only API v0 is live.</strong> {IMPLEMENTED_ENDPOINTS.length} engine-backed
             endpoints, a provenance envelope on every response, and an{" "}
-            <Link href="/api/v0/openapi.json" className="text-nebula underline-offset-4 hover:underline">OpenAPI 3.1 spec</Link>.
-            Start at the <Link href={ROUTES.developersApi} className="text-nebula underline-offset-4 hover:underline">API reference</Link>{" "}
-            or the <Link href={ROUTES.data} className="text-nebula underline-offset-4 hover:underline">data portal</Link>.
+            <Link href="/api/v0/openapi.json" className="text-nasa underline-offset-4 hover:underline">OpenAPI 3.1 spec</Link>.
+            Start at the <Link href={ROUTES.developersApi} className="text-nasa underline-offset-4 hover:underline">API reference</Link>{" "}
+            or the <Link href={ROUTES.data} className="text-nasa underline-offset-4 hover:underline">data portal</Link>.
           </p>
         </aside>
 
@@ -91,12 +91,12 @@ export default function DevelopersPage() {
             {IMPLEMENTED_ENDPOINTS.map((e) => (
               <li key={e.id}>
                 <Link href={e.example ?? ROUTES.developersApi} className="flex items-center justify-between gap-2 rounded-lg border border-white/10 bg-white/[0.02] px-3 py-2 font-mono text-xs text-faint transition hover:border-white/25 hover:text-fg">
-                  <span><span className="text-emerald-300">{e.method}</span> {e.path}</span>
+                  <span><span className="text-success-strong">{e.method}</span> {e.path}</span>
                 </Link>
               </li>
             ))}
           </ul>
-          <Link href={ROUTES.developersApi} className="mt-4 inline-block text-sm text-nebula underline-offset-4 hover:underline">Full API reference →</Link>
+          <Link href={ROUTES.developersApi} className="mt-4 inline-block text-sm text-nasa underline-offset-4 hover:underline">Full API reference →</Link>
         </section>
 
         <section aria-labelledby="planned-heading">
@@ -130,14 +130,14 @@ export default function DevelopersPage() {
           <h2 id="portal-heading" className="font-display text-2xl font-bold">Developer portal</h2>
           <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {PORTAL.map((d) => (
-              <li key={d.title} className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <li key={d.title} className="scientific-card p-5">
                 <div className="flex items-baseline justify-between gap-2">
                   <h3 className="font-display text-base font-semibold text-fg">{d.title}</h3>
                   <span className="text-[0.65rem] uppercase tracking-wider text-faint">{d.status}</span>
                 </div>
                 <p className="mt-1 text-sm text-muted">{d.description}</p>
                 {d.href && (
-                  <Link href={d.href} className="mt-2 inline-block text-sm text-nebula underline-offset-4 hover:underline">
+                  <Link href={d.href} className="mt-2 inline-block text-sm text-nasa underline-offset-4 hover:underline">
                     {d.linkLabel ?? "Open"} →
                   </Link>
                 )}

@@ -5,9 +5,8 @@ import { Container } from "@/components/ui/Container";
 import { PhotoBackdrop } from "@/components/cosmos/PhotoBackdrop";
 
 /**
- * Page hero / header. `compact` switches between the large homepage hero and
- * the lighter header used at the top of hub and category pages. When `backdrop`
- * is set the hero becomes a real-photo showcase above the global ambient layer.
+ * Page hero / header. This is the shared non-home editorial header for hubs,
+ * tools, docs, indexes, and legacy route families.
  */
 export function HeroSection({
   eyebrow,
@@ -33,31 +32,46 @@ export function HeroSection({
     <section
       style={accentVars(accent)}
       className={[
-        backdrop ? "relative isolate overflow-hidden" : "",
+        "relative isolate overflow-hidden border-b border-white/10 bg-black",
         backdrop && !compact ? "flex min-h-[560px] flex-col justify-end sm:min-h-[680px]" : "",
-        compact ? "pt-12 pb-3" : "pt-[4.5rem] pb-12 sm:pt-28 sm:pb-16",
+        compact ? "pt-14 pb-8 sm:pt-16 sm:pb-10" : "pt-24 pb-16 sm:pt-32 sm:pb-20",
       ].join(" ")}
     >
       {backdrop && <PhotoBackdrop variant="hero" priority={!compact} />}
-      <Container>
+      {!backdrop && (
+        <div aria-hidden className="absolute inset-0 -z-10 overflow-hidden">
+          <div
+            className="absolute inset-0 opacity-[0.32]"
+            style={{
+              backgroundImage:
+                "linear-gradient(rgba(245,247,248,0.055) 1px, transparent 1px), linear-gradient(90deg, rgba(245,247,248,0.04) 1px, transparent 1px)",
+              backgroundSize: "56px 56px",
+            }}
+          />
+          <div className="absolute -right-40 top-10 h-[34rem] w-[34rem] rounded-full border border-white/[0.06]" />
+          <div className="absolute -right-20 top-28 h-[20rem] w-[20rem] rounded-full border border-nasa/20" />
+          <div className="absolute bottom-0 left-1/2 h-px w-2/3 -translate-x-1/2 bg-nasa/50" />
+        </div>
+      )}
+      <Container className="relative">
         {eyebrow && (
-          <div className="mb-5 flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
-            <span aria-hidden className="inline-block h-3 w-1 rounded-full bg-nasa-red" />
+          <div className="mb-6 flex items-center gap-2.5 text-xs font-bold uppercase tracking-[0.18em] text-white">
+            <span aria-hidden className="inline-block h-4 w-1 rounded-full bg-nasa-red" />
             {eyebrow}
           </div>
         )}
         <h1
           className={
             compact
-              ? "max-w-4xl font-display text-4xl font-bold leading-[1.05] text-white sm:text-5xl"
-              : "max-w-5xl font-display text-5xl font-bold leading-[1.02] text-white sm:text-7xl"
+              ? "max-w-4xl font-display text-4xl font-bold leading-[1.04] text-white sm:text-5xl"
+              : "max-w-5xl font-display text-5xl font-bold leading-[1.01] text-white sm:text-7xl"
           }
         >
           {title}
         </h1>
         {lead && (
           <p
-            className={`mt-6 max-w-2xl leading-relaxed text-muted ${compact ? "text-lg" : "text-lg sm:text-xl"}`}
+            className={`mt-6 max-w-3xl leading-relaxed text-muted ${compact ? "text-lg" : "text-lg sm:text-xl"}`}
           >
             {lead}
           </p>

@@ -57,7 +57,7 @@ export default async function ApiGroupPage({ params }: { params: Promise<{ slug:
       <Container className="mt-8 mb-12 space-y-4">
         {endpoints.map((e) => <EndpointCard key={e.id} endpoint={e} />)}
         <p className="pt-4">
-          <Link href={ROUTES.developersApi} className="text-sm text-nebula underline-offset-4 hover:underline">← All endpoints</Link>
+          <Link href={ROUTES.developersApi} className="text-sm text-nasa underline-offset-4 hover:underline">← All endpoints</Link>
         </p>
       </Container>
     </>

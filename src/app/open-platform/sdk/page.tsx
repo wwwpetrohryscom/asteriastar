@@ -28,11 +28,11 @@ export default function OpenPlatformSdkPage() {
       <Container className="mt-8 mb-14">
         <OpenPlatformNav active="sdk" />
         <CapabilityCards records={engine.openPlatform.byCategory("sdk")} />
-        <section className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section className="mt-8 scientific-card p-5">
           <h2 className="font-display text-base font-semibold text-fg">Generate a client today</h2>
           <p className="mt-2 text-sm text-muted">
             No package is published yet, but the{" "}
-            <Link href="/api/v0/openapi.json" className="text-ember underline-offset-4 hover:underline">OpenAPI 3.1 spec</Link>{" "}
+            <Link href="/api/v0/openapi.json" className="text-nasa underline-offset-4 hover:underline">OpenAPI 3.1 spec</Link>{" "}
             supports client generation now (for example with <code className="rounded bg-white/5 px-1">openapi-generator</code>). A curated, versioned SDK is architecture-ready.
           </p>
         </section>
