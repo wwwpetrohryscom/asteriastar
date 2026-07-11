@@ -9,11 +9,26 @@ import { records as c4 } from "@/knowledge-graph/data/star-catalog/records/chunk
 import { records as c5 } from "@/knowledge-graph/data/star-catalog/records/chunk-05";
 
 /**
+ * Drop physically-impossible photometric values that occur in the source HYG
+ * database as bad-parallax artifacts, so the platform never presents them:
+ *  - luminosity ≤ 0 is an underflow of a very faint star (e.g. red dwarfs);
+ *  - luminosity > 5×10⁶ L☉ or absolute magnitude < −12.5 exceeds any real
+ *    Milky-Way star (the most luminous known reach ≈ 10⁶ L☉ / M ≈ −12).
+ * Nulled values become an honest empty state rather than a false measurement.
+ */
+function sanitizeStarPhotometry(r: StarRecord): StarRecord {
+  const badLum = r.luminositySolar != null && (r.luminositySolar <= 0 || r.luminositySolar > 5_000_000);
+  const badAbsMag = r.absoluteMagnitude != null && r.absoluteMagnitude < -12.5;
+  if (!badLum && !badAbsMag) return r;
+  return { ...r, luminositySolar: badLum ? undefined : r.luminositySolar, absoluteMagnitude: badAbsMag ? undefined : r.absoluteMagnitude };
+}
+
+/**
  * Star catalog — the generated dataset becomes first-class graph entities and
  * relations. Stars are NEVER hardcoded; everything here is derived from the
  * typed StarRecord dataset (sourced from the open HYG database, CC BY-SA 4.0).
  */
-export const STAR_RECORDS: StarRecord[] = [...c0, ...c1, ...c2, ...c3, ...c4, ...c5];
+export const STAR_RECORDS: StarRecord[] = [...c0, ...c1, ...c2, ...c3, ...c4, ...c5].map(sanitizeStarPhotometry);
 
 const CON_NAME = new Map(CONSTELLATIONS.map((c) => [`constellation:${c.slug}`, c.name]));
 const CON_DEF = new Map(CONSTELLATIONS.map((c) => [`constellation:${c.slug}`, c]));
