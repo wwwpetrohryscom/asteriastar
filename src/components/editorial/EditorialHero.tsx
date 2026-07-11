@@ -43,6 +43,7 @@ export function EditorialHero({
             alt=""
             fill
             priority
+            fetchPriority="high"
             sizes="100vw"
             placeholder={img!.blurDataURL ? "blur" : "empty"}
             blurDataURL={img!.blurDataURL}
