@@ -359,6 +359,21 @@ async function main() {
     `✓ Asteroids valid — ${asteroids.ASTEROIDS_STATS.asteroids} minor planets, ${asteroids.ASTEROIDS_STATS.families} families, ${asteroids.ASTEROIDS_STATS.groups} groups, ${asteroids.ASTEROIDS_STATS.neoClasses} NEO classes, ${asteroids.ASTEROIDS_STATS.trojanGroups} Trojan groups, ${asteroids.ASTEROIDS_STATS.resonances} resonances, ${asteroids.ASTEROIDS_STATS.impacts} impact events · ${asteroids.ASTEROIDS_STATS.newEntities} new entities, ${asteroids.ASTEROIDS_STATS.relations} relations (reused dwarf planets/asteroids/missions; no fabricated data)`,
   );
 
+  // Program 3 — small-body precision overlay (JPL SBDB, field-level provenance).
+  const sbPrecision = await import("../src/knowledge-graph/data/small-body-precision");
+  const sbPrecisionIssues = sbPrecision.validateSmallBodyPrecision();
+  if (sbPrecisionIssues.length > 0) {
+    console.error(`\n✗ ${sbPrecisionIssues.length} small-body-precision issue(s):`);
+    for (const i of sbPrecisionIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  {
+    const m = sbPrecision.SMALL_BODY_PRECISION_META;
+    console.log(
+      `✓ Small-body precision valid — ${m.bodies} bodies from JPL SBDB (retrieved ${m.retrievedAt}); ${m.neo} NEO, ${m.pha} PHA; per-epoch elements with uncertainties, hyperbolic orbits allowed, no ordering/NEO-PHA/SPK-ID contradiction`,
+    );
+  }
+
   const cometsCat = await import("../src/knowledge-graph/data/comets-catalog");
   const cometIssues = cometsCat.validateComets();
   // Cross-reference resolution: every relation endpoint the catalog emits must resolve

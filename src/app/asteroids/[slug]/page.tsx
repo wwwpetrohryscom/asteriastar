@@ -4,6 +4,8 @@ import Link from "next/link";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { EntityImagery } from "@/components/media/EntityImagery";
 import { Container } from "@/components/ui/Container";
+import { SmallBodyPrecisionSection } from "@/components/authority/SmallBodyPrecisionSection";
+import { getSmallBodyPrecision } from "@/knowledge-graph/data/small-body-precision";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Badge } from "@/components/ui/Badge";
 import { SourceList } from "@/components/ui/SourceList";
@@ -38,6 +40,7 @@ export default async function AsteroidPage({ params }: PageProps<"/asteroids/[sl
   const d = engine.asteroids.resolveAsteroid(slug);
   if (!d) notFound();
   const a = d.record;
+  const precision = getSmallBodyPrecision(a.id);
   const url = asteroidPath(slug);
 
   const crumbs: Crumb[] = [
@@ -96,6 +99,8 @@ export default async function AsteroidPage({ params }: PageProps<"/asteroids/[sl
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
           <div className="min-w-0 space-y-10">
+            {precision && <SmallBodyPrecisionSection p={precision} />}
+
             {a.highlights?.length ? (
               <section aria-labelledby="highlights">
                 <h2 id="highlights" className="font-display text-2xl font-bold">Highlights</h2>

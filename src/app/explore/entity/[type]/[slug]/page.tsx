@@ -14,6 +14,8 @@ import { EntityRecommendations } from "@/components/graph/EntityRecommendations"
 import { EntityDataPanel } from "@/components/graph/EntityDataPanel";
 import { EntityQualityPanel } from "@/components/authority/EntityQualityPanel";
 import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePanel";
+import { SmallBodyPrecisionSection } from "@/components/authority/SmallBodyPrecisionSection";
+import { getSmallBodyPrecision } from "@/knowledge-graph/data/small-body-precision";
 import { getStandaloneEntities } from "@/knowledge-graph";
 import { engine } from "@/platform/data-engine";
 import { buildMetadata } from "@/lib/seo/metadata";
@@ -57,6 +59,7 @@ export default async function GraphEntityPage({
   const typeLabel = resolved.typeLabel;
   const url = resolved.canonicalPath;
 
+  const sbPrecision = getSmallBodyPrecision(resolved.id);
   const images = getImagesForEntity(resolved.id);
   const heroImg = images[0];
   const bandImg = images[1];
@@ -110,6 +113,10 @@ export default async function GraphEntityPage({
           ]}
         />
       </Container>
+
+      {sbPrecision && (
+        <Container className="mt-10"><SmallBodyPrecisionSection p={sbPrecision} /></Container>
+      )}
 
       {bandImg?.url && (
         <FeatureImageBand

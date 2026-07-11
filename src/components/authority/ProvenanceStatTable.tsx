@@ -26,9 +26,14 @@ export const STATUS_NOTE: Record<ValueStatus, string> = {
 
 function fmt(v: number): string {
   const a = Math.abs(v);
-  if (a !== 0 && (a < 0.001 || a >= 1e7)) return v.toExponential(3);
+  if (a !== 0 && (a < 1e-4 || a >= 1e7)) return v.toExponential(4);
   if (a >= 1000) return Math.round(v).toLocaleString();
-  return Number(v.toFixed(4)).toString();
+  const r = Number(v.toFixed(6));
+  // Never let a non-integer collapse onto an integer — e.g. a near-parabolic hyperbolic
+  // eccentricity like 1.0000188 must not render as a bare "1" (which would read as a
+  // parabola / bound orbit). Fall back to significant-figure precision in that case.
+  if (r === Math.trunc(r) && !Number.isInteger(v)) return v.toPrecision(8).replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, "");
+  return r.toString();
 }
 
 export interface ProvRow { label: string; v: ScientificValue<number | string> }
