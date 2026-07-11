@@ -30,8 +30,8 @@ export default function ImagesHub() {
       </HeroSection>
 
       <Container className="mt-8 mb-14 space-y-12">
-        <aside role="note" className="rounded-2xl border border-halo/25 bg-halo/[0.06] p-5">
-          <p className="text-sm font-semibold text-halo">A provenance catalogue, not a re-host</p>
+        <aside role="note" className="rounded-2xl border border-white/25 bg-white/[0.06] p-5">
+          <p className="text-sm font-semibold text-white">A provenance catalogue, not a re-host</p>
           <p className="mt-1.5 text-sm leading-relaxed text-muted">Asteria Star records verified metadata and links to each image&apos;s official source archive. It does not re-host or hotlink image binaries it has not verified, and it never fabricates a photograph, credit, licence, capture date, or source URL. Only openly-licensed or public-domain images are catalogued.</p>
         </aside>
 
@@ -48,8 +48,8 @@ export default function ImagesHub() {
           <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {collections.map(({ collection, count }) => (
               <li key={collection.slug}>
-                <Link href={imageCollectionPath(collection.slug)} className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-0.5 hover:border-white/25">
-                  <div className="flex items-baseline justify-between gap-2"><h3 className="font-display text-lg font-semibold text-fg group-hover:text-nebula">{collection.name}</h3><span className="text-xs text-faint">{count}</span></div>
+                <Link href={imageCollectionPath(collection.slug)} className="group flex h-full flex-col scientific-card p-5 transition hover:-translate-y-0.5 hover:border-white/25">
+                  <div className="flex items-baseline justify-between gap-2"><h3 className="font-display text-lg font-semibold text-fg group-hover:text-nasa">{collection.name}</h3><span className="text-xs text-faint">{count}</span></div>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted">{collection.description}</p>
                 </Link>
               </li>
@@ -73,17 +73,17 @@ export default function ImagesHub() {
           <p className="mt-2 text-sm text-muted">The platform is prepared to ingest from these open archives; images are currently catalogued by hand with verified provenance. All providers are <strong className="text-fg">planned</strong> — nothing is scraped or ingested automatically yet.</p>
           <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {im.providers().map((p) => (
-              <li key={p.key} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                <div className="flex items-baseline justify-between gap-2"><a href={p.url} target="_blank" rel="noreferrer nofollow" className="font-medium text-fg hover:text-nebula">{p.name}</a><span className="text-xs text-faint">{p.status}</span></div>
+              <li key={p.key} className="scientific-card p-4">
+                <div className="flex items-baseline justify-between gap-2"><a href={p.url} target="_blank" rel="noreferrer nofollow" className="font-medium text-fg hover:text-nasa">{p.name}</a><span className="text-xs text-faint">{p.status}</span></div>
                 <p className="mt-1 text-sm text-muted">{p.organization} · {p.defaultLicense}</p>
               </li>
             ))}
           </ul>
         </section>
 
-        <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-sm text-muted">
+        <section className="scientific-card p-5 text-sm text-muted">
           <h2 className="font-display text-base font-semibold text-fg">Astrophotography</h2>
-          <p className="mt-1.5">Amateur and professional astrophotography — equipment, processing, and observation guides — are kept clearly separate from institutional scientific imagery. <Link href={astrophotographyPath("equipment")} className="text-nebula hover:underline">Explore the astrophotography guides →</Link></p>
+          <p className="mt-1.5">Amateur and professional astrophotography — equipment, processing, and observation guides — are kept clearly separate from institutional scientific imagery. <Link href={astrophotographyPath("equipment")} className="text-nasa hover:underline">Explore the astrophotography guides →</Link></p>
         </section>
       </Container>
     </>

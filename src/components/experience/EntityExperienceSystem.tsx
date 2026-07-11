@@ -208,7 +208,7 @@ function StoryRail({
     <section className="rounded-[2rem] border border-white/10 bg-[#02050b]/70 p-5 shadow-2xl shadow-black/25 sm:p-7">
       <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr]">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.32em] text-gold">
+          <p className="text-xs font-semibold uppercase tracking-[0.32em] text-nasa">
             Experience system V6
           </p>
           <h2 className="mt-3 max-w-3xl text-3xl font-semibold leading-tight sm:text-4xl">
@@ -221,7 +221,7 @@ function StoryRail({
             {profile.modules.map((module) => (
               <span
                 key={module}
-                className="rounded-full border border-halo/18 bg-halo/[0.05] px-3 py-1 text-xs font-medium text-silver"
+                className="rounded-full border border-white/20 bg-white/[0.05] px-3 py-1 text-xs font-medium text-silver"
               >
                 {module}
               </span>
@@ -232,7 +232,7 @@ function StoryRail({
           {steps.map((step, index) => (
             <li key={step.title} className="rounded-3xl border border-white/10 bg-white/[0.035] p-5">
               <div className="flex items-center gap-3">
-                <span className="flex size-10 items-center justify-center rounded-full border border-halo/20 bg-halo/[0.07] text-halo">
+                <span className="flex size-10 items-center justify-center rounded-full border border-white/20 bg-white/[0.07] text-white">
                   <ScientificIcon name={step.icon} className="size-5" />
                 </span>
                 <div>
@@ -257,7 +257,7 @@ function ImageProvenanceStrip({ images }: { images: ImageAsset[] }) {
     <section className="rounded-[2rem] border border-white/10 bg-bg-elevated/64 p-5 shadow-2xl shadow-black/20 sm:p-7">
       <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-nasa">
             Image provenance
           </p>
           <h2 className="mt-2 text-2xl font-semibold">Photography as evidence</h2>
@@ -271,7 +271,7 @@ function ImageProvenanceStrip({ images }: { images: ImageAsset[] }) {
             href={image.sourceUrl}
             target="_blank"
             rel="noreferrer nofollow"
-            className="group overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] transition hover:-translate-y-1 hover:border-halo/30"
+            className="group overflow-hidden rounded-3xl border border-white/10 bg-white/[0.035] transition hover:-translate-y-1 hover:border-white/30"
           >
             <div className="aspect-[4/3] overflow-hidden bg-surface">
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -307,11 +307,11 @@ function RelatedEditorial({ entity }: { entity: RuntimeEntity }) {
   return (
     <section className="rounded-[2rem] border border-white/10 bg-[#02050b]/58 p-5 sm:p-7">
       <div className="flex items-center gap-3">
-        <span className="flex size-10 items-center justify-center rounded-full border border-gold/25 bg-gold/[0.07] text-gold">
+        <span className="flex size-10 items-center justify-center rounded-full border border-nasa/25 bg-nasa/[0.07] text-nasa">
           <ScientificIcon name="source" className="size-5" />
         </span>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-nasa">
             Continue the atlas
           </p>
           <h2 className="mt-1 text-2xl font-semibold">Curated next objects</h2>
@@ -322,7 +322,7 @@ function RelatedEditorial({ entity }: { entity: RuntimeEntity }) {
           <Link
             key={item.id}
             href={entityGraphPath(item)}
-            className="rounded-3xl border border-white/10 bg-white/[0.035] p-5 transition hover:-translate-y-1 hover:border-halo/30 hover:bg-white/[0.055]"
+            className="rounded-3xl border border-white/10 bg-white/[0.035] p-5 transition hover:-translate-y-1 hover:border-white/30 hover:bg-white/[0.055]"
           >
             <span className="text-xs uppercase tracking-[0.2em] text-faint">{item.type.replace(/_/g, " ")}</span>
             <h3 className="mt-2 font-display text-lg font-semibold text-fg">{item.name}</h3>

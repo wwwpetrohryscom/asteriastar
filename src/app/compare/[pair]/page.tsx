@@ -38,11 +38,11 @@ export async function generateMetadata({
 
 function SidePanel({ side }: { side: ResolvedSide }) {
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6">
+    <div className="scientific-card p-6">
       <Badge tone="accent">{side.kindLabel}</Badge>
       <h2 className="mt-3 font-display text-2xl font-bold text-fg">
         {side.href ? (
-          <Link href={side.href} className="transition hover:text-nebula">
+          <Link href={side.href} className="transition hover:text-nasa">
             {side.name}
           </Link>
         ) : (

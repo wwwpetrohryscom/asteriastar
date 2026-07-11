@@ -51,7 +51,7 @@ export function ExportsPanel() {
         <p className="mt-1 text-sm text-muted">Everything is generated in your browser from your local data — nothing is uploaded.</p>
         <div className="mt-4 flex flex-wrap gap-2 print:hidden">
           {EXPORT_FORMATS.map((f) => (
-            <button key={f.id} type="button" disabled={empty} onClick={() => download(f.id)} className="rounded-lg border border-halo/40 px-4 py-2 text-sm text-halo hover:bg-halo/10 disabled:cursor-not-allowed disabled:border-white/10 disabled:text-faint">
+            <button key={f.id} type="button" disabled={empty} onClick={() => download(f.id)} className="rounded-lg border border-white/40 px-4 py-2 text-sm text-white hover:bg-white/10 disabled:cursor-not-allowed disabled:border-white/10 disabled:text-faint">
               {f.name}
             </button>
           ))}
@@ -62,7 +62,7 @@ export function ExportsPanel() {
       </section>
 
       {/* The printable research packet — a clean summary that prints well. */}
-      <section aria-labelledby="packet-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 print:border-0 print:bg-transparent print:p-0">
+      <section aria-labelledby="packet-heading" className="scientific-card p-6 print:border-0 print:bg-transparent print:p-0">
         <h2 id="packet-heading" className="font-display text-xl font-bold">Research packet</h2>
         {empty ? (
           <p className="mt-2 text-sm text-faint">Save entities, build collections, take notes, and collect citations — they will appear here, ready to print or export.</p>

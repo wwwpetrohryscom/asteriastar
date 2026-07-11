@@ -22,12 +22,12 @@ export function WorkspaceHub({ items }: { items: WorkspacePickItem[] }) {
   ];
 
   return (
-    <div className="space-y-10">
+    <div className="min-w-0 space-y-10">
       <section aria-label="Workspace summary">
         <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
           {stats.map((s) => (
             <li key={s.label}>
-              <Link href={s.href} className="block rounded-2xl border border-white/10 bg-white/[0.02] p-4 hover:border-white/25">
+              <Link href={s.href} className="block scientific-card p-4 hover:border-white/25">
                 <span className="block font-display text-2xl font-bold text-fg">{s.value}</span>
                 <span className="text-xs text-faint">{s.label}</span>
               </Link>
@@ -52,7 +52,7 @@ export function WorkspaceHub({ items }: { items: WorkspacePickItem[] }) {
                 const name = window.prompt("New collection name?");
                 if (name?.trim()) addCollection(name.trim(), "collection");
               }}
-              className="text-sm text-halo hover:underline"
+              className="text-sm text-white hover:underline"
             >
               + New collection
             </button>
@@ -66,7 +66,7 @@ export function WorkspaceHub({ items }: { items: WorkspacePickItem[] }) {
           <ul className="mt-4 divide-y divide-white/5 rounded-2xl border border-white/10">
             {state.savedEntities.map((e) => (
               <li key={e.id} className="flex flex-wrap items-center justify-between gap-3 px-4 py-2.5">
-                <Link href={e.href} className="min-w-0 truncate text-sm font-medium text-fg hover:text-halo">
+                <Link href={e.href} className="min-w-0 truncate text-sm font-medium text-fg hover:text-white">
                   {e.name} <span className="font-normal text-faint">· {e.type}</span>
                 </Link>
                 <div className="flex shrink-0 items-center gap-2">
@@ -81,7 +81,7 @@ export function WorkspaceHub({ items }: { items: WorkspacePickItem[] }) {
                       {state.collections.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
                     </select>
                   )}
-                  <button type="button" onClick={() => removeEntity(e.id)} className="rounded-md border border-white/10 px-2 py-1 text-xs text-faint hover:border-ember/40 hover:text-ember">
+                  <button type="button" onClick={() => removeEntity(e.id)} className="rounded-md border border-white/10 px-2 py-1 text-xs text-faint hover:border-nasa/40 hover:text-nasa">
                     Remove
                   </button>
                 </div>

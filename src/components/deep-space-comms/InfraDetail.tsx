@@ -39,9 +39,9 @@ export function InfraDetail({ d }: { d: ResolvedInfra }) {
       <HeroSection compact accent="aurora" eyebrow={<span>{KIND_LABEL[r.kind]}</span>} title={r.name} lead={r.description} />
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             {r.latencyNote ? (
-              <section aria-labelledby="latency" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section aria-labelledby="latency" className="scientific-card p-5">
                 <h2 id="latency" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Signal light-time</h2>
                 <p className="mt-2 text-sm text-muted">{r.latencyNote}</p>
               </section>
@@ -52,8 +52,8 @@ export function InfraDetail({ d }: { d: ResolvedInfra }) {
                 <h2 id="usedby" className="font-display text-2xl font-bold">Used by</h2>
                 <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {d.usedBy.map((x) => (
-                    <li key={x.id} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                      <Link href={hrefForRecord(x)} className="font-medium text-fg hover:text-aurora">{x.name}</Link>
+                    <li key={x.id} className="scientific-card p-4">
+                      <Link href={hrefForRecord(x)} className="font-medium text-fg hover:text-nasa">{x.name}</Link>
                       <div className="mt-0.5 text-xs text-faint">{KIND_LABEL[x.kind]}</div>
                     </li>
                   ))}
@@ -74,7 +74,7 @@ export function InfraDetail({ d }: { d: ResolvedInfra }) {
           </div>
 
           <aside className="space-y-6">
-            <section aria-labelledby="quick" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <section aria-labelledby="quick" className="scientific-card p-5">
               <h2 id="quick" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
               <dl className="mt-3 divide-y divide-white/5 text-sm">
                 {r.role ? <FactRow label="Role" value={r.role} /> : null}

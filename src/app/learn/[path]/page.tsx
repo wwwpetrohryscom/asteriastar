@@ -82,13 +82,13 @@ export default async function LearnPathPage({ params }: PageProps<"/learn/[path]
                 <li key={step.href}>
                   <Link
                     href={step.href}
-                    className="group flex items-start gap-4 rounded-2xl border border-white/10 bg-white/[0.02] p-4 transition hover:border-white/25 hover:bg-white/[0.04]"
+                    className="group flex items-start gap-4 scientific-card p-4 transition hover:border-white/25 hover:bg-white/[0.04]"
                   >
                     <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-white/15 text-xs text-faint">
                       {si + 1}.{i + 1}
                     </span>
                     <span>
-                      <span className="block font-medium text-fg group-hover:text-nebula">{step.title}</span>
+                      <span className="block font-medium text-fg group-hover:text-nasa">{step.title}</span>
                       <span className="mt-0.5 block text-sm text-muted">{step.blurb}</span>
                     </span>
                     <span aria-hidden className="ml-auto self-center text-faint transition group-hover:translate-x-0.5 group-hover:text-[var(--accent)]">→</span>

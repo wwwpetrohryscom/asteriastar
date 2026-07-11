@@ -21,7 +21,7 @@ export function WorkspaceTabs({ active }: { active: string }) {
             key={t.slug || "overview"}
             href={t.href}
             aria-current={on ? "page" : undefined}
-            className={`rounded-lg px-3 py-1.5 text-sm ${on ? "bg-halo/15 text-halo" : "text-muted hover:bg-white/5 hover:text-fg"}`}
+            className={`rounded-lg px-3 py-1.5 text-sm ${on ? "bg-white/15 text-white" : "text-muted hover:bg-white/5 hover:text-fg"}`}
           >
             {t.label}
           </Link>

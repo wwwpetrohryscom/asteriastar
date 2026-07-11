@@ -35,17 +35,17 @@ export default function TransparencyPage() {
         <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {TRANSPARENCY_PAGES.map((p) => (
             <li key={p.slug}>
-              <Link href={transparencyPath(p.slug)} className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
-                <h2 className="font-display text-lg font-semibold text-fg group-hover:text-nebula">{p.title}</h2>
+              <Link href={transparencyPath(p.slug)} className="group flex h-full flex-col scientific-card p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
+                <h2 className="font-display text-lg font-semibold text-fg group-hover:text-nasa">{p.title}</h2>
                 <p className="mt-1.5 text-sm leading-relaxed text-muted">{p.description}</p>
               </Link>
             </li>
           ))}
         </ul>
-        <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <div className="mt-8 scientific-card p-5">
           <p className="text-sm text-muted">
             See the live{" "}
-            <Link href={ROUTES.authority} className="text-nebula underline-offset-4 hover:underline">authority dashboard</Link>{" "}
+            <Link href={ROUTES.authority} className="text-nasa underline-offset-4 hover:underline">authority dashboard</Link>{" "}
             for coverage and quality numbers across the whole graph.
           </p>
         </div>

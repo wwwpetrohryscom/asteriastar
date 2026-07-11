@@ -17,14 +17,14 @@ import {
  */
 
 const ACCENT: Record<string, string> = {
-  halo: "border-halo/30 text-halo",
-  comet: "border-comet/30 text-comet",
-  gold: "border-gold/30 text-gold",
-  plasma: "border-plasma/30 text-plasma",
-  ember: "border-ember/30 text-ember",
-  stone: "border-stone/30 text-stone",
-  nebula: "border-nebula/30 text-nebula",
-  aurora: "border-aurora/30 text-aurora",
+  halo: "border-white/30 text-white",
+  comet: "border-white/30 text-faint",
+  gold: "border-nasa/30 text-nasa",
+  plasma: "border-white/30 text-nasa",
+  ember: "border-nasa/30 text-nasa",
+  stone: "border-white/30 text-faint",
+  nebula: "border-nasa/30 text-nasa",
+  aurora: "border-white/30 text-nasa",
 };
 
 export function TrustBadge({

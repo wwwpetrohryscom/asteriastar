@@ -38,9 +38,9 @@ export default function LearningTogetherPage() {
             <li key={p.slug}>
               <Link
                 href={learnPath(p.slug)}
-                className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:border-white/25 hover:bg-white/[0.04]"
+                className="group flex h-full flex-col scientific-card p-5 transition hover:border-white/25 hover:bg-white/[0.04]"
               >
-                <span className="font-display text-base font-semibold text-fg group-hover:text-comet">{p.title}</span>
+                <span className="font-display text-base font-semibold text-fg group-hover:text-muted">{p.title}</span>
                 <span className="mt-1 text-sm text-muted">{p.description}</span>
               </Link>
             </li>

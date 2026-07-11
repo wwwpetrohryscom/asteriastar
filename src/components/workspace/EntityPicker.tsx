@@ -27,7 +27,7 @@ export function EntityPicker({ items }: { items: WorkspacePickItem[] }) {
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder="Find a planet, star, mission, galaxy… to save"
-        className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-4 py-2.5 text-sm text-fg placeholder:text-faint focus:border-halo/60 focus:outline-none"
+        className="w-full rounded-xl border border-white/15 bg-white/[0.03] px-4 py-2.5 text-sm text-fg placeholder:text-faint focus:border-white/60 focus:outline-none"
       />
       {q.trim().length >= 2 ? (
         <ul className="mt-3 divide-y divide-white/5 rounded-xl border border-white/10">
@@ -45,7 +45,7 @@ export function EntityPicker({ items }: { items: WorkspacePickItem[] }) {
                     type="button"
                     disabled={saved}
                     onClick={() => saveEntity({ id: i.id, name: i.name, type: i.type, href: i.href })}
-                    className={`shrink-0 rounded-md border px-2.5 py-1 text-xs ${saved ? "border-white/10 text-faint" : "border-halo/40 text-halo hover:bg-halo/10"}`}
+                    className={`shrink-0 rounded-md border px-2.5 py-1 text-xs ${saved ? "border-white/10 text-faint" : "border-white/40 text-white hover:bg-white/10"}`}
                   >
                     {saved ? "Saved" : "Save"}
                   </button>

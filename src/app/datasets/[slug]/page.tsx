@@ -98,7 +98,7 @@ export default async function DatasetPage({ params }: PageProps<"/datasets/[slug
               ))}
             </ul>
           </div>
-          <dl className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+          <dl className="scientific-card p-5">
             {meta.map((m) => (
               <div key={m.label} className="flex justify-between gap-4 border-b border-white/5 py-2 text-sm last:border-0">
                 <dt className="text-faint">{m.label}</dt>
@@ -125,7 +125,7 @@ export default async function DatasetPage({ params }: PageProps<"/datasets/[slug
                 {sample.map((e) => (
                   <tr key={e.id} className="transition hover:bg-white/[0.02]">
                     <td className="px-4 py-2.5">
-                      <Link href={entityGraphPath(e)} className="font-medium text-fg transition hover:text-nebula">
+                      <Link href={entityGraphPath(e)} className="font-medium text-fg transition hover:text-nasa">
                         {e.name}
                       </Link>
                     </td>
@@ -144,7 +144,7 @@ export default async function DatasetPage({ params }: PageProps<"/datasets/[slug
             <section aria-labelledby="dataset-citations" className="mt-10">
               <h2 id="dataset-citations" className="font-display text-xl font-bold">Scientific citations</h2>
               <p className="mt-1 text-sm text-muted">Real, source-backed references for this dataset — formatted through the citation engine.</p>
-              <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <div className="mt-4 scientific-card p-5">
                 <CitationList citations={citations} />
               </div>
             </section>

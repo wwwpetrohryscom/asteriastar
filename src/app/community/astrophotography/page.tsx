@@ -45,9 +45,9 @@ export default function AstrophotographyPage() {
         <h2 id="image-platform-heading" className="font-display text-2xl font-bold">Built on the image platform</h2>
         <p className="mt-2 max-w-2xl text-muted">
           User astrophotography extends the same provenance discipline as the
-          Observatory&apos;s <Link href="/observatory/image-library" className="text-comet underline-offset-4 hover:underline">image platform</Link>:
+          Observatory&apos;s <Link href="/observatory/image-library" className="text-faint underline-offset-4 hover:underline">image platform</Link>:
           no fabricated or unlicensed imagery, and a clear license on everything.
-          See the <Link href="/sources-policy" className="text-comet underline-offset-4 hover:underline">sources &amp; licensing policy</Link>.
+          See the <Link href="/sources-policy" className="text-faint underline-offset-4 hover:underline">sources &amp; licensing policy</Link>.
         </p>
       </section>
     </CommunityLanding>

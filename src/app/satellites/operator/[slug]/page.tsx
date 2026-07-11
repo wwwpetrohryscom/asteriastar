@@ -70,7 +70,7 @@ export default async function SatelliteOperatorPage({ params }: PageProps<"/sate
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             {fleet.length ? (
               <section aria-labelledby="fleet">
                 <h2 id="fleet" className="font-display text-2xl font-bold">Fleet</h2>
@@ -78,7 +78,7 @@ export default async function SatelliteOperatorPage({ params }: PageProps<"/sate
                 <div className="mt-3"><SatellitesCards records={fleet} /></div>
               </section>
             ) : (
-              <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section className="scientific-card p-5">
                 <h2 className="font-display text-base font-semibold text-fg">Fleet</h2>
                 <p className="mt-2 text-sm text-muted">No satellites operated by {o.name} are modelled in this encyclopedia yet.</p>
               </section>
@@ -89,7 +89,7 @@ export default async function SatelliteOperatorPage({ params }: PageProps<"/sate
 
           <aside className="space-y-6">
             {o.launchDate && (
-              <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section className="scientific-card p-5">
                 <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
                 <dl className="mt-3 divide-y divide-white/5">
                   {o.country && (
@@ -102,10 +102,10 @@ export default async function SatelliteOperatorPage({ params }: PageProps<"/sate
 
             {d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
             {d.quality && (
-              <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section className="scientific-card p-5">
                 <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Authority</h2>
                 <div className="mt-3"><ReviewBadge status={d.reviewStatus} /></div>
-                <p className="mt-3 text-xs leading-relaxed text-faint">Existing space agencies are reused as operators, never duplicated. See{" "}<Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link>.</p>
+                <p className="mt-3 text-xs leading-relaxed text-faint">Existing space agencies are reused as operators, never duplicated. See{" "}<Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.</p>
               </section>
             )}
           </aside>

@@ -46,7 +46,7 @@ export default function AuthorityPage() {
     { label: "Reviewed", value: s.coverage.reviewed },
   ];
 
-  const QUALITY_ACCENT: Record<CoverageLevel, string> = { complete: "bg-halo/70", partial: "bg-comet/70", none: "bg-stone/50" };
+  const QUALITY_ACCENT: Record<CoverageLevel, string> = { complete: "bg-white/70", partial: "bg-white/70", none: "bg-white/50" };
 
   return (
     <>
@@ -70,7 +70,7 @@ export default function AuthorityPage() {
           <h2 id="headline-heading" className="sr-only">Headline numbers</h2>
           <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             {headline.map((m) => (
-              <div key={m.label} className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+              <div key={m.label} className="scientific-card p-4">
                 <div className="font-display text-3xl font-bold text-fg">{m.value.toLocaleString()}</div>
                 <div className="mt-1 text-xs text-faint">{m.label}</div>
               </div>
@@ -102,7 +102,7 @@ export default function AuthorityPage() {
           <h2 id="coverage-heading" className="font-display text-2xl font-bold">Coverage</h2>
           <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {coverage.map((c) => (
-              <div key={c.label} className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+              <div key={c.label} className="scientific-card p-4">
                 <div className="font-display text-2xl font-bold text-fg">{pct(c.value)}</div>
                 <div className="mt-1 text-xs text-faint">{c.label}</div>
                 <div className="text-[0.65rem] text-faint">{c.value} of {s.entities}</div>
@@ -113,7 +113,7 @@ export default function AuthorityPage() {
             Review and provenance coverage now reflect the first real batch of scientific authority records — {s.reviewed} flagship
             entities reviewed by the internal Asteria Scientific Review Process, backed by {s.provenanceRecords} sourced provenance
             records and {s.citations} citations. Coverage across the full graph is honestly still low and stays visible. See the{" "}
-            <Link href={ROUTES.transparency} className="text-nebula underline-offset-4 hover:underline">transparency pages</Link>.
+            <Link href={ROUTES.transparency} className="text-nasa underline-offset-4 hover:underline">transparency pages</Link>.
           </p>
         </section>
 
@@ -132,7 +132,7 @@ export default function AuthorityPage() {
               { label: "Datasets cited", value: s.citationCoverage.datasetsWithCitations },
               { label: "Primary / secondary", value: `${s.citationCoverage.primary} / ${s.citationCoverage.secondary}` },
             ].map((k) => (
-              <div key={k.label} className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+              <div key={k.label} className="scientific-card p-4">
                 <div className="font-display text-2xl font-bold text-fg">{k.value}</div>
                 <div className="mt-1 text-xs text-faint">{k.label}</div>
               </div>
@@ -179,7 +179,7 @@ export default function AuthorityPage() {
                 {sources.map((src) => (
                   <tr key={src.key} className="transition hover:bg-white/[0.02]">
                     <td className="px-4 py-2.5">
-                      <a href={src.url} target="_blank" rel="noopener noreferrer nofollow" className="font-medium text-fg transition hover:text-nebula">{src.name}</a>
+                      <a href={src.url} target="_blank" rel="noopener noreferrer nofollow" className="font-medium text-fg transition hover:text-nasa">{src.name}</a>
                       <span className="block text-xs text-faint">{src.organization}</span>
                     </td>
                     <td className="hidden px-4 py-2.5 text-muted sm:table-cell">{src.country}</td>

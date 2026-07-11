@@ -32,8 +32,8 @@ export default function SpaceInfrastructureHubPage() {
           <h2 id="explore-heading" className="font-display text-2xl font-bold">Explore the build-out</h2>
           <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {INFRA_DISCOVERIES.map((d) => (
-              <li key={d.slug} className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                <Link href={spaceInfrastructureDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-stone hover:underline">{d.title}</Link>
+              <li key={d.slug} className="flex flex-col scientific-card p-5">
+                <Link href={spaceInfrastructureDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nasa hover:underline">{d.title}</Link>
                 <p className="mt-1 flex-1 text-sm text-muted">{d.description}</p>
                 <span className="mt-3 text-xs text-faint">{d.get().length} entries</span>
               </li>
@@ -44,9 +44,9 @@ export default function SpaceInfrastructureHubPage() {
           <h2 id="domains-heading" className="font-display text-2xl font-bold">Domains</h2>
           <div className="mt-4"><InfraCards records={e.domains()} /></div>
         </section>
-        <section aria-labelledby="data-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="data-heading" className="scientific-card p-5">
           <h2 id="data-heading" className="font-display text-base font-semibold text-fg">Data &amp; provenance</h2>
-          <p className="mt-2 text-sm text-muted">Each domain, ISRU technique, manufacturing process, and infrastructure system is a first-class knowledge-graph entity resolved through the Scientific Data Engine, reusing the Moon, Mars, the metal asteroids, the commercial and inflatable space stations, the propellants, and the components already in the graph. Curated from NASA and ESA. Technology maturity is stated honestly — from operational to purely theoretical — and nothing is fabricated. See{" "}<Link href="/transparency/source-quality" className="text-stone underline-offset-4 hover:underline">source quality</Link>.</p>
+          <p className="mt-2 text-sm text-muted">Each domain, ISRU technique, manufacturing process, and infrastructure system is a first-class knowledge-graph entity resolved through the Scientific Data Engine, reusing the Moon, Mars, the metal asteroids, the commercial and inflatable space stations, the propellants, and the components already in the graph. Curated from NASA and ESA. Technology maturity is stated honestly — from operational to purely theoretical — and nothing is fabricated. See{" "}<Link href="/transparency/source-quality" className="text-faint underline-offset-4 hover:underline">source quality</Link>.</p>
         </section>
       </Container>
     </>

@@ -100,13 +100,9 @@ const srcSet = (base: string, ext: string) => WIDTHS.map((w) => `${base}-${w}.${
  * from the page background.
  */
 const OVERLAY: Record<PhotoVariant, string> = {
-  hero:
-    "linear-gradient(90deg, rgba(2,5,11,0.78) 0%, rgba(2,5,11,0.50) 48%, rgba(2,5,11,0.24) 100%)," +
-    "linear-gradient(180deg, rgba(2,5,11,0.38) 0%, rgba(2,5,11,0.12) 34%, rgba(2,5,11,0.68) 82%, var(--color-bg) 100%)",
-  ambient:
-    "linear-gradient(180deg, rgba(2,5,11,0.90) 0%, rgba(2,5,11,0.93) 55%, rgba(2,5,11,0.96) 100%)",
-  footer:
-    "linear-gradient(180deg, var(--color-bg) 0%, rgba(2,5,11,0.90) 42%, rgba(2,5,11,0.82) 100%)",
+  hero: "rgba(0, 0, 0, 0.64)",
+  ambient: "rgba(0, 0, 0, 0.9)",
+  footer: "rgba(0, 0, 0, 0.82)",
 };
 
 export function PhotoBackdrop({

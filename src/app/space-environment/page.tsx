@@ -34,8 +34,8 @@ export default function SpaceEnvironmentHubPage() {
           <h2 id="explore-heading" className="font-display text-2xl font-bold">Explore the hazards</h2>
           <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {ENV_DISCOVERIES.map((d) => (
-              <li key={d.slug} className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                <Link href={spaceEnvironmentDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-ember hover:underline">{d.title}</Link>
+              <li key={d.slug} className="flex flex-col scientific-card p-5">
+                <Link href={spaceEnvironmentDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nasa hover:underline">{d.title}</Link>
                 <p className="mt-1 flex-1 text-sm text-muted">{d.description}</p>
                 <span className="mt-3 text-xs text-faint">{d.get().length} entries</span>
               </li>
@@ -62,9 +62,9 @@ export default function SpaceEnvironmentHubPage() {
           </ul>
         </section>
 
-        <section aria-labelledby="data-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="data-heading" className="scientific-card p-5">
           <h2 id="data-heading" className="font-display text-base font-semibold text-fg">Data &amp; provenance</h2>
-          <p className="mt-2 text-sm text-muted">Each phenomenon, radiation environment, hazard, and index is a first-class knowledge-graph entity resolved through the Scientific Data Engine, reusing the Sun, the planets, and the solar missions. This encyclopedia states no live conditions — for current space weather, see NOAA&apos;s Space Weather Prediction Center. Unknown values are left blank. See{" "}<Link href="/transparency/source-quality" className="text-ember underline-offset-4 hover:underline">source quality</Link>.</p>
+          <p className="mt-2 text-sm text-muted">Each phenomenon, radiation environment, hazard, and index is a first-class knowledge-graph entity resolved through the Scientific Data Engine, reusing the Sun, the planets, and the solar missions. This encyclopedia states no live conditions — for current space weather, see NOAA&apos;s Space Weather Prediction Center. Unknown values are left blank. See{" "}<Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.</p>
         </section>
       </Container>
     </>

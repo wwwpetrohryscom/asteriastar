@@ -65,7 +65,7 @@ export function CometDetail({ d, kindLabel, url }: { d: ResolvedComet; kindLabel
       >
         <div className="mt-4 flex flex-wrap items-center gap-2">
           <Badge tone="accent">Comets</Badge>
-          {c.greatComet && <span className="rounded-full border border-amber-400/30 bg-amber-400/10 px-2 py-0.5 text-xs font-medium text-amber-300">Great comet</span>}
+          {c.greatComet && <span className="rounded-full border border-nasa/40 bg-nasa/10 px-2 py-0.5 text-xs font-medium text-nasa">Great comet</span>}
           {c.sungrazer && <span className="text-sm text-faint">Sungrazer</span>}
         </div>
       </HeroSection>
@@ -74,12 +74,12 @@ export function CometDetail({ d, kindLabel, url }: { d: ResolvedComet; kindLabel
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             {c.highlights?.length ? (
               <section aria-labelledby="highlights">
                 <h2 id="highlights" className="font-display text-2xl font-bold">Highlights</h2>
                 <ul className="mt-3 space-y-2">
-                  {c.highlights.map((h) => (<li key={h} className="flex gap-3 text-muted"><span className="mt-1 text-amber-300">★</span><span>{h}</span></li>))}
+                  {c.highlights.map((h) => (<li key={h} className="flex gap-3 text-muted"><span className="mt-1 text-nasa">★</span><span>{h}</span></li>))}
                 </ul>
               </section>
             ) : null}
@@ -114,7 +114,7 @@ export function CometDetail({ d, kindLabel, url }: { d: ResolvedComet; kindLabel
                   {science.slice(0, 24).map((cx) => (
                     <li key={cx.relation.id} className="flex items-baseline justify-between gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-sm">
                       <span className="text-faint">{cx.outgoing ? RELATION_LABELS[cx.relation.type] : INVERSE_RELATION_LABELS[cx.relation.type]}</span>
-                      <Link href={entityGraphPath(cx.other)} className="text-right font-medium text-fg hover:text-nebula">{cx.other.name}</Link>
+                      <Link href={entityGraphPath(cx.other)} className="text-right font-medium text-fg hover:text-nasa">{cx.other.name}</Link>
                     </li>
                   ))}
                 </ul>
@@ -125,32 +125,32 @@ export function CometDetail({ d, kindLabel, url }: { d: ResolvedComet; kindLabel
           </div>
 
           <aside className="space-y-6">
-            <section aria-labelledby="quick" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <section aria-labelledby="quick" className="scientific-card p-5">
               <h2 id="quick" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
               <dl className="mt-3 divide-y divide-white/5">
                 {facts.map((f) => (
                   <div key={f.label} className="flex justify-between gap-3 py-2 text-sm">
                     <dt className="text-faint">{f.label}</dt>
-                    <dd className="text-right font-medium text-fg">{f.href ? <Link href={f.href} className="hover:text-nebula">{f.value}</Link> : f.value}</dd>
+                    <dd className="text-right font-medium text-fg">{f.href ? <Link href={f.href} className="hover:text-nasa">{f.value}</Link> : f.value}</dd>
                   </div>
                 ))}
               </dl>
             </section>
 
             {/* Live Sky — link to the computed tools; comet visibility is NOT fabricated. */}
-            <section aria-labelledby="livesky" className="rounded-2xl border border-sky-400/20 bg-sky-400/[0.04] p-5">
+            <section aria-labelledby="livesky" className="rounded-2xl border border-white/20 bg-white/[0.045] p-5">
               <h2 id="livesky" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Observing</h2>
               <p className="mt-2 text-xs text-muted">This encyclopedia states no current comet brightness or &ldquo;visible tonight&rdquo; claim. For what is actually observable, use the Live Sky tools.</p>
               <ul className="mt-3 space-y-1.5 text-sm">
-                <li><Link href="/sky/comets" className="text-nebula hover:underline">Comets in the Live Sky →</Link></li>
-                <li><Link href="/sky/meteor-showers" className="text-nebula hover:underline">Meteor showers →</Link></li>
-                <li><Link href="/sky/observing-calendar" className="text-nebula hover:underline">Observing calendar →</Link></li>
+                <li><Link href="/sky/comets" className="text-nasa hover:underline">Comets in the Live Sky →</Link></li>
+                <li><Link href="/sky/meteor-showers" className="text-nasa hover:underline">Meteor showers →</Link></li>
+                <li><Link href="/sky/observing-calendar" className="text-nasa hover:underline">Observing calendar →</Link></li>
               </ul>
             </section>
 
             {d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
             {d.quality && (
-              <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section aria-labelledby="quality" className="scientific-card p-5">
                 <div className="flex items-center justify-between gap-2">
                   <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
                   <span className="text-xs text-faint">{d.quality.completenessPercent}%</span>
@@ -164,7 +164,7 @@ export function CometDetail({ d, kindLabel, url }: { d: ResolvedComet; kindLabel
                     </div>
                   ))}
                 </dl>
-                <p className="mt-3 text-xs leading-relaxed text-faint">Orbits and discovery data from the NASA/JPL Small-Body Database. Unknown values are left blank. See{" "}<Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link>.</p>
+                <p className="mt-3 text-xs leading-relaxed text-faint">Orbits and discovery data from the NASA/JPL Small-Body Database. Unknown values are left blank. See{" "}<Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.</p>
               </section>
             )}
           </aside>

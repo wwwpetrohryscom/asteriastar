@@ -30,7 +30,7 @@ export function StatGrid({
         {shown.map((s, i) => (
           <div
             key={i}
-            className="rounded-xl border border-white/10 bg-bg-elevated/60 p-5 transition duration-300 hover:border-white/20 hover:bg-bg-elevated/80"
+            className="scientific-card p-5 transition duration-300 hover:border-nasa/50"
           >
             <dt className="text-[11px] font-medium uppercase tracking-[0.14em] text-faint">{s.label}</dt>
             <dd className="mt-2 font-display text-2xl font-bold leading-tight text-fg sm:text-3xl">

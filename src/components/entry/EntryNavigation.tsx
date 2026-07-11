@@ -25,10 +25,10 @@ export function EntryNavigation({
         {previous ? (
           <Link
             href={previous.path}
-            className="group flex-1 rounded-xl border border-white/10 bg-white/[0.02] p-4 transition hover:border-white/25 hover:bg-white/[0.04]"
+            className="group flex-1 scientific-card p-4 transition hover:border-white/25 hover:bg-white/[0.04]"
           >
             <span className="text-xs text-faint">← Previous</span>
-            <span className="mt-1 block font-medium text-fg group-hover:text-nebula">
+            <span className="mt-1 block font-medium text-fg group-hover:text-nasa">
               {previous.title}
             </span>
           </Link>
@@ -39,10 +39,10 @@ export function EntryNavigation({
         {next ? (
           <Link
             href={next.path}
-            className="group flex-1 rounded-xl border border-white/10 bg-white/[0.02] p-4 text-right transition hover:border-white/25 hover:bg-white/[0.04]"
+            className="group flex-1 scientific-card p-4 text-right transition hover:border-white/25 hover:bg-white/[0.04]"
           >
             <span className="text-xs text-faint">Next →</span>
-            <span className="mt-1 block font-medium text-fg group-hover:text-nebula">
+            <span className="mt-1 block font-medium text-fg group-hover:text-nasa">
               {next.title}
             </span>
           </Link>

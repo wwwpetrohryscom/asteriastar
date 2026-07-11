@@ -45,7 +45,7 @@ export default function DevelopersPlatformPage() {
           <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {quickStart.map((q) => (
               <li key={q.href}>
-                <Link href={q.href} className="flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 hover:border-ember/40">
+                <Link href={q.href} className="flex h-full flex-col scientific-card p-5 hover:border-nasa/40">
                   <span className="font-display text-base font-semibold text-fg">{q.title}</span>
                   <span className="mt-1 flex-1 text-sm text-muted">{q.blurb}</span>
                 </Link>
@@ -53,13 +53,13 @@ export default function DevelopersPlatformPage() {
             ))}
           </ul>
         </section>
-        <section aria-labelledby="more" className="mt-12 rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="more" className="mt-12 scientific-card p-5">
           <h2 id="more" className="font-display text-base font-semibold text-fg">The full platform</h2>
           <p className="mt-2 text-sm text-muted">
             See the{" "}
-            <Link href={ROUTES.openPlatform} className="text-ember underline-offset-4 hover:underline">Open Astronomy Platform</Link>{" "}
+            <Link href={ROUTES.openPlatform} className="text-nasa underline-offset-4 hover:underline">Open Astronomy Platform</Link>{" "}
             for every capability — including the architecture-ready SPARQL, GraphQL, SDK, DOI, and Virtual-Observatory interfaces, each described honestly. Provenance and quality are documented under{" "}
-            <Link href="/transparency/source-quality" className="text-ember underline-offset-4 hover:underline">source quality</Link>.
+            <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.
           </p>
         </section>
       </Container>

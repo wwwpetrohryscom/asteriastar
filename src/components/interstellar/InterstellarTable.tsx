@@ -21,7 +21,7 @@ export function InterstellarTable({ records }: { records: InterstellarRecord[] }
           {records.map((r) => (
             <tr key={r.id} className="border-b border-white/5 last:border-0 hover:bg-white/[0.02]">
               <td className="px-4 py-3">
-                <Link href={interstellarObjectPath(r.slug)} className="font-medium text-fg hover:text-aurora">{r.name}</Link>
+                <Link href={interstellarObjectPath(r.slug)} className="font-medium text-fg hover:text-nasa">{r.name}</Link>
               </td>
               <td className="px-4 py-3 text-muted">{r.designation ?? "—"}</td>
               <td className="px-4 py-3">{r.status ? <StatusBadge status={r.status} /> : "—"}</td>

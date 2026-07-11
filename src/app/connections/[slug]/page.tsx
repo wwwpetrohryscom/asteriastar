@@ -69,7 +69,7 @@ export default async function ConnectionPage({ params }: PageProps<"/connections
           <p className="mb-6 text-sm text-faint">{page.note}</p>
         )}
         {entities.length === 0 ? (
-          <p className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-muted">
+          <p className="scientific-card p-6 text-muted">
             These connections are being added to the knowledge graph.
           </p>
         ) : (

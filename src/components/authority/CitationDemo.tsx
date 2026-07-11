@@ -20,7 +20,7 @@ export function CitationDemo({ citation = EXAMPLE }: { citation?: Citation }) {
   return (
     <div className="space-y-3">
       {formatted.map((f) => (
-        <div key={f.style} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+        <div key={f.style} className="scientific-card p-4">
           <p className="text-xs font-medium uppercase tracking-wider text-faint">{f.name}</p>
           <pre className="mt-1.5 overflow-x-auto whitespace-pre-wrap break-words font-mono text-xs leading-relaxed text-muted">{f.text}</pre>
         </div>

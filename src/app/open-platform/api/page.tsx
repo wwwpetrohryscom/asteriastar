@@ -30,8 +30,8 @@ export default function OpenPlatformApiPage() {
         <CapabilityCards records={engine.openPlatform.byCategory("api")} />
         <p className="mt-8 text-sm text-muted">
           The full machine-readable contract is the{" "}
-          <Link href="/api/v0/openapi.json" className="text-ember underline-offset-4 hover:underline">OpenAPI 3.1 spec</Link>, and the reference lives at{" "}
-          <Link href="/developers/api" className="text-ember underline-offset-4 hover:underline">/developers/api</Link>.
+          <Link href="/api/v0/openapi.json" className="text-nasa underline-offset-4 hover:underline">OpenAPI 3.1 spec</Link>, and the reference lives at{" "}
+          <Link href="/developers/api" className="text-nasa underline-offset-4 hover:underline">/developers/api</Link>.
         </p>
       </Container>
     </>

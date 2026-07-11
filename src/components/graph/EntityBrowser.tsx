@@ -15,9 +15,9 @@ export interface BrowserItem {
 }
 
 const DOMAIN_DOT: Record<BrowserItem["domain"], string> = {
-  science: "bg-halo",
-  culture: "bg-comet",
-  astrology: "bg-gold",
+  science: "bg-white",
+  culture: "bg-white",
+  astrology: "bg-nasa",
 };
 
 function initial(name: string): string {
@@ -88,14 +88,14 @@ export function EntityBrowser({
 
       <div className="mt-8 space-y-10">
         {groups.length === 0 ? (
-          <p className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-muted">
+          <p className="scientific-card p-6 text-muted">
             No entities match your search.
           </p>
         ) : (
           groups.map(([letter, group]) => (
             <section key={letter} aria-label={`Entities starting with ${letter}`}>
               <div className="mb-3 flex items-center gap-3">
-                <h2 className="font-display text-xl font-bold text-nebula">{letter}</h2>
+                <h2 className="font-display text-xl font-bold text-nasa">{letter}</h2>
                 <span className="h-px flex-1 bg-white/10" />
               </div>
               <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -103,11 +103,11 @@ export function EntityBrowser({
                   <li key={item.id}>
                     <Link
                       href={item.href}
-                      className="group flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 transition hover:border-white/25 hover:bg-white/[0.04]"
+                      className="group flex items-center gap-3 scientific-card px-4 py-3 transition hover:border-white/25 hover:bg-white/[0.04]"
                     >
                       <span aria-hidden className={`h-1.5 w-1.5 shrink-0 rounded-full ${DOMAIN_DOT[item.domain]}`} />
                       <span className="min-w-0">
-                        <span className="block truncate font-medium text-fg group-hover:text-nebula">
+                        <span className="block truncate font-medium text-fg group-hover:text-nasa">
                           {item.name}
                         </span>
                         <span className="block text-xs text-faint">{item.typeLabel}</span>

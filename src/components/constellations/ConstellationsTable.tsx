@@ -6,7 +6,7 @@ const HEMI_LABEL: Record<string, string> = { northern: "Northern", southern: "So
 
 export function ConstellationsTable({ records }: { records: ConstellationRecord[] }) {
   if (records.length === 0) {
-    return <p className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-sm text-muted">No constellations match this view yet.</p>;
+    return <p className="scientific-card p-4 text-sm text-muted">No constellations match this view yet.</p>;
   }
   return (
     <div className="overflow-x-auto rounded-2xl border border-white/10">
@@ -25,7 +25,7 @@ export function ConstellationsTable({ records }: { records: ConstellationRecord[
           {records.map((c) => (
             <tr key={c.id} className="transition hover:bg-white/[0.02]">
               <td className="px-4 py-3">
-                <Link href={constellationPath(c.slug)} className="font-medium text-fg underline-offset-4 hover:text-nebula hover:underline">{c.name}</Link>
+                <Link href={constellationPath(c.slug)} className="font-medium text-fg underline-offset-4 hover:text-nasa hover:underline">{c.name}</Link>
                 {c.meaning && <span className="block text-xs text-faint">{c.meaning}</span>}
               </td>
               <td className="px-4 py-3 font-mono text-xs text-muted">{c.abbr}</td>

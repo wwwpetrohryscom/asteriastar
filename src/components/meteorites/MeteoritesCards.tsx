@@ -14,14 +14,14 @@ function Fact({ label, value }: { label: string; value?: string | number | null 
 
 export function MeteoritesCards({ records }: { records: MeteoriteRecord[] }) {
   if (records.length === 0) {
-    return <p className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-sm text-muted">No meteorites match this view yet.</p>;
+    return <p className="scientific-card p-4 text-sm text-muted">No meteorites match this view yet.</p>;
   }
   return (
     <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {records.map((r) => (
-        <li key={r.id} className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <li key={r.id} className="flex flex-col scientific-card p-5">
           <div className="flex items-baseline justify-between gap-2">
-            <Link href={recordHref(r)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nebula hover:underline">{r.name}</Link>
+            <Link href={recordHref(r)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nasa hover:underline">{r.name}</Link>
             {r.fallType && <span className="shrink-0 text-[0.7rem] uppercase tracking-wide text-faint">{r.fallType}</span>}
           </div>
           <p className="mt-1 flex-1 text-sm text-muted">{r.description}</p>

@@ -3,39 +3,30 @@
 /*
  * Asteria Star design system
  * --------------------------
- * A deep-space, premium dark theme. Tokens are declared here and exposed to
+ * Observatory-black editorial theme. Tokens are declared here and exposed to
  * Tailwind v4 via @theme, so utilities like `bg-bg`, `text-fg`, `text-muted`,
- * and `font-display` are available throughout the app.
+ * and `font-display` stay available throughout the app.
  */
 
 @theme {
-  /* Surfaces — observatory-black and deep NASA editorial blues. */
-  --color-bg: #02050b;
-  --color-bg-elevated: #07111c;
-  --color-surface: #0a1728;
+  /* Surfaces: black, instrument-panel black, and raised editorial black. */
+  --color-bg: #000000;
+  --color-bg-elevated: #020304;
+  --color-surface: #050708;
 
-  /* Text — starlight white to faint silver. */
-  --color-fg: #f5f7fb;
-  --color-muted: #c2cad8;
-  --color-faint: #929cad;
+  /* Text: white headings, near-white copy, silver metadata. */
+  --color-fg: #ffffff;
+  --color-muted: #f5f7f8;
+  --color-faint: #c9ced3;
 
-  /* Palette — NASA/ESA scientific: deep navy, black, white, silver, soft gold,
-   * and NASA blue. No purple. `--color-nasa` is the bright accent for links;
-   * `--color-nasa-deep` is the institutional flag blue. Gold stays reserved for
-   * the brand emblem and the astrology-as-tradition distinction. Hub accents are
-   * subtle blue/steel/silver/gold tints so hubs stay legible without a rainbow. */
-  --color-nasa: #5d95df;
-  --color-nasa-deep: #0b3d91;
-  --color-nasa-red: #e0503a;
-  --color-gold: #e7c98a;
-  --color-nebula: #6ba1f0;
-  --color-aurora: #8fb0d4;
-  --color-ember: #e6c987;
-  --color-plasma: #7f9bd0;
-  --color-stone: #9aa6be;
-  --color-halo: #d4e0f4;
-  --color-comet: #a3c6de;
-  --color-silver: #c8d2e6;
+  /* Palette: red is editorial/active, green is reserved for status semantics. */
+  --color-nasa: #ff2a1a;
+  --color-nasa-deep: #b91c1c;
+  --color-nasa-red: #e10600;
+  --color-success: #18c964;
+  --color-success-strong: #22c55e;
+  --color-success-deep: #0f9f55;
+  --color-silver: #d9dee2;
 
   /* Typography */
   --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
@@ -56,7 +47,7 @@
   }
 
   body {
-    background-color: var(--color-bg);
+    background-color: #000000;
     color: var(--color-fg);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
@@ -75,13 +66,13 @@
 
   /* Visible, on-brand focus state for keyboard users. */
   :focus-visible {
-    outline: 2px solid var(--color-halo);
+    outline: 2px solid var(--color-nasa);
     outline-offset: 2px;
     border-radius: 4px;
   }
 
   ::selection {
-    background-color: rgba(79, 143, 240, 0.32);
+    background-color: rgba(225, 6, 0, 0.42);
     color: #fff;
   }
 }
@@ -89,19 +80,18 @@
 @layer components {
   /*
    * Base surface colour. The sourced real-space photo system (PhotoBackdrop)
-   * sits behind every page as the visible backdrop; this deep navy-black is the
-   * fallback painted before the image loads and behind its dark scrim.
+   * can sit behind editorial pages, but black remains the universal fallback.
    */
   .cosmos {
     background-color: var(--color-bg);
   }
 
-  /* Premium surface: solid, quiet, and readable over the telescope backdrop. */
+  /* Premium surface: solid, quiet, and readable over telescope imagery. */
   .panel {
-    background: rgba(7, 17, 28, 0.72);
-    border: 1px solid rgba(200, 210, 230, 0.14);
-    box-shadow: 0 18px 70px rgba(0, 0, 0, 0.28);
-    backdrop-filter: blur(14px);
+    background: rgba(5, 7, 8, 0.88);
+    border: 1px solid rgba(245, 247, 248, 0.12);
+    box-shadow: 0 18px 70px rgba(0, 0, 0, 0.36);
+    backdrop-filter: blur(12px);
   }
 
   .photo-backdrop-frame-cycle {
@@ -124,8 +114,9 @@
   /* Long-form editorial content (policy/about pages). Body copy is kept near
      pure white for magazine-grade readability (NASA/ESA/Nature Astronomy). */
   .prose-cosmos {
-    color: #eaeef6;
+    color: var(--color-muted);
     line-height: 1.75;
+    font-size: 1.02rem;
   }
   .prose-cosmos > p {
     margin-bottom: 1rem;
@@ -154,15 +145,17 @@
     margin-bottom: 0.4rem;
   }
   .prose-cosmos li::marker {
-    color: var(--color-faint);
+    color: var(--color-nasa);
   }
   .prose-cosmos a {
-    color: var(--color-halo);
+    color: #ffffff;
     text-decoration: underline;
     text-underline-offset: 3px;
+    text-decoration-color: var(--color-nasa);
+    text-decoration-thickness: 1px;
   }
   .prose-cosmos a:hover {
-    color: var(--color-fg);
+    color: #ff2a1a;
   }
   .prose-cosmos strong {
     color: var(--color-fg);
@@ -171,7 +164,82 @@
 
   /* Accent text is solid, not gradient-driven. */
   .accent-text {
-    color: var(--accent, var(--color-halo));
+    color: var(--accent, var(--color-nasa));
+  }
+
+  .scientific-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    border: 1px solid rgba(245, 247, 248, 0.12);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 44%),
+      rgba(5, 7, 8, 0.94);
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.32);
+  }
+
+  .scientific-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(rgba(245, 247, 248, 0.045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(245, 247, 248, 0.035) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.55), transparent 62%);
+  }
+
+  .scientific-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    color: var(--color-muted);
+  }
+
+  .scientific-table th {
+    color: #ffffff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.045);
+  }
+
+  .scientific-table th,
+  .scientific-table td {
+    border-bottom: 1px solid rgba(245, 247, 248, 0.1);
+    padding: 0.85rem 1rem;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .site-footer {
+    content-visibility: auto;
+    contain-intrinsic-size: 1560px;
+  }
+
+  @media (min-width: 640px) {
+    .site-footer {
+      contain-intrinsic-size: 1040px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .site-footer {
+      contain-intrinsic-size: 760px;
+    }
+  }
+
+  .semantic-link {
+    color: #ffffff;
+    text-decoration-line: underline;
+    text-decoration-color: var(--color-nasa);
+    text-underline-offset: 3px;
+  }
+
+  .semantic-link:hover {
+    color: var(--color-nasa);
   }
 }
 

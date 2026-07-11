@@ -192,8 +192,8 @@ export default function HomePage() {
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-nasa">Astronomy is evidence</p>
             <p className="mt-3 leading-relaxed text-muted">Scientific pages are sourced from institutions, observatories, datasets, and peer-reviewed literature. Unknown values stay blank; imagery is real and credited.</p>
           </div>
-          <div className="rounded-lg border-l-2 border-gold/60 bg-bg-elevated/72 p-6">
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">Tradition is labeled</p>
+          <div className="rounded-lg border-l-2 border-nasa/60 bg-bg-elevated/72 p-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-nasa">Tradition is labeled</p>
             <p className="mt-3 leading-relaxed text-muted">Mythology and astrology are handled as culture, history, and symbolism — clearly separated, never presented as proven physical science.</p>
           </div>
         </div>

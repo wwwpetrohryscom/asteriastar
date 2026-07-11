@@ -3,12 +3,12 @@ import { STATUS_LABEL } from "@/knowledge-graph/data/small-body-missions-catalog
 
 /** A coloured pill for a mission's operational status. */
 const STATUS_STYLE: Record<MissionStatus, string> = {
-  completed: "border-emerald-400/40 bg-emerald-400/[0.10] text-emerald-300",
-  extended: "border-teal-400/40 bg-teal-400/[0.10] text-teal-300",
-  active: "border-sky-400/40 bg-sky-400/[0.10] text-sky-300",
-  planned: "border-amber-400/40 bg-amber-400/[0.10] text-amber-300",
-  concept: "border-zinc-400/40 bg-zinc-400/[0.10] text-zinc-300",
-  cancelled: "border-rose-400/40 bg-rose-400/[0.10] text-rose-300",
+  completed: "border-success/40 bg-success/10 text-success-strong",
+  extended: "border-success/40 bg-success/10 text-success-strong",
+  active: "border-white/20 bg-white/[0.045] text-muted",
+  planned: "border-nasa/40 bg-nasa/10 text-nasa",
+  concept: "border-white/20 bg-white/[0.045] text-muted",
+  cancelled: "border-nasa-red/50 bg-nasa-red/[0.12] text-nasa",
 };
 
 export function MissionStatusBadge({ status, className = "" }: { status: MissionStatus; className?: string }) {

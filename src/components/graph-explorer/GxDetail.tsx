@@ -38,7 +38,7 @@ export function GxDetail({ d, demo, demoTitle }: { d: ResolvedGraphView; demo?: 
       <HeroSection compact accent="halo" eyebrow={<span>Graph view · {r.capability}</span>} title={r.name} lead={r.description} />
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             {demo ? (
               <section aria-labelledby="demo">
                 <h2 id="demo" className="font-display text-2xl font-bold">{demoTitle ?? "Live from the graph"}</h2>
@@ -47,8 +47,8 @@ export function GxDetail({ d, demo, demoTitle }: { d: ResolvedGraphView; demo?: 
             ) : null}
 
             {architecture ? (
-              <section aria-labelledby="arch" className="rounded-2xl border border-halo/25 bg-halo/[0.06] p-5">
-                <h2 id="arch" className="font-display text-sm font-semibold uppercase tracking-wider text-halo">Architecture-ready</h2>
+              <section aria-labelledby="arch" className="rounded-2xl border border-white/25 bg-white/[0.06] p-5">
+                <h2 id="arch" className="font-display text-sm font-semibold uppercase tracking-wider text-white">Architecture-ready</h2>
                 <p className="mt-2 text-sm text-muted">The interface is defined and modelled in the graph, but a public endpoint is future work. Nothing is fabricated.</p>
               </section>
             ) : null}
@@ -56,7 +56,7 @@ export function GxDetail({ d, demo, demoTitle }: { d: ResolvedGraphView; demo?: 
             {r.highlights?.length ? (
               <section aria-labelledby="highlights">
                 <h2 id="highlights" className="font-display text-2xl font-bold">Highlights</h2>
-                <ul className="mt-3 space-y-1.5 text-sm text-muted">{r.highlights.map((h) => <li key={h} className="flex gap-2"><span className="text-halo">›</span>{h}</li>)}</ul>
+                <ul className="mt-3 space-y-1.5 text-sm text-muted">{r.highlights.map((h) => <li key={h} className="flex gap-2"><span className="text-white">›</span>{h}</li>)}</ul>
               </section>
             ) : null}
 
@@ -73,7 +73,7 @@ export function GxDetail({ d, demo, demoTitle }: { d: ResolvedGraphView; demo?: 
           <aside className="space-y-6">
             {d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
             {d.quality && (
-              <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section aria-labelledby="quality" className="scientific-card p-5">
                 <div className="flex items-center justify-between gap-2">
                   <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
                   <span className="text-xs text-faint">{d.quality.completenessPercent}%</span>
@@ -87,7 +87,7 @@ export function GxDetail({ d, demo, demoTitle }: { d: ResolvedGraphView; demo?: 
                     </div>
                   ))}
                 </dl>
-                <p className="mt-3 text-xs leading-relaxed text-faint">The computed views run real algorithms over the actual graph; every number is counted and every path is a real chain of relations. See{" "}<Link href="/transparency/source-quality" className="text-halo underline-offset-4 hover:underline">source quality</Link>.</p>
+                <p className="mt-3 text-xs leading-relaxed text-faint">The computed views run real algorithms over the actual graph; every number is counted and every path is a real chain of relations. See{" "}<Link href="/transparency/source-quality" className="text-white underline-offset-4 hover:underline">source quality</Link>.</p>
               </section>
             )}
           </aside>

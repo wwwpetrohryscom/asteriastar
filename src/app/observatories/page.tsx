@@ -54,8 +54,8 @@ export default function ObservatoriesHub() {
           <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {OBS_DISCOVERIES.map((d) => (
               <li key={d.slug}>
-                <Link href={observatoryDiscoveryPath(d.slug)} className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
-                  <h3 className="font-display text-lg font-semibold text-fg group-hover:text-nebula">{d.title}</h3>
+                <Link href={observatoryDiscoveryPath(d.slug)} className="group flex h-full flex-col scientific-card p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
+                  <h3 className="font-display text-lg font-semibold text-fg group-hover:text-nasa">{d.title}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted">{d.description}</p>
                 </Link>
               </li>
@@ -63,11 +63,11 @@ export default function ObservatoriesHub() {
           </ul>
         </section>
 
-        <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-sm text-muted">
+        <section className="scientific-card p-5 text-sm text-muted">
           <h2 className="font-display text-base font-semibold text-fg">Data &amp; provenance</h2>
           <p className="mt-1.5">
             The observatories encyclopedia is curated from authoritative public sources — NASA, ESA, ESO, NOIRLab, NSF, NRAO, NAOJ, STScI, and observatory pages. Apertures, altitudes, first-light dates, operators, and instruments are well-established public facts; uncertain values are omitted, and future facilities are clearly marked as not yet operational. See the{" "}
-            <Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link> page.
+            <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link> page.
           </p>
         </section>
       </Container>

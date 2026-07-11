@@ -53,7 +53,7 @@ export default function ContributorsPage() {
         </p>
         <ul className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {REPUTATION_DIMENSIONS.map((d) => (
-            <li key={d} className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm font-medium text-fg">
+            <li key={d} className="scientific-card px-4 py-3 text-sm font-medium text-fg">
               {REPUTATION_DIMENSION_LABELS[d]}
             </li>
           ))}

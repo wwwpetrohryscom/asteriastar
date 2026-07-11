@@ -88,9 +88,9 @@ export function ObservatoryHub() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="group flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 transition hover:border-white/25 hover:bg-white/[0.04]"
+                  className="group flex items-center justify-between gap-3 scientific-card px-4 py-3 transition hover:border-white/25 hover:bg-white/[0.04]"
                 >
-                  <span className="font-medium text-fg group-hover:text-nebula">{link.title}</span>
+                  <span className="font-medium text-fg group-hover:text-nasa">{link.title}</span>
                   {link.note && <span className="text-xs text-faint">{link.note}</span>}
                 </Link>
               </li>

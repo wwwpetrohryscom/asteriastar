@@ -5,10 +5,10 @@ type Variant = "primary" | "secondary" | "ghost";
 
 const VARIANTS: Record<Variant, string> = {
   primary:
-    "bg-white text-bg shadow-[0_12px_34px_rgba(0,0,0,0.28)] hover:bg-silver",
+    "bg-nasa-red text-white shadow-[0_14px_42px_rgba(225,6,0,0.28)] hover:bg-nasa",
   secondary:
-    "border border-silver/20 bg-surface/70 text-fg hover:border-nasa/55 hover:bg-surface",
-  ghost: "text-muted hover:text-fg",
+    "border border-white/20 bg-surface/90 text-fg hover:border-nasa/70 hover:bg-black",
+  ghost: "text-muted underline decoration-nasa/60 underline-offset-4 hover:text-nasa",
 };
 
 /** A link styled as a button. (No client-side handlers needed in this phase.) */

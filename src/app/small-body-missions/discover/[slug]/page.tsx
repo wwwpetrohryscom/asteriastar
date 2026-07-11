@@ -41,7 +41,7 @@ export default async function MissionDiscoverPage({ params }: PageProps<"/small-
       <HeroSection compact accent="halo" eyebrow={<span>Small-Body Missions · {records.length}</span>} title={d.title} lead={d.description} />
       <Container className="mt-8 mb-14">
         {records.length === 0 ? (
-          <p className="rounded-xl border border-white/10 bg-white/[0.02] p-6 text-sm text-muted">No missions match this view yet.</p>
+          <p className="scientific-card p-6 text-sm text-muted">No missions match this view yet.</p>
         ) : d.view === "table" ? (
           <MissionsTable records={records} />
         ) : (

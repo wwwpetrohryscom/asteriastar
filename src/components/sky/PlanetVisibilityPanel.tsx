@@ -86,10 +86,10 @@ export function PlanetVisibilityPanel() {
   }
 
   return (
-    <section aria-labelledby="planet-vis-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <section aria-labelledby="planet-vis-heading" className="scientific-card p-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 id="planet-vis-heading" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Planet visibility calculator</h2>
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-sky-400/30 bg-sky-400/10 px-2.5 py-0.5 text-xs font-medium text-sky-300">
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-white/[0.045] px-2.5 py-0.5 text-xs font-medium text-muted">
           <span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden />
           Computed
         </span>
@@ -97,19 +97,19 @@ export function PlanetVisibilityPanel() {
 
       <form onSubmit={onSubmit} className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
         <label className="text-xs text-faint">Latitude
-          <input ref={latRef} name="latitude" type="text" inputMode="decimal" placeholder="50.08" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-sky-400/50" />
+          <input ref={latRef} name="latitude" type="text" inputMode="decimal" placeholder="50.08" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-nasa/60" />
         </label>
         <label className="text-xs text-faint">Longitude
-          <input ref={lonRef} name="longitude" type="text" inputMode="decimal" placeholder="14.44" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-sky-400/50" />
+          <input ref={lonRef} name="longitude" type="text" inputMode="decimal" placeholder="14.44" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-nasa/60" />
         </label>
         <label className="text-xs text-faint">Date <span className="text-faint/70">(optional — now)</span>
-          <input ref={dateRef} name="date" type="date" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-sky-400/50" />
+          <input ref={dateRef} name="date" type="date" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-nasa/60" />
         </label>
         <label className="text-xs text-faint">Timezone (IANA)
-          <input ref={tzRef} name="timezone" type="text" placeholder="Europe/Prague" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-sky-400/50" />
+          <input ref={tzRef} name="timezone" type="text" placeholder="Europe/Prague" className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-2.5 py-1.5 text-sm text-fg outline-none focus:border-nasa/60" />
         </label>
         <div className="col-span-2 sm:col-span-4">
-          <button type="submit" className="rounded-lg border border-sky-400/30 bg-sky-400/10 px-4 py-2 text-sm font-medium text-sky-200 transition hover:bg-sky-400/20">Calculate</button>
+          <button type="submit" className="rounded-lg border border-white/20 bg-white/[0.045] px-4 py-2 text-sm font-medium text-white transition hover:bg-nasa/20">Calculate</button>
         </div>
       </form>
 
@@ -118,14 +118,14 @@ export function PlanetVisibilityPanel() {
       </p>
 
       {state.kind === "idle" && (
-        <p className="mt-4 rounded-xl border border-white/10 bg-white/[0.02] p-4 text-sm text-muted" role="status">
+        <p className="mt-4 scientific-card p-4 text-sm text-muted" role="status">
           Enter a latitude and longitude to compute which naked-eye planets are up tonight — their rise, transit, and set times, altitude, and how favourably each is placed. Nothing is shown until you do; no location is assumed.
         </p>
       )}
       {state.kind === "loading" && <p className="mt-4 text-sm text-faint" role="status">Computing planetary positions…</p>}
       {state.kind === "error" && (
-        <div role="alert" className="mt-4 rounded-xl border border-rose-400/20 bg-rose-400/[0.04] p-4">
-          <p className="text-sm text-rose-200">{state.msg}</p>
+        <div role="alert" className="mt-4 rounded-xl border border-nasa-red/50 bg-nasa-red/[0.12] p-4">
+          <p className="text-sm text-nasa">{state.msg}</p>
         </div>
       )}
       {state.kind === "ok" && <PlanetsResult d={state.d} />}
@@ -139,13 +139,13 @@ function PlanetsResult({ d }: { d: PlanetsPayload }) {
     <div className="mt-5 space-y-4">
       <ul className="space-y-3">
         {d.planets.map((p) => (
-          <li key={p.objectEntityId} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+          <li key={p.objectEntityId} className="scientific-card p-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div className="flex items-baseline gap-2">
                 <span className="font-display text-lg font-semibold text-fg">{p.planetName}</span>
                 <span className="text-xs text-faint">mag {p.position.apparentMagnitude}</span>
               </div>
-              <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium ${p.visibility.visibleTonight ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-300" : "border-white/15 bg-white/[0.03] text-faint"}`}>
+              <span className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-xs font-medium ${p.visibility.visibleTonight ? "border-success/40 bg-success/10 text-success-strong" : "border-white/15 bg-white/[0.03] text-faint"}`}>
                 {p.visibility.visibleTonight ? `Visible · ${p.visibility.morningOrEvening}` : "Not visible tonight"}
               </span>
             </div>
@@ -157,15 +157,15 @@ function PlanetsResult({ d }: { d: PlanetsPayload }) {
               <Row k="Altitude now" v={`${p.position.altitudeDeg}° ${p.position.altitudeDeg > 0 ? compass(p.position.azimuthDeg) : ""}`} />
             </dl>
             {p.visibility.limitingFactors.length > 0 && (
-              <p className="mt-2 text-xs text-amber-200/80">{p.visibility.limitingFactors.join(" ")}</p>
+              <p className="mt-2 text-xs text-nasa/80">{p.visibility.limitingFactors.join(" ")}</p>
             )}
           </li>
         ))}
       </ul>
 
-      <div className="rounded-xl border border-amber-400/20 bg-amber-400/[0.05] p-4">
-        <p className="text-xs font-semibold uppercase tracking-wider text-amber-200">Accuracy</p>
-        <p className="mt-1 text-xs leading-relaxed text-amber-100/90">{d.accuracyNotes}</p>
+      <div className="rounded-xl border border-nasa/40 bg-nasa/10 p-4">
+        <p className="text-xs font-semibold uppercase tracking-wider text-nasa">Accuracy</p>
+        <p className="mt-1 text-xs leading-relaxed text-muted">{d.accuracyNotes}</p>
       </div>
 
       <div className="border-t border-white/10 pt-3 text-xs leading-relaxed text-faint">
@@ -173,7 +173,7 @@ function PlanetsResult({ d }: { d: PlanetsPayload }) {
         <p className="mt-1"><strong className="text-muted">Computed at:</strong> {fmtUTC(d.envelope.generatedAt)} · for {d.input.latitude}°, {d.input.longitude}° · positions as of {fmtUTC(d.referenceTimeIso)}.</p>
         <p className="mt-1">
           Programmatic access:{" "}
-          <a href={`/api/v0/live-sky/planets?latitude=${d.input.latitude}&longitude=${d.input.longitude}${tz !== "UTC" ? `&timezone=${encodeURIComponent(tz)}` : ""}`} className="text-nebula underline-offset-4 hover:underline">/api/v0/live-sky/planets</a>.
+          <a href={`/api/v0/live-sky/planets?latitude=${d.input.latitude}&longitude=${d.input.longitude}${tz !== "UTC" ? `&timezone=${encodeURIComponent(tz)}` : ""}`} className="text-nasa underline-offset-4 hover:underline">/api/v0/live-sky/planets</a>.
         </p>
       </div>
     </div>

@@ -32,17 +32,17 @@ export default function EclipsesPage() {
       </HeroSection>
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
-            <aside role="note" className="rounded-xl border border-rose-400/25 bg-rose-400/[0.06] p-4">
-              <p className="text-sm font-semibold text-rose-200">Eye-safety</p>
+          <div className="min-w-0 space-y-10">
+            <aside role="note" className="rounded-xl border border-nasa-red/50 bg-nasa-red/[0.12] p-4">
+              <p className="text-sm font-semibold text-nasa">Eye-safety</p>
               <p className="mt-1 text-sm leading-relaxed text-muted">Never look at the Sun (or a partial/annular solar eclipse) without certified solar filters — ordinary sunglasses are not safe. A total lunar eclipse is completely safe to watch with the naked eye.</p>
             </aside>
             <SkySection id="solar" title="Solar eclipses">
-              <p className="mb-3 text-sm text-muted">A solar eclipse happens at New Moon, when the Moon passes between Earth and the Sun. <Link href={skyPath("eclipses/solar")} className="text-nebula hover:underline">Solar eclipses in detail →</Link></p>
+              <p className="mb-3 text-sm text-muted">A solar eclipse happens at New Moon, when the Moon passes between Earth and the Sun. <Link href={skyPath("eclipses/solar")} className="text-nasa hover:underline">Solar eclipses in detail →</Link></p>
               <Types items={eclipses.solarTypes.map((t) => [t.name, t.description])} />
             </SkySection>
             <SkySection id="lunar" title="Lunar eclipses">
-              <p className="mb-3 text-sm text-muted">A lunar eclipse happens at Full Moon, when the Moon passes through Earth&apos;s shadow. <Link href={skyPath("eclipses/lunar")} className="text-nebula hover:underline">Lunar eclipses in detail →</Link></p>
+              <p className="mb-3 text-sm text-muted">A lunar eclipse happens at Full Moon, when the Moon passes through Earth&apos;s shadow. <Link href={skyPath("eclipses/lunar")} className="text-nasa hover:underline">Lunar eclipses in detail →</Link></p>
               <Types items={eclipses.lunarTypes.map((t) => [t.name, t.description])} />
             </SkySection>
             <PreparedForIntegration providers={provider ? [provider] : []} envelope={eclipses.upcoming()[0]?.envelope} />
@@ -51,9 +51,9 @@ export default function EclipsesPage() {
           </div>
           <aside className="space-y-6">
             <EnvelopeCard envelope={eclipses.typesEnvelope} />
-            <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <section className="scientific-card p-5">
               <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Learn</h2>
-              <p className="mt-2 text-sm text-muted"><Link href="/learn/observing-the-night-sky" className="text-nebula hover:underline">Observing the Night Sky →</Link></p>
+              <p className="mt-2 text-sm text-muted"><Link href="/learn/observing-the-night-sky" className="text-nasa hover:underline">Observing the Night Sky →</Link></p>
             </section>
           </aside>
         </div>
@@ -64,7 +64,7 @@ export default function EclipsesPage() {
 
 export function Types({ items }: { items: [string, string][] }) {
   return (
-    <dl className="divide-y divide-white/5 overflow-hidden rounded-xl border border-white/10 bg-white/[0.02]">
+    <dl className="divide-y divide-white/5 overflow-hidden scientific-card">
       {items.map(([term, def]) => (
         <div key={term} className="px-4 py-3">
           <dt className="font-medium text-fg">{term}</dt>

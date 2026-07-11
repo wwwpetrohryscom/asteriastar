@@ -268,11 +268,11 @@ export function ScientificDiagram({ entity }: { entity: RuntimeEntity }) {
   return (
     <section className="rounded-[2rem] border border-white/10 bg-bg-elevated/64 p-5 shadow-2xl shadow-black/20 sm:p-7">
       <div className="mb-5 flex items-center gap-3">
-        <span className="flex size-10 items-center justify-center rounded-full border border-gold/25 bg-gold/[0.07] text-gold">
+        <span className="flex size-10 items-center justify-center rounded-full border border-nasa/25 bg-nasa/[0.07] text-nasa">
           <ScientificIcon name="aperture" className="size-5" />
         </span>
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-gold">
+          <p className="text-xs font-semibold uppercase tracking-[0.28em] text-nasa">
             Original SVG diagram
           </p>
           <h3 className="mt-1 text-xl font-semibold">{title}</h3>

@@ -17,7 +17,7 @@ export function SectionGrid({
   }[columns];
 
   return (
-    <ul className={`grid grid-cols-1 gap-4 ${cols} ${className}`}>
+    <ul className={`grid grid-cols-1 gap-5 ${cols} ${className}`}>
       {items.map((item) => (
         <li key={item.href} className="contents">
           <TopicCard {...item} />

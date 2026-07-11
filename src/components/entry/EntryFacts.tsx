@@ -12,7 +12,7 @@ export function EntryFacts({
   return (
     <section
       aria-labelledby="facts-heading"
-      className="rounded-2xl border border-white/10 bg-white/[0.02] p-5"
+      className="scientific-card p-5"
     >
       <h2 id="facts-heading" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">
         {title}

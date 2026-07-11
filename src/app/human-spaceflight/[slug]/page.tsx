@@ -100,7 +100,7 @@ export default async function HumanSpaceflightPage({ params }: PageProps<"/human
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             <section aria-labelledby="overview">
               <h2 id="overview" className="font-display text-2xl font-bold">Overview</h2>
               <p className="mt-3 leading-relaxed text-muted">{r.description}</p>
@@ -151,7 +151,7 @@ export default async function HumanSpaceflightPage({ params }: PageProps<"/human
                   {science.slice(0, 30).map((c) => (
                     <li key={c.relation.id} className="flex items-baseline justify-between gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-sm">
                       <span className="text-faint">{c.outgoing ? RELATION_LABELS[c.relation.type] : INVERSE_RELATION_LABELS[c.relation.type]}</span>
-                      <Link href={entityGraphPath(c.other)} className="text-right font-medium text-fg hover:text-nebula">{c.other.name}</Link>
+                      <Link href={entityGraphPath(c.other)} className="text-right font-medium text-fg hover:text-nasa">{c.other.name}</Link>
                     </li>
                   ))}
                 </ul>
@@ -162,14 +162,14 @@ export default async function HumanSpaceflightPage({ params }: PageProps<"/human
           </div>
 
           <aside className="space-y-6">
-            <section aria-labelledby="quick" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <section aria-labelledby="quick" className="scientific-card p-5">
               <h2 id="quick" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
               <dl className="mt-3 divide-y divide-white/5">
                 {facts.map((f) => (
                   <div key={f.label} className="flex justify-between gap-3 py-2 text-sm">
                     <dt className="text-faint">{f.label}</dt>
                     <dd className="text-right font-medium text-fg">
-                      {f.href ? <Link href={f.href} className="hover:text-nebula">{f.value}</Link> : f.value}
+                      {f.href ? <Link href={f.href} className="hover:text-nasa">{f.value}</Link> : f.value}
                     </dd>
                   </div>
                 ))}
@@ -177,7 +177,7 @@ export default async function HumanSpaceflightPage({ params }: PageProps<"/human
             </section>
 
             {d.quality && (
-              <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section aria-labelledby="quality" className="scientific-card p-5">
                 <div className="flex items-center justify-between gap-2">
                   <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
                   <span className="text-xs text-faint">{d.quality.completenessPercent}%</span>
@@ -193,7 +193,7 @@ export default async function HumanSpaceflightPage({ params }: PageProps<"/human
                 </dl>
                 <p className="mt-3 text-xs leading-relaxed text-faint">
                   Curated from authoritative public sources. See{" "}
-                  <Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link>.
+                  <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.
                 </p>
               </section>
             )}
@@ -217,8 +217,8 @@ function RefCard({ label, name, href }: { label: string; name: string; href?: st
     </>
   );
   return href ? (
-    <Link href={href} className="rounded-xl border border-white/10 bg-white/[0.02] p-3 transition hover:border-white/25">{body}</Link>
+    <Link href={href} className="scientific-card p-3 transition hover:border-white/25">{body}</Link>
   ) : (
-    <div className="rounded-xl border border-white/10 bg-white/[0.02] p-3">{body}</div>
+    <div className="scientific-card p-3">{body}</div>
   );
 }

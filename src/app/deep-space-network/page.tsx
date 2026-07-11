@@ -43,8 +43,8 @@ export default function DeepSpaceNetworkHubPage() {
           <h2 id="explore-heading" className="font-display text-2xl font-bold">Explore the infrastructure</h2>
           <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {DSCOMM_DISCOVERIES.map((d) => (
-              <li key={d.slug} className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                <Link href={dsnDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-aurora hover:underline">{d.title}</Link>
+              <li key={d.slug} className="flex flex-col scientific-card p-5">
+                <Link href={dsnDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nasa hover:underline">{d.title}</Link>
                 <p className="mt-1 flex-1 text-sm text-muted">{d.description}</p>
                 <span className="mt-3 text-xs text-faint">{d.get().length} entries</span>
               </li>
@@ -55,7 +55,7 @@ export default function DeepSpaceNetworkHubPage() {
         <section aria-labelledby="networks-heading">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h2 id="networks-heading" className="font-display text-2xl font-bold">The networks</h2>
-            <Link href={dsnDiscoveryPath("networks")} className="text-sm text-aurora underline-offset-4 hover:underline">All networks →</Link>
+            <Link href={dsnDiscoveryPath("networks")} className="text-sm text-nasa underline-offset-4 hover:underline">All networks →</Link>
           </div>
           <p className="mt-1 text-sm text-faint">The deep-space and near-Earth networks, from NASA&apos;s DSN to the national and commercial services.</p>
           <div className="mt-4"><DSCommCards records={e.networks()} /></div>
@@ -76,8 +76,8 @@ export default function DeepSpaceNetworkHubPage() {
           <p className="mt-1 text-sm text-faint">How spacecraft know where they are and where they point.</p>
           <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             {nav.map((m) => (
-              <li key={m.slug} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                <Link href={dsnNavigationPath(m.slug)} className="font-medium text-fg hover:text-aurora">{m.name}</Link>
+              <li key={m.slug} className="scientific-card p-4">
+                <Link href={dsnNavigationPath(m.slug)} className="font-medium text-fg hover:text-nasa">{m.name}</Link>
                 {m.role ? <p className="mt-1 text-xs text-faint">{m.role}</p> : null}
               </li>
             ))}
@@ -87,7 +87,7 @@ export default function DeepSpaceNetworkHubPage() {
         <section aria-labelledby="support-heading">
           <div className="flex flex-wrap items-baseline justify-between gap-2">
             <h2 id="support-heading" className="font-display text-2xl font-bold">Missions supported</h2>
-            <Link href="/small-body-missions" className="text-sm text-aurora underline-offset-4 hover:underline">Small-body missions →</Link>
+            <Link href="/small-body-missions" className="text-sm text-nasa underline-offset-4 hover:underline">Small-body missions →</Link>
           </div>
           <p className="mt-1 text-sm text-faint">The networks track spacecraft across the Solar System — from the Voyagers to Psyche.</p>
           <ul className="mt-4 flex flex-wrap gap-2">
@@ -97,11 +97,11 @@ export default function DeepSpaceNetworkHubPage() {
           </ul>
         </section>
 
-        <section aria-labelledby="data-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="data-heading" className="scientific-card p-5">
           <h2 id="data-heading" className="font-display text-base font-semibold text-fg">Data &amp; provenance</h2>
           <p className="mt-2 text-sm text-muted">
             Each network, station, antenna, signal band, and navigation and timing system is a first-class knowledge-graph entity resolved through the Scientific Data Engine. The Deep Space Network, Estrack, and Near Space Network reuse the platform&apos;s existing network entities — enriched, never duplicated — and mission-support links reuse the existing spacecraft. Capabilities and antenna sizes come from NASA/JPL, ESA, and JAXA; signal light-time is real physics (distance ÷ the speed of light), never a fabricated fixed delay. Unknown values are left blank. See{" "}
-            <Link href="/transparency/source-quality" className="text-aurora underline-offset-4 hover:underline">source quality</Link>.
+            <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.
           </p>
         </section>
       </Container>

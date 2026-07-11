@@ -133,7 +133,7 @@ export default async function SolarBodyPage({ params }: PageProps<"/solar-system
 
       <Container className="mt-12 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             <section>
               <SectionHeader kicker="Overview" title="Scientific overview" />
               <p className="mt-4 max-w-2xl text-lg leading-[1.75] text-muted">
@@ -211,7 +211,7 @@ export default async function SolarBodyPage({ params }: PageProps<"/solar-system
 
           {/* Sidebar */}
           <aside className="space-y-6">
-            <section aria-labelledby="quick" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <section aria-labelledby="quick" className="scientific-card p-5">
               <h2 id="quick" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
               <dl className="mt-3 divide-y divide-white/5">
                 {quick.map((f) => (
@@ -226,7 +226,7 @@ export default async function SolarBodyPage({ params }: PageProps<"/solar-system
             {b.quality && <EntityProvenancePanel entityId={b.quality.entityId} />}
 
             {b.quality && (
-              <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section aria-labelledby="quality" className="scientific-card p-5">
                 <div className="flex items-center justify-between gap-2">
                   <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
                   <span className="text-xs text-faint">{b.quality.completenessPercent}%</span>
@@ -242,7 +242,7 @@ export default async function SolarBodyPage({ params }: PageProps<"/solar-system
                 </dl>
                 <p className="mt-3 text-xs leading-relaxed text-faint">
                   Data from the NASA Planetary Fact Sheet & JPL (public domain). See{" "}
-                  <Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link>.
+                  <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.
                 </p>
               </section>
             )}

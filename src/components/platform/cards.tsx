@@ -22,14 +22,14 @@ import type { Comparison } from "@/lib/compare";
 type Accent = "nebula" | "halo" | "aurora" | "gold" | "ember" | "stone" | "comet" | "plasma";
 
 const ACCENT_RING: Record<Accent, string> = {
-  nebula: "hover:border-nebula/40",
-  halo: "hover:border-halo/40",
-  aurora: "hover:border-aurora/40",
-  gold: "hover:border-gold/40",
-  ember: "hover:border-ember/40",
-  stone: "hover:border-stone/40",
-  comet: "hover:border-comet/40",
-  plasma: "hover:border-plasma/40",
+  nebula: "hover:border-nasa/40",
+  halo: "hover:border-white/40",
+  aurora: "hover:border-white/40",
+  gold: "hover:border-nasa/40",
+  ember: "hover:border-nasa/40",
+  stone: "hover:border-white/40",
+  comet: "hover:border-white/40",
+  plasma: "hover:border-white/40",
 };
 
 const DOMAIN_ACCENT: Record<string, Accent> = {
@@ -39,9 +39,9 @@ const DOMAIN_ACCENT: Record<string, Accent> = {
 };
 
 const DOMAIN_DOT: Record<string, string> = {
-  science: "bg-halo",
-  culture: "bg-gold",
-  astrology: "bg-plasma",
+  science: "bg-white",
+  culture: "bg-nasa",
+  astrology: "bg-white",
 };
 
 /** Shared base surface for every platform card. */
@@ -63,7 +63,7 @@ export function PlatformCard({
   return (
     <Link
       href={href}
-      className={`group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition duration-200 hover:-translate-y-0.5 hover:bg-white/[0.04] ${ACCENT_RING[accent]}`}
+      className={`group flex h-full flex-col scientific-card p-5 transition duration-200 hover:-translate-y-0.5 hover:bg-white/[0.04] ${ACCENT_RING[accent]}`}
     >
       {eyebrow != null && (
         <p className="text-[0.7rem] font-medium uppercase tracking-[0.14em] text-faint">{eyebrow}</p>
@@ -82,7 +82,7 @@ export function KnowledgeCard({ entity, relationCount }: { entity: GraphEntity; 
       accent={DOMAIN_ACCENT[entity.domain] ?? "nebula"}
       eyebrow={
         <span className="inline-flex items-center gap-1.5">
-          <span className={`inline-block h-1.5 w-1.5 rounded-full ${DOMAIN_DOT[entity.domain] ?? "bg-nebula"}`} />
+          <span className={`inline-block h-1.5 w-1.5 rounded-full ${DOMAIN_DOT[entity.domain] ?? "bg-nasa"}`} />
           {ENTITY_TYPE_LABELS[entity.type]}
         </span>
       }

@@ -32,8 +32,8 @@ export default function AstroinformaticsHubPage() {
           <h2 id="explore-heading" className="font-display text-2xl font-bold">Explore astroinformatics</h2>
           <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {BH_DISCOVERIES.map((d) => (
-              <li key={d.slug} className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                <Link href={astroinformaticsDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-stone hover:underline">{d.title}</Link>
+              <li key={d.slug} className="flex flex-col scientific-card p-5">
+                <Link href={astroinformaticsDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nasa hover:underline">{d.title}</Link>
                 <p className="mt-1 flex-1 text-sm text-muted">{d.description}</p>
                 <span className="mt-3 text-xs text-faint">{d.get().length} entries</span>
               </li>
@@ -44,9 +44,9 @@ export default function AstroinformaticsHubPage() {
           <h2 id="software-heading" className="font-display text-2xl font-bold">The software astronomers compute with</h2>
           <div className="mt-4"><AiCards records={e.software()} /></div>
         </section>
-        <section aria-labelledby="data-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="data-heading" className="scientific-card p-5">
           <h2 id="data-heading" className="font-display text-base font-semibold text-fg">Data &amp; provenance</h2>
-          <p className="mt-2 text-sm text-muted">Each software package, computing infrastructure, and astroinformatics concept is a first-class knowledge-graph entity resolved through the Scientific Data Engine, reusing the Virtual Observatory, the TAP protocol, the FITS standard, the archives, the open-science practices, the machine-learning methods, and the Rubin, LSST, SKA and Gaia facilities already in the graph. Curated from NASA, STScI, and NOIRLab. Only well-established practice is stated. See{" "}<Link href="/transparency/source-quality" className="text-stone underline-offset-4 hover:underline">source quality</Link>.</p>
+          <p className="mt-2 text-sm text-muted">Each software package, computing infrastructure, and astroinformatics concept is a first-class knowledge-graph entity resolved through the Scientific Data Engine, reusing the Virtual Observatory, the TAP protocol, the FITS standard, the archives, the open-science practices, the machine-learning methods, and the Rubin, LSST, SKA and Gaia facilities already in the graph. Curated from NASA, STScI, and NOIRLab. Only well-established practice is stated. See{" "}<Link href="/transparency/source-quality" className="text-faint underline-offset-4 hover:underline">source quality</Link>.</p>
         </section>
       </Container>
     </>

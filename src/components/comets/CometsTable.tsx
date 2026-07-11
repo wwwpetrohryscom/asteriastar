@@ -31,7 +31,7 @@ export function periodLabel(r: CometRecord): string | undefined {
 
 export function CometsTable({ records }: { records: CometRecord[] }) {
   if (records.length === 0) {
-    return <p className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-sm text-muted">No comets match this view yet.</p>;
+    return <p className="scientific-card p-4 text-sm text-muted">No comets match this view yet.</p>;
   }
   return (
     <div className="overflow-x-auto rounded-2xl border border-white/10">
@@ -51,8 +51,8 @@ export function CometsTable({ records }: { records: CometRecord[] }) {
             return (
               <tr key={r.id} className="transition hover:bg-white/[0.02]">
                 <td className="px-4 py-3">
-                  {href ? <Link href={href} className="font-medium text-fg underline-offset-4 hover:text-nebula hover:underline">{r.name}</Link> : <span className="font-medium text-fg">{r.name}</span>}
-                  {r.greatComet && <span className="ml-2 rounded bg-amber-400/10 px-1.5 py-0.5 text-[0.6rem] uppercase tracking-wide text-amber-300">Great</span>}
+                  {href ? <Link href={href} className="font-medium text-fg underline-offset-4 hover:text-nasa hover:underline">{r.name}</Link> : <span className="font-medium text-fg">{r.name}</span>}
+                  {r.greatComet && <span className="ml-2 rounded bg-nasa/10 px-1.5 py-0.5 text-[0.6rem] uppercase tracking-wide text-nasa">Great</span>}
                 </td>
                 <td className="px-4 py-3 font-mono text-xs text-muted">{r.designation ?? "—"}</td>
                 <td className="px-4 py-3 text-muted">{r.cometTypeLabel ?? (r.category ? CATEGORY_LABEL[r.category] ?? r.category : "—")}</td>

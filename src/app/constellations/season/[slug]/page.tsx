@@ -39,9 +39,9 @@ export default async function ConstellationSeasonPage({ params }: PageProps<"/co
       <Container className="pt-8"><Breadcrumbs crumbs={crumbs} /></Container>
       <HeroSection compact accent="nebula" eyebrow={<span>Seasonal sky · {d.season.months}</span>} title={d.season.name} lead={d.season.description} />
       <Container className="mt-8 mb-14 space-y-6">
-        <p className="rounded-xl border border-amber-400/20 bg-amber-400/[0.05] p-4 text-sm text-amber-100/90">
+        <p className="rounded-xl border border-nasa/40 bg-nasa/10 p-4 text-sm text-muted">
           Seasons here are for the <strong>northern mid-latitudes</strong>; from the southern hemisphere they are reversed. For tonight&apos;s actual sky at your location, use the{" "}
-          <Link href={skyPath("night-sky-tonight")} className="text-nebula underline-offset-4 hover:underline">computed Tonight dashboard</Link>.
+          <Link href={skyPath("night-sky-tonight")} className="text-nasa underline-offset-4 hover:underline">computed Tonight dashboard</Link>.
         </p>
         <ConstellationsTable records={d.members} />
       </Container>

@@ -38,16 +38,16 @@ export default function Universe3DHubPage() {
         <section aria-labelledby="scenes-heading">
           <div className="flex items-baseline justify-between gap-3">
             <h2 id="scenes-heading" className="font-display text-2xl font-bold">The scenes</h2>
-            <Link href={`${ROUTES.universe3d}/data-coverage`} className="text-sm text-nebula hover:underline">What can be shown in true 3D →</Link>
+            <Link href={`${ROUTES.universe3d}/data-coverage`} className="text-sm text-nasa hover:underline">What can be shown in true 3D →</Link>
           </div>
           <div className="mt-4"><UniverseCards scenes={scenes} /></div>
         </section>
-        <section aria-labelledby="how-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="how-heading" className="scientific-card p-5">
           <h2 id="how-heading" className="font-display text-base font-semibold text-fg">How these scenes are drawn</h2>
           <p className="mt-2 text-sm leading-relaxed text-muted">
             The interactive scenes render on a 2D canvas from the same measured coordinates that back the Sky Atlas — right ascension, declination, parallax distance, and orbital semi-major axes already in the knowledge graph. They complete the Atlas&rsquo;s &ldquo;3D-ready&rdquo; views. A star with no measured distance is never placed in a distance-true scene; a galaxy with only a descriptive scale label is never given invented coordinates. With JavaScript off, or when a scene has no numeric geometry, a server-rendered static image and a data table carry the same real data. See{" "}
-            <Link href={`${ROUTES.universe3d}/data-coverage`} className="text-nebula underline-offset-4 hover:underline">data coverage</Link>{" "}and{" "}
-            <Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link>.
+            <Link href={`${ROUTES.universe3d}/data-coverage`} className="text-nasa underline-offset-4 hover:underline">data coverage</Link>{" "}and{" "}
+            <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.
           </p>
         </section>
       </Container>

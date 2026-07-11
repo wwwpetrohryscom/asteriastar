@@ -18,7 +18,7 @@ export function recordHref(r: MeteoriteRecord): string {
 
 export function MeteoritesTable({ records }: { records: MeteoriteRecord[] }) {
   if (records.length === 0) {
-    return <p className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-sm text-muted">No meteorites match this view yet.</p>;
+    return <p className="scientific-card p-4 text-sm text-muted">No meteorites match this view yet.</p>;
   }
   return (
     <div className="overflow-x-auto rounded-2xl border border-white/10">
@@ -36,8 +36,8 @@ export function MeteoritesTable({ records }: { records: MeteoriteRecord[] }) {
           {records.map((r) => (
             <tr key={r.id} className="transition hover:bg-white/[0.02]">
               <td className="px-4 py-3">
-                <Link href={recordHref(r)} className="font-medium text-fg underline-offset-4 hover:text-nebula hover:underline">{r.name}</Link>
-                {r.bolide && <span className="ml-2 rounded bg-amber-400/10 px-1.5 py-0.5 text-[0.6rem] uppercase tracking-wide text-amber-300">Bolide</span>}
+                <Link href={recordHref(r)} className="font-medium text-fg underline-offset-4 hover:text-nasa hover:underline">{r.name}</Link>
+                {r.bolide && <span className="ml-2 rounded bg-nasa/10 px-1.5 py-0.5 text-[0.6rem] uppercase tracking-wide text-nasa">Bolide</span>}
               </td>
               <td className="px-4 py-3 text-muted">{r.classificationLabel ?? (r.category ? CATEGORY_LABEL[r.category] ?? r.category : "—")}</td>
               <td className="px-4 py-3 text-muted">{r.fallType ? (r.fallType === "fall" ? "Fall" : "Find") : "—"}</td>

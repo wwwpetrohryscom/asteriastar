@@ -37,9 +37,9 @@ interface MoonPayload {
 }
 
 const STATUS_CLASS: Record<string, string> = {
-  computed: "border-sky-400/30 bg-sky-400/10 text-sky-300",
-  live: "border-emerald-400/30 bg-emerald-400/10 text-emerald-300",
-  stale: "border-rose-400/30 bg-rose-400/10 text-rose-300",
+  computed: "border-white/20 bg-white/[0.045] text-muted",
+  live: "border-success/40 bg-success/10 text-success-strong",
+  stale: "border-nasa-red/50 bg-nasa-red/[0.12] text-nasa",
 };
 
 function fmt(iso: string | null): string {
@@ -82,7 +82,7 @@ export function MoonDataPanel() {
   }, []);
 
   return (
-    <section aria-labelledby="moon-data-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <section aria-labelledby="moon-data-heading" className="scientific-card p-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 id="moon-data-heading" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Current Moon phase</h2>
         {state.kind === "ok" && (
@@ -96,8 +96,8 @@ export function MoonDataPanel() {
       {state.kind === "loading" && <p className="mt-4 text-sm text-faint" role="status">Computing current Moon phase…</p>}
 
       {state.kind === "error" && (
-        <div className="mt-4 rounded-xl border border-rose-400/20 bg-rose-400/[0.04] p-4">
-          <p className="text-sm text-rose-200">{state.msg}</p>
+        <div className="mt-4 rounded-xl border border-nasa-red/50 bg-nasa-red/[0.12] p-4">
+          <p className="text-sm text-nasa">{state.msg}</p>
           <button onClick={reload} className="mt-3 rounded-lg border border-white/15 px-3 py-1.5 text-sm text-fg hover:border-white/30">Retry</button>
         </div>
       )}
@@ -105,15 +105,15 @@ export function MoonDataPanel() {
       {state.kind === "ok" && (
         <>
           <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <div className="col-span-2 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+            <div className="col-span-2 scientific-card p-4">
               <div className="font-display text-2xl font-bold text-fg">{state.d.phaseName}</div>
               <div className="mt-1 text-xs text-faint">{state.d.waxing ? "Waxing" : "Waning"} · {state.d.method}</div>
             </div>
-            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+            <div className="scientific-card p-4">
               <div className="font-display text-2xl font-bold text-fg">{state.d.illuminationPercent}%</div>
               <div className="mt-1 text-xs text-faint">Illuminated</div>
             </div>
-            <div className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+            <div className="scientific-card p-4">
               <div className="font-display text-2xl font-bold text-fg">{state.d.synodicAgeDays}d</div>
               <div className="mt-1 text-xs text-faint">Moon age</div>
             </div>
@@ -139,7 +139,7 @@ export function MoonDataPanel() {
           <p className="mt-2 text-xs leading-relaxed text-faint">
             <strong className="text-muted">Privacy:</strong> phase and illumination are global — no location is requested, inferred, or used. Programmatic access:{" "}
             {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- links to a JSON API route, not a page */}
-            <a href="/api/v0/live-sky/moon" className="text-nebula underline-offset-4 hover:underline">/api/v0/live-sky/moon</a>.
+            <a href="/api/v0/live-sky/moon" className="text-nasa underline-offset-4 hover:underline">/api/v0/live-sky/moon</a>.
           </p>
           <button onClick={reload} className="mt-3 rounded-lg border border-white/15 px-3 py-1.5 text-sm text-fg hover:border-white/30">Refresh</button>
         </>

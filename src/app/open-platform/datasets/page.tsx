@@ -31,8 +31,8 @@ export default function OpenPlatformDatasetsPage() {
         <CapabilityCards records={engine.openPlatform.byCategory("datasets")} />
         <p className="mt-8 text-sm text-muted">
           Browse and export all {DATASETS.length} datasets in the{" "}
-          <Link href={ROUTES.datasets} className="text-ember underline-offset-4 hover:underline">dataset catalogue</Link>, or list them via the{" "}
-          <Link href="/api/v0/datasets" className="text-ember underline-offset-4 hover:underline">/api/v0/datasets</Link> endpoint.
+          <Link href={ROUTES.datasets} className="text-nasa underline-offset-4 hover:underline">dataset catalogue</Link>, or list them via the{" "}
+          <Link href="/api/v0/datasets" className="text-nasa underline-offset-4 hover:underline">/api/v0/datasets</Link> endpoint.
         </p>
       </Container>
     </>

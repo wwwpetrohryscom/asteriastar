@@ -54,8 +54,8 @@ export default function ExoplanetsHub() {
           <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {EXO_DISCOVERIES.map((d) => (
               <li key={d.slug}>
-                <Link href={exoplanetDiscoveryPath(d.slug)} className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
-                  <h3 className="font-display text-lg font-semibold text-fg group-hover:text-nebula">{d.title}</h3>
+                <Link href={exoplanetDiscoveryPath(d.slug)} className="group flex h-full flex-col scientific-card p-5 transition hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]">
+                  <h3 className="font-display text-lg font-semibold text-fg group-hover:text-nasa">{d.title}</h3>
                   <p className="mt-1.5 text-sm leading-relaxed text-muted">{d.description}</p>
                 </Link>
               </li>
@@ -68,7 +68,7 @@ export default function ExoplanetsHub() {
           <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {methods.map((m) => (
               <li key={m.slug}>
-                <Link href={exoplanetPath(m.slug)} className="block rounded-2xl border border-white/10 bg-white/[0.02] p-4 transition hover:border-white/25">
+                <Link href={exoplanetPath(m.slug)} className="block scientific-card p-4 transition hover:border-white/25">
                   <div className="flex items-baseline justify-between gap-2"><span className="font-medium text-fg">{m.name}</span><span className="text-xs text-faint">{m.count}</span></div>
                 </Link>
               </li>
@@ -87,11 +87,11 @@ export default function ExoplanetsHub() {
           </ul>
         </section>
 
-        <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-sm text-muted">
+        <section className="scientific-card p-5 text-sm text-muted">
           <h2 className="font-display text-base font-semibold text-fg">Data &amp; provenance</h2>
           <p className="mt-1.5">
-            Exoplanets are generated from the <a href="https://exoplanetarchive.ipac.caltech.edu" target="_blank" rel="noopener noreferrer" className="text-nebula underline-offset-4 hover:underline">NASA Exoplanet Archive</a> — the authoritative catalogue of confirmed planets. Every value is real archive data; nothing is inferred or synthesised, and habitability is never asserted as a certainty. Host stars already in the Star Encyclopedia are reused, not duplicated. See the{" "}
-            <Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link> page.
+            Exoplanets are generated from the <a href="https://exoplanetarchive.ipac.caltech.edu" target="_blank" rel="noopener noreferrer" className="text-nasa underline-offset-4 hover:underline">NASA Exoplanet Archive</a> — the authoritative catalogue of confirmed planets. Every value is real archive data; nothing is inferred or synthesised, and habitability is never asserted as a certainty. Host stars already in the Star Encyclopedia are reused, not duplicated. See the{" "}
+            <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link> page.
           </p>
         </section>
       </Container>

@@ -45,7 +45,7 @@ export default async function AstroGuidePage({ params }: PageProps<"/images/astr
             <p className="leading-relaxed text-muted">{s.body}</p>
           </ImageSection>
         ))}
-        <p className="text-sm text-muted">More guides: {ASTRO_GUIDES.filter((x) => x.slug !== slug).map((x, i) => (<span key={x.slug}>{i > 0 ? " · " : ""}<Link href={astrophotographyPath(x.slug)} className="text-nebula hover:underline">{x.title}</Link></span>))}</p>
+        <p className="text-sm text-muted">More guides: {ASTRO_GUIDES.filter((x) => x.slug !== slug).map((x, i) => (<span key={x.slug}>{i > 0 ? " · " : ""}<Link href={astrophotographyPath(x.slug)} className="text-nasa hover:underline">{x.title}</Link></span>))}</p>
       </Container>
     </>
   );

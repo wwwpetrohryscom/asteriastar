@@ -42,11 +42,11 @@ export function NetworkDetail({ d }: { d: ResolvedDSNetwork }) {
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             {n.existing ? (
-              <p className="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-muted">
+              <p className="scientific-card px-4 py-3 text-sm text-muted">
                 This is the deep-space-communications view of {n.name}. See its{" "}
-                <Link href={d.canonicalHref} className="text-aurora underline-offset-4 hover:underline">main network page</Link> for the base profile.
+                <Link href={d.canonicalHref} className="text-nasa underline-offset-4 hover:underline">main network page</Link> for the base profile.
               </p>
             ) : null}
 
@@ -55,8 +55,8 @@ export function NetworkDetail({ d }: { d: ResolvedDSNetwork }) {
                 <h2 id="stations" className="font-display text-2xl font-bold">Stations</h2>
                 <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
                   {d.stations.map((s) => (
-                    <li key={s.id} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                      <Link href={hrefForRecord(s)} className="font-medium text-fg hover:text-aurora">{s.name}</Link>
+                    <li key={s.id} className="scientific-card p-4">
+                      <Link href={hrefForRecord(s)} className="font-medium text-fg hover:text-nasa">{s.name}</Link>
                       {(s.locationLabel || s.diameterLabel) ? <div className="mt-0.5 text-xs text-faint">{[s.locationLabel, s.diameterLabel].filter(Boolean).join(" · ")}</div> : null}
                     </li>
                   ))}
@@ -80,7 +80,7 @@ export function NetworkDetail({ d }: { d: ResolvedDSNetwork }) {
                   {science.slice(0, 24).map((cx) => (
                     <li key={cx.relation.id} className="flex items-baseline justify-between gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-sm">
                       <span className="text-faint">{cx.outgoing ? RELATION_LABELS[cx.relation.type] : INVERSE_RELATION_LABELS[cx.relation.type]}</span>
-                      <Link href={entityGraphPath(cx.other)} className="text-right font-medium text-fg hover:text-aurora">{cx.other.name}</Link>
+                      <Link href={entityGraphPath(cx.other)} className="text-right font-medium text-fg hover:text-nasa">{cx.other.name}</Link>
                     </li>
                   ))}
                 </ul>
@@ -91,7 +91,7 @@ export function NetworkDetail({ d }: { d: ResolvedDSNetwork }) {
           </div>
 
           <aside className="space-y-6">
-            <section aria-labelledby="quick" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <section aria-labelledby="quick" className="scientific-card p-5">
               <h2 id="quick" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
               <dl className="mt-3 divide-y divide-white/5 text-sm">
                 {d.operator ? <FactRow label="Operator" value={d.operator.name} href={d.operator.href} /> : (n.operatorLabel ? <FactRow label="Operator" value={n.operatorLabel} /> : null)}
@@ -112,14 +112,14 @@ export function FactRow({ label, value, href }: { label: string; value: string; 
   return (
     <div className="flex justify-between gap-3 py-2">
       <dt className="text-faint">{label}</dt>
-      <dd className="text-right font-medium text-fg">{href ? <Link href={href} className="hover:text-aurora">{value}</Link> : value}</dd>
+      <dd className="text-right font-medium text-fg">{href ? <Link href={href} className="hover:text-nasa">{value}</Link> : value}</dd>
     </div>
   );
 }
 
 export function QualityPanel({ quality, reviewStatus }: { quality: NonNullable<ResolvedDSNetwork["quality"]>; reviewStatus: ResolvedDSNetwork["reviewStatus"] }) {
   return (
-    <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <section aria-labelledby="quality" className="scientific-card p-5">
       <div className="flex items-center justify-between gap-2">
         <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
         <span className="text-xs text-faint">{quality.completenessPercent}%</span>
@@ -133,7 +133,7 @@ export function QualityPanel({ quality, reviewStatus }: { quality: NonNullable<R
           </div>
         ))}
       </dl>
-      <p className="mt-3 text-xs leading-relaxed text-faint">Infrastructure facts from NASA/JPL, ESA, and JAXA. Unknown values are left blank. See{" "}<Link href="/transparency/source-quality" className="text-aurora underline-offset-4 hover:underline">source quality</Link>.</p>
+      <p className="mt-3 text-xs leading-relaxed text-faint">Infrastructure facts from NASA/JPL, ESA, and JAXA. Unknown values are left blank. See{" "}<Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.</p>
     </section>
   );
 }

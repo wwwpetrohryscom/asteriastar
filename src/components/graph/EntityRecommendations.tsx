@@ -29,12 +29,12 @@ export function EntityRecommendations({
           <li key={entity.id}>
             <Link
               href={entityGraphPath(entity)}
-              className="group flex h-full flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]"
+              className="group flex h-full flex-col scientific-card p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-white/25 hover:bg-white/[0.04]"
             >
               <span className="text-xs uppercase tracking-wider text-faint">
                 {ENTITY_TYPE_LABELS[entity.type]}
               </span>
-              <span className="mt-1 font-display text-lg font-semibold text-fg group-hover:text-nebula">
+              <span className="mt-1 font-display text-lg font-semibold text-fg group-hover:text-nasa">
                 {entity.name}
               </span>
               <span className="mt-2 text-xs text-faint">{reason}</span>

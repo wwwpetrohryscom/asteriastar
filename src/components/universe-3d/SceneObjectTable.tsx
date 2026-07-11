@@ -38,7 +38,7 @@ export function SceneObjectTable({
             <tr key={p.id} className="border-b border-white/5">
               <td className="px-4 py-1.5 text-fg">
                 {p.href ? (
-                  <Link href={p.href} className="hover:text-nebula">{p.name}</Link>
+                  <Link href={p.href} className="hover:text-nasa">{p.name}</Link>
                 ) : (
                   p.name
                 )}

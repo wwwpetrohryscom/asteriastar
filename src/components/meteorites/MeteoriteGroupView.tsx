@@ -31,13 +31,13 @@ export function MeteoriteGroupView({ d, kindLabel, url }: { d: ResolvedMeteorite
       <HeroSection compact accent="nebula" eyebrow={<span>{kindLabel}</span>} title={r.name} lead={r.definition ?? r.description}>
         <div className="mt-4 flex flex-wrap items-center gap-2">
           <Badge tone="accent">{kindLabel}</Badge>
-          {d.parentBodies.map((p) => <Link key={p.id} href={p.href ?? "#"} className="text-sm text-nebula hover:underline">Parent body: {p.name}</Link>)}
+          {d.parentBodies.map((p) => <Link key={p.id} href={p.href ?? "#"} className="text-sm text-nasa hover:underline">Parent body: {p.name}</Link>)}
         </div>
       </HeroSection>
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             <section aria-labelledby="overview">
               <h2 id="overview" className="font-display text-2xl font-bold">Overview</h2>
               <p className="mt-3 leading-relaxed text-muted">{r.description}</p>
@@ -69,7 +69,7 @@ export function MeteoriteGroupView({ d, kindLabel, url }: { d: ResolvedMeteorite
                   {science.slice(0, 24).map((cx) => (
                     <li key={cx.relation.id} className="flex items-baseline justify-between gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-sm">
                       <span className="text-faint">{cx.outgoing ? RELATION_LABELS[cx.relation.type] : INVERSE_RELATION_LABELS[cx.relation.type]}</span>
-                      <Link href={entityGraphPath(cx.other)} className="text-right font-medium text-fg hover:text-nebula">{cx.other.name}</Link>
+                      <Link href={entityGraphPath(cx.other)} className="text-right font-medium text-fg hover:text-nasa">{cx.other.name}</Link>
                     </li>
                   ))}
                 </ul>
@@ -82,10 +82,10 @@ export function MeteoriteGroupView({ d, kindLabel, url }: { d: ResolvedMeteorite
           <aside className="space-y-6">
             {d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
             {d.quality && (
-              <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section className="scientific-card p-5">
                 <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Authority</h2>
                 <div className="mt-3"><ReviewBadge status={d.reviewStatus} /></div>
-                <p className="mt-3 text-xs leading-relaxed text-faint">Classifications follow the Meteoritical Society. Unknown values are left blank. See{" "}<Link href="/transparency/source-quality" className="text-nebula underline-offset-4 hover:underline">source quality</Link>.</p>
+                <p className="mt-3 text-xs leading-relaxed text-faint">Classifications follow the Meteoritical Society. Unknown values are left blank. See{" "}<Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.</p>
               </section>
             )}
           </aside>

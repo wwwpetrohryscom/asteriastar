@@ -19,7 +19,7 @@ export const metadata: Metadata = buildMetadata({ title: "Planetary Defense", de
 
 function surveyLink(id: string, fallback: string) {
   const e = getEntityById(id);
-  return e ? <Link href={entityGraphPath(e)} className="text-nebula underline-offset-4 hover:underline">{e.name}</Link> : <span>{fallback}</span>;
+  return e ? <Link href={entityGraphPath(e)} className="text-nasa underline-offset-4 hover:underline">{e.name}</Link> : <span>{fallback}</span>;
 }
 
 export default function PlanetaryDefensePage() {
@@ -56,8 +56,8 @@ export default function PlanetaryDefensePage() {
             When a new object&apos;s orbit is uncertain, astronomers estimate its impact probability and communicate it on two scales. The <strong>Torino Scale</strong> is a 0–10 public-facing scale combining impact probability and energy; almost every object sits at 0, and values are routinely revised down to 0 as more observations refine the orbit. The <strong>Palermo Scale</strong> is a finer logarithmic scale used by specialists to compare a hazard against the background impact risk. These are communication tools, not predictions — objects are added and then removed as tracking improves, which is the system working as intended.
           </p>
           <div className="mt-4 flex flex-wrap gap-2 text-sm">
-            <Link href={asteroidDiscoveryPath("potentially-hazardous")} className="rounded-lg border border-white/10 bg-white/[0.02] px-3 py-1.5 text-nebula hover:border-white/25">Potentially hazardous asteroids →</Link>
-            <Link href={asteroidDiscoveryPath("near-earth-objects")} className="rounded-lg border border-white/10 bg-white/[0.02] px-3 py-1.5 text-nebula hover:border-white/25">Near-Earth objects →</Link>
+            <Link href={asteroidDiscoveryPath("potentially-hazardous")} className="rounded-lg border border-white/10 bg-white/[0.02] px-3 py-1.5 text-nasa hover:border-white/25">Potentially hazardous asteroids →</Link>
+            <Link href={asteroidDiscoveryPath("near-earth-objects")} className="rounded-lg border border-white/10 bg-white/[0.02] px-3 py-1.5 text-nasa hover:border-white/25">Near-Earth objects →</Link>
           </div>
         </section>
 
@@ -97,8 +97,8 @@ export default function PlanetaryDefensePage() {
           <p className="mt-1 text-sm text-faint">Well-studied past impacts — the reason the surveys exist.</p>
           <ul className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-3">
             {pd.impactEvents.map((i) => (
-              <li key={i.slug} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                <Link href={asteroidImpactPath(i.slug)} className="font-medium text-fg hover:text-nebula">{i.name}</Link>
+              <li key={i.slug} className="scientific-card p-4">
+                <Link href={asteroidImpactPath(i.slug)} className="font-medium text-fg hover:text-nasa">{i.name}</Link>
                 {i.impactDate && <div className="mt-1 text-xs text-faint">{i.impactDate}</div>}
               </li>
             ))}

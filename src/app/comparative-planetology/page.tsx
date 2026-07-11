@@ -32,8 +32,8 @@ export default function ComparativePlanetologyHubPage() {
           <h2 id="explore-heading" className="font-display text-2xl font-bold">Explore comparative planetology</h2>
           <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {BA_DISCOVERIES.map((d) => (
-              <li key={d.slug} className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                <Link href={comparativePlanetologyDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-ember hover:underline">{d.title}</Link>
+              <li key={d.slug} className="flex flex-col scientific-card p-5">
+                <Link href={comparativePlanetologyDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nasa hover:underline">{d.title}</Link>
                 <p className="mt-1 flex-1 text-sm text-muted">{d.description}</p>
                 <span className="mt-3 text-xs text-faint">{d.get().length} entries</span>
               </li>
@@ -44,9 +44,9 @@ export default function ComparativePlanetologyHubPage() {
           <h2 id="processes-heading" className="font-display text-2xl font-bold">The processes that shape worlds</h2>
           <div className="mt-4"><CpCards records={e.processes()} /></div>
         </section>
-        <section aria-labelledby="data-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="data-heading" className="scientific-card p-5">
           <h2 id="data-heading" className="font-display text-base font-semibold text-fg">Data &amp; provenance</h2>
-          <p className="mt-2 text-sm text-muted">Each interior layer, planetary process, and world-type is a first-class knowledge-graph entity resolved through the Scientific Data Engine, reusing the planets, moons, Pluto, the planetary classes, the magnetosphere, the cryovolcano feature, the habitable zone, and the ocean-worlds theme already in the graph. Curated from NASA and the planetary-science community. Hypothetical world-types (such as hycean planets) are labelled as proposed. See{" "}<Link href="/transparency/source-quality" className="text-ember underline-offset-4 hover:underline">source quality</Link>.</p>
+          <p className="mt-2 text-sm text-muted">Each interior layer, planetary process, and world-type is a first-class knowledge-graph entity resolved through the Scientific Data Engine, reusing the planets, moons, Pluto, the planetary classes, the magnetosphere, the cryovolcano feature, the habitable zone, and the ocean-worlds theme already in the graph. Curated from NASA and the planetary-science community. Hypothetical world-types (such as hycean planets) are labelled as proposed. See{" "}<Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.</p>
         </section>
       </Container>
     </>

@@ -45,7 +45,7 @@ function EntitySelect({
 
   if (value) {
     return (
-      <div className="flex items-center justify-between gap-3 rounded-lg border border-nebula/40 bg-nebula/[0.06] px-3 py-2">
+      <div className="flex items-center justify-between gap-3 rounded-lg border border-nasa/40 bg-nasa/[0.06] px-3 py-2">
         <span className="min-w-0 truncate text-sm text-fg">{value.name} <span className="text-faint">· {value.type}</span></span>
         <button type="button" onClick={() => { onPick(null); setQ(""); }} className="shrink-0 text-xs text-faint hover:text-fg">Change</button>
       </div>
@@ -60,7 +60,7 @@ function EntitySelect({
         value={q}
         onChange={(e) => setQ(e.target.value)}
         placeholder="Search an entity…"
-        className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-3 py-2 text-sm text-fg placeholder:text-faint focus:border-nebula/60 focus:outline-none"
+        className="mt-1 w-full rounded-lg border border-white/15 bg-white/[0.03] px-3 py-2 text-sm text-fg placeholder:text-faint focus:border-nasa/60 focus:outline-none"
       />
       {q.trim().length >= 2 && (
         <ul className="mt-1 max-h-56 overflow-y-auto rounded-lg border border-white/10">
@@ -102,7 +102,7 @@ export function AssistantTool({
   const ready = picks.every((p) => p);
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-4">
+    <div className="scientific-card p-4">
       <div className="grid gap-3 sm:grid-cols-2">
         {fields.map((f, i) => (
           <EntitySelect
@@ -120,7 +120,7 @@ export function AssistantTool({
           const qs = fields.map((f, i) => `${f.name}=${encodeURIComponent(picks[i]!.id)}`).join("&");
           router.push(`${basePath}?${qs}`);
         }}
-        className="mt-4 rounded-lg border border-nebula/40 px-4 py-2 text-sm text-nebula hover:bg-nebula/10 disabled:cursor-not-allowed disabled:border-white/10 disabled:text-faint"
+        className="mt-4 rounded-lg border border-nasa/40 px-4 py-2 text-sm text-nasa hover:bg-nasa/10 disabled:cursor-not-allowed disabled:border-white/10 disabled:text-faint"
       >
         {runLabel}
       </button>

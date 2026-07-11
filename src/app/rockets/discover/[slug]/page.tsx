@@ -43,7 +43,7 @@ export default async function RocketDiscoverPage({ params }: PageProps<"/rockets
       <HeroSection compact accent="comet" eyebrow={<span>Rockets · {records.length} entries</span>} title={d.title} lead={d.description} />
       <Container className="mt-8 mb-14">
         {records.length === 0 ? (
-          <p className="rounded-xl border border-white/10 bg-white/[0.02] p-6 text-sm text-muted">No entries match this view yet — figures that are not reliably known are left blank rather than invented, so some filters are intentionally empty.</p>
+          <p className="scientific-card p-6 text-sm text-muted">No entries match this view yet — figures that are not reliably known are left blank rather than invented, so some filters are intentionally empty.</p>
         ) : d.view === "table" ? (
           <RocketsTable records={records} />
         ) : (

@@ -81,8 +81,8 @@ export default function ContributePage() {
       </HeroSection>
 
       <Container className="mt-8 mb-12 space-y-12">
-        <aside className="flex gap-3 rounded-xl border border-comet/25 bg-comet/[0.05] p-4">
-          <span aria-hidden className="mt-0.5 text-comet">
+        <aside className="flex gap-3 rounded-xl border border-white/25 bg-white/[0.05] p-4">
+          <span aria-hidden className="mt-0.5 text-faint">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" /><path d="M12 8h.01M11 11h1v5h1" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
           </span>
           <p className="text-sm leading-relaxed text-muted">
@@ -95,7 +95,7 @@ export default function ContributePage() {
           <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {ACCESS.map((a) => (
               <li key={a.href}>
-                <Link href={a.href} className="block h-full rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:border-white/25 hover:bg-white/[0.04]">
+                <Link href={a.href} className="block h-full scientific-card p-5 transition hover:border-white/25 hover:bg-white/[0.04]">
                   <span className="font-display text-base font-semibold text-fg">{a.title}</span>
                   <p className="mt-1 text-sm text-muted">{a.desc}</p>
                 </Link>
@@ -110,7 +110,7 @@ export default function ContributePage() {
             <ul className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {(items as typeof guides).map((s) => (
                 <li key={s.slug}>
-                  <Link href={contributePath(s.slug)} className="block h-full rounded-2xl border border-white/10 bg-white/[0.02] p-5 transition hover:border-white/25 hover:bg-white/[0.04]">
+                  <Link href={contributePath(s.slug)} className="block h-full scientific-card p-5 transition hover:border-white/25 hover:bg-white/[0.04]">
                     <span className="text-[0.65rem] uppercase tracking-wider text-faint">{s.eyebrow}</span>
                     <span className="mt-1 block font-display text-base font-semibold text-fg">{s.title}</span>
                     <p className="mt-1 text-sm text-muted">{s.description}</p>

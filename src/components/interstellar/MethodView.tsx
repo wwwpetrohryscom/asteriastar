@@ -38,7 +38,7 @@ export function MethodView({ d }: { d: ResolvedMethod }) {
       />
       <Container className="mt-8 mb-14 space-y-10">
         {r.definition ? (
-          <section aria-labelledby="inbrief" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+          <section aria-labelledby="inbrief" className="scientific-card p-5">
             <h2 id="inbrief" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">In brief</h2>
             <p className="mt-2 text-sm text-muted">{r.definition}</p>
           </section>
@@ -49,8 +49,8 @@ export function MethodView({ d }: { d: ResolvedMethod }) {
             <h2 id="usedby" className="font-display text-2xl font-bold">Objects identified this way</h2>
             <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
               {d.usedBy.map((m) => (
-                <li key={m.id} className="flex items-start justify-between gap-2 rounded-xl border border-white/10 bg-white/[0.02] p-4">
-                  <Link href={interstellarObjectPath(m.slug)} className="font-medium text-fg hover:text-aurora">{m.name}</Link>
+                <li key={m.id} className="flex items-start justify-between gap-2 scientific-card p-4">
+                  <Link href={interstellarObjectPath(m.slug)} className="font-medium text-fg hover:text-nasa">{m.name}</Link>
                   {m.status ? <StatusBadge status={m.status} /> : null}
                 </li>
               ))}

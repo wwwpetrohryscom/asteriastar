@@ -63,7 +63,7 @@ export default async function AsteroidImpactPage({ params }: PageProps<"/asteroi
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             <section aria-labelledby="overview">
               <h2 id="overview" className="font-display text-2xl font-bold">Overview</h2>
               <p className="mt-3 leading-relaxed text-muted">{r.description}</p>
@@ -73,7 +73,7 @@ export default async function AsteroidImpactPage({ params }: PageProps<"/asteroi
           </div>
           <aside className="space-y-6">
             {facts.length ? (
-              <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section className="scientific-card p-5">
                 <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
                 <dl className="mt-3 divide-y divide-white/5">
                   {facts.map((f) => (
@@ -82,14 +82,14 @@ export default async function AsteroidImpactPage({ params }: PageProps<"/asteroi
                 </dl>
               </section>
             ) : null}
-            <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-sm">
+            <section className="scientific-card p-5 text-sm">
               <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Planetary defense</h2>
               <p className="mt-2 text-muted">Impact history is why near-Earth objects are systematically discovered and tracked.</p>
-              <Link href="/asteroids/planetary-defense" className="mt-2 inline-block text-nebula hover:underline">Planetary defense →</Link>
+              <Link href="/asteroids/planetary-defense" className="mt-2 inline-block text-nasa hover:underline">Planetary defense →</Link>
             </section>
             {d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
             {d.quality && (
-              <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+              <section className="scientific-card p-5">
                 <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Authority</h2>
                 <div className="mt-3"><ReviewBadge status={d.reviewStatus} /></div>
               </section>

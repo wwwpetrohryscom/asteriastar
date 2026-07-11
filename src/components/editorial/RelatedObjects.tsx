@@ -59,11 +59,11 @@ export function RelatedObjects({
                     className="object-cover transition duration-500 group-hover:scale-[1.05]"
                   />
                 ) : (
-                  <div className="flex h-full w-full items-center justify-center bg-gradient-to-br from-surface to-black">
+                  <div className="flex h-full w-full items-center justify-center bg-surface">
                     <span className="font-display text-3xl font-bold text-white/25">{c.name?.[0] ?? "★"}</span>
                   </div>
                 )}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/45 to-transparent" />
+                <div className="absolute inset-0 bg-black/24" />
               </div>
               <div className="flex flex-1 flex-col p-4">
                 {c.typeLabel && <p className="mb-1 text-[11px] font-medium uppercase tracking-wider text-faint">{c.typeLabel}</p>}

@@ -47,18 +47,18 @@ export function StatusPill({ status }: { status?: string }) {
   if (!status) return <span className="text-faint">—</span>;
   const s = status.toLowerCase();
   const cls = /active|operational/.test(s)
-    ? "border-emerald-400/30 bg-emerald-400/10 text-emerald-300"
+    ? "border-success/40 bg-success/10 text-success-strong"
     : /retired|decommission/.test(s)
       ? "border-white/15 bg-white/[0.03] text-faint"
       : /develop|planned/.test(s)
-        ? "border-sky-400/30 bg-sky-400/10 text-sky-300"
+        ? "border-white/20 bg-white/[0.045] text-muted"
         : "border-white/15 bg-white/[0.03] text-muted";
   return <span className={`inline-block rounded-full border px-2 py-0.5 text-[0.65rem] font-medium ${cls}`}>{status}</span>;
 }
 
 export function SatellitesTable({ records }: { records: SatelliteRecord[] }) {
   if (records.length === 0) {
-    return <p className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-sm text-muted">No satellites match this view yet.</p>;
+    return <p className="scientific-card p-4 text-sm text-muted">No satellites match this view yet.</p>;
   }
   return (
     <div className="overflow-x-auto rounded-2xl border border-white/10">
@@ -77,7 +77,7 @@ export function SatellitesTable({ records }: { records: SatelliteRecord[] }) {
           {records.map((r) => (
             <tr key={r.id} className="transition hover:bg-white/[0.02]">
               <td className="px-4 py-3">
-                <Link href={recordPath(r)} className="font-medium text-fg underline-offset-4 hover:text-nebula hover:underline">{r.name}</Link>
+                <Link href={recordPath(r)} className="font-medium text-fg underline-offset-4 hover:text-nasa hover:underline">{r.name}</Link>
                 {r.kind === "constellation" && <span className="ml-2 rounded bg-white/[0.06] px-1.5 py-0.5 text-[0.6rem] uppercase tracking-wide text-faint">Constellation</span>}
               </td>
               <td className="px-4 py-3 text-muted">{r.category ? CATEGORY_LABEL[r.category] ?? r.category : "—"}</td>

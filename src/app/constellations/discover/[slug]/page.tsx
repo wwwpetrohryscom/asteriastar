@@ -43,7 +43,7 @@ export default async function ConstellationDiscoverPage({ params }: PageProps<"/
       <HeroSection compact accent="nebula" eyebrow={<span>Constellations · {records.length}</span>} title={d.title} lead={d.description} />
       <Container className="mt-8 mb-14">
         {records.length === 0 ? (
-          <p className="rounded-xl border border-white/10 bg-white/[0.02] p-6 text-sm text-muted">No constellations match this view yet — values that are not reliably known are left blank, so some filters are intentionally empty.</p>
+          <p className="scientific-card p-6 text-sm text-muted">No constellations match this view yet — values that are not reliably known are left blank, so some filters are intentionally empty.</p>
         ) : d.view === "table" ? (
           <ConstellationsTable records={records} />
         ) : (

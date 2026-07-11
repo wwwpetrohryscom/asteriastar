@@ -38,7 +38,7 @@ export default async function LearningPage({ searchParams }: PageProps<"/assista
         )}
         {result && (
           <div className="mt-8 space-y-8">
-            <h2 className="font-display text-2xl font-bold text-fg">A path from <Link href={result.entity.href} className="hover:text-nebula">{result.entity.name}</Link></h2>
+            <h2 className="font-display text-2xl font-bold text-fg">A path from <Link href={result.entity.href} className="hover:text-nasa">{result.entity.name}</Link></h2>
             {result.note && <p className="rounded-2xl border border-white/15 bg-white/[0.02] p-6 text-sm text-faint">{result.note}</p>}
             {result.foundations.length > 0 && (
               <section aria-labelledby="foundations">
@@ -57,7 +57,7 @@ export default async function LearningPage({ searchParams }: PageProps<"/assista
             {result.curatedPaths.length > 0 && (
               <section aria-labelledby="curated">
                 <h3 id="curated" className="font-display text-lg font-bold">Curated learning paths</h3>
-                <ul className="mt-3 space-y-2">{result.curatedPaths.map((p) => <li key={p.slug} className="rounded-lg border border-white/10 bg-white/[0.02] p-3"><Link href={learnPath(p.slug)} className="font-medium text-fg hover:text-nebula">{p.title}</Link><p className="mt-0.5 text-sm text-muted">{p.description}</p></li>)}</ul>
+                <ul className="mt-3 space-y-2">{result.curatedPaths.map((p) => <li key={p.slug} className="rounded-lg border border-white/10 bg-white/[0.02] p-3"><Link href={learnPath(p.slug)} className="font-medium text-fg hover:text-nasa">{p.title}</Link><p className="mt-0.5 text-sm text-muted">{p.description}</p></li>)}</ul>
               </section>
             )}
             <p className="text-xs text-faint">Assembled from {result.entity.name}&rsquo;s real relations and the platform&rsquo;s curated paths — deterministic, no language model.</p>

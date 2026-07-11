@@ -11,8 +11,8 @@ export function NeighborhoodPanel({ center, nodes }: { center: NeighborNode | nu
     byDist.set(n.distance, arr);
   }
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-      <p className="text-sm text-muted">Neighbourhood of <Link href={center.href} className="font-semibold text-fg hover:text-halo">{center.name}</Link>, expanded over the real relations — {nodes.length} entities:</p>
+    <div className="scientific-card p-5">
+      <p className="text-sm text-muted">Neighbourhood of <Link href={center.href} className="font-semibold text-fg hover:text-white">{center.name}</Link>, expanded over the real relations — {nodes.length} entities:</p>
       <div className="mt-4 space-y-4">
         {[...byDist.entries()].sort((a, b) => a[0] - b[0]).map(([dist, arr]) => (
           <div key={dist}>
@@ -32,16 +32,16 @@ export function NeighborhoodPanel({ center, nodes }: { center: NeighborNode | nu
 /** Renders a real shortest path — a chain of genuine relations — between two entities. */
 export function PathPanel({ path, from, to }: { path: NeighborNode[] | null; from: string; to: string }) {
   if (!path || path.length === 0) {
-    return <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5 text-sm text-muted">No path found between {from} and {to} within the search depth.</div>;
+    return <div className="scientific-card p-5 text-sm text-muted">No path found between {from} and {to} within the search depth.</div>;
   }
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <div className="scientific-card p-5">
       <p className="text-sm text-muted">A shortest chain of {path.length - 1} relations from <span className="font-semibold text-fg">{path[0].name}</span> to <span className="font-semibold text-fg">{path[path.length - 1].name}</span>:</p>
       <ol className="mt-4 flex flex-wrap items-center gap-2 text-sm">
         {path.map((n, i) => (
           <li key={n.id} className="flex items-center gap-2">
-            <Link href={n.href} className="rounded-lg border border-white/10 bg-white/[0.02] px-2.5 py-1 font-medium text-fg hover:border-halo/50 hover:text-halo">{n.name}</Link>
-            {i < path.length - 1 ? <span className="text-halo">→</span> : null}
+            <Link href={n.href} className="rounded-lg border border-white/10 bg-white/[0.02] px-2.5 py-1 font-medium text-fg hover:border-white/50 hover:text-white">{n.name}</Link>
+            {i < path.length - 1 ? <span className="text-white">→</span> : null}
           </li>
         ))}
       </ol>

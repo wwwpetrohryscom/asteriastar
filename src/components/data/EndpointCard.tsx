@@ -8,10 +8,10 @@ import type { EndpointDef } from "@/platform/open-data/endpoints";
 export function EndpointCard({ endpoint }: { endpoint: EndpointDef }) {
   const impl = endpoint.status === "implemented";
   return (
-    <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <div className="scientific-card p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="flex items-center gap-2 font-mono text-sm">
-          <span className="rounded-md border border-emerald-400/30 bg-emerald-400/10 px-1.5 py-0.5 text-xs font-semibold text-emerald-300">
+          <span className="rounded-md border border-success/40 bg-success/10 px-1.5 py-0.5 text-xs font-semibold text-success-strong">
             {endpoint.method}
           </span>
           <span className="text-fg">{endpoint.path}</span>
@@ -36,7 +36,7 @@ export function EndpointCard({ endpoint }: { endpoint: EndpointDef }) {
                 <tr key={p.name} className="align-top">
                   <td className="py-2 pr-4 font-mono text-xs text-fg">
                     {p.name}
-                    {p.required && <span className="ml-1 text-rose-300" title="required">*</span>}
+                    {p.required && <span className="ml-1 text-nasa" title="required">*</span>}
                   </td>
                   <td className="py-2 pr-4 text-xs text-faint">{p.in}</td>
                   <td className="py-2 pr-4 text-xs text-faint">{p.type}</td>
@@ -58,7 +58,7 @@ export function EndpointCard({ endpoint }: { endpoint: EndpointDef }) {
             <p className="text-xs font-semibold uppercase tracking-wider text-faint">Try it</p>
             <a
               href={endpoint.example}
-              className="mt-1 block break-all rounded-lg border border-white/10 bg-white/[0.02] px-3 py-1.5 font-mono text-xs text-nebula underline-offset-4 hover:underline"
+              className="mt-1 block break-all rounded-lg border border-white/10 bg-white/[0.02] px-3 py-1.5 font-mono text-xs text-nasa underline-offset-4 hover:underline"
             >
               {endpoint.example}
             </a>

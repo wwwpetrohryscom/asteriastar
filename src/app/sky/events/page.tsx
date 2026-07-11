@@ -34,9 +34,9 @@ export default function SkyEventsPage() {
               <SkySection key={m} id={`month-${m}`} title={monthName(m)}>
                 <ul className="space-y-2">
                   {events.map((e) => (
-                    <li key={e.slug} className="rounded-xl border border-white/10 bg-white/[0.02] p-4">
+                    <li key={e.slug} className="scientific-card p-4">
                       <div className="flex flex-wrap items-baseline justify-between gap-2">
-                        <span className="font-medium text-fg">{e.kind === "meteor-shower" ? <Link href={meteorShowerPath(e.slug.replace(/-peak$/, ""))} className="hover:text-nebula">{e.name}</Link> : e.name}</span>
+                        <span className="font-medium text-fg">{e.kind === "meteor-shower" ? <Link href={meteorShowerPath(e.slug.replace(/-peak$/, ""))} className="hover:text-nasa">{e.name}</Link> : e.name}</span>
                         <span className="text-xs uppercase tracking-wide text-faint">{e.kind.replace("-", " ")}</span>
                       </div>
                       <p className="mt-1 text-sm text-muted">{e.description}</p>
@@ -48,10 +48,10 @@ export default function SkyEventsPage() {
           </div>
           <aside className="space-y-6">
             <EnvelopeCard envelope={s.observingCalendar.envelope} />
-            <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <section className="scientific-card p-5">
               <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">More</h2>
-              <p className="mt-2 text-sm text-muted"><Link href={skyPath("this-month")} className="text-nebula hover:underline">This month in the sky →</Link></p>
-              <p className="mt-1 text-sm text-muted"><Link href={skyPath("observing-calendar")} className="text-nebula hover:underline">Observing calendar →</Link></p>
+              <p className="mt-2 text-sm text-muted"><Link href={skyPath("this-month")} className="text-nasa hover:underline">This month in the sky →</Link></p>
+              <p className="mt-1 text-sm text-muted"><Link href={skyPath("observing-calendar")} className="text-nasa hover:underline">Observing calendar →</Link></p>
             </section>
           </aside>
         </div>

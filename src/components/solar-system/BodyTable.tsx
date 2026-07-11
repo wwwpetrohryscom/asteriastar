@@ -29,7 +29,7 @@ export function BodyTable({ bodies }: { bodies: BodyRecord[] }) {
           {bodies.map((b) => (
             <tr key={b.id} className="transition hover:bg-white/[0.02]">
               <td className="px-4 py-2.5">
-                <Link href={solarBodyPath(bodySlug(b.id))} className="font-medium text-fg transition hover:text-nebula">{b.name}</Link>
+                <Link href={solarBodyPath(bodySlug(b.id))} className="font-medium text-fg transition hover:text-nasa">{b.name}</Link>
                 {b.designation && b.designation !== b.name && (
                   <span className="block text-xs text-faint">{b.designation}</span>
                 )}

@@ -25,7 +25,7 @@ export function ExplorationTable({ records, showStatus = true }: { records: Expl
           {records.map((r) => (
             <tr key={r.id} className="transition hover:bg-white/[0.02]">
               <td className="px-4 py-2.5">
-                <Link href={explorationPath(r.slug)} className="font-medium text-fg transition hover:text-nebula">{r.name}</Link>
+                <Link href={explorationPath(r.slug)} className="font-medium text-fg transition hover:text-nasa">{r.name}</Link>
                 {r.destination && <span className="block text-xs text-faint">{r.destination}</span>}
               </td>
               <td className="hidden px-4 py-2.5 text-muted sm:table-cell">{r.missionType ?? "—"}</td>
@@ -44,8 +44,8 @@ export function StatusPill({ status }: { status?: string }) {
   if (!status) return <span className="text-faint">—</span>;
   const active = /active|en route|operational/i.test(status);
   const done = /completed|retired|lost/i.test(status);
-  const tone = active ? "text-emerald-300 border-emerald-400/20 bg-emerald-400/5"
-    : done ? "text-slate-300 border-white/10 bg-white/[0.03]"
-    : "text-amber-300 border-amber-400/20 bg-amber-400/5";
+  const tone = active ? "text-success-strong border-success/25 bg-success/10"
+    : done ? "text-muted border-white/10 bg-white/[0.03]"
+    : "text-nasa border-nasa/40 bg-nasa/10";
   return <span className={`inline-block rounded-full border px-2 py-0.5 text-xs ${tone}`}>{status}</span>;
 }

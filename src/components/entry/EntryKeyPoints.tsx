@@ -10,7 +10,7 @@ export function EntryKeyPoints({
   return (
     <section
       aria-labelledby="keypoints-heading"
-      className="rounded-2xl border border-white/10 bg-white/[0.02] p-5"
+      className="scientific-card p-5"
     >
       <h2 id="keypoints-heading" className="font-display text-base font-semibold text-fg">
         {title}

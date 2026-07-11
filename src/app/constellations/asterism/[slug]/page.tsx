@@ -64,9 +64,9 @@ export default async function AsterismPage({ params }: PageProps<"/constellation
           </section>
         ) : null}
 
-        <p className="rounded-xl border border-amber-400/20 bg-amber-400/[0.05] p-4 text-sm text-amber-100/90">
+        <p className="rounded-xl border border-nasa/40 bg-nasa/10 p-4 text-sm text-muted">
           An asterism is a recognisable star pattern that is <strong>not</strong> one of the 88 official IAU constellations. Explore the{" "}
-          <Link href={ROUTES.constellations} className="text-nebula underline-offset-4 hover:underline">88 constellations →</Link>
+          <Link href={ROUTES.constellations} className="text-nasa underline-offset-4 hover:underline">88 constellations →</Link>
         </p>
 
         <SourceList keys={a.sources} title="Sources" />

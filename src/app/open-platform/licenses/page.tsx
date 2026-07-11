@@ -29,10 +29,10 @@ export default function OpenPlatformLicensesPage() {
       <Container className="mt-8 mb-14">
         <OpenPlatformNav active="licenses" />
 
-        <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section className="scientific-card p-5">
           <h2 className="font-display text-lg font-bold text-fg">The platform</h2>
           <p className="mt-2 text-sm text-muted">
-            The knowledge graph, the API responses, and the exports are licensed <span className="font-medium text-ember">{API_LICENSE}</span>. Attribution is requested as &ldquo;AsteriaStar&rdquo; with a link. Upstream source data retains the terms below — always defer to the stricter of the two for a given item.
+            The knowledge graph, the API responses, and the exports are licensed <span className="font-medium text-nasa">{API_LICENSE}</span>. Attribution is requested as &ldquo;AsteriaStar&rdquo; with a link. Upstream source data retains the terms below — always defer to the stricter of the two for a given item.
           </p>
         </section>
 
@@ -50,7 +50,7 @@ export default function OpenPlatformLicensesPage() {
               <tbody>
                 {sources.map((s) => (
                   <tr key={s.key} className="border-b border-white/5 align-top">
-                    <td className="px-4 py-2"><a href={s.url} target="_blank" rel="noopener noreferrer" className="font-medium text-fg hover:text-ember">{s.name}</a></td>
+                    <td className="px-4 py-2"><a href={s.url} target="_blank" rel="noopener noreferrer" className="font-medium text-fg hover:text-nasa">{s.name}</a></td>
                     <td className="px-4 py-2 text-muted">{s.organization}</td>
                     <td className="px-4 py-2 text-muted">{s.usage}</td>
                   </tr>
@@ -60,7 +60,7 @@ export default function OpenPlatformLicensesPage() {
           </div>
           <p className="mt-4 text-sm text-muted">
             The same registry is served as JSON at{" "}
-            <Link href="/api/v0/sources" className="text-ember underline-offset-4 hover:underline">/api/v0/sources</Link>.
+            <Link href="/api/v0/sources" className="text-nasa underline-offset-4 hover:underline">/api/v0/sources</Link>.
           </p>
         </section>
       </Container>

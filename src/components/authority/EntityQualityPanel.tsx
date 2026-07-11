@@ -22,7 +22,7 @@ export function EntityQualityPanel({ resolved }: { resolved: ResolvedEntity }) {
   return (
     <section
       aria-labelledby="quality-heading"
-      className="rounded-2xl border border-white/10 bg-white/[0.02] p-5"
+      className="scientific-card p-5"
     >
       <div className="flex items-center justify-between gap-3">
         <h2 id="quality-heading" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">
@@ -38,7 +38,7 @@ export function EntityQualityPanel({ resolved }: { resolved: ResolvedEntity }) {
       </div>
 
       <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-        <div className="h-full rounded-full bg-halo/70" style={{ width: `${q.completenessPercent}%` }} />
+        <div className="h-full rounded-full bg-white/70" style={{ width: `${q.completenessPercent}%` }} />
       </div>
 
       <dl className="mt-4 grid grid-cols-1 gap-x-4 gap-y-1.5 sm:grid-cols-2">
@@ -55,9 +55,9 @@ export function EntityQualityPanel({ resolved }: { resolved: ResolvedEntity }) {
           <>Interpretive tradition — presented as cultural context, not scientific evidence.</>
         ) : (
           <>Scientific entity. See the{" "}
-            <Link href="/transparency/evidence-framework" className="text-nebula underline-offset-4 hover:underline">evidence framework</Link>{" "}
+            <Link href="/transparency/evidence-framework" className="text-nasa underline-offset-4 hover:underline">evidence framework</Link>{" "}
             and{" "}
-            <Link href="/authority" className="text-nebula underline-offset-4 hover:underline">authority dashboard</Link>.
+            <Link href="/authority" className="text-nasa underline-offset-4 hover:underline">authority dashboard</Link>.
           </>
         )}
       </p>

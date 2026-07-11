@@ -27,14 +27,14 @@ export function SourceList({
         {sources.map((source) => (
           <li
             key={source.key}
-            className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
+            className="scientific-card p-4"
           >
             <div className="flex flex-wrap items-baseline justify-between gap-2">
               <a
                 href={source.url}
                 target="_blank"
                 rel="noreferrer nofollow"
-                className="font-medium text-fg underline-offset-4 transition hover:text-nebula hover:underline"
+                className="font-medium text-fg underline-offset-4 transition hover:text-nasa hover:underline"
               >
                 {source.name}
               </a>

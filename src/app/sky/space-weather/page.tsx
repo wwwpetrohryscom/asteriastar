@@ -32,13 +32,13 @@ export default function SpaceWeatherPage() {
       </HeroSection>
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             <SkySection id="flares" title="Solar flare classes">
-              <p className="mb-3 text-sm text-muted">Flares are ranked A–B–C–M–X by X-ray brightness, each class ten times stronger than the last. <Link href={skyPath("space-weather/solar-flares")} className="text-nebula hover:underline">Solar flares in detail →</Link></p>
+              <p className="mb-3 text-sm text-muted">Flares are ranked A–B–C–M–X by X-ray brightness, each class ten times stronger than the last. <Link href={skyPath("space-weather/solar-flares")} className="text-nasa hover:underline">Solar flares in detail →</Link></p>
               <Types items={sw.flareClasses.map((f) => [`Class ${f.flareClass}`, f.meaning])} />
             </SkySection>
             <SkySection id="storms" title="Geomagnetic storm scale">
-              <p className="mb-3 text-sm text-muted">NOAA ranks geomagnetic storms G1–G5. <Link href={skyPath("space-weather/geomagnetic-storms")} className="text-nebula hover:underline">Geomagnetic storms in detail →</Link></p>
+              <p className="mb-3 text-sm text-muted">NOAA ranks geomagnetic storms G1–G5. <Link href={skyPath("space-weather/geomagnetic-storms")} className="text-nasa hover:underline">Geomagnetic storms in detail →</Link></p>
               <Types items={sw.geomagneticScale.map((g) => [g.gScale, g.meaning])} />
             </SkySection>
             <PreparedForIntegration providers={providers} envelope={sw.recentFlares()[0]?.envelope} />
@@ -47,9 +47,9 @@ export default function SpaceWeatherPage() {
           </div>
           <aside className="space-y-6">
             <EnvelopeCard envelope={sw.scalesEnvelope} />
-            <section className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+            <section className="scientific-card p-5">
               <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Related</h2>
-              <p className="mt-2 text-sm text-muted"><Link href={skyPath("aurora")} className="text-nebula hover:underline">Aurora forecast →</Link></p>
+              <p className="mt-2 text-sm text-muted"><Link href={skyPath("aurora")} className="text-nasa hover:underline">Aurora forecast →</Link></p>
             </section>
           </aside>
         </div>

@@ -74,13 +74,13 @@ export default async function HistoryEntityPage({ params }: PageProps<"/history/
       <HeroSection compact accent="stone" eyebrow={<span>{eyebrow}</span>} title={title}>
         <div className="mt-4 flex flex-wrap items-center gap-2">
           <Badge tone="accent">History of Astronomy</Badge>
-          {d.kind === "astronomer" && d.era && <Link href={d.era.href} className="text-sm text-faint hover:text-nebula">{d.era.name}</Link>}
+          {d.kind === "astronomer" && d.era && <Link href={d.era.href} className="text-sm text-faint hover:text-nasa">{d.era.name}</Link>}
         </div>
       </HeroSection>
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
-          <div className="space-y-10">
+          <div className="min-w-0 space-y-10">
             {d.kind === "astronomer" && <AstronomerBody d={d} />}
             {d.kind === "discovery" && <DiscoveryBody d={d} />}
             {d.kind === "publication" && <PublicationBody d={d} />}
@@ -142,7 +142,7 @@ function AstronomerBody({ d }: { d: Extract<D, { kind: "astronomer" }> }) {
       <Section id="biography" title="Biography"><p className="leading-relaxed text-muted">{r.bio}</p></Section>
       {r.contributions?.length ? (
         <Section id="contributions" title="Scientific contributions">
-          <ul className="space-y-2">{r.contributions.map((c) => <li key={c} className="flex gap-2 text-muted"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-nebula/70" />{c}</li>)}</ul>
+          <ul className="space-y-2">{r.contributions.map((c) => <li key={c} className="flex gap-2 text-muted"><span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-nasa/70" />{c}</li>)}</ul>
         </Section>
       ) : null}
       {d.discoveries.length ? <Section id="discoveries" title="Major discoveries"><ItemList items={d.discoveries.map((x) => ({ name: x.name, meta: formatHistYear(x.year, x.yearApprox), href: historyPath(x.slug) }))} /></Section> : null}
@@ -301,13 +301,13 @@ function QuickFacts({ d }: { d: D }) {
   }
   if (!facts.length) return null;
   return (
-    <section aria-labelledby="quick" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <section aria-labelledby="quick" className="scientific-card p-5">
       <h2 id="quick" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
       <dl className="mt-3 divide-y divide-white/5">
         {facts.map((f) => (
           <div key={f.label} className="flex justify-between gap-3 py-2 text-sm">
             <dt className="text-faint">{f.label}</dt>
-            <dd className="text-right font-medium text-fg">{f.href ? <Link href={f.href} className="hover:text-nebula">{f.value}</Link> : f.value}</dd>
+            <dd className="text-right font-medium text-fg">{f.href ? <Link href={f.href} className="hover:text-nasa">{f.value}</Link> : f.value}</dd>
           </div>
         ))}
       </dl>
@@ -320,7 +320,7 @@ function QualityCard({ d }: { d: D }) {
   const q = d.quality;
   const reviewStatus = "reviewStatus" in d ? d.reviewStatus : undefined;
   return (
-    <section aria-labelledby="quality" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+    <section aria-labelledby="quality" className="scientific-card p-5">
       <div className="flex items-center justify-between gap-2">
         <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
         <span className="text-xs text-faint">{q.completenessPercent}%</span>
@@ -334,7 +334,7 @@ function QualityCard({ d }: { d: D }) {
           </div>
         ))}
       </dl>
-      <p className="mt-3 text-xs leading-relaxed text-faint">Curated from authoritative reference sources. See <Link href="/transparency/source-quality" className="text-nebula hover:underline">source quality</Link>.</p>
+      <p className="mt-3 text-xs leading-relaxed text-faint">Curated from authoritative reference sources. See <Link href="/transparency/source-quality" className="text-nasa hover:underline">source quality</Link>.</p>
     </section>
   );
 }
@@ -352,7 +352,7 @@ function Section({ id, title, children }: { id: string; title: string; children:
 
 function ItemList({ items }: { items: { name: string; meta?: string; href: string }[] }) {
   return (
-    <ul className="divide-y divide-white/5 overflow-hidden rounded-xl border border-white/10 bg-white/[0.02]">
+    <ul className="divide-y divide-white/5 overflow-hidden scientific-card">
       {items.map((it) => (
         <li key={it.href + it.name}>
           <Link href={it.href} className="flex items-baseline justify-between gap-3 px-4 py-2.5 transition hover:bg-white/[0.03]">
@@ -369,7 +369,7 @@ function RefGrid({ refs }: { refs: { id: string; name: string; href: string; tag
   return (
     <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
       {refs.map((r) => (
-        <Link key={r.tag + r.id} href={r.href} className="rounded-xl border border-white/10 bg-white/[0.02] p-3 transition hover:border-white/25">
+        <Link key={r.tag + r.id} href={r.href} className="scientific-card p-3 transition hover:border-white/25">
           {r.tag && <div className="text-xs text-faint">{r.tag}</div>}
           <div className="font-medium text-fg">{r.name}</div>
         </Link>
@@ -387,7 +387,7 @@ function ConnectionsSection({ id }: { id: string }) {
         {science.slice(0, 24).map((c) => (
           <li key={c.relation.id} className="flex items-baseline justify-between gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3 py-2 text-sm">
             <span className="text-faint">{c.outgoing ? RELATION_LABELS[c.relation.type] : INVERSE_RELATION_LABELS[c.relation.type]}</span>
-            <Link href={entityGraphPath(c.other)} className="text-right font-medium text-fg hover:text-nebula">{c.other.name}</Link>
+            <Link href={entityGraphPath(c.other)} className="text-right font-medium text-fg hover:text-nasa">{c.other.name}</Link>
           </li>
         ))}
       </ul>

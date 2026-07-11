@@ -44,7 +44,7 @@ export function CommunityLanding({
         lead={lead}
       />
       <Container className="mt-6">
-        <aside className="flex gap-3 rounded-xl border border-white/10 bg-white/[0.02] p-4">
+        <aside className="flex gap-3 scientific-card p-4">
           <span aria-hidden className="mt-0.5 text-muted">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
               <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.6" />
@@ -76,7 +76,7 @@ export function FeatureGrid({
   return (
     <ul className={`grid grid-cols-1 gap-4 ${cols}`}>
       {items.map((item) => (
-        <li key={item.title} className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <li key={item.title} className="scientific-card p-5">
           <h3 className="font-display text-base font-semibold text-fg">{item.title}</h3>
           <p className="mt-1.5 text-sm leading-relaxed text-muted">{item.description}</p>
         </li>

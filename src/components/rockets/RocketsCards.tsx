@@ -56,14 +56,14 @@ function factsFor(r: RocketRecord): { label: string; value?: string | number | n
 
 export function RocketsCards({ records }: { records: RocketRecord[] }) {
   if (records.length === 0) {
-    return <p className="rounded-xl border border-white/10 bg-white/[0.02] p-4 text-sm text-muted">Nothing in this view yet.</p>;
+    return <p className="scientific-card p-4 text-sm text-muted">Nothing in this view yet.</p>;
   }
   return (
     <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {records.map((r) => (
-        <li key={r.id} className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <li key={r.id} className="flex flex-col scientific-card p-5">
           <div className="flex items-baseline justify-between gap-2">
-            <Link href={rocketPath(r.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nebula hover:underline">{r.name}</Link>
+            <Link href={rocketPath(r.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nasa hover:underline">{r.name}</Link>
             <span className="shrink-0 text-[0.65rem] uppercase tracking-wider text-faint">{KIND_LABEL[r.kind]}</span>
           </div>
           <p className="mt-1 flex-1 text-sm text-muted">{r.description}</p>

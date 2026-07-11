@@ -8,14 +8,14 @@ import { CITATION_TYPE_LABELS, formatCitation, type Citation } from "@/lib/citat
  */
 
 const TYPE_ACCENT: Record<string, string> = {
-  peer_reviewed_paper: "text-emerald-300 border-emerald-400/30 bg-emerald-400/10",
-  dataset: "text-sky-300 border-sky-400/30 bg-sky-400/10",
-  catalogue: "text-sky-300 border-sky-400/30 bg-sky-400/10",
-  archive_page: "text-sky-300 border-sky-400/30 bg-sky-400/10",
-  image_archive: "text-blue-200 border-blue-300/30 bg-blue-300/10",
-  historical_reference: "text-amber-300 border-amber-400/30 bg-amber-400/10",
-  press_release: "text-amber-300 border-amber-400/30 bg-amber-400/10",
-  standards_reference: "text-amber-300 border-amber-400/30 bg-amber-400/10",
+  peer_reviewed_paper: "text-success-strong border-success/40 bg-success/10",
+  dataset: "text-muted border-white/20 bg-white/[0.045]",
+  catalogue: "text-muted border-white/20 bg-white/[0.045]",
+  archive_page: "text-muted border-white/20 bg-white/[0.045]",
+  image_archive: "text-muted border-white/20 bg-white/[0.045]",
+  historical_reference: "text-nasa border-nasa/40 bg-nasa/10",
+  press_release: "text-nasa border-nasa/40 bg-nasa/10",
+  standards_reference: "text-nasa border-nasa/40 bg-nasa/10",
 };
 
 /** Primary (peer-reviewed) first, then datasets/catalogues, then the rest. */
@@ -29,7 +29,7 @@ export function CitationList({ citations }: { citations: Citation[] }) {
   return (
     <ul className="space-y-3">
       {sorted.map((c) => {
-        const accent = TYPE_ACCENT[c.type] ?? "text-slate-300 border-slate-400/30 bg-slate-400/10";
+        const accent = TYPE_ACCENT[c.type] ?? "text-muted border-white/20 bg-white/[0.045]";
         const meta = [c.authors?.length ? (c.authors.length > 2 ? `${c.authors[0]} et al.` : c.authors.join(" & ")) : null, c.publication, c.date].filter(Boolean).join(" · ");
         return (
           <li key={c.id} className="border-t border-white/5 pt-3 first:border-t-0 first:pt-0">
@@ -37,7 +37,7 @@ export function CitationList({ citations }: { citations: Citation[] }) {
               <span className={`inline-flex items-center rounded-full border px-2 py-0.5 text-[0.65rem] font-medium ${accent}`}>
                 {CITATION_TYPE_LABELS[c.type]}
               </span>
-              <a href={c.url} target="_blank" rel="noreferrer nofollow" className="text-sm font-medium text-fg underline-offset-4 hover:text-nebula hover:underline">
+              <a href={c.url} target="_blank" rel="noreferrer nofollow" className="text-sm font-medium text-fg underline-offset-4 hover:text-nasa hover:underline">
                 {c.title}
               </a>
             </div>

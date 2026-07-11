@@ -58,7 +58,7 @@ export default function ApiReferencePage() {
 
       <Container className="mt-8 mb-12 space-y-12">
         <section aria-labelledby="basics-heading" className="grid gap-4 lg:grid-cols-2">
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+          <div className="scientific-card p-5">
             <h2 id="basics-heading" className="font-display text-lg font-semibold">Basics</h2>
             <ul className="mt-3 space-y-1.5 text-sm text-muted">
               <li>Base path: <span className="font-mono text-fg">/api/v0</span></li>
@@ -66,10 +66,10 @@ export default function ApiReferencePage() {
               <li>No authentication, no API keys, no rate limits.</li>
               <li>No cookies, tracking, user data, or write/upload endpoints.</li>
               <li>Cacheable &amp; deterministic — the same request returns the same bytes for a data version.</li>
-              <li>Spec: <Link href="/api/v0/openapi.json" className="text-nebula underline-offset-4 hover:underline">/api/v0/openapi.json</Link></li>
+              <li>Spec: <Link href="/api/v0/openapi.json" className="text-nasa underline-offset-4 hover:underline">/api/v0/openapi.json</Link></li>
             </ul>
           </div>
-          <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+          <div className="scientific-card p-5">
             <h2 className="font-display text-lg font-semibold">The response envelope</h2>
             <p className="mt-2 text-sm text-muted">Every response carries provenance metadata alongside its data:</p>
             <pre className="mt-3 max-h-64 overflow-auto rounded-lg border border-white/10 bg-black/30 p-3 font-mono text-[0.7rem] leading-relaxed text-faint">{sampleEnvelope}</pre>

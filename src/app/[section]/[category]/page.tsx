@@ -135,15 +135,15 @@ export default async function CategoryPage({
             {interpretive && <DisclaimerBox message={category.disclaimer} />}
 
             {category.dataModule && (
-              <aside className="flex gap-3 rounded-xl border border-halo/25 bg-halo/[0.05] p-4">
-                <span aria-hidden className="mt-0.5 text-halo">
+              <aside className="flex gap-3 rounded-xl border border-white/25 bg-white/[0.05] p-4">
+                <span aria-hidden className="mt-0.5 text-white">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
                     <path d="M12 3v4M12 17v4M3 12h4M17 12h4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
                     <circle cx="12" cy="12" r="3.5" stroke="currentColor" strokeWidth="1.6" />
                   </svg>
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-halo">Live data module</p>
+                  <p className="text-sm font-semibold text-white">Live data module</p>
                   <p className="mt-1 text-sm leading-relaxed text-muted">
                     Prepared for official integration. Live data will appear here —
                     we never fake live feeds or invent data. Explore the related
@@ -206,7 +206,7 @@ export default async function CategoryPage({
                 {category.plannedTopics.map((topic) => (
                   <li
                     key={topic}
-                    className="flex items-center gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-muted"
+                    className="flex items-center gap-3 scientific-card px-4 py-3 text-sm text-muted"
                   >
                     <span
                       aria-hidden
@@ -229,7 +229,7 @@ export default async function CategoryPage({
                 {faqs.map((faq) => (
                   <div
                     key={faq.question}
-                    className="rounded-xl border border-white/10 bg-white/[0.02] p-4"
+                    className="scientific-card p-4"
                   >
                     <dt className="font-medium text-fg">{faq.question}</dt>
                     <dd className="mt-1.5 text-sm leading-relaxed text-muted">

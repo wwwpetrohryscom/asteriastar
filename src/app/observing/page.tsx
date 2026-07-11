@@ -32,8 +32,8 @@ export default function ObservingHubPage() {
           <h2 id="explore-heading" className="font-display text-2xl font-bold">Explore the suite</h2>
           <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {BQ_DISCOVERIES.map((d) => (
-              <li key={d.slug} className="flex flex-col rounded-2xl border border-white/10 bg-white/[0.02] p-5">
-                <Link href={observingDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-comet hover:underline">{d.title}</Link>
+              <li key={d.slug} className="flex flex-col scientific-card p-5">
+                <Link href={observingDiscoveryPath(d.slug)} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-muted hover:underline">{d.title}</Link>
                 <p className="mt-1 flex-1 text-sm text-muted">{d.description}</p>
                 <span className="mt-3 text-xs text-faint">{d.get().length} entries</span>
               </li>
@@ -44,9 +44,9 @@ export default function ObservingHubPage() {
           <h2 id="planners-heading" className="font-display text-2xl font-bold">The planners</h2>
           <div className="mt-4"><OsCards records={e.planners()} /></div>
         </section>
-        <section aria-labelledby="data-heading" className="rounded-2xl border border-white/10 bg-white/[0.02] p-5">
+        <section aria-labelledby="data-heading" className="scientific-card p-5">
           <h2 id="data-heading" className="font-display text-base font-semibold text-fg">Data &amp; provenance</h2>
-          <p className="mt-2 text-sm text-muted">Each planner and integration is a first-class knowledge-graph entity resolved through the Scientific Data Engine. The planners reuse the computed live-sky data of the platform (twilight, the Moon, the planets) and its observing equipment, sites, and techniques — no ephemeris is re-implemented. The integrations are architecture-ready interfaces: weather, seeing, transparency, cloud, and Bortle data appear only from connected providers, never fabricated, following the same honesty envelope as the live-sky providers. The observing location stays on the device. See{" "}<Link href="/transparency/source-quality" className="text-comet underline-offset-4 hover:underline">source quality</Link>.</p>
+          <p className="mt-2 text-sm text-muted">Each planner and integration is a first-class knowledge-graph entity resolved through the Scientific Data Engine. The planners reuse the computed live-sky data of the platform (twilight, the Moon, the planets) and its observing equipment, sites, and techniques — no ephemeris is re-implemented. The integrations are architecture-ready interfaces: weather, seeing, transparency, cloud, and Bortle data appear only from connected providers, never fabricated, following the same honesty envelope as the live-sky providers. The observing location stays on the device. See{" "}<Link href="/transparency/source-quality" className="text-faint underline-offset-4 hover:underline">source quality</Link>.</p>
         </section>
       </Container>
     </>
