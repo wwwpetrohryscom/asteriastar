@@ -63,3 +63,23 @@ for (const [label, f] of dsFields) {
 }
 const blue = DS.filter((p) => (p.radialVelocityKmS?.value ?? 0) < 0 && p.extragalactic).length;
 console.log(`  blueshifted (approaching) galaxies correctly labelled radial velocity: ${blue}`);
+
+import { SMALL_BODY_PRECISION, SMALL_BODY_PRECISION_META } from "../../src/knowledge-graph/data/small-body-precision";
+const SB = [...SMALL_BODY_PRECISION.values()];
+console.log("\nPROGRAM 3 — SMALL-BODY PRECISION COVERAGE (JPL SBDB)");
+console.log(`  bodies with an orbit solution: ${SB.length} · ${SMALL_BODY_PRECISION_META.neo} NEO, ${SMALL_BODY_PRECISION_META.pha} PHA · retrieved ${SMALL_BODY_PRECISION_META.retrievedAt}`);
+const sbFields: [string, (p: (typeof SB)[number]) => unknown][] = [
+  ["orbital elements (a,e,i,q)", (p) => p.semiMajorAxisAu],
+  ["aphelion (bound orbits)", (p) => p.aphelionAu],
+  ["orbital period", (p) => p.orbitalPeriodDays],
+  ["diameter", (p) => p.diameterKm],
+  ["albedo", (p) => p.albedo],
+  ["rotation period", (p) => p.rotationPeriodH],
+];
+for (const [label, f] of sbFields) {
+  const c = SB.filter((p) => f(p) != null).length;
+  console.log(`    ${label.padEnd(38)} ${String(c).padStart(5)}  ${pct(c, SB.length)}`);
+}
+const withSigma = SB.filter((p) => p.semiMajorAxisAu?.uncertainty != null).length;
+console.log(`  semi-major axis with a stated uncertainty: ${withSigma} (${pct(withSigma, SB.length)})`);
+console.log(`  hyperbolic (unbound) comets correctly modelled: ${SB.filter((p) => (p.eccentricity?.value ?? 0) >= 1).length}`);

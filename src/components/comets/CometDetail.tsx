@@ -8,6 +8,8 @@ import { SourceList } from "@/components/ui/SourceList";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ReviewBadge, CoverageBadge } from "@/components/authority/TrustBadges";
 import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePanel";
+import { SmallBodyPrecisionSection } from "@/components/authority/SmallBodyPrecisionSection";
+import { getSmallBodyPrecision } from "@/knowledge-graph/data/small-body-precision";
 import { CATEGORY_LABEL, periodLabel } from "@/components/comets/CometsTable";
 import type { ResolvedComet } from "@/platform/data-engine/comet-engine";
 import { QUALITY_DIMENSION_LABELS, type QualityDimension } from "@/platform";
@@ -21,6 +23,7 @@ type Row = { label: string; value: string; href?: string };
 /** Shared detail view for a comet / active asteroid / dormant comet. */
 export function CometDetail({ d, kindLabel, url }: { d: ResolvedComet; kindLabel: string; url: string }) {
   const c = d.record;
+  const precision = getSmallBodyPrecision(c.id);
   const crumbs: Crumb[] = [
     { name: "Home", url: "/" },
     { name: "Comets", url: ROUTES.comets },
@@ -75,6 +78,8 @@ export function CometDetail({ d, kindLabel, url }: { d: ResolvedComet; kindLabel
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
           <div className="min-w-0 space-y-10">
+            {precision && <SmallBodyPrecisionSection p={precision} />}
+
             {c.highlights?.length ? (
               <section aria-labelledby="highlights">
                 <h2 id="highlights" className="font-display text-2xl font-bold">Highlights</h2>
