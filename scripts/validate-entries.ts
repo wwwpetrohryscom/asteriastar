@@ -268,6 +268,21 @@ async function main() {
     `✓ Deep Sky valid — ${deepSky.DEEP_SKY_STATS.objects} objects, ${deepSky.DEEP_SKY_STATS.newEntities} new entities, ${deepSky.DEEP_SKY_STATS.messier} Messier, ${deepSky.DEEP_SKY_STATS.caldwell} Caldwell`,
   );
 
+  // Program 2 — deep-sky precision overlay (SIMBAD + NED, field-level provenance).
+  const dsPrecision = await import("../src/knowledge-graph/data/deep-sky-catalog/precision");
+  const dsPrecisionIssues = dsPrecision.validateDeepSkyPrecision();
+  if (dsPrecisionIssues.length > 0) {
+    console.error(`\n✗ ${dsPrecisionIssues.length} deep-sky-precision issue(s):`);
+    for (const i of dsPrecisionIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  {
+    const m = dsPrecision.DEEP_SKY_PRECISION_META;
+    console.log(
+      `✓ Deep-sky precision valid — ${m.objects} objects (SIMBAD ${m.simbadRows} + NED ${m.nedRows} rows, retrieved ${m.simbadRetrievedAt}); redshift/velocity distinguished (sign-aware), no physical-size or redshift-on-Galactic contradiction, no gross coordinate error`,
+    );
+  }
+
   const exploration = await import("../src/knowledge-graph/data/exploration-catalog");
   const expIssues = exploration.validateExploration();
   if (expIssues.length > 0) {

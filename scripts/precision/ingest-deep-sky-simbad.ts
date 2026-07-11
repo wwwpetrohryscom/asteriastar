@@ -1,0 +1,103 @@
+/**
+ * Program 2 — SIMBAD deep-sky ingestion (basic + mesDistance).
+ *
+ * Deterministic, snapshot-based. For every deep-sky object it queries the SIMBAD
+ * `basic` table (identity, coordinates, redshift/velocity with type + bibcode) and
+ * the best `mesDistance` measurement (value, unit, method, quality, bibcode), writing
+ * each value verbatim. A field SIMBAD does not provide is `null`.
+ *   npx tsx scripts/precision/ingest-deep-sky-simbad.ts
+ */
+import { writeFileSync, mkdirSync } from "node:fs";
+import { DEEP_SKY_RECORDS } from "../../src/knowledge-graph/data/deep-sky-catalog";
+import type { SimbadDeepSkyRow } from "../../src/knowledge-graph/data/deep-sky-catalog/precision/types";
+import { tapQuery } from "./tap";
+
+const TAP = "https://simbad.cds.unistra.fr/simbad/sim-tap/sync";
+const OUT = "src/knowledge-graph/data/deep-sky-catalog/precision/snapshots/simbad-deep-sky.ts";
+const BATCH = 200;
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+/** Best SIMBAD identifier for an object — the catalogue ids already carry SIMBAD format. */
+function queryId(r: (typeof DEEP_SKY_RECORDS)[number]): string | null {
+  return r.ids.messier ?? r.ids.ngc ?? r.ids.ic ?? (r.ids.pgc ? `PGC ${r.ids.pgc}` : r.ids.ugc ? `UGC ${r.ids.ugc}` : null);
+}
+
+const num = (v: unknown): number | null => (v == null || v === "" || !Number.isFinite(Number(v)) ? null : Number(v));
+const str = (v: unknown): string | null => (v == null || v === "" ? null : String(v).trim() || null);
+const esc = (s: string) => s.replace(/'/g, "''");
+// SIMBAD returns catalogue ids space-padded ("NGC   224", "M  31"); collapse runs of
+// whitespace so the returned id maps back to the single-spaced id we queried with.
+const norm = (s: string) => s.replace(/\s+/g, " ").trim();
+
+async function basicBatch(ids: string[]): Promise<Map<string, Record<string, unknown>>> {
+  const inList = ids.map((s) => `'${esc(s)}'`).join(",");
+  const adql =
+    `SELECT i.id AS qname, b.main_id, b.otype_txt, b.ra, b.dec, b.coo_bibcode, ` +
+    `b.rvz_redshift, b.rvz_radvel, b.rvz_err, b.rvz_type, b.rvz_bibcode ` +
+    `FROM basic AS b JOIN ident AS i ON i.oidref = b.oid WHERE i.id IN (${inList})`;
+  const { cols, data } = await tapQuery(TAP, adql);
+  const out = new Map<string, Record<string, unknown>>();
+  for (const row of data) {
+    const rec = Object.fromEntries(cols.map((c, i) => [c, row[i]]));
+    out.set(norm(String(rec.qname)), rec);
+  }
+  return out;
+}
+
+async function distBatch(ids: string[]): Promise<Map<string, Record<string, unknown>>> {
+  const inList = ids.map((s) => `'${esc(s)}'`).join(",");
+  // mespos = 1 is SIMBAD's most-recent/adopted distance measurement.
+  const adql =
+    `SELECT i.id AS qname, d.dist, d.unit, d.method, d.qual, d.bibcode, d.mespos ` +
+    `FROM mesDistance AS d JOIN ident AS i ON i.oidref = d.oidref WHERE i.id IN (${inList})`;
+  const { cols, data } = await tapQuery(TAP, adql);
+  const best = new Map<string, Record<string, unknown>>();
+  for (const row of data) {
+    const rec = Object.fromEntries(cols.map((c, i) => [c, row[i]]));
+    const q = norm(String(rec.qname));
+    const prev = best.get(q);
+    if (!prev || Number(rec.mespos) < Number(prev.mespos)) best.set(q, rec);
+  }
+  return best;
+}
+
+async function main() {
+  const cohort = DEEP_SKY_RECORDS.map((r) => ({ dsId: r.id, q: queryId(r) })).filter((c): c is { dsId: string; q: string } => !!c.q);
+  const byQ = new Map(cohort.map((c) => [c.q, c.dsId]));
+  const ids = [...byQ.keys()];
+  console.log(`SIMBAD deep-sky: ${ids.length} objects`);
+
+  const rows: SimbadDeepSkyRow[] = [];
+  for (let i = 0; i < ids.length; i += BATCH) {
+    const batch = ids.slice(i, i + BATCH);
+    const [basic, dist] = [await basicBatch(batch), await distBatch(batch)];
+    for (const q of batch) {
+      const b = basic.get(norm(q));
+      if (!b) continue; // no SIMBAD match → leave absent
+      const d = dist.get(norm(q));
+      rows.push({
+        queryId: q, dsId: byQ.get(q)!, main_id: String(b.main_id ?? ""), otype_txt: str(b.otype_txt),
+        ra: num(b.ra), dec: num(b.dec), coo_bibcode: str(b.coo_bibcode),
+        rvz_redshift: num(b.rvz_redshift), rvz_radvel: num(b.rvz_radvel), rvz_err: num(b.rvz_err),
+        rvz_type: str(b.rvz_type), rvz_bibcode: str(b.rvz_bibcode),
+        dist: d ? num(d.dist) : null, dist_unit: d ? str(d.unit) : null, dist_method: d ? str(d.method) : null,
+        dist_qual: d ? str(d.qual) : null, dist_bibcode: d ? str(d.bibcode) : null,
+      });
+    }
+    console.log(`  ${Math.min(i + BATCH, ids.length)}/${ids.length} (matched: ${rows.length})`);
+    await sleep(400);
+  }
+
+  rows.sort((a, b) => a.dsId.localeCompare(b.dsId));
+  mkdirSync("src/knowledge-graph/data/deep-sky-catalog/precision/snapshots", { recursive: true });
+  const header =
+    `import type { SimbadDeepSkyRow } from "@/knowledge-graph/data/deep-sky-catalog/precision/types";\n\n` +
+    `// Generated by scripts/precision/ingest-deep-sky-simbad.ts from SIMBAD TAP\n` +
+    `// (basic + best mesDistance). Values verbatim; null = no source value. Do not edit by hand.\n\n` +
+    `export const SIMBAD_DEEP_SKY_RETRIEVED_AT = ${JSON.stringify(new Date().toISOString().slice(0, 10))};\n\n` +
+    `export const SIMBAD_DEEP_SKY_ROWS: SimbadDeepSkyRow[] = `;
+  writeFileSync(OUT, header + JSON.stringify(rows, null, 0) + ";\n");
+  console.log(`SIMBAD deep-sky: wrote ${rows.length} rows → ${OUT}`);
+}
+
+main().catch((e) => { console.error(e); process.exit(1); });

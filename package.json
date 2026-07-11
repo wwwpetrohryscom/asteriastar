@@ -18,6 +18,7 @@
     "content:audit": "tsx scripts/content-audit.ts",
     "content:report": "tsx scripts/content-audit.ts",
     "precision:stars": "tsx scripts/precision/ingest-simbad-stars.ts && tsx scripts/precision/ingest-gaia-stars.ts",
+    "precision:deep-sky": "tsx scripts/precision/ingest-deep-sky-simbad.ts && tsx scripts/precision/ingest-ned-galaxies.ts",
     "precision:report": "tsx scripts/precision/report.ts",
     "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts"
   },
