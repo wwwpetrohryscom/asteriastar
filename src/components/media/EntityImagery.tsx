@@ -19,7 +19,17 @@ export function EntityImagery({
   heading?: string;
   className?: string;
 }) {
-  const assets = getImagesForEntity(entityId);
+  let assets = getImagesForEntity(entityId);
+  let resolvedHeading = heading;
+  // Astrology signs carry no photograph of their own — show the sky image of the
+  // constellation of the same name (Aries → constellation:aries, …).
+  if (assets.length === 0 && entityId.startsWith("astrology_sign:")) {
+    const con = getImagesForEntity(`constellation:${entityId.split(":")[1]}`);
+    if (con.length > 0) {
+      assets = con;
+      if (heading === "Imagery") resolvedHeading = "The constellation";
+    }
+  }
   if (assets.length === 0) return null;
 
   const items: MediaItem[] = assets.map((a) => ({
@@ -44,8 +54,8 @@ export function EntityImagery({
   const hero = assets[0];
 
   return (
-    <section className={className} aria-label={heading}>
-      <h2 className="mb-4 flex items-center gap-2.5 font-display text-2xl font-bold sm:text-3xl">{heading}</h2>
+    <section className={className} aria-label={resolvedHeading}>
+      <h2 className="mb-4 flex items-center gap-2.5 font-display text-2xl font-bold sm:text-3xl">{resolvedHeading}</h2>
       <MediaLightbox items={items} />
       <JsonLd
         data={imageObjectSchema({
