@@ -230,6 +230,21 @@ async function main() {
     `✓ Star catalogue valid — ${starCatalog.STAR_STATS.stars} stars, ${starCatalog.STAR_STATS.constellationsCreated} new constellations, ${starCatalog.STAR_STATS.relations} relations`,
   );
 
+  // Program 1 — star precision overlay (SIMBAD + Gaia DR3, field-level provenance).
+  const starPrecision = await import("../src/knowledge-graph/data/star-catalog/precision");
+  const starPrecisionIssues = starPrecision.validateStarPrecision();
+  if (starPrecisionIssues.length > 0) {
+    console.error(`\n✗ ${starPrecisionIssues.length} star-precision issue(s):`);
+    for (const i of starPrecisionIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  {
+    const m = starPrecision.STAR_PRECISION_META;
+    console.log(
+      `✓ Star precision valid — ${m.stars} stars (SIMBAD ${m.simbadRows} rows retrieved ${m.simbadRetrievedAt}, Gaia DR3 ${m.gaiaRows} rows retrieved ${m.gaiaRetrievedAt}); every value source-traced, no coordinate mismatch or crossmatch collision`,
+    );
+  }
+
   // Solar System catalogue.
   const solarCatalog = await import("../src/knowledge-graph/data/solar-system-catalog");
   const solarIssues = solarCatalog.validateSolarSystem();
