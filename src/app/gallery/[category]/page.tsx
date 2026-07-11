@@ -1,68 +1,58 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { HeroSection } from "@/components/sections/HeroSection";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { GalleryCard } from "@/components/gallery/GalleryCard";
-import { GALLERY_THEMES, getGalleryTheme, galleryImages } from "@/lib/gallery";
+import { galleryCategories, getGalleryCategory } from "@/lib/gallery";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/jsonld";
-import { ROUTES, galleryPath, imageCollectionPath } from "@/lib/routes";
+import { ROUTES, galleryPath } from "@/lib/routes";
 
 export const dynamicParams = false;
 export function generateStaticParams() {
-  return GALLERY_THEMES.map((t) => ({ category: t.slug }));
+  return galleryCategories().map((c) => ({ category: c.slug }));
 }
 
 export async function generateMetadata({ params }: PageProps<"/gallery/[category]">): Promise<Metadata> {
   const { category } = await params;
-  const theme = getGalleryTheme(category);
-  if (!theme) return {};
-  return buildMetadata({ title: `${theme.title} — Gallery`, description: theme.tagline, path: galleryPath(category) });
+  const c = getGalleryCategory(category);
+  if (!c) return {};
+  return buildMetadata({ title: `${c.title} — Gallery`, description: c.tagline, path: galleryPath(category) });
 }
 
 export default async function GalleryCategoryPage({ params }: PageProps<"/gallery/[category]">) {
   const { category } = await params;
-  const theme = getGalleryTheme(category);
-  if (!theme) notFound();
-  const images = galleryImages(theme);
+  const c = getGalleryCategory(category);
+  if (!c) notFound();
   const crumbs: Crumb[] = [
     { name: "Home", url: "/" },
     { name: "Gallery", url: ROUTES.gallery },
-    { name: theme.title, url: galleryPath(category) },
+    { name: c.title, url: galleryPath(category) },
   ];
   return (
     <>
-      <JsonLd data={[breadcrumbSchema(crumbs), collectionPageSchema({ name: `${theme.title} — Gallery`, description: theme.tagline, url: galleryPath(category) })]} />
-      <HeroSection
-        accent="halo"
-        compact
-        eyebrow={<span className="text-halo/90">Gallery · {images.length} images</span>}
-        title={theme.title}
-        lead={theme.tagline}
-      />
-      <Container className="pt-2"><Breadcrumbs crumbs={crumbs} /></Container>
+      <JsonLd data={[breadcrumbSchema(crumbs), collectionPageSchema({ name: `${c.title} — Gallery`, description: c.tagline, url: galleryPath(category) })]} />
+
+      <Container className="pt-10">
+        <Breadcrumbs crumbs={crumbs} />
+        <p className="mt-6 flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-nasa">
+          <span aria-hidden className="inline-block h-3 w-1 rounded-full bg-nasa-red" />
+          Gallery · {c.images.length} objects
+        </p>
+        <h1 className="mt-2 font-display text-4xl font-bold text-white sm:text-5xl">{c.title}</h1>
+        <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted">{c.tagline}</p>
+      </Container>
+
       <Container className="mt-8 mb-14">
-        {images.length > 0 ? (
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {images.map((img) => (
-              <li key={img.slug} className="contents"><GalleryCard img={img} /></li>
-            ))}
-          </ul>
-        ) : (
-          <p className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 text-muted">
-            This collection is still being curated from openly-licensed archives.{" "}
-            {theme.collection ? (
-              <Link href={imageCollectionPath(theme.collection)} className="text-halo underline-offset-4 hover:underline">Browse the {theme.title} collection →</Link>
-            ) : (
-              <Link href={ROUTES.images} className="text-halo underline-offset-4 hover:underline">Browse the image archive →</Link>
-            )}
-          </p>
-        )}
+        <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {c.images.map((img) => (
+            <li key={img.id} className="contents"><GalleryCard img={img} /></li>
+          ))}
+        </ul>
         <p className="mt-8 text-sm text-faint">
-          Every image links to its official archive with full credit and licence. Asteria Star never re-hosts binaries or fabricates imagery.
+          Every image is a real observation, self-hosted with full credit and licence, and links to its object page.
+          AsteriaStar never uses AI-generated or decorative art for scientific objects.
         </p>
       </Container>
     </>

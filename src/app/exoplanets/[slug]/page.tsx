@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { EntityImagery } from "@/components/media/EntityImagery";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Badge } from "@/components/ui/Badge";
@@ -65,6 +66,10 @@ export default async function ExoplanetPage({ params }: PageProps<"/exoplanets/[
           {d.kind === "planet" && d.record.discoveryYear && <span className="text-sm text-faint">Discovered {d.record.discoveryYear}</span>}
         </div>
       </HeroSection>
+
+      {(d.kind === "planet" || d.kind === "host") && (
+        <Container className="mt-6"><EntityImagery entityId={d.kind === "planet" ? d.record.id : d.host.id} /></Container>
+      )}
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">

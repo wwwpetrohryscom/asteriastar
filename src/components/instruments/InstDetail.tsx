@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { EntityImagery } from "@/components/media/EntityImagery";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { SourceList } from "@/components/ui/SourceList";
@@ -41,6 +42,7 @@ export function InstDetail({ d }: { d: ResolvedInstrument }) {
       <HeroSection compact accent="nebula" eyebrow={<span>{KIND_LABEL[r.kind]}{r.measures ? ` · ${r.measures}` : ""}</span>} title={r.name} lead={r.description}>
         {d.instrumentClass ? <div className="mt-4"><Link href={d.instrumentClass.href ?? "#"} className="rounded-full border border-white/15 bg-white/[0.03] px-2.5 py-0.5 text-xs text-nebula hover:border-white/30">{d.instrumentClass.name}</Link></div> : null}
       </HeroSection>
+      <Container className="mt-6"><EntityImagery entityId={r.id} /></Container>
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
           <div className="space-y-10">

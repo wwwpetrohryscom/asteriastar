@@ -265,7 +265,7 @@ import {
   ROUTES,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
-import { GALLERY_THEMES } from "@/lib/gallery";
+import { galleryCategories } from "@/lib/gallery";
 import { ASTRO_GUIDES } from "@/app/images/astrophotography";
 import { DATA_SECTION_SLUGS, ENDPOINT_GROUPS, DEVELOPER_DOC_SLUGS } from "@/platform/open-data";
 import { CONTRIBUTE_SLUGS } from "@/platform/contributions";
@@ -375,7 +375,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const imageRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.images), changeFrequency: "weekly", priority: 0.8 },
     { url: absoluteUrl(ROUTES.gallery), changeFrequency: "weekly", priority: 0.7 },
-    ...GALLERY_THEMES.map((t) => ({ url: absoluteUrl(galleryPath(t.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
+    ...galleryCategories().map((c) => ({ url: absoluteUrl(galleryPath(c.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
     { url: absoluteUrl("/images/astrophotography"), changeFrequency: "monthly", priority: 0.5 },
     ...engine.images.slugs().map((s) => ({ url: absoluteUrl(imagePath(s)), changeFrequency: "monthly" as const, priority: 0.5 })),
     ...engine.images.collections.slugs().map((s) => ({ url: absoluteUrl(imageCollectionPath(s)), changeFrequency: "monthly" as const, priority: 0.6 })),

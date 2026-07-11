@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { EntityImagery } from "@/components/media/EntityImagery";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { SourceList } from "@/components/ui/SourceList";
@@ -68,6 +69,8 @@ export function InterstellarDetail({ d }: { d: ResolvedInterstellar }) {
           {o.trajectoryLabel ? <span className="rounded-full border border-white/15 bg-white/[0.03] px-2.5 py-0.5 text-xs text-muted">{o.trajectoryLabel}</span> : null}
         </div>
       </HeroSection>
+
+      <Container className="mt-6"><EntityImagery entityId={o.id} /></Container>
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">

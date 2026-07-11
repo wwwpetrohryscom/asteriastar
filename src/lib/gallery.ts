@@ -1,87 +1,107 @@
-import { engine } from "@/platform/data-engine";
-import { LICENSE_BY_SLUG } from "@/knowledge-graph/data/image-catalog";
-import type { ImageRecord } from "@/knowledge-graph/data/image-catalog/types";
+import { IMAGES } from "@/lib/media/registry";
+import { IMAGE_LICENSE_LABELS, type ImageAsset } from "@/lib/media/types";
+import { getEntityById, entityGraphPath } from "@/knowledge-graph";
+import { solarBodyPath } from "@/lib/routes";
+import { bodySlug } from "@/knowledge-graph/data/solar-system-catalog";
 
 /**
- * Curated gallery themes — a redesigned, editorial front door onto the existing
- * provenance-backed image catalogue. Each theme is a predicate over the real
- * ImageRecord set (no fabricated imagery; the catalogue links to each image's
- * official archive rather than re-hosting binaries). The gallery reuses the
- * image detail pages under /images for full provenance.
+ * The gallery is a real-image front door onto the media library
+ * (`src/lib/media/registry.ts`). Each card shows a real, openly-licensed,
+ * self-hosted photograph of an actual object and links to that object's page.
+ * Objects are grouped into categories by their knowledge-graph entity type.
  */
-export interface GalleryTheme {
+export interface GalleryImage {
+  id: string;
+  entityId: string;
+  url: string;
+  alt: string;
+  blurDataURL?: string;
+  title: string;
+  object: string;
+  credit: string;
+  licenseLabel: string;
+  href: string;
+}
+
+export interface GalleryCategory {
   slug: string;
   title: string;
   tagline: string;
-  /** Which catalogue images belong to this theme. */
-  match: (img: ImageRecord) => boolean;
-  /** Optional deep link into the image archive's matching collection. */
-  collection?: string;
+  images: GalleryImage[];
 }
 
-const inCollections = (img: ImageRecord, slugs: string[]) =>
-  (img.collections ?? []).some((c) => slugs.includes(c));
-
-export const GALLERY_THEMES: GalleryTheme[] = [
-  {
-    slug: "jwst",
-    title: "James Webb Space Telescope",
-    tagline: "The infrared universe in unprecedented depth — Webb's first images and beyond.",
-    collection: "jwst-first-images",
-    match: (img) => img.telescopeId === "space_telescope:james-webb-space-telescope" || inCollections(img, ["jwst-first-images"]),
-  },
-  {
-    slug: "hubble",
-    title: "Hubble Space Telescope",
-    tagline: "Three decades of the visible universe from low Earth orbit.",
-    match: (img) =>
-      img.telescopeId === "space_telescope:hubble-space-telescope" ||
-      /hubble/i.test(img.credit) ||
-      /hubble/i.test(img.institution ?? ""),
-  },
-  {
-    slug: "solar-system",
-    title: "Solar System",
-    tagline: "Our own worlds — the Sun, the planets, their moons, and the probes that visited them.",
-    collection: "solar-system",
-    match: (img) => inCollections(img, ["solar-system", "mars", "jupiter", "saturn", "the-sun", "apollo", "voyager", "cassini", "earth-from-space"]),
-  },
-  {
-    slug: "deep-sky",
-    title: "Deep Sky",
-    tagline: "Nebulae, galaxies, deep fields, and the horizon-scale shadows of black holes.",
-    collection: "nebulae",
-    match: (img) => inCollections(img, ["nebulae", "galaxies", "deep-fields", "black-holes"]),
-  },
-  {
-    slug: "earth-from-space",
-    title: "Earth from Space",
-    tagline: "Our home world seen from the Moon, from orbit, and from billions of kilometres away.",
-    collection: "earth-from-space",
-    match: (img) => inCollections(img, ["earth-from-space"]),
-  },
-  {
-    slug: "observatories",
-    title: "Observatories & Instruments",
-    tagline: "The telescopes and instruments that take these images — and the sky they map.",
-    match: (img) => /observ|telescope|array/i.test(img.objectName) || (img.telescopeId != null && img.category === "institutional"),
-  },
+const CATEGORY_DEFS: { slug: string; title: string; tagline: string; types: string[] }[] = [
+  { slug: "galaxies", title: "Galaxies", tagline: "Spiral, elliptical and interacting galaxies across the visible and infrared spectrum.", types: ["galaxy"] },
+  { slug: "nebulae", title: "Nebulae", tagline: "Star-forming regions, planetary nebulae and supernova remnants from Hubble and Webb.", types: ["nebula", "supernova_remnant"] },
+  { slug: "star-clusters", title: "Star clusters", tagline: "Open and globular clusters — dense cities of stars.", types: ["star_cluster"] },
+  { slug: "planets", title: "Planets & dwarf planets", tagline: "The worlds of the Solar System, portrayed by orbiters, flybys and Hubble.", types: ["planet", "dwarf_planet"] },
+  { slug: "moons", title: "Moons", tagline: "Natural satellites — from our Moon to the icy ocean worlds of the giants.", types: ["moon"] },
+  { slug: "sun-and-stars", title: "The Sun & stars", tagline: "Our star and its neighbours across ultraviolet, visible and infrared light.", types: ["star"] },
+  { slug: "comets-asteroids", title: "Comets & asteroids", tagline: "Small bodies visited by spacecraft, and comets imaged from Earth and space.", types: ["comet", "asteroid"] },
+  { slug: "black-holes", title: "Black holes", tagline: "Event-horizon-scale imagery of the Universe's most extreme objects.", types: ["black_hole"] },
+  { slug: "telescopes", title: "Telescopes & observatories", tagline: "The instruments that take these images — in orbit and on the ground.", types: ["space_telescope", "observatory"] },
+  { slug: "missions", title: "Missions & spacecraft", tagline: "The probes, rovers, spacecraft and launch vehicles of the space age.", types: ["space_mission", "spacecraft", "launch_vehicle"] },
+  { slug: "surface-features", title: "Surface features", tagline: "Mountains, canyons and terrains mapped across the Solar System.", types: ["surface_feature"] },
+  { slug: "constellations", title: "Constellations", tagline: "The patterns of the night sky and their brightest stars.", types: ["constellation"] },
+  { slug: "space-weather", title: "Space weather", tagline: "Aurorae, solar flares and the dynamic Sun–Earth connection.", types: ["space_weather_phenomenon"] },
 ];
 
-export function getGalleryTheme(slug: string): GalleryTheme | undefined {
-  return GALLERY_THEMES.find((t) => t.slug === slug);
+const TYPE_TO_CATEGORY = new Map<string, (typeof CATEGORY_DEFS)[number]>();
+for (const c of CATEGORY_DEFS) for (const t of c.types) TYPE_TO_CATEGORY.set(t, c);
+
+/** Canonical page URL for an entity that has an image. */
+function entityHref(entityId: string): string {
+  const e = getEntityById(entityId);
+  const type = entityId.split(":")[0];
+  if (e?.entryPath) return e.entryPath;
+  if (["planet", "dwarf_planet", "moon", "surface_feature"].includes(type)) return solarBodyPath(bodySlug(entityId));
+  if (e) return entityGraphPath(e);
+  return "/explore";
 }
 
-/** Images belonging to a theme, newest publication first. */
-export function galleryImages(theme: GalleryTheme): ImageRecord[] {
-  return engine.images
-    .all()
-    .filter(theme.match)
-    .sort((a, b) => (b.publicationYear ?? 0) - (a.publicationYear ?? 0));
+function toGalleryImage(img: ImageAsset): GalleryImage {
+  return {
+    id: img.id,
+    entityId: img.entityId ?? "",
+    url: img.url ?? "",
+    alt: img.alt,
+    blurDataURL: img.blurDataURL,
+    title: img.title,
+    object: img.object ?? img.title,
+    credit: img.credit,
+    licenseLabel: IMAGE_LICENSE_LABELS[img.license],
+    href: entityHref(img.entityId ?? ""),
+  };
 }
 
-/** The canonical short licence label for a catalogue licence slug (single
- *  source of truth — matches the licence badge on the image detail pages). */
-export function licenseLabel(slug: string): string {
-  return LICENSE_BY_SLUG.get(slug)?.shortName ?? slug.replace(/-/g, " ");
+/** One representative (hero) image per entity, in registry order. */
+function heroImages(): ImageAsset[] {
+  const seen = new Set<string>();
+  const out: ImageAsset[] = [];
+  for (const img of IMAGES) {
+    if (!img.published || !img.url || !img.entityId) continue;
+    if (seen.has(img.entityId)) continue;
+    seen.add(img.entityId);
+    out.push(img);
+  }
+  return out;
+}
+
+export function galleryCategories(): GalleryCategory[] {
+  const heroes = heroImages();
+  return CATEGORY_DEFS.map((c) => ({
+    slug: c.slug,
+    title: c.title,
+    tagline: c.tagline,
+    images: heroes.filter((h) => c.types.includes((h.entityId ?? "").split(":")[0])).map(toGalleryImage),
+  })).filter((c) => c.images.length > 0);
+}
+
+export function getGalleryCategory(slug: string): GalleryCategory | undefined {
+  return galleryCategories().find((c) => c.slug === slug);
+}
+
+/** Total distinct objects with imagery in the gallery. */
+export function galleryObjectCount(): number {
+  return heroImages().filter((h) => TYPE_TO_CATEGORY.has((h.entityId ?? "").split(":")[0])).length;
 }

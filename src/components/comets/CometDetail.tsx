@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { EntityImagery } from "@/components/media/EntityImagery";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Badge } from "@/components/ui/Badge";
@@ -68,6 +69,8 @@ export function CometDetail({ d, kindLabel, url }: { d: ResolvedComet; kindLabel
           {c.sungrazer && <span className="text-sm text-faint">Sungrazer</span>}
         </div>
       </HeroSection>
+
+      <Container className="mt-6"><EntityImagery entityId={c.id} /></Container>
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
