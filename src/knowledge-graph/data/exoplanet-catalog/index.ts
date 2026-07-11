@@ -172,5 +172,47 @@ export function validateExoplanets(): string[] {
   const connected = new Set<string>();
   for (const x of relations) { connected.add(x.from); connected.add(x.to); }
   for (const e of entities) if (!connected.has(e.id)) issues.push(`isolated new entity: ${e.id}`);
+
+  /* ---- Pass 3: scientific integrity (rejects impossible values, never absence) ----
+   * Bounds are deliberately generous so real, source-backed archive values (wide
+   * imaged companions, inflated young radii, brown-dwarf-mass objects, hot hosts)
+   * are never rejected. Only physically-impossible or contradictory values fail. */
+  const nextYear = new Date().getFullYear() + 1;
+  const posOnly: [keyof ExoplanetRecord, string][] = [
+    ["orbitalPeriodDays", "orbital period"], ["semiMajorAxisAu", "semi-major axis"],
+    ["radiusEarth", "radius"], ["massEarth", "mass"], ["eqTempK", "equilibrium temp"],
+    ["hostTeffK", "host Teff"],
+    ["hostRadiusSolar", "host radius"], ["hostMassSolar", "host mass"], ["hostDistancePc", "host distance"],
+  ];
+  for (const r of EXOPLANET_RECORDS) {
+    for (const [f, label] of posOnly) {
+      const v = r[f] as number | undefined;
+      if (v != null && v <= 0) issues.push(`${r.id}: non-physical ${label} (${v} ≤ 0)`);
+    }
+    // Insolation of exactly 0 is an archive underflow for very wide, faintly-lit
+    // companions (S⊕ ≪ 0.001 stored as 0), an honest unknown — only a negative flux
+    // would be physically impossible.
+    if (r.insolationFlux != null && r.insolationFlux < 0)
+      issues.push(`${r.id}: non-physical insolation (${r.insolationFlux} < 0)`);
+    if (r.eccentricity != null && (r.eccentricity < 0 || r.eccentricity >= 1))
+      issues.push(`${r.id}: eccentricity ${r.eccentricity} outside [0,1) for a bound planet`);
+    if (r.discoveryYear != null && (r.discoveryYear < 1988 || r.discoveryYear > nextYear))
+      issues.push(`${r.id}: discovery year ${r.discoveryYear} predates exoplanet detection or is in the future`);
+    if (r.hostId && !/^(star|host_star):/.test(r.hostId))
+      issues.push(`${r.id}: unresolved host id ${r.hostId}`);
+  }
+  // Wrong-host linkage guard: planets sharing one host cannot disagree on host
+  // effective temperature by >30% — that large a gap implies a different spectral
+  // type, i.e. the wrong star. (Host mass/radius/distance carry legitimate
+  // per-planet measurement scatter across composite rows and are not gated here.)
+  const byHostId = new Map<string, ExoplanetRecord[]>();
+  for (const r of EXOPLANET_RECORDS) (byHostId.get(r.hostId) ?? byHostId.set(r.hostId, []).get(r.hostId)!).push(r);
+  for (const [hid, list] of byHostId) {
+    if (list.length < 2) continue;
+    const teffs = list.map((r) => r.hostTeffK).filter((x): x is number => x != null && x > 0);
+    if (teffs.length < 2) continue;
+    const lo = Math.min(...teffs), hi = Math.max(...teffs);
+    if ((hi - lo) / hi > 0.3) issues.push(`${hid}: contradictory host Teff across planets (${lo} … ${hi} K) — possible wrong-host linkage`);
+  }
   return issues;
 }
