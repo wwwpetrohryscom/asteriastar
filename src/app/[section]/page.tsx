@@ -7,6 +7,7 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { DisclaimerBox } from "@/components/ui/DisclaimerBox";
 import { RelatedLinks } from "@/components/ui/RelatedLinks";
 import { ObservatoryHub } from "@/components/sections/ObservatoryHub";
+import { RelatedImages } from "@/components/media/RelatedImages";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getAllSections, getOtherSections, getSection } from "@/lib/content/registry";
 import { buildMetadata } from "@/lib/seo/metadata";
@@ -90,6 +91,18 @@ export default async function SectionPage({ params }: PageProps<"/[section]">) {
       ) : (
         <Container className="mt-8 space-y-12">
           {section.kind === "interpretive" && <DisclaimerBox />}
+
+          {section.slug === "astrology" && (
+            <RelatedImages
+              heading="The zodiac constellations"
+              max={12}
+              entityIds={[
+                "constellation:aries", "constellation:taurus", "constellation:gemini", "constellation:cancer",
+                "constellation:leo", "constellation:virgo", "constellation:libra", "constellation:scorpius",
+                "constellation:sagittarius", "constellation:capricornus", "constellation:aquarius", "constellation:pisces",
+              ]}
+            />
+          )}
 
           <SectionGrid items={categoryCards} columns={3} />
 

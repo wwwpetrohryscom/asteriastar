@@ -6,6 +6,7 @@ import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Badge } from "@/components/ui/Badge";
 import { EntityCard } from "@/components/graph/EntityCard";
+import { RelatedImages } from "@/components/media/RelatedImages";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { LEARNING_PATHS, getLearningPath } from "@/lib/learn";
 import { getEntityById } from "@/knowledge-graph";
@@ -62,6 +63,12 @@ export default async function LearnPathPage({ params }: PageProps<"/learn/[path]
         title={lp.title}
         lead={lp.description}
       />
+
+      {lp.relatedEntityIds && lp.relatedEntityIds.length > 0 && (
+        <Container className="mt-6">
+          <RelatedImages entityIds={lp.relatedEntityIds} heading="In pictures" />
+        </Container>
+      )}
 
       <Container className="mt-8 mb-12 space-y-10">
         {lp.stages.map((stage, si) => (

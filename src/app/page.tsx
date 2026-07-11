@@ -8,13 +8,16 @@ import { Button } from "@/components/ui/Button";
 import { HeroSearch } from "@/components/site/HeroSearch";
 import { KnowledgeGraphPreview } from "@/components/graph/KnowledgeGraphPreview";
 import { HeroCarousel, type HeroSlide } from "@/components/home/HeroCarousel";
-import { ImageOfDay, type FeaturedItem } from "@/components/home/ImageOfDay";
+import { PhotoOfDay } from "@/components/home/PhotoOfDay";
 import { getAllSections, REGISTRY_STATS } from "@/lib/content/registry";
 import { getHeroImageForEntity } from "@/lib/media/registry";
 import { IMAGE_LICENSE_LABELS } from "@/lib/media/types";
 import { ENTRY_STATS } from "@/content/entries";
 import { GRAPH_STATS } from "@/knowledge-graph";
 import { sectionPath, topicPath, ROUTES } from "@/lib/routes";
+
+// Regenerate daily so the Astronomy Photo of the Day advances automatically.
+export const revalidate = 86400;
 
 const POPULAR_TOPICS = [
   ["stars", "Stars"],
@@ -61,14 +64,6 @@ const FEATURED = [
   { id: "space_telescope:james-webb-space-telescope", href: "/astronomy/space-telescopes/james-webb-space-telescope", cat: "Space telescope", blurb: "Infrared eyes on the earliest galaxies and forming stars." },
 ] as const;
 
-// Rotating "featured observation" panel.
-const IOD_SOURCES = [
-  { id: "nebula:orion-nebula", href: "/explore/entity/nebula/orion-nebula", blurb: "The closest large star-forming region to Earth — a stellar nursery 1,300 light-years away." },
-  { id: "galaxy:whirlpool-galaxy", href: "/explore/entity/galaxy/whirlpool-galaxy", blurb: "A grand-design spiral interacting with a smaller companion galaxy." },
-  { id: "planet:saturn", href: "/solar-system/saturn", blurb: "The ringed gas giant, portrayed by the Cassini orbiter." },
-  { id: "moon:europa", href: "/solar-system/europa", blurb: "Jupiter's icy ocean moon — a prime target in the search for habitability." },
-] as const;
-
 const HUB_IMAGE: Record<string, string> = {
   astronomy: "galaxy:whirlpool-galaxy",
   "sky-guide": "moon:the-moon",
@@ -86,12 +81,6 @@ export default function HomePage() {
   for (const s of HERO_SOURCES) {
     const img = pic(s.id);
     if (img) heroSlides.push({ url: img.url, blurDataURL: img.blurDataURL, object: s.object, credit: img.credit, href: s.href });
-  }
-
-  const iodItems: FeaturedItem[] = [];
-  for (const s of IOD_SOURCES) {
-    const img = pic(s.id);
-    if (img) iodItems.push({ url: img.url, alt: img.alt, blurDataURL: img.blurDataURL, title: img.title, blurb: s.blurb, credit: img.credit, licenseLabel: licenseShort(img.license), href: s.href });
   }
 
   const hubCards = sections.map((section) => {
@@ -191,12 +180,10 @@ export default function HomePage() {
         <SectionGrid items={hubCards} columns={3} />
       </Container>
 
-      {/* ── Rotating featured observation ── */}
-      {iodItems.length > 0 && (
-        <Container className="mt-20">
-          <ImageOfDay items={iodItems} />
-        </Container>
-      )}
+      {/* ── Astronomy Photo of the Day (changes daily) ── */}
+      <Container className="mt-20">
+        <PhotoOfDay />
+      </Container>
 
       {/* ── Science vs. tradition ── */}
       <Container className="mt-20">

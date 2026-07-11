@@ -19,6 +19,7 @@
  */
 import { readFileSync, writeFileSync, mkdirSync, rmSync } from "node:fs";
 import { join } from "node:path";
+import { pathToFileURL } from "node:url";
 import sharp from "sharp";
 
 const ROOT = join(import.meta.dirname, "..");
@@ -75,8 +76,13 @@ function searchTerm(t: Target): string {
 
 function relevant(text: string, toks: string[], type: string): boolean {
   const lc = text.toLowerCase();
-  if (DENY_ALL.some((d) => lc.includes(d))) return false;
-  if (!HARDWARE.has(type) && DENY_OBJECT.some((d) => lc.includes(d))) return false;
+  // A constellation is a sky pattern — its correct depiction is a star chart or
+  // labelled sky photo (i.e. an "illustration"/"chart"), so the anti-artwork and
+  // anti-diagram denylists don't apply. Everything else must be a real photo.
+  if (type !== "constellation") {
+    if (DENY_ALL.some((d) => lc.includes(d))) return false;
+    if (!HARDWARE.has(type) && DENY_OBJECT.some((d) => lc.includes(d))) return false;
+  }
   return toks.some((tk) => lc.includes(tk));
 }
 
@@ -167,10 +173,12 @@ async function wikimediaCandidates(t: Target, toks: string[], type: string): Pro
     const em = ii.extmetadata ?? {};
     const licRaw = String(em.LicenseShortName?.value ?? "").toLowerCase();
     const license = OPEN_WIKI_LICENSES[licRaw];
-    const url: string = ii.url ?? "";
+    // Prefer the rasterized thumbnail (a JPG/PNG even when the source is an SVG
+    // chart), so IAU constellation charts and other vector sources are usable.
+    const url: string = ii.thumburl ?? ii.url ?? "";
     if (!license || !/\.(jpg|jpeg|png)$/i.test(url)) continue;
-    if ((ii.width ?? 0) < 700) continue;
-    const title = String(p.title ?? "").replace(/^File:/, "").replace(/\.(jpg|jpeg|png)$/i, "");
+    if ((ii.thumbwidth ?? ii.width ?? 0) < 600) continue;
+    const title = String(p.title ?? "").replace(/^File:/, "").replace(/\.(jpg|jpeg|png|svg)$/i, "");
     const text = `${title} ${String(em.ImageDescription?.value ?? "").replace(/<[^>]+>/g, "")}`;
     if (!relevant(text, toks, type)) continue;
     const credit = String(em.Artist?.value ?? em.Credit?.value ?? "Wikimedia Commons").replace(/<[^>]+>/g, "").trim().slice(0, 140) || "Wikimedia Commons";
@@ -208,6 +216,20 @@ function esc(s: string): string {
   return String(s).replace(/\\/g, "\\\\").replace(/"/g, '\\"').replace(/\s+/g, " ").trim();
 }
 
+/** Re-serialize an existing ImageAsset record (used in APPEND mode). */
+function serializeExisting(a: Record<string, unknown>): string {
+  const f: string[] = [];
+  const q = (k: string, v: unknown) => { if (v !== undefined && v !== null && v !== "") f.push(`${k}: "${esc(String(v))}"`); };
+  q("id", a.id); q("entityId", a.entityId); q("title", a.title); q("alt", a.alt); q("url", a.url);
+  f.push(`width: ${Number(a.width) || 0}`); f.push(`height: ${Number(a.height) || 0}`);
+  q("blurDataURL", a.blurDataURL); q("caption", a.caption); q("credit", a.credit); q("provider", a.provider);
+  q("sourceUrl", a.sourceUrl); q("originalUrl", a.originalUrl); q("license", a.license);
+  q("object", a.object); q("author", a.author); q("role", a.role);
+  f.push("published: true");
+  q("instrument", a.instrument); q("mission", a.mission); q("captureDate", a.captureDate);
+  return `  {\n    ${f.join(",\n    ")},\n  },`;
+}
+
 async function pool<T, R>(items: T[], n: number, fn: (x: T, i: number) => Promise<R>): Promise<R[]> {
   const res: R[] = new Array(items.length);
   let idx = 0;
@@ -223,14 +245,28 @@ async function pool<T, R>(items: T[], n: number, fn: (x: T, i: number) => Promis
 }
 
 async function main() {
+  const APPEND = process.env.APPEND === "1";
   const targets: Record<string, Target[]> = JSON.parse(readFileSync(TARGETS, "utf8"));
   const flat: Target[] = Object.values(targets).flat();
-  console.log(`[ingest] ${flat.length} target entities`);
-  rmSync(OUT_DIR, { recursive: true, force: true });
+
+  // In APPEND mode, keep the existing library and only ingest NEW entities.
+  let existing: Record<string, unknown>[] = [];
+  if (APPEND) {
+    try {
+      const mod = await import(pathToFileURL(DATA_FILE).href);
+      existing = (mod.OBSERVATION_IMAGES ?? []) as Record<string, unknown>[];
+    } catch (e) {
+      console.warn(`[ingest] APPEND: could not load existing observations: ${(e as Error).message}`);
+    }
+  }
+  const covered = new Set(existing.map((a) => String(a.entityId)));
+  console.log(`[ingest] ${flat.length} targets · APPEND=${APPEND} · existing=${existing.length} images / ${covered.size} entities`);
+  if (!APPEND) rmSync(OUT_DIR, { recursive: true, force: true });
   mkdirSync(OUT_DIR, { recursive: true });
 
   let done = 0;
   const perEntity = await pool(flat, CONCURRENCY, async (t) => {
+    if (covered.has(t.id)) { done++; return { entityId: t.id, count: 0, records: [] }; }
     const type = t.id.split(":")[0];
     const toks = tokens(t.name);
     if (toks.length === 0) toks.push(t.name.toLowerCase());
@@ -268,7 +304,11 @@ async function main() {
   });
 
   const all = perEntity.filter((e) => e.count > 0);
-  const body = all.flatMap((e) => e.records).join("\n");
+  const newBody = all.flatMap((e) => e.records);
+  const existingBody = existing.map(serializeExisting);
+  const body = [...existingBody, ...newBody].join("\n");
+  const totalImages = existing.length + all.reduce((n, e) => n + e.count, 0);
+  const totalEntities = covered.size + all.length;
   const header = `import type { ImageAsset } from "@/lib/media/types";
 
 /**
@@ -277,14 +317,12 @@ async function main() {
  * from live NASA Images API / Wikimedia Commons responses — downloaded,
  * optimized, blur-hashed, and fully attributed. Do not edit by hand.
  *
- * ${all.reduce((n, e) => n + e.count, 0)} images across ${all.length} entities.
+ * ${totalImages} images across ${totalEntities} entities.
  */
 export const OBSERVATION_IMAGES: ImageAsset[] = [
 `;
   writeFileSync(DATA_FILE, header + body + "\n];\n");
-  console.log(`[ingest] DONE — ${all.reduce((n, e) => n + e.count, 0)} images across ${all.length}/${flat.length} entities`);
-  const multi = all.filter((e) => e.count > 1).length;
-  console.log(`[ingest] entities with galleries (>1 image): ${multi}`);
+  console.log(`[ingest] DONE — +${newBody.length} new images across ${all.length} new entities (total ${totalImages} images / ${totalEntities} entities)`);
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });

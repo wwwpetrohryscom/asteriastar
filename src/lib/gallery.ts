@@ -50,7 +50,7 @@ const TYPE_TO_CATEGORY = new Map<string, (typeof CATEGORY_DEFS)[number]>();
 for (const c of CATEGORY_DEFS) for (const t of c.types) TYPE_TO_CATEGORY.set(t, c);
 
 /** Canonical page URL for an entity that has an image. */
-function entityHref(entityId: string): string {
+export function entityHref(entityId: string): string {
   const e = getEntityById(entityId);
   const type = entityId.split(":")[0];
   if (e?.entryPath) return e.entryPath;

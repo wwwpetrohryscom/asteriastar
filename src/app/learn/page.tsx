@@ -5,6 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { LEARNING_PATHS } from "@/lib/learn";
+import { getHeroImageForEntity } from "@/lib/media/registry";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES, learnPath } from "@/lib/routes";
@@ -23,13 +24,18 @@ export default function LearnIndexPage() {
     { name: "Home", url: "/" },
     { name: "Learn", url: ROUTES.learn },
   ];
-  const items = LEARNING_PATHS.map((p) => ({
-    title: p.title,
-    description: p.description,
-    href: learnPath(p.slug),
-    accent: p.accent,
-    eyebrow: `${p.stages.length} levels`,
-  }));
+  const items = LEARNING_PATHS.map((p) => {
+    const imgId = (p.relatedEntityIds ?? []).find((id) => getHeroImageForEntity(id));
+    const img = imgId ? getHeroImageForEntity(imgId) : undefined;
+    return {
+      title: p.title,
+      description: p.description,
+      href: learnPath(p.slug),
+      accent: p.accent,
+      eyebrow: `${p.stages.length} levels`,
+      image: img?.url ? { url: img.url, alt: img.alt, blurDataURL: img.blurDataURL } : undefined,
+    };
+  });
 
   return (
     <>
