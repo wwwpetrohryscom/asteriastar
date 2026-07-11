@@ -107,6 +107,33 @@ async function main() {
   }
   console.log(`✓ Solar-body integrity valid — ${solarRangeBodies.length} bodies, no impossible or contradictory values`);
 
+  // Star photometry & astrometry integrity. Operates on the sanitized catalogue
+  // (HYG bad-parallax artifacts already dropped). Fails on impossible values or
+  // unit mismatches, never on legitimate absence.
+  const starIntegrityBodies = solarRangeEng.star.all();
+  const starRangeIssues: string[] = [];
+  for (const b of starIntegrityBodies) {
+    const r = (b as unknown as { record?: Record<string, number | undefined> }).record ?? (b as unknown as Record<string, number | undefined>);
+    const id = String((r as { id?: string }).id ?? "star");
+    if (r.luminositySolar != null && r.luminositySolar <= 0) starRangeIssues.push(`${id}: luminosity ≤ 0 (${r.luminositySolar})`);
+    if (r.luminositySolar != null && r.luminositySolar > 5_000_000) starRangeIssues.push(`${id}: luminosity implausibly high (${r.luminositySolar} L☉)`);
+    if (r.absoluteMagnitude != null && (r.absoluteMagnitude < -12.5 || r.absoluteMagnitude > 25)) starRangeIssues.push(`${id}: absolute magnitude out of [-12.5,25] (${r.absoluteMagnitude})`);
+    if (r.apparentMagnitude != null && (r.apparentMagnitude < -30 || r.apparentMagnitude > 30)) starRangeIssues.push(`${id}: apparent magnitude out of [-30,30] (${r.apparentMagnitude})`);
+    if (r.distanceLy != null && r.distanceLy <= 0) starRangeIssues.push(`${id}: distance ≤ 0 ly`);
+    if (r.distancePc != null && r.distancePc <= 0) starRangeIssues.push(`${id}: distance ≤ 0 pc`);
+    if (r.colorIndex != null && (r.colorIndex < -1 || r.colorIndex > 6)) starRangeIssues.push(`${id}: colour index out of [-1,6] (${r.colorIndex})`);
+    if (r.distanceLy != null && r.distancePc != null) {
+      const exp = r.distancePc * 3.2616;
+      if (Math.abs(r.distanceLy - exp) / Math.max(r.distanceLy, 1) > 0.03) starRangeIssues.push(`${id}: distance ly/pc mismatch (${r.distanceLy} ly vs ${r.distancePc} pc)`);
+    }
+  }
+  if (starRangeIssues.length > 0) {
+    console.error(`\n✗ ${starRangeIssues.length} star integrity issue(s):`);
+    for (const i of starRangeIssues.slice(0, 30)) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  console.log(`✓ Star integrity valid — ${starIntegrityBodies.length} stars, no impossible photometry or unit mismatches`);
+
   // Community architecture (reference integrity; no user data exists yet).
   const community = await import("../src/lib/community");
   const communityIssues = community.validateCommunity(community.COMMUNITY_DATA);
