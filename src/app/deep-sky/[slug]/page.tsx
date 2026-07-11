@@ -63,6 +63,11 @@ export default async function DeepSkyPage({ params }: PageProps<"/deep-sky/[slug
     d.constellation ? { label: "Constellation", value: d.constellation.name } : null,
     r.apparentMagnitude != null ? { label: "Apparent magnitude", value: String(r.apparentMagnitude) } : null,
     r.sizeMajorArcmin != null ? { label: "Apparent size", value: `${r.sizeMajorArcmin}′${r.sizeMinorArcmin != null ? ` × ${r.sizeMinorArcmin}′` : ""}` } : null,
+    // Projected axis ratio (elongation on the sky), derived from the two source-backed
+    // angular diameters: b/a = minor ÷ major. Standard catalogue quantity; labelled derived.
+    r.sizeMajorArcmin != null && r.sizeMinorArcmin != null && r.sizeMajorArcmin > 0
+      ? { label: "Axis ratio (b/a)", value: `${(r.sizeMinorArcmin / r.sizeMajorArcmin).toFixed(2)} · derived` }
+      : null,
     r.hubbleType ? { label: "Morphology", value: r.hubbleType } : null,
     d.difficultyLabel ? { label: "Difficulty", value: d.difficultyLabel } : null,
   ].filter(Boolean) as Row[];

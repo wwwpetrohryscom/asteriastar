@@ -16,6 +16,12 @@ import { records as c2 } from "@/knowledge-graph/data/deep-sky-catalog/records/c
  */
 export const DEEP_SKY_RECORDS: DeepSkyRecord[] = [...c0, ...c1, ...c2];
 
+// Object-type families → the graph entity type each must resolve to (Pass 4
+// classification-integrity check). Kept in sync with DeepSkyType.
+const GALAXY_TYPES = new Set<DeepSkyRecord["type"]>(["galaxy", "galaxy-group"]);
+const NEBULA_TYPES = new Set<DeepSkyRecord["type"]>(["nebula", "emission-nebula", "reflection-nebula", "dark-nebula", "planetary-nebula", "supernova-remnant", "hii-region", "cluster-nebula"]);
+const CLUSTER_TYPES = new Set<DeepSkyRecord["type"]>(["open-cluster", "globular-cluster", "star-cloud", "asterism"]);
+
 const CON_NAME = new Map(CONSTELLATIONS.map((c) => [`constellation:${c.slug}`, c.name]));
 
 export const DEEP_SKY_BY_ID = new Map(DEEP_SKY_RECORDS.map((r) => [r.id, r]));
@@ -114,6 +120,33 @@ export function validateDeepSky(): string[] {
       if (prev && prev !== r.id) issues.push(`designation ${desig} maps to two objects: ${prev} and ${r.id}`);
       seenDesignation.set(desig, r.id);
     }
+
+    /* ---- Pass 4: observation & classification integrity (impossible/contradictory only) ---- */
+    // Angular size: a catalogued diameter must be positive, and the minor axis of
+    // an ellipse cannot exceed its major axis (a small float slack absorbs rounding).
+    if (r.sizeMajorArcmin != null && r.sizeMajorArcmin <= 0)
+      issues.push(`${r.id}: non-physical angular size (${r.sizeMajorArcmin}′ ≤ 0)`);
+    if (r.sizeMinorArcmin != null && r.sizeMinorArcmin <= 0)
+      issues.push(`${r.id}: non-physical minor axis (${r.sizeMinorArcmin}′ ≤ 0)`);
+    if (r.sizeMajorArcmin != null && r.sizeMinorArcmin != null && r.sizeMinorArcmin > r.sizeMajorArcmin * 1.001)
+      issues.push(`${r.id}: minor axis ${r.sizeMinorArcmin}′ exceeds major axis ${r.sizeMajorArcmin}′`);
+    // Coordinates: RA ∈ [0,24) h, Dec ∈ [−90,90]°.
+    if (r.raHours != null && (r.raHours < 0 || r.raHours >= 24))
+      issues.push(`${r.id}: RA ${r.raHours}h outside [0,24)`);
+    if (r.decDeg != null && (r.decDeg < -90 || r.decDeg > 90))
+      issues.push(`${r.id}: Dec ${r.decDeg}° outside [−90,90]`);
+    // Magnitude: generous bound (brightest DSO ≈ −4, faintest catalogued ≈ 20).
+    if (r.apparentMagnitude != null && (r.apparentMagnitude < -30 || r.apparentMagnitude > 25))
+      issues.push(`${r.id}: apparent magnitude ${r.apparentMagnitude} out of range`);
+    // Classification contradiction: the object type family must match its graph
+    // entity type, and galaxy-only morphology must not appear on non-galaxies.
+    const expectedEntity = GALAXY_TYPES.has(r.type) ? "galaxy" : NEBULA_TYPES.has(r.type) ? "nebula" : CLUSTER_TYPES.has(r.type) ? "star_cluster" : undefined;
+    if (expectedEntity && expectedEntity !== r.entityType)
+      issues.push(`${r.id}: type ${r.type} contradicts entityType ${r.entityType} (expected ${expectedEntity})`);
+    if (r.galaxyType != null && r.entityType !== "galaxy")
+      issues.push(`${r.id}: galaxy morphology on non-galaxy (${r.entityType})`);
+    if (r.hubbleType != null && r.entityType !== "galaxy")
+      issues.push(`${r.id}: Hubble type on non-galaxy (${r.entityType})`);
   }
   return issues;
 }
