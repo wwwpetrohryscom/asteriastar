@@ -35,6 +35,24 @@ export async function generateMetadata({ params }: PageProps<"/exoplanets/[slug]
 
 type Row = { label: string; value: string; href?: string };
 
+/**
+ * Bulk density derived from a planet's source-backed Earth-mass and Earth-radius,
+ * ρ = M / (4/3·π·r³), in g/cm³. Standard, non-fabricating (inputs come from the
+ * NASA Exoplanet Archive); returns undefined unless both inputs are positive.
+ * Earth (M⊕=1, R⊕=1) → 5.51 g/cm³, the known value, confirming the constants.
+ */
+function derivedDensityGCm3(massEarth?: number, radiusEarth?: number): number | undefined {
+  if (massEarth == null || radiusEarth == null || massEarth <= 0 || radiusEarth <= 0) return undefined;
+  const M_EARTH_KG = 5.972e24, R_EARTH_M = 6.371e6;
+  const volumeM3 = (4 / 3) * Math.PI * (radiusEarth * R_EARTH_M) ** 3;
+  const rho = (massEarth * M_EARTH_KG) / volumeM3 / 1000; // kg/m³ → g/cm³
+  // No planetary composition — even a compressed pure-iron world — exceeds ~30 g/cm³.
+  // A result above that means the archive's mass and radius come from inconsistent
+  // measurements (e.g. a TTV mass upper limit paired with a transit radius); no honest
+  // density can be formed from them, so the derived value is withheld.
+  return rho > 30 ? undefined : rho;
+}
+
 export default async function ExoplanetPage({ params }: PageProps<"/exoplanets/[slug]">) {
   const { slug } = await params;
   const d = engine.exoplanets.resolve(slug);
@@ -199,6 +217,7 @@ function ClassBody({ d }: { d: Extract<D, { kind: "class" }> }) {
 
 function QuickFacts({ d }: { d: D }) {
   const facts: Row[] = [];
+  let derivedShown = false;
   const push = (label: string, value?: string | number | null, href?: string) => { if (value != null && value !== "") facts.push({ label, value: String(value), href }); };
   if (d.kind === "planet") {
     const r = d.record;
@@ -207,8 +226,16 @@ function QuickFacts({ d }: { d: D }) {
     push("Discovery year", r.discoveryYear); push("Orbital period", r.orbitalPeriodDays != null ? `${r.orbitalPeriodDays} d` : undefined);
     push("Semi-major axis", r.semiMajorAxisAu != null ? `${r.semiMajorAxisAu} AU` : undefined);
     push("Eccentricity", r.eccentricity); push("Radius", r.radiusEarth != null ? `${r.radiusEarth} R⊕` : undefined);
-    push("Mass", r.massEarth != null ? `${r.massEarth} M⊕` : undefined); push("Equilibrium temp.", r.eqTempK != null ? `${r.eqTempK} K` : undefined);
-    push("Insolation", r.insolationFlux != null ? `${r.insolationFlux} S⊕` : undefined); push("Distance", d.distanceLy != null ? `${d.distanceLy} ly` : undefined);
+    push("Mass", r.massEarth != null ? `${r.massEarth} M⊕` : undefined);
+    // Derived bulk density from source-backed mass + radius: ρ = M / (4/3·π·r³).
+    // Standard, labelled `· derived`; the archive stores no density itself.
+    const rho = derivedDensityGCm3(r.massEarth, r.radiusEarth);
+    if (rho != null) { push("Density", `${rho.toFixed(2)} g/cm³ · derived`); derivedShown = true; }
+    // Equilibrium temperature: an insolation-set temperature cannot fall below the
+    // cosmic-microwave-background floor (2.725 K); such values are archive artefacts,
+    // shown as an honest empty state rather than an impossible measurement.
+    push("Equilibrium temp.", r.eqTempK != null && r.eqTempK > 2.725 ? `${r.eqTempK} K` : undefined);
+    push("Insolation", r.insolationFlux != null && r.insolationFlux > 0 ? `${r.insolationFlux} S⊕` : undefined); push("Distance", d.distanceLy != null ? `${d.distanceLy} ly` : undefined);
   } else if (d.kind === "host") {
     push("Spectral type", d.host.record.hostSpectralType); push("Effective temp.", d.host.record.hostTeffK != null ? `${d.host.record.hostTeffK.toLocaleString()} K` : undefined);
     push("Radius", d.host.record.hostRadiusSolar != null ? `${d.host.record.hostRadiusSolar} R☉` : undefined); push("Mass", d.host.record.hostMassSolar != null ? `${d.host.record.hostMassSolar} M☉` : undefined);
@@ -232,6 +259,9 @@ function QuickFacts({ d }: { d: D }) {
           </div>
         ))}
       </dl>
+      {derivedShown && (
+        <p className="mt-3 text-xs leading-relaxed text-faint">Density is <span className="text-muted">derived</span> from the archive mass and radius via ρ = M / (4⁄3·π·r³); all other values are catalogued measurements.</p>
+      )}
     </section>
   );
 }
