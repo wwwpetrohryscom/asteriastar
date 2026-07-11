@@ -4,10 +4,13 @@ import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { EditorialHero } from "@/components/editorial/EditorialHero";
 import { RelatedObjects } from "@/components/editorial/RelatedObjects";
+import { FeatureImageBand } from "@/components/editorial/FeatureImageBand";
+import { SectionHeader, ObjectClassification, ObservationPanel } from "@/components/editorial/scientific";
 import { SourceList } from "@/components/ui/SourceList";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { GraphConnections } from "@/components/graph/GraphConnections";
 import { EntityImagery } from "@/components/media/EntityImagery";
+import { getImagesForEntity } from "@/lib/media/registry";
 import { EntityRecommendations } from "@/components/graph/EntityRecommendations";
 import { EntityDataPanel } from "@/components/graph/EntityDataPanel";
 import { EntityQualityPanel } from "@/components/authority/EntityQualityPanel";
@@ -58,6 +61,11 @@ export default async function GraphEntityPage({
   const siblings = engine.recommendation.sameType(resolved.id);
   const hasConnections = resolved.connections.length > 0;
 
+  const images = getImagesForEntity(resolved.id);
+  const heroImg = images[0];
+  const bandImg = images[1];
+  const galleryStart = bandImg ? 2 : 1;
+
   const crumbs: Crumb[] = [
     { name: "Home", url: "/" },
     { name: "Explore", url: ROUTES.explore },
@@ -96,46 +104,69 @@ export default async function GraphEntityPage({
         ]}
       />
 
-      <Container className="mt-12 mb-12 space-y-14">
-        <EntityImagery entityId={resolved.id} heading="Gallery" excludeHero />
+      <Container className="mt-10">
+        <ObjectClassification
+          items={[
+            { label: "Type", value: typeLabel },
+            { label: "Domain", value: resolved.domainLabel },
+            { label: "Scientific name", value: resolved.scientificName },
+            { label: "Catalog", value: resolved.catalogNumbers[0] },
+          ]}
+        />
+      </Container>
 
-        <div className="grid gap-6 lg:grid-cols-2">
-          <EntityDataPanel resolved={resolved} />
-          <EntityQualityPanel resolved={resolved} />
-        </div>
+      {bandImg?.url && (
+        <FeatureImageBand
+          className="mt-12"
+          url={bandImg.url}
+          alt={bandImg.alt}
+          blurDataURL={bandImg.blurDataURL}
+          caption={bandImg.title}
+          credit={bandImg.credit}
+        />
+      )}
 
-        <div className="mt-6">
-          <EntityProvenancePanel entityId={resolved.id} />
-        </div>
-
-        {hasConnections && (
-          <section aria-labelledby="connections-heading">
-            <h2 id="connections-heading" className="font-display text-xl font-semibold text-fg">
-              Connections
-            </h2>
-            <p className="mt-1 text-sm text-faint">
-              How {resolved.name} connects across Asteria Star — scientific,
-              cultural, and astrological links are kept separate.
-            </p>
-            <div className="mt-4">
-              <GraphConnections entityId={resolved.id} />
-            </div>
-          </section>
+      <Container className="mt-14 mb-14 space-y-14">
+        {heroImg && (
+          <ObservationPanel
+            instrument={heroImg.instrument}
+            mission={heroImg.mission}
+            provider={heroImg.provider}
+            captureDate={heroImg.captureDate}
+          />
         )}
 
-        {related.length > 0 && (
-          <RelatedObjects heading="Related objects" items={related.map((e) => ({ id: e.id, name: e.name }))} />
-        )}
+        <EntityImagery entityId={resolved.id} heading="Gallery" skip={galleryStart} />
 
         {siblings.length > 0 && (
           <RelatedObjects heading={`More ${typeLabel.toLowerCase()}s`} items={siblings.map((e) => ({ id: e.id, name: e.name }))} />
         )}
 
+        {related.length > 0 && (
+          <RelatedObjects heading="Explore more" items={related.map((e) => ({ id: e.id, name: e.name }))} />
+        )}
+
+        {hasConnections && (
+          <section aria-labelledby="connections-heading">
+            <SectionHeader kicker="Connections" title={`How ${resolved.name} connects`} className="mb-5" />
+            <GraphConnections entityId={resolved.id} />
+          </section>
+        )}
+
+        <section>
+          <SectionHeader kicker="Data" title="Scientific data & provenance" className="mb-6" />
+          <div className="grid gap-6 lg:grid-cols-2">
+            <EntityDataPanel resolved={resolved} />
+            <EntityQualityPanel resolved={resolved} />
+          </div>
+          <div className="mt-6">
+            <EntityProvenancePanel entityId={resolved.id} />
+          </div>
+        </section>
+
         <EntityRecommendations entityId={resolved.id} />
 
-        {resolved.sources.length > 0 && (
-          <SourceList keys={resolved.sources.map((s) => s.key)} />
-        )}
+        {resolved.sources.length > 0 && <SourceList keys={resolved.sources.map((s) => s.key)} />}
       </Container>
     </>
   );

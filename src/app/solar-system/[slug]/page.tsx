@@ -4,6 +4,8 @@ import Link from "next/link";
 import { EditorialHero, type HeroFact } from "@/components/editorial/EditorialHero";
 import { StatGrid } from "@/components/editorial/StatGrid";
 import { RelatedObjects } from "@/components/editorial/RelatedObjects";
+import { EarthComparison, SectionHeader, ObservationPanel } from "@/components/editorial/scientific";
+import { getHeroImageForEntity } from "@/lib/media/registry";
 import { EntityImagery } from "@/components/media/EntityImagery";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -132,9 +134,9 @@ export default async function SolarBodyPage({ params }: PageProps<"/solar-system
       <Container className="mt-12 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
           <div className="space-y-10">
-            <section aria-labelledby="overview">
-              <h2 id="overview" className="font-display text-2xl font-bold">Scientific overview</h2>
-              <p className="mt-3 leading-relaxed text-muted">
+            <section>
+              <SectionHeader kicker="Overview" title="Scientific overview" />
+              <p className="mt-4 max-w-2xl text-lg leading-[1.75] text-muted">
                 {r.name} is {r.classification ? `a ${r.classification.toLowerCase()}` : `a ${b.kindLabel.toLowerCase()}`}
                 {b.parent && r.kind === "moon" ? ` orbiting ${b.parent.name}` : b.parent && r.kind !== "star" && !isCraft ? ` in orbit around ${b.parent.name}` : ""}
                 {r.distanceFromSun1e6Km != null ? `, at a mean distance of ${n(r.distanceFromSun1e6Km)} million km from the Sun` : ""}
@@ -145,9 +147,17 @@ export default async function SolarBodyPage({ params }: PageProps<"/solar-system
 
             {isCraft && <StatGrid heading="Mission" stats={mission} />}
             {!isCraft && <StatGrid heading="Physical characteristics" stats={physical} />}
+            {!isCraft && r.diameterKm != null && <EarthComparison name={r.name} otherDiameterKm={r.diameterKm} />}
             {!isCraft && <StatGrid heading="Orbit" stats={orbit} />}
 
-            <EntityImagery entityId={r.id} heading="Gallery" excludeHero />
+            <EntityImagery entityId={r.id} heading="Gallery" skip={1} />
+
+            {(() => {
+              const heroImg = getHeroImageForEntity(r.id);
+              return heroImg ? (
+                <ObservationPanel instrument={heroImg.instrument} mission={heroImg.mission} provider={heroImg.provider} captureDate={heroImg.captureDate} />
+              ) : null;
+            })()}
 
             {/* Targets (missions/spacecraft) */}
             {isCraft && (r.targets?.length || r.landedOn?.length || r.partOfMission) ? (
