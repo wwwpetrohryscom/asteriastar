@@ -40,6 +40,14 @@ export async function generateMetadata({ params }: PageProps<"/solar-system/[slu
 type Row = { label: string; value: string };
 const n = (v: number | undefined) => (v == null ? undefined : v.toLocaleString());
 
+// Standard derivations from source-backed mass & radius (labelled "· derived").
+// g = GM/r² ; v_esc = √(2GM/r). G in m³ kg⁻¹ s⁻².
+const G = 6.674e-11;
+const deriveGravity = (m1e24?: number, rKm?: number) =>
+  m1e24 != null && m1e24 > 0 && rKm != null && rKm > 0 ? (G * m1e24 * 1e24) / (rKm * 1000) ** 2 : undefined;
+const deriveEscape = (m1e24?: number, rKm?: number) =>
+  m1e24 != null && m1e24 > 0 && rKm != null && rKm > 0 ? Math.sqrt((2 * G * m1e24 * 1e24) / (rKm * 1000)) / 1000 : undefined;
+
 export default async function SolarBodyPage({ params }: PageProps<"/solar-system/[slug]">) {
   const { slug } = await params;
   const b = engine.solar.resolve(slug);
@@ -54,13 +62,21 @@ export default async function SolarBodyPage({ params }: PageProps<"/solar-system
     { name: r.name, url },
   ];
 
+  const gDerived = r.gravityMs2 == null ? deriveGravity(r.mass1e24Kg, r.radiusKm) : undefined;
+  const eDerived = r.escapeVelocityKms == null ? deriveEscape(r.mass1e24Kg, r.radiusKm) : undefined;
+  const derivedShown = gDerived != null || eDerived != null;
+
   const physical: Row[] = [
-    r.mass1e24Kg != null ? { label: "Mass", value: `${n(r.mass1e24Kg)} ×10²⁴ kg` } : null,
+    r.mass1e24Kg != null && r.mass1e24Kg > 0 ? { label: "Mass", value: `${n(r.mass1e24Kg)} ×10²⁴ kg` } : null,
     r.diameterKm != null ? { label: "Diameter", value: `${n(r.diameterKm)} km` } : null,
     r.radiusKm != null ? { label: "Radius", value: `${n(r.radiusKm)} km` } : null,
     r.densityGCm3 != null ? { label: "Density", value: `${r.densityGCm3} g/cm³` } : null,
-    r.gravityMs2 != null ? { label: "Surface gravity", value: `${r.gravityMs2} m/s²` } : null,
-    r.escapeVelocityKms != null ? { label: "Escape velocity", value: `${r.escapeVelocityKms} km/s` } : null,
+    r.gravityMs2 != null
+      ? { label: "Surface gravity", value: `${r.gravityMs2} m/s²` }
+      : gDerived != null ? { label: "Surface gravity", value: `${gDerived.toFixed(2)} m/s² · derived` } : null,
+    r.escapeVelocityKms != null
+      ? { label: "Escape velocity", value: `${r.escapeVelocityKms} km/s` }
+      : eDerived != null ? { label: "Escape velocity", value: `${eDerived.toFixed(1)} km/s · derived` } : null,
     r.rotationPeriodHours != null ? { label: "Rotation period", value: `${n(Math.abs(r.rotationPeriodHours))} h${r.rotationPeriodHours < 0 ? " (retrograde)" : ""}` } : null,
     r.meanTemperatureC != null ? { label: "Mean temperature", value: `${r.meanTemperatureC} °C` } : null,
     r.albedo != null ? { label: "Albedo", value: `${r.albedo}` } : null,
@@ -147,6 +163,13 @@ export default async function SolarBodyPage({ params }: PageProps<"/solar-system
 
             {isCraft && <StatGrid heading="Mission" stats={mission} />}
             {!isCraft && <StatGrid heading="Physical characteristics" stats={physical} />}
+            {!isCraft && derivedShown && (
+              <p className="max-w-2xl text-xs leading-relaxed text-faint">
+                Values marked <span className="font-medium text-muted">· derived</span> are computed from this body&rsquo;s
+                source-backed mass and radius using standard relations — surface gravity <span className="text-muted">g = GM/r²</span> and
+                escape velocity <span className="text-muted">v = √(2GM/r)</span> — not separately catalogued measurements.
+              </p>
+            )}
             {!isCraft && r.diameterKm != null && <EarthComparison name={r.name} otherDiameterKm={r.diameterKm} />}
             {!isCraft && <StatGrid heading="Orbit" stats={orbit} />}
 
