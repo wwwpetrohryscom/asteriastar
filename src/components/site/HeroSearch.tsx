@@ -19,7 +19,7 @@ export function HeroSearch() {
         const term = q.trim();
         router.push(`/search${term ? `?q=${encodeURIComponent(term)}` : ""}`);
       }}
-      className="flex w-full max-w-xl items-center gap-2 rounded-lg border border-silver/18 bg-bg-elevated/76 p-1.5 shadow-[0_18px_60px_rgba(0,0,0,0.24)] backdrop-blur-md focus-within:border-gold/45"
+      className="flex w-full max-w-xl items-center gap-2 rounded-lg border border-silver/18 bg-bg-elevated/76 p-1.5 shadow-[0_18px_60px_rgba(0,0,0,0.24)] backdrop-blur-md focus-within:border-nasa/55"
     >
       <span aria-hidden className="pl-3 text-faint">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none">

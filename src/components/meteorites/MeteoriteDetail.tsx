@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { EntityImagery } from "@/components/media/EntityImagery";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Badge } from "@/components/ui/Badge";
@@ -65,6 +66,8 @@ export function MeteoriteDetail({ d }: { d: ResolvedMeteorite }) {
           {d.parentBodies.map((p) => <Link key={p.id} href={p.href ?? "#"} className="rounded-full border border-white/15 bg-white/[0.03] px-2 py-0.5 text-xs text-nebula hover:border-white/30">From {p.name}</Link>)}
         </div>
       </HeroSection>
+
+      <Container className="mt-6"><EntityImagery entityId={m.id} /></Container>
 
       <Container className="mt-8 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
