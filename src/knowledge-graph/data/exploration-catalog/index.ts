@@ -125,12 +125,18 @@ export const EXPLORATION_STATS = {
   missions: EXPLORATION_BY_KIND.get("mission")?.length ?? 0,
 } as const;
 
+// Honest status vocabulary. Forward-looking states have not yet flown; done/ongoing
+// states have. The distinction drives the tense-consistency check below.
+const KNOWN_EXPLORATION_STATUS = new Set(["Completed", "Active", "Retired", "En route", "Planned", "In development", "Cancelled", "Failed", "Lost"]);
+const FLOWN_STATUS = new Set(["Completed", "Active", "Retired", "En route", "Failed", "Lost"]);
+
 export function validateExploration(): string[] {
   const issues: string[] = [];
   const seenId = new Set<string>();
   const seenSlug = new Set<string>();
   const ID = /^[a-z_]+:[a-z0-9-]+$/;
   const kinds = new Set(Object.keys(KIND_ENTITY_TYPE) as ExplorationKind[]);
+  const today = new Date().toISOString().slice(0, 10);
   for (const r of EXPLORATION_RECORDS) {
     if (seenId.has(r.id)) issues.push(`duplicate exploration id: ${r.id}`);
     seenId.add(r.id);
@@ -143,6 +149,21 @@ export function validateExploration(): string[] {
     }
     if (!r.sources?.length) issues.push(`${r.id}: missing sources`);
     if (!r.description) issues.push(`${r.id}: missing description`);
+
+    /* ---- Pass 5: status-tense honesty (planned ≠ completed; launch ≤ now for flown) ---- */
+    if (r.status && !KNOWN_EXPLORATION_STATUS.has(r.status)) issues.push(`${r.id}: unrecognised status "${r.status}"`);
+    if (r.launchDate) {
+      const isFuture = r.launchDate > today;
+      // A flown/ongoing status cannot sit on a launch date still in the future.
+      if (isFuture && r.status && FLOWN_STATUS.has(r.status))
+        issues.push(`${r.id}: status "${r.status}" but launch date ${r.launchDate} is in the future`);
+      // A craft that has already launched is no longer merely "Planned".
+      if (!isFuture && r.status === "Planned")
+        issues.push(`${r.id}: status "Planned" but launch date ${r.launchDate} is in the past`);
+      // End date, when present, cannot precede launch.
+      if (r.endDate && r.endDate < r.launchDate)
+        issues.push(`${r.id}: end date ${r.endDate} precedes launch date ${r.launchDate}`);
+    }
   }
   // Every NEW entity must carry at least one relation (no isolated nodes).
   const connected = new Set<string>();

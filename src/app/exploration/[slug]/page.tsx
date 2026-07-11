@@ -36,6 +36,32 @@ export async function generateMetadata({ params }: PageProps<"/exploration/[slug
 
 type Row = { label: string; value: string; href?: string };
 
+/**
+ * Human-readable mission span derived from source-backed ISO dates: launch → end
+ * when both are known, otherwise elapsed time since launch for a mission still
+ * under way (status Active / En route). Returns undefined when it cannot be formed
+ * honestly (no launch date, or a not-yet-launched / concluded-without-end mission).
+ * Labelled `· derived` at the call site so it is never mistaken for a catalogued field.
+ */
+function missionSpanLabel(launchDate?: string, endDate?: string, status?: string): string | undefined {
+  if (!launchDate) return undefined;
+  const start = new Date(launchDate);
+  const now = new Date();
+  // Not yet launched → there is no span to report. This honours the not-yet-launched
+  // contract even when a planned end date is present (a Planned mission may legitimately
+  // carry both a future launch and a future end date), so no duration is ever shown for
+  // a mission that has not happened.
+  if (Number.isNaN(start.getTime()) || start > now) return undefined;
+  const ongoing = status === "Active" || status === "En route";
+  const end = endDate ? new Date(endDate) : ongoing ? now : undefined;
+  if (!end || Number.isNaN(end.getTime()) || end < start) return undefined;
+  const days = (end.getTime() - start.getTime()) / 86_400_000;
+  const span = days < 365.25
+    ? `${Math.round(days)} day${Math.round(days) === 1 ? "" : "s"}`
+    : `${(days / 365.25).toFixed(1)} years`;
+  return `${span} · derived`;
+}
+
 export default async function ExplorationPage({ params }: PageProps<"/exploration/[slug]">) {
   const { slug } = await params;
   const d = engine.exploration.resolve(slug);
@@ -62,6 +88,9 @@ export default async function ExplorationPage({ params }: PageProps<"/exploratio
     push("Launch date", r.launchDate);
     push("End date", r.endDate);
     push("Status", r.status);
+    // Derived mission span from source-backed dates: launch → end when both are known,
+    // otherwise time elapsed since launch for a mission still under way. Labelled derived.
+    push(r.endDate ? "Mission duration" : "Time since launch", missionSpanLabel(r.launchDate, r.endDate, r.status));
     push("Launch vehicle", d.vehicle?.name, link(d.vehicle));
     push("Launch site", d.site?.name, link(d.site));
   } else if (r.kind === "agency") {

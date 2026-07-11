@@ -146,6 +146,8 @@ export const ROCKETS_STATS = {
   families: ROCKETS_BY_KIND.get("family")?.length ?? 0,
 } as const;
 
+const KNOWN_ROCKET_STATUS = new Set(["Active", "Retired", "In development", "Planned", "Cancelled"]);
+
 export function validateRockets(): string[] {
   const issues: string[] = [];
   const seenId = new Set<string>();
@@ -173,6 +175,13 @@ export function validateRockets(): string[] {
       else if (k === "longitude") { if (v < -180 || v > 180) issues.push(`${r.id}: longitude out of range: ${v}`); }
       else if (v < 0) issues.push(`${r.id}: invalid numeric ${k}=${v}`);
     }
+    /* ---- Pass 5: status vocabulary + maiden-flight chronology ---- */
+    if (r.status && !KNOWN_ROCKET_STATUS.has(r.status)) issues.push(`${r.id}: unrecognised status "${r.status}"`);
+    // A first flight is a historical event: its year cannot be in the future, and
+    // rocketry's first orbital launch was 1957 (Sputnik on the R-7).
+    const ffYear = r.firstFlight ? Number(String(r.firstFlight).match(/(\d{4})/)?.[1]) : undefined;
+    if (ffYear != null && Number.isFinite(ffYear) && (ffYear < 1942 || ffYear > new Date().getFullYear()))
+      issues.push(`${r.id}: first-flight year ${ffYear} is implausible (before rocketry or in the future)`);
   }
   // Relation integrity: every referenced cross-reference slug must resolve to a
   // real id (a catalog record or a reused external entity). Catches typos and
