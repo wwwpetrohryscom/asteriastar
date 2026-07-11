@@ -9,14 +9,20 @@ import { imageObjectSchema } from "@/lib/seo/jsonld";
  * real, openly-licensed observation images and renders a hero + expandable
  * lightbox gallery, plus an ImageObject JSON-LD for the hero. Renders nothing
  * when the entity has no images, so it is safe to drop onto every entity page.
+ *
+ * When `excludeHero` is set (used by pages that already show the hero image as a
+ * cinematic banner), the visible block shows only the remaining gallery images —
+ * but the hero's ImageObject JSON-LD is still emitted for SEO.
  */
 export function EntityImagery({
   entityId,
   heading = "Imagery",
+  excludeHero = false,
   className = "",
 }: {
   entityId: string;
   heading?: string;
+  excludeHero?: boolean;
   className?: string;
 }) {
   let assets = getImagesForEntity(entityId);
@@ -32,7 +38,10 @@ export function EntityImagery({
   }
   if (assets.length === 0) return null;
 
-  const items: MediaItem[] = assets.map((a) => ({
+  const hero = assets[0];
+  const gallery = excludeHero ? assets.slice(1) : assets;
+
+  const items: MediaItem[] = gallery.map((a) => ({
     url: a.url!,
     alt: a.alt,
     width: a.width ?? 1600,
@@ -51,12 +60,17 @@ export function EntityImagery({
     captureDate: a.captureDate,
   }));
 
-  const hero = assets[0];
-
   return (
-    <section className={className} aria-label={resolvedHeading}>
-      <h2 className="mb-4 flex items-center gap-2.5 font-display text-2xl font-bold sm:text-3xl">{resolvedHeading}</h2>
-      <MediaLightbox items={items} />
+    <>
+      {items.length > 0 && (
+        <section className={className} aria-label={resolvedHeading}>
+          <h2 className="mb-4 flex items-center gap-2.5 font-display text-2xl font-bold sm:text-3xl">
+            {excludeHero && <span aria-hidden className="inline-block h-4 w-1 rounded-full bg-nasa-red" />}
+            {resolvedHeading}
+          </h2>
+          <MediaLightbox items={items} />
+        </section>
+      )}
       <JsonLd
         data={imageObjectSchema({
           url: hero.url!,
@@ -71,6 +85,6 @@ export function EntityImagery({
           dateCreated: hero.captureDate,
         })}
       />
-    </section>
+    </>
   );
 }

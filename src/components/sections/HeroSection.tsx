@@ -41,22 +41,23 @@ export function HeroSection({
       {backdrop && <PhotoBackdrop variant="hero" priority={!compact} />}
       <Container>
         {eyebrow && (
-          <div className="mb-5 flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-faint">
+          <div className="mb-5 flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.18em] text-white/80">
+            <span aria-hidden className="inline-block h-3 w-1 rounded-full bg-nasa-red" />
             {eyebrow}
           </div>
         )}
         <h1
           className={
             compact
-              ? "max-w-4xl font-display text-3xl font-semibold leading-tight sm:text-4xl"
-              : "max-w-5xl font-display text-5xl font-semibold leading-[1.02] sm:text-7xl"
+              ? "max-w-4xl font-display text-4xl font-bold leading-[1.05] text-white sm:text-5xl"
+              : "max-w-5xl font-display text-5xl font-bold leading-[1.02] text-white sm:text-7xl"
           }
         >
           {title}
         </h1>
         {lead && (
           <p
-            className={`mt-6 max-w-2xl leading-relaxed text-muted ${compact ? "text-base" : "text-lg sm:text-xl"}`}
+            className={`mt-6 max-w-2xl leading-relaxed text-muted ${compact ? "text-lg" : "text-lg sm:text-xl"}`}
           >
             {lead}
           </p>

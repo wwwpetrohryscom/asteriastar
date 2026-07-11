@@ -19,6 +19,8 @@ import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePa
 import { engine } from "@/platform/data-engine";
 import { EntryGallery } from "@/components/entry/EntryGallery";
 import { EntityImagery } from "@/components/media/EntityImagery";
+import { EditorialHero } from "@/components/editorial/EditorialHero";
+import { getHeroImageForEntity } from "@/lib/media/registry";
 import { EntryTimeline } from "@/components/entry/EntryTimeline";
 import { EntryRelatedMissions } from "@/components/entry/EntryRelatedMissions";
 import {
@@ -102,6 +104,8 @@ export default async function EntryPage({
   const graphEntity = getEntityForEntry(entry);
   // Resolve the entity through the data engine for the data/quality panels.
   const resolvedEntity = graphEntity ? engine.entity.resolve(graphEntity.id) : null;
+  // When the entity has a real image, lead with a cinematic editorial hero.
+  const heroImage = graphEntity ? getHeroImageForEntity(graphEntity.id) : undefined;
 
   return (
     <div style={accentVars(section.accent)}>
@@ -111,20 +115,30 @@ export default async function EntryPage({
         <Breadcrumbs crumbs={crumbs} />
       </Container>
 
-      <EntryHeader
-        entry={entry}
-        accent={section.accent}
-        sectionName={section.name}
-        categoryName={category.name}
-        categoryHref={catHref}
-      />
+      {heroImage && graphEntity ? (
+        <EditorialHero
+          entityId={graphEntity.id}
+          eyebrow={`${section.name} · ${category.name}`}
+          title={entry.title}
+          subtitle={entry.heroSummary}
+          facts={(entry.facts ?? []).slice(0, 6).map((f) => ({ label: f.label, value: f.value }))}
+        />
+      ) : (
+        <EntryHeader
+          entry={entry}
+          accent={section.accent}
+          sectionName={section.name}
+          categoryName={category.name}
+          categoryHref={catHref}
+        />
+      )}
 
       <Container className="mt-8">
         <div className="grid gap-12 lg:grid-cols-3">
           <div className="space-y-10 lg:col-span-2">
             <EntryDisclaimer entry={entry} />
             {graphEntity ? (
-              <EntityImagery entityId={graphEntity.id} />
+              <EntityImagery entityId={graphEntity.id} heading="Gallery" excludeHero={Boolean(heroImage)} />
             ) : (
               section.slug === "astronomy" && <EntryGallery name={entry.title} entryPath={entry.path} />
             )}
