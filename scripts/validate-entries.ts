@@ -283,6 +283,21 @@ async function main() {
     );
   }
 
+  // Program 4 — mission precision overlay (Wikidata, field-level provenance).
+  const missionPrecision = await import("../src/knowledge-graph/data/mission-precision");
+  const missionPrecisionIssues = missionPrecision.validateMissionPrecision();
+  if (missionPrecisionIssues.length > 0) {
+    console.error(`\n✗ ${missionPrecisionIssues.length} mission-precision issue(s):`);
+    for (const i of missionPrecisionIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  {
+    const m = missionPrecision.MISSION_PRECISION_META;
+    console.log(
+      `✓ Mission precision valid — ${m.missions} missions from Wikidata (type-verified, retrieved ${m.retrievedAt}); ${m.withCospar} designators, ${m.withMass} launch masses, ${m.launchDatesConfirmed} launch dates cross-confirmed (${m.launchDateDiscrepancies} discrepancy kept catalogue-authoritative)`,
+    );
+  }
+
   const exploration = await import("../src/knowledge-graph/data/exploration-catalog");
   const expIssues = exploration.validateExploration();
   if (expIssues.length > 0) {

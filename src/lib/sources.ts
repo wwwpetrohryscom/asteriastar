@@ -47,6 +47,7 @@ export type SourceKey =
   | "esa-hubble"
   | "esa-webb"
   | "wikimedia"
+  | "wikidata"
   // Launch-vehicle manufacturers/operators + a specialist launch-vehicle reference
   // (Program V). Manufacturer sources are "reference" authority — primary for
   // their own hardware, but secondary/press-derived, not peer-reviewed.
@@ -274,6 +275,16 @@ export const SOURCES: Record<SourceKey, Source> = {
     country: "Europe",
     authorityType: "space-agency",
     reliability: "The most precise modern astrometric survey.",
+  },
+  wikidata: {
+    key: "wikidata",
+    name: "Wikidata",
+    organization: "Wikidata (Wikimedia Foundation) — community-curated structured knowledge base",
+    url: "https://www.wikidata.org",
+    scope: "Structured mission/spacecraft facts (international designator, operator, manufacturer, launch mass); statements link to their own citations where provided.",
+    country: "International",
+    authorityType: "database",
+    reliability: "Community-maintained; used only for type-verified, unambiguous structured statements, cross-checked against the catalogue.",
   },
   hyg: {
     key: "hyg",
