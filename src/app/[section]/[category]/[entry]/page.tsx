@@ -138,7 +138,7 @@ export default async function EntryPage({
           <div className="space-y-10 lg:col-span-2">
             <EntryDisclaimer entry={entry} />
             {graphEntity ? (
-              <EntityImagery entityId={graphEntity.id} heading="Gallery" excludeHero={Boolean(heroImage)} />
+              <EntityImagery entityId={graphEntity.id} heading="Gallery" skip={heroImage ? 1 : 0} />
             ) : (
               section.slug === "astronomy" && <EntryGallery name={entry.title} entryPath={entry.path} />
             )}
