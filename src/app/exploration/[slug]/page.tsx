@@ -9,6 +9,8 @@ import { SourceList } from "@/components/ui/SourceList";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ReviewBadge, CoverageBadge } from "@/components/authority/TrustBadges";
 import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePanel";
+import { MissionPrecisionSection } from "@/components/authority/MissionPrecisionSection";
+import { getMissionPrecision } from "@/knowledge-graph/data/mission-precision";
 import { ExplorationTable, StatusPill } from "@/components/exploration/ExplorationTable";
 import { engine } from "@/platform/data-engine";
 import { QUALITY_DIMENSION_LABELS, type QualityDimension } from "@/platform";
@@ -67,6 +69,7 @@ export default async function ExplorationPage({ params }: PageProps<"/exploratio
   const d = engine.exploration.resolve(slug);
   if (!d) notFound();
   const r = d.record;
+  const missionPrecision = getMissionPrecision(r.id);
   const url = explorationPath(slug);
   const link = (ref?: { id: string; name: string; slug?: string }) =>
     ref?.slug ? explorationPath(ref.slug) : undefined;
@@ -164,6 +167,8 @@ export default async function ExplorationPage({ params }: PageProps<"/exploratio
               <h2 id="overview" className="font-display text-2xl font-bold">{r.kind === "mission" ? "Mission overview" : "Overview"}</h2>
               <p className="mt-3 leading-relaxed text-muted">{r.description}</p>
             </section>
+
+            {missionPrecision && <MissionPrecisionSection p={missionPrecision} />}
 
             {r.objectives?.length ? (
               <section aria-labelledby="objectives">

@@ -83,3 +83,12 @@ for (const [label, f] of sbFields) {
 const withSigma = SB.filter((p) => p.semiMajorAxisAu?.uncertainty != null).length;
 console.log(`  semi-major axis with a stated uncertainty: ${withSigma} (${pct(withSigma, SB.length)})`);
 console.log(`  hyperbolic (unbound) comets correctly modelled: ${SB.filter((p) => (p.eccentricity?.value ?? 0) >= 1).length}`);
+
+import { MISSION_PRECISION_META } from "../../src/knowledge-graph/data/mission-precision";
+const M4 = MISSION_PRECISION_META;
+console.log("\nPROGRAM 4 — MISSION PRECISION COVERAGE (Wikidata, type-verified)");
+console.log(`  missions matched (type-safe, unambiguous): ${M4.missions} · retrieved ${M4.retrievedAt}`);
+console.log(`    international designator (COSPAR)       ${String(M4.withCospar).padStart(5)}`);
+console.log(`    launch mass                             ${String(M4.withMass).padStart(5)}`);
+console.log(`    launch dates cross-confirmed vs catalog ${String(M4.launchDatesConfirmed).padStart(5)}`);
+console.log(`    launch-date discrepancies (catalogue kept authoritative): ${M4.launchDateDiscrepancies}`);
