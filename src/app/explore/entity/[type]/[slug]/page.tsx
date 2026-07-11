@@ -3,13 +3,12 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { EditorialHero } from "@/components/editorial/EditorialHero";
-import { RelatedObjects } from "@/components/editorial/RelatedObjects";
 import { FeatureImageBand } from "@/components/editorial/FeatureImageBand";
 import { SectionHeader, ObjectClassification, ObservationPanel } from "@/components/editorial/scientific";
 import { SourceList } from "@/components/ui/SourceList";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { GraphConnections } from "@/components/graph/GraphConnections";
 import { EntityImagery } from "@/components/media/EntityImagery";
+import { EntityExperienceSystem } from "@/components/experience/EntityExperienceSystem";
 import { getImagesForEntity } from "@/lib/media/registry";
 import { EntityRecommendations } from "@/components/graph/EntityRecommendations";
 import { EntityDataPanel } from "@/components/graph/EntityDataPanel";
@@ -57,9 +56,6 @@ export default async function GraphEntityPage({
 
   const typeLabel = resolved.typeLabel;
   const url = resolved.canonicalPath;
-  const related = resolved.related;
-  const siblings = engine.recommendation.sameType(resolved.id);
-  const hasConnections = resolved.connections.length > 0;
 
   const images = getImagesForEntity(resolved.id);
   const heroImg = images[0];
@@ -127,6 +123,8 @@ export default async function GraphEntityPage({
       )}
 
       <Container className="mt-14 mb-14 space-y-14">
+        <EntityExperienceSystem entity={resolved} images={images} />
+
         {heroImg && (
           <ObservationPanel
             instrument={heroImg.instrument}
@@ -137,21 +135,6 @@ export default async function GraphEntityPage({
         )}
 
         <EntityImagery entityId={resolved.id} heading="Gallery" skip={galleryStart} />
-
-        {siblings.length > 0 && (
-          <RelatedObjects heading={`More ${typeLabel.toLowerCase()}s`} items={siblings.map((e) => ({ id: e.id, name: e.name }))} />
-        )}
-
-        {related.length > 0 && (
-          <RelatedObjects heading="Explore more" items={related.map((e) => ({ id: e.id, name: e.name }))} />
-        )}
-
-        {hasConnections && (
-          <section aria-labelledby="connections-heading">
-            <SectionHeader kicker="Connections" title={`How ${resolved.name} connects`} className="mb-5" />
-            <GraphConnections entityId={resolved.id} />
-          </section>
-        )}
 
         <section>
           <SectionHeader kicker="Data" title="Scientific data & provenance" className="mb-6" />
