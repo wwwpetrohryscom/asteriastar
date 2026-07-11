@@ -198,6 +198,20 @@ export function validateAsteroids(): string[] {
       else if (k === "meanDiameterKm") { if (v <= 0 || v > 3000) issues.push(`${r.id}: implausible diameter: ${v}`); }
       else if (v < 0) issues.push(`${r.id}: invalid numeric ${k}=${v}`);
     }
+    /* ---- Pass 5: orbital ordering, NEO/PHA consistency, discovery chronology ---- */
+    // A bound orbit must obey perihelion ≤ semi-major axis ≤ aphelion (1% slack for rounding).
+    const { perihelionAu: q, semiMajorAxisAu: a, aphelionAu: qa } = r;
+    if (q != null && a != null && q > a * 1.01) issues.push(`${r.id}: perihelion ${q} AU exceeds semi-major axis ${a} AU`);
+    if (a != null && qa != null && a > qa * 1.01) issues.push(`${r.id}: semi-major axis ${a} AU exceeds aphelion ${qa} AU`);
+    // A Potentially Hazardous Asteroid is by definition a near-Earth asteroid, so it
+    // must carry a near-Earth orbit class; and any near-Earth class implies a
+    // perihelion inside 1.3 AU (the NEO definition) when a perihelion is known.
+    if (r.pha === true && !r.neoClassSlug) issues.push(`${r.id}: flagged PHA but has no near-Earth orbit class`);
+    if (r.neoClassSlug && q != null && q >= 1.3 * 1.01) issues.push(`${r.id}: near-Earth class ${r.neoClassSlug} but perihelion ${q} AU ≥ 1.3 AU`);
+    // Discovery is a historical event: no asteroid predates Ceres (1801) by much, none is future.
+    const dy = r.discoveryYear ? Number(String(r.discoveryYear).match(/(\d{4})/)?.[1]) : undefined;
+    if (dy != null && Number.isFinite(dy) && (dy < 1750 || dy > new Date().getFullYear()))
+      issues.push(`${r.id}: discovery year ${r.discoveryYear} is implausible`);
   }
   // Relation integrity: catalog-internal cross-references must resolve to a real id
   // of the expected kind. (Mission/planet targets are full ids validated at the graph

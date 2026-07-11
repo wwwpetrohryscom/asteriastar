@@ -179,6 +179,15 @@ export function validateComets(): string[] {
       else if (k === "orbitalPeriodYears") { if (v <= 0 || v > 100000) issues.push(`${r.id}: implausible period: ${v}`); }
       else if (v < 0) issues.push(`${r.id}: invalid numeric ${k}=${v}`);
     }
+    /* ---- Pass 5: orbital ordering + discovery chronology ---- */
+    // For a bound comet with both apsides known, perihelion cannot exceed aphelion
+    // (hyperbolic comets have no aphelion, so this only fires when both are present).
+    if (r.perihelionAu != null && r.aphelionAu != null && r.perihelionAu > r.aphelionAu * 1.01)
+      issues.push(`${r.id}: perihelion ${r.perihelionAu} AU exceeds aphelion ${r.aphelionAu} AU`);
+    // A 4-digit discovery year cannot be in the future (antiquity years are 3-digit/BC and skipped).
+    const cy = r.discoveryYear ? Number(String(r.discoveryYear).match(/\b(\d{4})\b/)?.[1]) : undefined;
+    if (cy != null && Number.isFinite(cy) && cy > new Date().getFullYear())
+      issues.push(`${r.id}: discovery year ${r.discoveryYear} is in the future`);
   }
   // Relation integrity: catalog-internal cross-references must resolve to a real id of
   // the expected kind. (Mission/shower/reused-reservoir/related are full graph ids
