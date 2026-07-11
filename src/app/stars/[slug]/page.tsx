@@ -10,6 +10,8 @@ import { SourceList } from "@/components/ui/SourceList";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ReviewBadge, CoverageBadge } from "@/components/authority/TrustBadges";
 import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePanel";
+import { PrecisionMeasurements } from "@/components/authority/PrecisionMeasurements";
+import { getStarPrecision } from "@/knowledge-graph/data/star-catalog/precision";
 import { engine } from "@/platform/data-engine";
 import { relationLabel, type Connection } from "@/knowledge-graph";
 import { QUALITY_DIMENSION_LABELS, type QualityDimension } from "@/platform";
@@ -47,6 +49,7 @@ export default async function StarPage({ params }: PageProps<"/stars/[slug]">) {
   const url = starPath(slug);
   const sci = spectralInfo(r.spectralClass);
   const evolution = r.category ? CATEGORY_INFO[r.category] : undefined;
+  const precision = getStarPrecision(r.id);
 
   const crumbs: Crumb[] = [
     { name: "Home", url: "/" },
@@ -145,6 +148,9 @@ export default async function StarPage({ params }: PageProps<"/stars/[slug]">) {
                 <p className="mt-2 text-xs text-faint">Values are real catalogue data; fields without a reliable value are omitted, never estimated.</p>
               </section>
             )}
+
+            {/* Precision measurements (SIMBAD + Gaia DR3, field-level provenance) */}
+            {precision && <PrecisionMeasurements p={precision} />}
 
             {/* Evolution */}
             {evolution && (
