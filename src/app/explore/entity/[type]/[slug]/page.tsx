@@ -2,20 +2,18 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
-import { HeroSection } from "@/components/sections/HeroSection";
-import { Badge } from "@/components/ui/Badge";
+import { EditorialHero } from "@/components/editorial/EditorialHero";
+import { RelatedObjects } from "@/components/editorial/RelatedObjects";
 import { SourceList } from "@/components/ui/SourceList";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { GraphConnections } from "@/components/graph/GraphConnections";
 import { EntityImagery } from "@/components/media/EntityImagery";
-import { EntityCard } from "@/components/graph/EntityCard";
 import { EntityRecommendations } from "@/components/graph/EntityRecommendations";
 import { EntityDataPanel } from "@/components/graph/EntityDataPanel";
 import { EntityQualityPanel } from "@/components/authority/EntityQualityPanel";
 import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePanel";
 import { getStandaloneEntities } from "@/knowledge-graph";
 import { engine } from "@/platform/data-engine";
-import { topicPath } from "@/lib/routes";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES } from "@/lib/routes";
@@ -59,7 +57,6 @@ export default async function GraphEntityPage({
   const related = resolved.related;
   const siblings = engine.recommendation.sameType(resolved.id);
   const hasConnections = resolved.connections.length > 0;
-  const topic = resolved.topics[0];
 
   const crumbs: Crumb[] = [
     { name: "Home", url: "/" },
@@ -80,24 +77,27 @@ export default async function GraphEntityPage({
         ]}
       />
 
-      <Container className="pt-8">
+      <Container className="pt-6">
         <Breadcrumbs crumbs={crumbs} />
       </Container>
 
-      <HeroSection
-        compact
-        accent={resolved.domain === "culture" ? "ember" : "nebula"}
-        eyebrow={<span>{typeLabel}</span>}
+      <EditorialHero
+        entityId={resolved.id}
+        eyebrow={typeLabel}
         title={resolved.name}
-        lead={resolved.description}
-      >
-        <div className="mt-4">
-          <Badge tone="accent">Knowledge graph</Badge>
-        </div>
-      </HeroSection>
+        subtitle={resolved.description}
+        facts={[
+          { label: "Type", value: typeLabel },
+          { label: "Domain", value: resolved.domainLabel },
+          { label: "Connections", value: resolved.relationCount || undefined },
+          resolved.scientificName
+            ? { label: "Scientific name", value: resolved.scientificName }
+            : { label: "Catalog", value: resolved.catalogNumbers[0] },
+        ]}
+      />
 
-      <Container className="mt-8 mb-12 space-y-12">
-        <EntityImagery entityId={resolved.id} />
+      <Container className="mt-12 mb-12 space-y-14">
+        <EntityImagery entityId={resolved.id} heading="Gallery" excludeHero />
 
         <div className="grid gap-6 lg:grid-cols-2">
           <EntityDataPanel resolved={resolved} />
@@ -124,40 +124,11 @@ export default async function GraphEntityPage({
         )}
 
         {related.length > 0 && (
-          <section aria-labelledby="related-heading">
-            <h2 id="related-heading" className="font-display text-xl font-semibold text-fg">
-              Related entities
-            </h2>
-            <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {related.map((e) => (
-                <li key={e.id} className="contents">
-                  <EntityCard entity={e} />
-                </li>
-              ))}
-            </ul>
-          </section>
+          <RelatedObjects heading="Related objects" items={related.map((e) => ({ id: e.id, name: e.name }))} />
         )}
 
         {siblings.length > 0 && (
-          <section aria-labelledby="siblings-heading">
-            <div className="flex items-center justify-between gap-3">
-              <h2 id="siblings-heading" className="font-display text-xl font-semibold text-fg">
-                More {typeLabel.toLowerCase()}s
-              </h2>
-              {topic && (
-                <a href={topicPath(topic.slug)} className="text-sm text-muted transition hover:text-fg">
-                  Browse all →
-                </a>
-              )}
-            </div>
-            <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {siblings.map((e) => (
-                <li key={e.id} className="contents">
-                  <EntityCard entity={e} />
-                </li>
-              ))}
-            </ul>
-          </section>
+          <RelatedObjects heading={`More ${typeLabel.toLowerCase()}s`} items={siblings.map((e) => ({ id: e.id, name: e.name }))} />
         )}
 
         <EntityRecommendations entityId={resolved.id} />

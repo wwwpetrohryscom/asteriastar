@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { HeroSection } from "@/components/sections/HeroSection";
+import { EditorialHero, type HeroFact } from "@/components/editorial/EditorialHero";
+import { StatGrid } from "@/components/editorial/StatGrid";
+import { RelatedObjects } from "@/components/editorial/RelatedObjects";
 import { EntityImagery } from "@/components/media/EntityImagery";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
-import { Badge } from "@/components/ui/Badge";
 import { SourceList } from "@/components/ui/SourceList";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ReviewBadge, CoverageBadge } from "@/components/authority/TrustBadges";
@@ -36,27 +37,6 @@ export async function generateMetadata({ params }: PageProps<"/solar-system/[slu
 
 type Row = { label: string; value: string };
 const n = (v: number | undefined) => (v == null ? undefined : v.toLocaleString());
-
-function Table({ id, title, rows }: { id: string; title: string; rows: Row[] }) {
-  if (rows.length === 0) return null;
-  return (
-    <section aria-labelledby={id}>
-      <h2 id={id} className="font-display text-2xl font-bold">{title}</h2>
-      <div className="mt-4 overflow-hidden rounded-2xl border border-white/10">
-        <table className="w-full text-left text-sm">
-          <tbody className="divide-y divide-white/5">
-            {rows.map((r) => (
-              <tr key={r.label} className="transition hover:bg-white/[0.02]">
-                <td className="px-4 py-2.5 text-faint">{r.label}</td>
-                <td className="px-4 py-2.5 text-right font-medium text-fg">{r.value}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </section>
-  );
-}
 
 export default async function SolarBodyPage({ params }: PageProps<"/solar-system/[slug]">) {
   const { slug } = await params;
@@ -111,6 +91,22 @@ export default async function SolarBodyPage({ params }: PageProps<"/solar-system
     r.hasRingSystem ? { label: "Ring system", value: "Yes" } : null,
   ].filter(Boolean) as Row[];
 
+  const heroFacts: HeroFact[] = isCraft
+    ? [
+        { label: "Agency", value: r.agency },
+        { label: "Launched", value: r.launchYear ? String(r.launchYear) : undefined },
+        { label: "Type", value: r.missionType },
+        { label: "Status", value: r.status },
+      ]
+    : [
+        { label: "Type", value: r.classification ?? b.kindLabel },
+        { label: "Diameter", value: r.diameterKm != null ? `${n(r.diameterKm)} km` : undefined },
+        { label: "Distance from Sun", value: r.distanceFromSun1e6Km != null ? `${n(r.distanceFromSun1e6Km)} M km` : undefined },
+        { label: "Surface gravity", value: r.gravityMs2 != null ? `${r.gravityMs2} m/s²` : undefined },
+        { label: "Mean temp.", value: r.meanTemperatureC != null ? `${r.meanTemperatureC} °C` : undefined },
+        { label: "Moons", value: r.moonCount != null ? String(r.moonCount) : undefined },
+      ];
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Thing",
@@ -124,20 +120,16 @@ export default async function SolarBodyPage({ params }: PageProps<"/solar-system
   return (
     <>
       <JsonLd data={[breadcrumbSchema(crumbs), jsonLd]} />
-      <Container className="pt-8"><Breadcrumbs crumbs={crumbs} /></Container>
-      <HeroSection
-        compact
-        accent={isCraft ? "ember" : "halo"}
-        eyebrow={<span>{b.kindLabel}{r.classification ? ` · ${r.classification}` : ""}</span>}
+      <Container className="pt-6"><Breadcrumbs crumbs={crumbs} /></Container>
+      <EditorialHero
+        entityId={r.id}
+        eyebrow={`${b.kindLabel}${r.classification ? ` · ${r.classification}` : ""}`}
         title={r.name}
-        lead={r.designation && r.designation !== r.name ? r.designation : undefined}
-      >
-        <div className="mt-4"><Badge tone="accent">Solar System</Badge></div>
-      </HeroSection>
+        subtitle={r.designation && r.designation !== r.name ? r.designation : undefined}
+        facts={heroFacts}
+      />
 
-      <Container className="mt-6"><EntityImagery entityId={r.id} /></Container>
-
-      <Container className="mt-8 mb-14">
+      <Container className="mt-12 mb-14">
         <div className="grid gap-10 lg:grid-cols-[1fr_320px]">
           <div className="space-y-10">
             <section aria-labelledby="overview">
@@ -151,9 +143,11 @@ export default async function SolarBodyPage({ params }: PageProps<"/solar-system
               </p>
             </section>
 
-            {isCraft ? <Table id="mission" title="Mission" rows={mission} /> : null}
-            {!isCraft ? <Table id="physical" title="Physical characteristics" rows={physical} /> : null}
-            {!isCraft ? <Table id="orbit" title="Orbit" rows={orbit} /> : null}
+            {isCraft && <StatGrid heading="Mission" stats={mission} />}
+            {!isCraft && <StatGrid heading="Physical characteristics" stats={physical} />}
+            {!isCraft && <StatGrid heading="Orbit" stats={orbit} />}
+
+            <EntityImagery entityId={r.id} heading="Gallery" excludeHero />
 
             {/* Targets (missions/spacecraft) */}
             {isCraft && (r.targets?.length || r.landedOn?.length || r.partOfMission) ? (
@@ -174,19 +168,11 @@ export default async function SolarBodyPage({ params }: PageProps<"/solar-system
 
             {/* Moons */}
             {b.moons.length > 0 && (
-              <section aria-labelledby="moons">
-                <h2 id="moons" className="font-display text-2xl font-bold">Moons ({b.moons.length})</h2>
-                <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  {b.moons.map((m) => (
-                    <li key={m.id}>
-                      <Link href={solarBodyPath(bodySlug(m.id))} className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-2.5 transition hover:border-white/25 hover:bg-white/[0.04]">
-                        <span className="font-medium text-fg">{m.name}</span>
-                        <span className="text-xs text-faint">{m.radiusKm != null ? `${n(m.radiusKm)} km` : ""}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+              <RelatedObjects
+                heading={`Moons (${b.moons.length})`}
+                max={16}
+                items={b.moons.map((m) => ({ id: m.id, name: m.name, href: solarBodyPath(bodySlug(m.id)) }))}
+              />
             )}
 
             {/* Surface features */}
@@ -203,19 +189,11 @@ export default async function SolarBodyPage({ params }: PageProps<"/solar-system
 
             {/* Exploration */}
             {(b.missions.length > 0 || b.spacecraft.length > 0) && (
-              <section aria-labelledby="exploration">
-                <h2 id="exploration" className="font-display text-2xl font-bold">Exploration</h2>
-                <ul className="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-                  {[...b.missions, ...b.spacecraft].map((mc) => (
-                    <li key={mc.id}>
-                      <Link href={solarBodyPath(bodySlug(mc.id))} className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/[0.02] px-4 py-2.5 transition hover:border-white/25 hover:bg-white/[0.04]">
-                        <span className="font-medium text-fg">{mc.name}</span>
-                        <span className="text-xs text-faint">{mc.launchYear ?? ""}</span>
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+              <RelatedObjects
+                heading="Exploration"
+                max={16}
+                items={[...b.missions, ...b.spacecraft].map((mc) => ({ id: mc.id, name: mc.name, href: solarBodyPath(bodySlug(mc.id)) }))}
+              />
             )}
 
             <SourceList keys={r.sources} title="Sources" />
