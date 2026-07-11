@@ -42,3 +42,24 @@ const flagged = P.filter((p) => p.astrometryFlagged).length;
 console.log(`  parallax with uncertainty: ${uncert} (${pct(uncert, P.length)})`);
 console.log(`  distinct source bibcodes referenced: ${bibcodes.size}`);
 console.log(`  Gaia RUWE-flagged (astrometric-quality note surfaced): ${flagged}`);
+
+import { DEEP_SKY_PRECISION, DEEP_SKY_PRECISION_META } from "../../src/knowledge-graph/data/deep-sky-catalog/precision";
+import { DEEP_SKY_RECORDS } from "../../src/knowledge-graph/data/deep-sky-catalog";
+const DS = [...DEEP_SKY_PRECISION.values()];
+const dsN = DEEP_SKY_RECORDS.length;
+console.log("\nPROGRAM 2 — DEEP-SKY PRECISION COVERAGE");
+console.log(`  catalogue objects: ${dsN}`);
+console.log(`  objects with a precision overlay: ${DS.length} (${pct(DS.length, dsN)})`);
+console.log(`  SIMBAD retrieved ${DEEP_SKY_PRECISION_META.simbadRetrievedAt} · NED retrieved ${DEEP_SKY_PRECISION_META.nedRetrievedAt}`);
+const dsFields: [string, (p: (typeof DS)[number]) => unknown][] = [
+  ["distance (ly, catalogued)", (p) => p.distanceLy],
+  ["physical size (derived)", (p) => p.physicalMajorLy],
+  ["cosmological redshift (galaxies)", (p) => p.redshift],
+  ["radial velocity", (p) => p.radialVelocityKmS],
+];
+for (const [label, f] of dsFields) {
+  const c = DS.filter((p) => f(p) != null).length;
+  console.log(`    ${label.padEnd(38)} ${String(c).padStart(5)}  ${pct(c, dsN)}`);
+}
+const blue = DS.filter((p) => (p.radialVelocityKmS?.value ?? 0) < 0 && p.extragalactic).length;
+console.log(`  blueshifted (approaching) galaxies correctly labelled radial velocity: ${blue}`);

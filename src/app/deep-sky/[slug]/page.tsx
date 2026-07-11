@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { Container } from "@/components/ui/Container";
+import { DeepSkyPrecisionSection } from "@/components/authority/DeepSkyPrecisionSection";
+import { getDeepSkyPrecision } from "@/knowledge-graph/data/deep-sky-catalog/precision";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Badge } from "@/components/ui/Badge";
 import { SourceList } from "@/components/ui/SourceList";
@@ -40,6 +42,7 @@ export default async function DeepSkyPage({ params }: PageProps<"/deep-sky/[slug
   const d = engine.deepSky.resolve(slug);
   if (!d) notFound();
   const r = d.record;
+  const precision = getDeepSkyPrecision(r.id);
   const url = deepSkyPath(slug);
 
   // Scientific-overview prose, assembled so optional clauses never dangle.
@@ -147,6 +150,9 @@ export default async function DeepSkyPage({ params }: PageProps<"/deep-sky/[slug
                 {d.season && <Fact label="Season" value={d.season} />}
               </div>
             </section>
+
+            {/* Precision measurements (SIMBAD + NED, field-level provenance) */}
+            {precision && <DeepSkyPrecisionSection p={precision} />}
 
             {/* Related objects */}
             {d.neighbors.length > 0 && (
