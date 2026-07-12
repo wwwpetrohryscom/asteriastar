@@ -5,6 +5,7 @@
  * domains and prints coverage. Exits non-zero on any violation.
  */
 import { provenanceStats, validateAllProvenance } from "../../src/lib/provenance/registry";
+import { DERIVED_STATS, validateDerivedValues } from "../../src/knowledge-graph/data/derived-values";
 
 const stats = provenanceStats();
 console.log("FIELD-LEVEL PROVENANCE REGISTRY");
@@ -14,7 +15,9 @@ console.log("  by status:", stats.byStatus);
 console.log("  by source:", stats.bySource);
 console.log(`  distinct bibcodes: ${stats.distinctBibcodes} · values with uncertainty: ${stats.withUncertainty.toLocaleString()} · with epoch: ${stats.withEpoch.toLocaleString()}`);
 
-const issues = validateAllProvenance();
+console.log(`  derived values: ${DERIVED_STATS.total} (${Object.entries(DERIVED_STATS.byFormula).map(([k, v]) => `${v} ${k}`).join(", ")})`);
+
+const issues = [...validateDerivedValues(), ...validateAllProvenance()];
 if (issues.length) {
   console.error(`\n✗ ${issues.length} provenance issue(s):`);
   for (const i of issues.slice(0, 40)) console.error(`  • ${i}`);

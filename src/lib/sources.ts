@@ -48,6 +48,7 @@ export type SourceKey =
   | "esa-webb"
   | "wikimedia"
   | "wikidata"
+  | "asteriastar-derived"
   // Launch-vehicle manufacturers/operators + a specialist launch-vehicle reference
   // (Program V). Manufacturer sources are "reference" authority — primary for
   // their own hardware, but secondary/press-derived, not peer-reviewed.
@@ -275,6 +276,16 @@ export const SOURCES: Record<SourceKey, Source> = {
     country: "Europe",
     authorityType: "space-agency",
     reliability: "The most precise modern astrometric survey.",
+  },
+  "asteriastar-derived": {
+    key: "asteriastar-derived",
+    name: "AsteriaStar (derived)",
+    organization: "AsteriaStar Scientific Data Engine — values computed from cited source inputs via documented standard formulae",
+    url: "https://asteriastar.example/methodology",
+    scope: "Derived/calculated values (gravity, escape velocity, bulk density, axis ratio, mission duration) whose inputs and formula are fully traced.",
+    country: "International",
+    authorityType: "reference",
+    reliability: "Not an observation: a derived value from standard formulae (CODATA/IAU constants) applied to source-backed inputs; status is always 'derived' or 'calculated'.",
   },
   wikidata: {
     key: "wikidata",

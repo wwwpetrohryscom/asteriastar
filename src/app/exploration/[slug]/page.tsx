@@ -11,6 +11,8 @@ import { ReviewBadge, CoverageBadge } from "@/components/authority/TrustBadges";
 import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePanel";
 import { MissionPrecisionSection } from "@/components/authority/MissionPrecisionSection";
 import { getMissionPrecision } from "@/knowledge-graph/data/mission-precision";
+import { DerivedValuesPanel } from "@/components/authority/DerivedValuesPanel";
+import { derivedField } from "@/knowledge-graph/data/derived-values";
 import { ExplorationTable, StatusPill } from "@/components/exploration/ExplorationTable";
 import { engine } from "@/platform/data-engine";
 import { QUALITY_DIMENSION_LABELS, type QualityDimension } from "@/platform";
@@ -39,29 +41,17 @@ export async function generateMetadata({ params }: PageProps<"/exploration/[slug
 type Row = { label: string; value: string; href?: string };
 
 /**
- * Human-readable mission span derived from source-backed ISO dates: launch → end
- * when both are known, otherwise elapsed time since launch for a mission still
- * under way (status Active / En route). Returns undefined when it cannot be formed
- * honestly (no launch date, or a not-yet-launched / concluded-without-end mission).
- * Labelled `· derived` at the call site so it is never mistaken for a catalogued field.
+ * Mission span from the unified derived-value registry (single source of truth):
+ * "Mission duration" (a fixed span between two catalogued dates) or "Time since launch"
+ * (elapsed as of the data-release reference instant, for a still-active mission).
+ * Returns the label + formatted value, or undefined when no derived span exists.
  */
-function missionSpanLabel(launchDate?: string, endDate?: string, status?: string): string | undefined {
-  if (!launchDate) return undefined;
-  const start = new Date(launchDate);
-  const now = new Date();
-  // Not yet launched → there is no span to report. This honours the not-yet-launched
-  // contract even when a planned end date is present (a Planned mission may legitimately
-  // carry both a future launch and a future end date), so no duration is ever shown for
-  // a mission that has not happened.
-  if (Number.isNaN(start.getTime()) || start > now) return undefined;
-  const ongoing = status === "Active" || status === "En route";
-  const end = endDate ? new Date(endDate) : ongoing ? now : undefined;
-  if (!end || Number.isNaN(end.getTime()) || end < start) return undefined;
-  const days = (end.getTime() - start.getTime()) / 86_400_000;
-  const span = days < 365.25
-    ? `${Math.round(days)} day${Math.round(days) === 1 ? "" : "s"}`
-    : `${(days / 365.25).toFixed(1)} years`;
-  return `${span} · derived`;
+function missionSpan(entityId: string): { label: string; value: string } | undefined {
+  const dur = derivedField(entityId, "missionDuration") ?? derivedField(entityId, "timeSinceLaunch");
+  if (!dur) return undefined;
+  const days = dur.value;
+  const span = days < 365.25 ? `${Math.round(days)} day${Math.round(days) === 1 ? "" : "s"}` : `${(days / 365.25).toFixed(1)} years`;
+  return { label: dur.formulaId === "mission-duration" ? "Mission duration" : "Time since launch", value: `${span} · derived` };
 }
 
 export default async function ExplorationPage({ params }: PageProps<"/exploration/[slug]">) {
@@ -91,9 +81,9 @@ export default async function ExplorationPage({ params }: PageProps<"/exploratio
     push("Launch date", r.launchDate);
     push("End date", r.endDate);
     push("Status", r.status);
-    // Derived mission span from source-backed dates: launch → end when both are known,
-    // otherwise time elapsed since launch for a mission still under way. Labelled derived.
-    push(r.endDate ? "Mission duration" : "Time since launch", missionSpanLabel(r.launchDate, r.endDate, r.status));
+    // Derived mission span from the unified registry (duration or time-since-launch).
+    const span = missionSpan(r.id);
+    if (span) push(span.label, span.value);
     push("Launch vehicle", d.vehicle?.name, link(d.vehicle));
     push("Launch site", d.site?.name, link(d.site));
   } else if (r.kind === "agency") {
@@ -169,6 +159,7 @@ export default async function ExplorationPage({ params }: PageProps<"/exploratio
             </section>
 
             {missionPrecision && <MissionPrecisionSection p={missionPrecision} />}
+            <DerivedValuesPanel entityId={r.id} />
 
             {r.objectives?.length ? (
               <section aria-labelledby="objectives">

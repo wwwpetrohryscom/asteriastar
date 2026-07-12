@@ -298,6 +298,21 @@ async function main() {
     );
   }
 
+  // Derived values → field-level provenance (formula/inputs/output-consistency).
+  const derived = await import("../src/knowledge-graph/data/derived-values");
+  const derivedIssues = derived.validateDerivedValues();
+  if (derivedIssues.length > 0) {
+    console.error(`\n✗ ${derivedIssues.length} derived-value issue(s):`);
+    for (const i of derivedIssues.slice(0, 40)) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  {
+    const s = derived.DERIVED_STATS;
+    console.log(
+      `✓ Derived values valid — ${s.total} values (${Object.entries(s.byFormula).map(([k, v]) => `${v} ${k}`).join(", ")}); every value carries its formula, versioned inputs and recomputes consistently`,
+    );
+  }
+
   // Program 5 — unified cross-domain field-level provenance gate.
   const provenance = await import("../src/lib/provenance/registry");
   const provenanceIssues = provenance.validateAllProvenance();

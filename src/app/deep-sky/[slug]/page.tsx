@@ -5,6 +5,8 @@ import { HeroSection } from "@/components/sections/HeroSection";
 import { Container } from "@/components/ui/Container";
 import { DeepSkyPrecisionSection } from "@/components/authority/DeepSkyPrecisionSection";
 import { getDeepSkyPrecision } from "@/knowledge-graph/data/deep-sky-catalog/precision";
+import { DerivedValuesPanel } from "@/components/authority/DerivedValuesPanel";
+import { derivedField } from "@/knowledge-graph/data/derived-values";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { Badge } from "@/components/ui/Badge";
 import { SourceList } from "@/components/ui/SourceList";
@@ -66,10 +68,9 @@ export default async function DeepSkyPage({ params }: PageProps<"/deep-sky/[slug
     d.constellation ? { label: "Constellation", value: d.constellation.name } : null,
     r.apparentMagnitude != null ? { label: "Apparent magnitude", value: String(r.apparentMagnitude) } : null,
     r.sizeMajorArcmin != null ? { label: "Apparent size", value: `${r.sizeMajorArcmin}′${r.sizeMinorArcmin != null ? ` × ${r.sizeMinorArcmin}′` : ""}` } : null,
-    // Projected axis ratio (elongation on the sky), derived from the two source-backed
-    // angular diameters: b/a = minor ÷ major. Standard catalogue quantity; labelled derived.
-    r.sizeMajorArcmin != null && r.sizeMinorArcmin != null && r.sizeMajorArcmin > 0
-      ? { label: "Axis ratio (b/a)", value: `${(r.sizeMinorArcmin / r.sizeMajorArcmin).toFixed(2)} · derived` }
+    // Projected axis ratio from the unified derived-value registry (single source of truth).
+    derivedField(r.id, "axisRatio") != null
+      ? { label: "Axis ratio (b/a)", value: `${derivedField(r.id, "axisRatio")!.value.toFixed(2)} · derived` }
       : null,
     r.hubbleType ? { label: "Morphology", value: r.hubbleType } : null,
     d.difficultyLabel ? { label: "Difficulty", value: d.difficultyLabel } : null,
@@ -167,6 +168,7 @@ export default async function DeepSkyPage({ params }: PageProps<"/deep-sky/[slug
 
           {/* Sidebar */}
           <aside className="space-y-6">
+            <DerivedValuesPanel entityId={r.id} />
             <section aria-labelledby="quick" className="scientific-card p-5">
               <h2 id="quick" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quick facts</h2>
               <dl className="mt-3 divide-y divide-white/5">

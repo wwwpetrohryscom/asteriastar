@@ -9,6 +9,8 @@ import { Badge } from "@/components/ui/Badge";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ReviewBadge, CoverageBadge } from "@/components/authority/TrustBadges";
 import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePanel";
+import { DerivedValuesPanel } from "@/components/authority/DerivedValuesPanel";
+import { derivedField } from "@/knowledge-graph/data/derived-values";
 import { ExoplanetTable } from "@/components/exoplanets/ExoplanetTable";
 import { engine } from "@/platform/data-engine";
 import { QUALITY_DIMENSION_LABELS, type QualityDimension } from "@/platform";
@@ -34,24 +36,6 @@ export async function generateMetadata({ params }: PageProps<"/exoplanets/[slug]
 }
 
 type Row = { label: string; value: string; href?: string };
-
-/**
- * Bulk density derived from a planet's source-backed Earth-mass and Earth-radius,
- * ρ = M / (4/3·π·r³), in g/cm³. Standard, non-fabricating (inputs come from the
- * NASA Exoplanet Archive); returns undefined unless both inputs are positive.
- * Earth (M⊕=1, R⊕=1) → 5.51 g/cm³, the known value, confirming the constants.
- */
-function derivedDensityGCm3(massEarth?: number, radiusEarth?: number): number | undefined {
-  if (massEarth == null || radiusEarth == null || massEarth <= 0 || radiusEarth <= 0) return undefined;
-  const M_EARTH_KG = 5.972e24, R_EARTH_M = 6.371e6;
-  const volumeM3 = (4 / 3) * Math.PI * (radiusEarth * R_EARTH_M) ** 3;
-  const rho = (massEarth * M_EARTH_KG) / volumeM3 / 1000; // kg/m³ → g/cm³
-  // No planetary composition — even a compressed pure-iron world — exceeds ~30 g/cm³.
-  // A result above that means the archive's mass and radius come from inconsistent
-  // measurements (e.g. a TTV mass upper limit paired with a transit radius); no honest
-  // density can be formed from them, so the derived value is withheld.
-  return rho > 30 ? undefined : rho;
-}
 
 export default async function ExoplanetPage({ params }: PageProps<"/exoplanets/[slug]">) {
   const { slug } = await params;
@@ -100,6 +84,7 @@ export default async function ExoplanetPage({ params }: PageProps<"/exoplanets/[
           </div>
           <aside className="space-y-6">
             <QuickFacts d={d} />
+            {d.kind === "planet" && <DerivedValuesPanel entityId={d.record.id} />}
             {(d.kind === "planet" || d.kind === "host") && d.quality && <EntityProvenancePanel entityId={d.quality.entityId} />}
 
             {(d.kind === "planet" || d.kind === "host") && d.quality && (
@@ -229,7 +214,8 @@ function QuickFacts({ d }: { d: D }) {
     push("Mass", r.massEarth != null ? `${r.massEarth} M⊕` : undefined);
     // Derived bulk density from source-backed mass + radius: ρ = M / (4/3·π·r³).
     // Standard, labelled `· derived`; the archive stores no density itself.
-    const rho = derivedDensityGCm3(r.massEarth, r.radiusEarth);
+    // Bulk density from the unified derived-value registry (single source of truth).
+    const rho = derivedField(r.id, "bulkDensity")?.value;
     if (rho != null) { push("Density", `${rho.toFixed(2)} g/cm³ · derived`); derivedShown = true; }
     // Equilibrium temperature: an insolation-set temperature cannot fall below the
     // cosmic-microwave-background floor (2.725 K); such values are archive artefacts,
