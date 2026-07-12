@@ -72,7 +72,10 @@ export default function DataHealthPage() {
             <MetricCard label="Values without uncertainty" value={q.withoutUncertainty.toLocaleString()} sub={pct(q.withoutUncertainty)} />
             <MetricCard label="Secondary-sourced (Wikidata)" value={q.secondarySourced.toLocaleString()} />
             <MetricCard label="Source conflicts" value={q.launchDateConflicts.toLocaleString()} sub="launch date vs catalogue" href="/authority/data-health/conflicts" />
-            <MetricCard label="Missions unverified by primary" value={q.missionsUnverifiedByPrimary.toLocaleString()} sub="secondary until primary sourcing" />
+            <MetricCard label="Launch dates confirmed by primary" value={q.curatedLaunchDatesConfirmed.toLocaleString()} sub={`of ${q.curatedPrimarySources} curated agency sources`} href="/authority/data-health/conflicts" />
+            <MetricCard label="Primary-source conflicts" value={q.missionPrimaryConflicts.toLocaleString()} sub="primary vs committed value" href="/authority/data-health/conflicts" />
+            <MetricCard label="Missions primary-confirmed" value={q.missionsPrimaryConfirmed.toLocaleString()} sub={`of ${q.missionsWithStructuredData} with structured data`} />
+            <MetricCard label="Missions unverified by primary" value={q.missionsUnverifiedByPrimary.toLocaleString()} sub={`of ${q.missionsWithStructuredData} with structured data`} />
           </MetricGrid></div>
         </section>
 
