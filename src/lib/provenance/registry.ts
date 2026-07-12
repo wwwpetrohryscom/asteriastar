@@ -5,6 +5,7 @@ import { STAR_PRECISION } from "@/knowledge-graph/data/star-catalog/precision";
 import { DEEP_SKY_PRECISION } from "@/knowledge-graph/data/deep-sky-catalog/precision";
 import { SMALL_BODY_PRECISION } from "@/knowledge-graph/data/small-body-precision";
 import { MISSION_PRECISION } from "@/knowledge-graph/data/mission-precision";
+import { collectDerived } from "@/knowledge-graph/data/derived-values";
 
 /**
  * Field-level provenance registry (Program 5).
@@ -15,7 +16,7 @@ import { MISSION_PRECISION } from "@/knowledge-graph/data/mission-precision";
  * Open Data, and gate it with a single cross-domain honesty check.
  */
 
-export type ProvenanceDomain = "star" | "deep-sky" | "small-body" | "mission";
+export type ProvenanceDomain = "star" | "deep-sky" | "small-body" | "mission" | "solar-system" | "exoplanet";
 
 export interface ProvenanceEntry {
   entityId: string;
@@ -46,6 +47,8 @@ export function collectProvenance(): ProvenanceEntry[] {
     ...collectFrom(DEEP_SKY_PRECISION as unknown as AnyMap, "deep-sky", "dsId"),
     ...collectFrom(SMALL_BODY_PRECISION as unknown as AnyMap, "small-body", "bodyId"),
     ...collectFrom(MISSION_PRECISION as unknown as AnyMap, "mission", "recordId"),
+    // Derived values (gravity/escape/density/axis-ratio/duration) — full DerivedScientificValues.
+    ...collectDerived().map((e) => ({ entityId: e.entityId, domain: e.domain, field: e.field, value: e.value as ScientificValue<number | string> })),
   ];
   all.sort((a, b) => (a.entityId + a.field < b.entityId + b.field ? -1 : 1));
   return all;

@@ -4,7 +4,7 @@
   "schemaVersion": "1.0.0",
   "source": "Asteria Star — Scientific Data Engine & Knowledge Graph",
   "license": "cc-by-sa-4.0",
-  "count": 43,
+  "count": 44,
   "sources": [
     {
       "id": "ads",
@@ -23,6 +23,15 @@
       "country": "Europe",
       "authorityType": "reference",
       "scope": "Ariane and Vega launch-vehicle families — user's manuals and mission data."
+    },
+    {
+      "id": "asteriastar-derived",
+      "name": "AsteriaStar (derived)",
+      "organization": "AsteriaStar Scientific Data Engine — values computed from cited source inputs via documented standard formulae",
+      "url": "https://asteriastar.example/methodology",
+      "country": "International",
+      "authorityType": "reference",
+      "scope": "Derived/calculated values (gravity, escape velocity, bulk density, axis ratio, mission duration) whose inputs and formula are fully traced."
     },
     {
       "id": "blueorigin",

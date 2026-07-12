@@ -30,17 +30,17 @@
     },
     "field-provenance": {
       "file": "/exports/field-provenance.json",
-      "bytes": 82280,
-      "sha256": "569d5ce30cde54a0afee1c693792fc6ea57ba601b8b8af98a3f35e20c259f057",
+      "bytes": 82018,
+      "sha256": "defb95a58d0ae219238f99e8348ec3f4d9ffbea75e94cc49a4f41b46d0e0faf6",
       "recordCount": 200,
       "format": "JSON",
       "license": "cc-by-sa-4.0"
     },
     "source-registry": {
       "file": "/exports/source-registry.json",
-      "bytes": 14695,
-      "sha256": "eb8cac6bc9cd010079b8aa9c8e33586ea6a36ac08355f5e7e570169f8fcc0d67",
-      "recordCount": 43,
+      "bytes": 15203,
+      "sha256": "f0b5a01354628409cffd1c4b660fa27bf6b4c4d678010ace09ef6590a6a0ecfc",
+      "recordCount": 44,
       "format": "JSON",
       "license": "cc-by-sa-4.0"
     },
