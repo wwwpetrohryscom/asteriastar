@@ -1,0 +1,79 @@
+name: Scientific snapshot refresh (reusable)
+
+# Regenerate ONE committed scientific snapshot from its authoritative source, diff it
+# semantically, and propose the change via a reviewed pull request. The production site
+# always reads the committed snapshot; this workflow never writes to main directly and
+# never merges a change that is outside the documented safe thresholds. A fetch failure
+# preserves the last snapshot and opens no PR (the orchestrator guarantees this).
+
+on:
+  workflow_call:
+    inputs:
+      snapshot:
+        description: Snapshot id from scripts/refresh/snapshots.ts
+        required: true
+        type: string
+
+# Least privilege: only what is needed to push a branch and open a PR.
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: refresh-${{ inputs.snapshot }}
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+
+      - name: Refresh ${{ inputs.snapshot }} from its source
+        id: refresh
+        run: npm run refresh -- --provider ${{ inputs.snapshot }} --report-dir refresh-reports
+
+      - name: Open a pull request when the snapshot meaningfully changed
+        if: steps.refresh.outputs.hasChanges == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          snapshot='${{ inputs.snapshot }}'
+          file='${{ steps.refresh.outputs.file }}'
+          branch="refresh/${snapshot}-$(date -u +%Y%m%dT%H%M%SZ)"
+          git config user.name 'asteriastar-refresh'
+          git config user.email 'refresh@asteriastar.local'
+          git checkout -b "$branch"
+          # Commit ONLY the regenerated snapshot — nothing else.
+          git add -- "$file"
+          git commit -m "chore(refresh): update ${snapshot} snapshot from source"
+          git push -u origin "$branch"
+          # Ensure labels exist (idempotent), then label the PR.
+          gh label create automated-refresh --color 1f6feb --description 'Automated snapshot refresh' 2>/dev/null || true
+          gh label create review-required --color b60205 --description 'Refresh diff outside safe auto-merge thresholds' 2>/dev/null || true
+          labels='automated-refresh'
+          if [ '${{ steps.refresh.outputs.requiresReview }}' = 'true' ]; then labels="${labels},review-required"; fi
+          gh pr create --base main --head "$branch" \
+            --title "Refresh: ${snapshot} snapshot" \
+            --body-file "refresh-reports/${snapshot}.md" \
+            --label "$labels"
+          # This workflow never merges scientific-data changes itself: a red build must
+          # never ship. A refresh always opens a PR for merge under branch protection /
+          # human review. (Auto-merge could be enabled by adding `gh pr merge --auto` here
+          # ONLY once required status checks are configured so a failing check blocks it —
+          # without that, --auto would merge an unchecked build, which we do not allow.)
+
+      - name: Upload refresh report (always, incl. failures)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: refresh-report-${{ inputs.snapshot }}
+          path: refresh-reports/
+          if-no-files-found: ignore
