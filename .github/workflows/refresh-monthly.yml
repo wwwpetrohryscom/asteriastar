@@ -1,0 +1,24 @@
+name: Refresh (monthly)
+
+# the 3rd — regenerate the monthly-cadence scientific snapshots from their sources.
+# Each snapshot runs as an isolated job (provider-isolated) via the reusable workflow,
+# which opens a reviewed PR only when the data meaningfully changes.
+
+on:
+  schedule:
+    - cron: "23 5 3 * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  refresh:
+    strategy:
+      fail-fast: false
+      matrix:
+        snapshot: [simbad-stars, simbad-deep-sky, ned-deep-sky]
+    uses: ./.github/workflows/refresh-reusable.yml
+    with:
+      snapshot: ${{ matrix.snapshot }}

@@ -23,7 +23,10 @@
     "precision:missions": "tsx scripts/precision/ingest-wikidata-missions.ts",
     "precision:report": "tsx scripts/precision/report.ts",
     "provenance:validate": "tsx scripts/precision/validate-provenance.ts",
-    "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts"
+    "refresh": "tsx scripts/refresh/refresh.ts",
+    "refresh:test": "tsx scripts/refresh/refresh.test.ts",
+    "refresh:validate": "tsx scripts/refresh/validate-config.ts",
+    "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts && tsx scripts/refresh/validate-config.ts"
   },
   "dependencies": {
     "next": "16.2.9",
