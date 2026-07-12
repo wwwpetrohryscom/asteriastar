@@ -1,6 +1,7 @@
 import { collectProvenance, provenanceStats } from "@/lib/provenance/registry";
 import { DERIVED_STATS } from "@/knowledge-graph/data/derived-values";
-import { MISSION_PRECISION_META } from "@/knowledge-graph/data/mission-precision";
+import { MISSION_PRECISION_META, MISSION_PRECISION } from "@/knowledge-graph/data/mission-precision";
+import { MISSION_PRIMARY_META, getMissionPrimary } from "@/knowledge-graph/data/mission-primary";
 import { SOURCES, type SourceKey } from "@/lib/sources";
 import { SNAPSHOTS_META, CADENCE_DAYS, type SnapshotMeta } from "./snapshots-meta";
 
@@ -54,6 +55,10 @@ export function qualityMetrics() {
     const auth = SOURCES[e.value.sourceRef]?.authorityType ?? "unknown";
     bySourceAuthority[auth] = (bySourceAuthority[auth] ?? 0) + 1;
   }
+  // Primary-verification universe: the missions we hold structured data for, and how many of
+  // those have a launch date confirmed by an official agency primary source.
+  const structuredMissions = MISSION_PRECISION.size;
+  const primaryConfirmed = [...MISSION_PRECISION.keys()].filter((id) => getMissionPrimary(id)?.launchDateVerification === "confirmed_by_primary").length;
   return {
     withoutUncertainty: total - all.filter((e) => e.value.uncertainty).length,
     secondarySourced: all.filter((e) => secondarySourceKeys.includes(e.value.sourceRef)).length,
@@ -63,7 +68,18 @@ export function qualityMetrics() {
     lowerLimits: all.filter((e) => e.value.status === "lower_limit").length,
     // A real, surfaced cross-source conflict: Wikidata launch dates that disagree with the catalogue.
     launchDateConflicts: MISSION_PRECISION_META.launchDateDiscrepancies,
-    missionsUnverifiedByPrimary: MISSION_PRECISION_META.missions, // all still secondary-sourced until Program 4
+    // Primary-source verification (Program 4), reported over ONE explicit universe so the
+    // confirmed/unverified counts reconcile: the missions we hold structured (Wikidata/catalogue)
+    // data for. `primaryConfirmed + unverified === withStructuredData`, always.
+    missionsWithStructuredData: structuredMissions,
+    missionsPrimaryConfirmed: primaryConfirmed,
+    missionsUnverifiedByPrimary: structuredMissions - primaryConfirmed,
+    // Curated primary-source registry coverage — a SEPARATE universe (the missions Program 4
+    // examined), labelled as such wherever shown so it is not confused with the count above.
+    curatedPrimarySources: MISSION_PRIMARY_META.sources,
+    curatedLaunchDatesConfirmed: MISSION_PRIMARY_META.launchDatesConfirmedByPrimary,
+    // Field-level conflict count: launch-date conflicts + mass conflicts (a row may contribute to both).
+    missionPrimaryConflicts: MISSION_PRIMARY_META.launchDateConflicts + MISSION_PRIMARY_META.massConflicts,
   };
 }
 

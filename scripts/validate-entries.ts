@@ -298,6 +298,21 @@ async function main() {
     );
   }
 
+  // Program 4 — primary mission engineering verification (corroboration vs official agency source).
+  const missionPrimary = await import("../src/knowledge-graph/data/mission-primary");
+  const missionPrimaryIssues = missionPrimary.validateMissionPrimary();
+  if (missionPrimaryIssues.length > 0) {
+    console.error(`\n✗ ${missionPrimaryIssues.length} mission-primary issue(s):`);
+    for (const i of missionPrimaryIssues) console.error(`  • ${i}`);
+    process.exit(1);
+  }
+  {
+    const m = missionPrimary.MISSION_PRIMARY_META;
+    console.log(
+      `✓ Primary mission verification valid — ${m.sources} curated agency sources (${m.reachable} reachable, retrieved ${m.retrievedAt}); ${m.launchDatesConfirmedByPrimary}/${m.withCatalogueLaunchDate} launch dates and ${m.massesConfirmedByPrimary}/${m.withWikidataMass} launch masses confirmed by primary source (${m.launchDateConflicts} launch-date + ${m.massConflicts} mass conflict surfaced), uncorroborated values kept secondary — never re-labelled`,
+    );
+  }
+
   // Derived values → field-level provenance (formula/inputs/output-consistency).
   const derived = await import("../src/knowledge-graph/data/derived-values");
   const derivedIssues = derived.validateDerivedValues();

@@ -7,6 +7,7 @@
 import { collectProvenance } from "../../src/lib/provenance/registry";
 import { DERIVED_STATS } from "../../src/knowledge-graph/data/derived-values";
 import { MISSION_PRECISION } from "../../src/knowledge-graph/data/mission-precision";
+import { NASA_PRIMARY_ROWS } from "../../src/knowledge-graph/data/mission-primary/snapshots/nasa-primary";
 import { coverageMetrics, qualityMetrics, derivedMetrics, freshnessMetrics } from "../../src/lib/data-health/metrics";
 import { SNAPSHOTS_META, CADENCE_DAYS } from "../../src/lib/data-health/snapshots-meta";
 import { REFRESH_SNAPSHOTS } from "../refresh/snapshots";
@@ -55,6 +56,22 @@ const qual = qualityMetrics();
 eq("quality.launchDateConflicts", qual.launchDateConflicts, [...MISSION_PRECISION.values()].filter((p) => p.launchDateDiscrepancy).length);
 eq("quality.withoutUncertainty", qual.withoutUncertainty, all.length - all.filter((e) => e.value.uncertainty).length);
 eq("quality.secondarySourced", qual.secondarySourced, all.filter((e) => e.value.sourceRef === "wikidata").length);
+// Primary-source verification metrics equal an independent recount, computed the SAME way as the
+// metric (per-field conflict SUM, not a row-level OR) over the SAME universes.
+const isPrimaryConfirmed = (id: string) => NASA_PRIMARY_ROWS.some((r) => r.missionId === id && r.launchDateVerification === "confirmed_by_primary");
+const precisionConfirmed = [...MISSION_PRECISION.keys()].filter(isPrimaryConfirmed).length;
+// Recount "unverified" by a DIRECT filter (not size − confirmed), so the reconciliation below is a
+// genuine cross-check of the metric's subtraction, not an algebraic tautology.
+const precisionUnverified = [...MISSION_PRECISION.keys()].filter((id) => !isPrimaryConfirmed(id)).length;
+eq("quality.missionsWithStructuredData", qual.missionsWithStructuredData, MISSION_PRECISION.size);
+eq("quality.missionsPrimaryConfirmed", qual.missionsPrimaryConfirmed, precisionConfirmed);
+eq("quality.missionsUnverifiedByPrimary", qual.missionsUnverifiedByPrimary, precisionUnverified);
+eq("quality.curatedPrimarySources", qual.curatedPrimarySources, NASA_PRIMARY_ROWS.length);
+eq("quality.curatedLaunchDatesConfirmed", qual.curatedLaunchDatesConfirmed, NASA_PRIMARY_ROWS.filter((r) => r.launchDateVerification === "confirmed_by_primary").length);
+eq("quality.missionPrimaryConflicts", qual.missionPrimaryConflicts, NASA_PRIMARY_ROWS.filter((r) => r.launchDateVerification === "conflict").length + NASA_PRIMARY_ROWS.filter((r) => r.massVerification === "conflict").length);
+// Reconciliation: the two independently-recounted partitions must cover the whole universe.
+if (precisionConfirmed + precisionUnverified !== MISSION_PRECISION.size)
+  issues.push(`quality: primary confirmed + unverified (${precisionConfirmed}+${precisionUnverified}) != structured missions (${MISSION_PRECISION.size})`);
 
 // 3) Freshness thresholds behave correctly, tested relative to each snapshot's own date.
 for (const m of SNAPSHOTS_META) {

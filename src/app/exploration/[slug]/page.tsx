@@ -11,6 +11,8 @@ import { ReviewBadge, CoverageBadge } from "@/components/authority/TrustBadges";
 import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePanel";
 import { MissionPrecisionSection } from "@/components/authority/MissionPrecisionSection";
 import { getMissionPrecision } from "@/knowledge-graph/data/mission-precision";
+import { PrimaryVerificationSection } from "@/components/authority/PrimaryVerificationSection";
+import { getMissionPrimary } from "@/knowledge-graph/data/mission-primary";
 import { DerivedValuesPanel } from "@/components/authority/DerivedValuesPanel";
 import { derivedField } from "@/knowledge-graph/data/derived-values";
 import { ExplorationTable, StatusPill } from "@/components/exploration/ExplorationTable";
@@ -60,6 +62,7 @@ export default async function ExplorationPage({ params }: PageProps<"/exploratio
   if (!d) notFound();
   const r = d.record;
   const missionPrecision = getMissionPrecision(r.id);
+  const missionPrimary = getMissionPrimary(r.id);
   const url = explorationPath(slug);
   const link = (ref?: { id: string; name: string; slug?: string }) =>
     ref?.slug ? explorationPath(ref.slug) : undefined;
@@ -159,6 +162,7 @@ export default async function ExplorationPage({ params }: PageProps<"/exploratio
             </section>
 
             {missionPrecision && <MissionPrecisionSection p={missionPrecision} />}
+            {missionPrimary && <PrimaryVerificationSection p={missionPrimary} />}
             <DerivedValuesPanel entityId={r.id} />
 
             {r.objectives?.length ? (
