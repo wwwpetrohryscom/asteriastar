@@ -26,7 +26,8 @@
     "refresh": "tsx scripts/refresh/refresh.ts",
     "refresh:test": "tsx scripts/refresh/refresh.test.ts",
     "refresh:validate": "tsx scripts/refresh/validate-config.ts",
-    "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts && tsx scripts/refresh/validate-config.ts"
+    "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts && tsx scripts/refresh/validate-config.ts && tsx scripts/data-health/validate-health.ts",
+    "datahealth:validate": "tsx scripts/data-health/validate-health.ts"
   },
   "dependencies": {
     "next": "16.2.9",
