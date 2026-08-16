@@ -502,7 +502,7 @@ export const astronomy: Section = {
       ],
       body: [
         {
-          heading: "Three ways to acquire a moon",
+          heading: "How a planet acquires a moon",
           list: [
             "Co-accretion: forming alongside the planet from the same circumplanetary disc. The regular satellite systems of Jupiter and Saturn — orbiting near the equatorial plane, in the same direction, on near-circular orbits — indicate this route.",
             "Capture: a passing body caught by the planet's gravity. Captured moons typically have inclined, eccentric, and often retrograde orbits. Neptune's Triton, orbiting backwards, is almost certainly a captured Kuiper Belt object.",
@@ -814,7 +814,7 @@ export const astronomy: Section = {
       ],
       body: [
         {
-          heading: "The three words",
+          heading: "The words, and what each one names",
           list: [
             "A meteoroid is the solid object while it is still in space — smaller than an asteroid, with no sharp boundary between the terms.",
             "A meteor is the luminous phenomenon as the object heats and ablates in the atmosphere. The light comes mainly from ionised air along the path, not from the object burning.",

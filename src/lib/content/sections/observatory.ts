@@ -390,7 +390,7 @@ export const observatory: Section = {
       ],
       body: [
         {
-          heading: "Three categories that look alike",
+          heading: "Four categories that look alike",
           list: [
             "Footage: actual recorded imagery — spacecraft camera video, launch and landing recordings, ISS exterior views, planetary surface panoramas assembled from real frames.",
             "Scientific visualisation: real data rendered into a moving image, such as a simulation of galaxy formation or a flythrough built from measured topography. The data is real; the viewpoint, colour and timing are constructed.",
