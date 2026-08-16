@@ -21,7 +21,7 @@ export function SourceList({
         {title}
       </h2>
       <p className="mt-1 text-sm text-faint">
-        Facts on this topic will be cited from these primary and reference sources.
+        The primary and reference sources this topic draws on.
       </p>
       <ul className="mt-4 space-y-3">
         {sources.map((source) => (

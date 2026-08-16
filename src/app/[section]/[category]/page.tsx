@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -24,7 +25,6 @@ import {
   type FaqItem,
 } from "@/lib/seo/jsonld";
 import { categoryPath, sectionPath } from "@/lib/routes";
-import { ASTROLOGY_DISCLAIMER } from "@/lib/site";
 
 export const dynamicParams = false;
 
@@ -57,7 +57,6 @@ export default async function CategoryPage({
   const { section, category } = found;
 
   const interpretive = section.kind === "interpretive" || Boolean(category.interpretive);
-  const disclaimerMessage = category.disclaimer ?? ASTROLOGY_DISCLAIMER;
   const url = categoryPath(section, category);
 
   const entries = getEntriesByCategory(section.slug, category.slug);
@@ -75,26 +74,12 @@ export default async function CategoryPage({
     { name: category.name, url },
   ];
 
-  // Honest, content-matched FAQs (rendered visibly below + as FAQPage JSON-LD).
-  const faqs: FaqItem[] = [
-    { question: `What is ${category.name}?`, answer: category.overview },
-  ];
-  if (interpretive) {
-    faqs.push({
-      question: `Is ${category.name} scientifically proven?`,
-      answer: disclaimerMessage,
-    });
-  } else if (section.kind === "science") {
-    faqs.push({
-      question: `Is ${category.name} astronomy or astrology?`,
-      answer: `${category.name} is part of astronomy — the evidence-based, scientific study of the universe. On Asteria Star, astronomy is kept clearly separate from astrology.`,
-    });
-  } else {
-    faqs.push({
-      question: `What will I find under ${category.name}?`,
-      answer: `We are building this topic on a foundation page. Planned material includes: ${category.plannedTopics.join(", ")}.`,
-    });
-  }
+  // FAQs are authored per category and rendered visibly below. The structured
+  // data mirrors exactly what the page shows — never SEO-only markup.
+  const faqs: FaqItem[] = category.faqs.map((f) => ({
+    question: f.question,
+    answer: f.answer,
+  }));
 
   const siblings = getSiblingCategories(section, category).map((sib) => ({
     title: sib.name,
@@ -143,15 +128,75 @@ export default async function CategoryPage({
                   </svg>
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-white">Live data module</p>
+                  <p className="text-sm font-semibold text-white">Why there is no live readout here</p>
                   <p className="mt-1 text-sm leading-relaxed text-muted">
-                    Prepared for official integration. Live data will appear here —
-                    we never fake live feeds or invent data. Explore the related
-                    structured knowledge below in the meantime.
+                    This topic explains the underlying astronomy rather than
+                    streaming a live feed. Asteria Star does not publish
+                    simulated positions, times, or forecasts — when a value
+                    depends on your location and the current moment, we explain
+                    how it is calculated and point to the authoritative source
+                    that computes it.
                   </p>
                 </div>
               </aside>
             )}
+
+            <section aria-labelledby="overview-heading">
+              <h2
+                id="overview-heading"
+                className="font-display text-xl font-semibold text-fg"
+              >
+                Overview
+              </h2>
+              <p className="mt-3 text-lg leading-relaxed text-muted">
+                {category.overview}
+              </p>
+              {category.keyPoints && category.keyPoints.length > 0 && (
+                <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {category.keyPoints.map((point) => (
+                    <li
+                      key={point}
+                      className="flex gap-3 scientific-card px-4 py-3 text-sm leading-relaxed text-muted"
+                    >
+                      <span
+                        aria-hidden
+                        className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent,#c8d2e6)]"
+                      />
+                      {point}
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </section>
+
+            {category.body.map((block) => (
+              <section key={block.heading} aria-labelledby={headingId(block.heading)}>
+                <h2
+                  id={headingId(block.heading)}
+                  className="font-display text-xl font-semibold text-fg"
+                >
+                  {block.heading}
+                </h2>
+                {block.paragraphs?.map((p) => (
+                  <p key={p.slice(0, 48)} className="mt-3 leading-relaxed text-muted">
+                    {p}
+                  </p>
+                ))}
+                {block.list && block.list.length > 0 && (
+                  <ul className="mt-4 space-y-2.5">
+                    {block.list.map((item) => (
+                      <li key={item} className="flex gap-3 text-sm leading-relaxed text-muted">
+                        <span
+                          aria-hidden
+                          className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent,#c8d2e6)]"
+                        />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </section>
+            ))}
 
             {hasEntries && (
               <section aria-labelledby="entries-heading">
@@ -171,52 +216,35 @@ export default async function CategoryPage({
               </section>
             )}
 
-            <section aria-labelledby="overview-heading">
-              <h2
-                id="overview-heading"
-                className="font-display text-xl font-semibold text-fg"
-              >
-                Overview
-              </h2>
-              <p className="mt-3 text-lg leading-relaxed text-muted">
-                {category.overview}
-              </p>
-            </section>
-
-            <section aria-labelledby="planned-heading">
-              <div className="flex items-center gap-3">
+            {category.explore && category.explore.length > 0 && (
+              <section aria-labelledby="continue-heading">
                 <h2
-                  id="planned-heading"
+                  id="continue-heading"
                   className="font-display text-xl font-semibold text-fg"
                 >
-                  {hasEntries ? "Also planned" : "What this topic will cover"}
+                  Continue in the data
                 </h2>
-                <Badge tone="tradition">In progress</Badge>
-              </div>
-              <p className="mt-2 text-sm text-faint">
-                {hasEntries
-                  ? "We continue to expand this category. Upcoming material includes:"
-                  : "This is a foundation page. We are expanding it with structured, " +
-                    (section.kind === "science" || section.kind === "reference"
-                      ? "sourced"
-                      : "carefully labeled") +
-                    " content. Planned material includes:"}
-              </p>
-              <ul className="mt-4 grid gap-3 sm:grid-cols-2">
-                {category.plannedTopics.map((topic) => (
-                  <li
-                    key={topic}
-                    className="flex items-center gap-3 scientific-card px-4 py-3 text-sm text-muted"
-                  >
-                    <span
-                      aria-hidden
-                      className="h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--accent,#c8d2e6)]"
-                    />
-                    {topic}
-                  </li>
-                ))}
-              </ul>
-            </section>
+                <p className="mt-2 text-sm text-faint">
+                  Catalogues, hubs, and reference pages that hold the underlying
+                  records for this topic.
+                </p>
+                <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+                  {category.explore.map((link) => (
+                    <li key={link.href}>
+                      <Link
+                        href={link.href}
+                        className="block h-full scientific-card px-4 py-3 transition hover:border-white/30"
+                      >
+                        <span className="font-medium text-fg">{link.label}</span>
+                        <span className="mt-1 block text-sm leading-relaxed text-muted">
+                          {link.blurb}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            )}
 
             <section aria-labelledby="faq-heading">
               <h2
@@ -226,11 +254,8 @@ export default async function CategoryPage({
                 Frequently asked
               </h2>
               <dl className="mt-4 space-y-4">
-                {faqs.map((faq) => (
-                  <div
-                    key={faq.question}
-                    className="scientific-card p-4"
-                  >
+                {category.faqs.map((faq) => (
+                  <div key={faq.question} className="scientific-card p-4">
                     <dt className="font-medium text-fg">{faq.question}</dt>
                     <dd className="mt-1.5 text-sm leading-relaxed text-muted">
                       {faq.answer}
@@ -258,4 +283,11 @@ export default async function CategoryPage({
       </Container>
     </>
   );
+}
+
+function headingId(heading: string): string {
+  return heading
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }

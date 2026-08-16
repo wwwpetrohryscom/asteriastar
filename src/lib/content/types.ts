@@ -36,6 +36,36 @@ export type SectionKind =
   | "media" // observatory
   | "learning"; // guides
 
+/**
+ * A published body block on a category page: a heading plus prose and/or a
+ * bullet list. This is real editorial content — never a list of future topics.
+ */
+export interface CategorySection {
+  heading: string;
+  paragraphs?: string[];
+  list?: string[];
+}
+
+/**
+ * A question a reader plausibly asks, with a real answer. Authored per
+ * category — never templated from the page title, and never emitted as
+ * FAQPage structured data unless the visible page renders it.
+ */
+export interface CategoryFaq {
+  question: string;
+  answer: string;
+}
+
+/**
+ * A curated onward link into the platform's canonical hubs, catalogues, or
+ * entity pages. Context-aware discovery, not sitewide link dumping.
+ */
+export interface CategoryLink {
+  label: string;
+  href: string;
+  blurb: string;
+}
+
 export interface Category {
   /** URL slug, unique within its section. */
   slug: string;
@@ -50,9 +80,22 @@ export interface Category {
    * measurements are asserted here without a cited source.
    */
   overview: string;
-  /** Subtopics we plan to publish under this category. Clearly future-facing. */
-  plannedTopics: string[];
-  /** Source slots this category will draw on. */
+  /**
+   * The published editorial body — the actual content of the page. Required
+   * for every category (enforced by `validateCategories()`); a category with
+   * nothing to say does not belong in the public taxonomy.
+   */
+  body: CategorySection[];
+  /**
+   * Short factual takeaways rendered above the body. Optional; when present,
+   * every item must be a claim the body supports.
+   */
+  keyPoints?: string[];
+  /** Real reader questions with real answers. At least two per category. */
+  faqs: CategoryFaq[];
+  /** Curated links onward into the catalogues and hubs that hold the data. */
+  explore?: CategoryLink[];
+  /** Source slots this category draws on. */
   sources?: SourceKey[];
   /**
    * Marks a category as interpretive even when it sits outside the astrology

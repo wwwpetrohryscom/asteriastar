@@ -17,6 +17,7 @@
     "media:ingest": "tsx scripts/ingest-nasa-images.ts",
     "content:audit": "tsx scripts/content-audit.ts",
     "content:report": "tsx scripts/content-audit.ts",
+    "content:completion-audit": "tsx scripts/content-completion-audit.ts",
     "precision:stars": "tsx scripts/precision/ingest-simbad-stars.ts && tsx scripts/precision/ingest-gaia-stars.ts",
     "precision:deep-sky": "tsx scripts/precision/ingest-deep-sky-simbad.ts && tsx scripts/precision/ingest-ned-galaxies.ts",
     "precision:small-bodies": "tsx scripts/precision/ingest-sbdb.ts",
