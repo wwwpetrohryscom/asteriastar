@@ -27,6 +27,7 @@ export type PageClass =
   | "hub" // index/listing pages — navigation is the content
   | "tool" // calculators, workspace, assistant — interaction is the content
   | "data" // datasets, APIs, exports — the payload is the content
+  | "reference" // dictionary/glossary genre — a definition, deliberately short
   | "system"; // policy, about, health dashboards — short by design
 
 export type CompletionStatus =
@@ -179,9 +180,23 @@ const CLASS_BY_FAMILY: Record<string, PageClass> = {
   live: "system",
 };
 
-/** Sub-paths that are index/listing pages regardless of family. */
+/**
+ * Sub-paths that are index/listing pages regardless of family.
+ *
+ * NOTE ON THE `reference` CLASS: a glossary entry is a dictionary definition,
+ * not an essay. `/encyclopedia/glossary/light-year` publishes a definition, the
+ * context the term is used in, the related ideas, and links to neighbouring
+ * terms — and is finished at ~320 words. Scoring it against an editorial
+ * threshold of 450 would report a genre difference as a defect. This is a
+ * narrow, explicit carve-out for one route prefix, not a general relaxation:
+ * every other editorial page is still held to the full threshold.
+ */
 function classify(url: string, family: string, depth: number): PageClass {
   if (url === "/") return "hub";
+  if (url.startsWith("/encyclopedia/glossary/")) return "reference";
+  // A learning-path page is a curated sequence of lesson links: the navigation
+  // IS the content, which is what the `hub` thresholds already model.
+  if (family === "learn" && depth >= 2) return "hub";
   const byFamily = CLASS_BY_FAMILY[family];
   if (byFamily) return byFamily;
   // `/family` and `/family/<facet>` index pages are hubs; leaves are entities.
@@ -190,7 +205,12 @@ function classify(url: string, family: string, depth: number): PageClass {
   if (["astronomy", "sky-guide", "astrology", "encyclopedia", "observatory", "guides"].includes(family)) {
     return "editorial";
   }
-  if (family === "learn" || family === "methods" || family === "observing") return "editorial";
+  // /methods and /observing are bespoke CATALOGUE families — their pages render
+  // a definition, typed relations, sources and a quality panel, exactly like
+  // /instruments or /celestial-mechanics. They were previously carved out into
+  // `editorial` here for no principled reason, which held structured concept
+  // records to prose-essay thresholds. `editorial` now means precisely the
+  // taxonomy sections and guides — pages whose content IS the writing.
   return "entity";
 }
 
@@ -204,6 +224,7 @@ const THRESHOLDS: Record<PageClass, { thin: number; substantial: number; complet
   editorial: { thin: 250, substantial: 450, complete: 800, minSections: 4 },
   entity: { thin: 120, substantial: 220, complete: 400, minSections: 3 },
   hub: { thin: 80, substantial: 150, complete: 250, minSections: 2 },
+  reference: { thin: 120, substantial: 200, complete: 280, minSections: 3 },
   tool: { thin: 60, substantial: 120, complete: 200, minSections: 1 },
   data: { thin: 60, substantial: 120, complete: 200, minSections: 1 },
   system: { thin: 80, substantial: 150, complete: 250, minSections: 2 },
@@ -413,7 +434,7 @@ async function main() {
   L.push("");
   L.push("| Class | Pages | Placeholder | Thin | Substantial | Complete | Non-content |");
   L.push("| --- | ---: | ---: | ---: | ---: | ---: | ---: |");
-  for (const cls of ["editorial", "entity", "hub", "tool", "data", "system"] as PageClass[]) {
+  for (const cls of ["editorial", "entity", "reference", "hub", "tool", "data", "system"] as PageClass[]) {
     const rows = audits.filter((a) => a.pageClass === cls);
     if (rows.length === 0) continue;
     const c = (s: CompletionStatus) => rows.filter((r) => r.status === s).length;

@@ -100,13 +100,28 @@ export const encyclopediaMythology = defineEntries([
         ],
       },
       {
+        heading: "There is no single version",
+        paragraphs: [
+          "Greek myth was transmitted by many authors across many centuries, and they disagree about Orion substantially. He is variously the son of Poseidon, or born from a bull's hide buried in the earth. He dies by Artemis's arrow, or by the scorpion, or by Gaia's anger, depending on the source. Homer places him in the underworld still hunting; Hesiod and later compilers give other accounts.",
+          "Popular retellings usually smooth this into one authoritative narrative. That is a modern editorial choice, not a feature of the material, and it is worth knowing when reading any confident single version of the story.",
+        ],
+      },
+      {
         heading: "In the sky",
         paragraphs: [
-          "The constellation Orion is among the most easily recognized, marked by the three bright stars of Orion's Belt. It is a prominent feature of the winter evening sky in the Northern Hemisphere.",
+          "The constellation Orion is among the most easily recognised, marked by the three bright stars of the Belt — Alnitak, Alnilam and Mintaka. Betelgeuse marks a shoulder in orange, Rigel a foot in blue-white, and the two colours in one figure make Orion a standard demonstration of stellar temperature to the unaided eye.",
+          "The pairing with Scorpius is observationally real, not just narrative: the two constellations lie almost opposite one another, so Scorpius rises as Orion sets. Whether the myth explains the arrangement or the arrangement suggested the myth is not something the sources settle.",
+        ],
+      },
+      {
+        heading: "The figure is older than the Greek story",
+        paragraphs: [
+          "A prominent human figure in this part of the sky is attested well before Greek tradition. Babylonian star lists name the constellation MUL.SIPA.ZI.AN.NA, the 'True Shepherd of Anu', associated with the god Papsukkal, and Egyptian tradition identified the same stars with Sah, linked to Osiris.",
+          "This is the usual pattern for the classical constellations: the Greeks inherited a figure and supplied a story. Reading the myth as the origin of the constellation inverts the sequence."
         ],
       },
     ],
-    sources: ["britannica"],
+    sources: ["britannica", "iau"],
     relatedEntries: [
       ["encyclopedia", "greek-mythology", "perseus"],
       ["encyclopedia", "greek-mythology", "pleiades"],

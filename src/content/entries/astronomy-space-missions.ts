@@ -204,7 +204,21 @@ export const astronomySpaceMissions = defineEntries([
       {
         heading: "Reaching its station",
         paragraphs: [
-          "Rather than orbiting Earth like Hubble, Webb travelled to a region near the Sun–Earth L2 point, roughly a million miles away, where it can keep its giant sunshield between itself and the Sun and stay extremely cold.",
+          "Rather than orbiting Earth like Hubble, Webb travelled to a region near the Sun–Earth L2 point, roughly 1.5 million kilometres away, where the Sun, Earth and Moon all lie in the same direction — so a single sunshield blocks all three and the optics can cool passively to around 40 kelvin.",
+        ],
+      },
+      {
+        heading: "Thirty days of single-point failures",
+        paragraphs: [
+          "The most demanding part of the mission was not launch but deployment. Webb was too large to fly assembled: the sunshield and the primary mirror both had to be folded into the fairing and unfolded during the month-long cruise to L2, through a sequence of hundreds of individual mechanical steps.",
+          "Because the destination is far beyond any servicing capability, essentially all of that sequence had no backup — a jammed hinge or an unreleased pin could have ended the mission with the observatory intact but unusable. The deployment completed without a failure, which is why the operations phase is discussed as much as the science.",
+        ],
+      },
+      {
+        heading: "Commissioning, and what the launch bought",
+        paragraphs: [
+          "Ariane 5 delivered an unusually precise trajectory, so Webb spent far less propellant than budgeted on correction burns. That surplus is what allows a projected operational life well beyond the mission's original requirement, since propellant for station-keeping at L2 is the limiting consumable rather than any wearing component.",
+          "The first science images were released in July 2022 after several months of mirror alignment and instrument commissioning — eighteen mirror segments phased until they behave as one 6.5-metre optic.",
         ],
       },
       {
@@ -253,9 +267,17 @@ export const astronomySpaceMissions = defineEntries([
         ],
       },
       {
-        heading: "Servicing in orbit",
+        heading: "The mirror flaw, and the fix",
         paragraphs: [
-          "Because Hubble orbits close to Earth, astronauts were able to visit it on several Space Shuttle servicing missions, repairing an early optical flaw and repeatedly upgrading its instruments — a rare and remarkable feat for a space observatory.",
+          "Within weeks of launch it was clear something was wrong: images were blurred in a way no focus adjustment could correct. The primary mirror had been ground to slightly the wrong shape — an error of about two micrometres at the edge, traced to a miscalibrated test instrument used during manufacture. The result was spherical aberration, and it was an institutional failure as much as a technical one.",
+          "The first servicing mission in 1993 installed corrective optics that compensated for the error, and later instruments built the correction in rather than relying on an external fix. The recovery is routinely cited as the strongest practical argument for designing spacecraft that can be serviced.",
+        ],
+      },
+      {
+        heading: "Five servicing missions",
+        paragraphs: [
+          "Astronauts visited Hubble five times between 1993 and 2009, replacing instruments, gyroscopes, batteries and solar arrays. The detectors flown in 2009 were generations beyond those launched in 1990, so the observatory's capability increased over its lifetime instead of decaying — an almost unique trajectory for a space mission.",
+          "That option no longer exists. The Space Shuttle was retired in 2011 and no operational vehicle is equipped for the task, so Hubble now runs on its existing hardware, managing gyroscope failures with reduced-gyro observing modes while its orbit gradually decays. The contrast with JWST, which sits far beyond any servicing capability by design, is the clearest illustration of what that trade buys and costs.",
         ],
       },
       {

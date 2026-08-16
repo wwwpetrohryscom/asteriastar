@@ -4,9 +4,9 @@
     "pages": 8809,
     "indexable": 8667,
     "placeholder": 0,
-    "thin": 2821,
-    "substantial": 1410,
-    "complete": 4244,
+    "thin": 2730,
+    "substantial": 1428,
+    "complete": 4317,
     "nonContent": 334,
     "softMarkers": 0
   },
@@ -965,18 +965,6 @@
       "class": "entity",
       "words": 194,
       "sections": 6
-    },
-    {
-      "url": "/astronomy/space-missions/hubble-space-telescope",
-      "class": "editorial",
-      "words": 342,
-      "sections": 8
-    },
-    {
-      "url": "/astronomy/space-missions/james-webb-space-telescope",
-      "class": "editorial",
-      "words": 391,
-      "sections": 9
     },
     {
       "url": "/celestial-mechanics/apparent-solar-time",
@@ -3101,84 +3089,6 @@
       "class": "entity",
       "words": 193,
       "sections": 5
-    },
-    {
-      "url": "/encyclopedia/glossary/ascendant",
-      "class": "editorial",
-      "words": 291,
-      "sections": 6
-    },
-    {
-      "url": "/encyclopedia/glossary/astronomical-unit",
-      "class": "editorial",
-      "words": 291,
-      "sections": 7
-    },
-    {
-      "url": "/encyclopedia/glossary/black-hole",
-      "class": "editorial",
-      "words": 313,
-      "sections": 7
-    },
-    {
-      "url": "/encyclopedia/glossary/ecliptic",
-      "class": "editorial",
-      "words": 301,
-      "sections": 7
-    },
-    {
-      "url": "/encyclopedia/glossary/galaxy",
-      "class": "editorial",
-      "words": 282,
-      "sections": 7
-    },
-    {
-      "url": "/encyclopedia/glossary/light-year",
-      "class": "editorial",
-      "words": 321,
-      "sections": 7
-    },
-    {
-      "url": "/encyclopedia/glossary/nebula",
-      "class": "editorial",
-      "words": 292,
-      "sections": 7
-    },
-    {
-      "url": "/encyclopedia/glossary/planet",
-      "class": "editorial",
-      "words": 298,
-      "sections": 7
-    },
-    {
-      "url": "/encyclopedia/glossary/star",
-      "class": "editorial",
-      "words": 300,
-      "sections": 7
-    },
-    {
-      "url": "/encyclopedia/glossary/supernova",
-      "class": "editorial",
-      "words": 303,
-      "sections": 7
-    },
-    {
-      "url": "/encyclopedia/glossary/transit",
-      "class": "editorial",
-      "words": 328,
-      "sections": 7
-    },
-    {
-      "url": "/encyclopedia/glossary/zodiac",
-      "class": "editorial",
-      "words": 328,
-      "sections": 7
-    },
-    {
-      "url": "/encyclopedia/greek-mythology/orion",
-      "class": "editorial",
-      "words": 414,
-      "sections": 11
     },
     {
       "url": "/entity-index",
@@ -9667,400 +9577,16 @@
       "sections": 0
     },
     {
-      "url": "/learn/building-a-research-workspace",
-      "class": "editorial",
-      "words": 421,
-      "sections": 2
-    },
-    {
-      "url": "/learn/building-on-the-open-platform",
-      "class": "editorial",
-      "words": 391,
-      "sections": 2
-    },
-    {
-      "url": "/learn/deep-sky-and-galaxies",
-      "class": "editorial",
-      "words": 219,
-      "sections": 1
-    },
-    {
-      "url": "/learn/exoplanets",
-      "class": "editorial",
-      "words": 208,
-      "sections": 1
-    },
-    {
-      "url": "/learn/exploring-the-knowledge-graph",
-      "class": "editorial",
-      "words": 367,
-      "sections": 2
-    },
-    {
-      "url": "/learn/from-telescope-to-image",
-      "class": "editorial",
-      "words": 449,
-      "sections": 2
-    },
-    {
-      "url": "/learn/history-of-astronomy",
-      "class": "editorial",
-      "words": 330,
-      "sections": 2
-    },
-    {
-      "url": "/learn/history-of-space-exploration",
-      "class": "editorial",
-      "words": 216,
-      "sections": 1
-    },
-    {
-      "url": "/learn/how-the-sky-is-catalogued",
-      "class": "editorial",
-      "words": 347,
-      "sections": 2
-    },
-    {
-      "url": "/learn/human-spaceflight",
-      "class": "editorial",
-      "words": 219,
-      "sections": 1
-    },
-    {
-      "url": "/learn/learn-astronomy",
-      "class": "editorial",
-      "words": 226,
-      "sections": 3
-    },
-    {
-      "url": "/learn/learn-astrophotography",
-      "class": "editorial",
-      "words": 170,
-      "sections": 3
-    },
-    {
-      "url": "/learn/learn-black-holes",
-      "class": "editorial",
-      "words": 182,
-      "sections": 3
-    },
-    {
-      "url": "/learn/learn-galaxies",
-      "class": "editorial",
-      "words": 216,
-      "sections": 3
-    },
-    {
       "url": "/learn/learn-greek-sky-mythology",
-      "class": "editorial",
+      "class": "hub",
       "words": 144,
       "sections": 2
-    },
-    {
-      "url": "/learn/learn-night-sky",
-      "class": "editorial",
-      "words": 165,
-      "sections": 3
-    },
-    {
-      "url": "/learn/learn-space-exploration",
-      "class": "editorial",
-      "words": 234,
-      "sections": 3
-    },
-    {
-      "url": "/learn/learn-stars",
-      "class": "editorial",
-      "words": 162,
-      "sections": 3
     },
     {
       "url": "/learn/learn-telescopes",
-      "class": "editorial",
+      "class": "hub",
       "words": 144,
       "sections": 3
-    },
-    {
-      "url": "/learn/navigating-the-sky-atlas",
-      "class": "editorial",
-      "words": 399,
-      "sections": 2
-    },
-    {
-      "url": "/learn/observatories-and-telescopes",
-      "class": "editorial",
-      "words": 198,
-      "sections": 1
-    },
-    {
-      "url": "/learn/observing-the-night-sky",
-      "class": "editorial",
-      "words": 329,
-      "sections": 3
-    },
-    {
-      "url": "/learn/planning-a-night-of-observing",
-      "class": "editorial",
-      "words": 368,
-      "sections": 2
-    },
-    {
-      "url": "/learn/reading-live-scientific-data",
-      "class": "editorial",
-      "words": 409,
-      "sections": 2
-    },
-    {
-      "url": "/learn/the-astronomers-toolkit",
-      "class": "editorial",
-      "words": 365,
-      "sections": 2
-    },
-    {
-      "url": "/learn/the-deep-sky-menagerie",
-      "class": "editorial",
-      "words": 446,
-      "sections": 3
-    },
-    {
-      "url": "/learn/the-solar-system",
-      "class": "editorial",
-      "words": 203,
-      "sections": 1
-    },
-    {
-      "url": "/learn/understanding-asteroids",
-      "class": "editorial",
-      "words": 384,
-      "sections": 3
-    },
-    {
-      "url": "/learn/understanding-astrochemistry",
-      "class": "editorial",
-      "words": 404,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-astroinformatics",
-      "class": "editorial",
-      "words": 419,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-building-in-space",
-      "class": "editorial",
-      "words": 404,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-celestial-mechanics",
-      "class": "editorial",
-      "words": 445,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-citizen-astronomy",
-      "class": "editorial",
-      "words": 403,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-comets",
-      "class": "editorial",
-      "words": 428,
-      "sections": 3
-    },
-    {
-      "url": "/learn/understanding-comparative-planetology",
-      "class": "editorial",
-      "words": 406,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-constellations",
-      "class": "editorial",
-      "words": 352,
-      "sections": 3
-    },
-    {
-      "url": "/learn/understanding-data-archives",
-      "class": "editorial",
-      "words": 430,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-deep-space-communications",
-      "class": "editorial",
-      "words": 438,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-galaxies",
-      "class": "editorial",
-      "words": 378,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-how-astronomy-works",
-      "class": "editorial",
-      "words": 387,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-humans-in-space",
-      "class": "editorial",
-      "words": 398,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-launch-vehicles",
-      "class": "editorial",
-      "words": 395,
-      "sections": 3
-    },
-    {
-      "url": "/learn/understanding-machine-learning-in-astronomy",
-      "class": "editorial",
-      "words": 419,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-meteorites",
-      "class": "editorial",
-      "words": 410,
-      "sections": 3
-    },
-    {
-      "url": "/learn/understanding-mission-operations",
-      "class": "editorial",
-      "words": 376,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-multi-messenger-astronomy",
-      "class": "editorial",
-      "words": 440,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-planetary-defense",
-      "class": "editorial",
-      "words": 432,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-planetary-geology",
-      "class": "editorial",
-      "words": 395,
-      "sections": 3
-    },
-    {
-      "url": "/learn/understanding-satellites",
-      "class": "editorial",
-      "words": 418,
-      "sections": 3
-    },
-    {
-      "url": "/learn/understanding-scientific-instruments",
-      "class": "editorial",
-      "words": 364,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-small-body-missions",
-      "class": "editorial",
-      "words": 409,
-      "sections": 3
-    },
-    {
-      "url": "/learn/understanding-space-environment",
-      "class": "editorial",
-      "words": 433,
-      "sections": 3
-    },
-    {
-      "url": "/learn/understanding-space-institutions",
-      "class": "editorial",
-      "words": 414,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-space-policy",
-      "class": "editorial",
-      "words": 426,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-space-weather",
-      "class": "editorial",
-      "words": 433,
-      "sections": 3
-    },
-    {
-      "url": "/learn/understanding-spacecraft-systems",
-      "class": "editorial",
-      "words": 380,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-stars",
-      "class": "editorial",
-      "words": 247,
-      "sections": 1
-    },
-    {
-      "url": "/learn/understanding-the-dynamic-universe",
-      "class": "editorial",
-      "words": 387,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-the-future-of-exploration",
-      "class": "editorial",
-      "words": 368,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-the-history-of-discovery",
-      "class": "editorial",
-      "words": 437,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-the-history-of-spaceflight",
-      "class": "editorial",
-      "words": 363,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-the-search-for-life",
-      "class": "editorial",
-      "words": 388,
-      "sections": 2
-    },
-    {
-      "url": "/learn/understanding-the-universe",
-      "class": "editorial",
-      "words": 315,
-      "sections": 2
-    },
-    {
-      "url": "/learn/using-the-grounded-assistant",
-      "class": "editorial",
-      "words": 420,
-      "sections": 2
-    },
-    {
-      "url": "/learn/using-the-research-assistant",
-      "class": "editorial",
-      "words": 424,
-      "sections": 2
-    },
-    {
-      "url": "/learn/using-the-scientific-calculators",
-      "class": "editorial",
-      "words": 357,
-      "sections": 2
     },
     {
       "url": "/meteorites/alh-84001",
@@ -10316,236 +9842,164 @@
     },
     {
       "url": "/methods/adaptive-optics",
-      "class": "editorial",
+      "class": "entity",
       "words": 181,
       "sections": 4
     },
     {
       "url": "/methods/asteroseismology",
-      "class": "editorial",
+      "class": "entity",
       "words": 173,
       "sections": 4
     },
     {
-      "url": "/methods/astrometry-and-motion",
-      "class": "editorial",
-      "words": 300,
-      "sections": 5
-    },
-    {
       "url": "/methods/black-hole-mass-measurement",
-      "class": "editorial",
+      "class": "entity",
       "words": 190,
       "sections": 4
     },
     {
       "url": "/methods/cepheid-distance-scale",
-      "class": "editorial",
+      "class": "entity",
       "words": 204,
       "sections": 6
     },
     {
       "url": "/methods/cmb-measurements",
-      "class": "editorial",
+      "class": "entity",
       "words": 202,
       "sections": 6
     },
     {
-      "url": "/methods/cosmic-distance-ladder",
-      "class": "editorial",
-      "words": 236,
-      "sections": 6
-    },
-    {
       "url": "/methods/determining-stellar-properties",
-      "class": "editorial",
+      "class": "entity",
       "words": 169,
       "sections": 4
     },
     {
       "url": "/methods/discover/beyond-light",
-      "class": "editorial",
+      "class": "entity",
       "words": 326,
       "sections": 0
     },
     {
       "url": "/methods/discover/categories",
-      "class": "editorial",
+      "class": "entity",
       "words": 320,
       "sections": 0
     },
     {
       "url": "/methods/discover/finding-exoplanets",
-      "class": "editorial",
+      "class": "entity",
       "words": 61,
       "sections": 1
     },
     {
       "url": "/methods/discover/light-and-spectra",
-      "class": "editorial",
+      "class": "entity",
       "words": 331,
       "sections": 0
     },
     {
-      "url": "/methods/discover/the-distance-ladder",
-      "class": "editorial",
-      "words": 371,
-      "sections": 1
-    },
-    {
       "url": "/methods/error-analysis-and-calibration",
-      "class": "editorial",
+      "class": "entity",
       "words": 206,
       "sections": 5
     },
     {
       "url": "/methods/exoplanet-detection",
-      "class": "editorial",
+      "class": "entity",
       "words": 200,
       "sections": 5
     },
     {
       "url": "/methods/galaxy-rotation-curves",
-      "class": "editorial",
+      "class": "entity",
       "words": 201,
       "sections": 6
     },
     {
-      "url": "/methods/gravitation-and-multi-messenger",
-      "class": "editorial",
-      "words": 330,
-      "sections": 5
-    },
-    {
       "url": "/methods/gravitational-lensing",
-      "class": "editorial",
+      "class": "entity",
       "words": 187,
       "sections": 6
     },
     {
-      "url": "/methods/gravitational-wave-detection",
-      "class": "editorial",
-      "words": 255,
-      "sections": 6
-    },
-    {
       "url": "/methods/helioseismology",
-      "class": "editorial",
+      "class": "entity",
       "words": 175,
       "sections": 5
     },
     {
       "url": "/methods/interferometry",
-      "class": "editorial",
+      "class": "entity",
       "words": 187,
       "sections": 4
     },
     {
-      "url": "/methods/measurement-data-and-statistics",
-      "class": "editorial",
-      "words": 424,
-      "sections": 6
-    },
-    {
       "url": "/methods/multi-messenger-astronomy",
-      "class": "editorial",
+      "class": "entity",
       "words": 214,
       "sections": 6
     },
     {
       "url": "/methods/neutrino-astronomy",
-      "class": "editorial",
+      "class": "entity",
       "words": 185,
       "sections": 5
     },
     {
-      "url": "/methods/parallax",
-      "class": "editorial",
-      "words": 225,
-      "sections": 6
-    },
-    {
       "url": "/methods/photometry",
-      "class": "editorial",
+      "class": "entity",
       "words": 198,
       "sections": 4
     },
     {
-      "url": "/methods/photometry-and-imaging",
-      "class": "editorial",
-      "words": 313,
-      "sections": 5
-    },
-    {
       "url": "/methods/polarimetry",
-      "class": "editorial",
+      "class": "entity",
       "words": 162,
       "sections": 4
     },
     {
       "url": "/methods/proper-motion",
-      "class": "editorial",
+      "class": "entity",
       "words": 196,
       "sections": 5
     },
     {
       "url": "/methods/redshift-and-hubble-law",
-      "class": "editorial",
+      "class": "entity",
       "words": 203,
       "sections": 5
     },
     {
       "url": "/methods/space-astrometry",
-      "class": "editorial",
+      "class": "entity",
       "words": 204,
       "sections": 6
     },
     {
       "url": "/methods/spectral-classification",
-      "class": "editorial",
+      "class": "entity",
       "words": 197,
       "sections": 5
     },
     {
-      "url": "/methods/spectroscopy",
-      "class": "editorial",
-      "words": 248,
-      "sections": 5
-    },
-    {
-      "url": "/methods/spectroscopy-and-classification",
-      "class": "editorial",
-      "words": 293,
-      "sections": 5
-    },
-    {
       "url": "/methods/standard-candles",
-      "class": "editorial",
+      "class": "entity",
       "words": 196,
       "sections": 5
     },
     {
       "url": "/methods/stellar-occultations",
-      "class": "editorial",
+      "class": "entity",
       "words": 176,
       "sections": 4
     },
     {
-      "url": "/methods/the-cosmic-distance-ladder",
-      "class": "editorial",
-      "words": 381,
-      "sections": 6
-    },
-    {
       "url": "/methods/the-magnitude-system",
-      "class": "editorial",
+      "class": "entity",
       "words": 176,
-      "sections": 5
-    },
-    {
-      "url": "/methods/time-domain-and-seismology",
-      "class": "editorial",
-      "words": 289,
       "sections": 5
     },
     {
@@ -11810,127 +11264,127 @@
     },
     {
       "url": "/observing/altitude-chart-planner",
-      "class": "editorial",
+      "class": "entity",
       "words": 178,
       "sections": 6
     },
     {
       "url": "/observing/astrophotography-planner",
-      "class": "editorial",
+      "class": "entity",
       "words": 177,
       "sections": 6
     },
     {
       "url": "/observing/bortle-integration",
-      "class": "editorial",
+      "class": "entity",
       "words": 204,
       "sections": 6
     },
     {
       "url": "/observing/cloud-cover-integration",
-      "class": "editorial",
+      "class": "entity",
       "words": 187,
       "sections": 6
     },
     {
       "url": "/observing/darkness-planner",
-      "class": "editorial",
+      "class": "entity",
       "words": 172,
       "sections": 6
     },
     {
       "url": "/observing/deep-sky-planner",
-      "class": "editorial",
+      "class": "entity",
       "words": 186,
       "sections": 6
     },
     {
       "url": "/observing/discover/data-integrations",
-      "class": "editorial",
+      "class": "entity",
       "words": 246,
       "sections": 0
     },
     {
       "url": "/observing/discover/observing-planners",
-      "class": "editorial",
+      "class": "entity",
       "words": 546,
       "sections": 0
     },
     {
       "url": "/observing/equipment-planner",
-      "class": "editorial",
+      "class": "entity",
       "words": 159,
       "sections": 5
     },
     {
       "url": "/observing/meridian-transit-planner",
-      "class": "editorial",
+      "class": "entity",
       "words": 179,
       "sections": 6
     },
     {
       "url": "/observing/moon-planner",
-      "class": "editorial",
+      "class": "entity",
       "words": 153,
       "sections": 5
     },
     {
       "url": "/observing/planet-planner",
-      "class": "editorial",
+      "class": "entity",
       "words": 151,
       "sections": 5
     },
     {
       "url": "/observing/season-planner",
-      "class": "editorial",
+      "class": "entity",
       "words": 156,
       "sections": 5
     },
     {
       "url": "/observing/seeing-integration",
-      "class": "editorial",
+      "class": "entity",
       "words": 200,
       "sections": 6
     },
     {
       "url": "/observing/session-planner",
-      "class": "editorial",
+      "class": "entity",
       "words": 176,
       "sections": 6
     },
     {
       "url": "/observing/target-planner",
-      "class": "editorial",
+      "class": "entity",
       "words": 176,
       "sections": 6
     },
     {
       "url": "/observing/tonight-planner",
-      "class": "editorial",
+      "class": "entity",
       "words": 198,
       "sections": 6
     },
     {
       "url": "/observing/transparency-integration",
-      "class": "editorial",
+      "class": "entity",
       "words": 189,
       "sections": 6
     },
     {
       "url": "/observing/twilight-planner",
-      "class": "editorial",
+      "class": "entity",
       "words": 164,
       "sections": 6
     },
     {
       "url": "/observing/visibility-planner",
-      "class": "editorial",
+      "class": "entity",
       "words": 188,
       "sections": 6
     },
     {
       "url": "/observing/weather-integration",
-      "class": "editorial",
+      "class": "entity",
       "words": 206,
       "sections": 6
     },
@@ -16978,7 +16432,7 @@
     },
     {
       "sentence": "nasa national aeronautics and space administration mission data planetary science space telescopes and public domain imagery",
-      "pages": 1620,
+      "pages": 1609,
       "sample": [
         "/asteroids/achilles",
         "/asteroids/aethra",
@@ -16987,7 +16441,7 @@
     },
     {
       "sentence": "most nasa produced imagery is in the public domain individual items are checked for usage terms before publication",
-      "pages": 1620,
+      "pages": 1609,
       "sample": [
         "/asteroids/achilles",
         "/asteroids/aethra",
@@ -17221,7 +16675,7 @@
     },
     {
       "sentence": "nasa jpl jet propulsion laboratory solar system dynamics orbital data ephemerides and small body parameters for planets asteroids and comets",
-      "pages": 322,
+      "pages": 321,
       "sample": [
         "/asteroids/achilles",
         "/asteroids/aethra",
@@ -17238,15 +16692,6 @@
       ]
     },
     {
-      "sentence": "iau international astronomical union official naming definitions constellation boundaries and astronomical nomenclature",
-      "pages": 230,
-      "sample": [
-        "/astrology/zodiac-signs/aquarius",
-        "/astrology/zodiac-signs/aries",
-        "/astrology/zodiac-signs/cancer"
-      ]
-    },
-    {
       "sentence": "physical properties spectral type a#v luminosity class v apparent magnitude # absolute magnitude # luminosity sun # # colour index b v # distance # ly # pc values are real catalogue data fields without a reliable value are omitted never estimated",
       "pages": 229,
       "sample": [
@@ -17256,21 +16701,21 @@
       ]
     },
     {
+      "sentence": "iau international astronomical union official naming definitions constellation boundaries and astronomical nomenclature",
+      "pages": 227,
+      "sample": [
+        "/astrology/zodiac-signs/aquarius",
+        "/astrology/zodiac-signs/aries",
+        "/astrology/zodiac-signs/cancer"
+      ]
+    },
+    {
       "sentence": "projected axis ratio b a # derived formula inputs formula b a minor angular axis major angular axis v # # impl v # # inputs sizeminorarcmin # openngc sizemajorarcmin # openngc limitations sky projected apparent ratio not the intrinsic # d shape",
       "pages": 212,
       "sample": [
         "/deep-sky/ic-127",
         "/deep-sky/ic-1284",
         "/deep-sky/ic-1287"
-      ]
-    },
-    {
-      "sentence": "esa european space agency european missions observatories and space science imagery",
-      "pages": 203,
-      "sample": [
-        "/asteroids/planetary-defense",
-        "/astronomy/asteroids",
-        "/astronomy/black-holes"
       ]
     },
     {
@@ -17307,6 +16752,15 @@
         "/stars/1-lynx",
         "/stars/10-draco",
         "/stars/104-hercules"
+      ]
+    },
+    {
+      "sentence": "esa european space agency european missions observatories and space science imagery",
+      "pages": 197,
+      "sample": [
+        "/asteroids/planetary-defense",
+        "/astronomy/asteroids",
+        "/astronomy/black-holes"
       ]
     },
     {
@@ -17400,15 +16854,6 @@
       ]
     },
     {
-      "sentence": "sources references the primary and reference sources this topic draws on",
-      "pages": 112,
-      "sample": [
-        "/astrology/zodiac-signs/aquarius",
-        "/astrology/zodiac-signs/aries",
-        "/astrology/zodiac-signs/cancer"
-      ]
-    },
-    {
       "sentence": "scientific citations # real source backed references primary papers first then datasets and institutional sources",
       "pages": 104,
       "sample": [
@@ -17424,6 +16869,15 @@
         "/exoplanets/hd-100655-b",
         "/exoplanets/hd-100777-b",
         "/exoplanets/hd-102117-b"
+      ]
+    },
+    {
+      "sentence": "sources references the primary and reference sources this topic draws on",
+      "pages": 101,
+      "sample": [
+        "/astrology/zodiac-signs/aquarius",
+        "/astrology/zodiac-signs/aries",
+        "/astrology/zodiac-signs/cancer"
       ]
     },
     {
