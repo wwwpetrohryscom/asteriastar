@@ -55,8 +55,8 @@ export function ReviewBadge({ status }: { status: ReviewStatus }) {
   return <TrustBadge accent={REVIEW_STATUS_ACCENT[status]} title="Review status">{REVIEW_STATUS_LABELS[status]}</TrustBadge>;
 }
 
-export function CoverageBadge({ level, label }: { level: CoverageLevel; label?: string }) {
-  return <TrustBadge accent={COVERAGE_ACCENT[level]} title="Coverage">{label ?? COVERAGE_LABELS[level]}</TrustBadge>;
+export function CoverageBadge({ level, label, title }: { level: CoverageLevel; label?: string; title?: string }) {
+  return <TrustBadge accent={COVERAGE_ACCENT[level]} title={title ?? "Coverage"}>{label ?? COVERAGE_LABELS[level]}</TrustBadge>;
 }
 
 export function SourceIndicator({ count }: { count: number }) {

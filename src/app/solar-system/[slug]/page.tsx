@@ -16,7 +16,7 @@ import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePa
 import { DerivedValuesPanel } from "@/components/authority/DerivedValuesPanel";
 import { derivedField } from "@/knowledge-graph/data/derived-values";
 import { engine } from "@/platform/data-engine";
-import { QUALITY_DIMENSION_LABELS, type QualityDimension } from "@/platform";
+import { QUALITY_DIMENSION_LABELS, type QualityDimension, QUALITY_BAND_LABELS } from "@/platform";
 import { bodySlug } from "@/knowledge-graph/data/solar-system-catalog";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, type Crumb } from "@/lib/seo/jsonld";
@@ -243,7 +243,7 @@ export default async function SolarBodyPage({ params }: PageProps<"/solar-system
               <section aria-labelledby="quality" className="scientific-card p-5">
                 <div className="flex items-center justify-between gap-2">
                   <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
-                  <span className="text-xs text-faint">{b.quality.completenessPercent}%</span>
+                  <span className="text-xs text-faint">{QUALITY_BAND_LABELS[b.quality.band]}</span>
                 </div>
                 <div className="mt-3"><ReviewBadge status={b.reviewStatus} /></div>
                 <dl className="mt-3 grid grid-cols-1 gap-y-1.5">

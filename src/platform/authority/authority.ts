@@ -8,6 +8,7 @@ import { getAllSources, SOURCES, type AuthorityType } from "@/lib/sources";
 import { computeEntityQuality, type CoverageLevel } from "@/platform/authority/quality";
 import { reviewStatusFor } from "@/platform/authority/review";
 import { PROVENANCE } from "@/platform/authority/provenance";
+import { ENTITY_LOCALIZATIONS } from "@/platform/localization";
 import { CITATIONS, CITATION_STATS } from "@/lib/citations";
 
 /**
@@ -60,6 +61,9 @@ export interface AuthoritySnapshot {
   version: typeof GRAPH_VERSION_INFO;
 }
 
+/** Entities that actually carry a verified translation (the registry ships empty). */
+const LOCALIZED_ENTITY_IDS = new Set(ENTITY_LOCALIZATIONS.map((t) => t.entityId));
+
 export function computeAuthoritySnapshot(): AuthoritySnapshot {
   const entities = getAllGraphEntities();
   const sources = getAllSources();
@@ -69,17 +73,20 @@ export function computeAuthoritySnapshot(): AuthoritySnapshot {
   let withTimeline = 0;
   let withImages = 0;
   let localized = 0;
-  const quality: Record<CoverageLevel, number> = { complete: 0, partial: 0, none: 0 };
+  const quality: Record<CoverageLevel, number> = { complete: 0, partial: 0, none: 0, "not-applicable": 0 };
   const connected = new Set<string>();
 
   for (const e of entities) {
     if (reviewStatusFor(e.id) === "reviewed" || reviewStatusFor(e.id) === "verified") reviewed++;
     for (const s of e.sources ?? []) connected.add(s);
     const q = computeEntityQuality(e);
-    if (q.indicators.sourceCoverage !== "none") withSources++;
-    if (q.indicators.timelineCoverage !== "none") withTimeline++;
-    if (q.indicators.imageCoverage !== "none") withImages++;
-    if (q.indicators.localizationCoverage !== "none") localized++;
+    // Count only records that genuinely EXIST. "not-applicable" means the
+    // thing cannot exist for this entity type, and counting it as coverage
+    // would inflate every figure on the dashboard.
+    if (q.indicators.sourceCoverage === "complete" || q.indicators.sourceCoverage === "partial") withSources++;
+    if (q.indicators.timelineCoverage === "complete") withTimeline++;
+    if (q.indicators.imageCoverage === "complete") withImages++;
+    if (LOCALIZED_ENTITY_IDS.has(e.id)) localized++;
     quality[q.overall]++;
   }
 
