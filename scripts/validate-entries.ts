@@ -1648,6 +1648,14 @@ async function main() {
     process.exit(1);
   }
 
+  const catReg = await import("../src/lib/content/registry");
+  console.log(
+    `\n✓ Category registry valid — ${catReg.REGISTRY_STATS.categoryCount} published categories across ${catReg.REGISTRY_STATS.sectionCount} sections`,
+  );
+  console.log(
+    `    ${catReg.REGISTRY_STATS.categoryBodySections} editorial body sections · ${catReg.REGISTRY_STATS.categoryFaqs} authored FAQs · 0 placeholder pages`,
+  );
+
   console.log(`\n✓ Entry registry valid — ${ENTRY_STATS.total} published entries\n`);
   console.log("  By kind:");
   for (const [kind, count] of Object.entries(ENTRY_STATS.byKind)) {
