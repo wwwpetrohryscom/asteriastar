@@ -4,9 +4,9 @@
     "pages": 8809,
     "indexable": 8667,
     "placeholder": 0,
-    "thin": 2829,
-    "substantial": 1403,
-    "complete": 4243,
+    "thin": 2821,
+    "substantial": 1410,
+    "complete": 4244,
     "nonContent": 334,
     "softMarkers": 0
   },
@@ -809,54 +809,6 @@
       "class": "entity",
       "words": 156,
       "sections": 5
-    },
-    {
-      "url": "/astrology/zodiac-signs/aries",
-      "class": "editorial",
-      "words": 434,
-      "sections": 11
-    },
-    {
-      "url": "/astrology/zodiac-signs/cancer",
-      "class": "editorial",
-      "words": 447,
-      "sections": 11
-    },
-    {
-      "url": "/astrology/zodiac-signs/capricorn",
-      "class": "editorial",
-      "words": 436,
-      "sections": 10
-    },
-    {
-      "url": "/astrology/zodiac-signs/gemini",
-      "class": "editorial",
-      "words": 442,
-      "sections": 11
-    },
-    {
-      "url": "/astrology/zodiac-signs/leo",
-      "class": "editorial",
-      "words": 443,
-      "sections": 11
-    },
-    {
-      "url": "/astrology/zodiac-signs/scorpio",
-      "class": "editorial",
-      "words": 432,
-      "sections": 10
-    },
-    {
-      "url": "/astrology/zodiac-signs/taurus",
-      "class": "editorial",
-      "words": 446,
-      "sections": 11
-    },
-    {
-      "url": "/astrology/zodiac-signs/virgo",
-      "class": "editorial",
-      "words": 444,
-      "sections": 11
     },
     {
       "url": "/astronomy-software/aladin",
@@ -17286,21 +17238,21 @@
       ]
     },
     {
+      "sentence": "iau international astronomical union official naming definitions constellation boundaries and astronomical nomenclature",
+      "pages": 230,
+      "sample": [
+        "/astrology/zodiac-signs/aquarius",
+        "/astrology/zodiac-signs/aries",
+        "/astrology/zodiac-signs/cancer"
+      ]
+    },
+    {
       "sentence": "physical properties spectral type a#v luminosity class v apparent magnitude # absolute magnitude # luminosity sun # # colour index b v # distance # ly # pc values are real catalogue data fields without a reliable value are omitted never estimated",
       "pages": 229,
       "sample": [
         "/stars/10-eridanus",
         "/stars/10-triangulum",
         "/stars/101-aquarius"
-      ]
-    },
-    {
-      "sentence": "iau international astronomical union official naming definitions constellation boundaries and astronomical nomenclature",
-      "pages": 218,
-      "sample": [
-        "/astronomy/astronomers",
-        "/astronomy/constellations",
-        "/astronomy/dwarf-planets/ceres"
       ]
     },
     {
@@ -17385,6 +17337,15 @@
       ]
     },
     {
+      "sentence": "britannica encyclopaedia britannica general reference for the history of astronomy biographies and cultural context",
+      "pages": 141,
+      "sample": [
+        "/asteroids/impact/chicxulub",
+        "/asteroids/impact/tunguska",
+        "/astrology/zodiac-signs/aquarius"
+      ]
+    },
+    {
       "sentence": "redshift is the object #x# s measured redshift a negative value is a blueshift the galaxy is approaching its motion dominated by local rather than cosmic expansion",
       "pages": 136,
       "sample": [
@@ -17421,15 +17382,6 @@
       ]
     },
     {
-      "sentence": "britannica encyclopaedia britannica general reference for the history of astronomy biographies and cultural context",
-      "pages": 129,
-      "sample": [
-        "/asteroids/impact/chicxulub",
-        "/asteroids/impact/tunguska",
-        "/astronomy/astronomers"
-      ]
-    },
-    {
       "sentence": "formatted through the citation engine nothing is fabricated",
       "pages": 117,
       "sample": [
@@ -17448,6 +17400,15 @@
       ]
     },
     {
+      "sentence": "sources references the primary and reference sources this topic draws on",
+      "pages": 112,
+      "sample": [
+        "/astrology/zodiac-signs/aquarius",
+        "/astrology/zodiac-signs/aries",
+        "/astrology/zodiac-signs/cancer"
+      ]
+    },
+    {
       "sentence": "scientific citations # real source backed references primary papers first then datasets and institutional sources",
       "pages": 104,
       "sample": [
@@ -17463,15 +17424,6 @@
         "/exoplanets/hd-100655-b",
         "/exoplanets/hd-100777-b",
         "/exoplanets/hd-102117-b"
-      ]
-    },
-    {
-      "sentence": "sources references the primary and reference sources this topic draws on",
-      "pages": 100,
-      "sample": [
-        "/astronomy/asteroids",
-        "/astronomy/astronomers",
-        "/astronomy/black-holes"
       ]
     },
     {
