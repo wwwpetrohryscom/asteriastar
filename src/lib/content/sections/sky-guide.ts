@@ -202,7 +202,7 @@ export const skyGuide: Section = {
         {
           heading: "How to watch one",
           list: [
-            "Go out after midnight if you can. Earth's leading side faces the direction of orbital motion in the pre-dawn hours, so it sweeps up more particles.",
+            "Go out after midnight if you can. Earth's rotation carries you onto the planet's leading side in the pre-dawn hours — the side sweeping head-on into the debris — so rates typically rise toward dawn.",
             "Check the Moon. A bright Moon can ruin an otherwise strong shower, and this is often more decisive than the predicted rate.",
             "Use no equipment at all. Binoculars and telescopes restrict your field of view, which is exactly the wrong trade for meteors.",
             "Lie back so you can watch a large area of sky comfortably for an extended period, and give your eyes 20–30 minutes to adapt.",
@@ -261,7 +261,7 @@ export const skyGuide: Section = {
           ],
         },
         {
-          heading: "The three types",
+          heading: "The four types",
           list: [
             "Total: the Moon completely covers the photosphere, revealing the corona. Visible only from a narrow path, typically a few hundred kilometres wide, and lasting a few minutes at most at any one location.",
             "Annular: the Moon is near the far point of its elliptical orbit and appears slightly too small, leaving a bright ring of photosphere visible. The corona is not visible, and the sky does not darken appreciably.",
@@ -592,7 +592,7 @@ export const skyGuide: Section = {
         },
       ],
       explore: [
-        { label: "Comet reference", href: "/sky/comets", blurb: "Catalogued comets with orbital data and sources." },
+        { label: "Comet reference", href: "/sky/comets", blurb: "What makes comets visible, with brightness data still prepared for integration." },
         { label: "Comets", href: "/comets", blurb: "Comet families, reservoirs, and physics." },
         { label: "Meteor showers", href: "/sky-guide/meteor-showers", blurb: "The debris streams comets leave behind." },
       ],

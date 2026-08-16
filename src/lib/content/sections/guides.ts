@@ -258,7 +258,7 @@ export const guides: Section = {
         {
           heading: "Size scales with mass, and nothing else",
           paragraphs: [
-            "For a non-rotating black hole the horizon radius is proportional to mass: roughly 3 kilometres per solar mass. A 10-solar-mass stellar remnant has a horizon about 30 km across in radius; the four-million-solar-mass black hole at the centre of the Milky Way has one roughly the size of Mercury's orbit; the most massive known are billions of solar masses.",
+            "For a non-rotating black hole the horizon radius is proportional to mass: roughly 3 kilometres per solar mass. A 10-solar-mass stellar remnant has a horizon about 30 km in radius; the four-million-solar-mass black hole at the centre of the Milky Way has one about 12 million kilometres in radius, comfortably inside Mercury's orbit; the most massive known are billions of solar masses.",
             "The no-hair result of classical general relativity says an isolated, settled black hole is fully described by mass, angular momentum, and electric charge. Astrophysical black holes are expected to carry negligible net charge, so in practice two numbers — mass and spin — describe them completely. Everything else about whatever fell in is not accessible from outside.",
           ],
         },
@@ -583,9 +583,9 @@ export const guides: Section = {
         { label: "Reference systems", href: "/reference-systems", blurb: "Ecliptic coordinates, precession, and how sky positions are defined." },
       ],
       interpretive: true,
-      // Historical claims on this page (the 1930 newspaper column, the
-      // controlled-testing record) are factual and need a reference slot even
-      // though the subject matter is interpretive.
+      // Factual claims on this page (the controlled-testing record, the
+      // documented two-thousand-year history) need a reference slot even though
+      // the subject matter is interpretive.
       sources: ["britannica"],
       keywords: ["read birth chart", "astrology for beginners", "chart basics", "natal chart houses"],
     },
@@ -611,7 +611,7 @@ export const guides: Section = {
         {
           heading: "Scale, made graspable",
           paragraphs: [
-            "Space is mostly empty, and that is the hardest idea to convey. Scale models work far better than numbers. If the Sun were a large exercise ball, Earth would be a peppercorn about 25 metres away, and Neptune would be most of a kilometre distant — the planets are tiny and the gaps between them are enormous.",
+            "Space is mostly empty, and that is the hardest idea to convey. Scale models work far better than numbers. If the Sun were a basketball, Earth would be a peppercorn about 26 metres away, and Neptune would be most of a kilometre distant — the planets are tiny and the gaps between them are enormous.",
             "Light-travel time is another useful handle. Sunlight takes about 8 minutes to reach us, light from Jupiter around 35–50 minutes depending on where the planets are, and light from the nearest star system over four years. Looking at distant objects genuinely means looking into the past.",
           ],
         },
@@ -627,7 +627,7 @@ export const guides: Section = {
         {
           heading: "Activities that teach real physics",
           list: [
-            "Build a scale model of the Solar System along a street or field, using the Sun-as-exercise-ball scale. The walk itself is the lesson.",
+            "Build a scale model of the Solar System along a street or field, using the Sun-as-basketball scale. The walk itself is the lesson.",
             "Track the Moon's phase and position for two weeks and predict the next one.",
             "Watch a meteor shower near its peak — lying back, no equipment, counting what you see. The counts are real data of the kind meteor organisations collect.",
             "Use a shadow stick over a day to show the Sun's apparent motion, then repeat months later to show it changes with the seasons.",

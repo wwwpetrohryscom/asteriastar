@@ -111,7 +111,7 @@ export const encyclopedia: Section = {
       overview:
         "Astronomy is the oldest of the observational sciences. Its history is a sequence of expansions in what could be measured — first positions by eye, then magnified images, then the invisible spectrum, then the whole sky in wavelengths and messengers the eye can never detect.",
       keyPoints: [
-        "Predictive astronomy predates explanatory astronomy by well over a thousand years: Babylonian scribes forecast eclipses without any physical model.",
+        "Predictive astronomy predates explanatory astronomy by centuries: Babylonian scribes were forecasting eclipse possibilities from the Saros cycle by around the seventh century BCE, with no physical model of what an eclipse is.",
         "The telescope changed astronomy in 1609–10; spectroscopy changed it far more profoundly in the nineteenth century.",
         "Until 1838 no one had measured the distance to a single star.",
         "The universe was widely believed to consist of the Milky Way alone until the mid-1920s.",
@@ -121,7 +121,7 @@ export const encyclopedia: Section = {
           heading: "Prediction before explanation",
           paragraphs: [
             "The earliest sustained astronomy was arithmetic, not physical. Babylonian scribes compiled the astronomical diaries — a nightly observational record maintained across roughly seven centuries, one of the longest continuous scientific datasets in human history — and from it derived numerical schemes that predicted lunar and planetary phenomena accurately without any model of what the bodies were or why they moved.",
-            "Greek astronomy introduced the other half: geometric explanation. Eudoxus and Aristotle built nested-sphere models, Aristarchus proposed a Sun-centred arrangement in the third century BCE, Eratosthenes measured Earth's circumference from shadow lengths to within a few percent, and Hipparchus compared his own positions with earlier records to discover the precession of the equinoxes around 130 BCE. Ptolemy's Almagest, around 150 CE, combined observation and geometry into a predictive system that remained the working standard for roughly fourteen centuries.",
+            "Greek astronomy introduced the other half: geometric explanation. Eudoxus and Aristotle built nested-sphere models, Aristarchus proposed a Sun-centred arrangement in the third century BCE, Eratosthenes measured Earth's circumference from shadow lengths, obtaining 252,000 stadia, and Hipparchus compared his own positions with earlier records to discover the precession of the equinoxes around 130 BCE. Ptolemy's Almagest, around 150 CE, combined observation and geometry into a predictive system that remained the working standard for roughly fourteen centuries.",
           ],
         },
         {
@@ -134,7 +134,7 @@ export const encyclopedia: Section = {
         {
           heading: "The telescopic revolution",
           paragraphs: [
-            "In 1609–10 Galileo turned a telescope to the sky and published Sidereus Nuncius: mountains on the Moon, four satellites orbiting Jupiter, the phases of Venus, and the resolution of the Milky Way into individual stars. The phases of Venus were decisive evidence against the pure Ptolemaic arrangement.",
+            "In 1609–10 Galileo turned a telescope to the sky and published Sidereus Nuncius: mountains on the Moon, four satellites orbiting Jupiter, and the resolution of the Milky Way into individual stars. He observed the full cycle of the phases of Venus later in 1610, announcing it in cipher that December and publishing it in 1613 — decisive evidence against the pure Ptolemaic arrangement.",
             "Kepler, working from Tycho Brahe's exceptionally precise pre-telescopic positions, published elliptical orbits and the equal-area law in 1609 and the harmonic law in 1619 — abandoning the circle that every previous system had assumed. Newton's Principia in 1687 then supplied the physical cause, showing that a single inverse-square law of gravitation accounted for Kepler's empirical rules and for terrestrial falling bodies alike.",
           ],
         },
@@ -174,7 +174,7 @@ export const encyclopedia: Section = {
         {
           question: "Who first proposed that the Earth orbits the Sun?",
           answer:
-            "Aristarchus of Samos advanced a Sun-centred arrangement in the third century BCE, but it was not adopted, partly because the absence of observable stellar parallax was taken as evidence against it — correctly reasoned, but the stars turned out to be far more distant than anyone assumed. Copernicus revived and developed the model in De revolutionibus (1543), and Galileo's observation of the phases of Venus supplied the first decisive observational evidence against the alternative.",
+            "Aristarchus of Samos advanced a Sun-centred arrangement in the third century BCE, but it was not adopted, partly because the absence of observable stellar parallax was taken as evidence against it — correctly reasoned, but the stars turned out to be far more distant than anyone assumed. Copernicus revived and developed the model in De revolutionibus (1543), and Galileo's observation of the phases of Venus in 1610 supplied the first decisive observational evidence against the pure Ptolemaic arrangement — though not against geocentrism as such, since Tycho Brahe's geo-heliocentric system predicts the same phases. Direct observational evidence of Earth's own motion came only with Bradley's discovery of stellar aberration in 1728–29 and Bessel's parallax measurement in 1838.",
         },
         {
           question: "When was the distance to another star first measured?",
@@ -297,12 +297,12 @@ export const encyclopedia: Section = {
       keyPoints: [
         "Babylonian astronomy was predictive and arithmetic; Greek astronomy was explanatory and geometric. Both worked, differently.",
         "Chinese records of transient events span more than two millennia and remain scientifically useful today.",
-        "The zodiac, the sexagesimal degree, and the seven-day planetary week are all Mesopotamian inheritances.",
+        "The zodiac and the sexagesimal degree are Mesopotamian inheritances; the seven-day week named for the planets is a later Hellenistic construction built on Mesopotamian planetary order.",
         "Alignment claims about ancient monuments range from well-established to unsupported; the distinction matters.",
       ],
       body: [
         {
-          heading: "Four different things 'astronomy' meant",
+          heading: "Five different things 'astronomy' meant",
           paragraphs: [
             "Before surveying individual cultures it is worth separating the activities, because societies that excelled at one often did not attempt another.",
           ],
@@ -318,7 +318,7 @@ export const encyclopedia: Section = {
           heading: "Mesopotamia: the first predictive science",
           paragraphs: [
             "Babylonian scribes maintained the astronomical diaries — nightly records of lunar and planetary positions, weather, river levels and market prices — across roughly seven centuries. The resulting dataset let them identify repeating cycles, including the roughly 18-year Saros period after which eclipse circumstances approximately recur, and eclipse prediction followed from the pattern rather than from any theory of what an eclipse is.",
-            "By the Seleucid period this had matured into sophisticated arithmetic schemes, known to modern scholars as System A and System B, which computed lunar and planetary phenomena using step and zigzag functions. The inheritance is still visible: the twelve-sign zodiac, the sexagesimal division of the circle into 360 degrees of 60 minutes, and the seven-day week named for the seven classical planets all descend from this tradition.",
+            "By the Seleucid period this had matured into sophisticated arithmetic schemes, known to modern scholars as System A and System B, which computed lunar and planetary phenomena using step and zigzag functions. The inheritance is still visible: the twelve-sign zodiac and the sexagesimal division of the circle into 360 degrees of 60 minutes descend directly from this tradition, and the seven-day week named for the seven classical planets was later built on its planetary order.",
           ],
         },
         {
@@ -331,7 +331,7 @@ export const encyclopedia: Section = {
         {
           heading: "Greece: geometry and physical models",
           paragraphs: [
-            "Greek astronomy asked a different question: not only what the sky will do, but why. Eudoxus modelled planetary motion with nested homocentric spheres; Aristarchus proposed a heliocentric arrangement and attempted to measure the relative distances of the Sun and Moon; Eratosthenes derived Earth's circumference from the difference in solar altitude between two locations, obtaining a value within a few percent of the modern figure.",
+            "Greek astronomy asked a different question: not only what the sky will do, but why. Eudoxus modelled planetary motion with nested homocentric spheres; Aristarchus proposed a heliocentric arrangement and attempted to measure the relative distances of the Sun and Moon; Eratosthenes derived Earth's circumference from the difference in solar altitude between two locations, obtaining 252,000 stadia. How close that is to the modern figure depends on the length of his stadion, which is not known: within about one percent on a 157.5-metre stade, but some sixteen percent too large on the 185-metre Attic one.",
             "Hipparchus, working around 130 BCE, compiled a star catalogue and by comparing his positions with older records discovered the precession of the equinoxes. Ptolemy's Almagest (c. 150 CE) synthesised the tradition into a complete predictive geometrical system using epicycles, deferents and the equant. The Antikythera mechanism — a geared bronze device recovered from a shipwreck and dated to roughly the second or first century BCE — shows that this astronomy was also embodied in precision mechanical calculation.",
           ],
         },
@@ -339,7 +339,7 @@ export const encyclopedia: Section = {
           heading: "China: the longest continuous record",
           paragraphs: [
             "Chinese astronomy was an official state function, staffed by an imperial bureau whose duty was to observe and report celestial events. The resulting record is exceptional in duration and completeness, and it is still scientifically useful: the 'guest star' recorded in 1054 CE is the supernova whose remnant is the Crab Nebula, and Chinese cometary records extend the observational history of Halley's Comet back to 240 BCE.",
-            "The system was equatorial rather than ecliptic in emphasis, dividing the sky into 28 lunar mansions along the celestial equator — a structure quite different from the Mediterranean zodiac. Instrumentation was advanced: Su Song's eleventh-century astronomical clock tower included an escapement-driven armillary sphere, and under the Yuan dynasty Guo Shoujing's Shoushi calendar of 1281 used a value for the tropical year accurate to within seconds.",
+            "The system was equatorial rather than ecliptic in emphasis, dividing the sky into 28 lunar mansions along the celestial equator — a structure quite different from the Mediterranean zodiac. Instrumentation was advanced: Su Song's eleventh-century astronomical clock tower included an escapement-driven armillary sphere, and under the Yuan dynasty Guo Shoujing's Shoushi calendar of 1281 used a tropical year of 365.2425 days — within about 26 seconds of the modern figure, and the same value the Gregorian reform adopted three centuries later.",
           ],
         },
         {
@@ -379,7 +379,7 @@ export const encyclopedia: Section = {
         {
           question: "Could ancient astronomers predict eclipses?",
           answer:
-            "Yes, though not by understanding the geometry in every case. Babylonian scribes used the roughly 18-year Saros cycle, derived from centuries of records, to predict when eclipse circumstances would recur — accurate prediction from pattern rather than from theory. Greek astronomy later supplied the geometric explanation, and Indian astronomy independently described eclipses as shadow phenomena.",
+            "Yes, though not by understanding the geometry in every case. Babylonian scribes used the roughly 18-year Saros cycle, derived from centuries of records, to predict when eclipse circumstances would recur — accurate prediction from pattern rather than from theory. Greek astronomy later supplied the geometric explanation, and Indian astronomy — which had absorbed Greek and Babylonian material — set out the shadow account explicitly, Aryabhata in 499 CE displacing the traditional Rahu and Ketu explanation.",
         },
         {
           question: "Was Stonehenge an astronomical observatory?",
@@ -389,7 +389,7 @@ export const encyclopedia: Section = {
         {
           question: "What did ancient astronomy give us that we still use?",
           answer:
-            "A great deal. The 360-degree circle and its division into 60 minutes and 60 seconds is Mesopotamian sexagesimal arithmetic. The twelve-sign zodiac and the seven-day week named for the classical planets have the same origin. The division of the night into hours descends from Egyptian decanal star clocks. Many bright-star names reached us through Arabic transmission of Greek catalogues, and Chinese records of historical supernovae and comets are still used as data.",
+            "A great deal. The 360-degree circle and its division into 60 minutes and 60 seconds is Mesopotamian sexagesimal arithmetic. The twelve-sign zodiac has the same origin; the seven-day week named for the classical planets is a Hellenistic scheme built on Mesopotamian planetary order. The division of the night into hours descends from Egyptian decanal star clocks. Many bright-star names reached us through Arabic transmission of Greek catalogues, and Chinese records of historical supernovae and comets are still used as data.",
         },
       ],
       explore: [
@@ -418,7 +418,7 @@ export const encyclopedia: Section = {
           heading: "Where the sky figures came from",
           paragraphs: [
             "The Greeks did not invent most of the constellations they named. Several — including figures corresponding to Taurus, Leo and Scorpius — have recognisable Mesopotamian antecedents attested centuries earlier, and were absorbed along with the zodiac itself. What Greek culture supplied was a rich narrative layer and, eventually, a systematic catalogue.",
-            "Aratus's poem Phaenomena, in the third century BCE, popularised a set of sky figures and their stories to a wide audience. Ptolemy's Almagest then listed 48 constellations with member stars, and that catalogue remained the working reference until European navigators added southern figures in the sixteenth and seventeenth centuries. The International Astronomical Union fixed the modern list of 88 with precise boundaries in 1922 and 1930.",
+            "Aratus's poem Phaenomena, in the third century BCE, popularised a set of sky figures and their stories to a wide audience. Ptolemy's Almagest then listed 48 constellations with member stars, and that catalogue remained the working reference until southern figures were added between the sixteenth and eighteenth centuries — twelve from Keyser and de Houtman's 1595–97 voyage, published by Plancius in 1598 and Bayer in 1603, and fourteen more by Lacaille from the Cape of Good Hope in 1751–52. The International Astronomical Union fixed the modern list of 88 with precise boundaries in 1922 and 1930.",
           ],
         },
         {
@@ -562,8 +562,8 @@ export const encyclopedia: Section = {
         {
           heading: "Decans and the origin of hours",
           paragraphs: [
-            "The Egyptians divided the ecliptic band into 36 groups of stars called decans, each rising heliacally about ten days apart. Because a new decan rose roughly every 40 minutes through the night, their successive appearances marked out the hours of darkness. Diagonal star tables painted inside coffin lids from the Middle Kingdom served as tables of which decan should be rising at each stage of the night.",
-            "Twelve decans are visible during a typical night, and this twelvefold division of darkness — later paired with a twelvefold division of daylight — is a direct ancestor of the 24-hour day. Egyptian hours were seasonal, varying in length with the night, and only became equal-length hours much later.",
+            "The Egyptians identified 36 star groups called decans in a band of sky running south of the ecliptic, each rising heliacally about ten days apart. Because a new decan rose roughly every 40 minutes through the night, their successive appearances marked out the hours of darkness. Diagonal star tables painted inside coffin lids from the Middle Kingdom served as tables of which decan should be rising at each stage of the night.",
+            "About eighteen decans rise during a typical night, but roughly three at each end fall in evening and morning twilight, leaving twelve to mark the hours of full darkness. That twelvefold division, later paired with a twelvefold division of daylight, is a direct ancestor of the 24-hour day. Egyptian hours were seasonal, varying in length with the night, and only became equal-length hours much later.",
           ],
         },
         {
@@ -590,7 +590,7 @@ export const encyclopedia: Section = {
         {
           question: "What were the decans?",
           answer:
-            "Thirty-six star groups spaced around the sky so that a new one rose heliacally roughly every ten days. Their successive risings through the night marked out its divisions, and diagonal star tables inside coffin lids record which decan should be rising when. About twelve are visible in a typical night, and that division is an ancestor of the twelve night hours and ultimately the 24-hour day.",
+            "Thirty-six star groups spaced around the sky so that a new one rose heliacally roughly every ten days. Their successive risings through the night marked out its divisions, and diagonal star tables inside coffin lids record which decan should be rising when. About eighteen rise in a typical night, of which twelve fall in full darkness once evening and morning twilight are excluded — the ancestor of the twelve night hours and ultimately of the 24-hour day.",
         },
         {
           question: "Are the pyramids astronomically aligned?",
@@ -645,7 +645,7 @@ export const encyclopedia: Section = {
           list: [
             "The division of the ecliptic into twelve equal 30-degree signs appears in Babylonian sources around the fifth century BCE, replacing an earlier reference-star scheme. This is the direct ancestor of the astrological zodiac.",
             "The sexagesimal number system gave the 360-degree circle, the 60-minute degree and the 60-second minute — still standard in astronomy and navigation.",
-            "The seven-day week, with days associated with the seven classical moving bodies, has Mesopotamian roots.",
+            "Seven-day periodicity has Mesopotamian precedent — hemerologies singled out particular days of the lunar month — and the planet–deity identifications behind the day names are Babylonian, but naming the days for the seven classical planets is a Hellenistic development first attested around the turn of the era.",
             "The concept of a systematic, dated, quantitative observational record maintained over generations — arguably the most important inheritance of all.",
           ],
         },
@@ -697,7 +697,7 @@ export const encyclopedia: Section = {
         {
           heading: "Before the telescope",
           list: [
-            "Hipparchus (2nd century BCE) compiled a star catalogue and, comparing his positions against older records, discovered the precession of the equinoxes. He also introduced the magnitude scale astronomy still uses.",
+            "Hipparchus (2nd century BCE) compiled a star catalogue and, comparing his positions against older records, discovered the precession of the equinoxes. The six-class brightness ranking that became the modern magnitude scale is traditionally credited to him, but it is first attested in Ptolemy's Almagest and no surviving source confirms the attribution.",
             "Ptolemy (c. 100–170 CE) wrote the Almagest, a complete predictive geometric system whose accuracy kept it in use for roughly fourteen centuries — a longevity no subsequent astronomical model has matched.",
             "Al-Battani (c. 858–929) refined the length of the solar year and the rate of precession, producing values considerably more accurate than Ptolemy's.",
             "Al-Sufi (903–986) wrote the Book of Fixed Stars, correcting and illustrating Ptolemy's catalogue, and recorded what is now recognised as the earliest surviving description of the Andromeda Galaxy.",
@@ -710,7 +710,7 @@ export const encyclopedia: Section = {
           list: [
             "Nicolaus Copernicus (1473–1543) developed a heliocentric model in De revolutionibus. It still used circular orbits and epicycles and was not obviously more accurate than Ptolemy's, but it reorganised the problem decisively.",
             "Johannes Kepler (1571–1630) derived elliptical orbits and the area and harmonic laws from Tycho's data — abandoning circular motion, an assumption every previous model had treated as self-evident.",
-            "Galileo Galilei (1564–1642) published the first substantial telescopic observations in 1610: lunar mountains, four moons of Jupiter, the phases of Venus, and the resolution of the Milky Way into stars.",
+            "Galileo Galilei (1564–1642) published the first substantial telescopic observations in 1610: lunar mountains, four moons of Jupiter, and the resolution of the Milky Way into stars. He observed the phases of Venus later that year and published them in 1613.",
             "Isaac Newton (1643–1727) showed in the Principia that a single inverse-square gravitational law accounts for Kepler's empirical laws and for terrestrial motion alike, unifying celestial and earthly physics.",
           ],
         },
@@ -751,7 +751,7 @@ export const encyclopedia: Section = {
         {
           question: "What did Galileo actually discover?",
           answer:
-            "In 1610 he published observations of mountains and craters on the Moon, four satellites orbiting Jupiter, the resolution of the Milky Way into individual stars, and — crucially — the full set of phases of Venus, which is incompatible with the pure Ptolemaic arrangement. He did not invent the telescope, and his own theory of the tides was incorrect.",
+            "In 1610 he published observations of mountains and craters on the Moon, four satellites orbiting Jupiter, and the resolution of the Milky Way into individual stars. He observed the full cycle of the phases of Venus later that same year — crucially, since that cycle is incompatible with the pure Ptolemaic arrangement — announcing it in cipher in December 1610 and publishing it in 1613. He did not invent the telescope, and his own theory of the tides was incorrect.",
         },
         {
           question: "Who first showed that stars are mostly hydrogen?",
@@ -954,8 +954,8 @@ export const encyclopedia: Section = {
             "c. 8th century BCE onward — the Babylonian astronomical diaries begin, running for roughly seven centuries.",
             "c. 240 BCE — Eratosthenes estimates Earth's circumference from shadow lengths at two locations.",
             "c. 130 BCE — Hipparchus discovers precession by comparing his positions with earlier records, and compiles a star catalogue.",
-            "c. 150 CE — Ptolemy's Almagest establishes a predictive geometric system that remains standard for fourteen centuries.",
             "c. 2nd–1st century BCE — the Antikythera mechanism, a geared device for computing celestial positions.",
+            "c. 150 CE — Ptolemy's Almagest establishes a predictive geometric system that remains standard for fourteen centuries.",
           ],
         },
         {
@@ -963,7 +963,7 @@ export const encyclopedia: Section = {
           list: [
             "964 — al-Sufi's Book of Fixed Stars, including the earliest surviving description of the Andromeda Galaxy.",
             "1054 — Chinese and other observers record a 'guest star'; its remnant is the Crab Nebula.",
-            "1437 — Ulugh Beg's Samarkand star catalogue, the most accurate pre-telescopic positional work.",
+            "1437 — Ulugh Beg's Samarkand star catalogue, the most accurate positional work between Ptolemy and Tycho Brahe.",
             "1543 — Copernicus publishes De revolutionibus, placing the Sun at the centre.",
             "1572 and 1604 — Tycho's and Kepler's supernovae, both visible to the naked eye, challenge the doctrine of unchanging heavens.",
             "1609–1619 — Kepler publishes the laws of planetary motion; Galileo publishes the first telescopic observations in 1610.",
