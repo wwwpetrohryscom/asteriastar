@@ -8,7 +8,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { ReviewBadge, CoverageBadge } from "@/components/authority/TrustBadges";
 import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePanel";
 import type { ResolvedGraphView } from "@/platform/data-engine/graph-explorer-engine";
-import { QUALITY_DIMENSION_LABELS, type QualityDimension } from "@/platform";
+import { QUALITY_DIMENSION_LABELS, type QualityDimension, QUALITY_BAND_LABELS } from "@/platform";
 import { breadcrumbSchema, type Crumb } from "@/lib/seo/jsonld";
 import { absoluteUrl, ROUTES, graphViewPath } from "@/lib/routes";
 
@@ -76,7 +76,7 @@ export function GxDetail({ d, demo, demoTitle }: { d: ResolvedGraphView; demo?: 
               <section aria-labelledby="quality" className="scientific-card p-5">
                 <div className="flex items-center justify-between gap-2">
                   <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
-                  <span className="text-xs text-faint">{d.quality.completenessPercent}%</span>
+                  <span className="text-xs text-faint">{QUALITY_BAND_LABELS[d.quality.band]}</span>
                 </div>
                 <div className="mt-3"><ReviewBadge status={d.reviewStatus} /></div>
                 <dl className="mt-3 grid grid-cols-1 gap-y-1.5">

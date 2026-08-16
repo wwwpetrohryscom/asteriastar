@@ -604,13 +604,15 @@ export const calculators: Section = {
             "Signs 90 degrees apart (a square) — traditionally read as friction.",
             "Signs 180 degrees apart (an opposition) — traditionally read as polarity or complementary tension.",
             "Adjacent signs, 30 degrees apart (a semisextile) — traditionally read as having little in common.",
-            "Applying these five rules to all 78 unordered sign pairs reproduces essentially any published compatibility table.",
+            "Two people of the same sign (0 degrees, a conjunction) — traditionally read as mutual recognition that can tip into reinforcing a shared weakness.",
+            "Signs 150 degrees apart (a quincunx, or inconjunct) — traditionally read as mismatched, sharing neither element, modality nor polarity.",
+            "Applying these seven rules to all 78 unordered sign pairs reproduces essentially any published compatibility table.",
           ],
         },
         {
           heading: "Why the tables all look the same",
           paragraphs: [
-            "Because they are generated from the same rules. Once the element and modality scheme is fixed, the angular relationship between any two signs follows automatically, and so does the traditional reading. There is no additional information in one compatibility chart compared with another.",
+            "Because they are generated from the same rules. Once the element and modality scheme is fixed, the angular relationship between any two signs follows automatically, and so does the traditional reading — seven rules exhaust all 78 pairs. There is no additional information in one compatibility chart compared with another.",
             "This is worth knowing when evaluating any site that presents such a table as a result. It is a lookup produced by five rules, not a calculation over data — and it uses only the Sun's sign, discarding every other placement.",
           ],
         },
@@ -633,7 +635,7 @@ export const calculators: Section = {
         {
           question: "How are zodiac compatibility tables generated?",
           answer:
-            "From five rules about the angular distance between signs: same element and 120 degrees apart is read as harmonious, 60 degrees as complementary, 90 as friction, 180 as polarity, and 30 as having little in common. Applying those to all sign pairs reproduces essentially any published table. No ephemeris or chart data is involved.",
+            "From a handful of rules about the angular distance between signs: same element and 120 degrees apart is read as harmonious, 60 degrees as complementary, 90 as friction, 180 as polarity, 30 as having little in common, 150 as mismatched, and 0 — the same sign — as mutual recognition. Applying those seven to all 78 sign pairs reproduces essentially any published table. No ephemeris or chart data is involved.",
         },
         {
           question: "Is sun-sign compatibility what astrologers actually use?",

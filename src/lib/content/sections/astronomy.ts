@@ -144,8 +144,8 @@ export const astronomy: Section = {
         {
           heading: "Northern, southern, and the history of the sky map",
           paragraphs: [
-            "The classical constellations descend from Ptolemy's list of 48, itself inheriting Mesopotamian and Greek figures. That catalogue covered only the sky visible from Mediterranean latitudes, so the far southern sky was blank to European astronomy until sixteenth- and seventeenth-century voyages.",
-            "The southern constellations were therefore invented in the age of exploration and instrumentation, which is why they are named for equipment and animals encountered abroad — Telescopium, Microscopium, Octans, Tucana — rather than for mythological figures. Later attempts to add political or commemorative constellations were not retained in the 1922 list.",
+            "The classical constellations descend from Ptolemy's list of 48, itself inheriting Mesopotamian and Greek figures. That catalogue covered only the sky visible from Mediterranean latitudes, so the far southern sky was blank to European astronomy until the southern voyages that began in the 1590s. Keyser and de Houtman's observations on the 1595–97 Dutch expedition supplied twelve new constellations, engraved on Plancius's globe of 1598 and printed in Bayer's Uranometria of 1603; Lacaille added fourteen more from the Cape of Good Hope in 1751–52.",
+            "The southern constellations were therefore invented across the age of exploration and instrumentation, which is why they are named for equipment and animals encountered abroad — Telescopium, Microscopium, Octans, Tucana — rather than for mythological figures. Later attempts to add political or commemorative constellations were not retained in the 1922 list.",
           ],
         },
         {
@@ -203,7 +203,8 @@ export const astronomy: Section = {
         {
           heading: "Morphology: the Hubble sequence and its limits",
           paragraphs: [
-            "Edwin Hubble's classification, still the standard vocabulary, sorts galaxies into ellipticals (E0 to E7 by apparent flattening), spirals (Sa to Sc by how tightly wound the arms are and how large the bulge is), barred spirals (SBa to SBc), lenticulars (S0, disc-shaped but with little star formation), and irregulars.",
+            "Before the mid-1920s it was an open question whether the spiral 'nebulae' were clouds inside the Milky Way or separate stellar systems. In 1923–24 Edwin Hubble identified Cepheid variable stars in the Andromeda nebula and applied Leavitt's period–luminosity relation to them, showing it lies far beyond our own Galaxy and settling the question. Everything below rests on that result.",
+            "Hubble's classification, still the standard vocabulary, sorts galaxies into ellipticals (E0 to E7 by apparent flattening), spirals (Sa to Sc by how tightly wound the arms are and how large the bulge is), barred spirals (SBa to SBc), lenticulars (S0, disc-shaped but with little star formation), and irregulars.",
             "The scheme is descriptive, not evolutionary — the 'early' and 'late' labels sometimes attached to it reflect a discarded idea that galaxies evolve along the sequence. Morphology correlates strongly with other properties: ellipticals are typically old, red, gas-poor and found in dense environments, while spirals are actively forming stars and contain substantial cold gas.",
           ],
         },
@@ -408,7 +409,7 @@ export const astronomy: Section = {
         {
           question: "Are there planets beyond Neptune?",
           answer:
-            "No eighth-planet-class body has been found. There is an active hypothesis, based on the clustered orbits of some distant trans-Neptunian objects, that an undiscovered massive planet may exist far beyond Neptune, but it has not been detected and alternative explanations for the clustering — including observational selection effects — remain viable.",
+            "No ninth planet meeting the IAU definition has been found. There is an active hypothesis, based on the clustered orbits of some distant trans-Neptunian objects, that an undiscovered massive planet may exist far beyond Neptune, but it has not been detected and alternative explanations for the clustering — including observational selection effects — remain viable.",
         },
       ],
       explore: [
@@ -501,7 +502,7 @@ export const astronomy: Section = {
       ],
       body: [
         {
-          heading: "Three ways to acquire a moon",
+          heading: "How a planet acquires a moon",
           list: [
             "Co-accretion: forming alongside the planet from the same circumplanetary disc. The regular satellite systems of Jupiter and Saturn — orbiting near the equatorial plane, in the same direction, on near-circular orbits — indicate this route.",
             "Capture: a passing body caught by the planet's gravity. Captured moons typically have inclined, eccentric, and often retrograde orbits. Neptune's Triton, orbiting backwards, is almost certainly a captured Kuiper Belt object.",
@@ -740,7 +741,7 @@ export const astronomy: Section = {
           heading: "Anatomy of a comet",
           paragraphs: [
             "The nucleus is a solid body of ice, dust and rock, typically a few kilometres across and among the darkest surfaces in the Solar System — the 'dirty snowball' picture is closer to a very dark, porous, dusty ice. As the comet approaches the Sun, surface ices sublimate directly to gas, lifting dust with them.",
-            "That released material forms the coma, a diffuse envelope around the nucleus that can grow to hundreds of thousands of kilometres across, larger than the Sun. Beyond it, a vast hydrogen cloud is detectable in ultraviolet. Nearly everything visible about a comet is this temporary escaped atmosphere, not the tiny solid body producing it.",
+            "That released material forms the coma, a diffuse envelope around the nucleus that can grow to more than a million kilometres across, larger than the Sun. Beyond it, a vast hydrogen cloud is detectable in ultraviolet. Nearly everything visible about a comet is this temporary escaped atmosphere, not the tiny solid body producing it.",
           ],
         },
         {
@@ -748,7 +749,7 @@ export const astronomy: Section = {
           paragraphs: [
             "The ion tail forms when solar ultraviolet ionises cometary gas, and the solar wind's magnetic field carries those ions directly away from the Sun. It is bluish, straight, and can show sudden structural changes when the solar wind shifts.",
             "The dust tail forms from grains pushed outward by radiation pressure. Because dust grains retain their orbital motion and respond less sharply than ions, the dust tail curves along the comet's path and appears yellowish-white, reflecting sunlight rather than emitting.",
-            "Both tails point broadly away from the Sun regardless of the comet's direction of travel, so a comet moving outward after perihelion leads with its nucleus and trails nothing — it travels tail-first.",
+            "Both tails point broadly away from the Sun regardless of the comet's direction of travel, so a comet moving outward after perihelion leads with its tail rather than its nucleus — it travels tail-first.",
           ],
         },
         {
@@ -813,7 +814,7 @@ export const astronomy: Section = {
       ],
       body: [
         {
-          heading: "The three words",
+          heading: "The words, and what each one names",
           list: [
             "A meteoroid is the solid object while it is still in space — smaller than an asteroid, with no sharp boundary between the terms.",
             "A meteor is the luminous phenomenon as the object heats and ablates in the atmosphere. The light comes mainly from ionised air along the path, not from the object burning.",
@@ -898,7 +899,7 @@ export const astronomy: Section = {
           heading: "The event horizon",
           paragraphs: [
             "In general relativity, mass and energy curve spacetime and objects follow the straightest available paths through it. A black hole is a configuration where the curvature within a region is extreme enough that every future-directed path leads inward — the event horizon marks that boundary.",
-            "It is not a wall or a shell. An observer falling through the horizon of a very massive black hole would experience nothing locally remarkable at the crossing; what changes is causal structure, not local physics. For a non-rotating black hole the horizon radius is proportional to mass, at roughly 3 kilometres per solar mass.",
+            "Nothing marks the boundary locally — no surface, no barrier, no measurable jolt for an infalling observer crossing a supermassive one. What changes is which futures remain reachable. For a non-rotating black hole the horizon radius is proportional to mass, at roughly 3 kilometres per solar mass, which is the number every catalogued size on this platform is derived from.",
           ],
         },
         {
@@ -906,7 +907,7 @@ export const astronomy: Section = {
           list: [
             "Stellar-mass black holes, typically a few to a few tens of solar masses, form from the collapse of massive stellar cores. Many are found in X-ray binaries or through gravitational-wave detections of mergers.",
             "Supermassive black holes, millions to billions of solar masses, occupy the centres of most large galaxies. Sagittarius A* at the Milky Way's centre is about four million solar masses.",
-            "Intermediate-mass black holes, between roughly a hundred and a hundred thousand solar masses, are the least well-established population — candidates exist and some gravitational-wave events fall in the range, but the formation route is unclear.",
+            "The intermediate mass range, roughly a hundred to a hundred thousand solar masses, is the sparsest part of the catalogue: candidates exist and some merger events land in it, but no formation route is established, so records here carry lower confidence than either population above or below.",
             "How supermassive black holes reached their masses so early in cosmic history, given the quasars observed at high redshift, is an open problem.",
           ],
         },
@@ -914,13 +915,13 @@ export const astronomy: Section = {
           heading: "How they are detected",
           paragraphs: [
             "Nothing escapes a black hole, so detection is always indirect or, in the imaging case, based on the shadow it casts. Stellar orbits around the Galactic centre revealed a compact four-million-solar-mass object in a volume no star cluster could occupy — work recognised with the 2020 Nobel Prize in Physics.",
-            "LIGO's 2015 detection recorded the merger of two stellar-mass black holes, with the inspiral, merger and ringdown waveform matching general relativity's prediction. The Event Horizon Telescope, an Earth-spanning interferometer, published horizon-scale images of M87's black hole in 2019 and of Sagittarius A* in 2022, showing the bright emission ring and central shadow the theory requires.",
+            "Two detection channels now populate the catalogue directly. Gravitational-wave observatories have recorded merger events since 2015, each yielding component masses and spins. The Event Horizon Telescope published horizon-scale images of M87's black hole in 2019 and of Sagittarius A* in 2022 — the only two objects for which a resolved horizon-scale image exists, which is why image coverage on every other black-hole record is honestly empty.",
           ],
         },
         {
           heading: "Accretion, jets, and feedback",
           paragraphs: [
-            "Matter with angular momentum cannot fall straight in; it forms an accretion disc where friction and magnetic stresses transport angular momentum outward and let material spiral inward, converting gravitational energy into radiation with efficiency far exceeding nuclear fusion. This is why accreting black holes can outshine their entire host galaxy.",
+            "Accretion is what makes black holes catalogable at all: the infalling material radiates, and that radiation is the observable. Its efficiency far exceeds nuclear fusion, which is why an accreting black hole can outshine its entire host galaxy and be recorded across cosmological distances.",
             "Many systems also launch relativistic jets along the spin axis. On galactic scales these jets deposit enormous energy into the surrounding medium, heating gas and suppressing star formation — a feedback process now understood as an important regulator of galaxy evolution rather than a curiosity.",
           ],
         },
@@ -928,7 +929,7 @@ export const astronomy: Section = {
           heading: "Open questions",
           paragraphs: [
             "General relativity predicts a singularity at the centre, where its own equations cease to give meaningful results. That is generally taken as a signal that quantum gravity is required, not as a physical description of a place.",
-            "Hawking's prediction that black holes radiate thermally and slowly evaporate is theoretically well-motivated but unobserved: for any astrophysical black hole the predicted temperature is far below that of the cosmic microwave background, so they absorb far more than they emit. What happens to the information carried by infalling matter remains genuinely unresolved.",
+            "No catalogued black hole has ever been observed to lose mass. Hawking's predicted thermal emission is far colder than the cosmic microwave background for any astrophysical example, so every real object absorbs more than it emits — which is why no record on this platform carries an evaporation timescale.",
           ],
         },
       ],
@@ -936,7 +937,7 @@ export const astronomy: Section = {
         {
           question: "How big is a black hole?",
           answer:
-            "Its event horizon radius is proportional to its mass — roughly 3 kilometres per solar mass for a non-rotating black hole. A ten-solar-mass stellar remnant has a horizon about 30 kilometres in radius; the four-million-solar-mass black hole at the Galactic centre has one roughly comparable to Mercury's orbit.",
+            "Its event horizon radius is proportional to its mass — roughly 3 kilometres per solar mass for a non-rotating black hole. A ten-solar-mass stellar remnant has a horizon about 30 kilometres in radius; the four-million-solar-mass black hole at the Galactic centre has one about 12 million kilometres in radius, which fits comfortably inside Mercury's orbit — that orbit is nearly five times wider.",
         },
         {
           question: "If nothing escapes, how do we detect black holes?",
@@ -1041,7 +1042,7 @@ export const astronomy: Section = {
           heading: "Discovery",
           paragraphs: [
             "In 1967 Jocelyn Bell Burnell noticed an unusually regular repeating radio signal in data from a Cambridge array. Its precision — pulses arriving every 1.34 seconds — was initially so unlike any known astronomical source that the possibility of an artificial origin was briefly entertained, and the source was informally labelled LGM-1.",
-            "The discovery of further sources with different periods ruled that out, and the signals were identified as rotating neutron stars. The 1974 Nobel Prize in Physics for the discovery went to Bell Burnell's supervisor and a colleague, an omission that has been widely discussed since.",
+            "The discovery of further sources with different periods ruled that out, and the signals were identified as rotating neutron stars. The 1974 Nobel Prize in Physics went to Bell Burnell's supervisor Antony Hewish, cited for his decisive role in the discovery of pulsars, and was shared with Martin Ryle, cited separately for aperture synthesis. Bell Burnell's own omission has been widely discussed since.",
           ],
         },
         {
@@ -1186,7 +1187,7 @@ export const astronomy: Section = {
           heading: "Open clusters",
           paragraphs: [
             "Open clusters contain from a few dozen to a few thousand stars, are found in the Galactic disc where star formation is ongoing, and are loosely bound. Tidal forces from the Galaxy and encounters with molecular clouds gradually strip members away, so most disperse within a few hundred million years.",
-            "The Pleiades and the Hyades are the nearest bright examples, both visible without equipment. Their youth means they still contain hot massive stars, which is why they appear blue-white — those stars will be gone within a few hundred million years.",
+            "The Pleiades and the Hyades are the nearest bright examples, both visible without equipment. The Pleiades is young, around 100 million years old, so it still contains hot blue-white B-type stars, and those will be gone within a few hundred million years. The Hyades is several times older — roughly 600 to 800 million years — and its most massive stars have already evolved away: its main-sequence turn-off now sits among the A stars, and several prominent orange giants mark where earlier generations left the main sequence.",
           ],
         },
         {

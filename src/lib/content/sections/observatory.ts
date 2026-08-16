@@ -263,6 +263,7 @@ export const observatory: Section = {
         {
           heading: "The engineering constraints",
           paragraphs: [
+            "The optics are also unusually large for a space telescope: a segmented primary 6.5 metres across, built from 18 beryllium hexagons, giving several times Hubble's collecting area. No launch fairing could take a rigid mirror that size, so the primary flew folded and deployed on the way to its operating point, as did the sunshield.",
             "An infrared telescope must be cold, because a warm instrument glows in exactly the band it is trying to observe. Webb's five-layer sunshield, roughly the size of a tennis court, keeps the optics near 40 kelvin passively, and the mid-infrared instrument requires additional active cooling below that.",
             "That requirement dictated the orbit. Near the Sun–Earth L2 point, about 1.5 million kilometres beyond Earth, the Sun, Earth and Moon all lie in the same direction, so one shield blocks all three. The cost is that Webb is far beyond any servicing capability — unlike Hubble, which five shuttle missions kept scientifically current for decades.",
           ],
@@ -389,7 +390,7 @@ export const observatory: Section = {
       ],
       body: [
         {
-          heading: "Three categories that look alike",
+          heading: "Four categories that look alike",
           list: [
             "Footage: actual recorded imagery — spacecraft camera video, launch and landing recordings, ISS exterior views, planetary surface panoramas assembled from real frames.",
             "Scientific visualisation: real data rendered into a moving image, such as a simulation of galaxy formation or a flythrough built from measured topography. The data is real; the viewpoint, colour and timing are constructed.",
@@ -521,7 +522,7 @@ export const observatory: Section = {
         "Every visual model of the Solar System lies about something, because the real proportions cannot be shown on one screen. Knowing which compromise a given model has made is what makes it useful rather than misleading.",
       keyPoints: [
         "No model can show planet sizes and orbital distances at the same scale on one screen.",
-        "At true scale with Earth as one pixel, Neptune would be over a kilometre away.",
+        "At true scale with Earth as one pixel, Neptune's orbit would have a radius of hundreds of metres.",
         "Orbits are near-circular; textbook diagrams routinely exaggerate their eccentricity.",
         "The planets are almost never aligned, and diagrams showing them in a row are schematic.",
       ],
@@ -767,7 +768,7 @@ export const observatory: Section = {
         {
           heading: "Why Gaia is the outlier",
           paragraphs: [
-            "Gaia deserves separate mention because of its effect on everything downstream. By measuring parallaxes for over a billion stars, it replaced the previous distance foundation — Hipparcos, with about a hundred thousand — by four orders of magnitude in scale and substantially in precision.",
+            "Gaia deserves separate mention because of its effect on everything downstream. By measuring parallaxes for over a billion stars, it superseded the previous distance foundation — Hipparcos, with about a hundred thousand — exceeding it by four orders of magnitude in scale and substantially in precision.",
             "Distance underpins luminosity, and luminosity underpins mass and age, so a large fraction of stellar parameters published since Gaia's releases ultimately depend on its measurements. Several of the stellar catalogues on this platform carry Gaia-derived values with that provenance recorded.",
           ],
         },

@@ -9,7 +9,7 @@ import { EntityProvenancePanel } from "@/components/authority/EntityProvenancePa
 import { MethodCards } from "@/components/methods/MethodCards";
 import type { ResolvedAstronomyMethod } from "@/platform/data-engine/astronomy-methods-engine";
 import { KIND_LABEL } from "@/knowledge-graph/data/astronomy-methods-catalog/types";
-import { QUALITY_DIMENSION_LABELS, type QualityDimension } from "@/platform";
+import { QUALITY_DIMENSION_LABELS, type QualityDimension, QUALITY_BAND_LABELS } from "@/platform";
 import { RELATION_LABELS, INVERSE_RELATION_LABELS } from "@/knowledge-graph/schema";
 import { entityGraphPath } from "@/knowledge-graph";
 import { breadcrumbSchema, type Crumb } from "@/lib/seo/jsonld";
@@ -117,7 +117,7 @@ export function MethodDetail({ d }: { d: ResolvedAstronomyMethod }) {
               <section aria-labelledby="quality" className="scientific-card p-5">
                 <div className="flex items-center justify-between gap-2">
                   <h2 id="quality" className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Quality &amp; authority</h2>
-                  <span className="text-xs text-faint">{d.quality.completenessPercent}%</span>
+                  <span className="text-xs text-faint">{QUALITY_BAND_LABELS[d.quality.band]}</span>
                 </div>
                 <div className="mt-3"><ReviewBadge status={d.reviewStatus} /></div>
                 <dl className="mt-3 grid grid-cols-1 gap-y-1.5">

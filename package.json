@@ -27,7 +27,9 @@
     "refresh": "tsx scripts/refresh/refresh.ts",
     "refresh:test": "tsx scripts/refresh/refresh.test.ts",
     "refresh:validate": "tsx scripts/refresh/validate-config.ts",
-    "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts && tsx scripts/refresh/validate-config.ts && tsx scripts/data-health/validate-health.ts",
+    "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts && tsx scripts/validate-content-completion.ts && tsx scripts/refresh/validate-config.ts && tsx scripts/data-health/validate-health.ts",
+    "validate:completion": "tsx scripts/validate-content-completion.ts",
+    "check:mobile": "tsx scripts/check-mobile-overflow.ts",
     "datahealth:validate": "tsx scripts/data-health/validate-health.ts"
   },
   "dependencies": {

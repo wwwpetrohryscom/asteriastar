@@ -46,7 +46,7 @@ export default function AuthorityPage() {
     { label: "Reviewed", value: s.coverage.reviewed },
   ];
 
-  const QUALITY_ACCENT: Record<CoverageLevel, string> = { complete: "bg-white/70", partial: "bg-white/70", none: "bg-white/50" };
+  const QUALITY_ACCENT: Record<CoverageLevel, string> = { complete: "bg-white/70", partial: "bg-white/70", none: "bg-white/50", "not-applicable": "bg-white/30" };
 
   return (
     <>

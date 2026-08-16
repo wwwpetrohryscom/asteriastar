@@ -321,7 +321,7 @@ export const astrology: Section = {
       name: "Moon Sign",
       summary: "The sign the Moon occupied at birth, in tradition.",
       overview:
-        "The Moon sign is the zodiac sign containing the Moon's ecliptic longitude at the moment of birth. Because the Moon moves quickly, this placement changes every two to three days — fast enough that a birth date alone is sometimes not sufficient to determine it.",
+        "The Moon sign is the zodiac sign containing the Moon's ecliptic longitude at the moment of birth. Because the Moon moves quickly, this placement changes every two to two and a half days — fast enough that a birth date alone is sometimes not sufficient to determine it.",
       keyPoints: [
         "The Moon crosses roughly 13 degrees of ecliptic longitude per day, changing sign every two to three days.",
         "For births near a sign boundary, the time of day is decisive.",
@@ -332,7 +332,7 @@ export const astrology: Section = {
         {
           heading: "Why the Moon changes sign so often",
           paragraphs: [
-            "The Moon completes a circuit of the ecliptic in about 27.3 days relative to the stars, so it advances roughly 13 degrees per day — around thirteen times faster than the Sun. Since each sign spans 30 degrees, it occupies a given sign for approximately two and a quarter to two and a half days.",
+            "The Moon completes a circuit of the ecliptic in about 27.3 days relative to the stars, so it advances roughly 13 degrees per day — around thirteen times faster than the Sun. Since each sign spans 30 degrees, it occupies a given sign for roughly two to two and a half days.",
             "Its actual speed varies because the orbit is elliptical, so the time in a sign is not constant. For a birth close to an ingress — the moment the Moon crosses into a new sign — the hour of birth determines the answer, and an approximate date is not enough.",
           ],
         },
@@ -362,12 +362,12 @@ export const astrology: Section = {
         {
           question: "How often does the Moon change sign?",
           answer:
-            "Roughly every two and a quarter to two and a half days. The Moon advances about 13 degrees of ecliptic longitude per day, and each sign spans 30 degrees. The exact duration varies because the Moon's orbital speed changes over its elliptical orbit.",
+            "Roughly every two to two and a half days. The Moon advances about 13 degrees of ecliptic longitude per day, and each sign spans 30 degrees. The exact duration varies because the Moon's orbital speed changes over its elliptical orbit.",
         },
         {
           question: "Do I need my birth time to find my Moon sign?",
           answer:
-            "Often not, but sometimes yes. Because the Moon spends a bit over two days in each sign, the date alone usually settles it. If the birth falls close to the moment the Moon crossed into a new sign, the time of day decides the answer — so an accurate time matters for a minority of births and is irrelevant for most.",
+            "Often not, but sometimes yes. Because the Moon spends roughly two to two and a half days in each sign, the date alone usually settles it. If the birth falls close to the moment the Moon crossed into a new sign, the time of day decides the answer — so an accurate time matters for a minority of births and is irrelevant for most.",
         },
         {
           question: "Why does my Moon sign differ between Western and Vedic astrology?",
@@ -478,11 +478,11 @@ export const astrology: Section = {
         {
           heading: "Traditional house significations",
           list: [
-            "First — self, appearance, outward manner. Sixth — work, routine, health.",
-            "Second — resources, possessions, values. Seventh — partnership, one-to-one relationships.",
-            "Third — communication, siblings, local environment. Eighth — shared resources, transformation, inheritance.",
-            "Fourth — home, family, origins. Ninth — travel, higher learning, belief.",
-            "Fifth — creativity, play, children. Tenth — career, public standing.",
+            "First — self, appearance, outward manner. Second — resources, possessions, values.",
+            "Third — communication, siblings, local environment. Fourth — home, family, origins.",
+            "Fifth — creativity, play, children. Sixth — work, routine, health.",
+            "Seventh — partnership, one-to-one relationships. Eighth — shared resources, transformation, inheritance.",
+            "Ninth — travel, higher learning, belief. Tenth — career, public standing.",
             "Eleventh — friendships, groups, aspirations. Twelfth — solitude, the unconscious, what is hidden.",
           ],
         },
@@ -962,7 +962,7 @@ export const astrology: Section = {
         {
           heading: "When the year actually begins",
           paragraphs: [
-            "The zodiac year begins at Lunar New Year, which falls between late January and mid-February depending on the lunisolar calendar. Someone born in mid-January therefore belongs to the previous animal year, not the one that starts later that month.",
+            "The zodiac year begins at Lunar New Year, which falls between late January and mid-February depending on the lunisolar calendar. Someone born in mid-January therefore belongs to the previous animal year, not the one beginning at the coming Lunar New Year.",
             "This is the most common source of error in casual lookups, and it is a real calendrical fact rather than a subtlety of interpretation. Some traditions instead use the solar term Lichun, around 4 February, as the boundary, so authorities can disagree for births in that narrow window.",
           ],
         },
