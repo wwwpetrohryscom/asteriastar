@@ -149,10 +149,13 @@ export function GlobalSearch() {
   useEffect(() => {
     if (!open || !outcome || trimmed.length < MIN_QUERY_LENGTH) return;
     if (announcedFor.current === trimmed) return;
+    // Only record a settled query — a provisional core-only result would
+    // report false zero-result events for every catalogue query.
+    if (stage !== "ready") return;
     announcedFor.current = trimmed;
     trackSearchQuery(trimmed.length, outcome.total);
     if (outcome.total === 0) trackSearchNoResults(trimmed.length, outcome.fuzzyOnly);
-  }, [open, outcome, trimmed]);
+  }, [open, outcome, trimmed, stage]);
 
   const go = useCallback(
     (hit: SearchHit, rank: number) => {
@@ -218,7 +221,11 @@ export function GlobalSearch() {
 
   const tooShort = trimmed.length > 0 && trimmed.length < MIN_QUERY_LENGTH;
   const searching = trimmed.length >= MIN_QUERY_LENGTH;
-  const noResults = searching && outcome !== null && outcome.total === 0 && stage !== "loading";
+  const indexLoading = stage === "idle" || stage === "loading" || stage === "partial";
+  // "No results" must not appear until the WHOLE index has landed. The core
+  // shard is only 1,650 of 7,718 documents, so declaring failure while the
+  // catalogue is still in flight would be wrong for most catalogue queries.
+  const noResults = searching && outcome !== null && outcome.total === 0 && stage === "ready";
 
   return (
     <>
@@ -362,13 +369,19 @@ export function GlobalSearch() {
                         onClick={close}
                         className="inline-flex min-h-11 items-center text-sm font-medium text-nasa underline-offset-4 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-nasa"
                       >
-                        View all {outcome.total.toLocaleString()} results →
+                        View all {outcome.total.toLocaleString()}
+                        {stage === "partial" ? "+" : ""} results →
                       </Link>
                     </div>
                   ) : null}
 
-                  {stage === "loading" ? (
+                  {stage === "loading" || stage === "idle" ? (
                     <p className="px-4 py-8 text-center text-sm text-faint">Loading search index…</p>
+                  ) : null}
+                  {stage === "partial" ? (
+                    <p className="px-4 pb-3 text-center text-xs text-faint">
+                      Searching the full catalogue…
+                    </p>
                   ) : null}
 
                   {noResults ? (
@@ -410,7 +423,7 @@ export function GlobalSearch() {
           </div>
 
           <p aria-live="polite" className="sr-only">
-            {searching && outcome
+            {searching && outcome && stage === "ready"
               ? `${outcome.total} result${outcome.total === 1 ? "" : "s"}`
               : ""}
           </p>

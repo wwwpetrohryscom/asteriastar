@@ -88,10 +88,12 @@ export function SearchExplorer() {
   }, [docs, trimmed, nature]);
 
   useEffect(() => {
-    if (!outcome || trimmed.length < MIN_QUERY_LENGTH) return;
+    // Wait for the whole index: a core-only pass would log false zero-result
+    // events for every catalogue query.
+    if (!outcome || trimmed.length < MIN_QUERY_LENGTH || stage !== "ready") return;
     trackSearchQuery(trimmed.length, outcome.total);
     if (outcome.total === 0) trackSearchNoResults(trimmed.length, outcome.fuzzyOnly);
-  }, [outcome, trimmed]);
+  }, [outcome, trimmed, stage]);
 
   const submit = useCallback(
     (event: React.FormEvent) => {
@@ -153,7 +155,7 @@ export function SearchExplorer() {
             Type at least {MIN_QUERY_LENGTH} characters to search
             {docs.length ? ` ${docs.length.toLocaleString()} indexed pages` : " the platform"}.
           </p>
-        ) : stage === "loading" || (stage === "idle" && !docs.length) ? (
+        ) : stage === "idle" || stage === "loading" || (stage === "partial" && !outcome?.total) ? (
           <p className="text-muted">Loading search index…</p>
         ) : stage === "error" ? (
           <p className="text-muted">
@@ -163,7 +165,7 @@ export function SearchExplorer() {
             </Link>{" "}
             instead.
           </p>
-        ) : !outcome || outcome.total === 0 ? (
+        ) : !outcome || (outcome.total === 0 && stage === "ready") ? (
           <div>
             <p className="text-muted">
               No results for <span className="text-fg">“{trimmed}”</span>
@@ -177,7 +179,9 @@ export function SearchExplorer() {
         ) : (
           <>
             <p className="text-sm text-faint">
-              {outcome.total.toLocaleString()} result{outcome.total === 1 ? "" : "s"}
+              {outcome.total.toLocaleString()}
+              {stage === "partial" ? "+" : ""} result{outcome.total === 1 ? "" : "s"}
+              {stage === "partial" ? " — still loading the full catalogue" : ""}
               {outcome.fuzzyOnly ? " — showing close spellings" : ""}
             </p>
             <ul className="mt-4 space-y-1.5">
