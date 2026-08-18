@@ -40,11 +40,26 @@ share the same component.
 
 ## Universal search — `/search`
 
-`src/lib/search.ts` builds one static index over **entities, articles,
-hubs/topics, learning paths, timelines, and comparisons**. `SearchExplorer`
-filters it entirely client-side (no fetching), grouped by type with type chips.
-The homepage and header search route here. No AI, no chat — every result is a
-real record that navigates into the graph or content.
+Global search is available from every page — a header trigger, `Cmd/Ctrl+K`
+from anywhere, and a full results page at `/search`.
+
+`scripts/search/build-docs.ts` builds the index at build time from the canonical
+registries — **entities, articles, hubs, topics, learning paths, timelines,
+comparisons, datasets and platform destinations** — enriched with catalogue
+identifiers the graph does not mirror (HIP/HD/HR/Gliese, Messier/NGC/IC/
+Caldwell, small-body designations, IAU constellation abbreviations). It emits
+deterministic shards to `public/search-index/`: `core` answers immediately and
+`catalogue` streams in behind it.
+
+The client-safe core is `src/lib/search/{types,match,query,groups}.ts`, and it
+never imports the data layer — `npm run search:validate` fails the build if it
+does. Ranking is a fixed tier ladder (exact title → exact alias/identifier →
+title prefix → alias prefix → word prefix → all tokens → substring → close
+spelling), so every result can be explained by the tier it matched. Typo
+tolerance runs only as a second pass when the strict pass found almost nothing.
+No AI, no chat, nothing learned — every result is a real record.
+
+Commands: `npm run search:index`, `npm run search:validate`, `npm run search:test`.
 
 ## Graph intelligence fields
 
