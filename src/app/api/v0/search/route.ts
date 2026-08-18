@@ -16,7 +16,13 @@ export async function GET(req: Request): Promise<Response> {
       "Queries are folded before matching: diacritics stripped, Unicode apostrophes and dashes normalised, and " +
       "identifier separators collapsed so 'M 31', 'M-31' and 'M31' are one query. Close-spelling matches are only " +
       "attempted when a strict pass found almost nothing, so a typo can never displace a real match. " +
-      "There is no semantic, learned, or AI ranking.",
+      "There is no semantic, learned, or AI ranking. " +
+      "SCOPE: this endpoint searches Knowledge Graph entities and the aliases stored ON those entities. " +
+      "The on-site search index is additionally enriched at build time with catalogue identifiers that the " +
+      "graph does not mirror — HIP/HD/HR/Gliese numbers, Messier/NGC/IC/Caldwell designations, and " +
+      "observatory abbreviations such as HST or GBT — so a few identifier queries resolve on the site that " +
+      "do not resolve here. Closing that gap means mirroring those identifiers onto the graph entities " +
+      "themselves, which is a data change rather than an API change.",
     count: result.count,
   });
 }
