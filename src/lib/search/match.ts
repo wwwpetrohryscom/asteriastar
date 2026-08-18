@@ -140,6 +140,16 @@ export function fuzzyBudget(queryLength: number): number {
 
 export interface Haystacks {
   /** folded title */ title: string;
+  /**
+   * The folded title with a leading article removed, or "" when there is none.
+   *
+   * 234 indexed documents are titled "The …" — including "The Sun", "The Moon"
+   * and "The Milky Way". Comparing only the raw title meant the two most
+   * obvious queries on an astronomy platform ranked their own subject at #13
+   * and #18, far below an eight-row overlay, and the pages were reachable only
+   * by guessing the article.
+   */
+  bare: string;
   /** folded aliases/identifiers */ aliases: string[];
   /** identifier-folded title + aliases, separators stripped */ ids: string[];
   /** folded description */ desc: string;
@@ -156,12 +166,14 @@ export interface Haystacks {
 export function rankDoc(h: Haystacks, q: string, qid: string, allowFuzzy: boolean): Tier {
   if (!q) return Tier.None;
 
-  if (h.title === q) return Tier.TitleExact;
+  // Article-stripped forms are tested ALONGSIDE the raw title, never instead
+  // of it, so this can only ever raise a tier.
+  if (h.title === q || h.bare === q) return Tier.TitleExact;
   for (const a of h.aliases) if (a === q) return Tier.AliasExact;
   // Identifier equality after separator stripping: "m31" === "m 31".
   if (qid) for (const id of h.ids) if (id === qid) return Tier.AliasExact;
 
-  if (h.title.startsWith(q)) return Tier.TitlePrefix;
+  if (h.title.startsWith(q) || (h.bare && h.bare.startsWith(q))) return Tier.TitlePrefix;
   for (const a of h.aliases) if (a.startsWith(q)) return Tier.AliasPrefix;
   if (qid) for (const id of h.ids) if (id.startsWith(qid)) return Tier.AliasPrefix;
 
@@ -173,8 +185,13 @@ export function rankDoc(h: Haystacks, q: string, qid: string, allowFuzzy: boolea
   // title contains verbatim, and requiring ALL tokens keeps this from
   // degenerating into an OR that matches half the corpus.
   if (q.includes(" ")) {
-    const tokens = q.split(" ").filter(Boolean);
-    if (tokens.length > 1 && tokens.every((tok) => h.all.includes(tok))) return Tier.AllTokens;
+    // Every token must be at least two characters: a one-character token
+    // matches almost every document, so "a b" would sweep the corpus.
+    const tokens = q.split(" ").filter((t) => t.length >= 2);
+    if (tokens.length > 1 && tokens.length === q.split(" ").filter(Boolean).length &&
+        tokens.every((tok) => h.all.includes(tok))) {
+      return Tier.AllTokens;
+    }
   }
 
   if (h.title.includes(q)) return Tier.Substring;

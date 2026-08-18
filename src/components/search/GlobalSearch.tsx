@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { useSearchIndex } from "@/components/search/use-search-index";
@@ -29,6 +30,12 @@ import { SEARCH_GROUP_LABELS, type SearchGroupId } from "@/lib/search/types";
  * The panel is a full-screen sheet on mobile and a centred dialog on desktop —
  * one component, two layouts, so there is no second implementation to keep in
  * sync.
+ *
+ * It is rendered through a portal to document.body, and that is load-bearing
+ * rather than tidiness: SiteHeader carries `backdrop-blur-xl`, and any
+ * backdrop-filter establishes a containing block for fixed-position
+ * descendants. Rendered in place, the overlay's `fixed inset-0` resolved
+ * against the header's 68px box instead of the viewport.
  */
 
 /** Suggested destinations shown before anything is typed. */
@@ -48,7 +55,7 @@ export function GlobalSearch() {
   const [query, setQuery] = useState("");
   const [active, setActive] = useState(0);
   const router = useRouter();
-  const { docs, stage, prime } = useSearchIndex();
+  const { docs, stage, degraded, prime } = useSearchIndex();
 
   const baseId = useId();
   const listboxId = `${baseId}-listbox`;
@@ -157,6 +164,20 @@ export function GlobalSearch() {
     if (outcome.total === 0) trackSearchNoResults(trimmed.length, outcome.fuzzyOnly);
   }, [open, outcome, trimmed, stage]);
 
+  // Keep the active option visible when arrowing. Pointer-driven changes are
+  // skipped — scrolling under the cursor fights the user.
+  const pointerDriven = useRef(false);
+  useEffect(() => {
+    if (!open) return;
+    if (pointerDriven.current) {
+      pointerDriven.current = false;
+      return;
+    }
+    const id = rows[active]?.id;
+    if (!id) return;
+    document.getElementById(id)?.scrollIntoView({ block: "nearest" });
+  }, [active, rows, open]);
+
   const go = useCallback(
     (hit: SearchHit, rank: number) => {
       trackSearchResultClick(hit.doc.g, rank + 1, "overlay");
@@ -192,22 +213,26 @@ export function GlobalSearch() {
     } else if (event.key === "ArrowUp") {
       event.preventDefault();
       setActive((i) => (i - 1 + rows.length) % rows.length);
-    } else if (event.key === "Home") {
-      event.preventDefault();
-      setActive(0);
-    } else if (event.key === "End") {
-      event.preventDefault();
-      setActive(rows.length - 1);
     }
+    // Home/End are deliberately NOT bound: this combobox has an editable text
+    // field, and hijacking them breaks caret movement. ArrowUp/ArrowDown wrap,
+    // so first and last are still one keystroke away.
   }
 
   /* Keep focus inside the dialog while it is open. */
   function onPanelKeyDown(event: React.KeyboardEvent<HTMLDivElement>) {
     if (event.key !== "Tab") return;
-    const focusables = panelRef.current?.querySelectorAll<HTMLElement>(
-      'a[href], button:not([disabled]), input, [tabindex]:not([tabindex="-1"])',
+    // Result rows are anchors with tabIndex={-1} (selection moves by active
+    // descendant, not focus), so a raw selector match would pick one of them as
+    // "first"/"last" and the trap would jump into the list.
+    const candidates = panelRef.current?.querySelectorAll<HTMLElement>(
+      'a[href], button:not([disabled]), input, textarea, select, [tabindex]',
     );
-    if (!focusables?.length) return;
+    if (!candidates?.length) return;
+    const focusables = [...candidates].filter(
+      (el) => el.tabIndex >= 0 && !el.hasAttribute("disabled") && el.offsetParent !== null,
+    );
+    if (!focusables.length) return;
     const first = focusables[0];
     const last = focusables[focusables.length - 1];
     if (event.shiftKey && document.activeElement === first) {
@@ -247,7 +272,8 @@ export function GlobalSearch() {
         </kbd>
       </button>
 
-      {open ? (
+      {open && typeof document !== "undefined"
+        ? createPortal(
         <div
           className="fixed inset-0 z-[100] flex flex-col bg-bg/80 backdrop-blur-sm sm:items-center sm:justify-start sm:pt-[8vh]"
           role="presentation"
@@ -352,7 +378,10 @@ export function GlobalSearch() {
                                 id={row.id}
                                 hit={row.hit}
                                 selected={rank === active}
-                                onHover={() => setActive(rank)}
+                                onHover={() => {
+                                  pointerDriven.current = true;
+                                  setActive(rank);
+                                }}
                                 onPick={() => go(row.hit, rank)}
                               />
                             );
@@ -383,11 +412,16 @@ export function GlobalSearch() {
                       Searching the full catalogue…
                     </p>
                   ) : null}
+                  {degraded ? (
+                    <p className="px-4 pb-3 text-center text-xs text-faint">
+                      Part of the index failed to load — results may be incomplete.
+                    </p>
+                  ) : null}
 
                   {noResults ? (
                     <div className="px-4 py-8 text-center">
                       <p className="text-sm text-muted">
-                        No results for <span className="text-fg">“{trimmed}”</span>.
+                        No results for <span className="break-words text-fg">“{trimmed}”</span>.
                       </p>
                       <p className="mt-2 text-xs text-faint">
                         Check the spelling, try an identifier like M31 or 67P, or browse a hub below.
@@ -420,15 +454,17 @@ export function GlobalSearch() {
                 </>
               )}
             </div>
+            {/* Inside the dialog subtree, so assistive tech exposes it. */}
+            <p aria-live="polite" aria-atomic="true" className="sr-only">
+              {searching && outcome && stage === "ready"
+                ? `${outcome.total} result${outcome.total === 1 ? "" : "s"}`
+                : ""}
+            </p>
           </div>
-
-          <p aria-live="polite" className="sr-only">
-            {searching && outcome && stage === "ready"
-              ? `${outcome.total} result${outcome.total === 1 ? "" : "s"}`
-              : ""}
-          </p>
-        </div>
-      ) : null}
+        </div>,
+            document.body,
+          )
+        : null}
     </>
   );
 }

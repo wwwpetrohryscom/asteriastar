@@ -32,7 +32,7 @@ const PAGE_SIZE = 40;
 export function SearchExplorer() {
   const params = useSearchParams();
   const router = useRouter();
-  const { docs, stage, prime } = useSearchIndex();
+  const { docs, stage, degraded, prime } = useSearchIndex();
 
   const urlQuery = params.get("q") ?? "";
   const [query, setQuery] = useState(urlQuery);
@@ -78,8 +78,10 @@ export function SearchExplorer() {
   /** Group counts for the filter chips, computed without the group filter. */
   const groupCounts = useMemo(() => {
     if (!docs.length || trimmed.length < MIN_QUERY_LENGTH) return null;
+    // No display cap here: `total` is uncapped but `hits` is not, so a capped
+    // pass made the chip label disagree with the count shown after clicking it.
     const all = runSearch(docs, trimmed, {
-      limit: 5000,
+      limit: Number.MAX_SAFE_INTEGER,
       nature: nature === "all" ? undefined : nature,
     });
     const counts = new Map<SearchGroupId, number>();
@@ -149,6 +151,13 @@ export function SearchExplorer() {
         </Chip>
       </div>
 
+      {/* Announce the settled count once, politely. */}
+      <p aria-live="polite" aria-atomic="true" className="sr-only">
+        {searching && outcome && stage === "ready"
+          ? `${outcome.total} result${outcome.total === 1 ? "" : "s"} for ${trimmed}`
+          : ""}
+      </p>
+
       <div className="mt-8">
         {!searching ? (
           <p className="text-muted">
@@ -183,6 +192,7 @@ export function SearchExplorer() {
               {stage === "partial" ? "+" : ""} result{outcome.total === 1 ? "" : "s"}
               {stage === "partial" ? " — still loading the full catalogue" : ""}
               {outcome.fuzzyOnly ? " — showing close spellings" : ""}
+              {degraded ? " — part of the index failed to load, results may be incomplete" : ""}
             </p>
             <ul className="mt-4 space-y-1.5">
               {visible.map((hit, i) => (

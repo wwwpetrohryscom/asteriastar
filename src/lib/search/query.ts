@@ -57,8 +57,11 @@ function haystacksFor(doc: SearchDoc): Haystacks {
   const aliases = (doc.a ?? []).map(fold);
   const title = fold(doc.t);
   const desc = doc.d ? fold(doc.d) : "";
+  // Computed once per document and cached, not per keystroke.
+  const bare = /^(the|a|an) /.test(title) ? title.slice(title.indexOf(" ") + 1) : "";
   const built: Haystacks = {
     title,
+    bare,
     aliases,
     ids: [foldId(doc.t), ...(doc.a ?? []).map(foldId)],
     desc,

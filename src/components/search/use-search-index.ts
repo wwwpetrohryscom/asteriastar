@@ -31,6 +31,7 @@ type Stage = "idle" | "loading" | "partial" | "ready" | "error";
 
 let coreCache: SearchDoc[] | null = null;
 let tailCache: SearchDoc[] | null = null;
+let tailFailed = false;
 let started = false;
 
 const listeners = new Set<() => void>();
@@ -73,8 +74,11 @@ function begin() {
       notify();
     })
     .catch(() => {
-      // The catalogue failing is survivable — core still answers most queries.
-      tailCache = [];
+      // The catalogue failing is survivable — core still answers many queries —
+      // but it must not be reported as a complete index, or the UI would state
+      // "no results" for a query the missing 6,000 documents would have
+      // answered.
+      tailFailed = true;
       notify();
     });
 }
@@ -82,15 +86,20 @@ function begin() {
 export interface SearchIndexState {
   docs: SearchDoc[];
   stage: Stage;
+  /** True when the catalogue shard failed and only the core index is present. */
+  degraded: boolean;
   /** Begin loading. Safe to call repeatedly, and cheap after the first call. */
   prime: () => void;
 }
 
-function snapshot(): { docs: SearchDoc[]; stage: Stage } {
-  if (errored && !coreCache) return { docs: [], stage: "error" };
-  if (coreCache && tailCache) return { docs: [...coreCache, ...tailCache], stage: "ready" };
-  if (coreCache) return { docs: coreCache, stage: "partial" };
-  return { docs: [], stage: started ? "loading" : "idle" };
+function snapshot(): { docs: SearchDoc[]; stage: Stage; degraded: boolean } {
+  if (errored && !coreCache) return { docs: [], stage: "error", degraded: false };
+  if (coreCache && tailCache) return { docs: [...coreCache, ...tailCache], stage: "ready", degraded: false };
+  // Core present, catalogue permanently failed: usable, but incomplete, and
+  // said so rather than passed off as settled.
+  if (coreCache && tailFailed) return { docs: coreCache, stage: "ready", degraded: true };
+  if (coreCache) return { docs: coreCache, stage: "partial", degraded: false };
+  return { docs: [], stage: started ? "loading" : "idle", degraded: false };
 }
 
 export function useSearchIndex(): SearchIndexState {

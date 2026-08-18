@@ -1,29 +1,29 @@
 {
   "version": 1,
-  "total": 7718,
-  "checksum": "06b7f303",
+  "total": 7723,
+  "checksum": "ed68c307",
   "shards": [
     {
       "shard": "core",
-      "count": 1650,
-      "checksum": "524d45e1",
+      "count": 1656,
+      "checksum": "3bdbe67f",
       "path": "/search-index/core.json"
     },
     {
       "shard": "catalogue",
-      "count": 6068,
-      "checksum": "58b34561",
+      "count": 6067,
+      "checksum": "2469b26d",
       "path": "/search-index/catalogue.json"
     }
   ],
   "groups": {
-    "reference": 108,
-    "deep-sky": 895,
-    "solar-system": 312,
+    "reference": 107,
+    "deep-sky": 897,
+    "solar-system": 313,
     "history": 330,
-    "observatories": 238,
-    "stars-exoplanets": 4446,
-    "missions": 590,
+    "observatories": 239,
+    "stars-exoplanets": 4447,
+    "missions": 591,
     "science": 330,
     "data": 221,
     "tools": 95,

@@ -55,8 +55,55 @@ function trim(text: string | undefined): string | undefined {
   return `${(lastSpace > 60 ? cut.slice(0, lastSpace) : cut).trimEnd()}…`;
 }
 
-/** Dedupe, drop empties, and drop aliases identical to the title. */
-function cleanAliases(title: string, raw: (string | undefined | null)[]): string[] | undefined {
+/**
+ * Expand a catalogue designation into the forms a visitor actually types.
+ *
+ * "Messier 1" and "M1" are the same designation by definition, but the graph
+ * stores whichever form the source used — the Crab Nebula carries "Messier 1"
+ * and nothing else, so the query "M1" reached it only as a weak prefix match
+ * behind M10, M100 and M101. This adds the missing spelling of a designation
+ * that already exists; it never invents one.
+ */
+function expandDesignations(aliases: string[]): string[] {
+  const out: string[] = [];
+  for (const a of aliases) {
+    out.push(a);
+    const long = a.match(/^(Messier|Caldwell)\s*(\d+)$/i);
+    if (long) {
+      out.push(`${long[1][0].toUpperCase()}${long[2]}`);
+      continue;
+    }
+    const short = a.match(/^(M|C)\s*(\d+)$/);
+    if (short) out.push(`${short[1] === "M" ? "Messier" : "Caldwell"} ${short[2]}`);
+  }
+  return out;
+}
+
+/**
+ * Stellar spectral classes look like catalogue designations and are not.
+ *
+ * The exoplanet catalogue mirrors `hostSpectralType` onto host-star aliases, so
+ * 228 host stars carried "M1", "K2 V", "M4.5" as their only alias — and
+ * identifier folding collapses "M4.5" to "m45", putting seven red dwarfs at the
+ * same exact-identifier tier as Messier 45. A shared physical property must
+ * never be indexed as an identity.
+ *
+ * The filter is applied BY SOURCE, not by pattern: "M1" is a spectral class on
+ * a star and the Crab Nebula's Messier designation on a nebula, and the strings
+ * are identical. Only star-like types can carry a spectral class, so only they
+ * are filtered — a pattern-only rule silently deleted Messier numbers.
+ */
+const SPECTRAL_CLASS = /^[OBAFGKMLTY]\d?(\.\d)?\s*(I{1,3}V?|IV|V|VI)?$/i;
+
+/** Entity types for which a spectral-class-shaped alias is a property, not an id. */
+const SPECTRAL_TYPES = new Set(["star", "host_star", "planetary_system", "exoplanet"]);
+
+/** Dedupe, drop empties, drop aliases identical to the title, drop non-identities. */
+function cleanAliases(
+  title: string,
+  raw: (string | undefined | null)[],
+  entityType?: string,
+): string[] | undefined {
   const seen = new Set<string>();
   const titleKey = title.toLowerCase();
   const out: string[] = [];
@@ -64,9 +111,14 @@ function cleanAliases(title: string, raw: (string | undefined | null)[]): string
     if (!value) continue;
     const v = String(value).replace(/\s+/g, " ").trim();
     if (!v) continue;
+    if (entityType && SPECTRAL_TYPES.has(entityType) && SPECTRAL_CLASS.test(v)) continue;
+    // Dedupe on the identifier-folded form as well as the literal one, so the
+    // catalogue's "C 33" and our generated "C33" do not both ship.
     const key = v.toLowerCase();
-    if (key === titleKey || seen.has(key)) continue;
+    const idKey = key.replace(/[\s._/'-]+/g, "");
+    if (key === titleKey || seen.has(key) || seen.has(idKey)) continue;
     seen.add(key);
+    seen.add(idKey);
     out.push(v);
   }
   return out.length ? out : undefined;
@@ -113,7 +165,9 @@ function buildIdentifierMap(): Map<string, string[]> {
       ids.hr && `HR ${ids.hr}`,
       ids.gliese,
       r.scientificName as string,
-      r.constellationAbbr as string,
+      // NOT constellationAbbr: it is the constellation's identifier, not the
+      // star's, and aliasing all ~180 Orion stars to "Ori" makes the query
+      // "Ori" return 180 exact-identifier matches and no constellation.
     ]);
   }
 
@@ -144,7 +198,7 @@ function buildIdentifierMap(): Map<string, string[]> {
   for (const key of [
     "comets", "asteroids", "meteorites", "interstellarObjects", "satellites",
     "launchVehicles", "humanSpaceflight", "missionOperations", "timeDomain",
-    "dataArchives", "observatoryFrontier", "astrochemistry", "spacePolicy",
+    "dataArchives", "observatories", "observatoryFrontier", "astrochemistry", "spacePolicy",
     "astroinformatics", "solarPhysics", "skyCatalogs", "deepSkyEncyclopedia",
     "observationTechniques", "scientificAssistant", "liveScientificData",
   ]) {
@@ -246,10 +300,11 @@ export function buildSearchDocs(): SearchDoc[] {
       k: ENTITY_TYPE_LABELS[entity.type] ?? entity.type,
       g: groupForEntityType(entity.type),
       d: trim(entity.description),
-      a: cleanAliases(entity.name, [
-        ...(entity.aliases ?? []),
-        ...(identifiers.get(entity.id) ?? []),
-      ]),
+      a: cleanAliases(
+        entity.name,
+        expandDesignations([...(entity.aliases ?? []), ...(identifiers.get(entity.id) ?? [])]),
+        entity.type,
+      ),
       p: entityPriority(entity.type, Boolean(entity.entryPath)),
       ...(isCulturalType(entity.type) || entity.domain === "astrology" ? { c: 1 as const } : {}),
     });
@@ -379,7 +434,16 @@ function categoryGroup(sectionSlug: string, cultural: boolean): SearchGroupId {
  * route fails the build rather than shipping a dead search result.
  */
 const PLATFORM_PAGES: [string, string, string, SearchGroupId, string][] = [
-  ["Search", ROUTES.search, "Platform", "reference", "Search every catalogued object, topic, guide, and tool."],
+  // NOTE: /search is deliberately absent. It serves `noindex, follow`, it is
+  // reachable from the header on every page, and indexing the search page
+  // inside search itself is circular.
+  ["Solar System", ROUTES.solarSystem, "Encyclopedia", "solar-system", "Every planet, moon, and small body with measured data."],
+  ["Stars", ROUTES.stars, "Encyclopedia", "stars-exoplanets", "Catalogued stars with measured parameters and provenance."],
+  ["Deep sky", ROUTES.deepSky, "Encyclopedia", "deep-sky", "Messier, NGC, IC and Caldwell objects with catalogue data."],
+  ["Exoplanets", ROUTES.exoplanets, "Encyclopedia", "stars-exoplanets", "Archive-sourced planets and their host stars."],
+  ["Space exploration", ROUTES.exploration, "Encyclopedia", "missions", "Missions, programmes, and agencies as catalogued entities."],
+  ["Constellations", ROUTES.constellations, "Encyclopedia", "deep-sky", "All 88 IAU constellations with boundaries and bright stars."],
+  ["Observatories", ROUTES.observatories, "Encyclopedia", "observatories", "Ground and space observatories with their instruments."],
   ["Entity index", ROUTES.entityIndex, "Platform", "reference", "Every catalogued entity on the platform, by type."],
   ["Topic index", ROUTES.topicIndex, "Platform", "reference", "Every topic, grouped."],
   ["Explore", ROUTES.explore, "Platform", "reference", "Browse the knowledge graph by topic."],

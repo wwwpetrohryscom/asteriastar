@@ -160,6 +160,23 @@ export interface SearchHit { id: string; title: string; type: EntityType; domain
  * precedence — exact title, exact alias/identifier, title prefix, alias prefix
  * — is what this now implements.
  */
+/** Folded haystacks are stable per entity, so they are built once per process. */
+const apiHaystacks = new WeakMap<GraphEntity, ReturnType<typeof buildApiHaystacks>>();
+
+function buildApiHaystacks(e: GraphEntity) {
+  const title = fold(e.name);
+  const aliases = (e.aliases ?? []).map(fold);
+  const desc = fold(e.description ?? "");
+  return {
+    title,
+    bare: /^(the|a|an) /.test(title) ? title.slice(title.indexOf(" ") + 1) : "",
+    aliases,
+    ids: [foldId(e.name), foldId(e.id), ...(e.aliases ?? []).flatMap((a) => [foldId(a), fold(a)])],
+    desc,
+    all: [title, ...aliases, desc].join(" "),
+  };
+}
+
 export function searchEntities(params: URLSearchParams): { query: string; count: number; results: SearchHit[] } {
   const raw = (params.get("q") ?? "").trim();
   const type = params.get("type");
@@ -187,20 +204,12 @@ export function searchEntities(params: URLSearchParams): { query: string; count:
   if (domain) list = list.filter((e) => e.domain === domain);
 
   const rank = (e: GraphEntity, allowFuzzy: boolean): number => {
-    const aliases = (e.aliases ?? []).map(fold);
-    const idHaystacks = [foldId(e.name), ...(e.aliases ?? []).map(foldId), foldId(e.id)];
-    return rankDoc(
-      {
-        title: fold(e.name),
-        aliases,
-        ids: idHaystacks,
-        desc: fold(e.description ?? ""),
-        all: [fold(e.name), ...aliases, fold(e.description ?? "")].join(" "),
-      },
-      q,
-      qid,
-      allowFuzzy,
-    );
+    let h = apiHaystacks.get(e);
+    if (!h) {
+      h = buildApiHaystacks(e);
+      apiHaystacks.set(e, h);
+    }
+    return rankDoc(h, q, qid, allowFuzzy);
   };
 
   const collect = (allowFuzzy: boolean) =>

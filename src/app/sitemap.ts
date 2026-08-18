@@ -288,7 +288,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl(ROUTES.compare), changeFrequency: "weekly", priority: 0.6 },
     { url: absoluteUrl(ROUTES.learn), changeFrequency: "weekly", priority: 0.7 },
     { url: absoluteUrl(ROUTES.timelines), changeFrequency: "weekly", priority: 0.6 },
-    { url: absoluteUrl(ROUTES.search), changeFrequency: "monthly", priority: 0.5 },
     { url: absoluteUrl(ROUTES.community), changeFrequency: "weekly", priority: 0.6 },
     { url: absoluteUrl(ROUTES.openData), changeFrequency: "weekly", priority: 0.7 },
     { url: absoluteUrl(ROUTES.datasets), changeFrequency: "weekly", priority: 0.6 },

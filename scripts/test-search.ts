@@ -37,8 +37,8 @@ type Case = {
 
 /** The queries named in the product brief, plus the typo variants. */
 const CASES: Case[] = [
-  { q: "Sun", expect: "/sun", within: 3 },
-  { q: "Moon", expect: "moon", within: 3 },
+  { q: "Sun", expect: "/explore/entity/star/sun", within: 3, note: "leading-article title" },
+  { q: "Moon", expect: "/explore/entity/moon/the-moon", within: 3, note: "leading-article title" },
   { q: "Mars", expect: "mars", within: 2 },
   { q: "Jupiter", expect: "jupiter", within: 2 },
   { q: "M31", expect: "andromeda", within: 2, note: "Messier identifier" },
@@ -61,6 +61,12 @@ const CASES: Case[] = [
   { q: "Gaia DR3", expect: "gaia", within: 6 },
   { q: "Apollo 11", expect: "apollo-11", within: 3 },
   { q: "Voyager 1", expect: "voyager-1", within: 3 },
+
+  { q: "Milky Way", expect: "/explore/entity/galaxy/milky-way", within: 3, note: "leading-article title" },
+  { q: "HST", expect: "hubble", within: 3, note: "observatory abbreviation" },
+  { q: "GBT", expect: "green-bank", within: 3, note: "observatory abbreviation" },
+  { q: "M45", expect: "pleiades", within: 2, note: "must not collide with spectral class M4.5" },
+  { q: "M1", expect: "crab", within: 3, note: "must not collide with spectral class M1" },
 
   /* identifier forms that must normalise to the same thing */
   { q: "m 31", expect: "andromeda", within: 3, note: "spaced identifier" },

@@ -81,8 +81,10 @@ entity page's `generateMetadata` is generated this way.
 [`src/platform/search-core.ts`](../src/platform/search-core.ts) defines the
 typed search contract: providers (entities, relationships, datasets, learning
 paths, comparisons, guides, images, organizations, astronomers, missions), every
-result tracing back to a graph entity. Architecture only — the live engine is
-not implemented; the current static index is `src/lib/search.ts`.
+result tracing back to a graph entity. `platform/search-core.ts` remains the
+provider contract; the live engine is the build-time index under
+`scripts/search/build-docs.ts` plus the client-safe matcher in
+`src/lib/search/`, generated into `public/search-index/`.
 
 ## Components
 

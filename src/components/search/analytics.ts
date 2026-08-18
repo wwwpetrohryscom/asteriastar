@@ -20,6 +20,13 @@
  *
  * Every call is a no-op when the tracker is absent, so search works identically
  * with the script blocked, and nothing here can throw into the UI.
+ *
+ * KNOWN LIMIT, NOT FIXED HERE: the WebmasterID script auto-tracks pageviews
+ * including the full URL, and /search?q=… carries the query in that URL. This
+ * module withholding the query text therefore does NOT make the query private
+ * end to end. Closing that requires gating the site-wide tracker behind
+ * consent, which is a platform policy change rather than a search change — it
+ * is recorded in the PR as a required follow-up.
  */
 
 export type SearchEvent =
@@ -30,9 +37,15 @@ export type SearchEvent =
 
 type Props = Record<string, string | number | boolean>;
 
+/**
+ * The real vendor surface, confirmed against the served script rather than
+ * assumed: `window.WebmasterID.track()` takes ONE object and reads the event
+ * name from `event_name`. The previous two-argument shape here was a
+ * hand-written guess, so no custom event ever reached the endpoint.
+ */
 interface TrackerGlobal {
-  webmasterid?: { track?: (event: string, props?: Props) => void };
-  wmid?: { track?: (event: string, props?: Props) => void };
+  WebmasterID?: { track?: (payload: Props & { event_name: string }) => void };
+  webmasterid?: { track?: (payload: Props & { event_name: string }) => void };
 }
 
 /** Bucket a length so even the size of a query is coarse rather than exact. */
@@ -48,9 +61,9 @@ function send(event: SearchEvent, props: Props = {}): void {
   if (typeof window === "undefined") return;
   try {
     const g = window as unknown as TrackerGlobal;
-    const track = g.webmasterid?.track ?? g.wmid?.track;
+    const track = g.WebmasterID?.track ?? g.webmasterid?.track;
     if (typeof track !== "function") return;
-    track(event, props);
+    track({ event_name: event, ...props });
   } catch {
     // Analytics must never break search.
   }
