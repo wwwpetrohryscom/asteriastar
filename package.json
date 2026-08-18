@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "tsx scripts/generate-indexnow-key.ts",
+    "prebuild": "tsx scripts/generate-indexnow-key.ts && tsx scripts/build-search-index.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -18,6 +18,9 @@
     "content:audit": "tsx scripts/content-audit.ts",
     "content:report": "tsx scripts/content-audit.ts",
     "content:completion-audit": "tsx scripts/content-completion-audit.ts",
+    "search:index": "tsx scripts/build-search-index.ts",
+    "search:validate": "tsx scripts/validate-search-index.ts",
+    "search:test": "tsx scripts/test-search.ts",
     "precision:stars": "tsx scripts/precision/ingest-simbad-stars.ts && tsx scripts/precision/ingest-gaia-stars.ts",
     "precision:deep-sky": "tsx scripts/precision/ingest-deep-sky-simbad.ts && tsx scripts/precision/ingest-ned-galaxies.ts",
     "precision:small-bodies": "tsx scripts/precision/ingest-sbdb.ts",
@@ -27,7 +30,7 @@
     "refresh": "tsx scripts/refresh/refresh.ts",
     "refresh:test": "tsx scripts/refresh/refresh.test.ts",
     "refresh:validate": "tsx scripts/refresh/validate-config.ts",
-    "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts && tsx scripts/validate-content-completion.ts && tsx scripts/refresh/validate-config.ts && tsx scripts/data-health/validate-health.ts",
+    "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts && tsx scripts/validate-content-completion.ts && tsx scripts/refresh/validate-config.ts && tsx scripts/data-health/validate-health.ts && tsx scripts/validate-search-index.ts",
     "validate:completion": "tsx scripts/validate-content-completion.ts",
     "check:mobile": "tsx scripts/check-mobile-overflow.ts",
     "datahealth:validate": "tsx scripts/data-health/validate-health.ts"

@@ -1,4 +1,5 @@
 import { entities, relations, getEntityById, entityGraphPath, getConnectionsByDomain } from "@/knowledge-graph";
+import { fold, foldId, rankDoc, Tier } from "@/lib/search/match";
 import type { GraphEntity, GraphRelation, EntityType, EntityDomain, RelationType } from "@/knowledge-graph/schema";
 import { GRAPH_VERSION_INFO, GRAPH_RELEASED } from "@/knowledge-graph/version";
 import { traversalEngine } from "@/platform/data-engine/traversal-engine";
@@ -139,32 +140,98 @@ export function listRelationships(params: URLSearchParams) {
 
 /** Deterministic, non-semantic entity search: exact > prefix > substring on name/aliases/id. */
 export interface SearchHit { id: string; title: string; type: EntityType; domain: EntityDomain; path: string; summary?: string; score: number }
+/**
+ * Deterministic entity search.
+ *
+ * Ranking now runs through the same tier ladder as the on-site search
+ * (`lib/search/match`), so an API consumer and a visitor see results in the
+ * same order and the same normalisation applies to both: diacritics folded,
+ * Unicode apostrophes and dashes normalised to ASCII, and identifier
+ * separators collapsed so "M 31", "M-31" and "M31" are one query.
+ *
+ * BACKWARD COMPATIBILITY: the request parameters (`q`, `type`, `domain`,
+ * `limit`) and the response shape (`id`, `title`, `type`, `domain`, `path`,
+ * `summary`, `score`) are unchanged, and `score` remains a 0–100 integer.
+ *
+ * One ordering change is intentional: an exact alias match now outranks a
+ * title *prefix* match. The previous ladder scored a prefix (70) above an exact
+ * alias (65), so searching "M31" ranked every entity whose name merely begins
+ * with "m31" above the object actually designated M31. The documented
+ * precedence — exact title, exact alias/identifier, title prefix, alias prefix
+ * — is what this now implements.
+ */
 export function searchEntities(params: URLSearchParams): { query: string; count: number; results: SearchHit[] } {
-  const q = (params.get("q") ?? "").trim().toLowerCase();
+  const raw = (params.get("q") ?? "").trim();
   const type = params.get("type");
   const domain = params.get("domain");
   const limit = clampLimit(params.get("limit"), 20, 100);
-  if (!q) return { query: "", count: 0, results: [] };
-  const scoreOf = (e: GraphEntity): number => {
-    const name = e.name.toLowerCase();
-    const aliases = (e.aliases ?? []).map((a) => a.toLowerCase());
-    if (name === q || e.id.toLowerCase() === q) return 100;
-    if (name.startsWith(q)) return 70;
-    if (aliases.some((a) => a === q)) return 65;
-    if (name.includes(q)) return 40;
-    if (aliases.some((a) => a.includes(q))) return 30;
-    if (e.id.toLowerCase().includes(q)) return 20;
-    if ((e.scientificName ?? "").toLowerCase().includes(q)) return 25;
-    return 0;
+  if (!raw) return { query: "", count: 0, results: [] };
+
+  const q = fold(raw);
+  const qid = foldId(raw);
+
+  /** Tier → the 0–100 score the public API has always exposed. */
+  const SCORE: Record<number, number> = {
+    [Tier.TitleExact]: 100,
+    [Tier.AliasExact]: 90,
+    [Tier.TitlePrefix]: 70,
+    [Tier.AliasPrefix]: 55,
+    [Tier.WordPrefix]: 45,
+    [Tier.AllTokens]: 35,
+    [Tier.Substring]: 30,
+    [Tier.Fuzzy]: 10,
   };
+
   let list = entities;
   if (type) list = list.filter((e) => e.type === type);
   if (domain) list = list.filter((e) => e.domain === domain);
-  const scored = list.map((e) => ({ e, s: scoreOf(e) })).filter((x) => x.s > 0)
-    .sort((a, b) => b.s - a.s || a.e.name.localeCompare(b.e.name)).slice(0, limit);
+
+  const rank = (e: GraphEntity, allowFuzzy: boolean): number => {
+    const aliases = (e.aliases ?? []).map(fold);
+    const idHaystacks = [foldId(e.name), ...(e.aliases ?? []).map(foldId), foldId(e.id)];
+    return rankDoc(
+      {
+        title: fold(e.name),
+        aliases,
+        ids: idHaystacks,
+        desc: fold(e.description ?? ""),
+        all: [fold(e.name), ...aliases, fold(e.description ?? "")].join(" "),
+      },
+      q,
+      qid,
+      allowFuzzy,
+    );
+  };
+
+  const collect = (allowFuzzy: boolean) =>
+    list
+      .map((e) => ({ e, t: rank(e, allowFuzzy) }))
+      .filter((x) => x.t !== Tier.None);
+
+  // Strict first; typo tolerance only widens a query that found almost nothing,
+  // so a close spelling can never displace a real match.
+  let scored = collect(false);
+  if (scored.length < 3) {
+    const widened = collect(true);
+    if (widened.length > scored.length) scored = widened;
+  }
+
+  const ordered = scored
+    .sort((a, b) => b.t - a.t || a.e.name.length - b.e.name.length || a.e.name.localeCompare(b.e.name))
+    .slice(0, limit);
+
   return {
-    query: q, count: scored.length,
-    results: scored.map(({ e, s }) => ({ id: e.id, title: e.name, type: e.type, domain: e.domain, path: entityGraphPath(e), summary: e.description?.slice(0, 160), score: s })),
+    query: raw,
+    count: ordered.length,
+    results: ordered.map(({ e, t }) => ({
+      id: e.id,
+      title: e.name,
+      type: e.type,
+      domain: e.domain,
+      path: entityGraphPath(e),
+      summary: e.description?.slice(0, 160),
+      score: SCORE[t] ?? 0,
+    })),
   };
 }
 
