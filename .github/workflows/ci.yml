@@ -1,0 +1,54 @@
+name: CI
+
+# The repository's own gates, run on every pull request and every push to main.
+#
+# Until the migration these checks existed only on developer machines: the sole
+# status GitHub saw was the hosting provider's preview build. That made a
+# deployment provider the de-facto CI, and when the Vercel project was removed,
+# pull requests were left with no passing check at all.
+#
+# These gates are host-independent by design. They would run identically on
+# Netlify, on Vercel, or on no host at all, which is the point.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  gates:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          # Matches NODE_VERSION in netlify.toml so CI and the deploy build
+          # resolve the same toolchain.
+          node-version: 22
+          cache: npm
+      - run: npm ci
+
+      # Data integrity, content completion, refresh config, data health, search
+      # index, and the migration portability gate — the same chain the build
+      # runs behind `npm run validate`.
+      - name: Validate
+        run: npm run validate
+
+      - name: Type check
+        run: npx tsc --noEmit
+
+      - name: Lint
+        run: npm run lint
+
+      # The real proof: 9,200+ pages actually prerender. Runs last because it is
+      # the slowest and the cheaper gates above catch most failures first.
+      - name: Build
+        run: npm run build
