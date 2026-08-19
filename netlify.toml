@@ -117,22 +117,33 @@
     X-Robots-Tag = "noindex, nofollow"
 
 # ---------------------------------------------------------------------------
-# Redirects — apex → www, reproducing Vercel's behaviour exactly
+# Redirects — www → apex
 # ---------------------------------------------------------------------------
-# Vercel production served https://asteriastar.com with a 308 to
-# https://www.asteriastar.com. Netlify's built-in primary-domain redirect uses
-# 301; these explicit rules keep the status code — and therefore the method and
-# body semantics — identical to before. `force = true` is required so they win
-# over the prerendered pages.
+# CHANGED DELIBERATELY, and in the opposite direction to the original plan.
+#
+# Vercel production served www and 308'd the apex to it. That policy was going
+# to be reproduced exactly — until the Vercel deployment was removed while the
+# apex A record already pointed at Netlify, which left production down: the apex
+# had no certificate, and www answered Vercel's DEPLOYMENT_NOT_FOUND.
+#
+# The apex is now the primary domain, because it is the hostname the site has
+# always declared as canonical: every page's <link rel="canonical">, every
+# og:url, every JSON-LD url, and all 8,671 sitemap entries say
+# https://asteriastar.com. Under the old policy that canonical pointed at a host
+# that immediately redirected elsewhere — it was never self-referential. Serving
+# the apex makes it self-referential for the first time, and needs no content,
+# sitemap, or metadata change to do it.
+#
+# 308 is kept, matching the status code the previous production redirect used.
 
 [[redirects]]
-  from = "https://asteriastar.com/*"
-  to = "https://www.asteriastar.com/:splat"
+  from = "https://www.asteriastar.com/*"
+  to = "https://asteriastar.com/:splat"
   status = 308
   force = true
 
 [[redirects]]
-  from = "http://asteriastar.com/*"
-  to = "https://www.asteriastar.com/:splat"
+  from = "http://www.asteriastar.com/*"
+  to = "https://asteriastar.com/:splat"
   status = 308
   force = true
