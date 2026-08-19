@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Netlify build output: the adapter writes a copy of the server bundle,
+    // its traced node_modules, and the static publish tree here. Linting it
+    // reports thousands of problems in generated and third-party code, exactly
+    // as linting .next would.
+    ".netlify/**",
   ]),
 ]);
 
