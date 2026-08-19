@@ -38,17 +38,24 @@ jobs:
 
       # Data integrity, content completion, refresh config, data health, search
       # index, and the migration portability gate — the same chain the build
-      # runs behind `npm run validate`.
+      # runs behind `npm run validate`. Cheapest and most specific, so first.
       - name: Validate
         run: npm run validate
-
-      - name: Type check
-        run: npx tsc --noEmit
 
       - name: Lint
         run: npm run lint
 
-      # The real proof: 9,200+ pages actually prerender. Runs last because it is
-      # the slowest and the cheaper gates above catch most failures first.
+      # The real proof: 9,200+ pages actually prerender. It also runs Next's own
+      # TypeScript pass over the whole project.
       - name: Build
         run: npm run build
+
+      # AFTER the build, deliberately. Next generates the route-type globals
+      # (PageProps, LayoutProps, …) into .next/types during `next build`, so on a
+      # clean checkout `tsc --noEmit` fails with hundreds of "Cannot find name
+      # 'PageProps'" errors before anything has generated them. Running it here
+      # re-checks the whole tsconfig — scripts/ included — with those types
+      # present, and keeps the check meaningful if Next's built-in type checking
+      # is ever turned off.
+      - name: Type check
+        run: npx tsc --noEmit
