@@ -13,7 +13,7 @@ that are already working.
 
 | Asset | State | Needed for rollback |
 | --- | --- | --- |
-| Vercel project & production deployment | **intact and running** | yes — this is the rollback target |
+| Vercel project & production deployment | **intact and running** — `wwwpetrohryscoms-projects/asteriastar` | yes — this is the rollback target |
 | Vercel domain configuration for `asteriastar.com` and `www.asteriastar.com` | **left attached** | yes — required for Vercel to answer for the hostnames |
 | Vercel environment variables | **unchanged** | yes |
 | Vercel Git integration | **unchanged** | yes — a rebuild must remain possible |
