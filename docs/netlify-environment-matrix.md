@@ -11,7 +11,7 @@ search, WebmasterID, IndexNow, and GitHub workflows. Collected by scanning for
 | Variable | Required | Build | Functions | Browser | Secret | Source of truth |
 | --- | --- | --- | --- | --- | --- | --- |
 | `NEXT_PUBLIC_SITE_URL` | no (has fallback) | ✅ | ✅ | ✅ | no | `netlify.toml` → `[context.production.environment]` |
-| `INDEXNOW_KEY` | no (degrades safely) | ✅ | ✅ | ✖ | **yes** | Netlify env var, **production context only** |
+| `INDEXNOW_KEY` | no (degrades safely) | ✅ | ✅ | ✖ | **no — public by protocol** | Netlify env var, **production context only** |
 | `INDEXNOW_TRIGGER_TOKEN` | no | ✖ | ✅ | ✖ | **yes** | unset — optional guard on `/api/indexnow` |
 | `NEXT_PUBLIC_WEBMASTERID_SITE_ID` | no | ✅ | ✖ | ✅ | no | unset — code default `wm_knpkrkxcizuzoa0s` |
 | `NEXT_PUBLIC_WEBMASTERID_ENDPOINT` | no | ✅ | ✖ | ✅ | no | unset — code default (third-party ingest URL) |
@@ -30,14 +30,33 @@ in build logs, or in a `NEXT_PUBLIC_*` name.
 ## What was actually configured on Netlify
 
 ```
-INDEXNOW_KEY | scopes: builds,functions,runtime | contexts: production | secret: true
+INDEXNOW_KEY | contexts: production | secret: false
 ```
 
 Set with:
 
 ```
-netlify env:set INDEXNOW_KEY <key> --context production --secret
+netlify env:set INDEXNOW_KEY <key> --context production
 ```
+
+### Why `INDEXNOW_KEY` is *not* marked secret
+
+It was, at first — and that broke every production build, which is how the
+mistake was found rather than shipped.
+
+An IndexNow key is a **public verification token**, not a credential. The
+protocol requires it to be served at `/<key>.txt` on the site's own domain, so
+it has been committed at `public/c292fa58c74f45f9ad982e152b4f7c1c.txt` since
+2026-07-09 and is written out in `README.md`. Knowing the key grants nothing:
+IndexNow validates a submission against the key file hosted on the host being
+submitted for, so it is only usable by whoever already controls that host.
+
+Marking it secret told Netlify's secrets scanner to fail the build if the value
+appeared anywhere in the repository or build output — which it always will, in
+the file the protocol mandates. The scanner was right; the classification was
+wrong. It is now a normal production-scoped variable, and
+`SECRETS_SCAN_OMIT_KEYS = "INDEXNOW_KEY"` in `netlify.toml` records the reason
+so the mistake is not repeated. Scanning stays **enabled** for everything else.
 
 `NEXT_PUBLIC_SITE_URL` is **not** stored as a Netlify environment variable. It is
 declared in `netlify.toml` because it is not a secret and because keeping it in

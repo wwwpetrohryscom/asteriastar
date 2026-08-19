@@ -143,6 +143,13 @@ if (!existsSync(tomlPath)) {
   failures.push("netlify.toml is missing.");
 } else {
   const toml = readFileSync(tomlPath, "utf-8");
+  // Directive-only view of the file. netlify.toml documents in prose what must
+  // NOT be configured, and naming a setting in a comment must never be mistaken
+  // for setting it — the first version of this gate failed on its own comment.
+  const tomlDirectives0 = toml
+    .split("\n")
+    .filter((line) => !/^\s*#/.test(line))
+    .join("\n");
   const require_ = (needle: string, why: string) => {
     if (!toml.includes(needle)) failures.push(`netlify.toml is missing ${needle} — ${why}`);
   };
@@ -163,8 +170,18 @@ if (!existsSync(tomlPath)) {
       failures.push(`netlify.toml does not send X-Robots-Tag for ${ctx}; previews could be indexed.`);
     }
   }
-  if (toml.includes("INDEXNOW_KEY =")) {
-    failures.push("netlify.toml declares INDEXNOW_KEY; it must live only as a production-scoped Netlify env var.");
+  if (/^\s*INDEXNOW_KEY\s*=/m.test(tomlDirectives0)) {
+    failures.push("netlify.toml assigns INDEXNOW_KEY a value; it must live only as a production-scoped Netlify env var.");
+  }
+  // Secrets scanning must stay on. The IndexNow key is excluded BY NAME because
+  // it is a public verification token the protocol requires us to publish;
+  // turning the scanner off entirely would also stop it catching a real
+  // credential leak, which is a much worse trade than one named exclusion.
+  if (/^\s*SECRETS_SCAN_ENABLED\s*=\s*"false"/m.test(tomlDirectives0)) {
+    failures.push("netlify.toml disables secrets scanning wholesale; exclude specific keys or paths instead.");
+  }
+  if (!tomlDirectives0.includes('SECRETS_SCAN_OMIT_KEYS = "INDEXNOW_KEY"')) {
+    failures.push("netlify.toml no longer omits INDEXNOW_KEY from secrets scanning; production builds will fail on the protocol-required key file.");
   }
 }
 
