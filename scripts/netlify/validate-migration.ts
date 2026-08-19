@@ -150,23 +150,34 @@ if (!existsSync(tomlPath)) {
     .split("\n")
     .filter((line) => !/^\s*#/.test(line))
     .join("\n");
+  // Checked against the directive-only view, never the raw file: netlify.toml
+  // explains each of these settings in a comment directly above it, so matching
+  // the raw text would let a check pass on its own documentation.
   const require_ = (needle: string, why: string) => {
-    if (!toml.includes(needle)) failures.push(`netlify.toml is missing ${needle} — ${why}`);
+    if (!tomlDirectives0.includes(needle)) failures.push(`netlify.toml is missing ${needle} — ${why}`);
   };
   require_("@netlify/plugin-nextjs", "the official Next.js Runtime must be the adapter");
   require_('NEXT_PUBLIC_SITE_URL = "https://asteriastar.com"', "production canonical identity must be pinned");
   require_("Strict-Transport-Security", "HSTS parity with the previous production responses");
+  require_("Access-Control-Allow-Origin", "Vercel served CORS on all static content; browser clients of the public API depend on it");
+  // The cache-key rule is the one whose absence is silently wrong rather than
+  // visibly broken: without it every parameterised API response is served from
+  // a cache keyed on path alone, so callers get each other's answers.
+  require_('Netlify-Vary = "query"', "API responses must be cached per full query string, not per path");
+  if (!/for = "\/api\/\*"/.test(tomlDirectives0)) {
+    failures.push('netlify.toml has no [[headers]] rule for "/api/*"; the API cache key would ignore query parameters.');
+  }
   require_("status = 308", "the apex → www redirect must keep its original status code");
   // A publish directory set by hand fights the adapter.
-  if (/^\s*publish\s*=/m.test(toml)) {
+  if (/^\s*publish\s*=/m.test(tomlDirectives0)) {
     failures.push("netlify.toml sets `publish` by hand; the Next.js Runtime must resolve it.");
   }
   // Preview contexts must never be able to speak as production.
   for (const ctx of ["deploy-preview", "branch-deploy"]) {
-    if (!toml.includes(`[context.${ctx}]`)) {
+    if (!tomlDirectives0.includes(`[context.${ctx}]`)) {
       failures.push(`netlify.toml has no [context.${ctx}] build command; previews would emit production canonicals.`);
     }
-    if (!toml.includes(`[[context.${ctx}.headers]]`)) {
+    if (!tomlDirectives0.includes(`[[context.${ctx}.headers]]`)) {
       failures.push(`netlify.toml does not send X-Robots-Tag for ${ctx}; previews could be indexed.`);
     }
   }

@@ -258,9 +258,25 @@ async function checkHeaders() {
   const hsts = res.headers.get("strict-transport-security");
   // Only meaningful over TLS; skip on a local HTTP emulator.
   if (ORIGIN.startsWith("https://")) {
-    if (!hsts) fail("/", "Strict-Transport-Security is missing (production served max-age=63072000)");
-    else if (!/max-age=63072000/.test(hsts)) fail("/", `HSTS is "${hsts}", expected max-age=63072000`);
-    else pass("HSTS parity");
+    // Netlify enforces its own HSTS on *.netlify.app and will not let a site
+    // header rule weaken or replace it, so exact parity with the previous
+    // production value is not observable on a platform hostname. Assert the
+    // protection is present and at least as strong there, and require the exact
+    // value only on the canonical domain — where the netlify.toml rule applies
+    // and where the browser actually stores the policy.
+    const onPlatformHost = /\.(netlify\.app|vercel\.app)$/.test(new URL(ORIGIN).host);
+    const maxAge = Number(hsts?.match(/max-age=(\d+)/)?.[1] ?? 0);
+    if (!hsts) {
+      fail("/", "Strict-Transport-Security is missing (previous production served max-age=63072000)");
+    } else if (onPlatformHost) {
+      if (maxAge < 31536000) {
+        fail("/", `HSTS max-age=${maxAge} on the platform hostname is weaker than one year`);
+      } else {
+        pass(`HSTS present (${maxAge}s, platform-enforced) — exact parity is only checkable on the canonical domain`);
+      }
+    } else if (maxAge !== 63072000) {
+      fail("/", `HSTS is "${hsts}", expected max-age=63072000 to match the previous production value`);
+    } else pass("HSTS parity");
   }
   // The single most destructive way this migration could fail silently: the
   // preview-only noindex header escaping into production would deindex all

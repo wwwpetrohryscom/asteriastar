@@ -79,6 +79,42 @@
   for = "/*"
   [headers.values]
     Strict-Transport-Security = "max-age=63072000"
+    # Vercel served `Access-Control-Allow-Origin: *` on every static response —
+    # pages, assets, robots.txt, sitemap.xml, and the force-static Open Data
+    # endpoints (/api/v0/sources, /api/v0/openapi.json, …). It is a platform
+    # header there, not something the application emits, so browser clients of
+    # the public API depend on something Netlify does not provide by default.
+    # The site is entirely public and read-only, and `*` forbids credentialed
+    # requests by definition, so reproducing it site-wide is exact parity.
+    Access-Control-Allow-Origin = "*"
+
+# ---------------------------------------------------------------------------
+# API cache key — the query string MUST be part of it
+# ---------------------------------------------------------------------------
+# The Next.js Runtime sets, on every response it caches:
+#
+#   netlify-vary: query=__nextDataReq|_rsc, header=…, cookie=…
+#
+# That `query=` allow-list is right for App Router *pages*, which are keyed by
+# path and only need Next's own routing parameters in the cache key. It is
+# wrong for *route handlers*, whose entire contract is reading arbitrary query
+# parameters — and because it is an allow-list, every other parameter is
+# dropped from the key.
+#
+# Measured consequence on the candidate deploy, before this rule existed:
+# /api/v0/live-sky/sun?latitude=0&longitude=0 and ?latitude=60&longitude=25
+# both returned a cached answer computed for latitude=50.08, and the
+# no-parameter request returned a 200 instead of its 400 error contract. Every
+# parameterised endpoint served whichever answer was cached first for that path.
+#
+# `Netlify-Vary: query` with no allow-list means "the whole query string is part
+# of the cache key", which is what Vercel did and what these handlers require.
+# Scoped to /api/* on purpose: prerendered pages SHOULD stay query-insensitive,
+# so a ?utm_source= link still hits cache, exactly as before.
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Netlify-Vary = "query"
 
 # Non-production deploys must never be indexed, on whatever hostname Netlify
 # assigns them.

@@ -28,6 +28,8 @@ interface Snapshot {
   kind: ParityTarget["kind"];
   status: number;
   contentType: string;
+  /** Charset parameter, lower-cased; null when the response omits it. */
+  charset?: string | null;
   /** Only for redirects — the raw Location header. */
   location?: string;
   /** Semantic facts extracted per kind. */
@@ -107,10 +109,20 @@ async function snapshot(origin: string, target: ParityTarget): Promise<Snapshot>
   }
 
   base.status = res.status;
-  base.contentType = (res.headers.get("content-type") ?? "").split(";")[0].trim();
+  base.contentType = (res.headers.get("content-type") ?? "").split(";")[0].trim().toLowerCase();
+  // The charset parameter is tracked separately from the media type: HTTP
+  // parameter values are case-insensitive, and for application/json and
+  // application/manifest+json the spec already mandates UTF-8, so its presence
+  // or case is not a behavioural difference the way the media type is.
+  base.charset = (res.headers.get("content-type") ?? "")
+    .split(";").slice(1).join(";").match(/charset=([^;\s]+)/i)?.[1]?.toLowerCase() ?? null;
   for (const h of TRACKED_HEADERS) {
     const v = res.headers.get(h);
-    if (v) base.headers[h] = v;
+    if (!v) continue;
+    // Cache-Control differences that are only whitespace are not differences.
+    base.headers[h] = h === "cache-control"
+      ? v.split(",").map((d) => d.trim().toLowerCase()).filter(Boolean).sort().join(", ")
+      : v;
   }
   if (res.status >= 300 && res.status < 400) {
     base.location = stripOrigin(res.headers.get("location")) ?? undefined;
@@ -229,6 +241,12 @@ function compare(a: Snapshot[], b: Snapshot[]): Diff[] {
     }
     if (base.contentType !== cand.contentType) {
       diffs.push({ path: base.path, group: base.group, field: "contentType", baseline: base.contentType, candidate: cand.contentType, severity: "critical" });
+    }
+    if ((base.charset ?? null) !== (cand.charset ?? null)) {
+      // Advisory: the media types already matched (checked above), the bodies
+      // are compared byte-for-byte for protocol files, and every media type in
+      // this corpus either defines UTF-8 by spec or carries ASCII-only content.
+      diffs.push({ path: base.path, group: base.group, field: "contentType.charset", baseline: base.charset ?? null, candidate: cand.charset ?? null, severity: "warn" });
     }
     if (base.location !== cand.location) {
       diffs.push({ path: base.path, group: base.group, field: "location", baseline: base.location, candidate: cand.location, severity: "critical" });
