@@ -142,11 +142,39 @@ if (!apiHelpers) {
   if (!/"Netlify-Vary":\s*"query"/.test(apiHelpers)) {
     failures.push('src/platform/open-data/api.ts no longer declares `Netlify-Vary: "query"`; cached API responses would be keyed on path alone and callers would receive each other\'s answers.');
   }
+  // Vercel supplied CORS as a platform header on every static response, and a
+  // netlify.toml rule cannot reach the server function, so the public API has to
+  // declare it itself or browser clients lose cross-origin access to it.
+  if (!/"Access-Control-Allow-Origin":\s*"\*"/.test(apiHelpers)) {
+    failures.push("src/platform/open-data/api.ts no longer declares Access-Control-Allow-Origin; browser clients of the public Open Data API would lose cross-origin access.");
+  }
   for (const fn of ["apiResponse", "apiError"]) {
     const body = apiHelpers.slice(apiHelpers.indexOf(`export function ${fn}`));
     const end = body.indexOf("\nexport ", 1);
-    if (!/CACHE_KEY_IS_FULL_URL/.test(end > 0 ? body.slice(0, end) : body)) {
+    const fnBody = end > 0 ? body.slice(0, end) : body;
+    if (!fnBody.includes("...CACHE_KEY_IS_FULL_URL")) {
       failures.push(`${fn}() no longer spreads CACHE_KEY_IS_FULL_URL; its responses would be cached per path.`);
+    }
+    if (!fnBody.includes("...OPEN_DATA_CORS")) {
+      failures.push(`${fn}() no longer spreads OPEN_DATA_CORS; its responses would not be readable cross-origin.`);
+    }
+  }
+  // The public data exports are served by their own handlers, outside those two
+  // helpers, and are exactly the kind of file another site fetches directly.
+  for (const route of [
+    "app/data/graph.json/route.ts",
+    "app/data/graph.jsonld/route.ts",
+    "app/datasets/[slug]/csv/route.ts",
+    "app/datasets/[slug]/json/route.ts",
+  ]) {
+    const src = read.get(join(SRC, ...route.split("/")));
+    if (!src) {
+      failures.push(`src/${route} is missing.`);
+      // The SPREAD, not the identifier: an unused `import { OPEN_DATA_CORS }`
+      // left behind after the spread is deleted would satisfy a name-only check
+      // while the header stops being sent.
+    } else if (!src.includes("...OPEN_DATA_CORS")) {
+      failures.push(`src/${route} does not send OPEN_DATA_CORS; the export would not be readable cross-origin.`);
     }
   }
 }

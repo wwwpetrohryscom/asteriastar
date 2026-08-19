@@ -1,3 +1,4 @@
+import { OPEN_DATA_CORS } from "@/platform/open-data";
 import { DATASETS, getDataset, datasetToCsv } from "@/lib/datasets";
 
 /**
@@ -18,6 +19,6 @@ export async function GET(
   const dataset = getDataset(slug);
   if (!dataset) return new Response("Not found", { status: 404 });
   return new Response(datasetToCsv(dataset), {
-    headers: { "Content-Type": "text/csv; charset=utf-8" },
+    headers: { "Content-Type": "text/csv; charset=utf-8", ...OPEN_DATA_CORS },
   });
 }

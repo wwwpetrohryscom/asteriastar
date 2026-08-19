@@ -1,3 +1,4 @@
+import { OPEN_DATA_CORS } from "@/platform/open-data";
 import { DATASETS, getDataset, datasetRows } from "@/lib/datasets";
 
 /**
@@ -29,5 +30,5 @@ export async function GET(
       sources: dataset.sources,
     },
     entities: datasetRows(dataset),
-  });
+  }, { headers: { ...OPEN_DATA_CORS } });
 }

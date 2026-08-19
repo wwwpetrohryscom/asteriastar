@@ -81,6 +81,24 @@ export function apiMeta(opts: { provenance: string; license?: string; docs?: str
  */
 const CACHE_KEY_IS_FULL_URL = { "Netlify-Vary": "query" } as const;
 
+/**
+ * CORS for the public Open Data API.
+ *
+ * Vercel added `Access-Control-Allow-Origin: *` to every static response as a
+ * platform header, so browser clients of this API have always been able to read
+ * it cross-origin — without the application ever declaring it. Netlify does not,
+ * and a `netlify.toml` header rule cannot supply it here: those rules reach
+ * files in the publish directory (verified on /logo.svg and /favicon.ico) but
+ * not responses produced by the server function, which is what serves every
+ * route handler (verified on /api/v0/sources and /robots.txt).
+ *
+ * So the API declares its own CORS policy, which is where it belonged anyway:
+ * this is a public, read-only, credential-free API whose whole purpose is to be
+ * consumed by other people's software. `*` also forbids credentialed requests
+ * by definition, so it cannot leak anything a caller could not already fetch.
+ */
+export const OPEN_DATA_CORS = { "Access-Control-Allow-Origin": "*" } as const;
+
 /** A JSON response with the provenance envelope. Static data caches long; dynamic endpoints pass a shorter cacheControl. */
 export function apiResponse<T>(data: T, opts: { provenance: string; license?: string; count?: number; generatedAt?: string; source?: string; stale?: boolean; cacheControl?: string }): Response {
   const body = { meta: apiMeta(opts), ...(opts.count != null ? { count: opts.count } : {}), data };
@@ -90,6 +108,7 @@ export function apiResponse<T>(data: T, opts: { provenance: string; license?: st
       "Cache-Control": opts.cacheControl ?? "public, max-age=3600, stale-while-revalidate=86400",
       "X-Api-Version": API_VERSION,
       ...CACHE_KEY_IS_FULL_URL,
+      ...OPEN_DATA_CORS,
     },
   });
 }
@@ -99,7 +118,7 @@ export function apiError(status: number, message: string): Response {
     // An error response is as query-dependent as a success one: without this,
     // a cached 200 for one parameter set answers a request whose parameters are
     // invalid, and the 400 contract silently disappears.
-    status, headers: { "Content-Type": "application/json; charset=utf-8", ...CACHE_KEY_IS_FULL_URL },
+    status, headers: { "Content-Type": "application/json; charset=utf-8", ...CACHE_KEY_IS_FULL_URL, ...OPEN_DATA_CORS },
   });
 }
 
