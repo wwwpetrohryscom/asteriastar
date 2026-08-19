@@ -1,0 +1,3576 @@
+{
+  "origin": "https://www.asteriastar.com",
+  "capturedAt": "2026-08-19T21:50:37.533Z",
+  "snapshots": [
+    {
+      "path": "/",
+      "group": "home",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Asteria Star — Everything Above Earth",
+        "canonical": "/",
+        "ogUrl": "/",
+        "ogTitle": "Asteria Star — Everything Above Earth",
+        "description": "A knowledge platform for everything above Earth — astronomy, space, the night sky, celestial events, mythology, and astrology as a clearly separate cultural tradition.",
+        "robots": null,
+        "h1": [
+          "Everything Above Earth"
+        ],
+        "h2Count": 7,
+        "jsonLdTypes": [
+          "ImageObject",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 2,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 18,
+        "optimisedImages": 193
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/assistant/explain?id=planet:earth",
+      "group": "api-assistant",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "citations": [
+              {
+                "datasetIds": "…",
+                "entityIds": "…",
+                "id": "…",
+                "license": "…",
+                "notes": "…",
+                "organization": "…",
+                "provenanceIds": "…",
+                "source": "…",
+                "title": "…",
+                "type": "…",
+                "url": "…"
+              }
+            ],
+            "description": "string",
+            "entity": {
+              "href": "string",
+              "id": "string",
+              "name": "string",
+              "type": "string"
+            },
+            "links": [
+              {
+                "other": "…",
+                "relation": "…"
+              }
+            ],
+            "sources": [
+              "string"
+            ]
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/authority/data-health",
+      "group": "api-data-health",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "data": {
+            "asOf": "string",
+            "coverage": {
+              "byDomain": {
+                "deep-sky": "…",
+                "exoplanet": "…",
+                "mission": "…",
+                "small-body": "…",
+                "solar-system": "…",
+                "star": "…"
+              },
+              "bySource": {
+                "asteriastar-derived": "…",
+                "gaia": "…",
+                "jpl": "…",
+                "ned": "…",
+                "simbad": "…",
+                "wikidata": "…"
+              },
+              "byStatus": {
+                "calculated": "…",
+                "catalogued": "…",
+                "derived": "…",
+                "estimated": "…",
+                "measured": "…",
+                "modeled": "…"
+              },
+              "distinctBibcodes": "number",
+              "entities": "number",
+              "totalValues": "number",
+              "withBibcode": "number",
+              "withDoi": "number",
+              "withEpoch": "number",
+              "withReferenceFrame": "number",
+              "withRowReference": "number",
+              "withUncertainty": "number"
+            },
+            "derived": {
+              "byDomain": {
+                "deep-sky": "…",
+                "exoplanet": "…",
+                "mission": "…",
+                "solar-system": "…"
+              },
+              "byFormula": {
+                "bulk-density": "…",
+                "escape-velocity": "…",
+                "mission-duration": "…",
+                "mission-elapsed": "…",
+                "projected-axis-ratio": "…",
+                "surface-gravity": "…"
+              },
+              "inRegistry": "number",
+              "total": "number",
+              "withUncertainty": "number",
+              "withoutUncertainty": "number"
+            },
+            "freshness": {
+              "asOf": "string",
+              "rows": [
+                "…"
+              ]
+            },
+            "providers": [
+              {
+                "lastRetrieved": "…",
+                "provider": "…",
+                "rows": "…",
+                "snapshots": "…",
+                "status": "…"
+              }
+            ],
+            "quality": {
+              "bySourceAuthority": {
+                "database": "…",
+                "reference": "…",
+                "space-agency": "…"
+              },
+              "curatedLaunchDatesConfirmed": "number",
+              "curatedPrimarySources": "number",
+              "disputed": "number",
+              "launchDateConflicts": "number",
+              "lowerLimits": "number",
+              "missionPrimaryConflicts": "number",
+              "missionsPrimaryConfirmed": "number",
+              "missionsUnverifiedByPrimary": "number",
+              "missionsWithStructuredData": "number",
+              "secondarySourced": "number",
+              "upperLimits": "number",
+              "withoutUncertainty": "number"
+            }
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/authority/mission-primary",
+      "group": "api-mission-primary",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "data": {
+            "conflicts": [
+              {
+                "committedValue": "…",
+                "field": "…",
+                "missionId": "…",
+                "primaryValue": "…",
+                "sourceTitle": "…",
+                "sourceUrl": "…"
+              }
+            ],
+            "meta": {
+              "launchDateConflicts": "number",
+              "launchDatesConfirmedByPrimary": "number",
+              "massConflicts": "number",
+              "massesConfirmedByPrimary": "number",
+              "reachable": "number",
+              "retrievedAt": "string",
+              "sources": "number",
+              "withCatalogueLaunchDate": "number",
+              "withWikidataMass": "number"
+            },
+            "wikidataMigration": [
+              {
+                "confirmed_by_primary": "…",
+                "conflict": "…",
+                "field": "…",
+                "rejected": "…",
+                "retained_secondary": "…",
+                "superseded_by_primary": "…",
+                "total": "…"
+              }
+            ]
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/citations?limit=3",
+      "group": "api-citations",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "count": "number",
+            "items": [
+              {
+                "authors": "…",
+                "date": "…",
+                "doi": "…",
+                "entityIds": "…",
+                "id": "…",
+                "notes": "…",
+                "organization": "…",
+                "provenanceIds": "…",
+                "publication": "…",
+                "title": "…",
+                "type": "…",
+                "url": "…"
+              }
+            ],
+            "limit": "number",
+            "offset": "number",
+            "total": "number"
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/contribution-guidelines",
+      "group": "api-contrib",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "data": {
+            "principle": "string",
+            "roles": [
+              {
+                "capabilities": "…",
+                "description": "…",
+                "id": "…",
+                "label": "…"
+              }
+            ],
+            "security": [
+              {
+                "description": "…",
+                "id": "…",
+                "label": "…",
+                "stage": "…"
+              }
+            ],
+            "states": [
+              {
+                "description": "…",
+                "id": "…",
+                "label": "…",
+                "next": "…"
+              }
+            ],
+            "types": [
+              {
+                "description": "…",
+                "id": "…",
+                "impact": "…",
+                "label": "…",
+                "requiredTargets": "…",
+                "requiresSource": "…",
+                "track": "…"
+              }
+            ]
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/api/v0/contribution-types",
+      "group": "api-contrib",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "contributionTypes": [
+              {
+                "description": "…",
+                "id": "…",
+                "impact": "…",
+                "label": "…",
+                "optionalTargets": "…",
+                "proposesNew": "…",
+                "requiredTargets": "…",
+                "requiresImageProvenance": "…",
+                "requiresSource": "…",
+                "track": "…"
+              }
+            ],
+            "count": "number"
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/api/v0/datasets",
+      "group": "api-datasets",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "count": "number",
+            "datasets": [
+              {
+                "attribution": "…",
+                "description": "…",
+                "formats": "…",
+                "generatedAt": "…",
+                "id": "…",
+                "license": "…",
+                "recordCount": "…",
+                "schemaVersion": "…",
+                "sources": "…",
+                "status": "…",
+                "title": "…",
+                "updatePolicy": "…",
+                "version": "…"
+              }
+            ]
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/api/v0/entities?limit=3",
+      "group": "api-entities",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "count": "number",
+            "items": [
+              {
+                "aliases": "…",
+                "catalogNumbers": "…",
+                "description": "…",
+                "domain": "…",
+                "id": "…",
+                "name": "…",
+                "path": "…",
+                "sources": "…",
+                "type": "…"
+              }
+            ],
+            "limit": "number",
+            "offset": "number",
+            "total": "number"
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/entities/definitely-not-a-real-entity-xyz",
+      "group": "api-error-404",
+      "kind": "json",
+      "status": 404,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "error": {
+            "message": "string",
+            "status": "number"
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "error",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/entities/planet:earth",
+      "group": "api-entity-by-id",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "data": {
+            "description": "string",
+            "domain": "string",
+            "id": "string",
+            "name": "string",
+            "path": "string",
+            "relationships": [
+              {
+                "direction": "…",
+                "other": "…",
+                "relation": "…"
+              }
+            ],
+            "sources": [
+              "string"
+            ],
+            "type": "string"
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/entities/planet:earth/provenance",
+      "group": "api-provenance",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "data": {
+            "count": "number",
+            "entityId": "string",
+            "provenanceSchemaVersion": "string",
+            "values": []
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/images?limit=3",
+      "group": "api-images",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "count": "number",
+            "items": [
+              {
+                "id": "…",
+                "imageType": "…",
+                "license": "…",
+                "objectName": "…",
+                "path": "…",
+                "publicationYear": "…",
+                "source": "…",
+                "title": "…"
+              }
+            ],
+            "total": "number"
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/live-sky/moon",
+      "group": "api-live-sky",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "atIso": "string",
+            "calculationNotes": "string",
+            "envelope": {
+              "confidence": "string",
+              "generatedAt": "string",
+              "licenseNotes": "string",
+              "provenance": "string",
+              "source": [
+                "…"
+              ],
+              "stale": "boolean",
+              "status": "string",
+              "validFrom": "string",
+              "validUntil": "string"
+            },
+            "illuminationFraction": "number",
+            "illuminationPercent": "number",
+            "method": "string",
+            "objectEntityId": "string",
+            "phase": "string",
+            "phaseAngleDeg": "number",
+            "phaseName": "string",
+            "synodicAgeDays": "number",
+            "waxing": "boolean"
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string",
+            "stale": "boolean"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/live-sky/moon?latitude=50.08&longitude=14.44&date=2026-08-19",
+      "group": "api-live-sky",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "accuracyNotes": "string",
+            "calculationNotes": "string",
+            "envelope": {
+              "confidence": "string",
+              "generatedAt": "string",
+              "licenseNotes": "string",
+              "provenance": "string",
+              "source": [
+                "…"
+              ],
+              "stale": "boolean",
+              "status": "string",
+              "validFrom": "string",
+              "validUntil": "string"
+            },
+            "events": {
+              "lunarLowerTransit": {
+                "iso": "…",
+                "local": "…"
+              },
+              "lunarTransit": {
+                "altitudeDeg": "…",
+                "iso": "…",
+                "local": "…"
+              },
+              "moonrise": {
+                "azimuthDeg": "…",
+                "iso": "…",
+                "local": "…"
+              },
+              "moonset": {
+                "azimuthDeg": "…",
+                "iso": "…",
+                "local": "…"
+              }
+            },
+            "horizon": {
+              "aboveHorizonAtReferenceTime": "boolean",
+              "alwaysAboveHorizon": "boolean",
+              "alwaysBelowHorizon": "boolean",
+              "multipleEventsSameDay": "boolean",
+              "noMoonrise": "boolean",
+              "noMoonset": "boolean"
+            },
+            "input": {
+              "date": "string",
+              "latitude": "number",
+              "longitude": "number",
+              "timezone": "string",
+              "utcOffsetMinutes": "number"
+            },
+            "method": "string",
+            "objectEntityId": "string",
+            "phase": {
+              "illuminationFraction": "number",
+              "illuminationPercent": "number",
+              "phase": "string",
+              "phaseAngleDeg": "number",
+              "phaseName": "string",
+              "synodicAgeDays": "number",
+              "waxing": "boolean"
+            },
+            "position": {
+              "altitudeDeg": "number",
+              "azimuthDeg": "number",
+              "declinationDeg": "number",
+              "distanceKm": "number",
+              "hourAngleDeg": "number",
+              "rightAscensionDeg": "number"
+            },
+            "referenceTimeIso": "string"
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string",
+            "stale": "boolean"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=86400",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/live-sky/planets?latitude=50.08&longitude=14.44&date=2026-08-19",
+      "group": "api-live-sky",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "accuracyNotes": "string",
+            "calculationNotes": "string",
+            "envelope": {
+              "confidence": "string",
+              "generatedAt": "string",
+              "licenseNotes": "string",
+              "provenance": "string",
+              "source": [
+                "…"
+              ],
+              "stale": "boolean",
+              "status": "string",
+              "validFrom": "string",
+              "validUntil": "string"
+            },
+            "input": {
+              "date": "string",
+              "latitude": "number",
+              "longitude": "number",
+              "timezone": "string",
+              "utcOffsetMinutes": "number"
+            },
+            "method": "string",
+            "planets": [
+              {
+                "events": "…",
+                "objectEntityId": "…",
+                "planetName": "…",
+                "position": "…",
+                "status": "…",
+                "visibility": "…"
+              }
+            ],
+            "referenceTimeIso": "string"
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string",
+            "stale": "boolean"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=86400",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/live-sky/planets?latitude=50&longitude=14&planet=pluto",
+      "group": "api-error-400",
+      "kind": "json",
+      "status": 400,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "error": {
+            "message": "string",
+            "status": "number"
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "error",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/live-sky/providers",
+      "group": "api-live-sky",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "connected": "number",
+            "count": "number",
+            "providers": [
+              {
+                "access": "…",
+                "dataKinds": "…",
+                "id": "…",
+                "license": "…",
+                "name": "…",
+                "organization": "…",
+                "sources": "…",
+                "status": "…",
+                "url": "…"
+              }
+            ]
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/api/v0/live-sky/sun",
+      "group": "api-error-400",
+      "kind": "json",
+      "status": 400,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "error": {
+            "message": "string",
+            "status": "number"
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "error",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/live-sky/sun?latitude=50.08&longitude=14.44&date=2026-08-19",
+      "group": "api-live-sky",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "calculationNotes": "string",
+            "duration": {
+              "astronomicalTwilightMinutes": "number",
+              "civilTwilightMinutes": "number",
+              "daylightMinutes": "number",
+              "nauticalTwilightMinutes": "number"
+            },
+            "envelope": {
+              "confidence": "string",
+              "generatedAt": "string",
+              "licenseNotes": "string",
+              "provenance": "string",
+              "source": [
+                "…"
+              ],
+              "stale": "boolean",
+              "status": "string",
+              "validFrom": "string",
+              "validUntil": "string"
+            },
+            "events": {
+              "astronomicalDawn": {
+                "iso": "…",
+                "local": "…"
+              },
+              "astronomicalDusk": {
+                "iso": "…",
+                "local": "…"
+              },
+              "civilDawn": {
+                "iso": "…",
+                "local": "…"
+              },
+              "civilDusk": {
+                "iso": "…",
+                "local": "…"
+              },
+              "nauticalDawn": {
+                "iso": "…",
+                "local": "…"
+              },
+              "nauticalDusk": {
+                "iso": "…",
+                "local": "…"
+              },
+              "solarNoon": {
+                "iso": "…",
+                "local": "…"
+              },
+              "sunrise": {
+                "iso": "…",
+                "local": "…"
+              },
+              "sunset": {
+                "iso": "…",
+                "local": "…"
+              }
+            },
+            "input": {
+              "date": "string",
+              "latitude": "number",
+              "longitude": "number",
+              "timezone": "string",
+              "utcOffsetMinutes": "number"
+            },
+            "method": "string",
+            "objectEntityId": "string",
+            "solar": {
+              "declinationDeg": "number",
+              "equationOfTimeMinutes": "number",
+              "noonElevationDeg": "number"
+            },
+            "status": [
+              "string"
+            ]
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string",
+            "stale": "boolean"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=86400",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/live-sky/tonight?latitude=50.08&longitude=14.44&date=2026-08-19",
+      "group": "api-live-sky",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "accuracyNotes": "string",
+            "calculationNotes": "string",
+            "envelope": {
+              "confidence": "string",
+              "generatedAt": "string",
+              "licenseNotes": "string",
+              "provenance": "string",
+              "source": [
+                "…"
+              ],
+              "stale": "boolean",
+              "status": "string",
+              "validFrom": "string",
+              "validUntil": "string"
+            },
+            "input": {
+              "date": "string",
+              "latitude": "number",
+              "longitude": "number",
+              "timezone": "string",
+              "utcOffsetMinutes": "number"
+            },
+            "method": "string",
+            "moon": {
+              "currentAltitudeDeg": "number",
+              "currentAzimuthDeg": "number",
+              "illuminationPercent": "number",
+              "limitations": [],
+              "lunarTransit": {
+                "altitudeDeg": "…",
+                "iso": "…",
+                "local": "…"
+              },
+              "moonlightImpact": "string",
+              "moonrise": {
+                "azimuthDeg": "…",
+                "iso": "…",
+                "local": "…"
+              },
+              "moonset": {
+                "azimuthDeg": "…",
+                "iso": "…",
+                "local": "…"
+              },
+              "phaseName": "string"
+            },
+            "planets": [
+              {
+                "altitudeDeg": "…",
+                "apparentMagnitude": "…",
+                "azimuthDeg": "…",
+                "bestAltitudeDeg": "…",
+                "bestTimeIso": "…",
+                "limitingFactors": "…",
+                "objectEntityId": "…",
+                "planetName": "…",
+                "visibilityScore": "…",
+                "visibleTonight": "…"
+              }
+            ],
+            "recommendations": {
+              "bestDarkSkyWindow": "string",
+              "bestMoonObservingWindow": "string",
+              "notAvailable": [
+                "…"
+              ],
+              "topPlanets": [
+                "…"
+              ]
+            },
+            "referenceTimeIso": "string",
+            "summary": {
+              "bestOverallWindow": {
+                "endIso": "…",
+                "startIso": "…"
+              },
+              "darknessAvailable": "boolean",
+              "darknessMinutes": "number",
+              "limitations": [
+                "…"
+              ],
+              "locationStatus": "string",
+              "nightType": "string",
+              "observingDate": "string"
+            },
+            "sun": {
+              "astronomicalTwilight": {
+                "dawn": "…",
+                "dusk": "…"
+              },
+              "civilTwilight": {
+                "dawn": "…",
+                "dusk": "…"
+              },
+              "darknessWindows": [
+                "…"
+              ],
+              "daylightMinutes": "number",
+              "nauticalTwilight": {
+                "dawn": "…",
+                "dusk": "…"
+              },
+              "solarNoon": {
+                "iso": "…",
+                "local": "…"
+              },
+              "sunrise": {
+                "iso": "…",
+                "local": "…"
+              },
+              "sunset": {
+                "iso": "…",
+                "local": "…"
+              }
+            }
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string",
+            "stale": "boolean"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=86400",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/live/status",
+      "group": "api-live-status",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "byStatus": {
+              "cached": "number",
+              "computed": "number",
+              "connected": "number",
+              "planned": "number",
+              "stale": "number",
+              "unavailable": "number"
+            },
+            "connected": "number",
+            "planned": "number",
+            "providers": [
+              {
+                "category": "…",
+                "endpoint": "…",
+                "license": "…",
+                "name": "…",
+                "slug": "…",
+                "status": "…"
+              }
+            ],
+            "total": "number"
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/api/v0/openapi.json",
+      "group": "openapi",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "components": {
+            "schemas": {
+              "ApiEnvelope": {
+                "properties": "…",
+                "required": "…",
+                "type": "…"
+              },
+              "ApiMeta": {
+                "properties": "…",
+                "required": "…",
+                "type": "…"
+              },
+              "Entity": {
+                "properties": "…",
+                "required": "…",
+                "type": "…"
+              },
+              "Relationship": {
+                "properties": "…",
+                "required": "…",
+                "type": "…"
+              }
+            }
+          },
+          "info": {
+            "description": "string",
+            "license": {
+              "name": "string",
+              "url": "string"
+            },
+            "title": "string",
+            "version": "string"
+          },
+          "openapi": "string",
+          "paths": {
+            "/api/v0/assistant/compare": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/assistant/explain": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/assistant/path": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/citations": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/citations/{id}": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/contribution-guidelines": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/contribution-types": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/datasets": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/datasets/{id}": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/entities": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/entities/{id}": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/images": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/live-sky/moon": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/live-sky/planets": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/live-sky/providers": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/live-sky/sun": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/live-sky/tonight": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/openapi.json": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/relationships": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/review-states": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/search": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/sources": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            },
+            "/api/v0/traversal": {
+              "get": {
+                "description": "…",
+                "operationId": "…",
+                "parameters": "…",
+                "responses": "…",
+                "summary": "…",
+                "tags": "…"
+              }
+            }
+          },
+          "servers": [
+            {
+              "description": "string",
+              "url": "string"
+            }
+          ],
+          "tags": [
+            {
+              "name": "string"
+            }
+          ]
+        },
+        "keys": [
+          "components",
+          "info",
+          "openapi",
+          "paths",
+          "servers",
+          "tags"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/api/v0/relationships?limit=3",
+      "group": "api-relationships",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "count": "number",
+            "items": [
+              {
+                "confidence": "…",
+                "domain": "…",
+                "from": "…",
+                "id": "…",
+                "to": "…",
+                "type": "…"
+              }
+            ],
+            "limit": "number",
+            "offset": "number",
+            "total": "number"
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/review-states",
+      "group": "api-review-states",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "count": "number",
+            "states": [
+              {
+                "description": "…",
+                "id": "…",
+                "label": "…",
+                "next": "…"
+              }
+            ]
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/api/v0/search?q=jupiter&limit=3",
+      "group": "api-search",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "count": "number",
+            "query": "string",
+            "results": [
+              {
+                "domain": "…",
+                "id": "…",
+                "path": "…",
+                "score": "…",
+                "title": "…",
+                "type": "…"
+              }
+            ]
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/api/v0/sources",
+      "group": "api-sources",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "count": "number",
+            "sources": [
+              {
+                "authorityType": "…",
+                "country": "…",
+                "key": "…",
+                "name": "…",
+                "organization": "…",
+                "scope": "…",
+                "url": "…",
+                "usage": "…"
+              }
+            ]
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/api/v0/traversal?start=planet:earth&depth=1",
+      "group": "api-traversal",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "count": "number",
+          "data": {
+            "edges": [
+              {
+                "domain": "…",
+                "from": "…",
+                "to": "…",
+                "type": "…"
+              }
+            ],
+            "nodes": [
+              {
+                "distance": "…",
+                "id": "…",
+                "name": "…",
+                "path": "…",
+                "type": "…"
+              }
+            ],
+            "start": {
+              "description": "string",
+              "domain": "string",
+              "id": "string",
+              "name": "string",
+              "path": "string",
+              "sources": [
+                "…"
+              ],
+              "type": "string"
+            },
+            "truncated": "boolean",
+            "warnings": [
+              "string"
+            ]
+          },
+          "meta": {
+            "apiVersion": "string",
+            "attribution": "string",
+            "dataVersion": "string",
+            "docs": "string",
+            "generatedAt": "string",
+            "license": "string",
+            "provenance": "string",
+            "schemaVersion": "string",
+            "source": "string"
+          }
+        },
+        "keys": [
+          "count",
+          "data",
+          "meta"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=3600",
+        "strict-transport-security": "max-age=63072000"
+      }
+    },
+    {
+      "path": "/apple-icon.png",
+      "group": "apple-icon",
+      "kind": "asset",
+      "status": 200,
+      "contentType": "image/png",
+      "facts": {
+        "bytes": 16933
+      },
+      "headers": {
+        "content-type": "image/png",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/assistant/entity",
+      "group": "assistant-page",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Grounded Assistant — Explain · Asteria Star",
+        "canonical": "/assistant/entity",
+        "ogUrl": "/assistant/entity",
+        "ogTitle": "Grounded Assistant — Explain · Asteria Star",
+        "description": "A grounded explanation of any entity — what it is, its real relations, and its cited sources — assembled only from the knowledge graph. No language model; nothing generated.",
+        "robots": null,
+        "h1": [
+          "Explain an entity"
+        ],
+        "h2Count": 1,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 3,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 1,
+        "optimisedImages": 9
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "link": "</_next/static/media/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2?dpl=dpl_8pnGAPD5sfVbZjogoVjnyvEdYSzU>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2?dpl=dpl_8pnGAPD5sfVbZjogoVjnyvEdYSzU>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\""
+      }
+    },
+    {
+      "path": "/astronomy",
+      "group": "section",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Astronomy · Asteria Star",
+        "canonical": "/astronomy",
+        "ogUrl": "/astronomy",
+        "ogTitle": "Astronomy · Asteria Star",
+        "description": "Explore stars, galaxies, planets, and the objects that fill the universe — explained with scientific accuracy and built to cite authoritative sources.",
+        "robots": null,
+        "h1": [
+          "Astronomy"
+        ],
+        "h2Count": 2,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "CollectionPage",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 4,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 1,
+        "optimisedImages": 9
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/astronomy/dwarf-planets/ceres",
+      "group": "asteroid",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Ceres · Asteria Star",
+        "canonical": "/astronomy/dwarf-planets/ceres",
+        "ogUrl": "/astronomy/dwarf-planets/ceres",
+        "ogTitle": "Ceres · Asteria Star",
+        "description": "Ceres is the largest object in the asteroid belt and the only dwarf planet in the inner Solar System, studied up close by NASA&#x27;s Dawn mission.",
+        "robots": null,
+        "h1": [
+          "Ceres"
+        ],
+        "h2Count": 15,
+        "jsonLdTypes": [
+          "Article",
+          "BreadcrumbList",
+          "ImageObject",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 5,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 5,
+        "optimisedImages": 65
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/astronomy/planets/jupiter",
+      "group": "planet",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Jupiter · Asteria Star",
+        "canonical": "/astronomy/planets/jupiter",
+        "ogUrl": "/astronomy/planets/jupiter",
+        "ogTitle": "Jupiter · Asteria Star",
+        "description": "Jupiter is the largest planet in the Solar System — a giant ball of gas with a banded atmosphere, the Great Red Spot, and dozens of moons.",
+        "robots": null,
+        "h1": [
+          "Jupiter"
+        ],
+        "h2Count": 16,
+        "jsonLdTypes": [
+          "Article",
+          "BreadcrumbList",
+          "ImageObject",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 5,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 6,
+        "optimisedImages": 76
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/astronomy/space-missions/voyager-1",
+      "group": "mission",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Voyager 1 · Asteria Star",
+        "canonical": "/astronomy/space-missions/voyager-1",
+        "ogUrl": "/astronomy/space-missions/voyager-1",
+        "ogTitle": "Voyager 1 · Asteria Star",
+        "description": "Voyager 1 is a NASA probe launched in 1977 that explored Jupiter and Saturn and has since become the most distant human-made object, now in interstellar space.",
+        "robots": null,
+        "h1": [
+          "Voyager 1"
+        ],
+        "h2Count": 15,
+        "jsonLdTypes": [
+          "Article",
+          "BreadcrumbList",
+          "ImageObject",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 5,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 5,
+        "optimisedImages": 65
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/astronomy/stars",
+      "group": "category",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Stars · Asteria Star",
+        "canonical": "/astronomy/stars",
+        "ogUrl": "/astronomy/stars",
+        "ogTitle": "Stars · Asteria Star",
+        "description": "Luminous spheres of plasma powered by nuclear fusion.",
+        "robots": null,
+        "h1": [
+          "Stars"
+        ],
+        "h2Count": 12,
+        "jsonLdTypes": [
+          "Answer",
+          "Answer",
+          "Answer",
+          "Answer",
+          "BreadcrumbList",
+          "CollectionPage",
+          "FAQPage",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "Question",
+          "Question",
+          "Question",
+          "Question",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 5,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 1,
+        "optimisedImages": 9
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/astronomy/stars/sirius",
+      "group": "star",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Sirius · Asteria Star",
+        "canonical": "/astronomy/stars/sirius",
+        "ogUrl": "/astronomy/stars/sirius",
+        "ogTitle": "Sirius · Asteria Star",
+        "description": "Sirius is the brightest star in Earth&#x27;s night sky, a hot blue-white star in the constellation Canis Major and one of the Sun&#x27;s near neighbors.",
+        "robots": null,
+        "h1": [
+          "Sirius"
+        ],
+        "h2Count": 15,
+        "jsonLdTypes": [
+          "Article",
+          "BreadcrumbList",
+          "ImageObject",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 5,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 5,
+        "optimisedImages": 65
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/authority/data-health",
+      "group": "data-health-page",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Scientific Data Health · Asteria Star",
+        "canonical": "/authority/data-health",
+        "ogUrl": "/authority/data-health",
+        "ogTitle": "Scientific Data Health · Asteria Star",
+        "description": "Operator view of scientific-data health: coverage, freshness, provenance completeness, conflicts, derived values and provider status — every number computed from the live registries and committed snapshots.",
+        "robots": null,
+        "h1": [
+          "Scientific data health"
+        ],
+        "h2Count": 5,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 3,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 1,
+        "optimisedImages": 9
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "link": "</_next/static/media/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2?dpl=dpl_8pnGAPD5sfVbZjogoVjnyvEdYSzU>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2?dpl=dpl_8pnGAPD5sfVbZjogoVjnyvEdYSzU>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\""
+      }
+    },
+    {
+      "path": "/authority/data-health/sources",
+      "group": "data-health-page",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Data health — Sources · Asteria Star",
+        "canonical": "/authority/data-health/sources",
+        "ogUrl": "/authority/data-health/sources",
+        "ogTitle": "Data health — Sources · Asteria Star",
+        "description": "Every source-traced value by its authoritative source and authority type.",
+        "robots": null,
+        "h1": [
+          "Sources"
+        ],
+        "h2Count": 2,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 3,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 1,
+        "optimisedImages": 9
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "link": "</_next/static/media/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2?dpl=dpl_8pnGAPD5sfVbZjogoVjnyvEdYSzU>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2?dpl=dpl_8pnGAPD5sfVbZjogoVjnyvEdYSzU>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\""
+      }
+    },
+    {
+      "path": "/c292fa58c74f45f9ad982e152b4f7c1c.txt",
+      "group": "indexnow-key",
+      "kind": "text",
+      "status": 200,
+      "contentType": "text/plain",
+      "facts": {
+        "sha256": "f9175960076185b635a70f1cd7c8f8a87d1bfa468d3409337abb25e71b6727c4",
+        "bytes": 32,
+        "body": "c292fa58c74f45f9ad982e152b4f7c1c",
+        "lineCount": 1
+      },
+      "headers": {
+        "content-type": "text/plain; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/calculators",
+      "group": "calculator",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Scientific Calculators &amp; Simulation Platform · Asteria Star",
+        "canonical": "/calculators",
+        "ogUrl": "/calculators",
+        "ogTitle": "Scientific Calculators &amp; Simulation Platform · Asteria Star",
+        "description": "Every astronomy calculator under one scientific platform. Interactive calculators for orbital mechanics (escape velocity, orbital period, surface gravity, the Schwarzschild radius, the Hill and Roche limits), stellar physics (luminosity, blackbody radiation, the mass–luminosity relation, stellar lifetimes), photometry and distance (magnitudes, distance modulus, parallax, angular size and separation), exoplanets (equilibrium temperature, transit probability, the habitable zone), cosmology (redshift and Hubble distance), and telescopes (resolution, magnification, image scale, field of view). Each computes its published formula live from CODATA 2018 and IAU 2015 constants and your inputs — nothing is fabricated, and every formula is validated against a known result on each build.",
+        "robots": null,
+        "h1": [
+          "Scientific Calculators &amp; Simulation Platform"
+        ],
+        "h2Count": 4,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "CollectionPage",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 4,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 1,
+        "optimisedImages": 9
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/constellations/orion",
+      "group": "constellation",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Orion (Orionis) · Asteria Star",
+        "canonical": "/constellations/orion",
+        "ogUrl": "/constellations/orion",
+        "ogTitle": "Orion (Orionis) · Asteria Star",
+        "description": "Orion (Orionis) — The Hunter is one of the 88 modern constellations recognised by the International Astronomical Union.",
+        "robots": null,
+        "h1": [
+          "Orion"
+        ],
+        "h2Count": 15,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "ImageObject",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "Place",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 5,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 3,
+        "optimisedImages": 37
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/data/graph.json",
+      "group": "export-graph",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "entities": [
+            {
+              "description": "string",
+              "domain": "string",
+              "entryPath": "string",
+              "id": "string",
+              "name": "string",
+              "sources": [
+                "…"
+              ],
+              "type": "string"
+            }
+          ],
+          "relations": [
+            {
+              "confidence": "string",
+              "domain": "string",
+              "from": "string",
+              "id": "string",
+              "sources": [
+                "…"
+              ],
+              "to": "string",
+              "type": "string"
+            }
+          ],
+          "version": {
+            "datasetVersion": "string",
+            "entityCount": "number",
+            "graphVersion": "string",
+            "identifierScheme": "string",
+            "license": "string",
+            "relationCount": "number",
+            "released": "string",
+            "schemaVersion": "string"
+          }
+        },
+        "keys": [
+          "entities",
+          "relations",
+          "version"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/data/graph.jsonld",
+      "group": "export-jsonld",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/ld+json",
+      "facts": {
+        "shape": {
+          "@context": {
+            "@vocab": "string",
+            "description": "string",
+            "identifier": "string",
+            "name": "string"
+          },
+          "@graph": [
+            {
+              "@id": "string",
+              "@type": "string",
+              "belongs_to": [
+                "…"
+              ],
+              "description": "string",
+              "domain": "string",
+              "identifier": "string",
+              "name": "string"
+            }
+          ],
+          "version": {
+            "datasetVersion": "string",
+            "entityCount": "number",
+            "graphVersion": "string",
+            "identifierScheme": "string",
+            "license": "string",
+            "relationCount": "number",
+            "released": "string",
+            "schemaVersion": "string"
+          }
+        },
+        "keys": [
+          "@context",
+          "@graph",
+          "version"
+        ]
+      },
+      "headers": {
+        "content-type": "application/ld+json; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/datasets",
+      "group": "dataset",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Datasets · Asteria Star",
+        "canonical": "/datasets",
+        "ogUrl": "/datasets",
+        "ogTitle": "Datasets · Asteria Star",
+        "description": "Open, machine-readable datasets generated from the Asteria Star knowledge graph — stars, planets, galaxies, missions, telescopes, and more, free to reuse.",
+        "robots": null,
+        "h1": [
+          "Datasets"
+        ],
+        "h2Count": 128,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "CollectionPage",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 4,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 1,
+        "optimisedImages": 9
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/developers/api",
+      "group": "developer",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "API Reference · Asteria Star",
+        "canonical": "/developers/api",
+        "ogUrl": "/developers/api",
+        "ogTitle": "API Reference · Asteria Star",
+        "description": "The Asteria Star Open Data API (v0): a read-only, deterministic, engine-backed JSON API. Every response carries a provenance envelope. No authentication, no rate limits, no write endpoints.",
+        "robots": null,
+        "h1": [
+          "API reference"
+        ],
+        "h2Count": 5,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "CollectionPage",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebAPI",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 5,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 1,
+        "optimisedImages": 9
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/discover",
+      "group": "hub",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Discover · Asteria Star",
+        "canonical": "/discover",
+        "ogUrl": "/discover",
+        "ogTitle": "Discover · Asteria Star",
+        "description": "Curated paths through the Asteria Star knowledge graph — featured objects, missions, and connections to start exploring everything above Earth.",
+        "robots": null,
+        "h1": [
+          "Discover"
+        ],
+        "h2Count": 3,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "CollectionPage",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 4,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 1,
+        "optimisedImages": 9
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/encyclopedia/timeline",
+      "group": "entry",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Timeline · Asteria Star",
+        "canonical": "/encyclopedia/timeline",
+        "ogUrl": "/encyclopedia/timeline",
+        "ogTitle": "Timeline · Asteria Star",
+        "description": "A chronological thread through astronomy&#x27;s milestones.",
+        "robots": null,
+        "h1": [
+          "Timeline"
+        ],
+        "h2Count": 11,
+        "jsonLdTypes": [
+          "Answer",
+          "Answer",
+          "Answer",
+          "BreadcrumbList",
+          "CollectionPage",
+          "FAQPage",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "Question",
+          "Question",
+          "Question",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 5,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 1,
+        "optimisedImages": 9
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/entity-index",
+      "group": "index",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Entity Index · Asteria Star",
+        "canonical": "/entity-index",
+        "ogUrl": "/entity-index",
+        "ogTitle": "Entity Index · Asteria Star",
+        "description": "A complete, searchable A–Z index of every entity in the Asteria Star knowledge graph — stars, planets, galaxies, missions, telescopes, mythology, and more.",
+        "robots": null,
+        "h1": [
+          "Entity index"
+        ],
+        "h2Count": 1,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "CollectionPage",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 4,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 1,
+        "optimisedImages": 9
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/exoplanets/kepler-452-b",
+      "group": "exoplanet",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Kepler-452 b · Asteria Star",
+        "canonical": "/exoplanets/kepler-452-b",
+        "ogUrl": "/exoplanets/kepler-452-b",
+        "ogTitle": "Kepler-452 b · Asteria Star",
+        "description": "Kepler-452 b — exoplanet facts, host star, orbit, and discovery from the NASA Exoplanet Archive.",
+        "robots": null,
+        "h1": [
+          "Kepler-452 b"
+        ],
+        "h2Count": 10,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "CreativeWork",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 4,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 1,
+        "optimisedImages": 9
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/explore",
+      "group": "hub",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Explore · Asteria Star",
+        "canonical": "/explore",
+        "ogUrl": "/explore",
+        "ogTitle": "Explore · Asteria Star",
+        "description": "Explore everything above Earth through the Asteria Star knowledge graph — browse stars, planets, galaxies, missions, telescopes, constellations, mythology, and more.",
+        "robots": null,
+        "h1": [
+          "Explore the universe"
+        ],
+        "h2Count": 3,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "CollectionPage",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 4,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 1,
+        "optimisedImages": 9
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/explore/entity/galaxy/andromeda-galaxy",
+      "group": "galaxy",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Andromeda Galaxy — Galaxy · Asteria Star",
+        "canonical": "/explore/entity/galaxy/andromeda-galaxy",
+        "ogUrl": "/explore/entity/galaxy/andromeda-galaxy",
+        "ogTitle": "Andromeda Galaxy — Galaxy · Asteria Star",
+        "description": "The nearest large spiral galaxy to the Milky Way and the most distant object readily visible to the naked eye.",
+        "robots": null,
+        "h1": [
+          "Andromeda Galaxy"
+        ],
+        "h2Count": 14,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "CollectionPage",
+          "ImageObject",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 5,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 9,
+        "optimisedImages": 63
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/explore/entity/launch_vehicle/falcon-9",
+      "group": "rocket",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Falcon 9 — Launch vehicle · Asteria Star",
+        "canonical": "/explore/entity/launch_vehicle/falcon-9",
+        "ogUrl": "/explore/entity/launch_vehicle/falcon-9",
+        "ogTitle": "Falcon 9 — Launch vehicle · Asteria Star",
+        "description": "Falcon 9 is a partially reusable two-stage orbital launch vehicle developed and operated by SpaceX.",
+        "robots": null,
+        "h1": [
+          "Falcon 9"
+        ],
+        "h2Count": 13,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "CollectionPage",
+          "ImageObject",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 5,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 9,
+        "optimisedImages": 63
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/explore/entity/moon/europa",
+      "group": "moon",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Europa — Moon · Asteria Star",
+        "canonical": "/explore/entity/moon/europa",
+        "ogUrl": "/explore/entity/moon/europa",
+        "ogTitle": "Europa — Moon · Asteria Star",
+        "description": "Europa is one of the four Galilean moons of Jupiter, covered by a shell of water ice.",
+        "robots": null,
+        "h1": [
+          "Europa"
+        ],
+        "h2Count": 14,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "CollectionPage",
+          "ImageObject",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 5,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 9,
+        "optimisedImages": 63
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/explore/entity/nebula/orion-nebula",
+      "group": "nebula",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Orion Nebula — Nebula · Asteria Star",
+        "canonical": "/explore/entity/nebula/orion-nebula",
+        "ogUrl": "/explore/entity/nebula/orion-nebula",
+        "ogTitle": "Orion Nebula — Nebula · Asteria Star",
+        "description": "A diffuse emission nebula and active star-forming region, one of the brightest nebulae visible to the naked eye.",
+        "robots": null,
+        "h1": [
+          "Orion Nebula"
+        ],
+        "h2Count": 14,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "CollectionPage",
+          "ImageObject",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 5,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 9,
+        "optimisedImages": 63
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/favicon.ico",
+      "group": "favicon",
+      "kind": "asset",
+      "status": 200,
+      "contentType": "image/vnd.microsoft.icon",
+      "facts": {
+        "bytes": 4995
+      },
+      "headers": {
+        "content-type": "image/vnd.microsoft.icon",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/icon.svg",
+      "group": "icon",
+      "kind": "asset",
+      "status": 200,
+      "contentType": "image/svg+xml",
+      "facts": {
+        "bytes": 1401
+      },
+      "headers": {
+        "content-type": "image/svg+xml",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/images",
+      "group": "gallery",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Scientific Image Archive · Asteria Star",
+        "canonical": "/images",
+        "ogUrl": "/images",
+        "ogTitle": "Scientific Image Archive · Asteria Star",
+        "description": "A scientific image archive where every image has verified provenance. Asteria Star catalogues openly-licensed and public-domain imagery from NASA, ESA, ESO, STScI, the EHT, and others — recording each image&#x27;s source, instrument, license, and credit, and linking to the official archive.",
+        "robots": null,
+        "h1": [
+          "Every image has provenance"
+        ],
+        "h2Count": 6,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "CollectionPage",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 4,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 1,
+        "optimisedImages": 9
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/llms.txt",
+      "group": "llms",
+      "kind": "text",
+      "status": 200,
+      "contentType": "text/plain",
+      "facts": {
+        "sha256": "ea9dd667e897087da7c78932b748f66dcbe23c85bcb6e748ab6fbc609550cb8e",
+        "bytes": 179057,
+        "lineCount": 902
+      },
+      "headers": {
+        "content-type": "text/plain; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/logo.svg",
+      "group": "logo",
+      "kind": "asset",
+      "status": 200,
+      "contentType": "image/svg+xml",
+      "facts": {
+        "bytes": 1401
+      },
+      "headers": {
+        "content-type": "image/svg+xml",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/manifest.webmanifest",
+      "group": "manifest",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/manifest+json",
+      "facts": {
+        "shape": {
+          "background_color": "string",
+          "description": "string",
+          "display": "string",
+          "icons": [
+            {
+              "sizes": "string",
+              "src": "string",
+              "type": "string"
+            }
+          ],
+          "id": "string",
+          "name": "string",
+          "scope": "string",
+          "short_name": "string",
+          "start_url": "string",
+          "theme_color": "string"
+        },
+        "keys": [
+          "background_color",
+          "description",
+          "display",
+          "icons",
+          "id",
+          "name",
+          "scope",
+          "short_name",
+          "start_url",
+          "theme_color"
+        ]
+      },
+      "headers": {
+        "content-type": "application/manifest+json; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/observatories/very-large-telescope",
+      "group": "observatory",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Very Large Telescope — Telescope · Asteria Star",
+        "canonical": "/observatories/very-large-telescope",
+        "ogUrl": "/observatories/very-large-telescope",
+        "ogTitle": "Very Large Telescope — Telescope · Asteria Star",
+        "description": "ESO&#x27;s Very Large Telescope at Paranal comprises four 8.2-metre telescopes that can combine as an interferometer; it is among the most scientifically productive observatories on the ground.",
+        "robots": null,
+        "h1": [
+          "Very Large Telescope"
+        ],
+        "h2Count": 9,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "CreativeWork",
+          "ImageObject",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 5,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 3,
+        "optimisedImages": 37
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/opengraph-image",
+      "group": "og-image",
+      "kind": "asset",
+      "status": 200,
+      "contentType": "image/png",
+      "facts": {
+        "bytes": 2577262
+      },
+      "headers": {
+        "content-type": "image/png",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/robots.txt",
+      "group": "robots",
+      "kind": "text",
+      "status": 200,
+      "contentType": "text/plain",
+      "facts": {
+        "sha256": "f61da08a009d6eef60df9374f2eed607a90430f6153a391791146f69eef55da5",
+        "bytes": 131,
+        "body": "User-Agent: *\nAllow: /\nDisallow: /app/\nDisallow: /api/\n\nHost: https://asteriastar.com\nSitemap: https://asteriastar.com/sitemap.xml\n",
+        "lineCount": 8
+      },
+      "headers": {
+        "content-type": "text/plain; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/search-index/manifest.json",
+      "group": "search-index",
+      "kind": "json",
+      "status": 200,
+      "contentType": "application/json",
+      "facts": {
+        "shape": {
+          "checksum": "string",
+          "groups": {
+            "data": "number",
+            "deep-sky": "number",
+            "guides": "number",
+            "history": "number",
+            "missions": "number",
+            "observatories": "number",
+            "reference": "number",
+            "science": "number",
+            "solar-system": "number",
+            "stars-exoplanets": "number",
+            "tools": "number"
+          },
+          "shards": [
+            {
+              "checksum": "string",
+              "count": "number",
+              "path": "string",
+              "shard": "string"
+            }
+          ],
+          "total": "number",
+          "version": "number"
+        },
+        "keys": [
+          "checksum",
+          "groups",
+          "shards",
+          "total",
+          "version"
+        ]
+      },
+      "headers": {
+        "content-type": "application/json; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/sitemap.xml",
+      "group": "sitemap",
+      "kind": "xml",
+      "status": 200,
+      "contentType": "application/xml",
+      "facts": {
+        "locCount": 8671,
+        "hosts": [
+          "https://asteriastar.com"
+        ],
+        "imageCount": 1567,
+        "locSetSha256": "4710c5a5d0c3d03d105294167501c64e9112c7ca2be7369b65358db1149995a5"
+      },
+      "headers": {
+        "content-type": "application/xml",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/sky-guide/night-sky-tonight",
+      "group": "live-sky-page",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Night Sky Tonight · Asteria Star",
+        "canonical": "/sky-guide/night-sky-tonight",
+        "ogUrl": "/sky-guide/night-sky-tonight",
+        "ogTitle": "Night Sky Tonight · Asteria Star",
+        "description": "A guide to what&#x27;s visible after dark right now.",
+        "robots": null,
+        "h1": [
+          "Night Sky Tonight"
+        ],
+        "h2Count": 10,
+        "jsonLdTypes": [
+          "Answer",
+          "Answer",
+          "Answer",
+          "BreadcrumbList",
+          "CollectionPage",
+          "FAQPage",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "Question",
+          "Question",
+          "Question",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 5,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 1,
+        "optimisedImages": 9
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/solar-system/halleys-comet",
+      "group": "comet",
+      "kind": "page",
+      "status": 200,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Halley&#x27;s Comet — Comet · Asteria Star",
+        "canonical": "/solar-system/halleys-comet",
+        "ogUrl": "/solar-system/halleys-comet",
+        "ogTitle": "Halley&#x27;s Comet — Comet · Asteria Star",
+        "description": "Halley&#x27;s Comet: Periodic comet. Real data — physical characteristics, orbit, moons, and exploration — with sources and knowledge-graph connections.",
+        "robots": null,
+        "h1": [
+          "Halley&#x27;s Comet"
+        ],
+        "h2Count": 9,
+        "jsonLdTypes": [
+          "BreadcrumbList",
+          "ImageObject",
+          "ImageObject",
+          "ListItem",
+          "ListItem",
+          "ListItem",
+          "Organization",
+          "Thing",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 5,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 3,
+        "optimisedImages": 43
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/this-route-does-not-exist-xyz",
+      "group": "html-404",
+      "kind": "page",
+      "status": 404,
+      "contentType": "text/html",
+      "facts": {
+        "title": "Asteria Star — Everything Above Earth",
+        "canonical": "/",
+        "ogUrl": "/",
+        "ogTitle": "Asteria Star — Everything Above Earth",
+        "description": "A knowledge platform for everything above Earth — astronomy, space, the night sky, celestial events, mythology, and astrology as a clearly separate cultural tradition.",
+        "robots": "noindex",
+        "h1": [
+          "Lost in space"
+        ],
+        "h2Count": 1,
+        "jsonLdTypes": [
+          "ImageObject",
+          "Organization",
+          "WebSite"
+        ],
+        "jsonLdBlocks": 2,
+        "webmasterIdRefs": 2,
+        "webmasterSiteIds": [
+          "wm_knpkrkxcizuzoa0s"
+        ],
+        "vercelAppRefs": 0,
+        "netlifyAppRefs": 0,
+        "imageCount": 1,
+        "optimisedImages": 9
+      },
+      "headers": {
+        "content-type": "text/html; charset=utf-8",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    },
+    {
+      "path": "/twitter-image",
+      "group": "twitter-image",
+      "kind": "asset",
+      "status": 200,
+      "contentType": "image/png",
+      "facts": {
+        "bytes": 2577262
+      },
+      "headers": {
+        "content-type": "image/png",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      }
+    }
+  ]
+}

@@ -38,7 +38,9 @@
     "netlify:dev": "netlify dev",
     "netlify:build": "netlify build --context production",
     "netlify:smoke": "tsx scripts/netlify/smoke.ts",
-    "netlify:parity": "tsx scripts/netlify/parity-check.ts"
+    "netlify:parity": "tsx scripts/netlify/parity-check.ts",
+    "netlify:crawl": "tsx scripts/netlify/crawl.ts",
+    "netlify:perf": "tsx scripts/netlify/perf.ts"
   },
   "dependencies": {
     "next": "16.2.9",

@@ -1,0 +1,28 @@
+# Captured 2026-08-19T22:09:25Z
+--- NS asteriastar.com ---
+asteriastar.com.	210	IN	NS	dns2.registrar-servers.com.
+asteriastar.com.	210	IN	NS	dns1.registrar-servers.com.
+--- SOA asteriastar.com ---
+asteriastar.com.	2035	IN	SOA	dns1.registrar-servers.com. hostmaster.registrar-servers.com. 1786097409 43200 3600 604800 3601
+--- A asteriastar.com ---
+asteriastar.com.	209	IN	A	216.150.1.1
+--- AAAA asteriastar.com ---
+--- MX asteriastar.com ---
+asteriastar.com.	1800	IN	MX	15 eforward4.registrar-servers.com.
+asteriastar.com.	1800	IN	MX	10 eforward3.registrar-servers.com.
+asteriastar.com.	1800	IN	MX	10 eforward1.registrar-servers.com.
+asteriastar.com.	1800	IN	MX	10 eforward2.registrar-servers.com.
+asteriastar.com.	1800	IN	MX	20 eforward5.registrar-servers.com.
+--- TXT asteriastar.com ---
+asteriastar.com.	1799	IN	TXT	"v=spf1 include:spf.efwd.registrar-servers.com ~all"
+asteriastar.com.	1799	IN	TXT	"openai-domain-verification=dv-x0RZFKJdQOiu3zS0vYbAxT6o"
+asteriastar.com.	1799	IN	TXT	"google-site-verification=9RZdrDwjlVTCOFN1xxwtWOISfknaRz6IbaiLVgMH7uI"
+--- CAA asteriastar.com ---
+--- A www.asteriastar.com ---
+www.asteriastar.com.	210	IN	CNAME	9d8ba2f577984053.vercel-dns-016.com.
+9d8ba2f577984053.vercel-dns-016.com. 300 IN A	216.150.1.129
+9d8ba2f577984053.vercel-dns-016.com. 300 IN A	216.150.16.129
+--- AAAA www.asteriastar.com ---
+--- CNAME www.asteriastar.com ---
+www.asteriastar.com.	210	IN	CNAME	9d8ba2f577984053.vercel-dns-016.com.
+--- TXT www.asteriastar.com ---
