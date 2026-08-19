@@ -30,10 +30,17 @@
     "refresh": "tsx scripts/refresh/refresh.ts",
     "refresh:test": "tsx scripts/refresh/refresh.test.ts",
     "refresh:validate": "tsx scripts/refresh/validate-config.ts",
-    "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts && tsx scripts/validate-content-completion.ts && tsx scripts/refresh/validate-config.ts && tsx scripts/data-health/validate-health.ts && tsx scripts/validate-search-index.ts",
+    "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts && tsx scripts/validate-content-completion.ts && tsx scripts/refresh/validate-config.ts && tsx scripts/data-health/validate-health.ts && tsx scripts/validate-search-index.ts && tsx scripts/netlify/validate-migration.ts",
+    "validate:migration": "tsx scripts/netlify/validate-migration.ts",
     "validate:completion": "tsx scripts/validate-content-completion.ts",
     "check:mobile": "tsx scripts/check-mobile-overflow.ts",
-    "datahealth:validate": "tsx scripts/data-health/validate-health.ts"
+    "datahealth:validate": "tsx scripts/data-health/validate-health.ts",
+    "netlify:dev": "netlify dev",
+    "netlify:build": "netlify build --context production",
+    "netlify:smoke": "tsx scripts/netlify/smoke.ts",
+    "netlify:parity": "tsx scripts/netlify/parity-check.ts",
+    "netlify:crawl": "tsx scripts/netlify/crawl.ts",
+    "netlify:perf": "tsx scripts/netlify/perf.ts"
   },
   "dependencies": {
     "next": "16.2.9",
@@ -41,6 +48,7 @@
     "react-dom": "19.2.4"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.15.13",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
