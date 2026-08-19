@@ -262,10 +262,34 @@ async function checkHeaders() {
     else if (!/max-age=63072000/.test(hsts)) fail("/", `HSTS is "${hsts}", expected max-age=63072000`);
     else pass("HSTS parity");
   }
+  // The single most destructive way this migration could fail silently: the
+  // preview-only noindex header escaping into production would deindex all
+  // 8,671 URLs, and nothing else in the stack would look wrong. Checked on both
+  // a page and an API response, since header rules apply to function output too.
+  for (const path of ["/", "/astronomy/planets/jupiter", "/api/v0/sources", "/sitemap.xml"]) {
+    const r = await get(path);
+    const xrt = r.headers.get("x-robots-tag");
+    if (IS_PREVIEW) {
+      if (!xrt || !/noindex/i.test(xrt)) {
+        fail(path, `preview is missing X-Robots-Tag: noindex (got ${JSON.stringify(xrt)}) — a preview could be indexed`);
+      } else pass(`preview noindex on ${path}`);
+    } else if (xrt && /noindex/i.test(xrt)) {
+      fail(path, `PRODUCTION sends X-Robots-Tag: ${xrt} — this would deindex the site`);
+    } else pass(`no noindex header on ${path}`);
+  }
+
   const api = await get("/api/v0/sources");
   if (api.headers.get("access-control-allow-origin") !== "*") {
     fail("/api/v0/sources", "Open Data API lost its CORS allow-origin: *");
   } else pass("Open Data CORS preserved");
+
+  // The same check in the HTML itself: a production page must not carry a
+  // noindex robots meta tag.
+  const homeHtml = await (await get("/")).text();
+  const robotsMeta = homeHtml.match(/<meta name="robots" content="([^"]+)"/)?.[1];
+  if (!IS_PREVIEW && robotsMeta && /noindex/i.test(robotsMeta)) {
+    fail("/", `production page carries <meta name="robots" content="${robotsMeta}">`);
+  } else pass("robots meta safe");
 }
 
 // ---------------------------------------------------------------------------
