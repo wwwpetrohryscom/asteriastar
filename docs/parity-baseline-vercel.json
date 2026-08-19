@@ -1,6 +1,6 @@
 {
   "origin": "https://www.asteriastar.com",
-  "capturedAt": "2026-08-19T21:50:37.533Z",
+  "capturedAt": "2026-08-19T23:22:16.234Z",
   "snapshots": [
     {
       "path": "/",
@@ -36,9 +36,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
-        "strict-transport-security": "max-age=63072000"
-      }
+        "cache-control": "max-age=0, must-revalidate, public",
+        "strict-transport-security": "max-age=63072000",
+        "access-control-allow-origin": "*"
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/assistant/explain?id=planet:earth",
@@ -102,9 +104,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600",
+        "cache-control": "max-age=3600, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/authority/data-health",
@@ -225,9 +228,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600",
+        "cache-control": "max-age=3600, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/authority/mission-primary",
@@ -290,9 +294,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600",
+        "cache-control": "max-age=3600, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/citations?limit=3",
@@ -345,9 +350,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600",
+        "cache-control": "max-age=3600, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/contribution-guidelines",
@@ -414,10 +420,11 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
+        "cache-control": "max-age=3600, public, stale-while-revalidate=86400",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/contribution-types",
@@ -465,10 +472,11 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
+        "cache-control": "max-age=3600, public, stale-while-revalidate=86400",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/datasets",
@@ -519,10 +527,11 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
+        "cache-control": "max-age=3600, public, stale-while-revalidate=86400",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/entities?limit=3",
@@ -572,9 +581,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600",
+        "cache-control": "max-age=3600, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/entities/definitely-not-a-real-entity-xyz",
@@ -607,9 +617,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/entities/planet:earth",
@@ -656,9 +667,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600",
+        "cache-control": "max-age=3600, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/entities/planet:earth/provenance",
@@ -693,9 +705,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600",
+        "cache-control": "max-age=3600, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/images?limit=3",
@@ -742,9 +755,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600",
+        "cache-control": "max-age=3600, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/live-sky/moon",
@@ -802,9 +816,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600",
+        "cache-control": "max-age=3600, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/live-sky/moon?latitude=50.08&longitude=14.44&date=2026-08-19",
@@ -909,9 +924,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=86400",
+        "cache-control": "max-age=86400, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/live-sky/planets?latitude=50.08&longitude=14.44&date=2026-08-19",
@@ -979,9 +995,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=86400",
+        "cache-control": "max-age=86400, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/live-sky/planets?latitude=50&longitude=14&planet=pluto",
@@ -1014,9 +1031,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/live-sky/providers",
@@ -1064,10 +1082,11 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
+        "cache-control": "max-age=3600, public, stale-while-revalidate=86400",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/live-sky/sun",
@@ -1100,9 +1119,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/live-sky/sun?latitude=50.08&longitude=14.44&date=2026-08-19",
@@ -1211,9 +1231,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=86400",
+        "cache-control": "max-age=86400, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/live-sky/tonight?latitude=50.08&longitude=14.44&date=2026-08-19",
@@ -1362,9 +1383,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=86400",
+        "cache-control": "max-age=86400, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/live/status",
@@ -1418,10 +1440,11 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
+        "cache-control": "max-age=3600, public, stale-while-revalidate=86400",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/openapi.json",
@@ -1720,10 +1743,11 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
+        "cache-control": "max-age=3600, public, stale-while-revalidate=86400",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/relationships?limit=3",
@@ -1770,9 +1794,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600",
+        "cache-control": "max-age=3600, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/review-states",
@@ -1814,10 +1839,11 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
+        "cache-control": "max-age=3600, public, stale-while-revalidate=86400",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/search?q=jupiter&limit=3",
@@ -1862,9 +1888,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600",
+        "cache-control": "max-age=3600, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/sources",
@@ -1910,10 +1937,11 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600, stale-while-revalidate=86400",
+        "cache-control": "max-age=3600, public, stale-while-revalidate=86400",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/api/v0/traversal?start=planet:earth&depth=1",
@@ -1978,9 +2006,10 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=3600",
+        "cache-control": "max-age=3600, public",
         "strict-transport-security": "max-age=63072000"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/apple-icon.png",
@@ -1993,10 +2022,11 @@
       },
       "headers": {
         "content-type": "image/png",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": null
     },
     {
       "path": "/assistant/entity",
@@ -2036,10 +2066,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, no-cache, no-store, private",
         "strict-transport-security": "max-age=63072000",
-        "link": "</_next/static/media/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2?dpl=dpl_8pnGAPD5sfVbZjogoVjnyvEdYSzU>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2?dpl=dpl_8pnGAPD5sfVbZjogoVjnyvEdYSzU>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\""
-      }
+        "link": "</_next/static/media/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2?dpl=dpl_5Z2Zos7j4AFeMoxVPLNbJPE9PeXG>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2?dpl=dpl_5Z2Zos7j4AFeMoxVPLNbJPE9PeXG>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\""
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/astronomy",
@@ -2079,10 +2110,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/astronomy/dwarf-planets/ceres",
@@ -2125,10 +2157,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/astronomy/planets/jupiter",
@@ -2171,10 +2204,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/astronomy/space-missions/voyager-1",
@@ -2217,10 +2251,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/astronomy/stars",
@@ -2270,10 +2305,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/astronomy/stars/sirius",
@@ -2316,10 +2352,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/authority/data-health",
@@ -2359,10 +2396,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, no-cache, no-store, private",
         "strict-transport-security": "max-age=63072000",
-        "link": "</_next/static/media/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2?dpl=dpl_8pnGAPD5sfVbZjogoVjnyvEdYSzU>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2?dpl=dpl_8pnGAPD5sfVbZjogoVjnyvEdYSzU>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\""
-      }
+        "link": "</_next/static/media/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2?dpl=dpl_5Z2Zos7j4AFeMoxVPLNbJPE9PeXG>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2?dpl=dpl_5Z2Zos7j4AFeMoxVPLNbJPE9PeXG>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\""
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/authority/data-health/sources",
@@ -2403,10 +2441,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, no-cache, no-store, private",
         "strict-transport-security": "max-age=63072000",
-        "link": "</_next/static/media/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2?dpl=dpl_8pnGAPD5sfVbZjogoVjnyvEdYSzU>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2?dpl=dpl_8pnGAPD5sfVbZjogoVjnyvEdYSzU>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\""
-      }
+        "link": "</_next/static/media/0c89a48fa5027cee-s.p.2cyn07wtgehh0.woff2?dpl=dpl_5Z2Zos7j4AFeMoxVPLNbJPE9PeXG>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\", </_next/static/media/83afe278b6a6bb3c-s.p.2bn3s6zvc0dyp.woff2?dpl=dpl_5Z2Zos7j4AFeMoxVPLNbJPE9PeXG>; rel=preload; as=\"font\"; crossorigin=\"\"; type=\"font/woff2\""
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/c292fa58c74f45f9ad982e152b4f7c1c.txt",
@@ -2422,10 +2461,11 @@
       },
       "headers": {
         "content-type": "text/plain; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/calculators",
@@ -2465,10 +2505,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/constellations/orion",
@@ -2510,10 +2551,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/data/graph.json",
@@ -2568,10 +2610,11 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/data/graph.jsonld",
@@ -2619,10 +2662,11 @@
       },
       "headers": {
         "content-type": "application/ld+json; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/datasets",
@@ -2662,10 +2706,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/developers/api",
@@ -2707,10 +2752,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/discover",
@@ -2751,10 +2797,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/encyclopedia/timeline",
@@ -2802,10 +2849,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/entity-index",
@@ -2846,10 +2894,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/exoplanets/kepler-452-b",
@@ -2890,10 +2939,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/explore",
@@ -2933,10 +2983,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/explore/entity/galaxy/andromeda-galaxy",
@@ -2978,10 +3029,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/explore/entity/launch_vehicle/falcon-9",
@@ -3023,10 +3075,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/explore/entity/moon/europa",
@@ -3068,10 +3121,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/explore/entity/nebula/orion-nebula",
@@ -3113,10 +3167,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/favicon.ico",
@@ -3129,10 +3184,11 @@
       },
       "headers": {
         "content-type": "image/vnd.microsoft.icon",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": null
     },
     {
       "path": "/icon.svg",
@@ -3145,10 +3201,11 @@
       },
       "headers": {
         "content-type": "image/svg+xml",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": null
     },
     {
       "path": "/images",
@@ -3188,10 +3245,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/llms.txt",
@@ -3206,10 +3264,11 @@
       },
       "headers": {
         "content-type": "text/plain; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/logo.svg",
@@ -3222,10 +3281,11 @@
       },
       "headers": {
         "content-type": "image/svg+xml",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": null
     },
     {
       "path": "/manifest.webmanifest",
@@ -3267,10 +3327,11 @@
       },
       "headers": {
         "content-type": "application/manifest+json; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/observatories/very-large-telescope",
@@ -3312,10 +3373,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/opengraph-image",
@@ -3328,10 +3390,11 @@
       },
       "headers": {
         "content-type": "image/png",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": null
     },
     {
       "path": "/robots.txt",
@@ -3347,10 +3410,11 @@
       },
       "headers": {
         "content-type": "text/plain; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/search-index/manifest.json",
@@ -3395,10 +3459,11 @@
       },
       "headers": {
         "content-type": "application/json; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/sitemap.xml",
@@ -3416,10 +3481,11 @@
       },
       "headers": {
         "content-type": "application/xml",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": null
     },
     {
       "path": "/sky-guide/night-sky-tonight",
@@ -3467,10 +3533,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/solar-system/halleys-comet",
@@ -3512,10 +3579,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/this-route-does-not-exist-xyz",
@@ -3551,10 +3619,11 @@
       },
       "headers": {
         "content-type": "text/html; charset=utf-8",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": "utf-8"
     },
     {
       "path": "/twitter-image",
@@ -3567,10 +3636,11 @@
       },
       "headers": {
         "content-type": "image/png",
-        "cache-control": "public, max-age=0, must-revalidate",
+        "cache-control": "max-age=0, must-revalidate, public",
         "strict-transport-security": "max-age=63072000",
         "access-control-allow-origin": "*"
-      }
+      },
+      "charset": null
     }
   ]
 }
