@@ -23,7 +23,14 @@ function arg(name: string): string | undefined {
 const ORIGIN = (arg("origin") ?? "").replace(/\/$/, "");
 if (!ORIGIN) { console.error("usage: crawl --origin https://host [--limit N]"); process.exit(2); }
 const LIMIT = Number(arg("limit") ?? Infinity);
-const CONCURRENCY = Number(arg("concurrency") ?? 12);
+// Deliberately low. Crawling this site's 8,670 URLs at concurrency 14 got the
+// crawling IP rate-limited at Netlify's edge — and because that limit is scoped
+// to the account, it took every site on the account with it. A full crawl is a
+// verification tool, not a load test: it must never be the reason a real
+// visitor cannot reach a real site.
+const CONCURRENCY = Number(arg("concurrency") ?? 4);
+/** Milliseconds to pause between requests within a worker. */
+const DELAY_MS = Number(arg("delay") ?? 60);
 const OUT = arg("out");
 /** Hostnames a canonical URL must never use. */
 const PLATFORM_HOST = /\.(netlify\.app|vercel\.app|pages\.dev)$/;
@@ -106,12 +113,30 @@ async function main() {
   const results: Result[] = [];
   const queue = [...paths];
   let done = 0;
+  // Consecutive failures almost always mean the origin has started refusing us
+  // rather than that thousands of pages broke at once. Continuing in that state
+  // produces a report full of false failures and keeps hammering the origin.
+  let consecutiveFailures = 0;
+  let abortedReason: string | null = null;
+
   const worker = async () => {
     for (;;) {
+      if (abortedReason) return;
       const p = queue.shift();
       if (!p) return;
-      results.push(await check(p));
+      const r = await check(p);
+      results.push(r);
+      if (r.status === 0 || r.status === 429 || r.status >= 500) {
+        if (++consecutiveFailures >= 20) {
+          abortedReason = `aborted after ${consecutiveFailures} consecutive transport/5xx failures — the origin is refusing requests, not broken`;
+          console.error(`[crawl] ${abortedReason}`);
+          return;
+        }
+      } else {
+        consecutiveFailures = 0;
+      }
       if (++done % 500 === 0) console.log(`[crawl]   ${done}/${paths.length}`);
+      if (DELAY_MS > 0) await new Promise((r) => setTimeout(r, DELAY_MS));
     }
   };
   await Promise.all(Array.from({ length: CONCURRENCY }, worker));
@@ -140,6 +165,11 @@ async function main() {
     console.log(`[crawl] wrote ${OUT}`);
   }
 
+  if (abortedReason) {
+    console.error(`\n✗ Crawl incomplete: ${abortedReason}`);
+    console.error(`   ${results.length} of ${paths.length} URLs were checked. This is NOT a clean crawl.`);
+    process.exit(2);
+  }
   if (failures.length) {
     console.error(`\n✗ ${failures.length} problem(s):`);
     for (const f of failures.slice(0, 50)) console.error(`  ${f.status} ${f.path} — ${f.problem}`);
