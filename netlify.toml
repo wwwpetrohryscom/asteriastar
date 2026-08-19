@@ -21,6 +21,18 @@
   # Deploy Preview, and production builds are reproducible.
   NODE_VERSION = "22"
   NPM_FLAGS = "--no-audit --no-fund"
+  # INDEXNOW_KEY is a PUBLIC verification token, not a credential. The IndexNow
+  # protocol requires the key to be served at /<key>.txt on the site's own
+  # domain, so it is committed at public/c292fa58c74f45f9ad982e152b4f7c1c.txt and
+  # documented in the README. Knowing it grants nothing: IndexNow validates a
+  # submission against the file hosted on the host being submitted for.
+  #
+  # Netlify's secrets scanner is therefore guaranteed to "find" it — in the very
+  # file the protocol requires — and would fail every production build. Excluding
+  # the key by name is the correct resolution; suppressing the scanner wholesale
+  # (SECRETS_SCAN_ENABLED = "false") is not, because it would also stop it
+  # catching a genuine credential leak.
+  SECRETS_SCAN_OMIT_KEYS = "INDEXNOW_KEY"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"

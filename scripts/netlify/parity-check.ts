@@ -17,7 +17,7 @@
  * With only --baseline it records a snapshot. With both it compares them and
  * exits non-zero on any semantic difference.
  */
-import { writeFileSync, readFileSync, existsSync, mkdirSync } from "node:fs";
+import { writeFileSync, readFileSync, mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { createHash } from "node:crypto";
 import { PARITY_CORPUS, type ParityTarget } from "./parity-corpus.js";
