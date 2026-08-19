@@ -77,26 +77,48 @@ interface PageResult {
   status: number;
 }
 
-async function measure(origin: string): Promise<PageResult[]> {
-  const out: PageResult[] = [];
-  for (const p of PAGES) {
-    // A cache-busting query makes the first request a genuine cold path for that
-    // URL rather than whatever the CDN already had.
-    const bust = `${p.path}${p.path.includes("?") ? "&" : "?"}__perf=${out.length}-${process.pid}`;
-    const cold = await once(origin, bust);
-    const warm: Sample[] = [];
-    for (let i = 0; i < RUNS; i++) warm.push(await once(origin, p.path));
-    out.push({
-      path: p.path,
-      what: p.what,
-      coldTtfbMs: Math.round(cold.ttfbMs),
-      warmTtfbMedianMs: Math.round(median(warm.map((w) => w.ttfbMs))),
-      warmTotalMedianMs: Math.round(median(warm.map((w) => w.totalMs))),
-      bytes: warm[0].bytes,
-      status: warm[0].status,
-    });
+async function measurePage(origin: string, p: { path: string; what: string }, idx: number): Promise<PageResult> {
+  // A unique query makes this a genuine cache miss for that URL. It does NOT
+  // make the serverless function cold — that only happens once per origin — so
+  // "cold" here means "cold CDN cache", and the very first page measured on an
+  // origin additionally pays a function cold start.
+  const bust = `${p.path}${p.path.includes("?") ? "&" : "?"}__perf=${idx}-${process.pid}`;
+  const cold = await once(origin, bust);
+  const warm: Sample[] = [];
+  for (let i = 0; i < RUNS; i++) warm.push(await once(origin, p.path));
+  return {
+    path: p.path,
+    what: p.what,
+    coldTtfbMs: Math.round(cold.ttfbMs),
+    warmTtfbMedianMs: Math.round(median(warm.map((w) => w.ttfbMs))),
+    warmTotalMedianMs: Math.round(median(warm.map((w) => w.totalMs))),
+    bytes: warm[0].bytes,
+    status: warm[0].status,
+  };
+}
+
+/**
+ * Measure both origins page by page, alternating which one goes first.
+ *
+ * Measuring one origin fully and then the other is what makes a naive benchmark
+ * lie: the second origin is measured after the client, the DNS cache and the
+ * local network have all warmed up, and it looks faster for reasons that have
+ * nothing to do with the host. Interleaving shares that bias; alternating the
+ * order shares the remaining first-request penalty too.
+ */
+async function measureBoth(): Promise<{ base: PageResult[]; cand: PageResult[] }> {
+  const base: PageResult[] = [];
+  const cand: PageResult[] = [];
+  for (const [i, p] of PAGES.entries()) {
+    if (i % 2 === 0) {
+      base.push(await measurePage(BASELINE, p, i));
+      cand.push(await measurePage(CANDIDATE, p, i));
+    } else {
+      cand.push(await measurePage(CANDIDATE, p, i));
+      base.push(await measurePage(BASELINE, p, i));
+    }
   }
-  return out;
+  return { base, cand };
 }
 
 function pct(a: number, b: number) {
@@ -110,10 +132,7 @@ async function main() {
   console.log(`[perf] candidate ${CANDIDATE}`);
   console.log(`[perf] ${PAGES.length} pages × (1 cold + ${RUNS} warm)\n`);
 
-  // Interleave the two origins page-by-page so a change in local network
-  // conditions hits both rather than only whichever ran second.
-  const base = await measure(BASELINE);
-  const cand = await measure(CANDIDATE);
+  const { base, cand } = await measureBoth();
 
   const rows = base.map((b, i) => {
     const c = cand[i];
@@ -143,7 +162,9 @@ async function main() {
   const warmBase = median(rows.map((r) => r.warmTtfbMedianMs));
   const warmCand = median(rows.map((r) => r.cand.warmTtfbMedianMs));
   console.log(`\n[perf] median warm TTFB across pages: ${warmBase}ms → ${warmCand}ms (${pct(warmBase, warmCand)})`);
-  console.log("[perf] Measured from one client location; treat as a comparison between the two origins, not an absolute.");
+  console.log("[perf] Measured from one client location, origins interleaved page by page with alternating order.");
+  console.log("[perf] Treat these as a comparison between the two origins, not as absolute numbers.");
+  console.log("[perf] 'cold' = cold CDN cache for that URL; the first page measured per origin also pays a function cold start.");
 
   if (OUT) {
     mkdirSync(dirname(OUT), { recursive: true });
