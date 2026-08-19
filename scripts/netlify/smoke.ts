@@ -294,6 +294,44 @@ async function checkMedia() {
     pass(`next/image serving (${optimised.length} on homepage, 5 sampled)`);
   }
 
+  // Format negotiation, measured against production before the move: the app
+  // configures only `image/webp` (Next's default), so a browser advertising AVIF
+  // must still be served WebP, and a client advertising nothing must get the
+  // original type back. A different image CDN is exactly where this silently
+  // changes — either by ignoring Accept, or by "helpfully" serving AVIF that the
+  // application never opted into.
+  const sample = optimised[0];
+  if (sample) {
+    const negotiation: [string, RegExp][] = [
+      ["image/avif,image/webp,*/*", /^image\/webp$/],
+      ["image/webp,*/*", /^image\/webp$/],
+      ["*/*", /^image\/(jpeg|png)$/],
+    ];
+    let optimisedBytes = Infinity;
+    for (const [accept, wantType] of negotiation) {
+      const res = await get(sample, { headers: { accept, "user-agent": "asteriastar-netlify-smoke/1.0" } });
+      const ct = (res.headers.get("content-type") ?? "").split(";")[0].trim();
+      if (res.status !== 200) { fail(sample, `Accept:${accept} returned ${res.status}`); continue; }
+      if (!wantType.test(ct)) {
+        fail(sample, `Accept:${accept} produced "${ct}", expected ${wantType}`);
+      } else pass(`image negotiation ${accept} → ${ct}`);
+      const bytes = (await res.arrayBuffer()).byteLength;
+      if (accept.includes("webp")) optimisedBytes = Math.min(optimisedBytes, bytes);
+    }
+    // Optimisation must actually optimise. A CDN that passes the original
+    // through still returns 200 and the right content-type.
+    const originalPath = decodeURIComponent(sample.match(/[?&]url=([^&]+)/)?.[1] ?? "");
+    if (originalPath) {
+      const orig = await get(originalPath);
+      if (orig.status === 200) {
+        const originalBytes = (await orig.arrayBuffer()).byteLength;
+        if (optimisedBytes >= originalBytes) {
+          fail(sample, `optimised image (${optimisedBytes}B) is not smaller than the original ${originalPath} (${originalBytes}B) — optimisation is not happening`);
+        } else pass(`image optimisation ${(originalBytes / 1024).toFixed(0)}KB → ${(optimisedBytes / 1024).toFixed(0)}KB`);
+      }
+    }
+  }
+
   // A raw file from the 201 MB scientific media registry.
   const raw = home.match(/\/media\/[^"'?\\]+\.(?:avif|webp|jpg|png)/)?.[0];
   if (raw) {
