@@ -5,8 +5,9 @@ import { submitUrls, indexNowKey } from "@/lib/indexnow";
 /**
  * POST/GET /api/indexnow — submit the site's current sitemap URLs to IndexNow.
  *
- * Designed to be called by a post-deployment hook (a Vercel Deploy Hook, a CI
- * step, or the GitHub Action in .github/workflows/indexnow.yml). It reads the
+ * Designed to be called by a post-deployment hook — a CI step, a host's build
+ * hook, or the GitHub Action in .github/workflows/indexnow.yml, which is the
+ * mechanism actually in use and is deliberately host-independent. It reads the
  * IndexNow key from the environment and never exposes or hardcodes it.
  *
  * Triggering only ever resubmits our own public URLs, so it is safe to leave
