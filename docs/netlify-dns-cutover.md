@@ -24,6 +24,24 @@ Console verification, OpenAI domain verification) — none of which are hosting
 concerns, all of which break if the zone moves and they are not recreated exactly.
 Two record edits at Namecheap achieve the cutover with none of that risk.
 
+## 0b. One access setting to restore before cutover
+
+The site was created with the account's default `sso_login` (require a Netlify
+login to view). It was turned **off** on this site during migration so the
+candidate deployment could be tested over HTTP at all.
+
+Before cutover, set it to match the account's other production site
+(`globalcityintelligence`), which is the pattern already proven to work here:
+
+```sh
+netlify api updateSite --data '{"site_id":"21355df0-d3f8-4a27-98a3-115368ba7472","body":{"sso_login":true,"sso_login_context":"non_production"}}'
+```
+
+That leaves **production public** — which it must be — while restoring login
+protection on Deploy Previews and branch deploys. Verify afterwards that the
+production hostname still answers 200 before touching DNS; a site that requires
+a login would serve the public web a 401.
+
 ## 1. Gates that must be green before any DNS change
 
 Do not proceed until every one of these is satisfied. This is the checklist, not
@@ -78,6 +96,14 @@ routing; a `CNAME`'d subdomain can).
 
 Netlify will report the domains as awaiting DNS. That is the expected state until
 step 4.
+
+> **Order matters.** Step 3 must happen *before* step 4. Netlify only answers for
+> hostnames assigned to a site: if DNS is repointed first, apex and `www` reach
+> Netlify's load balancer as unknown hosts and get Netlify's own 404 page, not
+> the site — an outage caused purely by ordering. The `[[redirects]]` rules in
+> `netlify.toml` are subject to the same rule: a domain-level redirect from
+> `https://asteriastar.com/*` is inert until the apex is a domain alias of this
+> site.
 
 ## 4. The cutover — two record edits
 
