@@ -1,3 +1,4 @@
+import { OPEN_DATA_CORS } from "@/platform/open-data";
 import { buildGraphJson } from "@/lib/open-platform/graph-exports";
 
 /**
@@ -10,6 +11,6 @@ export const dynamic = "force-static";
 
 export function GET(): Response {
   return new Response(buildGraphJson(), {
-    headers: { "Content-Type": "application/json; charset=utf-8" },
+    headers: { "Content-Type": "application/json; charset=utf-8", ...OPEN_DATA_CORS },
   });
 }
