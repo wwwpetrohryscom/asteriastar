@@ -1,0 +1,102 @@
+# Netlify configuration for Asteria Star.
+#
+# The site is a Next.js 16 App Router application: ~9,200 prerendered pages,
+# 30 server-rendered routes, and 27 Open Data / Live Sky / provenance API
+# handlers. Everything below exists to reproduce the previous Vercel production
+# behaviour exactly — nothing here changes application semantics.
+#
+# Rendering is handled by the official Next.js Runtime (@netlify/plugin-nextjs,
+# the OpenNext-based adapter, pinned as a devDependency so local, preview, and
+# production builds all resolve the same version). The runtime derives the
+# publish directory, the server handler, and the Image CDN wiring from the Next
+# build output, so none of those are configured by hand here.
+
+[build]
+  command = "npm run build"
+  # `publish` is intentionally NOT set: the Next.js Runtime resolves it from the
+  # build output. Hard-coding it here would conflict with the adapter.
+
+[build.environment]
+  # Next.js 16 requires Node >= 20.9. Pinned to the current LTS so local,
+  # Deploy Preview, and production builds are reproducible.
+  NODE_VERSION = "22"
+  NPM_FLAGS = "--no-audit --no-fund"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+# ---------------------------------------------------------------------------
+# Deploy contexts
+# ---------------------------------------------------------------------------
+# Only production may speak as asteriastar.com. Canonical URLs, og:url, JSON-LD,
+# the sitemap, llms.txt and the OpenAPI server URL all derive from
+# NEXT_PUBLIC_SITE_URL, so pinning it per context is what keeps a Deploy Preview
+# from emitting production URLs — and production from ever emitting a
+# *.netlify.app URL.
+
+[context.production.environment]
+  # Explicit rather than relying on the in-code fallback. Same value the Vercel
+  # production deployment resolved to, so canonical identity is unchanged.
+  NEXT_PUBLIC_SITE_URL = "https://asteriastar.com"
+
+# Preview builds derive their own origin from Netlify's DEPLOY_PRIME_URL. The
+# interpolation happens in the build shell (netlify.toml does not expand
+# variables inside [*.environment] tables), which is why this is expressed as a
+# per-context build command rather than an environment value.
+[context.deploy-preview]
+  command = "NEXT_PUBLIC_SITE_URL=\"$DEPLOY_PRIME_URL\" npm run build"
+
+[context.branch-deploy]
+  command = "NEXT_PUBLIC_SITE_URL=\"$DEPLOY_PRIME_URL\" npm run build"
+
+# INDEXNOW_KEY is deliberately NOT declared here. It is stored as a Netlify
+# environment variable scoped to the production context only, so a preview or
+# branch deploy cannot notify a search engine even if /api/indexnow is called:
+# without the key the endpoint returns 503 and the submit script refuses to run.
+
+# ---------------------------------------------------------------------------
+# Headers — parity with the previous Vercel production responses
+# ---------------------------------------------------------------------------
+# Vercel added HSTS to every response automatically; Netlify does not, so it is
+# declared explicitly with the identical max-age (63072000 = 2 years). This is
+# the only header Vercel contributed that the application does not emit itself.
+# Cache-Control, CORS and Content-Type all come from the route handlers and from
+# Next.js, and are therefore already platform-portable.
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Strict-Transport-Security = "max-age=63072000"
+
+# Non-production deploys must never be indexed, on whatever hostname Netlify
+# assigns them.
+[[context.deploy-preview.headers]]
+  for = "/*"
+  [context.deploy-preview.headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+[[context.branch-deploy.headers]]
+  for = "/*"
+  [context.branch-deploy.headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+
+# ---------------------------------------------------------------------------
+# Redirects — apex → www, reproducing Vercel's behaviour exactly
+# ---------------------------------------------------------------------------
+# Vercel production served https://asteriastar.com with a 308 to
+# https://www.asteriastar.com. Netlify's built-in primary-domain redirect uses
+# 301; these explicit rules keep the status code — and therefore the method and
+# body semantics — identical to before. `force = true` is required so they win
+# over the prerendered pages.
+
+[[redirects]]
+  from = "https://asteriastar.com/*"
+  to = "https://www.asteriastar.com/:splat"
+  status = 308
+  force = true
+
+[[redirects]]
+  from = "http://asteriastar.com/*"
+  to = "https://www.asteriastar.com/:splat"
+  status = 308
+  force = true
