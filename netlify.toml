@@ -89,32 +89,20 @@
     Access-Control-Allow-Origin = "*"
 
 # ---------------------------------------------------------------------------
-# API cache key — the query string MUST be part of it
+# NOTE: the API cache key is NOT configured here
 # ---------------------------------------------------------------------------
-# The Next.js Runtime sets, on every response it caches:
+# It has to be, and is, declared by the responses themselves — see
+# CACHE_KEY_IS_FULL_URL in src/platform/open-data/api.ts.
 #
-#   netlify-vary: query=__nextDataReq|_rsc, header=…, cookie=…
+# A `[[headers]]` rule with `Netlify-Vary = "query"` for /api/* was tried first
+# and verified NOT to work: netlify.toml header rules apply to files in the
+# publish directory, not to responses produced by the Next.js server function,
+# which is what serves every route handler. The rule deployed cleanly, reported
+# as applied in the build log, and changed nothing — the collision was still
+# reproducible against the live deploy afterwards.
 #
-# That `query=` allow-list is right for App Router *pages*, which are keyed by
-# path and only need Next's own routing parameters in the cache key. It is
-# wrong for *route handlers*, whose entire contract is reading arbitrary query
-# parameters — and because it is an allow-list, every other parameter is
-# dropped from the key.
-#
-# Measured consequence on the candidate deploy, before this rule existed:
-# /api/v0/live-sky/sun?latitude=0&longitude=0 and ?latitude=60&longitude=25
-# both returned a cached answer computed for latitude=50.08, and the
-# no-parameter request returned a 200 instead of its 400 error contract. Every
-# parameterised endpoint served whichever answer was cached first for that path.
-#
-# `Netlify-Vary: query` with no allow-list means "the whole query string is part
-# of the cache key", which is what Vercel did and what these handlers require.
-# Scoped to /api/* on purpose: prerendered pages SHOULD stay query-insensitive,
-# so a ?utm_source= link still hits cache, exactly as before.
-[[headers]]
-  for = "/api/*"
-  [headers.values]
-    Netlify-Vary = "query"
+# Keep that in mind before adding any header rule here that is meant to affect a
+# dynamic route: confirm it on a real deploy rather than trusting the build log.
 
 # Non-production deploys must never be indexed, on whatever hostname Netlify
 # assigns them.

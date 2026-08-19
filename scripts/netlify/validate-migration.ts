@@ -127,6 +127,30 @@ if (!indexnowLib) {
     failures.push("src/lib/indexnow.ts no longer restricts submissions to the site's own host.");
   }
 }
+// ---------------------------------------------------------------------------
+// 5b. API responses must declare that their cache key is the full URL.
+// ---------------------------------------------------------------------------
+// Without this, Netlify's Next.js Runtime caches every route-handler response
+// under its path alone, and callers receive each other's answers — including on
+// the location-parameterised Live Sky endpoints. It is the one defect in this
+// migration that is silently wrong rather than visibly broken, so it is asserted
+// at the source rather than left to a deploy-time check.
+const apiHelpers = read.get(join(SRC, "platform", "open-data", "api.ts"));
+if (!apiHelpers) {
+  failures.push("src/platform/open-data/api.ts is missing.");
+} else {
+  if (!/"Netlify-Vary":\s*"query"/.test(apiHelpers)) {
+    failures.push('src/platform/open-data/api.ts no longer declares `Netlify-Vary: "query"`; cached API responses would be keyed on path alone and callers would receive each other\'s answers.');
+  }
+  for (const fn of ["apiResponse", "apiError"]) {
+    const body = apiHelpers.slice(apiHelpers.indexOf(`export function ${fn}`));
+    const end = body.indexOf("\nexport ", 1);
+    if (!/CACHE_KEY_IS_FULL_URL/.test(end > 0 ? body.slice(0, end) : body)) {
+      failures.push(`${fn}() no longer spreads CACHE_KEY_IS_FULL_URL; its responses would be cached per path.`);
+    }
+  }
+}
+
 const submitScript = readFileSync(join(SCRIPTS, "indexnow-submit.ts"), "utf-8");
 if (!submitScript.includes("host(SITE_URL)")) {
   failures.push("scripts/indexnow-submit.ts no longer scopes submissions to the configured site host.");
@@ -163,10 +187,9 @@ if (!existsSync(tomlPath)) {
   // The cache-key rule is the one whose absence is silently wrong rather than
   // visibly broken: without it every parameterised API response is served from
   // a cache keyed on path alone, so callers get each other's answers.
-  require_('Netlify-Vary = "query"', "API responses must be cached per full query string, not per path");
-  if (!/for = "\/api\/\*"/.test(tomlDirectives0)) {
-    failures.push('netlify.toml has no [[headers]] rule for "/api/*"; the API cache key would ignore query parameters.');
-  }
+  // The API cache key is asserted against the source that actually controls it
+  // (see below), not against netlify.toml — a header rule there does not reach
+  // the server function's responses.
   require_("status = 308", "the apex → www redirect must keep its original status code");
   // A publish directory set by hand fights the adapter.
   if (/^\s*publish\s*=/m.test(tomlDirectives0)) {

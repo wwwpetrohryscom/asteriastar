@@ -54,6 +54,33 @@ export function apiMeta(opts: { provenance: string; license?: string; docs?: str
   };
 }
 
+/**
+ * Cache-key declaration for every API response.
+ *
+ * RFC 9111 makes the *whole* request URI the cache key, query string included —
+ * which is what every one of these endpoints relies on: `?latitude=50&longitude=14`
+ * and `?latitude=60&longitude=25` are different questions with different answers.
+ *
+ * Netlify's Next.js Runtime overrides that default with
+ * `Netlify-Vary: query=__nextDataReq|_rsc`, an allow-list naming only Next's own
+ * routing parameters. That is correct for App Router pages, which are keyed by
+ * path — and wrong for route handlers, because an allow-list drops everything
+ * not named. Measured before this header existed: a request for latitude 60 was
+ * served a cached answer computed for latitude 0, and a request with no
+ * parameters at all was served a 200 instead of its 400 error contract.
+ *
+ * `Netlify-Vary: query` with no allow-list restores the RFC default. It cannot
+ * be set from `netlify.toml`: custom header rules there apply to files in the
+ * publish directory, not to responses produced by the server function — that was
+ * tried first and verified not to work. So it is declared here, next to the
+ * `Cache-Control` it qualifies.
+ *
+ * The header is inert on hosts that do not implement it, and it asserts the
+ * standard behaviour rather than a vendor-specific one, so it does not tie these
+ * handlers to a platform.
+ */
+const CACHE_KEY_IS_FULL_URL = { "Netlify-Vary": "query" } as const;
+
 /** A JSON response with the provenance envelope. Static data caches long; dynamic endpoints pass a shorter cacheControl. */
 export function apiResponse<T>(data: T, opts: { provenance: string; license?: string; count?: number; generatedAt?: string; source?: string; stale?: boolean; cacheControl?: string }): Response {
   const body = { meta: apiMeta(opts), ...(opts.count != null ? { count: opts.count } : {}), data };
@@ -62,13 +89,17 @@ export function apiResponse<T>(data: T, opts: { provenance: string; license?: st
       "Content-Type": "application/json; charset=utf-8",
       "Cache-Control": opts.cacheControl ?? "public, max-age=3600, stale-while-revalidate=86400",
       "X-Api-Version": API_VERSION,
+      ...CACHE_KEY_IS_FULL_URL,
     },
   });
 }
 
 export function apiError(status: number, message: string): Response {
   return new Response(JSON.stringify({ meta: apiMeta({ provenance: "Error response." }), error: { status, message } }, null, 2), {
-    status, headers: { "Content-Type": "application/json; charset=utf-8" },
+    // An error response is as query-dependent as a success one: without this,
+    // a cached 200 for one parameter set answers a request whose parameters are
+    // invalid, and the 400 contract silently disappears.
+    status, headers: { "Content-Type": "application/json; charset=utf-8", ...CACHE_KEY_IS_FULL_URL },
   });
 }
 
