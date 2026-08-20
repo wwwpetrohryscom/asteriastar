@@ -9,6 +9,7 @@ import { LEARNING_PATHS } from "@/lib/learn";
 import { TIMELINES } from "@/lib/timelines";
 import { DATASETS } from "@/lib/datasets";
 import { TRANSPARENCY_PAGES } from "@/app/transparency/content";
+import { ECOSYSTEM_PATH } from "@/lib/ecosystem/projects";
 import { engine } from "@/platform/data-engine";
 import { STAR_DISCOVERIES } from "@/app/stars/discovery";
 import { SOLAR_DISCOVERIES } from "@/app/solar-system/discovery";
@@ -303,6 +304,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: absoluteUrl(ROUTES.platform), changeFrequency: "weekly", priority: 0.7 },
     { url: absoluteUrl(ROUTES.authority), changeFrequency: "weekly", priority: 0.7 },
     { url: absoluteUrl(ROUTES.transparency), changeFrequency: "weekly", priority: 0.7 },
+    /*
+     * The ecosystem directory — an AsteriaStar page, listed like any other.
+     * The products it links to are deliberately NOT here: a sitemap declares
+     * the URLs of the host that serves it, and every ecosystem product has its
+     * own canonical home and its own sitemap. Listing them here would claim
+     * URLs this site does not own.
+     */
+    { url: absoluteUrl(ECOSYSTEM_PATH), changeFrequency: "monthly", priority: 0.5 },
     ...TRANSPARENCY_PAGES.map((p) => ({ url: absoluteUrl(transparencyPath(p.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
     ...DATASETS.map((d) => ({ url: absoluteUrl(datasetPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.5 })),
     ...[
