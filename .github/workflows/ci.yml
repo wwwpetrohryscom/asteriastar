@@ -50,6 +50,13 @@ jobs:
       - name: Build
         run: npm run build
 
+      # Needs the build output: it reads the PRERENDERED HTML to prove the
+      # ecosystem links are in what the server sends, before any JavaScript.
+      # Checking a running browser instead would pass even if the links were
+      # injected on hydration, which is exactly the regression it guards.
+      - name: Ecosystem links are server-rendered
+        run: npm run ecosystem:rendering
+
       # AFTER the build, deliberately. Next generates the route-type globals
       # (PageProps, LayoutProps, …) into .next/types during `next build`, so on a
       # clean checkout `tsc --noEmit` fails with hundreds of "Cannot find name
