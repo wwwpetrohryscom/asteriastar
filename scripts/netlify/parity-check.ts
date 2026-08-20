@@ -120,9 +120,10 @@ async function snapshot(origin: string, target: ParityTarget): Promise<Snapshot>
     const v = res.headers.get(h);
     if (!v) continue;
     // Cache-Control differences that are only whitespace are not differences.
-    base.headers[h] = h === "cache-control"
-      ? v.split(",").map((d) => d.trim().toLowerCase()).filter(Boolean).sort().join(", ")
-      : v;
+    // Stored verbatim. Normalisation happens at COMPARISON time instead, so a
+    // snapshot captured by an older version of this script stays comparable —
+    // which matters here, because the Vercel baseline can never be re-captured.
+    base.headers[h] = v;
   }
   if (res.status >= 300 && res.status < 400) {
     base.location = stripOrigin(res.headers.get("location")) ?? undefined;
@@ -213,6 +214,32 @@ interface Diff {
   severity: "critical" | "warn";
 }
 
+/**
+ * Compare headers by meaning rather than by formatting.
+ *
+ * Applied when comparing, never when capturing, so snapshots stay verbatim and
+ * a baseline recorded by an older version of this script remains usable. That
+ * is not hypothetical: the Vercel baseline in docs/ can never be taken again.
+ *
+ *  - Cache-Control: the directive SET is the contract; whitespace is not.
+ *    "public, max-age=0, must-revalidate" and "public,max-age=0,must-revalidate"
+ *    are the same instruction.
+ *  - Content-Type: the media type is the contract. The charset parameter is
+ *    compared separately as advisory — HTTP parameter values are
+ *    case-insensitive, and application/json and application/manifest+json
+ *    define UTF-8 by spec, so its case or absence changes no behaviour. A
+ *    changed media type still fails, which is the part that would break a
+ *    client.
+ */
+function normaliseHeader(name: string, value: string | undefined): string | null {
+  if (value === undefined) return null;
+  if (name === "cache-control") {
+    return value.split(",").map((d) => d.trim().toLowerCase()).filter(Boolean).sort().join(", ");
+  }
+  if (name === "content-type") return value.split(";")[0].trim().toLowerCase();
+  return value;
+}
+
 /** Fields that legitimately differ between two live deployments of the same code. */
 const TOLERATED = new Set([
   // Live Sky and other computed endpoints embed the real computation time.
@@ -275,13 +302,13 @@ function compare(a: Snapshot[], b: Snapshot[]): Diff[] {
 
     for (const h of TRACKED_HEADERS) {
       if (h === "cache-control") continue; // reported separately, see caching report
-      const bv = base.headers[h];
-      const cv = cand.headers[h];
+      const bv = normaliseHeader(h, base.headers[h]);
+      const cv = normaliseHeader(h, cand.headers[h]);
       if (bv !== cv) {
         diffs.push({ path: base.path, group: base.group, field: `headers.${h}`, baseline: bv ?? null, candidate: cv ?? null, severity: h === "content-type" ? "critical" : "warn" });
       }
     }
-    if (base.headers["cache-control"] !== cand.headers["cache-control"]) {
+    if (normaliseHeader("cache-control", base.headers["cache-control"]) !== normaliseHeader("cache-control", cand.headers["cache-control"])) {
       diffs.push({ path: base.path, group: base.group, field: "headers.cache-control", baseline: base.headers["cache-control"] ?? null, candidate: cand.headers["cache-control"] ?? null, severity: "warn" });
     }
   }
