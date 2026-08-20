@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Inter } from "next/font/google";
 import "./globals.css";
+import { EcosystemBar } from "@/components/ecosystem/EcosystemBar";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { WebmasterId } from "@/components/site/WebmasterId";
@@ -68,6 +69,8 @@ export default function RootLayout({
           Skip to content
         </a>
 
+        {/* Topmost layer on every public page, above the site header. */}
+        <EcosystemBar />
         <SiteHeader />
         <main id="main" className="flex-1">
           {children}

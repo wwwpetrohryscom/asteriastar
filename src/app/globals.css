@@ -39,11 +39,24 @@
 
 :root {
   color-scheme: dark;
+
+  /*
+   * Global sticky-header geometry. Declared once, consumed by both the
+   * HELPERG ecosystem bar and the AsteriaStar site header, so their offsets
+   * can never disagree — the bar sticks at 0, the header sticks at the bar's
+   * height, and anything that needs to clear both (scroll anchoring, a
+   * full-height panel) uses the combined offset rather than re-deriving it.
+   */
+  --ecosystem-bar-height: 2.25rem;
+  --site-header-height: 4.25rem;
+  --global-header-offset: calc(var(--ecosystem-bar-height) + var(--site-header-height));
 }
 
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Anchor targets must clear both sticky bars, not just the site header. */
+    scroll-padding-top: calc(var(--global-header-offset) + 1rem);
   }
 
   body {
