@@ -179,6 +179,20 @@ if (!apiHelpers) {
   }
 }
 
+// ---------------------------------------------------------------------------
+// 5c. HSTS is declared by the application, portably.
+// ---------------------------------------------------------------------------
+// Vercel added max-age=63072000 automatically; Netlify sends a weaker default
+// and netlify.toml header rules do not reach the server function. Declaring it
+// in next.config.ts keeps the site's own security policy the site's decision on
+// any host.
+const nextConfigSrc = readFileSync(join(ROOT, "next.config.ts"), "utf-8");
+if (!/Strict-Transport-Security/.test(nextConfigSrc)) {
+  failures.push("next.config.ts no longer sets Strict-Transport-Security; the site's HSTS policy would fall back to whatever the host happens to send.");
+} else if (!/max-age=63072000/.test(nextConfigSrc)) {
+  failures.push("next.config.ts sets HSTS but not max-age=63072000, the value this site has published since before the migration.");
+}
+
 const submitScript = readFileSync(join(SCRIPTS, "indexnow-submit.ts"), "utf-8");
 if (!submitScript.includes("host(SITE_URL)")) {
   failures.push("scripts/indexnow-submit.ts no longer scopes submissions to the configured site host.");
@@ -210,7 +224,8 @@ if (!existsSync(tomlPath)) {
   };
   require_("@netlify/plugin-nextjs", "the official Next.js Runtime must be the adapter");
   require_('NEXT_PUBLIC_SITE_URL = "https://asteriastar.com"', "production canonical identity must be pinned");
-  require_("Strict-Transport-Security", "HSTS parity with the previous production responses");
+  // HSTS moved to next.config.ts (see below): a netlify.toml header rule never
+  // reached the server function's responses, which is most of the site.
   require_("Access-Control-Allow-Origin", "Vercel served CORS on all static content; browser clients of the public API depend on it");
   // The cache-key rule is the one whose absence is silently wrong rather than
   // visibly broken: without it every parameterised API response is served from
