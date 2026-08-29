@@ -95,8 +95,8 @@ export const PROVIDERS: ProviderInfo[] = [
     key: "celestrak", name: "CelesTrak", organization: "CelesTrak (Dr. T.S. Kelso)",
     url: "https://celestrak.org/", sources: ["celestrak"],
     dataKinds: ["ISS orbital elements (TLE)", "Satellite passes (via propagation)"],
-    license: "Public TLE data; attribution expected.", status: "planned", access: "public-data-files",
-    notes: "Pass prediction requires an SGP4 propagator and an observer location.",
+    license: "Public TLE data; attribution expected.", status: "planned", access: "requires-review",
+    notes: "EVALUATED AND NOT CONNECTED (Program CL). The host refused automated connections after a handful of requests, so an integration could not be established or its terms verified. The ISS is tracked instead from NASA/JSC's own published operational ephemeris, which needs no propagator: it is state vectors, not mean elements, and it comes with the ascending-node longitudes that make the coordinate transformation verifiable.",
   },
   {
     key: "minor-planet-center", name: "Minor Planet Center", organization: "IAU Minor Planet Center",

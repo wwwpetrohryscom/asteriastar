@@ -268,6 +268,8 @@ import {
   spaceWeatherPath,
   NEO_SLUGS,
   neoPath,
+  SATELLITE_LIVE_SLUGS,
+  satelliteLivePath,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
 import { galleryCategories } from "@/lib/gallery";
@@ -822,6 +824,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 
+  /**
+   * Live satellite pages (Program CL). Five stable URLs and no parameters — the pass calculator
+   * runs in the browser precisely so that a coordinate never becomes part of a URL.
+   */
+  const satelliteLiveRoutes: MetadataRoute.Sitemap = SATELLITE_LIVE_SLUGS.map((slug) => ({
+    url: absoluteUrl(satelliteLivePath(slug)),
+    changeFrequency: "daily" as const,
+    priority: slug === "iss" || slug === "passes" ? 0.9 : 0.7,
+  }));
+
   const universe3dRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.universe3d), changeFrequency: "monthly", priority: 0.8 },
     { url: absoluteUrl(`${ROUTES.universe3d}/data-coverage`), changeFrequency: "monthly", priority: 0.6 },
@@ -954,6 +966,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...liveRoutes,
     ...spaceWeatherRoutes,
     ...neoRoutes,
+    ...satelliteLiveRoutes,
     ...universe3dRoutes,
     ...workspaceRoutes,
     ...openPlatformRoutes,

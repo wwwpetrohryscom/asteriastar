@@ -122,6 +122,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Night Sky", href: ROUTES.sky, description: "What to observe — meteor showers, eclipses, the Moon" },
             { name: "Space Weather", href: ROUTES.spaceWeather, description: "Live from NOAA & NASA — solar wind, the Kp index, flares, storms and the aurora forecast, each with the time it was measured" },
             { name: "Near-Earth Objects", href: ROUTES.neo, description: "Live from NASA/JPL & the Minor Planet Center — close approaches with their real uncertainty, the Sentry risk table read as JPL publishes it, and new discoveries" },
+            { name: "Where Is the ISS?", href: "/satellites/iss", description: "The station's position now, from NASA's own operational trajectory — with pass predictions computed in your browser, so your coordinates never leave your device" },
             { name: "Image Archive", href: ROUTES.images, description: "Scientific imagery with verified provenance" },
             { name: "Gallery", href: ROUTES.gallery, description: "Webb, Hubble, the Solar System & the deep sky — curated, openly-licensed cosmic imagery" },
             { name: "Explore", href: ROUTES.explore, description: "Topics, entities, and connections" },

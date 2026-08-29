@@ -382,6 +382,37 @@ export const ENDPOINTS: EndpointDef[] = [
     example: "/api/v0/live/neo/99942",
     returns: "{ designation, foundInLiveFeeds, catalogue, closeApproaches, sentry, recentEntry, confirmationPageCandidate }",
   },
+
+  /* ------------------------------------------------------------- satellites (Program CL) */
+  {
+    id: "live-satellites", group: "live", method: "GET", path: "/api/v0/live/satellites",
+    summary: "Tracked satellites", status: "implemented",
+    description: "Every satellite AsteriaStar tracks live, which is one: the International Space Station, from NASA Johnson Space Center's published operational ephemeris. The response states its own coverage explicitly rather than leaving it to be inferred from a single-element array.",
+    params: [],
+    example: "/api/v0/live/satellites",
+    returns: "{ trackedCount, coverage, satellites[], providers[] }",
+  },
+  {
+    id: "live-satellite", group: "live", method: "GET", path: "/api/v0/live/satellites/{id}",
+    summary: "One satellite's current state", status: "implemented",
+    description: "Position, altitude, speed and measured nodal period for one satellite, plus `frameVerification` — the measured disagreement between this platform's coordinate transformation and NASA's own published equator-crossing longitudes from the same file. A consumer relying on these positions is entitled to see how far they can be trusted, measured rather than claimed. `current` is null when the published ephemeris does not cover the present moment; nothing is extrapolated past its end.",
+    params: [{ name: "id", in: "path", required: true, type: "string", description: "Satellite id. The only recognised value is `iss` (also accepts 25544).", example: "iss" }],
+    example: "/api/v0/live/satellites/iss",
+    returns: "{ id, name, ephemeris, current, frameVerification[] }",
+  },
+  {
+    id: "live-satellite-passes", group: "live", method: "GET", path: "/api/v0/live/satellites/{id}/passes",
+    summary: "Visible passes for an explicit location", status: "implemented",
+    description: "Pass predictions for coordinates you supply. The coordinates are used to evaluate a pure function and are NOT logged, stored, counted or transmitted anywhere; nothing is inferred, geolocated or defaulted, and omitting them returns an error rather than a guess. Each pass states whether it is actually visible — sunlit station, dark sky — or which of those conditions failed. No weather is modelled. Note that the website itself does not call this endpoint: the pass page ships orbital data to the browser and computes there, so a reader's coordinates never leave their device at all.",
+    params: [
+      { name: "id", in: "path", required: true, type: "string", description: "Satellite id; `iss` only.", example: "iss" },
+      { name: "latitude", in: "query", required: true, type: "string", description: "Observer latitude in decimal degrees, -90 to 90.", example: "51.4779" },
+      { name: "longitude", in: "query", required: true, type: "string", description: "Observer longitude in decimal degrees, -180 to 180.", example: "-0.0015" },
+      { name: "hours", in: "query", required: false, type: "integer", description: "Window length in hours (default 48, maximum 240). Predictions stop where the published ephemeris stops." },
+    ],
+    example: "/api/v0/live/satellites/iss/passes?latitude=51.4779&longitude=-0.0015&hours=48",
+    returns: "{ observer, windowHours, minimumElevationDeg, passes[] }",
+  },
 ];
 
 export const IMPLEMENTED_ENDPOINTS = ENDPOINTS.filter((e) => e.status === "implemented");
