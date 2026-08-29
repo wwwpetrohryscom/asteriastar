@@ -165,9 +165,34 @@ function inBackoff(descriptor: LiveProviderDescriptor, productKey: string, nowIs
   return remaining > 0 ? Math.ceil(remaining) : null;
 }
 
+/**
+ * The wall-clock budget one render may spend waiting on providers, in milliseconds.
+ *
+ * This exists because a per-request timeout is not a bound on a SERIALISED provider. JPL's terms
+ * permit one request at a time, so three JPL products behind an eight-second timeout can take
+ * twenty-four seconds — and the serverless function serving the page is killed at ten. The visitor
+ * then gets a platform error page instead of the honest "unavailable" envelope this whole design
+ * exists to deliver: the failure path is useless if the process does not survive to run it.
+ *
+ * So a render declares a budget. A product whose turn comes after the budget is spent returns
+ * immediately with whatever is cached, honestly stale, or with nothing — the same envelope a
+ * timeout would have produced, minutes sooner.
+ */
+export const DEFAULT_RENDER_BUDGET_MS = 6_000;
+
 export interface LoadOptions {
   /** The moment to judge freshness against. Defaults to now; injected by tests. */
   now?: Date;
+  /**
+   * Epoch milliseconds after which this load must not start a new request. Composed loads share one
+   * deadline so the whole render is bounded, not each product independently.
+   */
+  deadlineMs?: number;
+}
+
+/** A deadline for a group of loads, `DEFAULT_RENDER_BUDGET_MS` from now unless told otherwise. */
+export function renderDeadline(budgetMs: number = DEFAULT_RENDER_BUDGET_MS): number {
+  return Date.now() + budgetMs;
 }
 
 /*
@@ -249,13 +274,34 @@ export async function loadProduct<T>(productKey: string, parse: (raw: unknown) =
     );
   }
 
+  /* ------------------------------------------------------- the render budget */
+  const deadlineMs = opts.deadlineMs;
+  if (deadlineMs !== undefined && Date.now() >= deadlineMs) {
+    return fallbackOrNothing<T>(
+      product,
+      provider,
+      url,
+      nowIso,
+      `The time budget for this page was spent before ${provider.name} could be asked for this product. Nothing was fabricated in its place.`,
+      false,
+    );
+  }
+
   const key = `${productKey}|${url}`;
   const existing = inFlight.get(key) as Promise<LiveEnvelope<T>> | undefined;
   if (existing) return existing;
 
-  const pending = throughGate(provider.providerKey, provider.maxConcurrentRequests, () =>
-    refresh<T>(product, provider, url, parse, nowIso),
-  ).finally(() => {
+  const pending = throughGate(provider.providerKey, provider.maxConcurrentRequests, async () => {
+    // Checked AGAIN on leaving the gate: a product can queue behind a slow sibling and reach the
+    // front long after the budget ran out, and starting a fresh eight-second request at that point
+    // is precisely how the function gets killed.
+    if (deadlineMs !== undefined && Date.now() >= deadlineMs) {
+      return fallbackOrNothing<T>(product, provider, url, nowIso, `${provider.name} was still busy with an earlier request when this page's time budget ran out.`, false);
+    }
+    // The request may not outlive the budget either.
+    const remaining = deadlineMs === undefined ? undefined : Math.max(250, deadlineMs - Date.now());
+    return refresh<T>(product, provider, url, parse, nowIso, remaining);
+  }).finally(() => {
     // Safe because a key can only ever have one promise: this is the sole `set`, and it is
     // guarded by the `get` above.
     inFlight.delete(key);
@@ -270,17 +316,35 @@ async function refresh<T>(
   url: string,
   parse: (raw: unknown) => ParseResult<T>,
   nowIso: string,
+  timeoutOverrideMs?: number,
 ): Promise<LiveEnvelope<T>> {
   recordAttempt(product.productKey, provider.providerKey, nowIso);
 
-  const result = await fetchProviderJson<unknown>(url, { timeoutMs: provider.timeoutMs, maxBytes: product.maxBytes });
+  const timeoutMs = timeoutOverrideMs === undefined ? provider.timeoutMs : Math.min(provider.timeoutMs, timeoutOverrideMs);
+  const result = await fetchProviderJson<unknown>(url, { timeoutMs, maxBytes: product.maxBytes });
 
   if (!result.ok) {
     recordFailure(product.productKey, provider.providerKey, result.fetchedAt, result.reason, result.message, result.latencyMs);
     return fallbackOrNothing<T>(product, provider, url, nowIso, `${provider.name} could not be reached: ${result.message}`, result.reason === "malformed" || result.reason === "content_type");
   }
 
-  const parsed = parse(result.value);
+  /*
+   * The parser is supplied by the caller, and until now `refresh` trusted it. Every other failure
+   * in this file becomes an envelope; a parser that THREW became a rejected promise, which escaped
+   * `loadProduct`, the composing `Promise.all`, and the page, as a 500. That is not hypothetical:
+   * a date arithmetic edge case in one client could reach `new Date(...).toISOString()` on an
+   * out-of-range value and raise a RangeError. A throwing parser is a schema mismatch like any
+   * other and is recorded as one.
+   */
+  let parsed: ParseResult<T>;
+  try {
+    parsed = parse(result.value);
+  } catch (err) {
+    const detail = err instanceof Error ? err.message.slice(0, 160) : "unknown parser failure";
+    recordSchemaChange(product.productKey, provider.providerKey, result.fetchedAt, `parser threw: ${detail}`);
+    return fallbackOrNothing<T>(product, provider, url, nowIso, `${provider.name} answered, but this integration's parser could not process the response: ${detail}`, true);
+  }
+
   if (!parsed.ok) {
     recordSchemaChange(product.productKey, provider.providerKey, result.fetchedAt, parsed.problem);
     return fallbackOrNothing<T>(product, provider, url, nowIso, `${provider.name} answered, but not in the shape this integration understands: ${parsed.problem}`, true);

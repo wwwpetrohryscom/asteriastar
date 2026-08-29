@@ -25,7 +25,16 @@ function fold(value: string): string {
 
 export async function GET(req: Request, { params }: { params: Promise<{ designation: string }> }): Promise<Response> {
   const { designation: raw } = await params;
-  const requested = decodeURIComponent(raw ?? "").trim();
+
+  // Next hands this already decoded, but a stray "%" survives into it and `decodeURIComponent`
+  // THROWS on one — turning the documented 400 into an unhandled 500. Decoding is attempted for
+  // the double-encoded case and the raw value is used when it fails.
+  let requested: string;
+  try {
+    requested = decodeURIComponent(raw ?? "").trim();
+  } catch {
+    requested = (raw ?? "").trim();
+  }
 
   // Bounded and character-checked before it is used for anything, including a comparison: a
   // designation is letters, digits, spaces, hyphens and slashes, and nothing else.

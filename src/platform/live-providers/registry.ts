@@ -185,7 +185,7 @@ export const LIVE_PROVIDERS: LiveProviderDescriptor[] = [
     entityId: "live_data_source:jpl-cneos",
     authentication: "none",
     rateLimits:
-      "JPL publishes a Fair Use Policy rather than a numeric limit: requests must be \u201creasonably necessary\u201d, automated processes must not be \u201cunnecessarily frequent, repetitive, or redundant\u201d, only ONE request may be open at a time, and processes must back off on errors. AsteriaStar therefore serialises every JPL request, caches each product for hours, and stops asking after three consecutive failures.",
+      "JPL publishes a Fair Use Policy rather than a numeric limit: requests must be \u201creasonably necessary\u201d, automated processes must not be \u201cunnecessarily frequent, repetitive, or redundant\u201d, only ONE request may be open at a time, and processes must back off on errors. AsteriaStar serialises JPL requests and stops asking after three consecutive failures \u2014 within a server instance, which is the honest scope: this deployment is serverless, so a second instance has its own queue and its own failure count. What bounds the rate across instances is the response cache in front of these pages, which is measured in hours: a page view is not a provider request, and the products are re-fetched when a cached page revalidates, not when someone reads it.",
     redistribution:
       "A work of the US Government, freely reusable. JPL adds one restriction that shapes the architecture: \u201cYou may not embed these APIs in your website (per NASA CORS policy).\u201d No browser on this site ever contacts ssd-api.jpl.nasa.gov \u2014 every request is made server-side and the result is re-served from AsteriaStar's own origin, cached and attributed, which is also what the Fair Use Policy asks for.",
     license: "Public domain (US Government work), NASA/JPL-Caltech.",
@@ -193,7 +193,10 @@ export const LIVE_PROVIDERS: LiveProviderDescriptor[] = [
     providerCaveat:
       "JPL states of Sentry impact probabilities: \u201cThe probability computation is complex and depends on a number of assumptions that are difficult to verify. For these reasons the stated probability can easily be inaccurate by a factor of a few, and occasionally by a factor of ten or more.\u201d It also notes there is no guarantee any particular API remains available.",
     integration: "IMPLEMENTED",
-    timeoutMs: 12000,
+    // Eight seconds, not twelve: these requests are SERIALISED by the provider's own terms, so a
+    // per-request timeout multiplies by the number of products. The render budget bounds the total,
+    // and this bounds any single request within it.
+    timeoutMs: 8000,
     // One. This is the provider's stated term, not a tuning choice.
     maxConcurrentRequests: 1,
     backoffAfterFailures: 3,
@@ -557,11 +560,18 @@ LIVE_PRODUCTS.push(
     productKey: "jpl:recent-neos",
     providerKey: "jpl-ssd",
     label: "Recently observed near-Earth objects",
-    // The `sb-cdata` constraint is a fixed JSON literal, URL-encoded: first observation on or after
-    // a rolling date is NOT used, because the provider offers no relative form and a date computed
-    // here would change the URL every day and defeat every cache. A fixed recent epoch is used and
-    // the client filters to the newest entries.
-    url: "https://ssd-api.jpl.nasa.gov/sbdb_query.api?fields=full_name,pdes,neo,pha,H,diameter,first_obs,class,moid&sb-class=IEO,ATE,APO,AMO&sb-cdata=%7B%22AND%22%3A%5B%22first_obs%7CGE%7C{startDate}%22%5D%7D&limit=300",
+    /*
+     * The window start is substituted from the server clock, so the URL advances once per calendar
+     * day and every request within a day shares one cache entry.
+     *
+     * `sort=-first_obs` is not cosmetic. SBDB returns rows in its own order — ascending by
+     * designation, verified against the live API — so a `limit` that the window ever exceeds would
+     * silently drop the NEWEST objects while the page went on calling them "the most recent".
+     * Sorting newest-first means truncation can only ever remove the oldest, which is the only
+     * direction in which losing rows is honest. The limit is also set well above the plausible
+     * count for a 60-day window (recently ~250).
+     */
+    url: "https://ssd-api.jpl.nasa.gov/sbdb_query.api?fields=full_name,pdes,neo,pha,H,diameter,first_obs,class,moid&sb-class=IEO,ATE,APO,AMO&sb-cdata=%7B%22AND%22%3A%5B%22first_obs%7CGE%7C{startDate}%22%5D%7D&sort=-first_obs&limit=1000",
     windowDays: 60,
     kind: "observation",
     cacheSeconds: 6 * 3600,

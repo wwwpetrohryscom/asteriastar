@@ -5,7 +5,7 @@ import { FreshnessWatch } from "@/components/space-weather/FreshnessWatch";
 import { getLiveProduct } from "@/platform/live-providers/registry";
 import type { LiveEnvelope } from "@/platform/live-providers/envelope";
 import { formatDiameter, type ApproachDistance, type CatalogueMatch, type ObjectSize, type ResolvedCloseApproach, type SentryObject } from "@/platform/neo/model";
-import { palermoMeaning, torinoMeaning } from "@/platform/neo/service";
+import { palermoMeaning, torinoMeaning, torinoIsElevated } from "@/platform/neo/service";
 import { NEO_SLUGS, neoPath, ROUTES, type NeoSlug } from "@/lib/routes";
 
 /**
@@ -87,6 +87,14 @@ export function Size({ size }: { size?: ObjectSize }) {
       </span>
     );
   }
+  if (size.kind === "provider-estimate") {
+    return (
+      <span className="whitespace-nowrap">
+        <span className="font-medium text-fg">{formatDiameter(size.km)}</span>
+        <span className="ml-1.5 text-xs text-faint">JPL figure, albedo {size.assumedAlbedo} unless measured</span>
+      </span>
+    );
+  }
   return (
     <span className="whitespace-nowrap">
       <span className="font-medium text-fg">
@@ -110,6 +118,35 @@ export function CatalogueLink({ match }: { match: CatalogueMatch }) {
     <Link href={match.entityPath} className="text-xs text-nasa underline-offset-4 hover:underline">
       {match.entityName} →
     </Link>
+  );
+}
+
+/**
+ * One headline figure — or an honest gap where the provider did not answer.
+ *
+ * `value === undefined` means the feed could not be read. Rendering a zero there would turn a JPL
+ * outage into a confident statement about how many objects are being monitored, which on this
+ * subject is a falsely reassuring one. So the card says so, and the surrounding prose is written to
+ * cope with the figure being missing rather than assuming it never is.
+ */
+export function NeoStat({ value, label, sub, unavailableNote }: { value?: number | string; label: string; sub: string; unavailableNote?: string }) {
+  const missing = value === undefined;
+  return (
+    <li className="scientific-card p-5">
+      {missing ? (
+        <>
+          <p className="font-display text-xl font-bold text-nasa">Unavailable</p>
+          <p className="mt-1 text-sm font-medium text-muted">{label}</p>
+          <p className="mt-1 text-xs text-faint">{unavailableNote ?? "The provider could not be reached; no figure is shown and none is assumed."}</p>
+        </>
+      ) : (
+        <>
+          <p className="font-display text-3xl font-bold text-fg">{typeof value === "number" ? value.toLocaleString("en-GB") : value}</p>
+          <p className="mt-1 text-sm font-medium text-muted">{label}</p>
+          <p className="mt-1 text-xs text-faint">{sub}</p>
+        </>
+      )}
+    </li>
   );
 }
 
@@ -220,7 +257,11 @@ export function SentryRow({ s }: { s: SentryObject }) {
         {s.lastObservationUtc && <span className="block text-xs text-faint">last observed {s.lastObservationUtc} UTC</span>}
       </td>
       <td className="px-3 py-2 whitespace-nowrap text-muted">
-        {s.impactProbability !== undefined ? `1 in ${Math.round(1 / s.impactProbability).toLocaleString("en-GB")}` : "—"}
+        {s.impactProbability === undefined
+          ? "—"
+          : s.impactProbability <= 0
+            ? "0 — no impact remains possible in this solution"
+            : `1 in ${Math.round(1 / s.impactProbability).toLocaleString("en-GB")}`}
         {s.potentialImpacts !== undefined && <span className="block text-xs text-faint">{s.potentialImpacts} potential impact{s.potentialImpacts === 1 ? "" : "s"}</span>}
       </td>
       <td className="px-3 py-2 whitespace-nowrap text-muted">{s.yearRange ?? "—"}</td>
@@ -229,8 +270,9 @@ export function SentryRow({ s }: { s: SentryObject }) {
         {s.palermoCumulative !== undefined && s.palermoCumulative < -2 && <span className="ml-2 text-xs text-faint">below concern threshold</span>}
       </td>
       <td className="px-3 py-2 whitespace-nowrap">
+        {/* Level 1 is "normal" on the scale's own wording, so it is not given an alarming tone. */}
         {s.torinoMaximum !== undefined ? (
-          <StatusBadge tone={s.torinoMaximum === 0 ? "verified-green" : "stale"}>Torino {s.torinoMaximum}</StatusBadge>
+          <StatusBadge tone={torinoIsElevated(s.torinoMaximum) ? "warning-red" : "verified-green"}>Torino {s.torinoMaximum}</StatusBadge>
         ) : (
           <span className="text-faint">—</span>
         )}

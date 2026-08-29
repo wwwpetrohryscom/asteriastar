@@ -9,7 +9,7 @@ import { breadcrumbSchema, datasetSchema, webPageSchema, type Crumb } from "@/li
 import { ROUTES, neoPath } from "@/lib/routes";
 import { NeoNav, NeoHonestyNote, NeoPanel } from "@/components/neo/NeoUI";
 import { ApproachFilters } from "@/components/neo/ApproachFilters";
-import { EnvelopeDetails, DataUnavailable } from "@/components/space-weather/LiveStatus";
+import { EnvelopeDetails } from "@/components/space-weather/LiveStatus";
 import { closeApproachSnapshot, resolveApproaches, reage } from "@/platform/neo/service";
 
 const DESCRIPTION =
@@ -50,7 +50,14 @@ export default async function CloseApproachesPage() {
             license: "https://www.usa.gov/government-works",
             variables: ["close-approach distance", "relative velocity", "absolute magnitude", "estimated diameter"],
             coverageFrom: "2026-08-29",
-            distributionUrl: "https://ssd-api.jpl.nasa.gov/cad.api",
+            /*
+             * AsteriaStar's own endpoint, not JPL's. A bare `cad.api` URL returns CNEOS's DEFAULT
+             * window, which is a different dataset from the 60-day / 0.05 au one described above —
+             * so a machine following the distribution would get data that does not match the
+             * declared variables or coverage. It would also advertise the very host this
+             * integration is careful never to point a client at, per NASA's CORS policy.
+             */
+            distributionUrl: "https://asteriastar.com/api/v0/live/neo/close-approaches",
           }),
         ]}
       />
@@ -66,8 +73,17 @@ export default async function CloseApproachesPage() {
         <NeoNav current="close-approaches" />
 
         <NeoPanel envelope={s.closeApproaches} title="The next 60 days" what="The CNEOS close-approach table" id="approaches-heading">
+          {/*
+            NeoPanel has already handled the case where the feed could not be READ. Reaching here
+            with an empty list means the opposite: JPL answered, and nothing comes that close in the
+            window. Rendering the red "current data unavailable" panel for that would report a real
+            answer as a failure — the inverse of the mistake this platform is built against.
+          */}
           {approaches.length === 0 ? (
-            <DataUnavailable envelope={s.closeApproaches} what="Close approaches" />
+            <p className="rounded-lg border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-muted">
+              No object passes within 0.05 au in the next 60 days. The feed was read successfully and returned no approaches —
+              that is an answer, not a gap.
+            </p>
           ) : (
             <ApproachFilters approaches={approaches} />
           )}
@@ -85,8 +101,9 @@ export default async function CloseApproachesPage() {
             <p>
               <strong className="text-fg">The times are TDB.</strong> Barycentric dynamical time is the scale JPL computes in, and
               it currently runs about 69 seconds ahead of UTC. AsteriaStar does not convert them, because at the one-minute
-              resolution these are published the conversion would imply a precision the source does not claim. Where you see TDB,
-              read it as UTC plus about a minute if you need a wall-clock answer.
+              resolution these are published the conversion would imply a precision the source does not claim. If you need a
+              wall-clock answer: UTC is TDB <em>minus</em> about 69 seconds, so a time shown here is at most a minute later than
+              the same moment on a UTC clock.
             </p>
             <p>
               <strong className="text-fg">The size is usually a guess from brightness.</strong> Absolute magnitude says how much

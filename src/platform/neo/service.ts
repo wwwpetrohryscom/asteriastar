@@ -1,6 +1,7 @@
 import { NO_VALUE_STATUSES, refreshStatus, type LiveEnvelope } from "@/platform/live-providers/envelope";
 import { getLiveProduct, LIVE_PRODUCTS, LIVE_PROVIDERS, providerState, type LiveProviderDescriptor } from "@/platform/live-providers/registry";
 import { getHealth, type ProviderHealth } from "@/platform/live-providers/health";
+import { renderDeadline } from "@/platform/live-providers/client";
 import { SBDB_ROWS } from "@/knowledge-graph/data/small-body-precision/snapshots/sbdb";
 import { entityGraphPath, getEntityById } from "@/knowledge-graph";
 import * as clients from "@/platform/neo/clients";
@@ -106,26 +107,32 @@ export function catalogueCoverage(designations: { designation: string; fullName?
  * accidentally violate it.
  */
 export async function neoSnapshot(): Promise<NeoSnapshot> {
+  // One deadline for the whole render. JPL's terms serialise these, so without a shared budget the
+  // page's worst case is the sum of three timeouts — longer than the platform will let the function
+  // live, which would replace the honest "unavailable" envelope with a platform error page.
+  const opts = { deadlineMs: renderDeadline() };
   const [closeApproaches, sentry, recent, candidates] = await Promise.all([
-    clients.closeApproaches(),
-    clients.sentryTable(),
-    clients.recentNeos(),
-    clients.neoCandidates(),
+    clients.closeApproaches(opts),
+    clients.sentryTable(opts),
+    clients.recentNeos(opts),
+    clients.neoCandidates(opts),
   ]);
   return { closeApproaches, sentry, recent, candidates };
 }
 
 export async function closeApproachSnapshot(): Promise<Pick<NeoSnapshot, "closeApproaches" | "sentry">> {
-  const [closeApproaches, sentry] = await Promise.all([clients.closeApproaches(), clients.sentryTable()]);
+  const opts = { deadlineMs: renderDeadline() };
+  const [closeApproaches, sentry] = await Promise.all([clients.closeApproaches(opts), clients.sentryTable(opts)]);
   return { closeApproaches, sentry };
 }
 
 export async function riskSnapshot(): Promise<Pick<NeoSnapshot, "sentry">> {
-  return { sentry: await clients.sentryTable() };
+  return { sentry: await clients.sentryTable({ deadlineMs: renderDeadline() }) };
 }
 
 export async function discoverySnapshot(): Promise<Pick<NeoSnapshot, "recent" | "candidates">> {
-  const [recent, candidates] = await Promise.all([clients.recentNeos(), clients.neoCandidates()]);
+  const opts = { deadlineMs: renderDeadline() };
+  const [recent, candidates] = await Promise.all([clients.recentNeos(opts), clients.neoCandidates(opts)]);
   return { recent, candidates };
 }
 
@@ -169,12 +176,27 @@ export function palermoMeaning(ps: number | undefined): string {
   return "At or above 0 on the Palermo scale: the computed hazard meets or exceeds the background risk from all objects of comparable size. No object has ever remained at this level once enough observations were gathered.";
 }
 
-/** The Torino scale's own published wording for each level, abbreviated to its meaning. */
+/**
+ * The Torino scale's own bands, in its own terms.
+ *
+ * The scale has FOUR bands above zero, not one: 2–4 merit attention by astronomers, 5–7 are
+ * threatening, and 8–10 are certain collisions ranging from localised destruction to a global
+ * catastrophe. Collapsing 2–10 into "warranting attention from astronomers" — as an earlier version
+ * of this function did — would publish a certain impact as a matter for specialists. Nothing on
+ * these pages has ever been above 0, but a page that quotes a scale has to quote all of it.
+ */
 export function torinoMeaning(level: number | undefined): string | undefined {
   if (level === undefined) return undefined;
-  if (level === 0) return "Torino 0: the likelihood of a collision is zero, or so low as to be effectively zero. This applies to almost every object ever tracked.";
-  if (level === 1) return "Torino 1: a routine discovery whose pass near Earth poses no unusual level of danger. Current calculations show the chance of collision is extremely unlikely.";
-  return `Torino ${level}: a level warranting attention from astronomers. The scale is defined only for potential impacts less than a century away.`;
+  if (level === 0) return "Torino 0 (no hazard): the likelihood of a collision is zero, or so low as to be effectively zero. This applies to almost every object ever tracked.";
+  if (level === 1) return "Torino 1 (normal): a routine discovery whose pass near Earth poses no unusual level of danger. Current calculations show the chance of collision is extremely unlikely.";
+  if (level <= 4) return `Torino ${level} (meriting attention by astronomers): a close encounter deserving attention from astronomers, and at level 3 or 4, from public officials if the encounter is less than a decade away. Most such ratings are revised down to 0 once more observations are gathered.`;
+  if (level <= 7) return `Torino ${level} (threatening): a close encounter posing a serious but still uncertain threat of regional or, at level 7, global devastation, with the encounter within a century. Contingency planning by governments is warranted at these levels.`;
+  return `Torino ${level} (certain collision): a collision is certain. Level 8 means localised destruction; level 9, unprecedented regional devastation; level 10, a global climatic catastrophe of the kind that occurs on a timescale of 100,000 years or more.`;
+}
+
+/** Whether a Torino level is above the scale's own "no hazard / normal" band. */
+export function torinoIsElevated(level: number | undefined): boolean {
+  return level !== undefined && level >= 2;
 }
 
 /** Re-age a snapshot's envelopes against a later clock. */
@@ -208,24 +230,48 @@ export function neoProviderReports(): NeoProviderReport[] {
   });
 }
 
-/** Counts for the NEO hub, all derived from the live responses. */
-export function neoTotals(snapshot: NeoSnapshot) {
-  const approaches = snapshot.closeApproaches.data ?? [];
-  const sentry = snapshot.sentry.data ?? [];
-  const recent = snapshot.recent.data ?? [];
-  const candidates = snapshot.candidates.data ?? [];
+/**
+ * Counts for the NEO pages.
+ *
+ * Every figure is `number | undefined`, and `undefined` means the provider did not answer. That
+ * distinction is the whole point: `snapshot.sentry.data ?? []` would turn a JPL outage into
+ * `sentryObjects: 0` and `torinoAboveZero: 0`, and the prose built on those numbers would then read
+ * "not one currently rates above zero on the Torino scale, which is the ordinary state of affairs"
+ * — a falsely reassuring statement about impact risk, produced by a provider being down. An absent
+ * count must be absent, so that a page has to decide what to say about it.
+ */
+export interface NeoTotals {
+  approaches?: number;
+  /** Approaches closer than one lunar distance — a real threshold, not a danger threshold. */
+  withinOneLunarDistance?: number;
+  sentryObjects?: number;
+  /** Objects the Palermo scale itself places above "no cause for public concern". */
+  aboveBackgroundConcern?: number;
+  /** Objects rated at or above Palermo 0 — at or beyond the background risk. */
+  atOrAbovePalermoZero?: number;
+  torinoAboveZero?: number;
+  recentObjects?: number;
+  recentHazardous?: number;
+  candidates?: number;
+  catalogued?: { total: number; matched: number };
+}
+
+export function neoTotals(snapshot: NeoSnapshot): NeoTotals {
+  const approaches = snapshot.closeApproaches.data;
+  const sentry = snapshot.sentry.data;
+  const recent = snapshot.recent.data;
+  const candidates = snapshot.candidates.data;
   return {
-    approaches: approaches.length,
-    /** Approaches closer than one lunar distance — a real threshold, not a danger threshold. */
-    withinOneLunarDistance: approaches.filter((a) => a.distance.lunarDistances < 1).length,
-    sentryObjects: sentry.length,
-    /** Objects the Palermo scale itself places above "no cause for public concern". */
-    aboveBackgroundConcern: sentry.filter((s) => (s.palermoCumulative ?? -99) >= -2).length,
-    torinoAboveZero: sentry.filter((s) => (s.torinoMaximum ?? 0) > 0).length,
-    recentObjects: recent.length,
-    recentHazardous: recent.filter((r) => r.isPotentiallyHazardous).length,
-    candidates: candidates.length,
-    catalogued: catalogueCoverage(approaches.map((a) => ({ designation: a.designation, fullName: a.fullName }))),
+    approaches: approaches?.length,
+    withinOneLunarDistance: approaches?.filter((a) => a.distance.lunarDistances < 1).length,
+    sentryObjects: sentry?.length,
+    aboveBackgroundConcern: sentry?.filter((s) => (s.palermoCumulative ?? -99) >= -2).length,
+    atOrAbovePalermoZero: sentry?.filter((s) => (s.palermoCumulative ?? -99) >= 0).length,
+    torinoAboveZero: sentry?.filter((s) => (s.torinoMaximum ?? 0) > 0).length,
+    recentObjects: recent?.length,
+    recentHazardous: recent?.filter((r) => r.isPotentiallyHazardous).length,
+    candidates: candidates?.length,
+    catalogued: approaches ? catalogueCoverage(approaches.map((a) => ({ designation: a.designation, fullName: a.fullName }))) : undefined,
   };
 }
 

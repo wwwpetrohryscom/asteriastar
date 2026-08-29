@@ -31,6 +31,8 @@ export default async function NeoRiskPage() {
   const top = highestRatedRisks(s.sentry, 25);
   const all = s.sentry.data ?? [];
   const aboveThreshold = all.filter((o) => (o.palermoCumulative ?? -99) >= -2);
+  // Computed from the same array the table renders, so the sentence and the table cannot disagree.
+  const atOrAboveZero = all.filter((o) => (o.palermoCumulative ?? -99) >= 0);
   const provider = getLiveProvider("jpl-ssd");
 
   const crumbs: Crumb[] = [
@@ -76,7 +78,9 @@ export default async function NeoRiskPage() {
             known orbit above a kilometre-wide object with a well-determined one.
             {aboveThreshold.length === 0
               ? " Every object currently listed sits below −2 on that scale, the level its own definition calls no cause for public concern."
-              : ` ${aboveThreshold.length} object${aboveThreshold.length === 1 ? "" : "s"} currently sit${aboveThreshold.length === 1 ? "s" : ""} above −2, and all remain below 0 — that is, below the background risk from all objects of comparable size.`}
+              : atOrAboveZero.length === 0
+                ? ` ${aboveThreshold.length} object${aboveThreshold.length === 1 ? "" : "s"} currently sit${aboveThreshold.length === 1 ? "s" : ""} above −2, and all remain below 0 — that is, below the background risk from all objects of comparable size.`
+                : ` ${aboveThreshold.length} object${aboveThreshold.length === 1 ? "" : "s"} currently sit${aboveThreshold.length === 1 ? "s" : ""} above −2, of which ${atOrAboveZero.length} rate${atOrAboveZero.length === 1 ? "s" : ""} at or above 0 — at or beyond the background risk from all objects of comparable size.`}
           </p>
           <div className="overflow-x-auto rounded-lg border border-white/10">
             <table className="w-full min-w-[760px] text-left text-sm">

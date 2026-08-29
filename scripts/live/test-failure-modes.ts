@@ -4,6 +4,9 @@ import { clearHealth, getHealth } from "../../src/platform/live-providers/health
 import { checkProviderUrl } from "../../src/platform/live-providers/fetch";
 import { refreshStatus, worseOf } from "../../src/platform/live-providers/envelope";
 import { getLiveProduct, getLiveProvider, LIVE_PRODUCTS } from "../../src/platform/live-providers/registry";
+import { renderDeadline, DEFAULT_RENDER_BUDGET_MS } from "../../src/platform/live-providers/client";
+import { neoTotals } from "../../src/platform/neo/service";
+import type { NeoSnapshot } from "../../src/platform/neo/model";
 import type { ParseResult } from "../../src/platform/live-providers/client";
 
 /**
@@ -28,9 +31,28 @@ function check(name: string, condition: boolean, detail: string): void {
 /** The real fetch, restored after every case. */
 const realFetch = globalThis.fetch;
 
-type Stub = () => Promise<Response> | Response;
+type Stub = (init?: RequestInit) => Promise<Response> | Response;
 function withStub(stub: Stub): void {
-  globalThis.fetch = (() => Promise.resolve(stub())) as typeof fetch;
+  globalThis.fetch = ((_input: unknown, init?: RequestInit) => Promise.resolve(stub(init))) as unknown as typeof fetch;
+}
+
+/**
+ * A provider that answers slowly and HONOURS the abort signal, as a real one does.
+ *
+ * The distinction matters: a stub that ignores the signal hangs the whole suite, because the
+ * timeout it is supposed to be testing can never fire. Writing this stub wrong is how you convince
+ * yourself a budget works when the thing enforcing it is the socket, not your code.
+ */
+function slowStub(delayMs: number): Stub {
+  return (init) =>
+    new Promise<Response>((resolve, reject) => {
+      const timer = setTimeout(() => resolve(jsonResponse([{ proton_speed: 430, time_tag: new Date().toISOString() }])), delayMs);
+      init?.signal?.addEventListener("abort", () => {
+        clearTimeout(timer);
+        const reason = init.signal?.reason;
+        reject(reason instanceof Error ? reason : new DOMException("The operation was aborted", "TimeoutError"));
+      });
+    });
 }
 function restore(): void {
   globalThis.fetch = realFetch;
@@ -318,6 +340,69 @@ async function main(): Promise<void> {
     check("the back-off says it is backing off", (env.error ?? "").includes("no further request"), `error was "${env.error}"`);
   }
 
+  /* ---------- 16. a parser that THROWS is a schema mismatch, not a rejected promise ---------- */
+  clearCache();
+  clearHealth();
+  withStub(() => jsonResponse([{ proton_speed: 430, time_tag: new Date().toISOString() }]));
+  {
+    let threw = false;
+    let env: Awaited<ReturnType<typeof loadProduct<Reading>>> | undefined;
+    try {
+      env = await loadProduct<Reading>(PRODUCT, () => {
+        // Exactly the shape of a real defect: a date arithmetic edge case reaching toISOString on
+        // an out-of-range value raises a RangeError from inside a parser.
+        throw new RangeError("Invalid time value");
+      });
+    } catch {
+      threw = true;
+    }
+    restore();
+    check("a throwing parser does not reject", !threw, "loadProduct rejected — this is a 500 on every page composing a snapshot");
+    check("a throwing parser returns no data", env?.data === undefined, "returned data from a parser that threw");
+    check("a throwing parser is recorded as a schema change", getHealth(PRODUCT)?.schemaState === "changed", `schemaState was "${getHealth(PRODUCT)?.schemaState}"`);
+  }
+
+  /* --------- 17. a render budget bounds a serialised provider, whatever its timeout ---------- */
+  clearCache();
+  clearHealth();
+  {
+    // A provider that answers slowly but is not dead. With JPL's terms serialising its products and
+    // an eight-second per-request timeout, three of them would take twenty-four seconds — longer
+    // than the platform lets the function live, so the honest envelope would never be rendered.
+    withStub(slowStub(30_000));
+    const started = Date.now();
+    const deadlineMs = renderDeadline(1200);
+    const jplProducts = LIVE_PRODUCTS.filter((p) => p.providerKey === "jpl-ssd").map((p) => p.productKey);
+    const envs = await Promise.all(jplProducts.map((key) => loadProduct(key, () => ({ ok: true as const, value: 1 }), { deadlineMs })));
+    const elapsed = Date.now() - started;
+    restore();
+    check("a render budget bounds a serialised provider", elapsed < 4000, `three serialised products took ${elapsed}ms against a 1200ms budget — the function would be killed before the failure path ran`);
+    check("budget-exhausted products still return an envelope", envs.every((e) => e.status !== undefined), "a product returned no envelope at all");
+    check("budget-exhausted products return no data", envs.every((e) => e.data === undefined), "a product returned data it never received");
+    check("a spent budget is explained", envs.some((e) => (e.error ?? "").includes("budget")), `no envelope named the budget: ${envs.map((e) => e.error).join(" | ")}`);
+    if (DEFAULT_RENDER_BUDGET_MS > 8000) failures.push(`the default render budget (${DEFAULT_RENDER_BUDGET_MS}ms) leaves no room inside a ten-second function limit`);
+  }
+
+  /* ------ 18. an unreachable provider must not become a confident zero in a headline count ----- */
+  {
+    const empty = (productKey: string) => ({
+      provider: "test", providerKey: "test", productKey, organization: "test", sourceUrl: "https://ssd-api.jpl.nasa.gov/cad.api",
+      sources: [], license: "test", providerState: "UNAVAILABLE" as const, kind: "model" as const, cacheSeconds: 0,
+      provenance: "test", status: "unavailable" as const, stale: false, error: "provider unreachable",
+    });
+    const outage = {
+      closeApproaches: empty("jpl:close-approaches"),
+      sentry: empty("jpl:sentry"),
+      recent: empty("jpl:recent-neos"),
+      candidates: empty("mpc:neocp"),
+    } as unknown as NeoSnapshot;
+    const totals = neoTotals(outage);
+    check("an outage does not become zero monitored objects", totals.sentryObjects === undefined, `sentryObjects was ${totals.sentryObjects} during a total provider outage — a falsely reassuring number about impact risk`);
+    check("an outage does not become zero Torino ratings", totals.torinoAboveZero === undefined, `torinoAboveZero was ${totals.torinoAboveZero}`);
+    check("an outage does not become zero approaches", totals.approaches === undefined, `approaches was ${totals.approaches}`);
+    check("an outage leaves catalogue coverage absent", totals.catalogued === undefined, "catalogue coverage was computed over a feed that returned nothing");
+  }
+
   /* ----------------------------------------------------- 10. the request guard refuses unsafe URLs */
   {
     const cases: [string, string][] = [
@@ -344,7 +429,7 @@ async function main(): Promise<void> {
     for (const f of failures) console.error(`  • ${f}`);
     process.exit(1);
   }
-  console.log(`✓ Failure modes handled — ${passed.length} cases: provider down, HTTP error, HTML answer, malformed JSON, schema change, oversized response, future timestamp, a body that dies mid-stream, the stale-cache fallback surviving re-ageing, a forecast never badged as an observation, a single-request provider never asked twice at once, a failing provider backed off rather than stormed, no substitution, and seven unsafe URLs refused.`);
+  console.log(`✓ Failure modes handled — ${passed.length} cases: provider down, HTTP error, HTML answer, malformed JSON, schema change, a parser that throws, oversized response, future timestamp, a body that dies mid-stream, the stale-cache fallback surviving re-ageing, a forecast never badged as an observation, a single-request provider never asked twice at once, a failing provider backed off rather than stormed, a render budget bounding a serialised provider, an outage never becoming a zero, no substitution, and seven unsafe URLs refused.`);
 }
 
 void main();

@@ -1,4 +1,4 @@
-import { loadProduct, type ParseResult } from "@/platform/live-providers/client";
+import { loadProduct, type LoadOptions, type ParseResult } from "@/platform/live-providers/client";
 import { array, boundedNum, line, num, record } from "@/platform/live-providers/normalise";
 import type { LiveEnvelope } from "@/platform/live-providers/envelope";
 import {
@@ -34,8 +34,13 @@ function columnar(raw: unknown, required: string[]): { rows: Record<string, unkn
   for (const r of array(o.data)) {
     const cells = array(r);
     if (cells.length !== fields.length) continue; // a row that does not match its own header
-    const row: Record<string, unknown> = {};
+    // `Object.create(null)`, and `__proto__` skipped explicitly. The column names come from the
+    // provider; assigning them into a plain object lets a column called `__proto__` reparent the
+    // row, after which every field the row does NOT have resolves to whatever was injected — a
+    // missing `pha` reading back as "Y" would mark every object potentially hazardous.
+    const row: Record<string, unknown> = Object.create(null) as Record<string, unknown>;
     fields.forEach((name, i) => {
+      if (name === "__proto__" || name === "constructor" || name === "prototype") return;
       row[name] = cells[i];
     });
     rows.push(row);
@@ -133,8 +138,8 @@ function parseCloseApproaches(raw: unknown): ParseResult<CloseApproach[]> {
   return { ok: true, value: approaches };
 }
 
-export function closeApproaches(): Promise<LiveEnvelope<CloseApproach[]>> {
-  return loadProduct("jpl:close-approaches", parseCloseApproaches);
+export function closeApproaches(opts: LoadOptions = {}): Promise<LiveEnvelope<CloseApproach[]>> {
+  return loadProduct("jpl:close-approaches", parseCloseApproaches, opts);
 }
 
 /* ------------------------------------------------------------------- Sentry */
@@ -173,8 +178,8 @@ function parseSentry(raw: unknown): ParseResult<SentryObject[]> {
   return { ok: true, value: objects };
 }
 
-export function sentryTable(): Promise<LiveEnvelope<SentryObject[]>> {
-  return loadProduct("jpl:sentry", parseSentry);
+export function sentryTable(opts: LoadOptions = {}): Promise<LiveEnvelope<SentryObject[]>> {
+  return loadProduct("jpl:sentry", parseSentry, opts);
 }
 
 /* --------------------------------------------------------- recent NEO entries */
@@ -210,8 +215,8 @@ function parseRecentNeos(raw: unknown): ParseResult<RecentNeo[]> {
   return { ok: true, value: objects };
 }
 
-export function recentNeos(): Promise<LiveEnvelope<RecentNeo[]>> {
-  return loadProduct("jpl:recent-neos", parseRecentNeos);
+export function recentNeos(opts: LoadOptions = {}): Promise<LiveEnvelope<RecentNeo[]>> {
+  return loadProduct("jpl:recent-neos", parseRecentNeos, opts);
 }
 
 /* --------------------------------------------------- MPC NEO Confirmation Page */
@@ -222,12 +227,20 @@ export function recentNeos(): Promise<LiveEnvelope<RecentNeo[]>> {
  * a late-evening discovery back to midnight and silently make every candidate look older.
  */
 function fractionalDayToIso(year: number, month: number, day: number): string | undefined {
-  if (!Number.isInteger(year) || month < 1 || month > 12 || day < 1 || day >= 32) return undefined;
+  // The year is bounded, not merely required to be an integer. `Date.UTC(275760, 8, 13)` sits
+  // exactly on the maximum representable time value and passes a finiteness check, but adding the
+  // fractional-day milliseconds pushes it past the limit and `toISOString()` then THROWS. A
+  // provider record is never allowed to reach that: the confirmation page describes objects seen in
+  // the last few days, so anything outside a plausible observing era is a parsing accident.
+  if (!Number.isInteger(year) || year < 1900 || year > 2200) return undefined;
+  if (!Number.isFinite(month) || month < 1 || month > 12) return undefined;
+  if (!Number.isFinite(day) || day < 1 || day >= 32) return undefined;
   const whole = Math.floor(day);
   const ms = Math.round((day - whole) * 86400_000);
   const base = Date.UTC(year, month - 1, whole);
   if (!Number.isFinite(base)) return undefined;
-  return new Date(base + ms).toISOString();
+  const at = new Date(base + ms);
+  return Number.isFinite(at.getTime()) ? at.toISOString() : undefined;
 }
 
 function parseCandidates(raw: unknown): ParseResult<NeoCandidate[]> {
@@ -264,6 +277,6 @@ function parseCandidates(raw: unknown): ParseResult<NeoCandidate[]> {
   return { ok: true, value: candidates };
 }
 
-export function neoCandidates(): Promise<LiveEnvelope<NeoCandidate[]>> {
-  return loadProduct("mpc:neocp", parseCandidates);
+export function neoCandidates(opts: LoadOptions = {}): Promise<LiveEnvelope<NeoCandidate[]>> {
+  return loadProduct("mpc:neocp", parseCandidates, opts);
 }

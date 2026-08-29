@@ -12,12 +12,17 @@ import { EnvelopeDetails } from "@/components/space-weather/LiveStatus";
 import { discoverySnapshot, matchCatalogue, reage } from "@/platform/neo/service";
 import { getLiveProvider } from "@/platform/live-providers/registry";
 
-const ORBIT_CLASS: Record<string, string> = {
-  IEO: "Atira — orbit entirely inside Earth's",
-  ATE: "Aten — Earth-crossing, mostly inside Earth's orbit",
-  APO: "Apollo — Earth-crossing, mostly outside Earth's orbit",
-  AMO: "Amor — approaches but does not cross Earth's orbit",
-};
+/**
+ * A Map, not an object literal: the key is a provider string, and `ORBIT_CLASS["toString"]` on a
+ * literal resolves through the prototype chain to a function, which then passes a truthiness guard
+ * and is handed to React as a child.
+ */
+const ORBIT_CLASS = new Map<string, string>([
+  ["IEO", "Atira — orbit entirely inside Earth's"],
+  ["ATE", "Aten — Earth-crossing, mostly inside Earth's orbit"],
+  ["APO", "Apollo — Earth-crossing, mostly outside Earth's orbit"],
+  ["AMO", "Amor — approaches but does not cross Earth's orbit"],
+]);
 
 const DESCRIPTION =
   "Near-Earth objects newly entered into NASA/JPL's small-body database, and the candidates still awaiting confirmation on the IAU Minor Planet Center's NEO Confirmation Page. The difference matters: a confirmed entry has a computed orbit, while a candidate may turn out to be an already-known object, not near-Earth at all, or nothing.";
@@ -144,7 +149,7 @@ export default async function RecentlyDiscoveredPage() {
                       <td className="px-3 py-2 whitespace-nowrap text-muted">{r.firstObservation}</td>
                       <td className="px-3 py-2 text-muted">
                         {r.orbitClass ?? "—"}
-                        {r.orbitClass && ORBIT_CLASS[r.orbitClass] && <span className="block text-xs text-faint">{ORBIT_CLASS[r.orbitClass]}</span>}
+                        {r.orbitClass && ORBIT_CLASS.has(r.orbitClass) && <span className="block text-xs text-faint">{ORBIT_CLASS.get(r.orbitClass)}</span>}
                       </td>
                       <td className="px-3 py-2"><Size size={r.size} /></td>
                       <td className="px-3 py-2 whitespace-nowrap text-muted">{r.moidAu !== undefined ? `${r.moidAu.toFixed(4)} au` : "—"}</td>
@@ -152,7 +157,7 @@ export default async function RecentlyDiscoveredPage() {
                         {r.isPotentiallyHazardous ? (
                           <>
                             <span className="text-fg">Potentially hazardous</span>
-                            <span className="block text-xs text-faint">MOID under 0.05 au and H brighter than 22 — a size-and-proximity classification, not a prediction</span>
+                            <span className="block text-xs text-faint">MOID of 0.05 au or less and H of 22 or brighter — a size-and-proximity classification, not a prediction</span>
                           </>
                         ) : (
                           <span className="text-faint">Not classified hazardous</span>
@@ -170,9 +175,11 @@ export default async function RecentlyDiscoveredPage() {
           <h2 id="phrase-heading" className="font-display text-2xl font-bold">&ldquo;Potentially hazardous&rdquo; is a category, not a warning</h2>
           <p className="max-w-none text-sm leading-relaxed text-muted">
             An object is classified potentially hazardous if its orbit comes within 0.05 astronomical units of Earth&apos;s and it
-            is bright enough — absolute magnitude 22 or brighter — to be roughly 140 metres across or larger. Both conditions are
-            about the orbit and the size, and neither says anything about whether an impact is expected. Around two thousand
-            objects meet the definition. None of them is on a collision course.
+            is bright enough — absolute magnitude 22.0 or brighter — to be roughly 140 metres across or larger. Both tests include
+            their boundary. Both conditions are
+            about the orbit and the size, and neither says anything about whether an impact is expected. Thousands of known
+            objects meet the definition — a few thousand, and rising as surveys find more, which is why no fixed number is
+            written here. None of them is on a collision course.
           </p>
         </section>
 

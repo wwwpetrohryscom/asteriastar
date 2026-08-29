@@ -25,7 +25,11 @@ type DistanceBand = "any" | "1" | "5" | "10";
 /** The largest plausible diameter for an object, used only for filtering. */
 function upperSizeKm(a: ResolvedCloseApproach): number | undefined {
   if (!a.size) return undefined;
-  return a.size.kind === "measured" ? a.size.km : a.size.maxKm;
+  // The upper bound of whatever the provider offers: an exact figure where there is one, and the
+  // large-object end of the albedo range where the size is inferred from brightness. Filtering on
+  // the upper bound is deliberate — "under 50 m" should not hide an object that might be 80 m.
+  if (a.size.kind === "estimated-from-magnitude") return a.size.maxKm;
+  return a.size.km;
 }
 
 export function ApproachFilters({ approaches }: { approaches: ResolvedCloseApproach[] }) {
@@ -88,16 +92,31 @@ export function ApproachFilters({ approaches }: { approaches: ResolvedCloseAppro
           On the Sentry table
         </label>
 
-        {(distance !== "any" || size !== "any" || catalogued || monitored) && (
-          <button
-            type="button"
-            onClick={() => { setDistance("any"); setSize("any"); setCatalogued(false); setMonitored(false); }}
-            className="rounded-lg border border-white/15 px-3 py-1.5 text-sm text-muted transition hover:border-white/30 hover:text-fg"
-          >
-            Clear filters
-          </button>
-        )}
+        {/*
+          Disabled, never unmounted. Removing the button on activation destroys the focus of the
+          keyboard user who just pressed it: focus falls back to the document body and the next Tab
+          restarts from the top of the page, with nothing announced.
+        */}
+        <button
+          type="button"
+          disabled={distance === "any" && size === "any" && !catalogued && !monitored}
+          onClick={() => { setDistance("any"); setSize("any"); setCatalogued(false); setMonitored(false); }}
+          className="rounded-lg border border-white/15 px-3 py-1.5 text-sm text-muted transition hover:border-white/30 hover:text-fg disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:border-white/15 disabled:hover:text-muted"
+        >
+          Clear filters
+        </button>
       </div>
+
+      {/*
+        Without JavaScript the controls above render but cannot act, and the table below is the
+        complete unfiltered list — which is the right degradation, but only if the reader is told
+        rather than left wondering why the controls do nothing.
+      */}
+      <noscript>
+        <p className="rounded-lg border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-muted">
+          Filtering needs JavaScript. Every approach in the window is listed below regardless.
+        </p>
+      </noscript>
 
       {/*
         A polite live region, so a filter change is announced once with its result rather than the
@@ -156,13 +175,15 @@ export function ApproachFilters({ approaches }: { approaches: ResolvedCloseAppro
                   <td className="px-3 py-2 whitespace-nowrap">
                     {!a.size ? (
                       <span className="text-faint">not published</span>
-                    ) : a.size.kind === "measured" ? (
-                      <span className="font-medium text-fg">{formatDiameter(a.size.km)}<span className="ml-1.5 text-xs font-normal text-faint">measured</span></span>
-                    ) : (
+                    ) : a.size.kind === "estimated-from-magnitude" ? (
                       <span className="font-medium text-fg">
                         {formatDiameter(a.size.minKm)}–{formatDiameter(a.size.maxKm)}
                         <span className="ml-1.5 text-xs font-normal text-faint">from H {a.size.absoluteMagnitude.toFixed(1)}</span>
                       </span>
+                    ) : a.size.kind === "provider-estimate" ? (
+                      <span className="font-medium text-fg">{formatDiameter(a.size.km)}<span className="ml-1.5 text-xs font-normal text-faint">JPL figure</span></span>
+                    ) : (
+                      <span className="font-medium text-fg">{formatDiameter(a.size.km)}<span className="ml-1.5 text-xs font-normal text-faint">measured</span></span>
                     )}
                   </td>
                   <td className="px-3 py-2">

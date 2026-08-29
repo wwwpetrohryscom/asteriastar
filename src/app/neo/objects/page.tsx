@@ -65,7 +65,7 @@ export default async function NeoObjectsPage() {
 
   for (const a of approaches) add(a.designation, a.fullName, "Approaching", a.size);
   for (const o of (s.sentry.data ?? []).slice(0, 40)) {
-    add(o.designation, o.fullName, "Sentry", o.diameterKm !== undefined ? { kind: "measured", km: o.diameterKm, note: "JPL's estimate from absolute magnitude assuming an albedo of 0.154, unless a measurement exists." } : undefined,
+    add(o.designation, o.fullName, "Sentry", o.diameterKm !== undefined ? { kind: "provider-estimate", km: o.diameterKm, assumedAlbedo: 0.154, note: "JPL's figure: derived from absolute magnitude assuming an albedo of 0.154, unless a measured value exists. The feed does not say which each row is." } : undefined,
       o.palermoCumulative !== undefined ? `Palermo ${o.palermoCumulative.toFixed(2)}` : undefined);
   }
   for (const r of (s.recent.data ?? []).slice(0, 40)) add(r.designation, r.fullName, "Newly catalogued", r.size, r.orbitClass);

@@ -36,10 +36,27 @@ export interface ApproachDistance {
   lunarDistances: number;
 }
 
-/** A diameter, either measured or inferred from brightness under a stated albedo assumption. */
+/**
+ * A diameter, and how it was arrived at. Three cases, because the providers really do offer three.
+ *
+ * `measured` is a physical measurement — radar, thermal infrared, occultation.
+ *
+ * `estimated-from-magnitude` is a brightness converted into a size across an albedo RANGE, which is
+ * the only honest form when the albedo is unknown.
+ *
+ * `provider-estimate` is a single number from a provider that MAY be either. Sentry is the case that
+ * forced this variant: it publishes one `diameter` column derived from absolute magnitude at an
+ * assumed albedo of 0.154 "unless a measurement exists", and it does not say which each row is.
+ * Checked against the live table, 1979 XB's 0.66 km reproduces the 0.154 formula to three decimals
+ * while Bennu's 0.49 km and 1950 DA's 1.3 km are radar values that do not. Calling the column
+ * "measured" would publish a brightness conversion as a measurement; calling it "estimated" would
+ * demote two genuinely measured diameters. So it is labelled as what it is: the provider's figure,
+ * with the provider's own explanation of how it was obtained.
+ */
 export type ObjectSize =
   | { kind: "measured"; km: number; uncertaintyKm?: number; note: string }
-  | { kind: "estimated-from-magnitude"; minKm: number; maxKm: number; absoluteMagnitude: number; albedoRange: [number, number]; note: string };
+  | { kind: "estimated-from-magnitude"; minKm: number; maxKm: number; absoluteMagnitude: number; albedoRange: [number, number]; note: string }
+  | { kind: "provider-estimate"; km: number; assumedAlbedo: number; note: string };
 
 /** One predicted close approach to Earth, as CNEOS computes it. */
 export interface CloseApproach {

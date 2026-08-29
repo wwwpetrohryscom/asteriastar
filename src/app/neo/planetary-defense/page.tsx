@@ -8,8 +8,8 @@ import { SourceList } from "@/components/ui/SourceList";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, webPageSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES, neoPath } from "@/lib/routes";
-import { NeoNav, NeoHonestyNote } from "@/components/neo/NeoUI";
-import { neoSnapshot, neoTotals, reage } from "@/platform/neo/service";
+import { NeoNav, NeoHonestyNote, NeoStat } from "@/components/neo/NeoUI";
+import { riskSnapshot, discoverySnapshot, reage } from "@/platform/neo/service";
 import { engine } from "@/platform/data-engine";
 
 /**
@@ -35,8 +35,14 @@ export const revalidate = 21600;
 
 export default async function NeoPlanetaryDefensePage() {
   const nowIso = new Date().toISOString();
-  const s = reage(await neoSnapshot(), nowIso);
-  const totals = neoTotals(s);
+  // Only the feeds this page actually renders. `neoSnapshot()` would additionally fetch and parse
+  // the close-approach product — up to its byte ceiling — and run a full catalogue fold over it,
+  // all discarded, inside a serialised JPL request budget this page has no reason to spend.
+  const [risk, discovery] = await Promise.all([riskSnapshot(), discoverySnapshot()]);
+  const s = reage({ ...risk, ...discovery }, nowIso);
+  const sentry = s.sentry.data;
+  const sentryObjects = sentry?.length;
+  const torinoAboveZero = sentry?.filter((o) => (o.torinoMaximum ?? 0) > 0).length;
   const pd = engine.planetaryDefense;
 
   const crumbs: Crumb[] = [
@@ -62,18 +68,10 @@ export default async function NeoPlanetaryDefensePage() {
         <section aria-labelledby="today-heading" className="space-y-4">
           <h2 id="today-heading" className="font-display text-2xl font-bold">Where things stand right now</h2>
           <ul className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-            {[
-              [totals.sentryObjects.toLocaleString("en-GB"), "objects monitored", "orbits not yet precise enough to exclude any impact"],
-              [totals.torinoAboveZero, "above Torino 0", "the scale's own definition of anything but routine"],
-              [totals.recentObjects, "catalogued in 60 days", "new orbits computed from first observations"],
-              [totals.candidates, "awaiting confirmation", "candidates on the MPC's page right now"],
-            ].map(([value, label, sub]) => (
-              <li key={String(label)} className="scientific-card p-5">
-                <p className="font-display text-3xl font-bold text-fg">{value}</p>
-                <p className="mt-1 text-sm font-medium text-muted">{label}</p>
-                <p className="mt-1 text-xs text-faint">{sub}</p>
-              </li>
-            ))}
+            <NeoStat value={sentryObjects} label="objects monitored" sub="orbits not yet precise enough to exclude any impact" />
+            <NeoStat value={torinoAboveZero} label="above Torino 0" sub="the scale's own definition of anything but routine" />
+            <NeoStat value={s.recent.data?.length} label="first observed in 60 days" sub="and since given a computed orbit — not the same as newly announced" />
+            <NeoStat value={s.candidates.data?.length} label="awaiting confirmation" sub="candidates on the MPC's page right now" />
           </ul>
         </section>
 
@@ -92,14 +90,14 @@ export default async function NeoPlanetaryDefensePage() {
             </p>
             <p>
               <strong className="text-fg">Assess.</strong> Sentry projects every fitted orbit forward and flags any that cannot yet
-              be shown to miss. The {totals.sentryObjects.toLocaleString("en-GB")} objects on that list are there because of what is
-              not yet known about them, and they leave it as observations accumulate.
+              be shown to miss.{" "}
+              {sentryObjects !== undefined
+                ? `The ${sentryObjects.toLocaleString("en-GB")} objects on that list are there because of what is not yet known about them, and they leave it as observations accumulate.`
+                : "The table could not be read from JPL for this page, so no count is given; objects are on that list because of what is not yet known about them, and they leave it as observations accumulate."}
             </p>
             <p>
-              <strong className="text-fg">Deflect.</strong> Demonstrated once. In September 2022, NASA&apos;s DART spacecraft struck
-              the moonlet Dimorphos and shortened its orbit around Didymos by about 32 minutes — far more than the mission required,
-              and the first time humanity deliberately changed the orbit of a celestial body. Neither object was ever a threat; the
-              point was to find out whether the technique works on a body whose response could be measured.
+              <strong className="text-fg">Deflect.</strong> Demonstrated once, in 2022, by NASA&apos;s DART mission. The
+              encyclopedia covers what was done and what it showed; this page&apos;s job is the live figures above.
             </p>
           </div>
         </section>
@@ -107,15 +105,22 @@ export default async function NeoPlanetaryDefensePage() {
         <section aria-labelledby="encyclopedia-heading" className="space-y-3">
           <h2 id="encyclopedia-heading" className="font-display text-2xl font-bold">The full account</h2>
           <p className="text-sm leading-relaxed text-muted">
-            This page is the live status. AsteriaStar&apos;s planetary-defence encyclopedia covers the subject properly — the
-            survey programmes, the deflection techniques and their trade-offs, the international coordination structures, and the
-            impact record — across {pd.count} catalogued entries. It is not repeated here, so that there is only ever one account
-            to keep right.
+            This page is the live status and nothing else. AsteriaStar already covers planetary defence properly in two places,
+            and repeating either here would give the platform three accounts of one subject that drift apart. The survey
+            programmes, the deflection techniques and their trade-offs, the coordination structures and the impact record are in
+            the encyclopedia — {pd.count} catalogued entries — and the asteroid section covers the objects themselves. The
+            hazard scales are defined there too; this page and{" "}
+            <Link href={neoPath("risk")} className="text-nasa underline-offset-4 hover:underline">the risk page</Link> quote them
+            only as far as reading today&apos;s numbers requires.
           </p>
-          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <ul className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <li className="scientific-card p-5">
               <Link href={ROUTES.planetaryDefense} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nasa hover:underline">Planetary defence encyclopedia →</Link>
               <p className="mt-1 text-sm text-muted">Surveys, deflection methods, coordination and the impact record.</p>
+            </li>
+            <li className="scientific-card p-5">
+              <Link href="/asteroids/planetary-defense" className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nasa hover:underline">Asteroid defence overview →</Link>
+              <p className="mt-1 text-sm text-muted">The asteroid section&apos;s own account, including the hazard scales in full.</p>
             </li>
             <li className="scientific-card p-5">
               <Link href={ROUTES.asteroids} className="font-display text-base font-semibold text-fg underline-offset-4 hover:text-nasa hover:underline">Asteroids →</Link>
