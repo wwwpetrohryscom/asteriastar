@@ -1,4 +1,6 @@
 import { spaceWeatherSnapshot, solarEventsSnapshot, currentSolarWind, latestObservedKp, currentScales, liveProviderReports } from "../../src/platform/space-weather/service";
+import { neoSnapshot } from "../../src/platform/neo/service";
+import { clearCache } from "../../src/platform/live-providers/cache";
 import { getLiveProduct, LIVE_PRODUCTS } from "../../src/platform/live-providers/registry";
 import { NO_VALUE_STATUSES, type LiveDatum, type LiveEnvelope } from "../../src/platform/live-providers/envelope";
 import { allHealth } from "../../src/platform/live-providers/health";
@@ -92,8 +94,14 @@ async function main(): Promise<void> {
 
   console.log(`Probing ${LIVE_PRODUCTS.length} products across ${new Set(LIVE_PRODUCTS.map((p) => p.providerKey)).size} providers…\n`);
 
+  // Clear first, so every request below is a REAL one. Without this a warm process would report
+  // cached values as though the providers had just answered — the exact fabrication this script
+  // exists to rule out.
+  clearCache();
+
   const weather = await spaceWeatherSnapshot();
   const events = await solarEventsSnapshot();
+  const neo = await neoSnapshot();
 
   // Taken AFTER the requests, so an age is never negative merely because a fetch completed after
   // the clock was read. Ages here are real: the gap between the provider's own timestamp and now.
@@ -114,6 +122,10 @@ async function main(): Promise<void> {
   record("donki:cmes", events.cmes, nowIso);
   record("donki:geomagnetic-storms", events.storms, nowIso);
   record("donki:sep", events.sepEvents, nowIso);
+  record("jpl:close-approaches", neo.closeApproaches, nowIso);
+  record("jpl:sentry", neo.sentry, nowIso);
+  record("jpl:recent-neos", neo.recent, nowIso);
+  record("mpc:neocp", neo.candidates, nowIso);
 
   /* --- the composed values a page actually renders, checked as values and not just as responses */
   const wind = currentSolarWind(weather);
@@ -151,6 +163,25 @@ async function main(): Promise<void> {
     }
     if (aurora.gridCells < 1000) warnings.push(`aurora: only ${aurora.gridCells} grid cells parsed — the OVATION grid is normally tens of thousands`);
   }
+
+  /* --- NEO semantics that a shape check cannot see --------------------------------------- */
+  for (const a of neo.closeApproaches.data ?? []) {
+    // A TDB timestamp must NOT carry a zone designator: appending one would assert UTC.
+    if (/[Zz]|[+-]\d{2}:\d{2}$/.test(a.approachTdb)) failures.push(`${a.designation}: close-approach time "${a.approachTdb}" carries a zone designator — TDB is not UTC and must not be written as though it were`);
+    if (a.distance.au <= 0) failures.push(`${a.designation}: non-positive approach distance`);
+    // The nominal distance must lie inside the provider's own 3-sigma bracket.
+    if (a.distanceMin && a.distanceMax && (a.distance.au < a.distanceMin.au || a.distance.au > a.distanceMax.au)) {
+      failures.push(`${a.designation}: nominal distance ${a.distance.au} au lies outside the provider's 3-sigma range ${a.distanceMin.au}-${a.distanceMax.au} au`);
+    }
+    if (a.size?.kind === "estimated-from-magnitude" && !(a.size.minKm < a.size.maxKm)) {
+      failures.push(`${a.designation}: an estimated size range that is not a range`);
+    }
+  }
+  const probabilities = (neo.sentry.data ?? []).map((o) => o.impactProbability).filter((p): p is number => p !== undefined);
+  if (probabilities.some((p) => p <= 0 || p > 1)) failures.push("sentry: an impact probability outside (0, 1]");
+  if ((neo.sentry.data ?? []).some((o) => (o.torinoMaximum ?? 0) < 0 || (o.torinoMaximum ?? 0) > 10)) failures.push("sentry: a Torino rating outside 0-10");
+  if ((neo.closeApproaches.data ?? []).length === 0) warnings.push("close approaches: none within 0.05 au in the next 60 days — unusual but possible");
+  if ((neo.candidates.data ?? []).length === 0) warnings.push("MPC confirmation page: currently empty — a real state, not a failure");
 
   /* ------------------------------------------------------------------------------- report */
   const pad = (s: string, n: number) => s.padEnd(n).slice(0, n);

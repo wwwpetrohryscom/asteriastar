@@ -108,6 +108,8 @@ export const ROUTES = {
   astronomySoftware: "/astronomy-software",
   /** Program CJ — the operational space-weather centre, backed by live NOAA SWPC and NASA DONKI data. */
   spaceWeather: "/space-weather",
+  /** Program CK — operational near-Earth-object intelligence, backed by live JPL/CNEOS and MPC data. */
+  neo: "/neo",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -722,6 +724,17 @@ export function spaceWeatherPath(slug: SpaceWeatherSlug): string {
 }
 export const SPACE_WEATHER_SLUGS = ["live", "solar-activity", "geomagnetic", "solar-wind", "aurora", "events"] as const;
 export type SpaceWeatherSlug = (typeof SPACE_WEATHER_SLUGS)[number];
+
+/**
+ * A near-Earth-object sub-page. As with space weather, these are the only URLs in the family: no
+ * designation, date or distance ever becomes a path or a query parameter, so the section is fully
+ * indexable without admitting a single crawlable permutation. Filtering happens in the browser.
+ */
+export function neoPath(slug: NeoSlug): string {
+  return `/neo/${slug}`;
+}
+export const NEO_SLUGS = ["close-approaches", "objects", "risk", "recently-discovered", "planetary-defense"] as const;
+export type NeoSlug = (typeof NEO_SLUGS)[number];
 export function universeScenePath(slug: string): string {
   return `/universe-3d/${slug}`;
 }

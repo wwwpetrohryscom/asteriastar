@@ -266,6 +266,8 @@ import {
   ROUTES,
   SPACE_WEATHER_SLUGS,
   spaceWeatherPath,
+  NEO_SLUGS,
+  neoPath,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
 import { galleryCategories } from "@/lib/gallery";
@@ -807,6 +809,19 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 
+  /**
+   * Near-Earth objects (Program CK). Six stable URLs, no query parameters: the close-approach
+   * filters run in the browser precisely so that a filtered view never becomes a crawlable URL.
+   */
+  const neoRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.neo), changeFrequency: "daily", priority: 0.9 },
+    ...NEO_SLUGS.map((slug) => ({
+      url: absoluteUrl(neoPath(slug)),
+      changeFrequency: "daily" as const,
+      priority: slug === "close-approaches" ? 0.9 : 0.7,
+    })),
+  ];
+
   const universe3dRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.universe3d), changeFrequency: "monthly", priority: 0.8 },
     { url: absoluteUrl(`${ROUTES.universe3d}/data-coverage`), changeFrequency: "monthly", priority: 0.6 },
@@ -938,6 +953,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...assistantRoutes,
     ...liveRoutes,
     ...spaceWeatherRoutes,
+    ...neoRoutes,
     ...universe3dRoutes,
     ...workspaceRoutes,
     ...openPlatformRoutes,

@@ -356,6 +356,32 @@ export const ENDPOINTS: EndpointDef[] = [
     example: "/api/v0/live/providers",
     returns: "{ totals, providers: LiveProviderReport[] }",
   },
+
+  /* ------------------------------------------------------- near-Earth objects (Program CK) */
+  {
+    id: "live-neo", group: "live", method: "GET", path: "/api/v0/live/neo",
+    summary: "Near-Earth objects", status: "implemented",
+    description: "Every near-Earth object feed in one response: close approaches within 0.05 au over the next 60 days, the CNEOS Sentry impact-risk table, newly catalogued objects, and the Minor Planet Center's unconfirmed candidates. Close-approach times are TDB, not UTC. Impact probabilities are JPL's own and carry JPL's statement that they can be inaccurate by a factor of ten; AsteriaStar computes none of its own.",
+    params: [],
+    example: "/api/v0/live/neo",
+    returns: "{ totals, closeApproaches, sentry, recent, candidates } — each an envelope",
+  },
+  {
+    id: "live-neo-close-approaches", group: "live", method: "GET", path: "/api/v0/live/neo/close-approaches",
+    summary: "Close approaches", status: "implemented",
+    description: "Near-Earth objects passing within 0.05 au over the next 60 days, each resolved against AsteriaStar's catalogue. Every approach carries its nominal distance in astronomical units, kilometres and lunar distances, the provider's 3-sigma minimum and maximum, and the 3-sigma uncertainty in the approach time — a nominal distance served without its bounds would turn a prediction with real error bars into a fact.",
+    params: [],
+    example: "/api/v0/live/neo/close-approaches",
+    returns: "LiveEnvelope<ResolvedCloseApproach[]>",
+  },
+  {
+    id: "live-neo-object", group: "live", method: "GET", path: "/api/v0/live/neo/{designation}",
+    summary: "One object across the live feeds", status: "implemented",
+    description: "Everything the four live feeds currently say about one object. This endpoint does NOT proxy the provider: the designation comes from the request, and no value from a request is ever placed into a provider URL. The feeds are loaded from their own constant URLs and matched locally, so a designation absent here is absent from these four feeds — not from JPL's database.",
+    params: [{ name: "designation", in: "path", required: true, type: "string", description: "Object designation, 1-40 characters of letters, digits, spaces, dots, slashes or hyphens.", example: "99942" }],
+    example: "/api/v0/live/neo/99942",
+    returns: "{ designation, foundInLiveFeeds, catalogue, closeApproaches, sentry, recentEntry, confirmationPageCandidate }",
+  },
 ];
 
 export const IMPLEMENTED_ENDPOINTS = ENDPOINTS.filter((e) => e.status === "implemented");

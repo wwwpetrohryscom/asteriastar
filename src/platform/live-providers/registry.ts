@@ -59,6 +59,23 @@ export interface LiveProviderDescriptor {
   /* operational policy */
   integration: IntegrationLevel;
   timeoutMs: number;
+  /**
+   * How many requests this provider permits AsteriaStar to have open at once.
+   *
+   * Not a performance tuning knob — a term of use. JPL's Fair Use Policy for the SSD/CNEOS APIs
+   * states: "You agree to submit only one API request at a time (no simultaneous requests)." The
+   * service layer still composes products with `Promise.all`, so the queue that enforces this lives
+   * in the loader, where it cannot be forgotten by a caller.
+   */
+  maxConcurrentRequests: number;
+  /**
+   * After this many consecutive failures the provider is left alone for `backoffSeconds` rather
+   * than being asked again on every render. JPL asks that automated processes "back off or reduce
+   * request rates" on errors; it is also what stops a provider outage becoming a request storm from
+   * every serverless instance at once.
+   */
+  backoffAfterFailures: number;
+  backoffSeconds: number;
   /** Version tag for the response shape this client parses. Bumped when a parser changes. */
   schemaVersion: string;
   /**
@@ -123,6 +140,9 @@ export const LIVE_PROVIDERS: LiveProviderDescriptor[] = [
     attribution: "NOAA Space Weather Prediction Center (SWPC)",
     integration: "IMPLEMENTED",
     timeoutMs: 8000,
+    maxConcurrentRequests: 4,
+    backoffAfterFailures: 3,
+    backoffSeconds: 60,
     schemaVersion: "swpc-2026-08",
     verifiedAt: "2026-08-29",
   },
@@ -146,7 +166,67 @@ export const LIVE_PROVIDERS: LiveProviderDescriptor[] = [
       "CCMC states that “the real-time space weather information and simulations stored in DONKI should be considered only as prototyping quality and in research context”. DONKI events are shown here as a curated research catalogue, not as an operational alert service — that role belongs to SWPC.",
     integration: "IMPLEMENTED",
     timeoutMs: 8000,
+    maxConcurrentRequests: 2,
+    backoffAfterFailures: 3,
+    backoffSeconds: 120,
     schemaVersion: "donki-2026-08",
+    verifiedAt: "2026-08-29",
+  },
+
+  {
+    providerKey: "jpl-ssd",
+    name: "JPL Solar System Dynamics / CNEOS",
+    organization: "NASA Jet Propulsion Laboratory, California Institute of Technology",
+    documentation: "https://ssd-api.jpl.nasa.gov/",
+    baseUrl: "https://ssd-api.jpl.nasa.gov",
+    category: "near-earth-object",
+    sources: ["jpl", "nasa"],
+    liveSkyKey: "jpl-horizons",
+    entityId: "live_data_source:jpl-cneos",
+    authentication: "none",
+    rateLimits:
+      "JPL publishes a Fair Use Policy rather than a numeric limit: requests must be \u201creasonably necessary\u201d, automated processes must not be \u201cunnecessarily frequent, repetitive, or redundant\u201d, only ONE request may be open at a time, and processes must back off on errors. AsteriaStar therefore serialises every JPL request, caches each product for hours, and stops asking after three consecutive failures.",
+    redistribution:
+      "A work of the US Government, freely reusable. JPL adds one restriction that shapes the architecture: \u201cYou may not embed these APIs in your website (per NASA CORS policy).\u201d No browser on this site ever contacts ssd-api.jpl.nasa.gov \u2014 every request is made server-side and the result is re-served from AsteriaStar's own origin, cached and attributed, which is also what the Fair Use Policy asks for.",
+    license: "Public domain (US Government work), NASA/JPL-Caltech.",
+    attribution: "NASA/JPL-Caltech, Solar System Dynamics and the Center for Near-Earth Object Studies (CNEOS)",
+    providerCaveat:
+      "JPL states of Sentry impact probabilities: \u201cThe probability computation is complex and depends on a number of assumptions that are difficult to verify. For these reasons the stated probability can easily be inaccurate by a factor of a few, and occasionally by a factor of ten or more.\u201d It also notes there is no guarantee any particular API remains available.",
+    integration: "IMPLEMENTED",
+    timeoutMs: 12000,
+    // One. This is the provider's stated term, not a tuning choice.
+    maxConcurrentRequests: 1,
+    backoffAfterFailures: 3,
+    backoffSeconds: 300,
+    schemaVersion: "jpl-ssd-2026-08",
+    verifiedAt: "2026-08-29",
+  },
+
+  {
+    providerKey: "minor-planet-center",
+    name: "IAU Minor Planet Center",
+    organization: "International Astronomical Union / Center for Astrophysics, Harvard & Smithsonian",
+    documentation: "https://minorplanetcenter.net/data",
+    baseUrl: "https://minorplanetcenter.net",
+    category: "near-earth-object",
+    sources: ["mpc"],
+    liveSkyKey: "minor-planet-center",
+    entityId: "live_data_source:minor-planet-center",
+    authentication: "none",
+    rateLimits:
+      "The MPC publishes machine-readable data files rather than an API, with no registration, no credentials and no documented rate limit. AsteriaStar reads one of them \u2014 the NEO Confirmation Page, about six kilobytes \u2014 and caches it for ten minutes.",
+    redistribution: "Public IAU/MPC data. No documented redistribution restriction; attribution is requested.",
+    license: "Public data of the IAU Minor Planet Center.",
+    attribution:
+      "This research has made use of data and/or services provided by the International Astronomical Union's Minor Planet Center.",
+    providerCaveat:
+      "The NEO Confirmation Page lists CANDIDATES, not discoveries. An entry may turn out to be an already-known object, a main-belt asteroid rather than a near-Earth one, or an artefact; most entries leave the page within days. The score is the MPC's estimate of how likely the object is a NEO, not a probability that it exists.",
+    integration: "IMPLEMENTED",
+    timeoutMs: 10000,
+    maxConcurrentRequests: 2,
+    backoffAfterFailures: 3,
+    backoffSeconds: 300,
+    schemaVersion: "mpc-neocp-2026-08",
     verifiedAt: "2026-08-29",
   },
 ];
@@ -383,10 +463,16 @@ export const LIVE_PRODUCTS: LiveProduct[] = [
   },
 ];
 
-const PRODUCT_BY_KEY = new Map(LIVE_PRODUCTS.map((p) => [p.productKey, p]));
+/**
+ * Built lazily, because products are registered by program: the space-weather set is declared
+ * inline above and the near-Earth-object set is appended below. A Map captured at module scope
+ * before those appends would silently miss half the registry.
+ */
+let productIndex: Map<string, LiveProduct> | null = null;
 
 export function getLiveProduct(key: string): LiveProduct | undefined {
-  return PRODUCT_BY_KEY.get(key);
+  if (!productIndex) productIndex = new Map(LIVE_PRODUCTS.map((p) => [p.productKey, p]));
+  return productIndex.get(key);
 }
 
 export function productsForProvider(providerKey: string): LiveProduct[] {
@@ -419,3 +505,87 @@ export function providerState(descriptor: LiveProviderDescriptor, productKeys: s
   if (failing > 0) return "DEGRADED";
   return attempted.some((h) => h.successCount > 0) ? "CONNECTED" : "DEGRADED";
 }
+
+/* ------------------------------------------------------- near-Earth objects (Program CK) */
+
+/**
+ * JPL products are date-windowed through their own query parameters rather than the `{startDate}`
+ * template, because the CAD API expresses its window as `date-min=now&date-max=+30` — server-side
+ * relative terms the provider resolves itself. Nothing in these URLs comes from a request.
+ */
+const NEO_CATALOGUE: FreshnessPolicy = { basis: "fetch", liveWithinSeconds: 3600, recentWithinSeconds: 6 * 3600, staleAfterSeconds: 24 * 3600 };
+
+/** The confirmation page turns over within days and is regenerated continuously. */
+const NEOCP_FEED: FreshnessPolicy = { basis: "fetch", liveWithinSeconds: 1800, recentWithinSeconds: 3 * 3600, staleAfterSeconds: 12 * 3600 };
+
+LIVE_PRODUCTS.push(
+  {
+    productKey: "jpl:close-approaches",
+    providerKey: "jpl-ssd",
+    label: "Near-Earth object close approaches",
+    // `fullname` and `diameter` are requested explicitly; `dist-max=0.05 au` is about twenty lunar
+    // distances, which is the window CNEOS itself uses for its public close-approach table.
+    url: "https://ssd-api.jpl.nasa.gov/cad.api?date-min=now&date-max=%2B60&dist-max=0.05&sort=date&fullname=true&diameter=true",
+    kind: "model",
+    cacheSeconds: 3600,
+    refreshCadenceSeconds: 86400,
+    freshness: NEO_CATALOGUE,
+    maxBytes: 600_000,
+    cacheRationale:
+      "Close-approach solutions change only when an object's orbit is refitted from new observations, which happens on a timescale of days. An hour's cache is far finer than that, and JPL's Fair Use Policy asks that automated requests not be unnecessarily frequent.",
+    limitations:
+      "Times are TDB (barycentric dynamical time), not UTC — the provider publishes them that way and AsteriaStar does not silently convert them. Distances are the nominal solution with 3-sigma minimum and maximum bounds alongside; a close approach is a computed prediction from a fitted orbit, not an observation. The window is the next 60 days within 0.05 au (about 20 lunar distances).",
+  },
+  {
+    productKey: "jpl:sentry",
+    providerKey: "jpl-ssd",
+    label: "Sentry impact-risk table",
+    url: "https://ssd-api.jpl.nasa.gov/sentry.api",
+    kind: "model",
+    cacheSeconds: 6 * 3600,
+    refreshCadenceSeconds: 86400,
+    freshness: NEO_CATALOGUE,
+    // The table is ~560 KB at ~2,200 objects and grows as surveys find more; the ceiling leaves
+    // room for that growth without leaving room for a runaway response.
+    maxBytes: 1_500_000,
+    cacheRationale:
+      "Sentry is re-run when new observations arrive for a listed object; entries persist for months or years and change slowly. Six hours is well inside that, and keeps a page view from becoming a request to a research service.",
+    limitations:
+      "Impact probabilities are JPL's own, with JPL's own caveat that they can be wrong by a factor of a few and occasionally by ten or more. Diameters are estimated from absolute magnitude assuming an albedo of 0.154 unless a measurement exists. Objects LEAVE this table when further observations eliminate their potential impacts — a disappearance is good news, not missing data. The Torino scale is defined only for potential impacts less than a century away.",
+  },
+  {
+    productKey: "jpl:recent-neos",
+    providerKey: "jpl-ssd",
+    label: "Recently observed near-Earth objects",
+    // The `sb-cdata` constraint is a fixed JSON literal, URL-encoded: first observation on or after
+    // a rolling date is NOT used, because the provider offers no relative form and a date computed
+    // here would change the URL every day and defeat every cache. A fixed recent epoch is used and
+    // the client filters to the newest entries.
+    url: "https://ssd-api.jpl.nasa.gov/sbdb_query.api?fields=full_name,pdes,neo,pha,H,diameter,first_obs,class,moid&sb-class=IEO,ATE,APO,AMO&sb-cdata=%7B%22AND%22%3A%5B%22first_obs%7CGE%7C{startDate}%22%5D%7D&limit=300",
+    windowDays: 60,
+    kind: "observation",
+    cacheSeconds: 6 * 3600,
+    refreshCadenceSeconds: 86400,
+    freshness: NEO_CATALOGUE,
+    maxBytes: 600_000,
+    cacheRationale:
+      "A new NEO enters the database once its orbit is computed, which happens over days. Six hours cannot delay one meaningfully, and the date window only advances once per day.",
+    limitations:
+      "`first_obs` is the date of the FIRST OBSERVATION used in the orbit solution — not the date the object was announced, and not the date anyone recognised it as new. Absolute magnitude H is a brightness, not a size; a diameter appears only where one has actually been measured or modelled.",
+  },
+  {
+    productKey: "mpc:neocp",
+    providerKey: "minor-planet-center",
+    label: "NEO Confirmation Page (unconfirmed candidates)",
+    url: "https://minorplanetcenter.net/Extended_Files/neocp.json",
+    kind: "observation",
+    cacheSeconds: 600,
+    refreshCadenceSeconds: 900,
+    freshness: NEOCP_FEED,
+    maxBytes: 200_000,
+    cacheRationale:
+      "The page is regenerated as observations arrive, and entries live on it for hours to days. Ten minutes bounds how long a new candidate is missing while keeping the request rate to a small file trivial.",
+    limitations:
+      "These are CANDIDATES awaiting confirmation, not discoveries. An entry may prove to be an already-known object, not a near-Earth object at all, or an artefact, and most leave the page within days. The score is the MPC's estimate of how likely the object is a NEO — it is not a probability that the object exists, and it is not an impact risk.",
+  },
+);

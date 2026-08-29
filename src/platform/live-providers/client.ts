@@ -111,6 +111,60 @@ function statusFor(product: LiveProduct, fetchedAt: string, observedAt: string |
  */
 const inFlight = new Map<string, Promise<unknown>>();
 
+/**
+ * Per-provider request gates.
+ *
+ * A provider's concurrency limit is a TERM OF USE, not a tuning choice — JPL's Fair Use Policy for
+ * the SSD/CNEOS APIs says "You agree to submit only one API request at a time (no simultaneous
+ * requests)". The service layer composes products with `Promise.all` because that is the natural
+ * way to write it, so the limit is enforced here, in the one place every request passes through,
+ * rather than depending on each caller remembering.
+ *
+ * A gate is a promise chain: each request waits for the one `slots` places ahead of it. With
+ * `slots = 1` that is strict serialisation.
+ */
+const gates = new Map<string, Promise<void>[]>();
+
+async function throughGate<T>(providerKey: string, slots: number, run: () => Promise<T>): Promise<T> {
+  const queue = gates.get(providerKey) ?? [];
+  gates.set(providerKey, queue);
+
+  // Wait for the request `slots` positions back, so at most `slots` run at once.
+  const ahead = queue.length >= slots ? queue[queue.length - slots] : undefined;
+  let release!: () => void;
+  const mine = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  queue.push(mine);
+
+  try {
+    if (ahead) await ahead;
+    return await run();
+  } finally {
+    release();
+    const index = queue.indexOf(mine);
+    if (index >= 0) queue.splice(index, 1);
+  }
+}
+
+/**
+ * Whether a provider is inside a back-off window after repeated failures.
+ *
+ * Asking a dead provider once per render, from every serverless instance, is how a third party's
+ * outage becomes a third party's outage plus a request storm. JPL asks explicitly that automated
+ * processes "back off or reduce request rates" on errors; this is that, and it applies to every
+ * provider because it is good manners regardless of who documents it.
+ */
+function inBackoff(descriptor: LiveProviderDescriptor, productKey: string, nowIso: string): number | null {
+  const health = getHealth(productKey);
+  if (!health || health.consecutiveFailures < descriptor.backoffAfterFailures) return null;
+  if (!health.lastFailureAt) return null;
+  const elapsed = (Date.parse(nowIso) - Date.parse(health.lastFailureAt)) / 1000;
+  if (!Number.isFinite(elapsed)) return null;
+  const remaining = descriptor.backoffSeconds - elapsed;
+  return remaining > 0 ? Math.ceil(remaining) : null;
+}
+
 export interface LoadOptions {
   /** The moment to judge freshness against. Defaults to now; injected by tests. */
   now?: Date;
@@ -179,11 +233,29 @@ export async function loadProduct<T>(productKey: string, parse: (raw: unknown) =
   }
 
   /* ------------------------------------------------------------- refresh */
+  /* ------------------------------------------------------------- back off */
+  const cooldown = inBackoff(provider, productKey, nowIso);
+  if (cooldown !== null) {
+    // The provider has failed repeatedly and is being left alone. Whatever is cached is still shown
+    // — honestly stale — and if nothing is, no value is shown. Either way the reason names the
+    // back-off rather than pretending a request was made and failed again.
+    return fallbackOrNothing<T>(
+      product,
+      provider,
+      url,
+      nowIso,
+      `${provider.name} has failed ${getHealth(productKey)?.consecutiveFailures ?? 0} times in a row; no further request will be made for ${cooldown}s.`,
+      false,
+    );
+  }
+
   const key = `${productKey}|${url}`;
   const existing = inFlight.get(key) as Promise<LiveEnvelope<T>> | undefined;
   if (existing) return existing;
 
-  const pending = refresh<T>(product, provider, url, parse, nowIso).finally(() => {
+  const pending = throughGate(provider.providerKey, provider.maxConcurrentRequests, () =>
+    refresh<T>(product, provider, url, parse, nowIso),
+  ).finally(() => {
     // Safe because a key can only ever have one promise: this is the sole `set`, and it is
     // guarded by the `get` above.
     inFlight.delete(key);

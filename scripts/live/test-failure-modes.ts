@@ -3,7 +3,7 @@ import { clearCache, peek } from "../../src/platform/live-providers/cache";
 import { clearHealth, getHealth } from "../../src/platform/live-providers/health";
 import { checkProviderUrl } from "../../src/platform/live-providers/fetch";
 import { refreshStatus, worseOf } from "../../src/platform/live-providers/envelope";
-import { getLiveProduct } from "../../src/platform/live-providers/registry";
+import { getLiveProduct, getLiveProvider, LIVE_PRODUCTS } from "../../src/platform/live-providers/registry";
 import type { ParseResult } from "../../src/platform/live-providers/client";
 
 /**
@@ -273,6 +273,51 @@ async function main(): Promise<void> {
     check("a current forecast is labelled forecast, not live", env.status === "forecast", `status was "${env.status}" — a model prediction must never be badged as an observation`);
   }
 
+  /* ---------------- 14. a provider's concurrency limit is honoured, because it is a term of use */
+  clearCache();
+  clearHealth();
+  {
+    let open = 0;
+    let peak = 0;
+    withStub(() => {
+      // Not a real Response yet: the stub resolves after a tick so overlap is observable.
+      open += 1;
+      peak = Math.max(peak, open);
+      return jsonResponse([{ proton_speed: 401, time_tag: new Date().toISOString() }]);
+    });
+    // `jpl:*` products all belong to a provider whose declared limit is one request at a time.
+    const jplProducts = LIVE_PRODUCTS.filter((p) => p.providerKey === "jpl-ssd").map((p) => p.productKey);
+    await Promise.all(
+      jplProducts.map((key) =>
+        loadProduct(key, () => {
+          open -= 1;
+          return { ok: true as const, value: 1 };
+        }),
+      ),
+    );
+    restore();
+    check("a single-request provider is never asked twice at once", peak <= 1, `${peak} requests were open simultaneously to a provider whose terms permit one`);
+  }
+
+  /* ------------------------- 15. repeated failure stops the requests instead of storming */
+  clearCache();
+  clearHealth();
+  {
+    let attempts = 0;
+    withStub(() => {
+      attempts += 1;
+      throw new TypeError("fetch failed");
+    });
+    // The descriptor's threshold is three consecutive failures; after that no request is made.
+    for (let i = 0; i < 8; i++) await loadProduct<Reading>(PRODUCT, parse);
+    restore();
+    const threshold = getLiveProvider("noaa-swpc")?.backoffAfterFailures ?? 3;
+    check("repeated failure triggers a back-off", attempts <= threshold, `${attempts} requests were made after ${threshold} consecutive failures — a provider outage would become a request storm`);
+    const env = await loadProduct<Reading>(PRODUCT, parse);
+    check("a backed-off provider still answers honestly", env.data === undefined && Boolean(env.error), "the back-off path returned neither data nor a reason");
+    check("the back-off says it is backing off", (env.error ?? "").includes("no further request"), `error was "${env.error}"`);
+  }
+
   /* ----------------------------------------------------- 10. the request guard refuses unsafe URLs */
   {
     const cases: [string, string][] = [
@@ -299,7 +344,7 @@ async function main(): Promise<void> {
     for (const f of failures) console.error(`  • ${f}`);
     process.exit(1);
   }
-  console.log(`✓ Failure modes handled — ${passed.length} cases: provider down, HTTP error, HTML answer, malformed JSON, schema change, oversized response, future timestamp, a body that dies mid-stream, the stale-cache fallback surviving re-ageing, a forecast never badged as an observation, no substitution, and seven unsafe URLs refused.`);
+  console.log(`✓ Failure modes handled — ${passed.length} cases: provider down, HTTP error, HTML answer, malformed JSON, schema change, oversized response, future timestamp, a body that dies mid-stream, the stale-cache fallback surviving re-ageing, a forecast never badged as an observation, a single-request provider never asked twice at once, a failing provider backed off rather than stormed, no substitution, and seven unsafe URLs refused.`);
 }
 
 void main();
