@@ -3,8 +3,9 @@ import { liveScientificDataEngine } from "@/platform/data-engine/live-data-engin
 
 /**
  * GET /api/v0/live/status — the honest status of every live scientific-data provider AsteriaStar
- * models. Static. No provider is connected in this deployment, so no live value is served; every
- * provider reports its real status, endpoint, and licence. Nothing is fabricated.
+ * models: its endpoint, licence and connection state. Static, because it reports the CATALOGUE, not
+ * a measurement — the live values themselves are served by /api/v0/live/space-weather and the
+ * runtime request record by /api/v0/live/providers. Nothing here is fabricated.
  */
 export const dynamic = "force-static";
 

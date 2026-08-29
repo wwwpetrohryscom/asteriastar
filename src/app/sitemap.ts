@@ -264,6 +264,8 @@ import {
   workspaceFeaturePath,
   openPlatformPath,
   ROUTES,
+  SPACE_WEATHER_SLUGS,
+  spaceWeatherPath,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
 import { galleryCategories } from "@/lib/gallery";
@@ -790,6 +792,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...BT_DISCOVERIES.map((d) => ({ url: absoluteUrl(liveDiscoveryPath(d.slug)), changeFrequency: "weekly" as const, priority: 0.6 })),
   ];
 
+  /**
+   * Space weather (Program CJ). Seven stable, evergreen URLs and no more: the section deliberately
+   * has no query parameters at all, so there is no coordinate, date or provider parameter that a
+   * crawler could turn into a combinatorial URL space. `daily` is honest for pages whose underlying
+   * values change by the minute but whose CONTENT — what they explain and how — changes rarely.
+   */
+  const spaceWeatherRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.spaceWeather), changeFrequency: "daily", priority: 0.9 },
+    ...SPACE_WEATHER_SLUGS.map((slug) => ({
+      url: absoluteUrl(spaceWeatherPath(slug)),
+      changeFrequency: "daily" as const,
+      priority: slug === "live" ? 0.9 : 0.7,
+    })),
+  ];
+
   const universe3dRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.universe3d), changeFrequency: "monthly", priority: 0.8 },
     { url: absoluteUrl(`${ROUTES.universe3d}/data-coverage`), changeFrequency: "monthly", priority: 0.6 },
@@ -920,6 +937,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...graphRoutes,
     ...assistantRoutes,
     ...liveRoutes,
+    ...spaceWeatherRoutes,
     ...universe3dRoutes,
     ...workspaceRoutes,
     ...openPlatformRoutes,

@@ -437,7 +437,7 @@ function Quality() {
   ];
   const LIMITS = [
     "Citation coverage is a framework: 0 citations are published in this phase, and the count is reported honestly rather than inflated.",
-    "Live-sky data is not served — provider integrations are prepared, not connected.",
+    "Live-sky ephemeris data is computed, not fetched; of the external providers, NOAA SWPC and NASA DONKI are connected and served at /space-weather, while the ephemeris and orbital providers remain prepared.",
     "Quality indicators are deterministic completeness signals, not invented authority scores.",
   ];
   return (

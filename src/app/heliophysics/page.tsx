@@ -10,13 +10,22 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES, heliophysicsDiscoveryPath } from "@/lib/routes";
 import { AW_DISCOVERIES } from "@/app/heliophysics/discovery";
+import { CompactSpaceWeather } from "@/components/space-weather/CompactSpaceWeather";
 
 const DESCRIPTION =
   "The operational layer of heliophysics — how the Sun drives space weather, and how that weather reaches technology and people. The solar sources: the solar cycle, sunspots, active regions, coronal holes, and the ionosphere they disturb, alongside the reused solar flares, CMEs, solar wind, and geomagnetic storms. The operational impacts: on satellites, GPS and navigation, aviation, human spaceflight, power grids, and radio communications. And the forecasting that watches for it all — NOAA's Space Weather Prediction Center and Europe's space-weather service network, using the Parker Solar Probe, Solar Orbiter, DSCOVR, and ACE. Reuses the platform's space-weather phenomena, the NOAA G/S/R scales, the solar-energetic-particle and Van Allen radiation environments, the heliophysics missions, and the Sun; nothing is fabricated.";
 
 export const metadata: Metadata = buildMetadata({ title: "Heliophysics & Space Weather Operations", description: DESCRIPTION, path: ROUTES.heliophysics });
 
-export default function HeliophysicsHubPage() {
+/**
+ * Five minutes. This page carries the compact live space-weather strip, so it must not be frozen at
+ * build time: without a revalidation window the fetch inside it would run once during `next build`
+ * and the page would show whatever the Sun was doing on deploy day. The strip's own freshness badge
+ * re-evaluates in the browser, so even a page served from this cache reports its real age.
+ */
+export const revalidate = 300;
+
+export default async function HeliophysicsHubPage() {
   const e = engine.heliophysics;
   const crumbs: Crumb[] = [
     { name: "Home", url: "/" },
@@ -28,6 +37,7 @@ export default function HeliophysicsHubPage() {
       <Container className="pt-8"><Breadcrumbs crumbs={crumbs} /></Container>
       <HeroSection compact accent="aurora" eyebrow={<span>Encyclopedia · {e.count} entries · {e.impactCount} operational impacts</span>} title="Heliophysics &amp; Space Weather Operations" lead="The Sun is not a constant. It flares, it flings billion-tonne clouds of plasma at the Earth, and it breathes on an eleven-year cycle — and when its weather reaches us, it can knock out radio, scramble GPS, endanger astronauts, and darken power grids. This is the operational science of watching the Sun and defending against it." />
       <Container className="mt-8 mb-14 space-y-12">
+        <CompactSpaceWeather />
         <section aria-labelledby="explore-heading">
           <h2 id="explore-heading" className="font-display text-2xl font-bold">Explore space weather</h2>
           <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

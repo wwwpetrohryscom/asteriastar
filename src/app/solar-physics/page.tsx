@@ -11,6 +11,7 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES, solarPhysicsDiscoveryPath } from "@/lib/routes";
 import { BY_DISCOVERIES } from "@/app/solar-physics/discovery";
+import { CompactSpaceWeather } from "@/components/space-weather/CompactSpaceWeather";
 
 const DESCRIPTION =
   "The Sun from its core to the edge of the heliosphere. The concentric solar interior (core, radiative zone, convection zone, tachocline) and atmosphere (photosphere, chromosphere, transition region, corona); the surface and atmospheric features (granulation, prominences, filaments, plages, spicules, coronal loops, streamers); the physics of the Sun (dynamo, magnetic reconnection, differential rotation, the coronal-heating problem); the solar cycle (butterfly diagram, Maunder & Dalton minima, irradiance variation); the fast and slow solar wind; and the heliosphere (Parker spiral, termination shock, heliosheath, bow wave). Reuses the Sun, the space-weather phenomena, helioseismology, and the solar observatories already in the graph. Only well-established solar physics is stated; open questions are flagged and nothing is fabricated.";
@@ -27,7 +28,15 @@ const OBSERVATORY_IDS = [
   "telescope:daniel-k-inouye-solar-telescope",
 ];
 
-export default function SolarPhysicsHubPage() {
+/**
+ * Five minutes. This page carries the compact live space-weather strip, so it must not be frozen at
+ * build time: without a revalidation window the fetch inside it would run once during `next build`
+ * and the page would show whatever the Sun was doing on deploy day. The strip's own freshness badge
+ * re-evaluates in the browser, so even a page served from this cache reports its real age.
+ */
+export const revalidate = 300;
+
+export default async function SolarPhysicsHubPage() {
   const e = engine.solarPhysics;
   const observatories = OBSERVATORY_IDS.map((id) => getEntityById(id)).filter(Boolean) as { id: string; name: string; description?: string }[];
   const crumbs: Crumb[] = [
@@ -46,6 +55,7 @@ export default function SolarPhysicsHubPage() {
         lead="The nearest star, from the inside out. Follow energy from the fusion core through the radiative and convective interior to the visible surface, into the million-degree corona, and out on the solar wind to the edge of the heliosphere — the bubble the Sun blows in interstellar space, crossed by the Voyagers."
       />
       <Container className="mt-8 mb-14 space-y-12">
+        <CompactSpaceWeather />
         <section aria-labelledby="explore-heading">
           <h2 id="explore-heading" className="font-display text-2xl font-bold">Explore the Sun</h2>
           <ul className="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-2">

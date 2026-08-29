@@ -30,7 +30,7 @@
     "refresh": "tsx scripts/refresh/refresh.ts",
     "refresh:test": "tsx scripts/refresh/refresh.test.ts",
     "refresh:validate": "tsx scripts/refresh/validate-config.ts",
-    "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts && tsx scripts/validate-content-completion.ts && tsx scripts/refresh/validate-config.ts && tsx scripts/data-health/validate-health.ts && tsx scripts/validate-search-index.ts && tsx scripts/validate-ecosystem.ts && tsx scripts/netlify/validate-migration.ts",
+    "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts && tsx scripts/validate-content-completion.ts && tsx scripts/refresh/validate-config.ts && tsx scripts/data-health/validate-health.ts && tsx scripts/live/validate-live-providers.ts && tsx scripts/live/test-failure-modes.ts && tsx scripts/validate-search-index.ts && tsx scripts/validate-ecosystem.ts && tsx scripts/netlify/validate-migration.ts",
     "validate:migration": "tsx scripts/netlify/validate-migration.ts",
     "ecosystem:validate": "tsx scripts/validate-ecosystem.ts",
     "ecosystem:links": "tsx scripts/validate-ecosystem.ts --check-network",
@@ -44,7 +44,10 @@
     "netlify:smoke": "tsx scripts/netlify/smoke.ts",
     "netlify:parity": "tsx scripts/netlify/parity-check.ts",
     "netlify:crawl": "tsx scripts/netlify/crawl.ts",
-    "netlify:perf": "tsx scripts/netlify/perf.ts"
+    "netlify:perf": "tsx scripts/netlify/perf.ts",
+    "live:validate": "tsx scripts/live/validate-live-providers.ts",
+    "live:probe": "tsx scripts/live/probe-providers.ts",
+    "live:test": "tsx scripts/live/test-failure-modes.ts"
   },
   "dependencies": {
     "next": "16.2.9",

@@ -1349,10 +1349,32 @@ async function main() {
     if (!getBtEnt(r.to)) btIssues.push(`relation ${r.id}: 'to' endpoint missing in graph: ${r.to}`);
   }
   const { liveSkyEngine } = await import("../src/platform/data-engine/live-sky-engine");
+  const { LIVE_PROVIDERS } = await import("../src/platform/live-providers/registry");
   const realProviderKeys = new Set<string>(liveSkyEngine.providers().map((p) => String(p.key)));
+  const runtimeByEntity = new Map(LIVE_PROVIDERS.filter((p) => p.entityId).map((p) => [p.entityId as string, p]));
+
+  /*
+   * A catalogue record may claim `connected` ONLY when there is a real client behind it that has
+   * been verified end-to-end against the live provider.
+   *
+   * This rule used to be the blanket "nothing is connected in this build", which was true when it
+   * was written and became false the moment Program CJ connected NOAA SWPC and NASA DONKI. A gate
+   * whose premise can silently expire is worse than no gate: it either blocks honest work or, once
+   * relaxed, stops checking anything. So it now checks the thing it was always for — that a
+   * connection claim is backed by code and by a recorded verification, not by someone typing the
+   * word into a data file.
+   */
   for (const s of btCat.sources) {
     if (s.providerKey && !realProviderKeys.has(s.providerKey)) btIssues.push(`live source ${s.id}: providerKey "${s.providerKey}" is not a real live-sky provider`);
-    if (s.status === "connected") btIssues.push(`live source ${s.id}: claims 'connected' but no provider is actually connected in this build`);
+    if (s.status !== "connected") continue;
+    const runtime = runtimeByEntity.get(s.id);
+    if (!runtime) {
+      btIssues.push(`live source ${s.id}: claims 'connected' but no client for it exists in the live-provider runtime`);
+    } else if (runtime.integration !== "IMPLEMENTED") {
+      btIssues.push(`live source ${s.id}: claims 'connected' but its runtime integration is ${runtime.integration}`);
+    } else if (!runtime.verifiedAt) {
+      btIssues.push(`live source ${s.id}: claims 'connected' but the integration has never been verified end-to-end — run \`npm run live:probe\` and record the date`);
+    }
   }
   if (btIssues.length > 0) {
     console.error(`\n✗ ${btIssues.length} live-data issue(s):`);

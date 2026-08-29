@@ -27,7 +27,7 @@ export const spaceWeather = {
   geomagneticScale: GEOMAGNETIC_SCALE,
   scalesEnvelope: referenceEnvelope({
     source: ["swpc", "donki"], provider: "noaa-swpc", confidence: "established",
-    provenance: "The A–X solar-flare classes and the G1–G5 geomagnetic storm scale are standard, timeless classifications. Current flare and storm activity is not shown here.",
+    provenance: "The A–X solar-flare classes and the G1–G5 geomagnetic storm scale are standard, timeless classifications — reference data, not a reading. Current flare and storm activity is measured live at /space-weather.",
   }),
   /**
    * Recent solar flares. Prepared for integration — data will come from NASA
@@ -38,7 +38,7 @@ export const spaceWeather = {
       data: null,
       envelope: preparedEnvelope({
         source: ["donki", "swpc"], provider: "nasa-donki",
-        provenance: "Recent solar-flare events will be sourced from NASA DONKI / NOAA SWPC. No current flare data is shown until then.",
+        provenance: "This Live Sky module carries the timeless flare classification only; it fetches nothing. Current flare activity IS available — the GOES X-ray state from NOAA SWPC and the catalogued flares from NASA DONKI are served at /space-weather/solar-activity, each with the provider's own timestamp. Nothing is shown here, and nothing is invented here.",
       }),
     },
   ],
@@ -51,7 +51,7 @@ export const spaceWeather = {
       data: null,
       envelope: preparedEnvelope({
         source: ["swpc"], provider: "noaa-swpc",
-        provenance: "Current geomagnetic storm level (Kp / G-scale) will be sourced from NOAA SWPC. No current storm data is shown until then.",
+        provenance: "This Live Sky module carries the timeless G-scale only; it fetches nothing. The current planetary K-index and G-level ARE available — from NOAA SWPC at /space-weather/geomagnetic, with the provider's own timestamps. Nothing is shown here, and nothing is invented here.",
       }),
     },
   ],

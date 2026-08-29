@@ -374,7 +374,8 @@ export function buildSearchDocs(): SearchDoc[] {
 
   /* platform destinations that are pages in their own right */
   for (const [title, url, kind, group, desc] of PLATFORM_PAGES) {
-    docs.push({ i: `x:${url}`, t: title, u: url, k: kind, g: group, d: desc, p: 90 });
+    const a = PLATFORM_PAGE_ALIASES[url];
+    docs.push({ i: `x:${url}`, t: title, u: url, k: kind, g: group, d: desc, p: 90, ...(a ? { a } : {}) });
   }
 
   return disambiguate(dedupeByUrl(docs));
@@ -433,6 +434,22 @@ function categoryGroup(sectionSlug: string, cultural: boolean): SearchGroupId {
  * their own; each is checked against the sitemap by the validator, so a renamed
  * route fails the build rather than shipping a dead search result.
  */
+/**
+ * Search vocabulary for pages whose subject people name differently from their title. Someone
+ * looking for the aurora forecast types "aurora" or "northern lights", not "Aurora forecast"; the
+ * geomagnetic page is what they mean by "Kp". Aliases are matched by the same tier ladder as titles,
+ * so these make the live surfaces findable without inflating any other page's ranking.
+ */
+const PLATFORM_PAGE_ALIASES: Record<string, string[]> = {
+  "/space-weather": ["solar storm", "sun activity", "heliophysics live", "SWPC", "NOAA space weather"],
+  "/space-weather/live": ["current space weather", "space weather today", "live space weather"],
+  "/space-weather/solar-wind": ["Bz", "IMF", "interplanetary magnetic field", "DSCOVR", "L1", "proton density"],
+  "/space-weather/geomagnetic": ["Kp", "Kp index", "planetary K-index", "geomagnetic storm", "G1", "G2", "G3", "G4", "G5", "geomagnetic forecast"],
+  "/space-weather/solar-activity": ["solar flare", "X-class flare", "M-class flare", "sunspots", "active regions", "F10.7", "solar radio flux"],
+  "/space-weather/aurora": ["aurora", "aurora borealis", "aurora australis", "northern lights", "southern lights", "OVATION"],
+  "/space-weather/events": ["CME", "coronal mass ejection", "solar events", "DONKI", "SEP", "solar energetic particles", "proton event"],
+};
+
 const PLATFORM_PAGES: [string, string, string, SearchGroupId, string][] = [
   // NOTE: /search is deliberately absent. It serves `noindex, follow`, it is
   // reachable from the header on every page, and indexing the search page
@@ -473,4 +490,13 @@ const PLATFORM_PAGES: [string, string, string, SearchGroupId, string][] = [
   ["Timelines", ROUTES.timelines, "Platform", "history", "Chronological threads through astronomy."],
   ["Compare", ROUTES.compare, "Platform", "tools", "Side-by-side entity comparisons."],
   ["About", ROUTES.about, "Platform", "reference", "What Asteria Star is and how it is built."],
+  // Space weather (Program CJ). Live surfaces, indexed as the stable pages they are — the values
+  // change by the minute, the destinations never do.
+  ["Space weather", ROUTES.spaceWeather, "Live data", "tools", "Live solar wind, geomagnetic activity, flares and aurora from NOAA and NASA."],
+  ["Space weather now", "/space-weather/live", "Live data", "tools", "Current conditions: solar wind, Kp index, NOAA scales, alerts, flares and aurora."],
+  ["Solar wind", "/space-weather/solar-wind", "Live data", "tools", "Live solar wind speed, density and interplanetary magnetic field measured at L1."],
+  ["Geomagnetic activity", "/space-weather/geomagnetic", "Live data", "tools", "Planetary Kp index observed and forecast, storm levels, and NOAA watches and warnings."],
+  ["Solar activity", "/space-weather/solar-activity", "Live data", "tools", "GOES X-ray flares, active regions, sunspots and the 10.7 cm radio flux."],
+  ["Aurora forecast", "/space-weather/aurora", "Live data", "tools", "NOAA OVATION aurora model: how far towards the equator the auroral oval reaches."],
+  ["Space weather events", "/space-weather/events", "Live data", "tools", "Catalogued solar flares, coronal mass ejections, geomagnetic storms and particle events."],
 ];

@@ -47,7 +47,7 @@ export function LiveDetail({ d }: { d: ResolvedLiveSource }) {
               <h2 id="envelope" className="font-display text-sm font-semibold uppercase tracking-wider text-nasa">Provider status</h2>
               <dl className="mt-3 grid grid-cols-1 gap-y-1.5 text-sm sm:grid-cols-2 sm:gap-x-6">
                 <div className="flex justify-between gap-2"><dt className="text-muted">Status</dt><dd className="font-medium text-fg">{env.status}</dd></div>
-                <div className="flex justify-between gap-2"><dt className="text-muted">Data shown</dt><dd className="font-medium text-fg">{env.data ? "live" : "none (not connected)"}</dd></div>
+                <div className="flex justify-between gap-2"><dt className="text-muted">Data shown</dt><dd className="font-medium text-fg">{env.status === "connected" ? "none on this page — see /space-weather" : "none (not connected)"}</dd></div>
                 {env.endpoint ? <div className="flex justify-between gap-2"><dt className="text-muted">Endpoint</dt><dd className="truncate"><a href={env.endpoint} className="text-nasa hover:underline" rel="nofollow noopener">{env.endpoint.replace(/^https?:\/\//, "")}</a></dd></div> : null}
                 {env.license ? <div className="flex justify-between gap-2"><dt className="text-muted">Licence</dt><dd className="text-right text-fg">{env.license}</dd></div> : null}
                 <div className="flex justify-between gap-2"><dt className="text-muted">Fetched at</dt><dd className="text-fg">{env.fetchedAt ?? "—"}</dd></div>

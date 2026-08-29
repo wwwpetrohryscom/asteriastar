@@ -66,6 +66,16 @@ export default function DataHealthPage() {
           /></div>
         </section>
 
+        <section aria-labelledby="live-providers">
+          <h2 id="live-providers" className="font-display text-2xl font-bold">Live external providers</h2>
+          <p className="mt-1 text-sm text-muted">
+            The operational feeds AsteriaStar fetches from at request time — NOAA SWPC and NASA CCMC DONKI. Their health cannot be
+            read from a stored history because none is kept: no provider response is written to the repository. The detail page
+            therefore probes them as it renders and reports what the request actually did.{" "}
+            <Link href="/authority/data-health/live-providers" className="text-nasa hover:underline">Live provider health →</Link>
+          </p>
+        </section>
+
         <section aria-labelledby="quality">
           <h2 id="quality" className="font-display text-2xl font-bold">Quality</h2>
           <div className="mt-4"><MetricGrid>
