@@ -7,8 +7,10 @@ import { BT_RECORDS, type LiveSourceRecord, type ProviderEnvelope, type LiveStat
  * populate `data`, `fetchedAt`, and the validity window.
  */
 
-/** Build the honest envelope for a provider that has not been fetched — status carried from the
- *  catalogue, no data, no invented timestamps. This is what every provider returns in this build. */
+/** Build the honest envelope for a provider whose page is being rendered from the catalogue alone —
+ *  status carried from the catalogue, no data, no invented timestamps. Providers that ARE connected
+ *  serve their real values through the live-provider runtime (platform/live-providers); this
+ *  envelope describes the catalogue record, and deliberately carries no measurement. */
 export function plannedEnvelope(source: LiveSourceRecord): ProviderEnvelope {
   return {
     provider: source.name,
@@ -32,7 +34,8 @@ export interface LiveStatusReport {
 }
 
 /** A truthful summary of every provider's status. Counts are real (from the catalogue); it never
- *  claims a provider is connected when it is not. */
+ *  claims a provider is connected when it is not, and the note it produces is derived from those
+ *  same counts rather than written by hand. */
 export function buildStatusReport(): LiveStatusReport {
   const byStatus = { connected: 0, computed: 0, cached: 0, stale: 0, unavailable: 0, planned: 0 } as Record<LiveStatus, number>;
   for (const r of BT_RECORDS) byStatus[r.status] += 1;
@@ -41,7 +44,12 @@ export function buildStatusReport(): LiveStatusReport {
     byStatus,
     connected: byStatus.connected,
     planned: byStatus.planned,
-    generatedNote: "Status is read from the live-data catalogue and the live-sky provider registry. No provider is connected in this deployment; no live value is fabricated.",
+    // Computed, never asserted: the sentence has to change when the catalogue does, so it cannot
+    // drift into claiming a connection that no longer exists — or denying one that now does.
+    generatedNote:
+      `Status is read from the live-data catalogue and the live-sky provider registry. ` +
+      `${byStatus.connected} of ${BT_RECORDS.length} providers are connected end-to-end and serve real values with the provider's own timestamps; ` +
+      `${byStatus.planned} remain architecture-ready and show no values at all. No live value, timestamp or provider status is fabricated.`,
     sources: BT_RECORDS.map((r) => ({ slug: r.slug, name: r.name, category: r.category, status: r.status, endpoint: r.endpoint, license: r.licenseNote })),
   };
 }

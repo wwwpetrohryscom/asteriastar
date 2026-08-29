@@ -222,3 +222,41 @@ export function softwareApplicationSchema(input: {
     publisher: { "@id": ORG_ID },
   };
 }
+
+/**
+ * A Dataset, for a page whose subject really is a dataset — the live space-weather products, for
+ * example, each of which is a real, citable, publicly-fetchable file with a named distributor and
+ * licence. It is deliberately NOT used for pages that merely display numbers: `Dataset` claims the
+ * page is a description of a data resource, and that claim has to be true.
+ */
+export function datasetSchema(input: {
+  name: string;
+  description: string;
+  url: string;
+  creatorName: string;
+  creatorUrl?: string;
+  license?: string;
+  /** Keywords describing the measured variables. */
+  variables?: string[];
+  /** ISO 8601 duration, e.g. "PT1M" for a one-minute cadence. */
+  repeatFrequency?: string;
+  distributionUrl?: string;
+}): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Dataset",
+    name: input.name,
+    description: input.description,
+    url: absoluteUrl(input.url),
+    isAccessibleForFree: true,
+    inLanguage: "en",
+    creator: { "@type": "Organization", name: input.creatorName, ...(input.creatorUrl ? { url: input.creatorUrl } : {}) },
+    ...(input.license ? { license: input.license } : {}),
+    ...(input.variables?.length ? { variableMeasured: input.variables } : {}),
+    ...(input.repeatFrequency ? { temporalCoverage: "current", repeatFrequency: input.repeatFrequency } : {}),
+    ...(input.distributionUrl
+      ? { distribution: { "@type": "DataDownload", encodingFormat: "application/json", contentUrl: input.distributionUrl } }
+      : {}),
+    publisher: { "@id": ORG_ID },
+  };
+}

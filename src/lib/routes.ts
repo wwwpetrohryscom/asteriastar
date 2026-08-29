@@ -106,6 +106,8 @@ export const ROUTES = {
   observationTechniques: "/observation-techniques",
   gallery: "/gallery",
   astronomySoftware: "/astronomy-software",
+  /** Program CJ — the operational space-weather centre, backed by live NOAA SWPC and NASA DONKI data. */
+  spaceWeather: "/space-weather",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -710,6 +712,16 @@ export function livePath(slug: string): string {
 export function liveDiscoveryPath(slug: string): string {
   return `/live/discover/${slug}`;
 }
+/**
+ * A space-weather sub-page. These are the only URLs in the family: they are stable, evergreen and
+ * carry no query parameters, so the whole section is indexable without ever admitting a
+ * coordinate or a date into a crawlable URL.
+ */
+export function spaceWeatherPath(slug: SpaceWeatherSlug): string {
+  return `/space-weather/${slug}`;
+}
+export const SPACE_WEATHER_SLUGS = ["live", "solar-activity", "geomagnetic", "solar-wind", "aurora", "events"] as const;
+export type SpaceWeatherSlug = (typeof SPACE_WEATHER_SLUGS)[number];
 export function universeScenePath(slug: string): string {
   return `/universe-3d/${slug}`;
 }

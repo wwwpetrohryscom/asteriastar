@@ -13,7 +13,7 @@ import { ROUTES, liveDiscoveryPath } from "@/lib/routes";
 import { BT_DISCOVERIES } from "@/app/live/discovery";
 
 const DESCRIPTION =
-  "AsteriaStar's first connections to real external scientific data providers — modelled with the full honesty envelope. Space weather from NOAA's Space Weather Prediction Center, solar activity from NASA DONKI, near-Earth-object close approaches from the Minor Planet Center and JPL/CNEOS, orbital elements from CelesTrak, and atmospheric conditions. Every provider exposes its endpoint, licence, status, and limitations; a provider that is not connected shows no data — only its honest status. No live value, timestamp, or provider response is ever fabricated.";
+  "AsteriaStar's connections to real external scientific data providers, under the full honesty envelope. Space weather from NOAA's Space Weather Prediction Center, solar activity from NASA DONKI, near-Earth-object close approaches from the Minor Planet Center and JPL/CNEOS, orbital elements from CelesTrak, and atmospheric conditions. Every provider exposes its endpoint, licence, status, and limitations. NOAA SWPC and NASA DONKI are connected and serve live values; the others show no data — only their honest status. No live value, timestamp, or provider response is ever fabricated.";
 
 export const metadata: Metadata = buildMetadata({ title: "Live Scientific Data Platform", description: DESCRIPTION, path: ROUTES.live });
 
@@ -28,7 +28,7 @@ export default function LiveHubPage() {
     <>
       <JsonLd data={[breadcrumbSchema(crumbs), collectionPageSchema({ name: "Live Scientific Data Platform", description: DESCRIPTION, url: ROUTES.live })]} />
       <Container className="pt-8"><Breadcrumbs crumbs={crumbs} /></Container>
-      <HeroSection compact accent="aurora" eyebrow={<span>Encyclopedia · {e.count} providers · {report.connected} connected</span>} title="Live Scientific Data Platform" lead="The Sun does not wait, and neither do the asteroids. This is AsteriaStar's connection to the real, changing sky — space weather, solar activity, and near-Earth objects from the agencies that measure them. Honesty first: every provider shows its status and licence, and a provider that is not connected shows no data at all, never a fabricated one." />
+      <HeroSection compact accent="aurora" eyebrow={<span>Encyclopedia · {e.count} providers · {report.connected} connected</span>} title="Live Scientific Data Platform" lead="The Sun does not wait, and neither do the asteroids. This is AsteriaStar's connection to the real, changing sky — space weather, solar activity, and near-Earth objects from the agencies that measure them. Honesty first: every provider shows its status and licence, a connected one shows real values with the provider’s own timestamps, and a provider that is not connected shows no data at all — never a fabricated one." />
       <Container className="mt-8 mb-14 space-y-12">
         <section aria-labelledby="status-heading">
           <div className="flex items-baseline justify-between gap-3">
@@ -55,7 +55,7 @@ export default function LiveHubPage() {
         </section>
         <section aria-labelledby="data-heading" className="scientific-card p-5">
           <h2 id="data-heading" className="font-display text-base font-semibold text-fg">Data &amp; provenance</h2>
-          <p className="mt-2 text-sm text-muted">Each provider is a first-class knowledge-graph entity resolved through the Scientific Data Engine, reusing the operating organisation and the space-weather phenomena already in the graph. The integration reuses the existing live-sky provider registry as its source of truth for status. In this deployment no provider is connected, so no live value is shown — every provider reports its honest status, endpoint, licence, and limitations, and nothing is fabricated. See{" "}<Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.</p>
+          <p className="mt-2 text-sm text-muted">Each provider is a first-class knowledge-graph entity resolved through the Scientific Data Engine, reusing the operating organisation and the space-weather phenomena already in the graph. The integration reuses the existing live-sky provider registry as its source of truth for status. NOAA SWPC and NASA CCMC DONKI are connected end-to-end and serve real values at /space-weather; the rest are architecture-ready and show no values at all. Every provider reports its honest status, endpoint, licence and limitations, and nothing is fabricated. See{" "}<Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.</p>
         </section>
       </Container>
     </>

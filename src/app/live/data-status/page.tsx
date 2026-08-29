@@ -11,7 +11,7 @@ import { breadcrumbSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES } from "@/lib/routes";
 
 const DESCRIPTION =
-  "The honest status of every live data provider connected to AsteriaStar — which are connected, computed, cached, stale, unavailable, or architecture-ready — with endpoints and licences. No provider is connected in this deployment, so no live value is shown; nothing is fabricated.";
+  "The honest status of every live data provider connected to AsteriaStar — which are connected, computed, cached, stale, unavailable, or architecture-ready — with endpoints and licences. NOAA SWPC and NASA DONKI are connected and serve real values; the rest show no values at all. Nothing is fabricated.";
 
 export const metadata: Metadata = buildMetadata({ title: "Live Data Status", description: DESCRIPTION, path: `${ROUTES.live}/data-status` });
 

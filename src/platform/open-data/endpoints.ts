@@ -201,7 +201,7 @@ export const ENDPOINTS: EndpointDef[] = [
   {
     id: "live-sky-providers", group: "live-sky", method: "GET", path: "/api/v0/live-sky/providers",
     summary: "List live-sky providers", status: "implemented",
-    description: "The registry of external providers the live-sky layer is designed to integrate. Every provider reports its integration status honestly (currently all planned).",
+    description: "The registry of external providers the live-sky layer is designed to integrate. Every provider reports its integration status honestly: NOAA SWPC and NASA DONKI are connected, the rest are planned.",
     params: [],
     example: "/api/v0/live-sky/providers",
     returns: "{ count, connected, providers: Provider[] }",
@@ -309,10 +309,52 @@ export const ENDPOINTS: EndpointDef[] = [
   },
   {
     id: "live-sky-observations", group: "live-sky", method: "GET", path: "/api/v0/live-sky/{provider}/now",
-    summary: "Live observations", status: "planned",
-    description: "Planned. Requires a connected external provider; no provider is connected yet, so no live data is served. The provider registry above is real.",
+    summary: "Live observations by provider key", status: "planned",
+    description: "Planned. A generic per-provider observation endpoint. The connected space-weather providers are already served by the /api/v0/live/space-weather endpoints below, which return each product in its own honesty envelope; this generic form awaits the ephemeris and orbital providers.",
     params: [{ name: "provider", in: "path", required: true, type: "string", description: "Provider key." }],
     returns: "Live observation data (not available)",
+  },
+
+  /* ---------------------------------------------------------------- live providers (Program CJ) */
+  {
+    id: "live-space-weather", group: "live", method: "GET", path: "/api/v0/live/space-weather",
+    summary: "Current space weather", status: "implemented",
+    description: "Every current space-weather product from NOAA SWPC in one response: real-time solar wind and interplanetary magnetic field at L1, the propagated solar-wind series, observed and forecast planetary K-index, the R/S/G scales, the alert stream, the GOES X-ray flare state, the daily active-region report, the 10.7 cm radio flux, and the OVATION aurora forecast. Each product carries its own honesty envelope: provider, exact source URL, the provider's timestamp, freshness status, cache window, licence and limitations. A product that could not be read is present with a status and a reason and NO data key.",
+    params: [],
+    example: "/api/v0/live/space-weather",
+    returns: "Record<productName, LiveEnvelope>",
+  },
+  {
+    id: "live-space-weather-solar", group: "live", method: "GET", path: "/api/v0/live/space-weather/solar",
+    summary: "Solar activity", status: "implemented",
+    description: "The GOES X-ray flare state, NOAA's daily numbered active regions with sunspot and magnetic classifications, the 10.7 cm radio flux, and NASA CCMC DONKI's curated flare and CME catalogues. The operational reading and the curated catalogue are separate keys and are never merged: they have different latencies and answer different questions.",
+    params: [],
+    example: "/api/v0/live/space-weather/solar",
+    returns: "Record<productName, LiveEnvelope>",
+  },
+  {
+    id: "live-space-weather-geomagnetic", group: "live", method: "GET", path: "/api/v0/live/space-weather/geomagnetic",
+    summary: "Geomagnetic activity", status: "implemented",
+    description: "The planetary K-index observed and forecast, the NOAA R/S/G scales, and SWPC's watch, warning and alert stream. Every Kp point carries a provenance field of observed, estimated or predicted, so no consumer has to guess whether a value is a measurement or a forecast.",
+    params: [],
+    example: "/api/v0/live/space-weather/geomagnetic",
+    returns: "Record<productName, LiveEnvelope>",
+  },
+  {
+    id: "live-space-weather-events", group: "live", method: "GET", path: "/api/v0/live/space-weather/events",
+    summary: "Space weather events", status: "implemented",
+    description: "NASA CCMC DONKI's catalogued solar flares, coronal mass ejections, geomagnetic storms and solar energetic particle events. An empty array means the catalogue held no records in the window, which is not the same as nothing having happened: DONKI is analyst-curated and lags events by hours.",
+    params: [],
+    example: "/api/v0/live/space-weather/events",
+    returns: "Record<productName, LiveEnvelope>",
+  },
+  {
+    id: "live-providers", group: "live", method: "GET", path: "/api/v0/live/providers",
+    summary: "Live provider health", status: "implemented",
+    description: "Every live provider and product: its terms, authentication, documented rate limits, cache window, publication cadence, stale threshold, and what THIS server instance has actually observed of it — last attempt, last success, latency, consecutive failures and schema state. There is no uptime percentage and no reliability score: this deployment retains no operational history, so a long-run figure would be invented.",
+    params: [],
+    example: "/api/v0/live/providers",
+    returns: "{ totals, providers: LiveProviderReport[] }",
   },
 ];
 
