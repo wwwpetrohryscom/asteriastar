@@ -238,8 +238,16 @@ export function datasetSchema(input: {
   license?: string;
   /** Keywords describing the measured variables. */
   variables?: string[];
-  /** ISO 8601 duration, e.g. "PT1M" for a one-minute cadence. */
-  repeatFrequency?: string;
+  /**
+   * The date the series begins, as YYYY-MM-DD. Emitted as an open-ended ISO 8601 interval
+   * (`2026-08-29/..`), the form specified for a feed still being extended.
+   *
+   * There is deliberately no `repeatFrequency`: its schema.org domain is `Schedule`, not `Dataset`,
+   * so on a Dataset node it is an out-of-vocabulary property consumers drop — and it used to drag a
+   * non-ISO `temporalCoverage: "current"` along with it, expressing open-ended coverage in a form
+   * nothing can parse.
+   */
+  coverageFrom?: string;
   distributionUrl?: string;
 }): JsonLd {
   return {
@@ -253,10 +261,17 @@ export function datasetSchema(input: {
     creator: { "@type": "Organization", name: input.creatorName, ...(input.creatorUrl ? { url: input.creatorUrl } : {}) },
     ...(input.license ? { license: input.license } : {}),
     ...(input.variables?.length ? { variableMeasured: input.variables } : {}),
-    ...(input.repeatFrequency ? { temporalCoverage: "current", repeatFrequency: input.repeatFrequency } : {}),
+    ...(input.coverageFrom ? { temporalCoverage: `${input.coverageFrom}/..` } : {}),
     ...(input.distributionUrl
       ? { distribution: { "@type": "DataDownload", encodingFormat: "application/json", contentUrl: input.distributionUrl } }
       : {}),
-    publisher: { "@id": ORG_ID },
+    /*
+     * The dataset's publisher is the agency that produces it, NOT AsteriaStar. AsteriaStar
+     * publishes the PAGE — which the WebPage node alongside this one already says — and the
+     * distribution URL points at the agency's own file. Naming ourselves publisher here would be a
+     * provenance claim in machine-readable markup that the visible text is careful never to make.
+     */
+    publisher: { "@type": "Organization", name: input.creatorName, ...(input.creatorUrl ? { url: input.creatorUrl } : {}) },
+    includedInDataCatalog: { "@type": "DataCatalog", "@id": ORG_ID },
   };
 }

@@ -44,14 +44,31 @@ export function SourceLabel({ sources }: { sources: readonly SourceKey[] }) {
   );
 }
 
-/** The prominent, honest panel: this data is prepared for integration, not live. */
+/**
+ * The prominent, honest panel: THIS page shows no live values.
+ *
+ * The headline used to read "No live data is shown", which was a claim about the whole platform.
+ * Once NOAA SWPC and NASA DONKI were connected it became self-contradictory — the panel printed it
+ * directly above a provider list saying "Status: connected". A page not showing live values and a
+ * provider not being connected are two different facts, so the panel now states the first and, when
+ * a listed provider is connected, says where its values actually are.
+ */
 export function PreparedForIntegration({ providers, envelope }: { providers: ProviderInfo[]; envelope?: SkyEnvelope }) {
+  const connected = providers.filter((p) => p.status === "connected");
   return (
     <aside role="note" className="rounded-2xl border border-nasa/40 bg-nasa/10 p-5">
       <div className="flex items-center gap-2">
         <DataStatusBadge status="prepared" />
-        <span className="text-sm font-semibold text-nasa">No live data is shown</span>
+        <span className="text-sm font-semibold text-nasa">This page shows no live values</span>
       </div>
+      {connected.length > 0 && (
+        <p className="mt-2 text-sm leading-relaxed text-muted">
+          {connected.length === 1 ? `${connected[0].name} is` : `${connected.map((p) => p.name).join(" and ")} are`} connected, and{" "}
+          {connected.length === 1 ? "its" : "their"} current values are served — with the provider&apos;s own timestamps — in the{" "}
+          <Link href="/space-weather" className="text-nasa underline-offset-4 hover:underline">space-weather section</Link>. This page is
+          the reference material behind them.
+        </p>
+      )}
       <p className="mt-2 text-sm leading-relaxed text-muted">
         {envelope?.provenance ??
           "This module is architecture only. The platform never fabricates live values, positions, forecasts, or event dates — nothing is shown until a real provider is connected and its licensing verified."}

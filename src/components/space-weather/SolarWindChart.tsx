@@ -23,7 +23,15 @@ function path(points: { x: number; y: number }[]): string {
   return points.map((p, i) => `${i === 0 ? "M" : "L"}${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(" ");
 }
 
-function niceRange(values: number[], padFraction = 0.1): [number, number] {
+/**
+ * A padded range over real values, or null when there are none. Returning null rather than a
+ * range is the point: `Math.min(...[])` is `Infinity`, and the previous version painted the
+ * strings "Infinity" and "-Infinity" as the axis bounds of a scientific chart whenever SWPC
+ * published a magnetometer series with no usable plasma speeds — which happens whenever DSCOVR's
+ * Faraday cup drops out while its magnetometer keeps reporting.
+ */
+function niceRange(values: number[], padFraction = 0.1): [number, number] | null {
+  if (values.length === 0) return null;
   const min = Math.min(...values);
   const max = Math.max(...values);
   if (min === max) return [min - 1, max + 1];
@@ -44,8 +52,8 @@ export function SolarWindChart({ points, describedBy }: { points: SolarWindPoint
   const tMax = Math.max(...times);
   const x = (iso: string) => PAD.left + (tMax === tMin ? plotW / 2 : ((Date.parse(iso) - tMin) / (tMax - tMin)) * plotW);
 
-  const [sLo, sHi] = niceRange(speeds.map((p) => p.speedKmS));
-  const ySpeed = (v: number) => PAD.top + plotH - ((v - sLo) / (sHi - sLo)) * plotH;
+  const speedRange = niceRange(speeds.map((p) => p.speedKmS));
+  const ySpeed = (v: number) => (speedRange ? PAD.top + plotH - ((v - speedRange[0]) / (speedRange[1] - speedRange[0])) * plotH : 0);
 
   // Bz is scaled symmetrically about zero so the zero line sits in the middle and a southward
   // excursion is visually obvious rather than being flattened by an asymmetric range.
@@ -56,10 +64,20 @@ export function SolarWindChart({ points, describedBy }: { points: SolarWindPoint
   const lastBz = bzs[bzs.length - 1];
   const minBz = bzs.length > 0 ? Math.min(...bzs.map((p) => p.bzNt)) : undefined;
 
+  // "Most southward" is only true of a negative Bz. During a northward hour — entirely ordinary —
+  // the old wording asserted a southward excursion that never happened, in the one sentence a
+  // screen-reader user gets instead of the chart.
+  const bzSentence = !lastBz
+    ? ""
+    : minBz !== undefined && minBz < 0
+      ? `Bz ${lastBz.bzNt.toFixed(1)} nT, reaching ${minBz.toFixed(1)} nT southward.`
+      : `Bz ${lastBz.bzNt.toFixed(1)} nT; the field stayed northward throughout, with a minimum of ${minBz?.toFixed(1)} nT.`;
+
   const summary = [
     `Solar wind over the last hour: ${points.length} one-minute rows.`,
-    lastSpeed ? `Speed ${lastSpeed.speedKmS.toFixed(0)} km/s at ${utcStamp(lastSpeed.observedAt)}, ranging ${Math.min(...speeds.map((p) => p.speedKmS)).toFixed(0)} to ${Math.max(...speeds.map((p) => p.speedKmS)).toFixed(0)} km/s.` : "",
-    lastBz ? `Bz ${lastBz.bzNt.toFixed(1)} nT, most southward ${minBz?.toFixed(1)} nT.` : "",
+    lastSpeed && speedRange ? `Speed ${lastSpeed.speedKmS.toFixed(0)} km/s at ${utcStamp(lastSpeed.observedAt)}, ranging ${Math.min(...speeds.map((p) => p.speedKmS)).toFixed(0)} to ${Math.max(...speeds.map((p) => p.speedKmS)).toFixed(0)} km/s.` : "",
+    speeds.length === 0 ? "The provider published no usable solar-wind speed for this hour, so no speed trace is drawn." : "",
+    bzSentence,
   ]
     .filter(Boolean)
     .join(" ");
@@ -73,14 +91,18 @@ export function SolarWindChart({ points, describedBy }: { points: SolarWindPoint
         <text x={WIDTH - PAD.right + 4} y={yBz(bzMax) + 10} fontSize="10" fill="var(--color-faint)">+{bzMax.toFixed(0)}</text>
         <text x={WIDTH - PAD.right + 4} y={yBz(-bzMax)} fontSize="10" fill="var(--color-faint)">−{bzMax.toFixed(0)}</text>
 
-        <text x={4} y={PAD.top + 8} fontSize="10" fill="var(--color-faint)">{sHi.toFixed(0)}</text>
-        <text x={4} y={PAD.top + plotH} fontSize="10" fill="var(--color-faint)">{sLo.toFixed(0)}</text>
-        <text x={4} y={HEIGHT - 8} fontSize="10" fill="var(--color-faint)">km/s</text>
+        {speedRange && (
+          <>
+            <text x={4} y={PAD.top + 8} fontSize="10" fill="var(--color-faint)">{speedRange[1].toFixed(0)}</text>
+            <text x={4} y={PAD.top + plotH} fontSize="10" fill="var(--color-faint)">{speedRange[0].toFixed(0)}</text>
+            <text x={4} y={HEIGHT - 8} fontSize="10" fill="var(--color-faint)">km/s</text>
+          </>
+        )}
 
         {bzs.length > 1 && (
           <path d={path(bzs.map((p) => ({ x: x(p.observedAt), y: yBz(p.bzNt) })))} fill="none" stroke="var(--color-nasa)" strokeWidth="1.6" strokeDasharray="5 3" />
         )}
-        {speeds.length > 1 && (
+        {speeds.length > 1 && speedRange && (
           <path d={path(speeds.map((p) => ({ x: x(p.observedAt), y: ySpeed(p.speedKmS) })))} fill="none" stroke="rgba(217,222,226,0.95)" strokeWidth="1.8" />
         )}
 
@@ -90,9 +112,11 @@ export function SolarWindChart({ points, describedBy }: { points: SolarWindPoint
 
       <figcaption id={describedBy} className="mt-3">
         <ul className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-faint">
-          <li className="flex items-center gap-1.5">
-            <span aria-hidden className="inline-block h-0.5 w-6 bg-silver" /> Speed (km/s, left)
-          </li>
+          {speedRange && (
+            <li className="flex items-center gap-1.5">
+              <span aria-hidden className="inline-block h-0.5 w-6 bg-silver" /> Speed (km/s, left)
+            </li>
+          )}
           <li className="flex items-center gap-1.5">
             <span aria-hidden className="inline-block h-0.5 w-6 border-t-2 border-dashed border-nasa" /> Bz GSM (nT, right)
           </li>

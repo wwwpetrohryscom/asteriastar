@@ -11,10 +11,16 @@ import type { ProviderState } from "@/platform/live-providers/envelope";
 /**
  * Live provider health — the operator view of the external feeds Program CJ connected.
  *
- * The page PROBES the providers as it renders, rather than reading a stored history, because there
- * is no stored history to read: no operational response is written to the repository, and a
- * serverless instance may be seconds old. So the honest thing a dashboard can report is what a
- * request made right now actually did — which is what the numbers below are.
+ * The page reads every product through the ordinary loader, so a cold cache means a real request
+ * and a warm one does not. It does NOT force a request per render, for two reasons: the claim
+ * would be false most of the time (the loader serves from cache inside each product's window
+ * without recording an attempt), and an unauthenticated page that forced fifteen upstream requests
+ * on every view would be a request amplifier pointed at two government services — this deploys to
+ * serverless functions, where concurrent views land on separate instances with cold caches, so no
+ * process-local cache would restrain it.
+ *
+ * A short revalidation window puts a CDN in front of that, and the numbers say exactly what they
+ * are: this instance's real request record since it started, not a history of the site.
  *
  * There is no uptime percentage and no reliability score anywhere on this page. Both would be
  * fabrications built on a sample of one.
@@ -32,8 +38,11 @@ export const metadata: Metadata = buildMetadata({
   noindex: true,
 });
 
-/** The counters describe this running process, so a cached render would describe a dead one. */
-export const dynamic = "force-dynamic";
+/**
+ * One minute. Long enough that a burst of views cannot become a burst of provider requests, short
+ * enough that the counters describe a live process rather than a long-dead one.
+ */
+export const revalidate = 60;
 
 /** Map a provider state onto the dashboard's existing status vocabulary. */
 const STATE_TO_HEALTH: Record<ProviderState, HealthStatus> = {
@@ -45,8 +54,8 @@ const STATE_TO_HEALTH: Record<ProviderState, HealthStatus> = {
 };
 
 export default async function LiveProviderHealthPage() {
-  // Probing before reading the registry is the point: it is what turns "we believe this works"
-  // into "a request made a moment ago returned this".
+  // Reading every product before reporting on it: where the cache is cold this is a real request,
+  // and where it is warm the counters below already describe the request that filled it.
   await Promise.all([spaceWeatherSnapshot(), solarEventsSnapshot()]);
 
   const reports = liveProviderReports();
@@ -64,7 +73,7 @@ export default async function LiveProviderHealthPage() {
             <MetricCard label="Degraded" value={totals.degraded} />
             <MetricCard label="Unavailable" value={totals.unavailable} />
             <MetricCard label="Products" value={totals.products} />
-            <MetricCard label="Products fetched this render" value={totals.productsExercised} />
+            <MetricCard label="Products fetched by this instance" value={totals.productsExercised} sub="since it started, not this render" />
             <MetricCard label="Products failing" value={totals.productsFailing} />
             <MetricCard label="Schema mismatches" value={totals.schemaChanges} />
             <MetricCard label="Cached responses held" value={cacheSize()} sub={`kept ${humanDuration(CACHE_FALLBACK_RETENTION_SECONDS)} past expiry for the failure path`} />
@@ -128,9 +137,12 @@ export default async function LiveProviderHealthPage() {
             documentation before they were written down, and they change only when someone changes the registry.
           </p>
           <p>
-            The operational columns are measurements taken by <em>this</em> server process. Rendering this page issues a real
-            request to every product, so &ldquo;last attempt&rdquo; is a few hundred milliseconds ago by construction. A serverless
-            cold start resets the counters, which is why they are labelled as belonging to an instance and not to the site.
+            The operational columns are measurements taken by <em>this</em> server process. Rendering this page reads every
+            product through the ordinary loader, so where a cache was cold the timings below are seconds old, and where it was
+            warm they describe the earlier request that filled it — a blank &ldquo;last attempt&rdquo; means this instance has
+            not yet needed to ask. A serverless cold start resets every counter, which is why they are labelled as belonging to
+            an instance and not to the site. The page deliberately does not force a request per view: that would make it an
+            unauthenticated amplifier pointed at NOAA and NASA.
           </p>
           <p>
             There is no uptime figure, no availability percentage and no reliability score, because AsteriaStar retains no

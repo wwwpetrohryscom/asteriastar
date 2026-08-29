@@ -40,13 +40,16 @@ export function explainSolarWindSpeed(kmS: number): Interpretation {
 
 /**
  * The north–south component of the interplanetary magnetic field. Southward Bz is the single most
- * important control on whether solar-wind energy enters the magnetosphere: it allows magnetic
- * reconnection at the dayside boundary.
+ * important control on whether solar-wind energy enters the magnetosphere.
+ *
+ * The geometry matters and is easy to state backwards: at the subsolar magnetopause Earth's own
+ * field points NORTHWARD. A northward IMF is therefore aligned with it and reconnects poorly; a
+ * SOUTHWARD IMF is the antiparallel one, and that is the configuration that opens the dayside.
  */
 export function explainBz(nT: number): Interpretation {
-  if (nT > 2) return { label: "Northward", meaning: "The interplanetary field points north, opposing Earth's own field at the dayside boundary. Coupling into the magnetosphere is weak, and geomagnetic activity tends to subside.", elevated: false };
+  if (nT > 2) return { label: "Northward", meaning: "The interplanetary field points north, the same way as Earth's own field where the two meet on the dayside. Aligned fields do not reconnect efficiently, so coupling into the magnetosphere is weak and geomagnetic activity tends to subside.", elevated: false };
   if (nT >= -2) return { label: "Near neutral", meaning: "The field has little north–south component. Coupling is modest and can change quickly — Bz varies on a timescale of minutes.", elevated: false };
-  if (nT >= -10) return { label: "Southward", meaning: "A southward field lets solar-wind energy reconnect into the magnetosphere. Sustained southward Bz is what turns a fast stream into geomagnetic activity.", elevated: false };
+  if (nT >= -10) return { label: "Southward", meaning: "The interplanetary field points south, opposite to Earth's own field at the dayside boundary — the antiparallel geometry that lets the two reconnect and admit solar-wind energy. Sustained southward Bz is what turns a fast stream into geomagnetic activity.", elevated: false };
   return { label: "Strongly southward", meaning: "Strong southward field. This is the condition that drives major geomagnetic storms, though the response also depends on how long it lasts and on the solar-wind speed and density behind it.", elevated: true };
 }
 

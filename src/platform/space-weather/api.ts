@@ -78,12 +78,24 @@ export function serialiseSnapshot<T extends object>(snapshot: T): Record<string,
  * products it serves — so the HTTP cache can never outlive the data policy behind it.
  */
 export function liveCacheControl(productKeys: string[]): string {
-  const windows = productKeys.map((k) => getLiveProduct(k)?.cacheSeconds).filter((n): n is number => n !== undefined);
-  const shortest = windows.length > 0 ? Math.min(...windows) : 60;
-  // `stale-while-revalidate` is capped at the same window: serving a stale operational value for
-  // longer than it is valid is exactly what this platform refuses to do elsewhere, and an HTTP
-  // header is not an exception to that.
-  return `public, max-age=${shortest}, s-maxage=${shortest}, stale-while-revalidate=${shortest}`;
+  const products = productKeys.map((k) => getLiveProduct(k)).filter((p) => p !== undefined);
+  const shortestCache = products.length > 0 ? Math.min(...products.map((p) => p.cacheSeconds)) : 60;
+  const shortestStale = products.length > 0 ? Math.min(...products.map((p) => p.freshness.staleAfterSeconds)) : 3600;
+
+  /*
+   * `stale-while-revalidate` ADDS to `max-age`; it does not cap it. A shared cache may serve a
+   * response for up to `max-age + stale-while-revalidate` seconds while it refreshes in the
+   * background — so the two together, not max-age alone, are what bound how old a served response
+   * can be. (An earlier comment here claimed the opposite, which is a common enough misreading of
+   * RFC 5861 to be worth naming.)
+   *
+   * The total is therefore held below the shortest product's own stale threshold: a cache is
+   * allowed to serve a value that is not the provider's newest, and is never allowed to serve one
+   * this platform would itself refuse to call current. The body always carries the real
+   * `fetchedAt` and `status`, so a consumer can age any response exactly regardless.
+   */
+  const swr = Math.max(0, Math.min(shortestCache, shortestStale - shortestCache));
+  return `public, max-age=${shortestCache}, s-maxage=${shortestCache}, stale-while-revalidate=${swr}`;
 }
 
 /** A one-line summary of a snapshot's honesty state, for the API meta block. */

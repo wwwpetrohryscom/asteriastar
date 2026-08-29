@@ -17,7 +17,7 @@ export const aurora = {
   kpScale: KP_SCALE,
   referenceEnvelope: referenceEnvelope({
     source: ["swpc"], provider: "noaa-swpc", confidence: "established",
-    provenance: "The Kp scale and the physical cause of aurora (solar wind and CMEs exciting Earth's upper atmosphere along the magnetic field) are timeless. Live forecasts are not shown here.",
+    provenance: "The Kp scale and the physical cause of aurora (solar wind and CMEs exciting Earth's upper atmosphere along the magnetic field) are timeless reference facts. The live OVATION forecast and the current Kp are served at /space-weather/aurora.",
   }),
   reference: {
     cause: "Aurorae occur when charged particles from the Sun — carried by the solar wind and coronal mass ejections — are funnelled by Earth's magnetic field into the upper atmosphere, exciting oxygen and nitrogen to glow.",
@@ -31,7 +31,7 @@ export const aurora = {
     data: null,
     envelope: preparedEnvelope({
       source: ["swpc"], provider: "noaa-swpc",
-      provenance: "Aurora forecasts require NOAA SWPC space-weather data and your location. No forecast, Kp value, or visibility line is shown until then — none are invented.",
+      provenance: "A LOCATION-AWARE aurora forecast needs an observer position, which this module has not been given, so no visibility line for any place is shown or invented. The hemispheric forecast that does not need one IS available: NOAA's OVATION model and the planetary K-index are served at /space-weather/aurora.",
     }),
   }),
 };

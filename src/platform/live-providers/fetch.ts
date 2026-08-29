@@ -154,6 +154,11 @@ export interface ProviderFetchOptions {
  * Fetch a provider URL and return parsed JSON, or a typed failure. Redirects are refused
  * (`redirect: "error"`), which is what stops an upstream 302 from moving the request to a host
  * the allowlist never approved.
+ *
+ * There are TWO places a request can fail, and both are caught: at the headers (DNS, connection,
+ * timeout before a response line) and in the body (a timeout that fires mid-stream, a reset, a
+ * truncated chunk). Missing the second is easy — the first `try` looks like it covers the request
+ * — and it is the one a slow megabyte-scale response actually takes.
  */
 export async function fetchProviderJson<T = unknown>(url: string, opts: ProviderFetchOptions = {}): Promise<FetchResult<T>> {
   const started = Date.now();
@@ -207,7 +212,18 @@ export async function fetchProviderJson<T = unknown>(url: string, opts: Provider
     return { ok: false, reason: "content_type", message: `expected JSON, provider sent ${contentType.split(";")[0]}`, latencyMs, fetchedAt };
   }
 
-  const read = await readCapped(res, maxBytes);
+  let read: { text: string; bytes: number } | null;
+  try {
+    read = await readCapped(res, maxBytes);
+  } catch (err) {
+    // The body failed AFTER the headers arrived: a timeout that fired mid-stream, a reset
+    // connection, a truncated chunk. `AbortSignal.timeout` covers the whole operation, not just
+    // the headers, so this is the ordinary fate of a large response from a slow provider — and it
+    // must come back as a typed failure like every other, never as a rejection.
+    const message = normaliseMessage(err);
+    const reason: FetchFailureReason = /timeout|timed out|aborted/i.test(message) ? "timeout" : "network";
+    return { ok: false, reason, message: `response body failed mid-stream: ${message}`, latencyMs: Date.now() - started, fetchedAt };
+  }
   if (!read) {
     return { ok: false, reason: "too_large", message: `response exceeded the ${maxBytes}-byte ceiling`, latencyMs, fetchedAt };
   }

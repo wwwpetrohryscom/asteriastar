@@ -4,7 +4,9 @@ import type {
   NoaaScaleDay, SpaceWeatherAlert, XrayFlareState,
 } from "@/platform/space-weather/model";
 import { explainAuroraBoundary, explainFlareClass, explainScale, scaleElevated, scaleLabel } from "@/platform/space-weather/explain";
-import { DataUnavailable, LiveStatusBadge, StaleNotice, utcStamp } from "@/components/space-weather/LiveStatus";
+import { DataUnavailable, KindLabel, StaleNotice, utcStamp } from "@/components/space-weather/LiveStatus";
+import { FreshnessWatch } from "@/components/space-weather/FreshnessWatch";
+import { getLiveProduct } from "@/platform/live-providers/registry";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 
 /**
@@ -30,11 +32,13 @@ function Panel({
   id: string;
 }) {
   const hasData = envelope.data !== undefined;
+  const product = getLiveProduct(envelope.productKey);
+  const reference = product?.freshness.basis === "fetch" ? envelope.fetchedAt : (envelope.generatedAt ?? envelope.fetchedAt);
   return (
     <section aria-labelledby={id} className="space-y-3">
       <div className="flex flex-wrap items-baseline justify-between gap-2">
         <h2 id={id} className="font-display text-xl font-bold">{title}</h2>
-        <LiveStatusBadge status={envelope.status} />
+        <FreshnessWatch serverStatus={envelope.status} referenceIso={reference} policy={product?.freshness} />
       </div>
       {!hasData ? <DataUnavailable envelope={envelope} what={what} /> : (
         <>
@@ -218,7 +222,13 @@ export function ActiveRegionPanel({ envelope }: { envelope: LiveEnvelope<ActiveR
           <p className="text-sm text-muted">
             {r.regionCount === 0
               ? `NOAA numbered no active regions on the visible disc in the report for ${r.observedDate}.`
-              : `${r.regionCount} numbered active region${r.regionCount === 1 ? "" : "s"} in the report for ${r.observedDate}${r.spotTotal !== undefined ? `, with ${r.spotTotal} sunspots counted across them` : ""}.`}
+              : `${r.regionCount} numbered active region${r.regionCount === 1 ? "" : "s"} in the report for ${r.observedDate}${
+                  r.spotTotal !== undefined
+                    ? `, with ${r.spotTotal} sunspots counted across ${
+                        r.spotTotalFromRegions === r.regionCount ? "them" : `${r.spotTotalFromRegions} of them — NOAA published no spot count for the ${r.regionCount - (r.spotTotalFromRegions ?? 0)} remaining`
+                      }`
+                    : ""
+                }.`}
           </p>
           {r.regions.length > 0 && (
             <div className="overflow-x-auto rounded-lg border border-white/10">
@@ -247,7 +257,7 @@ export function ActiveRegionPanel({ envelope }: { envelope: LiveEnvelope<ActiveR
                       <td className="px-3 py-2 text-muted">{[region.spotClass, region.magClass].filter(Boolean).join(" / ") || "—"}</td>
                       <td className="px-3 py-2 text-muted">
                         {region.flareProbability?.m !== undefined || region.flareProbability?.x !== undefined
-                          ? `${region.flareProbability?.m ?? 0}% / ${region.flareProbability?.x ?? 0}%`
+                          ? `${region.flareProbability?.m !== undefined ? `${region.flareProbability.m}%` : "—"} / ${region.flareProbability?.x !== undefined ? `${region.flareProbability.x}%` : "—"}`
                           : "—"}
                       </td>
                     </tr>
@@ -275,7 +285,10 @@ export function AuroraPanel({ envelope }: { envelope: LiveEnvelope<AuroraForecas
               const interpretation = explainAuroraBoundary(h.equatorwardBoundaryLat, h.maxProbabilityPercent, a.thresholdPercent);
               return (
                 <li key={name} className="scientific-card p-5">
-                  <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">{name}</h3>
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">{name}</h3>
+                    <KindLabel kind="computed" />
+                  </div>
                   <p className={`mt-2 font-display text-2xl font-bold ${interpretation.elevated ? "text-nasa" : "text-fg"}`}>{interpretation.label}</p>
                   <p className="mt-2 text-sm leading-relaxed text-muted">{interpretation.meaning}</p>
                 </li>
@@ -302,6 +315,21 @@ export function AuroraPanel({ envelope }: { envelope: LiveEnvelope<AuroraForecas
 }
 
 /* ---------------------------------------------------------- DONKI events */
+
+/**
+ * NOAA active-region numbers passed 10,000 long ago. DONKI records the full number; SWPC's daily
+ * region report publishes only its last four digits. Both appear on the solar-activity page, so
+ * the convention is stated rather than either provider's value being silently rewritten.
+ */
+export function RegionNumberNote() {
+  return (
+    <p className="rounded-lg border border-white/10 bg-white/[0.02] px-4 py-3 text-xs leading-relaxed text-faint">
+      Region numbers here are DONKI&apos;s full five-digit NOAA numbers. NOAA&apos;s daily region report, above, publishes the
+      last four digits of the same number — so DONKI&apos;s region 14518 and the report&apos;s region 4518 are one region. Neither
+      provider&apos;s value is rewritten.
+    </p>
+  );
+}
 
 /** The caveat CCMC states about DONKI, shown wherever DONKI events are. */
 export function DonkiCaveat() {
@@ -345,6 +373,7 @@ export function FlareEventPanel({ envelope, limit = 8 }: { envelope: LiveEnvelop
           ))}
         </ul>
       )}
+      <RegionNumberNote />
       <DonkiCaveat />
     </Panel>
   );

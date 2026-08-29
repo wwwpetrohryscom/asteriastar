@@ -8,7 +8,7 @@ import {
 import { entityGraphPath, getConnectionsByDomain, getEntityById } from "@/knowledge-graph";
 import { computeEntityQuality, type EntityQuality } from "@/platform/authority/quality";
 import { reviewStatusFor, type ReviewStatus } from "@/platform/authority/review";
-import { buildStatusReport, plannedEnvelope, type LiveStatusReport } from "@/lib/live/status";
+import { buildStatusReport, catalogueEnvelope, type LiveStatusReport } from "@/lib/live/status";
 
 /**
  * Live Scientific Data Engine — resolver and honest-status surface for the Live Scientific Data
@@ -32,7 +32,7 @@ export interface ResolvedLiveSource {
   connections: ReturnType<typeof getConnectionsByDomain>;
   quality: EntityQuality | null;
   reviewStatus: ReviewStatus;
-  envelope: ReturnType<typeof plannedEnvelope>;
+  envelope: ReturnType<typeof catalogueEnvelope>;
 }
 
 function resolveRecord(r: LiveSourceRecord): ResolvedLiveSource {
@@ -46,7 +46,7 @@ function resolveRecord(r: LiveSourceRecord): ResolvedLiveSource {
     connections: getConnectionsByDomain(r.id),
     quality: entity ? computeEntityQuality(entity) : null,
     reviewStatus: reviewStatusFor(r.id),
-    envelope: plannedEnvelope(r),
+    envelope: catalogueEnvelope(r),
   };
 }
 

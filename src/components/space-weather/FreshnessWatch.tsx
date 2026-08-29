@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { classifyFreshness, LIVE_STATUS_LABEL, type FreshnessPolicy, type LiveDataStatus } from "@/platform/live-providers/envelope";
+import { classifyFreshness, worseOf, LIVE_STATUS_LABEL, type FreshnessPolicy, type LiveDataStatus } from "@/platform/live-providers/envelope";
 import { StatusBadge, type StatusTone } from "@/components/ui/StatusBadge";
 
 /**
@@ -12,6 +12,12 @@ import { StatusBadge, type StatusTone } from "@/components/ui/StatusBadge";
  * time anyone reads the badge, "Live" may be a statement about a moment that has passed. This
  * island re-evaluates the SAME pure function against the browser's clock, so a reading that was
  * live when generated correctly reads as delayed, and then as stale, without a reload.
+ *
+ * It can only ever make the status WORSE, never better. The server knows things a timestamp does
+ * not — above all, that the last refresh FAILED and the value is being shown only as a labelled
+ * fallback. Such a value carries a recent observation time, so recomputing from the timestamp alone
+ * would flip a "Stale — NOAA could not be reached" badge to a green "Live" in the browser. Time
+ * ages a datum; it cannot re-establish a connection.
  *
  * It renders the server's status first so hydration matches exactly, then corrects itself on mount
  * and once a minute after that. It announces only when the status actually changes, so a reader
@@ -39,7 +45,11 @@ export function FreshnessWatch({
   policy,
 }: {
   serverStatus: LiveDataStatus;
-  /** The timestamp the status is computed from — the provider's, or our fetch time. */
+  /**
+   * The timestamp the status is computed from — the provider's, or our fetch time. Optional
+   * because an envelope with no data has no timestamp to age; when it is absent the server's
+   * status is simply kept, which for a no-value envelope is already the whole truth.
+   */
   referenceIso?: string;
   policy?: FreshnessPolicy;
 }) {
@@ -59,7 +69,9 @@ export function FreshnessWatch({
     const active: FreshnessPolicy = { basis, liveWithinSeconds: liveWithin, recentWithinSeconds: recentWithin, staleAfterSeconds: staleAfter };
 
     const evaluate = () => {
-      const next = classifyFreshness(active, referenceIso, new Date().toISOString());
+      // `worseOf` is the same guard the server applies in `refreshStatus`: a recomputation may
+      // only move the status further from "live".
+      const next = worseOf(serverStatus, classifyFreshness(active, referenceIso, new Date().toISOString()));
       // State updaters must stay pure — React may call them twice — so the comparison and both
       // updates happen here, outside the updater.
       setStatus((previous) => (previous === next ? previous : next));

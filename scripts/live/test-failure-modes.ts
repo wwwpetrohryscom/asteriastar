@@ -2,6 +2,8 @@ import { loadProduct } from "../../src/platform/live-providers/client";
 import { clearCache, peek } from "../../src/platform/live-providers/cache";
 import { clearHealth, getHealth } from "../../src/platform/live-providers/health";
 import { checkProviderUrl } from "../../src/platform/live-providers/fetch";
+import { refreshStatus, worseOf } from "../../src/platform/live-providers/envelope";
+import { getLiveProduct } from "../../src/platform/live-providers/registry";
 import type { ParseResult } from "../../src/platform/live-providers/client";
 
 /**
@@ -188,6 +190,89 @@ async function main(): Promise<void> {
     check("a failed provider substitutes nothing", env.data === undefined, "a value appeared from somewhere");
   }
 
+  /* ------------------- 11. a body that fails AFTER the headers is a failure, not an exception */
+  clearCache();
+  clearHealth();
+  withStub(() =>
+    new Response(
+      new ReadableStream({
+        start(controller) {
+          controller.enqueue(new TextEncoder().encode('[{"proton_speed":'));
+          // The provider answered, then the connection died mid-body: a timeout that fired while
+          // streaming, a reset, a truncated chunk. `AbortSignal.timeout` covers the whole
+          // operation, so this is the ordinary fate of a slow megabyte-scale response.
+          setTimeout(() => controller.error(new Error("terminated")), 5);
+        },
+      }),
+      { headers: { "content-type": "application/json" } },
+    ),
+  );
+  {
+    let threw = false;
+    let env: Awaited<ReturnType<typeof loadProduct<Reading>>> | undefined;
+    try {
+      env = await loadProduct<Reading>(PRODUCT, parse);
+    } catch {
+      threw = true;
+    }
+    restore();
+    check("a body that errors mid-stream does not throw", !threw, "loadProduct rejected — this is a 500 on every page that composes a snapshot");
+    check("a body that errors mid-stream returns no data", env?.data === undefined, "returned data from a truncated body");
+    check("a body that errors mid-stream is reported", Boolean(env?.error), "no reason given");
+  }
+
+  /* ------------- 12. re-ageing may only make a status worse, never resurrect a failed refresh */
+  clearCache();
+  clearHealth();
+  {
+    const observedAt = new Date(Date.now() - 120_000).toISOString();
+    withStub(() => jsonResponse([{ proton_speed: 488, time_tag: observedAt }]));
+    await loadProduct<Reading>(PRODUCT, parse);
+    restore();
+
+    const entry = peek<{ value: Reading }>(PRODUCT);
+    if (entry) entry.storedAtMs -= 10 * 60 * 1000;
+    withStub(() => new Response("upstream down", { status: 503 }));
+    const fallback = await loadProduct<Reading>(PRODUCT, parse);
+    restore();
+
+    const policy = getLiveProduct(PRODUCT)!.freshness;
+    const reaged = refreshStatus(fallback, policy, new Date().toISOString());
+
+    // The cached datum's OWN observation time is two minutes old — comfortably inside the "live"
+    // window — so a naive recomputation promotes it straight back to live and hides a total
+    // provider outage behind a green badge. The value is old news precisely because the refresh
+    // failed, which is a fact no timestamp can express.
+    check("re-ageing does not resurrect a failed refresh", reaged.status === "stale" && reaged.stale === true, `re-ageing returned "${reaged.status}" (stale=${reaged.stale}) for a value served from cache after a 503`);
+    check("re-ageing keeps the served-from-cache marker", reaged.servedFromCache === true, "the marker was dropped");
+
+    // And the shared rule the browser island uses is the same one.
+    check("worseOf never improves a status", worseOf("stale", "live") === "stale" && worseOf("live", "delayed") === "delayed", "worseOf improved a status");
+    check("worseOf takes an unageable status", worseOf("live", "provider_error") === "provider_error", "an unageable datum was reported as fresh");
+  }
+
+  /* ------------------------------- 13. a forecast product is never reported as an observation */
+  clearCache();
+  clearHealth();
+  {
+    const observedAt = new Date(Date.now() - 60_000).toISOString();
+    const forecastFor = new Date(Date.now() + 3600_000).toISOString();
+    withStub(() =>
+      jsonResponse({
+        "Observation Time": observedAt,
+        "Forecast Time": forecastFor,
+        "Data Format": "[Longitude, Latitude, Aurora]",
+        coordinates: [[0, 60, 12], [0, -60, 8]],
+      }),
+    );
+    const env = await loadProduct("swpc:ovation-aurora", (raw) => {
+      const o = raw as Record<string, unknown>;
+      return { ok: true as const, value: o, observedAt: String(o["Observation Time"]) };
+    });
+    restore();
+    check("a current forecast is labelled forecast, not live", env.status === "forecast", `status was "${env.status}" — a model prediction must never be badged as an observation`);
+  }
+
   /* ----------------------------------------------------- 10. the request guard refuses unsafe URLs */
   {
     const cases: [string, string][] = [
@@ -214,7 +299,7 @@ async function main(): Promise<void> {
     for (const f of failures) console.error(`  • ${f}`);
     process.exit(1);
   }
-  console.log(`✓ Failure modes handled — ${passed.length} cases: provider down, HTTP error, HTML answer, malformed JSON, schema change, oversized response, future timestamp, stale-cache fallback, no substitution, and seven unsafe URLs refused.`);
+  console.log(`✓ Failure modes handled — ${passed.length} cases: provider down, HTTP error, HTML answer, malformed JSON, schema change, oversized response, future timestamp, a body that dies mid-stream, the stale-cache fallback surviving re-ageing, a forecast never badged as an observation, no substitution, and seven unsafe URLs refused.`);
 }
 
 void main();

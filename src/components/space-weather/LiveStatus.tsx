@@ -170,7 +170,9 @@ export function EnvelopeDetails({ envelope, title = "Provenance" }: { envelope: 
   return (
     <section className="scientific-card p-5">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">{title}</h2>
+        {/* h3, not h2: every page renders these UNDER its own "Provenance" h2, and heading-based
+            navigation should show that containment rather than four peer top-level sections. */}
+        <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">{title}</h3>
         <LiveStatusBadge status={envelope.status} />
       </div>
       <dl className="mt-3 divide-y divide-white/5">

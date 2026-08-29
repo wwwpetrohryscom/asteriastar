@@ -36,9 +36,30 @@ export function KpChart({ points, title, describedBy }: { points: KpPoint[]; tit
   const x = (i: number) => PAD.left + (i * plotW) / points.length;
   const y = (kp: number) => PAD.top + plotH - (Math.min(kp, MAX_KP) / MAX_KP) * plotH;
 
-  const storms = points.filter((p) => p.kp >= 5).length;
-  const peak = points.reduce((a, b) => (b.kp > a.kp ? b : a));
-  const summary = `${title}: ${points.length} three-hour intervals, peak planetary K-index ${peak.kp.toFixed(2)} at ${utcStamp(peak.at)}${storms > 0 ? `, ${storms} interval${storms === 1 ? "" : "s"} at storm level (Kp 5 or above)` : ", no interval reached storm level"}.`;
+  /*
+   * The summary is the SVG's aria-label, the visible caption AND the table's caption — it is what a
+   * reader who cannot see the chart gets INSTEAD of it. The chart is careful to hatch predicted
+   * bars; a single "peak Kp 6.33, 2 intervals at storm level" computed over the mixed series would
+   * throw that care away and state NOAA's forecast as a measurement. Observed and predicted are
+   * therefore summarised separately, and a series with no predicted rows says nothing about them.
+   */
+  const measured = points.filter((p) => p.provenance !== "predicted");
+  const predicted = points.filter((p) => p.provenance === "predicted");
+
+  const describe = (subset: KpPoint[], noun: string): string => {
+    if (subset.length === 0) return "";
+    const top = subset.reduce((a, b) => (b.kp > a.kp ? b : a));
+    const storms = subset.filter((p) => p.kp >= 5).length;
+    return `Highest ${noun} planetary K-index ${top.kp.toFixed(2)}, for the interval beginning ${utcStamp(top.at)}${storms > 0 ? `; ${storms} ${noun} interval${storms === 1 ? "" : "s"} at storm level (Kp 5 or above)` : `; no ${noun} interval reaches storm level`}.`;
+  };
+
+  const summary = [
+    `${title}: ${points.length} three-hour intervals, of which ${measured.length} are observed or estimated and ${predicted.length} are NOAA forecasts.`,
+    describe(measured, "observed"),
+    describe(predicted, "forecast"),
+  ]
+    .filter(Boolean)
+    .join(" ");
 
   return (
     <figure className="m-0">

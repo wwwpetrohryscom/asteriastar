@@ -83,6 +83,13 @@ function baseEnvelope<T>(product: LiveProduct, provider: LiveProviderDescriptor,
 /**
  * Classify a successfully-parsed response. `observation`-based products are aged by the
  * provider's own newest timestamp; `fetch`-based ones by when we asked.
+ *
+ * A FORECAST product can never come back "live". `live` is defined as a real observation inside the
+ * provider's publication cadence, and OVATION's aurora grid and NOAA's Kp forecast are predictions
+ * about a time that has not happened — so a current forecast is reported as `forecast`, and only
+ * its going out of date is expressed on the freshness ladder. Without this, the aurora panel on the
+ * "current conditions" page was headed by a green "Live" badge for a model forecast, which the
+ * envelope's own `CURRENT_STATUSES` set exists to forbid.
  */
 function statusFor(product: LiveProduct, fetchedAt: string, observedAt: string | undefined, nowIso: string): LiveDataStatus {
   const reference = product.freshness.basis === "fetch" ? fetchedAt : observedAt;
@@ -91,7 +98,10 @@ function statusFor(product: LiveProduct, fetchedAt: string, observedAt: string |
     // un-ageable "current" value is exactly what this model exists to prevent.
     return "provider_error";
   }
-  return classifyFreshness(product.freshness, reference, nowIso);
+  const freshness = classifyFreshness(product.freshness, reference, nowIso);
+  if (product.kind !== "forecast") return freshness;
+  // Still current → say what it is. Past its window → the staleness is the more important fact.
+  return freshness === "stale" || freshness === "provider_error" ? freshness : "forecast";
 }
 
 /**
@@ -104,9 +114,15 @@ const inFlight = new Map<string, Promise<unknown>>();
 export interface LoadOptions {
   /** The moment to judge freshness against. Defaults to now; injected by tests. */
   now?: Date;
-  /** Skip the cache and force a request. Used only by the provider probe. */
-  force?: boolean;
 }
+
+/*
+ * There is deliberately no "force" option. One existed, was never passed by anything, and made the
+ * in-flight map unsound: a second promise for the same key overwrote the first, and the first's
+ * `finally` then deleted the second's entry while it was still running. Code that needs a
+ * guaranteed real request calls `clearCache()` — the provider probe does — which needs no second
+ * path through the loader and cannot desynchronise the coalescing map.
+ */
 
 /**
  * Load one product and return its honesty envelope. Never throws, never returns fabricated data,
@@ -145,7 +161,7 @@ export async function loadProduct<T>(productKey: string, parse: (raw: unknown) =
   const url = resolved.url;
 
   /* ---------------------------------------------- serve a still-fresh cache entry */
-  if (!opts.force) {
+  {
     const cached = peek<{ value: T; observedAt?: string; generatedAt?: string; validFrom?: string; validUntil?: string }>(productKey);
     if (cached && isFresh(cached)) {
       const status = statusFor(product, cached.fetchedAt, cached.value.observedAt, nowIso);
@@ -164,13 +180,15 @@ export async function loadProduct<T>(productKey: string, parse: (raw: unknown) =
 
   /* ------------------------------------------------------------- refresh */
   const key = `${productKey}|${url}`;
-  let pending = inFlight.get(key) as Promise<LiveEnvelope<T>> | undefined;
-  if (!pending || opts.force) {
-    pending = refresh<T>(product, provider, url, parse, nowIso).finally(() => {
-      inFlight.delete(key);
-    });
-    inFlight.set(key, pending);
-  }
+  const existing = inFlight.get(key) as Promise<LiveEnvelope<T>> | undefined;
+  if (existing) return existing;
+
+  const pending = refresh<T>(product, provider, url, parse, nowIso).finally(() => {
+    // Safe because a key can only ever have one promise: this is the sole `set`, and it is
+    // guarded by the `get` above.
+    inFlight.delete(key);
+  });
+  inFlight.set(key, pending);
   return pending;
 }
 

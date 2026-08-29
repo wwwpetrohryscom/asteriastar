@@ -30,7 +30,10 @@ function parseSolarWindSpeed(raw: unknown): ParseResult<SolarWindSpeedReading> {
   const first = record(rows[0]);
   if (!first) return { ok: false, problem: "expected a non-empty array of readings" };
   const observedAt = timestamp(first.time_tag);
-  // 200–3000 km/s spans everything from the slowest quiet wind to the fastest shock ever recorded.
+  // 100–3000 km/s comfortably brackets everything real: the slowest quiet wind ever measured is
+  // around 250 km/s and the fastest shock a little over 2000. Anything outside this is a parsing
+  // accident or a fill value, not a remarkable sky. The documented bound and the enforced bound
+  // are the same numbers on purpose.
   const speedKmS = boundedNum(first.proton_speed, 100, 3000);
   if (!observedAt) return { ok: false, problem: "reading has no usable time_tag" };
   if (speedKmS === undefined) return { ok: false, problem: "proton_speed is missing or outside a physical range" };
@@ -129,7 +132,17 @@ export function kpObserved(): Promise<LiveEnvelope<KpPoint[]>> {
   return loadProduct("swpc:kp-index", parseKpObserved);
 }
 
-const KP_PROVENANCE: Record<string, KpProvenance> = { observed: "observed", estimated: "estimated", predicted: "predicted" };
+/**
+ * A `Map`, not an object literal. `KP_PROVENANCE["constructor"]` on a literal walks the prototype
+ * chain and returns a function, which passes a truthiness guard — admitting a row of unknown
+ * provenance that would then be DRAWN IN OBSERVED STYLING because it is merely not `"predicted"`.
+ * A Map has no prototype members to inherit.
+ */
+const KP_PROVENANCE = new Map<string, KpProvenance>([
+  ["observed", "observed"],
+  ["estimated", "estimated"],
+  ["predicted", "predicted"],
+]);
 
 /**
  * The Kp forecast product mixes observed, estimated and predicted rows in one array. The
@@ -147,7 +160,7 @@ function parseKpForecast(raw: unknown): ParseResult<KpPoint[]> {
     if (!o) continue;
     const at = timestamp(o.time_tag);
     const kp = boundedNum(o.kp, 0, 9);
-    const provenance = KP_PROVENANCE[String(o.observed ?? "").toLowerCase()];
+    const provenance = KP_PROVENANCE.get(String(o.observed ?? "").toLowerCase());
     if (!at || kp === undefined || !provenance) continue;
     points.push({ at, kp, provenance, noaaScale: line(o.noaa_scale, 8) });
     // Kp rows are stamped with the START of their three-hour interval, and SWPC publishes an
@@ -393,6 +406,10 @@ function parseActiveRegions(raw: unknown): ParseResult<ActiveRegionReport> {
   }
 
   regions.sort((a, b) => a.number - b.number);
+  // SWPC publishes `number_spots: null` routinely — a region can be numbered before its spots are
+  // counted. Summing only the regions that HAVE a count and presenting the result as a total across
+  // every region would let an absent value contribute a silent zero, so the number of contributing
+  // regions is carried with the total and stated wherever it is shown.
   const spots = regions.map((r) => r.spotCount).filter((n): n is number => n !== undefined);
   const observedAt = timestamp(`${latest}T00:00:00`);
   return {
@@ -402,6 +419,7 @@ function parseActiveRegions(raw: unknown): ParseResult<ActiveRegionReport> {
       regions,
       regionCount: regions.length,
       spotTotal: spots.length > 0 ? spots.reduce((a, b) => a + b, 0) : undefined,
+      spotTotalFromRegions: spots.length,
     },
     observedAt,
   };
@@ -496,7 +514,10 @@ function parseAurora(raw: unknown): ParseResult<AuroraForecastSummary> {
       gridCells: cells,
     },
     observedAt,
-    validUntil: forecastFor,
+    // `forecastFor` is deliberately NOT written to `validUntil`. It is the instant the forecast
+    // DESCRIBES, roughly an hour ahead — the moment it becomes applicable, not the moment it
+    // expires. Putting it there made the provenance panel read "Valid until <the time the forecast
+    // is for>", the exact inverse of its meaning. It is carried in the summary, where it is named.
   };
 }
 

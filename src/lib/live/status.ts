@@ -7,22 +7,34 @@ import { BT_RECORDS, type LiveSourceRecord, type ProviderEnvelope, type LiveStat
  * populate `data`, `fetchedAt`, and the validity window.
  */
 
-/** Build the honest envelope for a provider whose page is being rendered from the catalogue alone —
- *  status carried from the catalogue, no data, no invented timestamps. Providers that ARE connected
- *  serve their real values through the live-provider runtime (platform/live-providers); this
- *  envelope describes the catalogue record, and deliberately carries no measurement. */
-export function plannedEnvelope(source: LiveSourceRecord): ProviderEnvelope {
+/**
+ * Build the honest envelope for a provider's CATALOGUE entry — its identity, endpoint, licence and
+ * connection state. This page describes the provider; it does not read from it, which is why there
+ * is no value and no timestamp here and never has been.
+ *
+ * The provenance sentence depends on the status. A connected provider's readings live in the
+ * live-provider runtime and are shown at /space-weather; saying "no live fetch has occurred in this
+ * build" on its catalogue page — as this function once did for every provider regardless — is a
+ * statement that stopped being true the moment one was connected.
+ */
+export function catalogueEnvelope(source: LiveSourceRecord): ProviderEnvelope {
+  const connected = source.status === "connected";
   return {
     provider: source.name,
     endpoint: source.endpoint,
     license: source.licenseNote,
     status: source.status,
     stale: false,
-    provenance: `Modelled from ${source.name}. No live fetch has occurred in this build; the integration is ${source.status}.`,
+    provenance: connected
+      ? `This is ${source.name}'s catalogue entry: what it is, what it serves, and under what terms. It carries no measurement — the live readings from this provider are fetched at request time and shown at /space-weather, each with the provider's own timestamp.`
+      : `This is ${source.name}'s catalogue entry. The integration is ${source.status}: no fetch has been made, so no value, timestamp or provider response is shown — and none is invented.`,
     limitations: source.limitations,
     // fetchedAt / generatedAt / validFrom / validUntil / data are intentionally absent: no fetch.
   };
 }
+
+/** @deprecated Renamed to `catalogueEnvelope`; kept so an external import does not break silently. */
+export const plannedEnvelope = catalogueEnvelope;
 
 export interface LiveStatusReport {
   total: number;

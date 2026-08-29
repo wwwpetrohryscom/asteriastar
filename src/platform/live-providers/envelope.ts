@@ -216,18 +216,51 @@ export function unavailableEnvelope<T>(base: Omit<LiveEnvelope<T>, "status" | "s
 }
 
 /**
+ * How far a status is from "a current observation". Re-ageing may move a value DOWN this ladder and
+ * never up: time only makes data older.
+ */
+const STALENESS_RANK: Partial<Record<LiveDataStatus, number>> = { live: 0, recent: 1, delayed: 2, stale: 3 };
+
+/**
+ * The worse of two freshness statuses — the one further from a current observation.
+ *
+ * Shared by the server's `refreshStatus` and by the browser's freshness island, so there is exactly
+ * one implementation of the rule "a recomputation may never improve a status". An unranked status
+ * (`provider_error`, from a timestamp that cannot be aged at all) always wins: not being able to
+ * age a datum is worse than any freshness level.
+ */
+export function worseOf(a: LiveDataStatus, b: LiveDataStatus): LiveDataStatus {
+  const ra = STALENESS_RANK[a];
+  const rb = STALENESS_RANK[b];
+  if (ra === undefined) return a;
+  if (rb === undefined) return b;
+  return rb > ra ? b : a;
+}
+
+/**
  * Re-evaluate an envelope's freshness at a later moment.
  *
  * Rendered HTML can be cached and served long after it was produced, so a status computed at
  * render time is a claim about the past. This recomputes it from the datum's own timestamp
  * against a later clock — the same pure function the server used — so a page that was `live`
  * when generated correctly reads `stale` when it is finally viewed.
+ *
+ * It can only ever make a status WORSE. That rule is not decoration: the failure path deliberately
+ * forces `stale` on a value served from cache after a failed refresh, because whatever we hold is
+ * by definition no longer the provider's current publication — and that value's own observation
+ * time is usually recent, so a naive recomputation would promote it straight back to "live" and
+ * present a cached reading during a total provider outage as a live measurement. Timestamps age a
+ * datum; they cannot re-establish a connection.
  */
 export function refreshStatus<T>(env: LiveEnvelope<T>, policy: FreshnessPolicy, nowIso: string): LiveEnvelope<T> {
   if (NO_VALUE_STATUSES.has(env.status)) return env;
   if (env.status === "forecast" || env.status === "historical" || env.status === "computed") return env;
+  // A value we are showing only because the refresh failed stays stale for as long as we show it.
+  if (env.servedFromCache) return env;
+
   const reference = policy.basis === "fetch" ? env.fetchedAt : (env.generatedAt ?? env.fetchedAt);
   if (!reference) return env;
-  const status = classifyFreshness(policy, reference, nowIso);
+
+  const status = worseOf(env.status, classifyFreshness(policy, reference, nowIso));
   return { ...env, status, stale: status === "stale" };
 }

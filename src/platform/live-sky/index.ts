@@ -109,7 +109,7 @@ export const SKY_PAGES: SkyPageDef[] = [
   },
   {
     slug: "aurora", title: "Aurora Forecast — Data Architecture", eyebrow: "Night Sky Platform",
-    lead: "What causes the aurora and the Kp index are shown as reference. Location-aware aurora forecasts are prepared for NOAA SWPC space-weather data.",
+    lead: "What causes the aurora and the Kp index, as reference. A LOCATION-AWARE forecast — whether aurora is visible from a particular place — is still prepared, not built; NOAA's live hemispheric OVATION forecast and the current Kp are at /space-weather/aurora.",
     content: "aurora", providerKeys: ["noaa-swpc"], sourceKeys: ["swpc"],
     relatedEntityIds: ["star:sun", "planet:earth"], learnHref: "/learn/observing-the-night-sky",
   },

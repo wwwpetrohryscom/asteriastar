@@ -54,7 +54,7 @@ export default async function GeomagneticPage() {
             creatorUrl: "https://www.swpc.noaa.gov",
             license: "https://www.usa.gov/government-works",
             variables: ["planetary K-index", "NOAA G-scale geomagnetic storm level"],
-            repeatFrequency: "PT3H",
+            coverageFrom: "2026-08-29",
             distributionUrl: "https://services.swpc.noaa.gov/products/noaa-planetary-k-index-forecast.json",
           }),
         ]}

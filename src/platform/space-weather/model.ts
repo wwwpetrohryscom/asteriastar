@@ -142,8 +142,10 @@ export interface ActiveRegionReport {
   regions: ActiveRegion[];
   /** Count of numbered regions on the disc in this report. */
   regionCount: number;
-  /** Total spots across numbered regions. NOT the International Sunspot Number. */
+  /** Total spots across the regions that published a count. NOT the International Sunspot Number. */
   spotTotal?: number;
+  /** How many of `regions` contributed to `spotTotal` — a region may be numbered before it is counted. */
+  spotTotalFromRegions?: number;
 }
 
 /* ---------------------------------------------------------------- aurora */
@@ -153,8 +155,9 @@ export interface ActiveRegionReport {
  *
  * The grid itself is about a megabyte of per-degree probabilities; what a page can honestly say
  * from it is where the aurora oval reaches and how strong it is. `equatorwardBoundary` is a named,
- * versioned computation over the provider's own numbers, not a provider product — which is why it
- * is labelled `computed` wherever it is shown.
+ * versioned computation over the provider's own numbers, not a provider product — so wherever it is
+ * shown it carries a "computed by AsteriaStar" label and its method identifier, and the page states
+ * that the probabilities are NOAA's while the reduction is ours.
  */
 export interface AuroraForecastSummary {
   /** The time of the observation the forecast is derived from (ISO). */

@@ -52,7 +52,7 @@ export default async function SolarWindPage() {
             creatorUrl: "https://www.swpc.noaa.gov",
             license: "https://www.usa.gov/government-works",
             variables: ["solar wind speed", "proton density", "interplanetary magnetic field Bt", "interplanetary magnetic field Bz GSM"],
-            repeatFrequency: "PT1M",
+            coverageFrom: "2026-08-29",
             distributionUrl: "https://services.swpc.noaa.gov/products/geospace/propagated-solar-wind-1-hour.json",
           }),
         ]}

@@ -8,7 +8,7 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, webPageSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES, spaceWeatherPath } from "@/lib/routes";
 import { SectionNav, HonestyNote } from "@/components/space-weather/SectionNav";
-import { LiveValue, EnvelopeDetails } from "@/components/space-weather/LiveStatus";
+import { LiveValue, EnvelopeDetails, DataUnavailable } from "@/components/space-weather/LiveStatus";
 import { AuroraPanel } from "@/components/space-weather/Panels";
 import { KpChart } from "@/components/space-weather/KpChart";
 import { auroraSnapshot, latestObservedKp, peakForecastKp, reage } from "@/platform/space-weather/service";
@@ -64,7 +64,9 @@ export default async function AuroraPage() {
             number aurora watchers follow. It is a three-hourly planetary average, so it describes the global state, not your sky.
           </p>
           <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
-            {kp && <LiveValue datum={kp} label="Latest observed Kp" envelope={s.kpObserved} interpretation={explainKp(kp.value)} precision={2} />}
+            {kp
+              ? <LiveValue datum={kp} label="Latest observed Kp" envelope={s.kpObserved} interpretation={explainKp(kp.value)} precision={2} />
+              : <DataUnavailable envelope={s.kpObserved} what="The observed planetary K-index" />}
             <div className="scientific-card p-5">
               <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">Highest forecast Kp</h3>
               {peak ? (

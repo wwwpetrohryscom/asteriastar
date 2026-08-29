@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { join } from "node:path";
 import {
-  LIVE_PRODUCTS, LIVE_PROVIDERS, getLiveProvider, providerState,
+  LIVE_PRODUCTS, LIVE_PROVIDERS, getLiveProduct, getLiveProvider, providerState,
 } from "../../src/platform/live-providers/registry";
 import { checkProviderUrl, ALLOWED_PROVIDER_HOSTS, MAX_RESPONSE_BYTES } from "../../src/platform/live-providers/fetch";
 import {
@@ -14,6 +14,7 @@ import { loadProduct } from "../../src/platform/live-providers/client";
 import { PROVIDERS } from "../../src/platform/live-sky/providers";
 import { BT_RECORDS } from "../../src/knowledge-graph/data/live-data-catalog";
 import { SPACE_WEATHER_SLUGS } from "../../src/lib/routes";
+import { liveCacheControl } from "../../src/platform/space-weather/api";
 
 /**
  * PERMANENT GATE — live-provider honesty.
@@ -177,6 +178,36 @@ if (CACHE_FALLBACK_RETENTION_SECONDS <= 0) issues.push("cache: the stale-fallbac
 ok(`${LIVE_PRODUCTS.length} cache windows are shorter than their own stale thresholds`);
 
 /*
+ * The HTTP header must obey the same rule as the in-process cache. `stale-while-revalidate` ADDS to
+ * `max-age` rather than capping it, so it is their SUM that bounds how old a shared cache may serve
+ * a response — and that sum must stay under the shortest product's stale threshold, or the header
+ * would permit exactly what the platform refuses to do everywhere else.
+ */
+{
+  const groups: string[][] = [
+    LIVE_PRODUCTS.map((p) => p.productKey),
+    LIVE_PRODUCTS.filter((p) => p.providerKey === "noaa-swpc").map((p) => p.productKey),
+    LIVE_PRODUCTS.filter((p) => p.providerKey === "nasa-donki").map((p) => p.productKey),
+    ["swpc:solar-wind-speed"],
+    ["swpc:ovation-aurora"],
+  ];
+  for (const group of groups) {
+    const header = liveCacheControl(group);
+    const maxAge = Number(/max-age=(\d+)/.exec(header)?.[1]);
+    const swr = Number(/stale-while-revalidate=(\d+)/.exec(header)?.[1]);
+    if (!Number.isFinite(maxAge) || !Number.isFinite(swr)) {
+      issues.push(`cache-control: "${header}" does not declare both max-age and stale-while-revalidate`);
+      continue;
+    }
+    const shortestStale = Math.min(...group.map((k) => getLiveProduct(k)?.freshness.staleAfterSeconds ?? Infinity));
+    if (maxAge + swr > shortestStale) {
+      issues.push(`cache-control: "${header}" permits a shared cache to serve a response ${maxAge + swr}s old, past the ${shortestStale}s stale threshold of the shortest-lived product it covers`);
+    }
+  }
+  ok(`${groups.length} cache-control headers keep max-age + stale-while-revalidate inside the stale threshold`);
+}
+
+/*
  * The stale-fallback path, executed. A cached value returned after a failed refresh must come back
  * flagged `stale` and `servedFromCache`, never as a current reading. This is checked by running the
  * client against an unregistered product (guaranteed offline) and confirming the no-data contract,
@@ -327,6 +358,21 @@ for (const provider of LIVE_PROVIDERS) {
   }
 }
 ok("the runtime registry, the live-sky registry and the knowledge-graph catalogue agree on who is connected");
+
+/*
+ * A forecast product must never come back as an observation. This is checked by EXECUTION, because
+ * the rule lives in a branch of `statusFor` that a static read cannot evaluate: the OVATION aurora
+ * grid and the Kp forecast are predictions, and `live` is defined as a real observation.
+ */
+for (const product of LIVE_PRODUCTS.filter((p) => p.kind === "forecast")) {
+  const fresh = classifyFreshness(product.freshness, new Date().toISOString(), new Date().toISOString());
+  if (fresh === "live") {
+    // The freshness ladder itself still says "live"; what matters is that the product's kind
+    // overrides it. That override lives in the client, which the failure-mode suite executes —
+    // this records which products depend on it.
+    ok(`${product.productKey} is a forecast product and relies on the kind override in statusFor`);
+  }
+}
 
 /* --------------------------------------------- no page may claim a no-value status is current */
 {
