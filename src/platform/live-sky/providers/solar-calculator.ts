@@ -113,12 +113,21 @@ function solarGeometry(jc: number): SolarGeometry {
  * without a second implementation of the solar series appearing in the codebase. The same NOAA
  * apparent-longitude and obliquity values that give the declination above give the vector here.
  *
- * The frame is the mean equator of date rather than J2000, and the Sun's position is good to about
- * 0.01°. Both are far finer than eclipse geometry needs: the question is whether a point 400 km up
- * is inside a shadow cylinder 6,378 km across, and a hundredth of a degree moves the terminator by
- * about a kilometre.
+ * The frame is the TRUE (apparent) equator and equinox of date, not the mean one and not J2000: the
+ * apparent longitude carries both aberration and the nutation in longitude, and the obliquity used
+ * carries the nutation in obliquity. That distinction is what makes the consumer correct — a vector
+ * referred to the true equinox must be rotated into the Earth-fixed frame by Greenwich APPARENT
+ * sidereal time, and a maintainer who read "mean" here would reach for GMST and introduce an error
+ * of about seventeen arcseconds.
+ *
+ * The Sun's position is good to about 0.01°, far finer than eclipse geometry needs: the question is
+ * whether a point 400 km up is inside a shadow cylinder 6,378 km across, and a hundredth of a degree
+ * moves the terminator by about a kilometre.
  */
 export function solarDirectionEci(utcMs: number): [number, number, number] {
+  // Named `...Eci` for consistency with the platform's other vector helpers; the frame is stated
+  // precisely in the documentation above, because "ECI" alone does not distinguish the three that
+  // matter here.
   const jc = (utcMs / 86400000 + 2440587.5 - 2451545.0) / 36525.0;
   const { appLongDeg, obliquityDeg } = solarGeometry(jc);
   return [

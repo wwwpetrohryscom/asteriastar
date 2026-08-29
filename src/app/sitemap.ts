@@ -828,11 +828,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
    * Live satellite pages (Program CL). Five stable URLs and no parameters — the pass calculator
    * runs in the browser precisely so that a coordinate never becomes part of a URL.
    */
-  const satelliteLiveRoutes: MetadataRoute.Sitemap = SATELLITE_LIVE_SLUGS.map((slug) => ({
-    url: absoluteUrl(satelliteLivePath(slug)),
-    changeFrequency: "daily" as const,
-    priority: slug === "iss" || slug === "passes" ? 0.9 : 0.7,
-  }));
+  const satelliteLiveRoutes: MetadataRoute.Sitemap = [
+    // The index the nested `constellations/live` page hangs beneath. Without it, truncating that
+    // URL — the ordinary way a reader or a crawler recovers from a deep link — was a 404.
+    { url: absoluteUrl("/satellites/constellations"), changeFrequency: "monthly", priority: 0.7 },
+    ...SATELLITE_LIVE_SLUGS.map((slug) => ({
+      url: absoluteUrl(satelliteLivePath(slug)),
+      changeFrequency: "daily" as const,
+      priority: slug === "iss" || slug === "passes" ? 0.9 : 0.7,
+    })),
+  ];
 
   const universe3dRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.universe3d), changeFrequency: "monthly", priority: 0.8 },

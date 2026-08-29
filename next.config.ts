@@ -33,6 +33,20 @@ const nextConfig: NextConfig = {
             key: "Strict-Transport-Security",
             value: "max-age=63072000",
           },
+          {
+            /*
+             * Never let a browser second-guess a declared Content-Type.
+             *
+             * The public API answers `Access-Control-Allow-Origin: *` with JSON that can contain
+             * strings from an upstream provider or, on an error, from the request path. None of
+             * that is markup and none of it is served as HTML — but content sniffing is precisely
+             * the mechanism that turns "not served as HTML" into "executed as HTML anyway", and it
+             * costs one header to remove the question. It applies to every response, because the
+             * reasoning is not specific to the API.
+             */
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
         ],
       },
     ];

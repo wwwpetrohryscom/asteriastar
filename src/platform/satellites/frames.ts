@@ -136,9 +136,14 @@ export function eme2000ToEcef(v: Vec3, utcMs: number): Vec3 {
   const zeta = (2306.2181 * T + 0.30188 * T * T + 0.017998 * T ** 3) * AS2R;
   const theta = (2004.3109 * T - 0.42665 * T * T - 0.041833 * T ** 3) * AS2R;
   const zAngle = (2306.2181 * T + 1.09468 * T * T + 0.018203 * T ** 3) * AS2R;
-  let r = rot3(-zAngle, v);
+  // P = R3(−z)·R2(θ)·R3(−ζ), so applied to a vector the ζ rotation comes FIRST. Composing it the
+  // other way round is nearly invisible — ζ and z agree through first order in T and differ only by
+  // 0.79·T² arcseconds, about three micrometres on the ground in 2026, far below what the
+  // node-longitude check can see. It is still the wrong matrix, and this file's own docstring makes
+  // a claim about the order.
+  let r = rot3(-zeta, v);
   r = rot2(theta, r);
-  r = rot3(-zeta, r);
+  r = rot3(-zAngle, r);
 
   // IAU 1980 nutation: mean of date -> true equator and equinox of date.
   const eps0 = (23.439291111 - 0.0130041667 * T - 1.6389e-7 * T * T + 5.036e-7 * T ** 3) * D2R;
@@ -191,6 +196,16 @@ export interface Geodetic {
 export function ecefToGeodetic(ecef: Vec3): Geodetic {
   const [x, y, z] = ecef;
   const p = Math.hypot(x, y);
+
+  // Exactly on the polar axis the iteration divides by zero: `altitude` becomes −N, so `n + h` is
+  // zero on the next pass and everything downstream is NaN. The pole is a perfectly ordinary point
+  // and this is a general-purpose function, so it is handled rather than assumed away — the
+  // semi-minor axis is a(1 − f), and longitude there is undefined, conventionally zero.
+  if (p === 0) {
+    const semiMinor = EARTH_RADIUS_KM * (1 - FLATTENING);
+    return { latitudeDeg: z >= 0 ? 90 : -90, longitudeDeg: 0, altitudeKm: Math.abs(z) - semiMinor };
+  }
+
   let latitude = Math.atan2(z, p * (1 - E2));
   let altitude = 0;
   for (let i = 0; i < 6; i++) {

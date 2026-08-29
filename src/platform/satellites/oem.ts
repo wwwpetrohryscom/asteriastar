@@ -78,6 +78,18 @@ function oemTime(value: string): number | undefined {
 const NODE_RE = /asc\.\s*node\s*:\s*EPOCH\s*=\s*(\S+).*?LAN\(DEG\)\s*=\s*(-?[\d.]+)/i;
 const ORBIT_RE = /ORBIT\s*=\s*(\d+)/i;
 
+/**
+ * The longest comment this parser will examine.
+ *
+ * `NODE_RE` pairs a greedy `(\S+)` with a lazy `.*?` and a tail that may never match, so on a line
+ * with no `LAN(DEG)` it backtracks quadratically: measured at 1 ms for two thousand characters, 12 ms
+ * for eight thousand, and 195 ms for thirty-two thousand — four times the cost for twice the input.
+ * The product's byte ceiling is two megabytes and the file is split only on newlines, so one
+ * oversized comment line could block the event loop for minutes. Real comment lines here are under
+ * two hundred characters; the bound is generous and the ceiling is the point.
+ */
+const MAX_COMMENT_SCAN = 1000;
+
 export function parseOem(raw: unknown): OemParseResult {
   if (typeof raw !== "string") return { ok: false, problem: "expected the OEM as text" };
   const lines = raw.split(/\r?\n/);
@@ -91,16 +103,19 @@ export function parseOem(raw: unknown): OemParseResult {
   const states: StateVector[] = [];
   let inMetadata = false;
   let seenMetadata = false;
+  let segments = 0;
 
   for (const rawLine of lines) {
     const l = rawLine.trim();
     if (!l) continue;
 
-    if (l === "META_START") { inMetadata = true; continue; }
+    if (l === "META_START") { inMetadata = true; segments += 1; continue; }
     if (l === "META_STOP") { inMetadata = false; seenMetadata = true; continue; }
 
     if (l.startsWith("COMMENT")) {
-      const body = l.slice("COMMENT".length).trim();
+      // Bounded BEFORE the regex runs, not after: truncating the retained text would leave the
+      // backtracking cost exactly where it was.
+      const body = l.slice("COMMENT".length, "COMMENT".length + MAX_COMMENT_SCAN).trim();
       const node = NODE_RE.exec(body);
       if (node) {
         const timeMs = oemTime(node[1]);
@@ -115,7 +130,10 @@ export function parseOem(raw: unknown): OemParseResult {
     }
 
     const kv = /^([A-Z_0-9]+)\s*=\s*(.*)$/.exec(l);
-    if (kv) { header.set(kv[1], kv[2].trim()); continue; }
+    // Header values are network-controlled and are rendered on a page and returned by two API
+    // routes, so they are bounded like every other string this parser keeps. Everything else here
+    // was already capped; these were not.
+    if (kv) { header.set(kv[1], line(kv[2], 200) ?? ""); continue; }
 
     // Anything else inside the data section is a state vector: epoch then six numbers.
     if (!seenMetadata || inMetadata) continue;
@@ -129,6 +147,21 @@ export function parseOem(raw: unknown): OemParseResult {
     // A state vector inside the Earth is a parsing accident, not an orbit.
     if (Math.hypot(px, py, pz) < 6000) continue;
     states.push({ timeMs, position: [px, py, pz], velocity: [vx, vy, vz] });
+  }
+
+  /*
+   * A CCSDS OEM may legally contain several segments, each declaring its own reference frame — and
+   * the frame check below reads only whichever declaration came last, while the state vectors from
+   * every segment are merged into one array. A file whose first segment is TEME and whose second is
+   * EME2000 would therefore pass the very check this parser exists to perform, and the mixed
+   * vectors would be displaced by the accumulated precession: about 0.68° in 2026, which is exactly
+   * the error the node-longitude verification was built to catch and would not catch here, because
+   * it samples only two epochs.
+   *
+   * NASA's file has one segment. A file with more is refused rather than interpreted.
+   */
+  if (segments > 1) {
+    return { ok: false, problem: `the file contains ${segments} ephemeris segments; this integration reads single-segment files only, because segments may declare different reference frames and merging them would silently mix coordinate systems` };
   }
 
   const referenceFrame = header.get("REF_FRAME") ?? "";

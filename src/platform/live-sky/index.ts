@@ -102,9 +102,9 @@ export const SKY_PAGES: SkyPageDef[] = [
     learnHref: "/learn/observing-the-night-sky",
   },
   {
-    slug: "iss-tracker", title: "ISS Tracker — Data Architecture", eyebrow: "Night Sky Platform",
-    lead: "What the International Space Station is and how visible passes work is shown as reference. Live position and pass predictions are prepared for orbital-element data and an observer location — no position is ever fabricated.",
-    content: "iss", providerKeys: ["celestrak"], sourceKeys: ["celestrak"],
+    slug: "iss-tracker", title: "The ISS — Reference & Visibility", eyebrow: "Night Sky Platform",
+    lead: "What the International Space Station is, how it orbits, and why it is visible only around dusk and dawn. Its live position and visible-pass predictions are computed from NASA's own operational ephemeris at /satellites/iss and /satellites/passes; this page is the reference material behind them.",
+    content: "iss", providerKeys: ["nasa-iss-ephemeris"], sourceKeys: ["nasa"],
     relatedEntityIds: ["satellite:international-space-station"], learnHref: "/learn/observing-the-night-sky",
   },
   {

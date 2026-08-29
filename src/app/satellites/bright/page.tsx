@@ -60,12 +60,25 @@ export default async function BrightSatellitesPage() {
       <Container className="mt-8 mb-14 space-y-12">
         <SatelliteNav current="bright" />
 
-        <SatellitePanel envelope={ephemeris} title="The brightest of them" what="The NASA ISS ephemeris" id="iss-heading">
+        {/*
+          The explanatory text and the onward link sit OUTSIDE the live panel deliberately. Neither
+          depends on NASA, and putting them inside would mean a provider outage deleted a paragraph
+          about why the station is bright and the only route to the pass calculator — which has its
+          own independently-cached data and would still be working.
+        */}
+        <section aria-labelledby="brightest-heading" className="space-y-3">
+          <h2 id="brightest-heading" className="font-display text-xl font-bold">The brightest of them</h2>
           <p className="text-sm leading-relaxed text-muted">
             The International Space Station outshines everything else in orbit by a wide margin. It reaches roughly magnitude −4
             on a high overhead pass — as bright as Venus, and brighter than any star. It manages that by being large, low and
             highly reflective: a hundred metres across, four hundred kilometres up, with an acre of solar array angled at the Sun.
           </p>
+          <p className="text-sm text-muted">
+            <Link href={satelliteLivePath("passes")} className="text-nasa underline-offset-4 hover:underline">Find out when it passes over you →</Link>
+          </p>
+        </section>
+
+        <SatellitePanel envelope={ephemeris} title="Its orbit right now" what="The NASA ISS ephemeris" id="iss-heading">
           {now && (
             <ul className="grid grid-cols-2 gap-4 lg:grid-cols-4">
               <SatelliteStat value={now.state.geodetic.altitudeKm.toFixed(0)} unit="km" label="Altitude now" sub="low enough to appear fast and bright" />
@@ -74,9 +87,6 @@ export default async function BrightSatellitesPage() {
               <SatelliteStat value="51.6" unit="°" label="Inclination" sub="the latitudes it can ever pass over" />
             </ul>
           )}
-          <p className="text-sm text-muted">
-            <Link href={satelliteLivePath("passes")} className="text-nasa underline-offset-4 hover:underline">Find out when it passes over you →</Link>
-          </p>
         </SatellitePanel>
 
         <section aria-labelledby="why-heading" className="space-y-3">

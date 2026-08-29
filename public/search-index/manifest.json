@@ -1,12 +1,12 @@
 {
   "version": 1,
-  "total": 7742,
-  "checksum": "18f06f01",
+  "total": 7743,
+  "checksum": "e9a15b14",
   "shards": [
     {
       "shard": "core",
-      "count": 1674,
-      "checksum": "4919c944",
+      "count": 1675,
+      "checksum": "92344f44",
       "path": "/search-index/core.json"
     },
     {
@@ -23,7 +23,7 @@
     "history": 330,
     "observatories": 239,
     "stars-exoplanets": 4447,
-    "missions": 591,
+    "missions": 592,
     "science": 330,
     "data": 222,
     "tools": 113,

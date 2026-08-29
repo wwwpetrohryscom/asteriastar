@@ -46,6 +46,12 @@ export type PassVisibility =
   | "not-visible";
 
 export interface SatellitePass {
+  /**
+   * True when the published ephemeris itself ran out before the pass began or ended, so the rise or
+   * set below is where the DATA stops rather than where the pass does. In that case the azimuth and
+   * duration are not the pass's own, and callers are told rather than left to assume.
+   */
+  truncatedByEphemeris: boolean;
   startMs: number;
   peakMs: number;
   endMs: number;
@@ -80,17 +86,44 @@ export const MINIMUM_PASS_ELEVATION_DEG = 10;
  */
 export const DARK_SKY_SUN_ELEVATION_DEG = -6;
 
-/** Coarse scan step. Thirty seconds cannot miss a pass: the shortest are several minutes long. */
-const SCAN_STEP_MS = 30_000;
+/**
+ * Coarse scan step.
+ *
+ * The quantity that has to be bracketed is not how long the station is above the HORIZON — that is
+ * several minutes — but how long it is above the ten-degree reporting THRESHOLD, which for a pass
+ * that barely grazes it can be seconds. A thirty-second step demonstrably missed a real pass peaking
+ * at 10.03°. Ten seconds is what is used instead, and the guarantee is stated exactly: a pass
+ * spending less than one step above the threshold can still be missed, and any such pass peaks
+ * within a few hundredths of a degree of ten, where it is not observable in any case.
+ */
+const SCAN_STEP_MS = 10_000;
 /** Refinement step for rise, set and peak. */
 const REFINE_STEP_MS = 2_000;
+
+/**
+ * How far outside the requested window the scan reaches, so that a pass straddling either edge is
+ * found whole.
+ *
+ * Without it the two edges behaved differently and both behaved badly: a pass in progress at the
+ * end was dropped entirely, and one in progress at the start was reported with its rise clamped to
+ * the window edge — naming a compass direction the station never rose from, which is fabricated
+ * data wearing the same formatting as a measurement. Fifteen minutes comfortably exceeds the
+ * longest ISS pass.
+ */
+const EDGE_BUFFER_MS = 15 * 60_000;
 
 const D2R = Math.PI / 180;
 const R2D = 180 / Math.PI;
 
-/** The Sun's altitude at an observer, from the same solar series the rest of the platform uses. */
-function sunElevationDeg(observer: Observer, timeMs: number): number {
-  const sunEcef = equatorOfDateToEcef(solarDirectionEci(timeMs), timeMs);
+/**
+ * The Sun's altitude at an observer, from an ALREADY-COMPUTED Earth-fixed solar direction.
+ *
+ * Taking the vector as an argument rather than recomputing it halves the transcendental work in the
+ * innermost loop: the full NOAA solar series plus a ten-term nutation and a sidereal rotation is
+ * about forty trigonometric evaluations, and the caller needs the same vector for the eclipse test
+ * at the same instant. On the passes page this loop runs synchronously on the reader's device.
+ */
+function sunElevationDeg(observer: Observer, sunEcef: readonly [number, number, number]): number {
   const lat = observer.latitudeDeg * D2R;
   const lon = observer.longitudeDeg * D2R;
   // The observer's local zenith direction in the Earth-fixed frame.
@@ -111,7 +144,7 @@ export function sampleAt(ephemeris: Ephemeris, observer: Observer, timeMs: numbe
     ...angles,
     timeMs,
     sunlit: isSunlit(state.positionEcef, sunEcef),
-    sunElevationDeg: sunElevationDeg(observer, timeMs),
+    sunElevationDeg: sunElevationDeg(observer, sunEcef),
     state,
   };
 }
@@ -143,35 +176,56 @@ export function findPasses(
   minimumElevationDeg = MINIMUM_PASS_ELEVATION_DEG,
 ): SatellitePass[] {
   const passes: SatellitePass[] = [];
+  const firstCovered = ephemeris.states[0].timeMs;
   const lastCovered = ephemeris.states[ephemeris.states.length - 1].timeMs;
-  const start = Math.max(fromMs, ephemeris.states[0].timeMs);
-  const end = Math.min(toMs, lastCovered);
-  if (end <= start) return passes;
+  if (toMs <= fromMs) return passes;
+
+  /*
+   * The scan reaches past both edges of the requested window, clamped to the ephemeris, so a pass
+   * straddling an edge is found in full and its rise and set are the pass's own. Only the EPHEMERIS
+   * can now truncate a pass, which is a real limit rather than an artefact of how the question was
+   * asked — and when it does, the pass is flagged rather than silently reshaped or dropped.
+   */
+  const scanStart = Math.max(fromMs - EDGE_BUFFER_MS, firstCovered);
+  const scanEnd = Math.min(toMs + EDGE_BUFFER_MS, lastCovered);
+  if (scanEnd <= scanStart) return passes;
 
   let current: PassSample[] | null = null;
+  let startedAtScanEdge = false;
 
-  for (let t = start; t <= end; t += SCAN_STEP_MS) {
+  const flush = (endedAtScanEdge: boolean) => {
+    if (!current) return;
+    // Truncated only if the run touches an edge that the EPHEMERIS imposed, not one we chose.
+    const truncated =
+      (startedAtScanEdge && scanStart <= firstCovered) || (endedAtScanEdge && scanEnd >= lastCovered);
+    const pass = buildPass(ephemeris, observer, current, minimumElevationDeg, truncated);
+    // Reported if the pass PEAKS inside the window the caller asked about, half-open at the end.
+    // Using the peak rather than the rise, and excluding the closing instant, is what keeps each
+    // pass in exactly one window when consecutive windows are requested — with an inclusive end a
+    // pass peaking exactly on the boundary appears in both.
+    if (pass.peakMs >= fromMs && pass.peakMs < toMs) passes.push(pass);
+    current = null;
+    startedAtScanEdge = false;
+  };
+
+  for (let t = scanStart; t <= scanEnd; t += SCAN_STEP_MS) {
     const s = sampleAt(ephemeris, observer, t);
     if (!s) continue;
-    const above = s.elevationDeg >= minimumElevationDeg;
-
-    if (above) {
-      if (!current) current = [];
+    if (s.elevationDeg >= minimumElevationDeg) {
+      if (!current) {
+        current = [];
+        startedAtScanEdge = t === scanStart;
+      }
       current.push(s);
       continue;
     }
-    if (current) {
-      passes.push(buildPass(ephemeris, observer, current, minimumElevationDeg));
-      current = null;
-    }
+    flush(false);
   }
-  // A pass still in progress at the end of the window is only reported if the ephemeris ended too;
-  // otherwise it is truncated by our own window and would understate its duration.
-  if (current && end >= lastCovered) passes.push(buildPass(ephemeris, observer, current, minimumElevationDeg));
+  flush(true);
   return passes;
 }
 
-function buildPass(ephemeris: Ephemeris, observer: Observer, samples: PassSample[], minimumElevationDeg: number): SatellitePass {
+function buildPass(ephemeris: Ephemeris, observer: Observer, samples: PassSample[], minimumElevationDeg: number, truncatedByEphemeris: boolean): SatellitePass {
   // Refine the rise and set boundaries, which the coarse scan bracketed to within one step.
   const refineBoundary = (aroundMs: number, direction: 1 | -1): PassSample => {
     let best = samples[direction === 1 ? 0 : samples.length - 1];
@@ -196,6 +250,7 @@ function buildPass(ephemeris: Ephemeris, observer: Observer, samples: PassSample
   const { visibility, from, to } = classify(all);
 
   return {
+    truncatedByEphemeris,
     startMs: rise.timeMs,
     peakMs: peak.timeMs,
     endMs: set.timeMs,

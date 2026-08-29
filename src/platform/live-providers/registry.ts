@@ -222,7 +222,8 @@ export const LIVE_PROVIDERS: LiveProviderDescriptor[] = [
     sources: ["nasa"],
     // Deliberately NOT `liveSkyKey: "celestrak"`. CelesTrak is a different provider that was
     // evaluated and refused connections; conflating the two would make the registries agree by
-    // relabelling one provider as another.
+    // relabelling one provider as another. It has its own entry in the live-sky registry instead.
+    liveSkyKey: "nasa-iss-ephemeris",
     entityId: "live_data_source:nasa-iss-ephemeris",
     authentication: "none",
     rateLimits:

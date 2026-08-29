@@ -99,7 +99,13 @@ export function GroundTrack({
           <li className="flex items-center gap-1.5"><span aria-hidden className="inline-block h-2 w-2 rounded-full bg-nasa" /> Position now</li>
           <li className="flex items-center gap-1.5"><span aria-hidden className="inline-block h-0.5 w-6 border-t border-dashed border-nasa/40" /> 51.6° inclination limit</li>
         </ul>
-        <p className="text-xs leading-relaxed text-faint">{summary}</p>
+        {/* The summary is the SVG's accessible name; repeating it verbatim inside the description
+            the same element points at makes a screen reader read the identical sentence twice. The
+            visible caption says something the name does not. */}
+        <p className="text-xs leading-relaxed text-faint">
+          Each orbit crosses the map west to east and falls about 22.5 degrees of longitude west of the last, because the Earth
+          turns beneath it. The dotted lines are the ±51.6° limits set by the station&apos;s orbital inclination.
+        </p>
       </figcaption>
     </figure>
   );

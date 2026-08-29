@@ -48,6 +48,10 @@ export function PassCalculator({ window: win, coverageEndMs }: { window: Seriali
   // the component happens to re-render.
   const [submitted, setSubmitted] = useState<{ lat: number; lon: number; fromMs: number } | null>(null);
   const [problem, setProblem] = useState<string | null>(null);
+  // Incremented on every failed submission so the alert node is REPLACED rather than re-rendered
+  // with identical text. Without it, submitting the same mistake twice mutates nothing in the DOM
+  // and assistive technology announces nothing — the button appears to do nothing at all.
+  const [attempt, setAttempt] = useState(0);
   const baseId = useId();
 
   // The window is rebuilt into the shape the pure pass finder expects. Doing this in a memo keeps
@@ -74,6 +78,7 @@ export function PassCalculator({ window: win, coverageEndMs }: { window: Seriali
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const check = validateObserver(latitude, longitude);
+    setAttempt((n) => n + 1);
     if (!check.ok) {
       setProblem(check.problem);
       setSubmitted(null);
@@ -85,6 +90,11 @@ export function PassCalculator({ window: win, coverageEndMs }: { window: Seriali
 
   const field = "w-full rounded-lg border border-white/15 bg-black/40 px-3 py-2 text-sm text-fg focus-visible:outline-2 focus-visible:outline-nasa";
   const visible = passes?.filter((p) => p.visibility === "visible") ?? [];
+  // Which field the message is about, so the rejected input is the one marked invalid rather than
+  // both. A reader tabbing back must land on a field that says it was the problem.
+  const latitudeInvalid = Boolean(problem?.startsWith("latitude"));
+  const longitudeInvalid = Boolean(problem?.startsWith("longitude"));
+  const describe = (invalid: boolean) => (invalid ? `${baseId}-help ${baseId}-error` : `${baseId}-help`);
 
   return (
     <div className="space-y-6">
@@ -101,7 +111,8 @@ export function PassCalculator({ window: win, coverageEndMs }: { window: Seriali
               <input
                 id={`${baseId}-lat`} className={`${field} mt-1`} inputMode="decimal" placeholder="51.4779"
                 value={latitude} onChange={(e) => setLatitude(e.target.value)}
-                aria-describedby={`${baseId}-help`}
+                aria-invalid={latitudeInvalid || undefined}
+                aria-describedby={describe(latitudeInvalid)}
               />
             </div>
             <div>
@@ -109,7 +120,8 @@ export function PassCalculator({ window: win, coverageEndMs }: { window: Seriali
               <input
                 id={`${baseId}-lon`} className={`${field} mt-1`} inputMode="decimal" placeholder="-0.0015"
                 value={longitude} onChange={(e) => setLongitude(e.target.value)}
-                aria-describedby={`${baseId}-help`}
+                aria-invalid={longitudeInvalid || undefined}
+                aria-describedby={describe(longitudeInvalid)}
               />
             </div>
             <button type="submit" className="rounded-lg border border-nasa/50 bg-nasa/10 px-4 py-2 text-sm font-medium text-fg transition hover:bg-nasa/20">
@@ -121,25 +133,37 @@ export function PassCalculator({ window: win, coverageEndMs }: { window: Seriali
           </p>
         </fieldset>
         {problem && (
-          <p role="alert" className="mt-3 rounded-lg border border-nasa-red/40 bg-nasa-red/[0.08] px-3 py-2 text-sm text-muted">{problem}</p>
+          <p key={attempt} id={`${baseId}-error`} role="alert" className="mt-3 rounded-lg border border-nasa-red/40 bg-nasa-red/[0.08] px-3 py-2 text-sm text-muted">{problem}</p>
         )}
       </form>
 
-      <div role="status" aria-live="polite">
-        {passes === null ? (
-          <p className="text-sm text-muted">Enter a latitude and longitude to see the next passes.</p>
-        ) : passes.length === 0 ? (
-          <p className="rounded-lg border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-muted">
-            No pass reaches ten degrees above your horizon before the published ephemeris runs out, on{" "}
-            {new Date(coverageEndMs).toISOString().slice(0, 16).replace("T", " ")} UTC. That is a real answer: at some latitudes
-            the station simply does not come high enough for days at a time.
+      <div>
+        {/*
+          ONLY the summary is a live region. Announcing the whole list would read out every heading,
+          definition list and sentence — several hundred words for a busy location — with no way to
+          skip forward, because a polite announcement is not navigable. The list sits outside it and
+          is reached by ordinary navigation, which is what a reader can actually move around in.
+        */}
+        <p role="status" aria-live="polite" className="text-sm text-muted">
+          {passes === null
+            ? "Enter a latitude and longitude to see the next passes."
+            : passes.length === 0
+              ? "No pass reaches ten degrees above your horizon before the published ephemeris runs out."
+              : `${passes.length} pass${passes.length === 1 ? "" : "es"} above ten degrees, of which ${visible.length} ${visible.length === 1 ? "is" : "are"} visible.`}
+        </p>
+
+        {passes !== null && passes.length === 0 && (
+          <p className="mt-3 rounded-lg border border-white/10 bg-white/[0.02] px-4 py-3 text-sm text-muted">
+            The ephemeris runs out on {new Date(coverageEndMs).toISOString().slice(0, 16).replace("T", " ")} UTC. That is a real
+            answer: at some latitudes the station simply does not come high enough for days at a time.
           </p>
-        ) : (
+        )}
+
+        {passes !== null && passes.length > 0 && (
           <>
-            <p className="text-sm text-muted">
-              {passes.length} pass{passes.length === 1 ? "" : "es"} above ten degrees, of which{" "}
-              <strong className="text-fg">{visible.length}</strong> {visible.length === 1 ? "is" : "are"} visible — sunlit station,
-              dark sky. The rest are overhead but cannot be seen, and are listed with the reason.
+            <p className="mt-1 text-sm text-muted">
+              A visible pass is a sunlit station in a dark sky. The rest are overhead but cannot be seen, and are listed with the
+              reason.
             </p>
             <ul className="mt-4 space-y-3">
               {passes.map((p) => {

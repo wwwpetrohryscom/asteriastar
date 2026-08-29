@@ -61,6 +61,7 @@ export interface SkyEnvelope {
 /** Data-provider keys (typed interfaces defined in providers.ts). */
 export type ProviderKey =
   | "nasa-apis"
+  | "nasa-iss-ephemeris"
   | "jpl-horizons"
   | "nasa-donki"
   | "noaa-swpc"

@@ -99,6 +99,13 @@ export const PROVIDERS: ProviderInfo[] = [
     notes: "EVALUATED AND NOT CONNECTED (Program CL). The host refused automated connections after a handful of requests, so an integration could not be established or its terms verified. The ISS is tracked instead from NASA/JSC's own published operational ephemeris, which needs no propagator: it is state vectors, not mean elements, and it comes with the ascending-node longitudes that make the coordinate transformation verifiable.",
   },
   {
+    key: "nasa-iss-ephemeris", name: "NASA ISS Trajectory Data", organization: "NASA Johnson Space Center, Flight Operations Directorate",
+    url: "https://www.nasa.gov/spot-the-station/", sources: ["nasa"],
+    dataKinds: ["ISS operational ephemeris (CCSDS OEM)", "Sub-satellite position & ground track", "Visible passes for an explicit observer"],
+    license: "Public domain (US Government work), NASA/JSC.", status: "connected", access: "public-data-files",
+    notes: "CONNECTED by Program CL. The station's own operational trajectory — state vectors every four minutes in the mean equator and equinox of J2000, spanning fifteen days — rather than mean elements requiring SGP4. Its ascending-node longitudes make the coordinate transformation verifiable against the provider's own figures.",
+  },
+  {
     key: "minor-planet-center", name: "Minor Planet Center", organization: "IAU Minor Planet Center",
     url: "https://www.minorplanetcenter.net/", sources: ["mpc"],
     dataKinds: ["Asteroid & comet designations and orbits", "Close-approach data"],

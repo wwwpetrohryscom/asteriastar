@@ -522,5 +522,6 @@ const PLATFORM_PAGES: [string, string, string, SearchGroupId, string][] = [
   ["ISS passes", "/satellites/passes", "Live data", "tools", "When the station crosses your sky — computed in your browser, from coordinates you type."],
   ["Live satellite data", "/satellites/live", "Live data", "tools", "Which orbital data is connected, which is not, and why."],
   ["Bright satellites", "/satellites/bright", "Live data", "tools", "What is visible to the naked eye in orbit, and what makes it so."],
+  ["Satellite constellations", "/satellites/constellations", "Encyclopedia", "missions", "Every catalogued constellation — navigation, broadband and Earth observation."],
   ["Constellation data status", "/satellites/constellations/live", "Live data", "tools", "The state of live orbital data for the large satellite constellations."],
 ];

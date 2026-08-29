@@ -1,7 +1,6 @@
 import { apiError, apiResponse } from "@/platform/open-data";
 import { issEphemeris, issPasses, reage } from "@/platform/satellites/service";
 import { validateObserver, MINIMUM_PASS_ELEVATION_DEG, DARK_SKY_SUN_ELEVATION_DEG } from "@/platform/satellites/passes";
-import { liveCacheControl } from "@/platform/space-weather/api";
 
 /**
  * GET /api/v0/live/satellites/{id}/passes — visible passes for an EXPLICIT observer position.
@@ -11,6 +10,14 @@ import { liveCacheControl } from "@/platform/space-weather/api";
  * an analytics service, and not used to derive anything about the caller. Nothing infers a location
  * either: there is no default, no geolocation, and no inspection of the request's network address —
  * omitting the parameters returns an error, never a guess.
+ *
+ * That is why every response here is `private, no-store`, and why this is the only endpoint in the
+ * family that is not cacheable. Every other live route returns the same bytes to every caller, so a
+ * shared cache costs nothing; this one echoes the caller's own coordinates in a body whose cache key
+ * is a URL containing them. Serving it `public, s-maxage=21600` — which is what the shared helper
+ * produces — would put a reader's location into a CDN's storage and its request logs for six hours,
+ * which is precisely the thing the paragraph above promises does not happen. A promise the response
+ * headers contradict is not a promise.
  *
  * The website does not use this endpoint. The pass page ships the ephemeris window to the browser
  * and computes there, so a reader's coordinates never leave their device at all. This exists for
@@ -30,6 +37,12 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
     requested = decodeURIComponent(raw ?? "").trim().toLowerCase();
   } catch {
     requested = (raw ?? "").trim().toLowerCase();
+  }
+  // The same shape and length check the sibling route applies. Without it an arbitrary-length
+  // caller string is reflected into the 404 body, and the two routes disagree about what a
+  // malformed id is.
+  if (!requested || requested.length > 40 || !/^[a-z0-9-]+$/.test(requested)) {
+    return apiError(400, "id must be 1-40 characters of lowercase letters, digits or hyphens.");
   }
   if (!KNOWN.has(requested)) {
     return apiError(404, `No live satellite with id "${requested}". Pass prediction is available for the International Space Station only, id "iss": it is the one satellite whose operator publishes an open, documented operational ephemeris.`);
@@ -99,7 +112,8 @@ export async function GET(req: Request, { params }: { params: Promise<{ id: stri
       generatedAt: now.toISOString(),
       count: passes.length,
       stale: ephemeris.stale,
-      cacheControl: liveCacheControl(["nasa:iss-ephemeris"]),
+      // Never shared-cacheable: see the note at the top of this file.
+      cacheControl: "private, no-store",
     },
   );
 }
