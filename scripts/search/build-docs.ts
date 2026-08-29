@@ -448,6 +448,12 @@ const PLATFORM_PAGE_ALIASES: Record<string, string[]> = {
   "/space-weather/solar-activity": ["solar flare", "X-class flare", "M-class flare", "sunspots", "active regions", "F10.7", "solar radio flux"],
   "/space-weather/aurora": ["aurora", "aurora borealis", "aurora australis", "northern lights", "southern lights", "OVATION"],
   "/space-weather/events": ["CME", "coronal mass ejection", "solar events", "DONKI", "SEP", "solar energetic particles", "proton event"],
+  "/neo": ["NEO", "near earth object", "asteroid watch", "asteroid tracker", "CNEOS", "potentially hazardous asteroid", "PHA"],
+  "/neo/close-approaches": ["close approach", "asteroid passing earth", "lunar distance", "asteroid flyby", "how close"],
+  "/neo/risk": ["impact probability", "Sentry", "Palermo scale", "Torino scale", "asteroid impact", "will an asteroid hit earth"],
+  "/neo/recently-discovered": ["new asteroid", "NEOCP", "confirmation page", "newly discovered asteroid", "asteroid candidates"],
+  "/neo/objects": ["asteroid designations", "NEO list", "asteroid catalogue"],
+  "/neo/planetary-defense": ["planetary defence", "planetary defense", "DART", "asteroid deflection", "kinetic impactor"],
 };
 
 const PLATFORM_PAGES: [string, string, string, SearchGroupId, string][] = [
@@ -499,4 +505,11 @@ const PLATFORM_PAGES: [string, string, string, SearchGroupId, string][] = [
   ["Solar activity", "/space-weather/solar-activity", "Live data", "tools", "GOES X-ray flares, active regions, sunspots and the 10.7 cm radio flux."],
   ["Aurora forecast", "/space-weather/aurora", "Live data", "tools", "NOAA OVATION aurora model: how far towards the equator the auroral oval reaches."],
   ["Space weather events", "/space-weather/events", "Live data", "tools", "Catalogued solar flares, coronal mass ejections, geomagnetic storms and particle events."],
+  // Near-Earth objects (Program CK).
+  ["Near-Earth objects", ROUTES.neo, "Live data", "tools", "Live close approaches, impact-risk monitoring and new discoveries from NASA/JPL and the Minor Planet Center."],
+  ["Close approaches", "/neo/close-approaches", "Live data", "tools", "Objects passing within 0.05 au over the next 60 days, with their 3-sigma uncertainty."],
+  ["Impact risk", "/neo/risk", "Live data", "tools", "JPL's Sentry table, the Palermo and Torino scales, and what their numbers actually mean."],
+  ["Recently discovered", "/neo/recently-discovered", "Live data", "tools", "New database entries and the Minor Planet Center's unconfirmed candidates."],
+  ["Objects in the live feeds", "/neo/objects", "Live data", "tools", "Which near-Earth objects the feeds name, and which have an AsteriaStar entry."],
+  ["Planetary defence status", "/neo/planetary-defense", "Live data", "tools", "How many objects are monitored right now, and what the defence system actually does."],
 ];

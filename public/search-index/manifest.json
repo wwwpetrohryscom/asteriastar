@@ -1,18 +1,18 @@
 {
   "version": 1,
-  "total": 7730,
-  "checksum": "3caedf7e",
+  "total": 7736,
+  "checksum": "6d52050f",
   "shards": [
     {
       "shard": "core",
-      "count": 1663,
-      "checksum": "abf2e769",
+      "count": 1669,
+      "checksum": "2eaeaefb",
       "path": "/search-index/core.json"
     },
     {
       "shard": "catalogue",
       "count": 6067,
-      "checksum": "2469b26d",
+      "checksum": "7e8eeda2",
       "path": "/search-index/catalogue.json"
     }
   ],
@@ -26,7 +26,7 @@
     "missions": 591,
     "science": 330,
     "data": 221,
-    "tools": 102,
+    "tools": 108,
     "guides": 153
   }
 }

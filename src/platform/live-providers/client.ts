@@ -111,9 +111,88 @@ function statusFor(product: LiveProduct, fetchedAt: string, observedAt: string |
  */
 const inFlight = new Map<string, Promise<unknown>>();
 
+/**
+ * Per-provider request gates.
+ *
+ * A provider's concurrency limit is a TERM OF USE, not a tuning choice — JPL's Fair Use Policy for
+ * the SSD/CNEOS APIs says "You agree to submit only one API request at a time (no simultaneous
+ * requests)". The service layer composes products with `Promise.all` because that is the natural
+ * way to write it, so the limit is enforced here, in the one place every request passes through,
+ * rather than depending on each caller remembering.
+ *
+ * A gate is a promise chain: each request waits for the one `slots` places ahead of it. With
+ * `slots = 1` that is strict serialisation.
+ */
+const gates = new Map<string, Promise<void>[]>();
+
+async function throughGate<T>(providerKey: string, slots: number, run: () => Promise<T>): Promise<T> {
+  const queue = gates.get(providerKey) ?? [];
+  gates.set(providerKey, queue);
+
+  // Wait for the request `slots` positions back, so at most `slots` run at once.
+  const ahead = queue.length >= slots ? queue[queue.length - slots] : undefined;
+  let release!: () => void;
+  const mine = new Promise<void>((resolve) => {
+    release = resolve;
+  });
+  queue.push(mine);
+
+  try {
+    if (ahead) await ahead;
+    return await run();
+  } finally {
+    release();
+    const index = queue.indexOf(mine);
+    if (index >= 0) queue.splice(index, 1);
+  }
+}
+
+/**
+ * Whether a provider is inside a back-off window after repeated failures.
+ *
+ * Asking a dead provider once per render, from every serverless instance, is how a third party's
+ * outage becomes a third party's outage plus a request storm. JPL asks explicitly that automated
+ * processes "back off or reduce request rates" on errors; this is that, and it applies to every
+ * provider because it is good manners regardless of who documents it.
+ */
+function inBackoff(descriptor: LiveProviderDescriptor, productKey: string, nowIso: string): number | null {
+  const health = getHealth(productKey);
+  if (!health || health.consecutiveFailures < descriptor.backoffAfterFailures) return null;
+  if (!health.lastFailureAt) return null;
+  const elapsed = (Date.parse(nowIso) - Date.parse(health.lastFailureAt)) / 1000;
+  if (!Number.isFinite(elapsed)) return null;
+  const remaining = descriptor.backoffSeconds - elapsed;
+  return remaining > 0 ? Math.ceil(remaining) : null;
+}
+
+/**
+ * The wall-clock budget one render may spend waiting on providers, in milliseconds.
+ *
+ * This exists because a per-request timeout is not a bound on a SERIALISED provider. JPL's terms
+ * permit one request at a time, so three JPL products behind an eight-second timeout can take
+ * twenty-four seconds — and the serverless function serving the page is killed at ten. The visitor
+ * then gets a platform error page instead of the honest "unavailable" envelope this whole design
+ * exists to deliver: the failure path is useless if the process does not survive to run it.
+ *
+ * So a render declares a budget. A product whose turn comes after the budget is spent returns
+ * immediately with whatever is cached, honestly stale, or with nothing — the same envelope a
+ * timeout would have produced, minutes sooner.
+ */
+export const DEFAULT_RENDER_BUDGET_MS = 6_000;
+
 export interface LoadOptions {
   /** The moment to judge freshness against. Defaults to now; injected by tests. */
   now?: Date;
+  /**
+   * Epoch milliseconds after which this load must not start a new request. Composed loads share one
+   * deadline so the whole render is bounded, not each product independently.
+   */
+  deadlineMs?: number;
+}
+
+/** A deadline for a group of loads, `DEFAULT_RENDER_BUDGET_MS` from now unless told otherwise. */
+export function renderDeadline(budgetMs: number = DEFAULT_RENDER_BUDGET_MS): number {
+  return Date.now() + budgetMs;
 }
 
 /*
@@ -179,11 +258,50 @@ export async function loadProduct<T>(productKey: string, parse: (raw: unknown) =
   }
 
   /* ------------------------------------------------------------- refresh */
+  /* ------------------------------------------------------------- back off */
+  const cooldown = inBackoff(provider, productKey, nowIso);
+  if (cooldown !== null) {
+    // The provider has failed repeatedly and is being left alone. Whatever is cached is still shown
+    // — honestly stale — and if nothing is, no value is shown. Either way the reason names the
+    // back-off rather than pretending a request was made and failed again.
+    return fallbackOrNothing<T>(
+      product,
+      provider,
+      url,
+      nowIso,
+      `${provider.name} has failed ${getHealth(productKey)?.consecutiveFailures ?? 0} times in a row; no further request will be made for ${cooldown}s.`,
+      false,
+    );
+  }
+
+  /* ------------------------------------------------------- the render budget */
+  const deadlineMs = opts.deadlineMs;
+  if (deadlineMs !== undefined && Date.now() >= deadlineMs) {
+    return fallbackOrNothing<T>(
+      product,
+      provider,
+      url,
+      nowIso,
+      `The time budget for this page was spent before ${provider.name} could be asked for this product. Nothing was fabricated in its place.`,
+      false,
+    );
+  }
+
   const key = `${productKey}|${url}`;
   const existing = inFlight.get(key) as Promise<LiveEnvelope<T>> | undefined;
   if (existing) return existing;
 
-  const pending = refresh<T>(product, provider, url, parse, nowIso).finally(() => {
+  const pending = throughGate(provider.providerKey, provider.maxConcurrentRequests, async () => {
+    // Checked AGAIN on leaving the gate: a product can queue behind a slow sibling and reach the
+    // front long after the budget ran out, and starting a fresh eight-second request at that point
+    // is precisely how the function gets killed.
+    if (deadlineMs !== undefined && Date.now() >= deadlineMs) {
+      return fallbackOrNothing<T>(product, provider, url, nowIso, `${provider.name} was still busy with an earlier request when this page's time budget ran out.`, false);
+    }
+    // The request may not outlive the budget either.
+    const remaining = deadlineMs === undefined ? undefined : Math.max(250, deadlineMs - Date.now());
+    return refresh<T>(product, provider, url, parse, nowIso, remaining);
+  }).finally(() => {
     // Safe because a key can only ever have one promise: this is the sole `set`, and it is
     // guarded by the `get` above.
     inFlight.delete(key);
@@ -198,17 +316,35 @@ async function refresh<T>(
   url: string,
   parse: (raw: unknown) => ParseResult<T>,
   nowIso: string,
+  timeoutOverrideMs?: number,
 ): Promise<LiveEnvelope<T>> {
   recordAttempt(product.productKey, provider.providerKey, nowIso);
 
-  const result = await fetchProviderJson<unknown>(url, { timeoutMs: provider.timeoutMs, maxBytes: product.maxBytes });
+  const timeoutMs = timeoutOverrideMs === undefined ? provider.timeoutMs : Math.min(provider.timeoutMs, timeoutOverrideMs);
+  const result = await fetchProviderJson<unknown>(url, { timeoutMs, maxBytes: product.maxBytes });
 
   if (!result.ok) {
     recordFailure(product.productKey, provider.providerKey, result.fetchedAt, result.reason, result.message, result.latencyMs);
     return fallbackOrNothing<T>(product, provider, url, nowIso, `${provider.name} could not be reached: ${result.message}`, result.reason === "malformed" || result.reason === "content_type");
   }
 
-  const parsed = parse(result.value);
+  /*
+   * The parser is supplied by the caller, and until now `refresh` trusted it. Every other failure
+   * in this file becomes an envelope; a parser that THREW became a rejected promise, which escaped
+   * `loadProduct`, the composing `Promise.all`, and the page, as a 500. That is not hypothetical:
+   * a date arithmetic edge case in one client could reach `new Date(...).toISOString()` on an
+   * out-of-range value and raise a RangeError. A throwing parser is a schema mismatch like any
+   * other and is recorded as one.
+   */
+  let parsed: ParseResult<T>;
+  try {
+    parsed = parse(result.value);
+  } catch (err) {
+    const detail = err instanceof Error ? err.message.slice(0, 160) : "unknown parser failure";
+    recordSchemaChange(product.productKey, provider.providerKey, result.fetchedAt, `parser threw: ${detail}`);
+    return fallbackOrNothing<T>(product, provider, url, nowIso, `${provider.name} answered, but this integration's parser could not process the response: ${detail}`, true);
+  }
+
   if (!parsed.ok) {
     recordSchemaChange(product.productKey, provider.providerKey, result.fetchedAt, parsed.problem);
     return fallbackOrNothing<T>(product, provider, url, nowIso, `${provider.name} answered, but not in the shape this integration understands: ${parsed.problem}`, true);

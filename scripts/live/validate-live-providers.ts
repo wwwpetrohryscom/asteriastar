@@ -13,7 +13,7 @@ import { clearHealth } from "../../src/platform/live-providers/health";
 import { loadProduct } from "../../src/platform/live-providers/client";
 import { PROVIDERS } from "../../src/platform/live-sky/providers";
 import { BT_RECORDS } from "../../src/knowledge-graph/data/live-data-catalog";
-import { SPACE_WEATHER_SLUGS } from "../../src/lib/routes";
+import { SPACE_WEATHER_SLUGS, NEO_SLUGS } from "../../src/lib/routes";
 import { liveCacheControl } from "../../src/platform/space-weather/api";
 
 /**
@@ -154,8 +154,16 @@ ok(`${LIVE_PRODUCTS.length} products declare sources, limitations and a cache ra
     if (!provider.rateLimits || !provider.redistribution || !provider.license || !provider.attribution) {
       issues.push(`${provider.providerKey}: is missing its terms (rate limits, redistribution, licence, attribution)`);
     }
+    if (!Number.isInteger(provider.maxConcurrentRequests) || provider.maxConcurrentRequests < 1) {
+      issues.push(`${provider.providerKey}: declares no usable concurrency limit — this is a term of use, not a tuning value`);
+    }
+    if (provider.backoffAfterFailures < 1 || provider.backoffSeconds < 1) {
+      issues.push(`${provider.providerKey}: declares no failure back-off; a provider outage would become a request storm`);
+    }
   }
   ok(`${LIVE_PROVIDERS.length} providers derive their state from real request history or a recorded verification`);
+  const serialised = LIVE_PROVIDERS.filter((p) => p.maxConcurrentRequests === 1).map((p) => p.providerKey);
+  ok(`every provider declares a concurrency limit and a failure back-off${serialised.length > 0 ? ` (serialised by their own terms: ${serialised.join(", ")})` : ""}`);
 }
 
 /* -------------------------------------------- 7–8. cache windows and the stale-fallback contract */
@@ -271,12 +279,14 @@ ok(`${LIVE_PRODUCTS.length} product URLs resolve to allowlisted HTTPS hosts (${A
       issues.push(`live-providers/${file}: calls fetch with a template literal — provider URLs must be resolved through the registry and the guard`);
     }
   }
-  const swDir = join(REPO, "src/platform/space-weather");
-  for (const file of readdirSync(swDir)) {
-    if (!file.endsWith(".ts")) continue;
-    const src = readFileSync(join(swDir, file), "utf8");
-    if (/\bfetch\s*\(/.test(src)) {
-      issues.push(`space-weather/${file}: calls fetch directly — every provider request must go through loadProduct`);
+  for (const domain of ["space-weather", "neo"]) {
+    const domainDir = join(REPO, "src/platform", domain);
+    for (const file of readdirSync(domainDir)) {
+      if (!file.endsWith(".ts")) continue;
+      const src = readFileSync(join(domainDir, file), "utf8");
+      if (/\bfetch\s*\(/.test(src)) {
+        issues.push(`${domain}/${file}: calls fetch directly — every provider request must go through loadProduct`);
+      }
     }
   }
   ok("no domain client calls fetch directly; every request goes through the guarded path");
@@ -288,21 +298,27 @@ ok(`${LIVE_PRODUCTS.length} product URLs resolve to allowlisted HTTPS hosts (${A
   for (const marker of ["?lat", "?lon", "?latitude", "?longitude", "?date=", "&lat", "&lon"]) {
     if (sitemap.includes(marker)) issues.push(`sitemap: contains "${marker}" — coordinate and date parameters must never be crawlable`);
   }
-  // The space-weather family must be exactly the declared slugs: no more, no fewer, no parameters.
-  for (const slug of SPACE_WEATHER_SLUGS) {
-    if (!sitemap.includes("SPACE_WEATHER_SLUGS")) {
-      issues.push("sitemap: the space-weather family is not generated from the declared slug list");
-      break;
+  /*
+   * Each live route family must be exactly the slugs it declares — no more, no fewer, and no query
+   * parameters anywhere. A page on disk that the sitemap does not know about is invisible; a slug
+   * in the sitemap with no page behind it is a 404 served to a crawler.
+   */
+  const families: [string, readonly string[], string][] = [
+    ["space-weather", SPACE_WEATHER_SLUGS, "SPACE_WEATHER_SLUGS"],
+    ["neo", NEO_SLUGS, "NEO_SLUGS"],
+  ];
+  for (const [dir, slugs, token] of families) {
+    if (!sitemap.includes(token)) {
+      issues.push(`sitemap: the ${dir} family is not generated from its declared slug list (${token})`);
     }
-    void slug;
+    const pagesDir = join(REPO, "src/app", dir);
+    const present = readdirSync(pagesDir).filter((d) => statSync(join(pagesDir, d)).isDirectory()).sort();
+    const declared = [...slugs].sort();
+    if (present.join(",") !== declared.join(",")) {
+      issues.push(`${dir}: the routes on disk (${present.join(", ")}) do not match the declared slugs (${declared.join(", ")}) — the sitemap would list a page that does not exist, or miss one that does`);
+    }
+    ok(`the ${dir} family is exactly ${declared.length} stable URLs with no query parameters`);
   }
-  const pagesDir = join(REPO, "src/app/space-weather");
-  const present = readdirSync(pagesDir).filter((d) => statSync(join(pagesDir, d)).isDirectory()).sort();
-  const declared = [...SPACE_WEATHER_SLUGS].sort();
-  if (present.join(",") !== declared.join(",")) {
-    issues.push(`space-weather: the routes on disk (${present.join(", ")}) do not match the declared slugs (${declared.join(", ")}) — the sitemap would list a page that does not exist, or miss one that does`);
-  }
-  ok(`the space-weather family is exactly ${declared.length} stable URLs with no query parameters`);
 }
 
 /* ------------------------------------ 13. no operational provider response is in the repository */

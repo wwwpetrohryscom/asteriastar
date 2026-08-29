@@ -67,8 +67,8 @@ export const PROVIDERS: ProviderInfo[] = [
     key: "jpl-horizons", name: "JPL Horizons", organization: "NASA Jet Propulsion Laboratory",
     url: "https://ssd.jpl.nasa.gov/horizons/", sources: ["jpl"],
     dataKinds: ["Planet ephemerides", "Moon position", "Rise/set", "Comet & asteroid ephemerides"],
-    license: "Public NASA/JPL data.", status: "planned", access: "public-api",
-    notes: "Authoritative ephemerides for Solar System bodies; a client must respect JPL usage guidance.",
+    license: "Public NASA/JPL data.", status: "connected", access: "public-api",
+    notes: "Authoritative ephemerides and small-body data. CONNECTED by Program CK for the SSD/CNEOS near-Earth-object services - close approaches, the Sentry impact-risk table and recent database entries, shown at /neo. JPL's Fair Use Policy permits only ONE request at a time, which the live-provider runtime enforces per provider; the Horizons ephemeris service itself is not yet used.",
   },
   {
     key: "usno", name: "US Naval Observatory Almanac", organization: "United States Naval Observatory",
@@ -102,8 +102,8 @@ export const PROVIDERS: ProviderInfo[] = [
     key: "minor-planet-center", name: "Minor Planet Center", organization: "IAU Minor Planet Center",
     url: "https://www.minorplanetcenter.net/", sources: ["mpc"],
     dataKinds: ["Asteroid & comet designations and orbits", "Close-approach data"],
-    license: "Public MPC data.", status: "planned", access: "public-data-files",
-    notes: "Authoritative small-body designations and orbits.",
+    license: "Public MPC data.", status: "connected", access: "public-data-files",
+    notes: "Authoritative small-body designations and orbits. CONNECTED by Program CK for the NEO Confirmation Page, the machine-readable list of candidate objects awaiting confirmation, shown at /neo/recently-discovered. The bulk orbit files (MPCORB, NEA, PHA) are not ingested.",
   },
   {
     key: "imo", name: "International Meteor Organization", organization: "IMO",
