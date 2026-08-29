@@ -112,7 +112,7 @@ export default async function GeomagneticPage() {
         </section>
 
         <ScalePanel envelope={s.scales} current={currentScales(s.scales)} forecast={forecastScales(s.scales)} />
-        <AlertPanel envelope={s.alerts} active={activeAlerts(s.alerts, nowIso)} recent={recentAlerts(s.alerts, 15)} />
+        <AlertPanel envelope={s.alerts} active={activeAlerts(s.alerts, nowIso)} recent={recentAlerts(s.alerts, 15)} nowIso={nowIso} />
 
         <section aria-labelledby="reading-heading" className="space-y-3">
           <h2 id="reading-heading" className="font-display text-2xl font-bold">What Kp measures, and what it does not</h2>

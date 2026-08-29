@@ -110,11 +110,13 @@ export function explainRadioFlux(sfu: number): Interpretation {
  * probability on a grid, and cloud, moonlight, light pollution and the direction you happen to be
  * looking are not in this dataset.
  */
-export function explainAuroraBoundary(latitude: number | undefined, maxProbability: number): Interpretation {
+export function explainAuroraBoundary(latitude: number | undefined, maxProbability: number, thresholdPercent: number): Interpretation {
   if (latitude === undefined) {
     return {
+      // The threshold is passed in rather than restated, so this sentence can never disagree with
+      // the number the boundary was actually computed against.
       label: "No visible-aurora probability",
-      meaning: `The model gives no location in this hemisphere at least a ${10}% chance of visible aurora in this forecast window.`,
+      meaning: `The model gives nowhere in this hemisphere at least a ${thresholdPercent}% chance of visible aurora in this forecast window; the strongest anywhere is ${Math.round(maxProbability)}%.`,
       elevated: false,
     };
   }

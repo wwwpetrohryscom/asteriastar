@@ -81,6 +81,11 @@ export type AlertKind = "watch" | "warning" | "alert" | "summary" | "cancellatio
 /**
  * One SWPC operational message, parsed from its structured header. The full text is retained,
  * normalised to plain text; it is never rendered as markup.
+ *
+ * There is deliberately no `active` field. Whether a message is in force is a function of the
+ * clock, and a boolean computed when the response was parsed would be cached alongside it — so an
+ * expired warning could be served as still standing minutes later. `validFrom` and `validUntil`
+ * are the facts; `activeAlerts()` evaluates them at the moment of reading.
  */
 export interface SpaceWeatherAlert {
   productId: string;
@@ -93,8 +98,6 @@ export interface SpaceWeatherAlert {
   validUntil?: string;
   /** The NOAA scale the message names, e.g. "G1". */
   scale?: string;
-  /** Whether this message is inside its own validity window at the time it was read. */
-  active: boolean;
   /** The full plain-text message as issued. */
   message: string;
 }

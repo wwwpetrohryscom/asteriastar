@@ -188,9 +188,12 @@ export function forecastScales(env: LiveEnvelope<NoaaScaleDay[]>): NoaaScaleDay[
 }
 
 /**
- * Alerts still inside their own validity window. Recomputed here rather than trusted from parse
- * time, because a cached response can be read minutes after it was parsed and a warning can
- * expire in between.
+ * Alerts still inside their own validity window, judged against the clock passed in — never
+ * against parse time, because a cached response can be read minutes after it was parsed and a
+ * warning can expire in between.
+ *
+ * A message with no stated end is treated as NOT currently in force rather than as indefinitely
+ * in force: claiming an open-ended warning still stands is a claim the message does not make.
  */
 export function activeAlerts(env: LiveEnvelope<SpaceWeatherAlert[]>, nowIso: string): SpaceWeatherAlert[] {
   if (!env.data) return [];

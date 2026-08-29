@@ -126,7 +126,7 @@ export function ScalePanel({ envelope, current, forecast }: { envelope: LiveEnve
 
 const ALERT_TONE = { watch: "stale", warning: "stale", alert: "warning-red", summary: "neutral", cancellation: "inactive", other: "neutral" } as const;
 
-export function AlertPanel({ envelope, active, recent }: { envelope: LiveEnvelope<SpaceWeatherAlert[]>; active: SpaceWeatherAlert[]; recent: SpaceWeatherAlert[] }) {
+export function AlertPanel({ envelope, active, recent, nowIso }: { envelope: LiveEnvelope<SpaceWeatherAlert[]>; active: SpaceWeatherAlert[]; recent: SpaceWeatherAlert[]; nowIso: string }) {
   return (
     <Panel envelope={envelope} title="Watches, warnings and alerts" what="SWPC's operational message stream" id="alerts-heading">
       {active.length === 0 ? (
@@ -166,7 +166,7 @@ export function AlertPanel({ envelope, active, recent }: { envelope: LiveEnvelop
             {recent.map((a) => (
               <li key={`r-${a.productId}-${a.issuedAt}`} className="flex flex-wrap items-baseline justify-between gap-2 rounded-lg border border-white/10 px-3 py-2 text-sm">
                 <span className="text-muted">{a.headline}</span>
-                <span className="text-xs text-faint">{utcStamp(a.issuedAt)}{a.validUntil && a.validUntil <= new Date().toISOString() ? " · expired" : ""}</span>
+                <span className="text-xs text-faint">{utcStamp(a.issuedAt)}{a.validUntil && a.validUntil <= nowIso ? " · expired" : ""}</span>
               </li>
             ))}
           </ul>
@@ -272,7 +272,7 @@ export function AuroraPanel({ envelope }: { envelope: LiveEnvelope<AuroraForecas
         <>
           <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {([["Northern hemisphere", a.northern], ["Southern hemisphere", a.southern]] as const).map(([name, h]) => {
-              const interpretation = explainAuroraBoundary(h.equatorwardBoundaryLat, h.maxProbabilityPercent);
+              const interpretation = explainAuroraBoundary(h.equatorwardBoundaryLat, h.maxProbabilityPercent, a.thresholdPercent);
               return (
                 <li key={name} className="scientific-card p-5">
                   <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-faint">{name}</h3>

@@ -121,7 +121,7 @@ export default async function LiveSpaceWeatherPage() {
         </section>
 
         <ScalePanel envelope={s.scales} current={currentScales(s.scales)} forecast={forecastScales(s.scales)} />
-        <AlertPanel envelope={s.alerts} active={activeAlerts(s.alerts, nowIso)} recent={recentAlerts(s.alerts, 12)} />
+        <AlertPanel envelope={s.alerts} active={activeAlerts(s.alerts, nowIso)} recent={recentAlerts(s.alerts, 12)} nowIso={nowIso} />
         <XrayFlarePanel envelope={s.xrayFlare} />
         <AuroraPanel envelope={s.aurora} />
 

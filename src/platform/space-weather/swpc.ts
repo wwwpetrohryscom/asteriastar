@@ -286,7 +286,6 @@ function extractHeadline(message: string, productId: string): string {
 function parseAlerts(raw: unknown): ParseResult<SpaceWeatherAlert[]> {
   const rows = array(raw);
   if (rows.length === 0) return { ok: false, problem: "expected an array of messages" };
-  const nowIso = new Date().toISOString();
 
   const alerts: SpaceWeatherAlert[] = [];
   for (const r of rows) {
@@ -312,10 +311,6 @@ function parseAlerts(raw: unknown): ParseResult<SpaceWeatherAlert[]> {
       validFrom,
       validUntil,
       scale,
-      // A message with no stated end is treated as not currently active rather than as
-      // indefinitely active: claiming an open-ended warning is still in force is a claim the
-      // message does not make.
-      active: Boolean(validUntil && validUntil > nowIso && (!validFrom || validFrom <= nowIso)),
       message,
     });
   }
