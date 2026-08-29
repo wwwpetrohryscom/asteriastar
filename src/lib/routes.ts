@@ -735,6 +735,18 @@ export function neoPath(slug: NeoSlug): string {
 }
 export const NEO_SLUGS = ["close-approaches", "objects", "risk", "recently-discovered", "planetary-defense"] as const;
 export type NeoSlug = (typeof NEO_SLUGS)[number];
+
+/**
+ * The live satellite pages (Program CL). `constellations/live` is nested rather than flat so it
+ * cannot be mistaken for the existing `/satellites/constellation/[slug]` encyclopedia routes, which
+ * are singular. As elsewhere, no coordinate ever becomes part of a URL: the pass calculator runs in
+ * the browser and the address bar never changes.
+ */
+export function satelliteLivePath(slug: SatelliteLiveSlug): string {
+  return `/satellites/${slug}`;
+}
+export const SATELLITE_LIVE_SLUGS = ["live", "iss", "passes", "bright", "constellations/live"] as const;
+export type SatelliteLiveSlug = (typeof SATELLITE_LIVE_SLUGS)[number];
 export function universeScenePath(slug: string): string {
   return `/universe-3d/${slug}`;
 }

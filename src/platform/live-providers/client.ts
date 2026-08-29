@@ -321,7 +321,7 @@ async function refresh<T>(
   recordAttempt(product.productKey, provider.providerKey, nowIso);
 
   const timeoutMs = timeoutOverrideMs === undefined ? provider.timeoutMs : Math.min(provider.timeoutMs, timeoutOverrideMs);
-  const result = await fetchProviderJson<unknown>(url, { timeoutMs, maxBytes: product.maxBytes });
+  const result = await fetchProviderJson<unknown>(url, { timeoutMs, maxBytes: product.maxBytes, accept: product.responseType ?? "json" });
 
   if (!result.ok) {
     recordFailure(product.productKey, provider.providerKey, result.fetchedAt, result.reason, result.message, result.latencyMs);

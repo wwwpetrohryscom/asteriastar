@@ -454,6 +454,11 @@ const PLATFORM_PAGE_ALIASES: Record<string, string[]> = {
   "/neo/recently-discovered": ["new asteroid", "NEOCP", "confirmation page", "newly discovered asteroid", "asteroid candidates"],
   "/neo/objects": ["asteroid designations", "NEO list", "asteroid catalogue"],
   "/neo/planetary-defense": ["planetary defence", "planetary defense", "DART", "asteroid deflection", "kinetic impactor"],
+  "/satellites/iss": ["ISS", "space station", "ISS position", "ISS tracker", "track the space station", "ISS altitude"],
+  "/satellites/passes": ["see the space station", "when can I see the ISS", "space station sighting", "satellite pass", "ISS visible tonight"],
+  "/satellites/live": ["satellite tracking", "live satellites", "orbital elements", "TLE", "satellite ephemeris"],
+  "/satellites/bright": ["naked eye satellite", "satellite in the sky", "moving star", "is that a satellite"],
+  "/satellites/constellations/live": ["Starlink", "GPS satellites", "satellite constellation", "OneWeb", "Iridium"],
 };
 
 const PLATFORM_PAGES: [string, string, string, SearchGroupId, string][] = [
@@ -512,4 +517,11 @@ const PLATFORM_PAGES: [string, string, string, SearchGroupId, string][] = [
   ["Recently discovered", "/neo/recently-discovered", "Live data", "tools", "New database entries and the Minor Planet Center's unconfirmed candidates."],
   ["Objects in the live feeds", "/neo/objects", "Live data", "tools", "Which near-Earth objects the feeds name, and which have an AsteriaStar entry."],
   ["Planetary defence status", "/neo/planetary-defense", "Live data", "tools", "How many objects are monitored right now, and what the defence system actually does."],
+  // Satellites and the ISS (Program CL).
+  ["Where is the ISS", "/satellites/iss", "Live data", "tools", "The station's position right now, from NASA's own published trajectory."],
+  ["ISS passes", "/satellites/passes", "Live data", "tools", "When the station crosses your sky — computed in your browser, from coordinates you type."],
+  ["Live satellite data", "/satellites/live", "Live data", "tools", "Which orbital data is connected, which is not, and why."],
+  ["Bright satellites", "/satellites/bright", "Live data", "tools", "What is visible to the naked eye in orbit, and what makes it so."],
+  ["Satellite constellations", "/satellites/constellations", "Encyclopedia", "missions", "Every catalogued constellation — navigation, broadband and Earth observation."],
+  ["Constellation data status", "/satellites/constellations/live", "Live data", "tools", "The state of live orbital data for the large satellite constellations."],
 ];

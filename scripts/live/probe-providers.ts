@@ -1,5 +1,6 @@
 import { spaceWeatherSnapshot, solarEventsSnapshot, currentSolarWind, latestObservedKp, currentScales, liveProviderReports } from "../../src/platform/space-weather/service";
 import { neoSnapshot } from "../../src/platform/neo/service";
+import { issEphemeris, issNow, issPasses, verifyFrames } from "../../src/platform/satellites/service";
 import { clearCache } from "../../src/platform/live-providers/cache";
 import { getLiveProduct, LIVE_PRODUCTS } from "../../src/platform/live-providers/registry";
 import { NO_VALUE_STATUSES, type LiveDatum, type LiveEnvelope } from "../../src/platform/live-providers/envelope";
@@ -102,6 +103,7 @@ async function main(): Promise<void> {
   const weather = await spaceWeatherSnapshot();
   const events = await solarEventsSnapshot();
   const neo = await neoSnapshot();
+  const iss = await issEphemeris();
 
   // Taken AFTER the requests, so an age is never negative merely because a fetch completed after
   // the clock was read. Ages here are real: the gap between the provider's own timestamp and now.
@@ -126,6 +128,7 @@ async function main(): Promise<void> {
   record("jpl:sentry", neo.sentry, nowIso);
   record("jpl:recent-neos", neo.recent, nowIso);
   record("mpc:neocp", neo.candidates, nowIso);
+  record("nasa:iss-ephemeris", iss, nowIso);
 
   /* --- the composed values a page actually renders, checked as values and not just as responses */
   const wind = currentSolarWind(weather);
@@ -182,6 +185,55 @@ async function main(): Promise<void> {
   if ((neo.sentry.data ?? []).some((o) => (o.torinoMaximum ?? 0) < 0 || (o.torinoMaximum ?? 0) > 10)) failures.push("sentry: a Torino rating outside 0-10");
   if ((neo.closeApproaches.data ?? []).length === 0) warnings.push("close approaches: none within 0.05 au in the next 60 days — unusual but possible");
   if ((neo.candidates.data ?? []).length === 0) warnings.push("MPC confirmation page: currently empty — a real state, not a failure");
+
+  /* --- the ISS frame chain, against the provider's own numbers --------------------------- */
+  if (iss.data) {
+    const checks = verifyFrames(iss.data);
+    if (checks.length === 0) {
+      warnings.push("ISS ephemeris: the file carried no ascending-node comments, so the frame transformation could not be verified against it");
+    }
+    for (const c of checks) {
+      // Twenty metres. The transformation reproduces NASA's own figures to a couple of metres in
+      // practice; this threshold leaves room for their rounding without leaving room for a real
+      // error, the smallest of which — a missing nutation term — would be tens of kilometres.
+      if (c.groundErrorMetres > 20) {
+        failures.push(`ISS ${c.node} node: our Earth-fixed longitude disagrees with NASA's by ${c.groundErrorMetres.toFixed(1)} m — the precession, nutation or sidereal-time chain is wrong  [SCHEMA]`);
+      }
+      if (Math.abs(c.computedLatitudeDeg) > 0.01) {
+        failures.push(`ISS ${c.node} node: computed latitude ${c.computedLatitudeDeg.toFixed(5)}° at an ASCENDING NODE, which is by definition at zero  [SCHEMA]`);
+      }
+    }
+    if (checks.length > 0) {
+      console.log(`\nISS frame check: ${checks.map((c) => `${c.node} ${c.groundErrorMetres.toFixed(1)} m`).join(", ")} against NASA's own node longitudes`);
+    }
+
+    // The derived physics must be the station's, not something else's.
+    const state = issNow(iss, Date.now());
+    if (!state) {
+      warnings.push("ISS ephemeris: the published file does not cover the present moment");
+    } else {
+      const { altitudeKm } = state.state.geodetic;
+      if (altitudeKm < 350 || altitudeKm > 500) failures.push(`ISS altitude ${altitudeKm.toFixed(1)} km is outside the station's operating band`);
+      if (state.state.speedKmS < 7.4 || state.state.speedKmS > 7.9) failures.push(`ISS speed ${state.state.speedKmS.toFixed(3)} km/s is not an orbital speed at this altitude`);
+      if (state.periodMinutes !== undefined && (state.periodMinutes < 90 || state.periodMinutes > 95)) {
+        failures.push(`ISS nodal period ${state.periodMinutes.toFixed(2)} min is outside the station's range`);
+      }
+      if (Math.abs(state.state.geodetic.latitudeDeg) > 51.7) {
+        failures.push(`ISS latitude ${state.state.geodetic.latitudeDeg.toFixed(3)}° exceeds its 51.6° inclination`);
+      }
+      console.log(`ISS now: ${state.state.geodetic.latitudeDeg.toFixed(2)}°, ${state.state.geodetic.longitudeDeg.toFixed(2)}°  alt ${altitudeKm.toFixed(1)} km  ${state.state.speedKmS.toFixed(3)} km/s  period ${state.periodMinutes?.toFixed(2)} min`);
+
+      // Passes must be plausible in shape: an ISS pass lasts minutes, not seconds or hours.
+      const passes = issPasses(iss, { latitudeDeg: 51.4779, longitudeDeg: -0.0015, altitudeKm: 0 }, Date.now(), 48);
+      for (const p of passes) {
+        if (p.durationSeconds < 60 || p.durationSeconds > 900) failures.push(`ISS pass duration ${p.durationSeconds}s is not physically plausible`);
+        if (p.maxElevationDeg < 10 || p.maxElevationDeg > 90.01) failures.push(`ISS pass peak elevation ${p.maxElevationDeg.toFixed(2)}° is outside the reportable range`);
+        if (p.minRangeKm < altitudeKm - 30 || p.minRangeKm > 3000) failures.push(`ISS pass closest approach ${p.minRangeKm.toFixed(0)} km is impossible for a satellite at ${altitudeKm.toFixed(0)} km`);
+      }
+      console.log(`ISS passes over Greenwich in 48 h: ${passes.length} above 10°, ${passes.filter((p) => p.visibility === "visible").length} visible`);
+      if (passes.length === 0) warnings.push("ISS passes: none above 10° over Greenwich in 48 hours — possible, but unusual");
+    }
+  }
 
   /* ------------------------------------------------------------------------------- report */
   const pad = (s: string, n: number) => s.padEnd(n).slice(0, n);

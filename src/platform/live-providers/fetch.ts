@@ -19,6 +19,7 @@ export const ALLOWED_PROVIDER_HOSTS: readonly string[] = [
   "ssd-api.jpl.nasa.gov", // JPL Solar System Dynamics / CNEOS APIs
   "celestrak.org", // CelesTrak orbital elements
   "minorplanetcenter.net", // IAU Minor Planet Center machine-readable data files
+  "nasa-public-data.s3.amazonaws.com", // NASA public-data store: the ISS operational ephemeris
 ];
 
 const ALLOWED_HOST_SET = new Set(ALLOWED_PROVIDER_HOSTS);

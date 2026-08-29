@@ -13,7 +13,11 @@ import { clearHealth } from "../../src/platform/live-providers/health";
 import { loadProduct } from "../../src/platform/live-providers/client";
 import { PROVIDERS } from "../../src/platform/live-sky/providers";
 import { BT_RECORDS } from "../../src/knowledge-graph/data/live-data-catalog";
-import { SPACE_WEATHER_SLUGS, NEO_SLUGS } from "../../src/lib/routes";
+import { SPACE_WEATHER_SLUGS, NEO_SLUGS, SATELLITE_LIVE_SLUGS } from "../../src/lib/routes";
+import { eme2000ToEcef, ecefToGeodetic, greenwichMeanSiderealTime, geodeticToEcef, lookAngles } from "../../src/platform/satellites/frames";
+import { parseOem } from "../../src/platform/satellites/oem";
+import { findPasses } from "../../src/platform/satellites/passes";
+import type { Ephemeris } from "../../src/platform/satellites/oem";
 import { liveCacheControl } from "../../src/platform/space-weather/api";
 
 /**
@@ -279,7 +283,7 @@ ok(`${LIVE_PRODUCTS.length} product URLs resolve to allowlisted HTTPS hosts (${A
       issues.push(`live-providers/${file}: calls fetch with a template literal — provider URLs must be resolved through the registry and the guard`);
     }
   }
-  for (const domain of ["space-weather", "neo"]) {
+  for (const domain of ["space-weather", "neo", "satellites"]) {
     const domainDir = join(REPO, "src/platform", domain);
     for (const file of readdirSync(domainDir)) {
       if (!file.endsWith(".ts")) continue;
@@ -307,6 +311,21 @@ ok(`${LIVE_PRODUCTS.length} product URLs resolve to allowlisted HTTPS hosts (${A
     ["space-weather", SPACE_WEATHER_SLUGS, "SPACE_WEATHER_SLUGS"],
     ["neo", NEO_SLUGS, "NEO_SLUGS"],
   ];
+
+  // The satellite family is nested under an existing encyclopedia section rather than owning its
+  // own directory, so it is checked route by route instead of by listing a folder.
+  if (!sitemap.includes("SATELLITE_LIVE_SLUGS")) {
+    issues.push("sitemap: the live satellite family is not generated from its declared slug list (SATELLITE_LIVE_SLUGS)");
+  }
+  for (const slug of SATELLITE_LIVE_SLUGS) {
+    const page = join(REPO, "src/app/satellites", slug, "page.tsx");
+    try {
+      statSync(page);
+    } catch {
+      issues.push(`satellites: /satellites/${slug} is in the sitemap but has no page at ${page.slice(REPO.length + 1)}`);
+    }
+  }
+  ok(`the live satellite family is exactly ${SATELLITE_LIVE_SLUGS.length} stable URLs with no query parameters`);
   for (const [dir, slugs, token] of families) {
     if (!sitemap.includes(token)) {
       issues.push(`sitemap: the ${dir} family is not generated from its declared slug list (${token})`);
@@ -388,6 +407,208 @@ for (const product of LIVE_PRODUCTS.filter((p) => p.kind === "forecast")) {
     // this records which products depend on it.
     ok(`${product.productKey} is a forecast product and relies on the kind override in statusFor`);
   }
+}
+
+/*
+ * The reference-frame chain, checked by ARITHMETIC rather than by reading it.
+ *
+ * A satellite position is converted from NASA's J2000 state vectors into a place on the Earth
+ * through precession, nutation and Earth rotation. Getting any of it wrong does not produce
+ * nonsense — it produces a ground track displaced by a fraction of a degree, which looks entirely
+ * plausible. These are the invariants that catch that without needing a network request; the
+ * comparison against NASA's own node longitudes, which needs the live file, is in `live:probe`.
+ */
+{
+  // Greenwich Mean Sidereal Time at J2000.0 is 18h 41m 50.548s by definition — the single value
+  // that pins this formula's constant term and, with the second check, its rate.
+  const j2000 = Date.UTC(2000, 0, 1, 12, 0, 0);
+  const gmstJ2000Deg = (greenwichMeanSiderealTime(j2000) * 180) / Math.PI;
+  const expectedJ2000 = ((67310.54841 % 86400) / 240);
+  if (Math.abs(gmstJ2000Deg - expectedJ2000) > 1e-6) {
+    issues.push(`frames: GMST at J2000.0 is ${gmstJ2000Deg.toFixed(6)}°, expected ${expectedJ2000.toFixed(6)}°`);
+  }
+  // One sidereal day later, GMST must have returned to the same value. This is what catches a wrong
+  // rotation rate, which a single-epoch check cannot see.
+  const siderealDayMs = 86164090.5;
+  const after = (greenwichMeanSiderealTime(j2000 + siderealDayMs) * 180) / Math.PI;
+  const drift = Math.abs(((after - gmstJ2000Deg + 540) % 360) - 180);
+  if (drift > 0.001) issues.push(`frames: GMST drifted ${drift.toFixed(5)}° over one sidereal day; the rotation rate is wrong`);
+  ok("sidereal time matches its defining value at J2000 and closes over one sidereal day");
+
+  // Round-tripping geodetic coordinates through the Earth-fixed frame must return them unchanged.
+  for (const [lat, lon, alt] of [[0, 0, 0], [51.4779, -0.0015, 0.024], [-33.8688, 151.2093, 0.058], [89.9, 179.9, 400]] as const) {
+    const back = ecefToGeodetic(geodeticToEcef(lat, lon, alt));
+    if (Math.abs(back.latitudeDeg - lat) > 1e-7 || Math.abs(back.altitudeKm - alt) > 1e-6) {
+      issues.push(`frames: geodetic round trip failed for ${lat}, ${lon}, ${alt} km — got ${back.latitudeDeg}, ${back.longitudeDeg}, ${back.altitudeKm}`);
+    }
+  }
+  ok("geodetic coordinates round-trip through the Earth-fixed frame at four latitudes");
+
+  // A point directly above an observer must sit at 90° elevation; one on the opposite side of the
+  // Earth must be far below the horizon. These catch a transposed topocentric rotation, which
+  // otherwise produces azimuths that look reasonable and are wrong.
+  const site = { latitudeDeg: 45, longitudeDeg: 20, altitudeKm: 0 };
+  const overhead = geodeticToEcef(45, 20, 400);
+  const zenith = lookAngles(site, overhead);
+  if (Math.abs(zenith.elevationDeg - 90) > 1e-6) issues.push(`frames: a satellite directly overhead reported ${zenith.elevationDeg.toFixed(4)}° elevation`);
+  if (Math.abs(zenith.rangeKm - 400) > 1e-6) issues.push(`frames: a satellite 400 km overhead reported a range of ${zenith.rangeKm.toFixed(3)} km`);
+  const antipode = geodeticToEcef(-45, -160, 400);
+  if (lookAngles(site, antipode).elevationDeg > -30) issues.push("frames: a satellite on the opposite side of the Earth was not far below the horizon");
+  // Bearings, against the analytic great-circle formula rather than against intuition. A point at
+  // the SAME latitude but a different longitude is not due east — on a sphere the initial bearing
+  // to it is north of east, by about two degrees for six degrees of longitude at 45°N. Testing it
+  // as 90° would be testing the wrong thing, and would pass only if the code were also wrong.
+  const bearing = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+    const rad = Math.PI / 180;
+    const dLon = (lon2 - lon1) * rad;
+    const y = Math.sin(dLon) * Math.cos(lat2 * rad);
+    const x = Math.cos(lat1 * rad) * Math.sin(lat2 * rad) - Math.sin(lat1 * rad) * Math.cos(lat2 * rad) * Math.cos(dLon);
+    return ((Math.atan2(y, x) * 180) / Math.PI + 360) % 360;
+  };
+  for (const [lat2, lon2] of [[50, 20], [45, 26], [40, 14], [45, 14], [60, 45]] as const) {
+    const measured = lookAngles(site, geodeticToEcef(lat2, lon2, 400)).azimuthDeg;
+    const expected = bearing(site.latitudeDeg, site.longitudeDeg, lat2, lon2);
+    const diff = Math.abs(((measured - expected + 540) % 360) - 180);
+    // A tenth of a degree: the residual is the difference between the ellipsoid the look angles use
+    // and the sphere the bearing formula assumes, which is real and small.
+    if (diff > 0.1) issues.push(`frames: bearing to ${lat2}, ${lon2} read as ${measured.toFixed(3)}°, great-circle formula gives ${expected.toFixed(3)}°`);
+  }
+  ok("observer look angles match the analytic great-circle bearing at five directions, plus zenith and antipode");
+
+  // The transform must actually MOVE with time: a fixed inertial vector maps to a longitude that
+  // advances at the sidereal rate. A transform that silently ignored Earth rotation would pass
+  // every static check above.
+  const inertial = [7000, 0, 0] as const;
+  const t0 = Date.UTC(2026, 5, 1, 0, 0, 0);
+  const lon0 = ecefToGeodetic(eme2000ToEcef(inertial, t0)).longitudeDeg;
+  const lon1 = ecefToGeodetic(eme2000ToEcef(inertial, t0 + 3600_000)).longitudeDeg;
+  const moved = Math.abs(((lon0 - lon1 + 540) % 360) - 180);
+  if (Math.abs(moved - 15.041) > 0.02) {
+    issues.push(`frames: a fixed inertial direction moved ${moved.toFixed(3)}° of longitude in an hour; the sidereal rate is 15.041°`);
+  }
+  ok("a fixed inertial direction sweeps longitude at the sidereal rate");
+
+  // The poles are ordinary points on the ellipsoid, and this is a general-purpose function. On the
+  // polar axis the iteration divides by zero and every result downstream is NaN.
+  for (const z of [6356.7523142, -6356.7523142, 6756.7523142]) {
+    const g = ecefToGeodetic([0, 0, z]);
+    if (!Number.isFinite(g.latitudeDeg) || !Number.isFinite(g.altitudeKm)) {
+      issues.push(`frames: a position on the polar axis (z=${z}) produced NaN rather than a latitude of ±90°`);
+    } else if (Math.abs(Math.abs(g.latitudeDeg) - 90) > 1e-9) {
+      issues.push(`frames: a position on the polar axis reported latitude ${g.latitudeDeg}`);
+    }
+  }
+  ok("a position exactly on the polar axis resolves rather than producing NaN");
+}
+
+/*
+ * Pass-window edges, checked against a synthetic circular orbit so it needs no network.
+ *
+ * The rule being enforced is that a window boundary must not INVENT anything. A pass straddling an
+ * edge previously came back with its rise clamped to the window — naming a compass direction the
+ * satellite never rose from — or was dropped entirely at the other edge, which is the same defect
+ * with the opposite sign.
+ */
+{
+  // A 92-minute circular orbit at 51.6° inclination, tabulated every four minutes for two days,
+  // built directly in EME2000. The numbers need not match any real satellite; what matters is that
+  // it produces passes over a mid-latitude site.
+  const states = [];
+  const t0 = Date.UTC(2026, 6, 1, 0, 0, 0);
+  const radius = 6778;
+  const periodS = 92.9 * 60;
+  const inc = (51.6 * Math.PI) / 180;
+  for (let i = 0; i <= (2 * 86400) / 240; i++) {
+    const t = t0 + i * 240_000;
+    const u = (2 * Math.PI * (i * 240)) / periodS;
+    const x = radius * Math.cos(u);
+    const y = radius * Math.sin(u) * Math.cos(inc);
+    const z = radius * Math.sin(u) * Math.sin(inc);
+    states.push({ timeMs: t, position: [x, y, z] as [number, number, number], velocity: [0, 0, 0] as [number, number, number] });
+  }
+  const synthetic: Ephemeris = {
+    objectName: "TEST", referenceFrame: "EME2000", timeSystem: "UTC",
+    startMs: states[0].timeMs, stopMs: states[states.length - 1].timeMs,
+    states, ascendingNodes: [], comments: [],
+  };
+  const observer = { latitudeDeg: 45, longitudeDeg: 10, altitudeKm: 0 };
+  const full = findPasses(synthetic, observer, states[0].timeMs, states[states.length - 1].timeMs);
+
+  if (full.length < 2) {
+    issues.push(`pass finder: the synthetic orbit produced only ${full.length} passes over a mid-latitude site; the fixture is not exercising the boundary logic`);
+  } else {
+    const target = full[Math.floor(full.length / 2)];
+    const mid = Math.round((target.startMs + target.endMs) / 2);
+    const before = findPasses(synthetic, observer, states[0].timeMs, mid);
+    const after = findPasses(synthetic, observer, mid, states[states.length - 1].timeMs);
+    const inBefore = before.find((p) => Math.abs(p.startMs - target.startMs) < 60_000);
+    const inAfter = after.find((p) => Math.abs(p.startMs - target.startMs) < 60_000);
+
+    // Exactly one window, and with the pass's own rise — not the window's edge.
+    if (Boolean(inBefore) === Boolean(inAfter)) {
+      issues.push(`pass finder: a pass straddling a window boundary appeared in ${inBefore && inAfter ? "both" : "neither"} adjacent window; it must appear in exactly one`);
+    }
+    const found = inBefore ?? inAfter;
+    if (found) {
+      if (Math.abs(found.riseAzimuthDeg - target.riseAzimuthDeg) > 0.5) {
+        issues.push(`pass finder: a boundary-straddling pass reported rise azimuth ${found.riseAzimuthDeg.toFixed(1)}°, but its real rise is ${target.riseAzimuthDeg.toFixed(1)}° — a clamped edge presented as a measurement`);
+      }
+      if (Math.abs(found.durationSeconds - target.durationSeconds) > 30) {
+        issues.push(`pass finder: a boundary-straddling pass reported ${found.durationSeconds}s, but it lasts ${target.durationSeconds}s`);
+      }
+      if (found.truncatedByEphemeris) {
+        issues.push("pass finder: a pass truncated only by the REQUESTED window was flagged as truncated by the ephemeris");
+      }
+    }
+    ok(`a pass straddling a window boundary appears in exactly one window, with its own rise (${full.length} synthetic passes)`);
+  }
+}
+
+/*
+ * The OEM parser must refuse what it cannot safely interpret, rather than interpreting it.
+ */
+{
+  const header = [
+    "CCSDS_OEM_VERS = 2.0",
+    "ORIGINATOR = TEST",
+  ];
+  const segment = (frame: string, timeSystem: string, epoch: string) => [
+    "META_START",
+    `OBJECT_NAME = TEST`,
+    `CENTER_NAME = Earth`,
+    `REF_FRAME = ${frame}`,
+    `TIME_SYSTEM = ${timeSystem}`,
+    `START_TIME = ${epoch}`,
+    `STOP_TIME = ${epoch}`,
+    "META_STOP",
+    `${epoch} 7000.0 0.0 0.0 0.0 7.5 0.0`,
+    `2026-07-01T00:04:00.000 7000.0 100.0 0.0 0.0 7.5 0.0`,
+  ];
+
+  const single = parseOem([...header, ...segment("EME2000", "UTC", "2026-07-01T00:00:00.000")].join("\n"));
+  if (!single.ok) issues.push(`oem: a valid single-segment file was rejected — ${single.problem}`);
+
+  // Two segments in different frames: the frame check reads only the LAST declaration while every
+  // segment's vectors are merged, so this must be refused outright.
+  const mixed = parseOem([
+    ...header,
+    ...segment("TEME", "UTC", "2026-07-01T00:00:00.000"),
+    ...segment("EME2000", "UTC", "2026-07-01T01:00:00.000"),
+  ].join("\n"));
+  if (mixed.ok) issues.push("oem: a multi-segment file with two different reference frames was accepted; its state vectors would be silently mixed across coordinate systems");
+
+  const wrongFrame = parseOem([...header, ...segment("TEME", "UTC", "2026-07-01T00:00:00.000")].join("\n"));
+  if (wrongFrame.ok) issues.push("oem: a TEME file was accepted by a parser written for EME2000");
+  const wrongTime = parseOem([...header, ...segment("EME2000", "TAI", "2026-07-01T00:00:00.000")].join("\n"));
+  if (wrongTime.ok) issues.push("oem: a TAI file was accepted by a parser written for UTC");
+
+  // The node regex backtracks quadratically; a bounded scan is what stops one long line from
+  // blocking the event loop for minutes.
+  const started = Date.now();
+  parseOem([...header, `COMMENT asc. node: EPOCH = ${"A".repeat(200_000)}`, ...segment("EME2000", "UTC", "2026-07-01T00:00:00.000")].join("\n"));
+  const elapsed = Date.now() - started;
+  if (elapsed > 500) issues.push(`oem: a 200,000-character comment took ${elapsed}ms to parse; the comment scan is not bounded`);
+  ok(`the OEM parser refuses mixed frames, wrong frames and wrong time systems, and bounds its comment scan (${elapsed}ms on 200k characters)`);
 }
 
 /* --------------------------------------------- no page may claim a no-value status is current */

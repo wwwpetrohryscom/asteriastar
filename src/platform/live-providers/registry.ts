@@ -112,6 +112,13 @@ export interface LiveProduct {
   freshness: FreshnessPolicy;
   /** Ceiling for this product specifically; a response larger than this is refused. */
   maxBytes: number;
+  /**
+   * What the provider actually sends. Declared per product rather than assumed, because a provider
+   * serving a text format may label it anything: NASA's ISS ephemeris is a CCSDS text message
+   * served as `binary/octet-stream`, and a JSON-only fetch refuses it on content type alone.
+   * Defaults to JSON.
+   */
+  responseType?: "json" | "text";
   /** Why this cache window is defensible for this product. */
   cacheRationale: string;
   /** Honest limits: resolution, coverage, what the product is not. */
@@ -205,6 +212,37 @@ export const LIVE_PROVIDERS: LiveProviderDescriptor[] = [
     verifiedAt: "2026-08-29",
   },
 
+  {
+    providerKey: "nasa-iss-ephemeris",
+    name: "NASA ISS Trajectory Data",
+    organization: "NASA Johnson Space Center, Flight Operations Directorate (TOPO)",
+    documentation: "https://www.nasa.gov/spot-the-station/",
+    baseUrl: "https://nasa-public-data.s3.amazonaws.com",
+    category: "orbital",
+    sources: ["nasa"],
+    // Deliberately NOT `liveSkyKey: "celestrak"`. CelesTrak is a different provider that was
+    // evaluated and refused connections; conflating the two would make the registries agree by
+    // relabelling one provider as another. It has its own entry in the live-sky registry instead.
+    liveSkyKey: "nasa-iss-ephemeris",
+    entityId: "live_data_source:nasa-iss-ephemeris",
+    authentication: "none",
+    rateLimits:
+      "A static file on NASA's public-data store, regenerated every few days. No key, no documented rate limit. AsteriaStar fetches it at most once every six hours, which is far less often than it changes.",
+    redistribution: "A work of the US Government, not subject to domestic copyright and freely reusable. NASA asks that reuse not imply endorsement.",
+    license: "Public domain (US Government work), NASA/JSC.",
+    attribution: "NASA Johnson Space Center, Flight Operations Directorate — ISS trajectory data",
+    providerCaveat:
+      "This is the operational trajectory the station's flight controllers use, not a two-line element set: state vectors every four minutes in the mean equator and equinox of J2000, spanning fifteen days. It ENDS. Beyond the published span there is no trajectory, and the station manoeuvres — so a position past the end of the file would be a guess, and none is offered.",
+    integration: "IMPLEMENTED",
+    timeoutMs: 10000,
+    maxConcurrentRequests: 2,
+    backoffAfterFailures: 3,
+    backoffSeconds: 300,
+    schemaVersion: "ccsds-oem-2.0",
+    verifiedAt: "2026-08-29",
+    note:
+      "Chosen over two-line elements deliberately. A TLE requires SGP4 propagation and carries kilometre-level error by construction; this is the operator's own trajectory, and it comes with the ascending-node longitudes NASA computed from it — which is what makes the reference-frame transformation verifiable rather than merely plausible.",
+  },
   {
     providerKey: "minor-planet-center",
     name: "IAU Minor Planet Center",
@@ -582,6 +620,22 @@ LIVE_PRODUCTS.push(
       "A new NEO enters the database once its orbit is computed, which happens over days. Six hours cannot delay one meaningfully, and the date window only advances once per day.",
     limitations:
       "`first_obs` is the date of the FIRST OBSERVATION used in the orbit solution — not the date the object was announced, and not the date anyone recognised it as new. Absolute magnitude H is a brightness, not a size; a diameter appears only where one has actually been measured or modelled.",
+  },
+  {
+    productKey: "nasa:iss-ephemeris",
+    providerKey: "nasa-iss-ephemeris",
+    label: "ISS operational ephemeris (CCSDS OEM)",
+    url: "https://nasa-public-data.s3.amazonaws.com/iss-coords/current/ISS_OEM/ISS.OEM_J2K_EPH.txt",
+    kind: "model",
+    cacheSeconds: 6 * 3600,
+    refreshCadenceSeconds: 3 * 86400,
+    freshness: { basis: "fetch", liveWithinSeconds: 6 * 3600, recentWithinSeconds: 24 * 3600, staleAfterSeconds: 4 * 86400 },
+    maxBytes: 2_000_000,
+    responseType: "text",
+    cacheRationale:
+      "NASA regenerates this file every few days and it covers fifteen. Six hours is a small fraction of the interval between publications, and re-parsing five thousand state vectors on every page view would be pure waste.",
+    limitations:
+      "A predicted trajectory, not a measurement: state vectors from NASA's operational determination and propagation, in the mean equator and equinox of J2000, at four-minute spacing. It covers fifteen days from its creation and NOTHING beyond that — the station manoeuvres, and no position is offered past the end of the file. Positions between tabulated epochs are interpolated by the method the CCSDS standard specifies.",
   },
   {
     productKey: "mpc:neocp",

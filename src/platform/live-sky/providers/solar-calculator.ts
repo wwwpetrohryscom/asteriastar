@@ -73,6 +73,10 @@ interface SolarGeometry {
   declinationDeg: number;
   /** The equation of time (minutes: apparent − mean solar time). */
   eqTimeMin: number;
+  /** The Sun's apparent ecliptic longitude, degrees. */
+  appLongDeg: number;
+  /** The obliquity of the ecliptic corrected for nutation, degrees. */
+  obliquityDeg: number;
 }
 
 /** The Sun's declination and equation of time for a Julian century (NOAA formulae). */
@@ -99,7 +103,38 @@ function solarGeometry(jc: number): SolarGeometry {
       4 * e * y * sinD(m) * cosD(2 * l0) -
       0.5 * y * y * sinD(4 * l0) -
       1.25 * e * e * sinD(2 * m));
-  return { declinationDeg, eqTimeMin };
+  return { declinationDeg, eqTimeMin, appLongDeg: appLong, obliquityDeg: eps };
+}
+
+/**
+ * The direction from Earth to the Sun as a unit vector in the equatorial frame of date.
+ *
+ * Exported so that satellite eclipse geometry (Program CL) can ask "is this satellite in sunlight?"
+ * without a second implementation of the solar series appearing in the codebase. The same NOAA
+ * apparent-longitude and obliquity values that give the declination above give the vector here.
+ *
+ * The frame is the TRUE (apparent) equator and equinox of date, not the mean one and not J2000: the
+ * apparent longitude carries both aberration and the nutation in longitude, and the obliquity used
+ * carries the nutation in obliquity. That distinction is what makes the consumer correct — a vector
+ * referred to the true equinox must be rotated into the Earth-fixed frame by Greenwich APPARENT
+ * sidereal time, and a maintainer who read "mean" here would reach for GMST and introduce an error
+ * of about seventeen arcseconds.
+ *
+ * The Sun's position is good to about 0.01°, far finer than eclipse geometry needs: the question is
+ * whether a point 400 km up is inside a shadow cylinder 6,378 km across, and a hundredth of a degree
+ * moves the terminator by about a kilometre.
+ */
+export function solarDirectionEci(utcMs: number): [number, number, number] {
+  // Named `...Eci` for consistency with the platform's other vector helpers; the frame is stated
+  // precisely in the documentation above, because "ECI" alone does not distinguish the three that
+  // matter here.
+  const jc = (utcMs / 86400000 + 2440587.5 - 2451545.0) / 36525.0;
+  const { appLongDeg, obliquityDeg } = solarGeometry(jc);
+  return [
+    cosD(appLongDeg),
+    cosD(obliquityDeg) * sinD(appLongDeg),
+    sinD(obliquityDeg) * sinD(appLongDeg),
+  ];
 }
 
 /**
