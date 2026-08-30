@@ -1,18 +1,18 @@
 {
   "version": 1,
-  "total": 7743,
-  "checksum": "e9a15b14",
+  "total": 7755,
+  "checksum": "ff650aaf",
   "shards": [
     {
       "shard": "core",
-      "count": 1675,
-      "checksum": "92344f44",
+      "count": 1685,
+      "checksum": "c5ea35e9",
       "path": "/search-index/core.json"
     },
     {
       "shard": "catalogue",
-      "count": 6068,
-      "checksum": "756773e5",
+      "count": 6070,
+      "checksum": "ae53d7b9",
       "path": "/search-index/catalogue.json"
     }
   ],
@@ -25,8 +25,8 @@
     "stars-exoplanets": 4447,
     "missions": 592,
     "science": 330,
-    "data": 222,
-    "tools": 113,
+    "data": 224,
+    "tools": 123,
     "guides": 153
   }
 }

@@ -413,6 +413,32 @@ export const ENDPOINTS: EndpointDef[] = [
     example: "/api/v0/live/satellites/iss/passes?latitude=51.4779&longitude=-0.0015&hours=48",
     returns: "{ observer, windowHours, minimumElevationDeg, passes[] }",
   },
+
+  /* --------------------------------------------------- the observing calendar (Program CM) */
+  {
+    id: "live-events", group: "live", method: "GET", path: "/api/v0/live/events",
+    summary: "Observing calendar", status: "implemented",
+    description: "A year of dated astronomical events, each carrying the provenance of its date. `basis` is one of `computed` (derived here, with `method` naming the algorithm and version), `source-backed` (published by an authority, with `source` naming it), `forecast` (an annual recurrence, approximate to about a day) or `planned` (somebody's intention, with `source.lastVerifiedAt` giving the time it was last confirmed). `precision` says how much of the timestamp means anything \u2014 a launch scheduled to the quarter is not a timestamp to the minute \u2014 and `confirmed` is false for everything that can still move. Categories whose provider could not be reached are reported in `gaps` rather than silently omitted.",
+    params: [],
+    example: "/api/v0/live/events",
+    returns: "{ window, events: AstronomicalEvent[], gaps, providers }",
+  },
+  {
+    id: "live-events-eclipses", group: "live", method: "GET", path: "/api/v0/live/events/eclipses",
+    summary: "Eclipse catalogue", status: "implemented",
+    description: "Every solar and lunar eclipse of the twenty-first century, reproduced from NASA/GSFC's Five Millennium Catalog by Espenak and Meeus. The catalogue's instants are Terrestrial Dynamical Time; `greatestEclipseUtc` is that time less the catalogue's own `deltaTSeconds`, and both are returned so the arithmetic can be checked rather than trusted. These are the circumstances of GREATEST eclipse only \u2014 not local circumstances, which need the Besselian elements NASA publishes separately.",
+    params: [],
+    example: "/api/v0/live/events/eclipses",
+    returns: "{ solar, lunar } \u2014 each an envelope around a CatalogueEclipse[]",
+  },
+  {
+    id: "live-events-launches", group: "live", method: "GET", path: "/api/v0/live/events/launches",
+    summary: "Upcoming launches", status: "implemented",
+    description: "The upcoming orbital launch schedule from Launch Library 2, maintained by The Space Devs \u2014 a community aggregation of operator and agency announcements, NOT a schedule published by any space agency. Every date is a No Earlier Than value that moves, often by weeks. `netPrecision` is the provider's own statement of how precisely the date is known, from the second down to the year, and `lastUpdated` is when the provider last confirmed the entry; both are passed through unchanged because without them a launch date cannot be used honestly.",
+    params: [],
+    example: "/api/v0/live/events/launches",
+    returns: "LiveEnvelope<{ total, launches: UpcomingLaunch[] }>",
+  },
 ];
 
 export const IMPLEMENTED_ENDPOINTS = ENDPOINTS.filter((e) => e.status === "implemented");

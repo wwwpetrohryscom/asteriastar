@@ -14,7 +14,7 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, type Crumb } from "@/lib/seo/jsonld";
 import { absoluteUrl, ROUTES, skyPath } from "@/lib/routes";
 
-const DESCRIPTION = "Lunar eclipses — total, partial, and penumbral — with the geometry behind each. Completely safe to watch with the naked eye. Specific dates are prepared for published NASA predictions; none are fabricated.";
+const DESCRIPTION = "Lunar eclipses — total, partial, and penumbral — with the geometry behind each. Completely safe to watch with the naked eye. Dated lunar eclipses are in the observing calendar, from NASA's Five Millennium Catalog.";
 export const metadata: Metadata = buildMetadata({ title: "Lunar Eclipses — Types & Viewing", description: DESCRIPTION, path: skyPath("eclipses/lunar") });
 
 export default function LunarEclipsesPage() {

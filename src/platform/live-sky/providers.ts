@@ -130,8 +130,15 @@ export const PROVIDERS: ProviderInfo[] = [
     key: "eclipse-catalogue", name: "Eclipse Catalogue", organization: "NASA GSFC eclipse data (five-millennium canon)",
     url: "https://eclipse.gsfc.nasa.gov/", sources: ["nasa"],
     dataKinds: ["Solar & lunar eclipse circumstances", "Paths of totality"],
-    license: "Public NASA eclipse predictions.", status: "planned", access: "public-data-files",
-    notes: "Eclipse dates and paths will be sourced from published predictions; none are fabricated.",
+    license: "Public NASA eclipse predictions.", status: "connected", access: "public-data-files",
+    notes: "Connected (Program CM): the century catalogues are fetched at request time and every eclipse of 2001\u20132100 is reproduced from them, with the catalogue's own \u0394T applied to convert its Terrestrial Dynamical Time to UTC. Circumstances of greatest eclipse only \u2014 paths of totality remain on NASA's own maps, which each eclipse links to.",
+  },
+  {
+    key: "launch-library", name: "Launch Library 2", organization: "The Space Devs (community-maintained)",
+    url: "https://thespacedevs.com/llapi", sources: ["thespacedevs"],
+    dataKinds: ["Upcoming orbital launch schedule", "Scheduling precision & confirmation times"],
+    license: "Free public access within the provider's stated request rate; attribution given.", status: "connected", access: "public-api",
+    notes: "Connected (Program CM). NOT an agency schedule: a community aggregation of operator and agency announcements. Launches are shown as PLANNED events \u2014 never confirmed \u2014 with the provider's own statement of how precisely each date is known and when it was last confirmed.",
   },
 ];
 

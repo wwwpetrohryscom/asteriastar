@@ -114,8 +114,8 @@ export const SKY_PAGES: SkyPageDef[] = [
     relatedEntityIds: ["star:sun", "planet:earth"], learnHref: "/learn/observing-the-night-sky",
   },
   {
-    slug: "observing-calendar", title: "Observing Calendar", eyebrow: "Night Sky Platform",
-    lead: "A month-by-month guide to recurring sky events — meteor-shower peaks, equinoxes, and solstices. For a specific night, the Tonight Observing Dashboard composes the Sun, Moon, and planet times for your location; exact dates for other events are prepared for a connected almanac provider.",
+    slug: "observing-calendar", title: "The Observing Year", eyebrow: "Night Sky Platform",
+    lead: "A month-by-month guide to recurring sky events — meteor-shower peaks, equinoxes, and solstices — written without years, because they recur. Dated instants for a specific year are in the observing calendar at /events; for a specific night, the Tonight Observing Dashboard composes the Sun, Moon, and planet times for your location.",
     content: "observing-calendar", providerKeys: ["imo", "usno"], sourceKeys: ["imo", "usno"],
     relatedEntityIds: ["star:sun", "planet:earth", "meteor_shower:perseids", "meteor_shower:geminids"],
     learnHref: "/learn/observing-the-night-sky",

@@ -47,7 +47,7 @@ for (const r of BT_RECORDS) {
 
 export const relations: GraphRelation[] = derived;
 
-const CATEGORIES: LiveCategory[] = ["space-weather", "solar-activity", "near-earth-object", "orbital", "atmospheric"];
+const CATEGORIES: LiveCategory[] = ["space-weather", "solar-activity", "near-earth-object", "orbital", "events", "atmospheric"];
 const STATUSES: LiveStatus[] = ["connected", "computed", "cached", "stale", "unavailable", "planned"];
 
 export const BT_STATS = {

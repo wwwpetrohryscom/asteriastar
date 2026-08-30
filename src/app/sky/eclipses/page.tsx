@@ -14,7 +14,7 @@ import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/js
 import { ROUTES, skyPath } from "@/lib/routes";
 
 const s = engine.liveSky;
-const DESCRIPTION = "Solar and lunar eclipses explained — the types, the geometry, and how to watch them safely. Specific eclipse dates and paths are prepared for published NASA predictions; none are fabricated.";
+const DESCRIPTION = "Solar and lunar eclipses explained — the types, the geometry, and how to watch them safely. Dated eclipses are in the observing calendar, reproduced from NASA's Five Millennium Catalog; paths of totality remain on NASA's own maps.";
 
 export const metadata: Metadata = buildMetadata({ title: "Eclipses — Guide & Data Architecture", description: DESCRIPTION, path: skyPath("eclipses") });
 
@@ -45,7 +45,7 @@ export default function EclipsesPage() {
               <p className="mb-3 text-sm text-muted">A lunar eclipse happens at Full Moon, when the Moon passes through Earth&apos;s shadow. <Link href={skyPath("eclipses/lunar")} className="text-nasa hover:underline">Lunar eclipses in detail →</Link></p>
               <Types items={eclipses.lunarTypes.map((t) => [t.name, t.description])} />
             </SkySection>
-            <PreparedForIntegration providers={provider ? [provider] : []} envelope={eclipses.upcoming()[0]?.envelope} />
+            <PreparedForIntegration providers={provider ? [provider] : []} envelope={eclipses.upcoming()[0]?.envelope} counterpart={{ href: "/events/eclipses", label: "observing calendar" }} />
             {related.length > 0 && <SkySection id="graph" title="Related in the Knowledge Graph"><RefCards refs={related} /></SkySection>}
             <SourceList keys={["nasa"]} title="Sources & references" />
           </div>

@@ -270,6 +270,8 @@ import {
   neoPath,
   SATELLITE_LIVE_SLUGS,
   satelliteLivePath,
+  EVENTS_SLUGS,
+  eventsPath,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
 import { galleryCategories } from "@/lib/gallery";
@@ -839,6 +841,21 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
   ];
 
+  /**
+   * The observing calendar (Program CM). Ten evergreen hubs, each naming a window rather than
+   * carrying one, so no date, coordinate or filter can enter a URL and nothing here is a query
+   * result. The iCalendar export is deliberately absent: it is a file for calendar software, not a
+   * page for a reader, and listing it would invite indexing of a download.
+   */
+  const eventRoutes: MetadataRoute.Sitemap = [
+    { url: absoluteUrl(ROUTES.events), changeFrequency: "daily", priority: 0.9 },
+    ...EVENTS_SLUGS.map((slug) => ({
+      url: absoluteUrl(eventsPath(slug)),
+      changeFrequency: (slug === "today" ? "daily" : "weekly") as "daily" | "weekly",
+      priority: slug === "eclipses" || slug === "moon" || slug === "meteor-showers" ? 0.9 : 0.8,
+    })),
+  ];
+
   const universe3dRoutes: MetadataRoute.Sitemap = [
     { url: absoluteUrl(ROUTES.universe3d), changeFrequency: "monthly", priority: 0.8 },
     { url: absoluteUrl(`${ROUTES.universe3d}/data-coverage`), changeFrequency: "monthly", priority: 0.6 },
@@ -972,6 +989,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...spaceWeatherRoutes,
     ...neoRoutes,
     ...satelliteLiveRoutes,
+    ...eventRoutes,
     ...universe3dRoutes,
     ...workspaceRoutes,
     ...openPlatformRoutes,

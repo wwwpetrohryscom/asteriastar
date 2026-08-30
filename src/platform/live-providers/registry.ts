@@ -107,8 +107,15 @@ export interface LiveProduct {
   kind: ObservationKind;
   /** Seconds AsteriaStar caches the parsed response. */
   cacheSeconds: number;
-  /** How often the provider itself publishes, as documented or as demonstrated by the feed. */
-  refreshCadenceSeconds: number;
+  /**
+   * How often the provider itself publishes, as documented or as demonstrated by the feed.
+   *
+   * OMITTED for a product that is not republished at all. Giving NASA's five-millennium eclipse
+   * canon a cadence of a year made the provenance panel state that NASA reissues it annually, which
+   * is untrue of something computed once in 2007 — a cadence invented to fill a required field is
+   * still an invented fact.
+   */
+  refreshCadenceSeconds?: number;
   freshness: FreshnessPolicy;
   /** Ceiling for this product specifically; a response larger than this is refused. */
   maxBytes: number;
@@ -268,6 +275,65 @@ export const LIVE_PROVIDERS: LiveProviderDescriptor[] = [
     backoffAfterFailures: 3,
     backoffSeconds: 300,
     schemaVersion: "mpc-neocp-2026-08",
+    verifiedAt: "2026-08-29",
+  },
+
+  {
+    providerKey: "nasa-gsfc-eclipse",
+    name: "NASA Eclipse Web Site",
+    organization: "NASA Goddard Space Flight Center",
+    documentation: "https://eclipse.gsfc.nasa.gov/SEcat5/catkey.html",
+    baseUrl: "https://eclipse.gsfc.nasa.gov",
+    category: "events",
+    sources: ["nasa"],
+    liveSkyKey: "eclipse-catalogue",
+    entityId: "live_data_source:nasa-gsfc-eclipse",
+    authentication: "none",
+    rateLimits:
+      "Static catalogue pages with no key, no registration and no documented rate limit. The two century tables AsteriaStar reads are about two hundred kilobytes together and are cached for a week, because the contents were computed once and do not change.",
+    redistribution:
+      "NASA content is generally not copyrighted and may be reused; NASA asks that reuse not imply endorsement. The catalogues themselves credit Fred Espenak and Jean Meeus, and that credit travels with every eclipse shown here.",
+    license:
+      "Public domain (US Government work), and NASA states that permission to reproduce the data is granted WHEN ACCOMPANIED BY an acknowledgment \u2014 \u201cEclipse Predictions by Fred Espenak (NASA\u2019s GSFC)\u201d for the solar catalogue and \u201cEclipse Predictions by Fred Espenak and Jean Meeus (NASA\u2019s GSFC)\u201d for the lunar one. The right acknowledgment travels with every eclipse AsteriaStar shows.",
+    attribution: "Eclipse Predictions by Fred Espenak and Jean Meeus (NASA's GSFC)",
+    providerCaveat:
+      "Instants are Terrestrial Dynamical Time, and the \u0394T needed to convert them to UTC is itself a prediction for future dates \u2014 accurate to a second or two for the coming decades, and progressively less so further out. The catalogue gives the circumstances of greatest eclipse; it is not a local-circumstances calculator, and AsteriaStar does not turn it into one.",
+    integration: "IMPLEMENTED",
+    timeoutMs: 10000,
+    maxConcurrentRequests: 2,
+    backoffAfterFailures: 3,
+    backoffSeconds: 600,
+    schemaVersion: "gsfc-eclipse-canon-2026-08",
+    verifiedAt: "2026-08-29",
+    note:
+      "A published canon rather than a live feed: computed once, in 2007, for five thousand years. It is fetched rather than copied into the repository so that the provenance is a real request to NASA with a real timestamp \u2014 but nothing here is ever labelled live, because nothing about it is.",
+  },
+
+  {
+    providerKey: "thespacedevs-launchlibrary",
+    name: "Launch Library 2",
+    organization: "The Space Devs",
+    documentation: "https://thespacedevs.com/llapi",
+    baseUrl: "https://ll.thespacedevs.com",
+    category: "events",
+    sources: ["thespacedevs"],
+    liveSkyKey: "launch-library",
+    entityId: "live_data_source:launch-library",
+    authentication: "none",
+    rateLimits:
+      "The provider states the database is free for up to 15 requests an hour without a key. AsteriaStar caches each response for thirty minutes and backs off for a quarter of an hour after three consecutive failures, so a rate-limit response is never answered with more requests. That cache is process-local and does not survive a cold start, so it is a BEST-EFFORT bound rather than a guaranteed two an hour: several serverless instances answering at once each pay their own first request. Keeping inside the provider's allowance therefore rests on the cache plus the CDN in front of it, not on a shared budget \u2014 there is no durable one.",
+    redistribution:
+      "The provider states that the entire database is accessible to everyone, free of charge, within that request rate. AsteriaStar shows a single page of upcoming launches and links each entry back to the provider's own record.",
+    license: "Free public access as stated by the provider; attribution given on every surface that uses it.",
+    attribution: "Launch schedule data from Launch Library 2, maintained by The Space Devs",
+    providerCaveat:
+      "NOT an agency schedule. It is a community-maintained aggregation of announcements made by operators and agencies, and the operators change their own dates constantly. Every entry carries the provider's own confirmation timestamp and its own statement of how precisely the date is known, and both are shown \u2014 a launch scheduled to the quarter is not displayed as though it were scheduled to the second.",
+    integration: "IMPLEMENTED",
+    timeoutMs: 8000,
+    maxConcurrentRequests: 1,
+    backoffAfterFailures: 3,
+    backoffSeconds: 900,
+    schemaVersion: "ll2-upcoming-2026-08",
     verifiedAt: "2026-08-29",
   },
 ];
@@ -501,6 +567,55 @@ export const LIVE_PRODUCTS: LiveProduct[] = [
     maxBytes: 300_000,
     cacheRationale: "As for flares.",
     limitations: "Proton events identified in spacecraft particle data. The instrument and energy channel are recorded on each event because a detection in one channel is not a detection in another.",
+  },
+  /* ------------------------------------------------- NASA/GSFC eclipse canon */
+  {
+    productKey: "gsfc:solar-eclipses",
+    providerKey: "nasa-gsfc-eclipse",
+    label: "Solar eclipses of the twenty-first century",
+    url: "https://eclipse.gsfc.nasa.gov/SEcat5/SE2001-2100.html",
+    kind: "forecast",
+    cacheSeconds: 7 * 86400,
+    // No cadence: the canon is not republished. See the field's documentation.
+    freshness: { basis: "fetch", liveWithinSeconds: 7 * 86400, recentWithinSeconds: 30 * 86400, staleAfterSeconds: 90 * 86400 },
+    maxBytes: 1_500_000,
+    responseType: "text",
+    cacheRationale:
+      "The catalogue was computed once and published in 2007. A week is not a compromise between freshness and load \u2014 there is no freshness to trade, and re-parsing two hundred and twenty-four eclipses on every page view would be waste with no upside.",
+    limitations:
+      "Circumstances of GREATEST eclipse only: the instant, the type, the Saros series, gamma, the magnitude, and the point on Earth the shadow axis passes closest to. It does not say what an eclipse looks like from any particular place, and neither does AsteriaStar \u2014 local circumstances need the Besselian elements, which NASA publishes separately and which are not read here.",
+  },
+  {
+    productKey: "gsfc:lunar-eclipses",
+    providerKey: "nasa-gsfc-eclipse",
+    label: "Lunar eclipses of the twenty-first century",
+    url: "https://eclipse.gsfc.nasa.gov/LEcat5/LE2001-2100.html",
+    kind: "forecast",
+    cacheSeconds: 7 * 86400,
+    // No cadence: the canon is not republished. See the field's documentation.
+    freshness: { basis: "fetch", liveWithinSeconds: 7 * 86400, recentWithinSeconds: 30 * 86400, staleAfterSeconds: 90 * 86400 },
+    maxBytes: 1_500_000,
+    responseType: "text",
+    cacheRationale: "The same fixed catalogue as the solar table, on the same terms.",
+    limitations:
+      "Circumstances of greatest eclipse and the published durations of the penumbral, partial and total phases. Contact times for a specific location are not in the table and are not derived here.",
+  },
+
+  /* ------------------------------------------------------ Launch Library 2 */
+  {
+    productKey: "ll2:upcoming-launches",
+    providerKey: "thespacedevs-launchlibrary",
+    label: "Upcoming orbital launches",
+    url: "https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=40&mode=list",
+    kind: "forecast",
+    cacheSeconds: 1800,
+    refreshCadenceSeconds: 1800,
+    freshness: { basis: "fetch", liveWithinSeconds: 1800, recentWithinSeconds: 7200, staleAfterSeconds: 21600 },
+    maxBytes: 500_000,
+    cacheRationale:
+      "The provider allows fifteen requests an hour. Thirty minutes puts AsteriaStar at two, leaving the rest of the allowance for everyone else, and a launch schedule does not change meaningfully inside half an hour \u2014 when it does change, it changes by days.",
+    limitations:
+      "Intentions, not appointments. Every date is a No Earlier Than value whose precision the provider states explicitly, from the second down to the year, and which moves without notice. The feed is an aggregation of operator announcements maintained by volunteers, not a schedule published by any agency.",
   },
 ];
 

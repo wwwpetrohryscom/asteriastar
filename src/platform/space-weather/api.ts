@@ -77,7 +77,18 @@ export function serialiseSnapshot<T extends object>(snapshot: T): Record<string,
  * The `Cache-Control` for a live endpoint, derived from the shortest cache window among the
  * products it serves — so the HTTP cache can never outlive the data policy behind it.
  */
-export function liveCacheControl(productKeys: string[]): string {
+/**
+ * How long a shared cache may hold this response.
+ *
+ * `failed` is the parameter that matters most and is easiest to forget. The window is derived from
+ * the product's cache policy, and one of the eclipse catalogues is cached for a WEEK because its
+ * contents were computed once in 2007 and never change. Applying that window to a response that
+ * contains no data — because NASA was briefly unreachable — pinned an empty body at the CDN for
+ * seven days: a momentary outage became a week-long one, and nothing on the origin could undo it.
+ * A response with nothing in it is cached for a minute, whatever the product's policy says.
+ */
+export function liveCacheControl(productKeys: string[], failed = false): string {
+  if (failed) return "public, max-age=60, s-maxage=60, stale-while-revalidate=60";
   const products = productKeys.map((k) => getLiveProduct(k)).filter((p) => p !== undefined);
   const shortestCache = products.length > 0 ? Math.min(...products.map((p) => p.cacheSeconds)) : 60;
   const shortestStale = products.length > 0 ? Math.min(...products.map((p) => p.freshness.staleAfterSeconds)) : 3600;

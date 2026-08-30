@@ -20,6 +20,8 @@ export const ALLOWED_PROVIDER_HOSTS: readonly string[] = [
   "celestrak.org", // CelesTrak orbital elements
   "minorplanetcenter.net", // IAU Minor Planet Center machine-readable data files
   "nasa-public-data.s3.amazonaws.com", // NASA public-data store: the ISS operational ephemeris
+  "eclipse.gsfc.nasa.gov", // NASA/GSFC Eclipse Web Site: the five-millennium eclipse catalogues
+  "ll.thespacedevs.com", // Launch Library 2: the aggregated launch schedule
 ];
 
 const ALLOWED_HOST_SET = new Set(ALLOWED_PROVIDER_HOSTS);

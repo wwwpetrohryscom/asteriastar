@@ -113,7 +113,17 @@ for (const product of LIVE_PRODUCTS) {
   if (!provider.sources.length) issues.push(`${provider.providerKey}: declares no source-registry keys — a value with no source cannot be cited`);
   if (!product.limitations) issues.push(`${product.productKey}: states no limitations`);
   if (!product.cacheRationale) issues.push(`${product.productKey}: gives no reason for its cache window`);
-  if (product.refreshCadenceSeconds <= 0) issues.push(`${product.productKey}: has no publication cadence`);
+  /*
+   * A cadence, when the product HAS one, must be positive. A product may legitimately have none:
+   * a published canon is not republished, and a cadence invented to fill the field would be shown
+   * to readers as a claim that the provider reissues it on a schedule.
+   */
+  if (product.refreshCadenceSeconds !== undefined && product.refreshCadenceSeconds <= 0) {
+    issues.push(`${product.productKey}: declares a cadence of ${product.refreshCadenceSeconds}s`);
+  }
+  if (product.refreshCadenceSeconds === undefined && product.freshness.basis === "observation") {
+    issues.push(`${product.productKey}: is aged by its observation time but declares no publication cadence, so there is nothing to judge "late" against`);
+  }
 }
 ok(`${LIVE_PRODUCTS.length} products declare sources, limitations and a cache rationale`);
 
@@ -179,7 +189,7 @@ for (const product of LIVE_PRODUCTS) {
   if (freshness.liveWithinSeconds > freshness.recentWithinSeconds || freshness.recentWithinSeconds > freshness.staleAfterSeconds) {
     issues.push(`${productKey}: freshness thresholds are not ordered live <= recent <= stale`);
   }
-  if (freshness.basis === "observation" && freshness.liveWithinSeconds < refreshCadenceSeconds) {
+  if (freshness.basis === "observation" && refreshCadenceSeconds !== undefined && freshness.liveWithinSeconds < refreshCadenceSeconds) {
     issues.push(`${productKey}: would be marked stale before the provider has published again (live window ${freshness.liveWithinSeconds}s < cadence ${refreshCadenceSeconds}s)`);
   }
   if (product.maxBytes > MAX_RESPONSE_BYTES) {

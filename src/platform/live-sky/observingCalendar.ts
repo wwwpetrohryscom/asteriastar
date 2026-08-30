@@ -29,7 +29,7 @@ export const observingCalendar = {
   events: OBSERVING_EVENTS,
   envelope: referenceEnvelope({
     source: ["imo", "usno"], provider: "usno", confidence: "established",
-    provenance: "A month-by-month guide to recurring sky events (meteor-shower peaks, equinoxes, solstices). These recur annually; exact dates and times for a given year and location require a connected almanac provider and are not shown here.",
+    provenance: "A month-by-month guide to recurring sky events (meteor-shower peaks, equinoxes, solstices), deliberately without years \u2014 these recur annually and this structure describes the pattern. The dated calendar is at /events: equinoxes, solstices and lunar phases are computed there and checked on every build against the US Naval Observatory's and NASA's published instants, and shower peaks are dated per year from the same IMO working-list values used here.",
   }),
   /** Recurring events in a given month (1-12). */
   forMonth: (month: number): ObservingEvent[] => OBSERVING_EVENTS.filter((e) => e.month === month),

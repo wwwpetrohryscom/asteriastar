@@ -14,7 +14,7 @@ import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/js
 import { ROUTES, skyPath, meteorShowerPath } from "@/lib/routes";
 
 const s = engine.liveSky;
-const DESCRIPTION = "The recurring events of the observing year — meteor-shower peaks, equinoxes, and solstices — as a perennial guide. These recur annually; exact dates for a given year are prepared for a connected almanac.";
+const DESCRIPTION = "The recurring events of the observing year — meteor-shower peaks, equinoxes, and solstices — as a perennial guide, written without years because they recur. Dated instants for a given year are in the observing calendar.";
 export const metadata: Metadata = buildMetadata({ title: "Sky Events — The Observing Year", description: DESCRIPTION, path: skyPath("events") });
 
 export default function SkyEventsPage() {

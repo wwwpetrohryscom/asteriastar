@@ -422,6 +422,135 @@ async function main(): Promise<void> {
     check("the guard accepts a real product URL", good.ok === true, "it refused a legitimate URL");
   }
 
+  /* ------------------------------------------------ the calendar survives every provider dying */
+  {
+    const { buildCalendar, clearEventCache } = await import("../../src/platform/events/service");
+    clearCache();
+    clearEventCache();
+    // Every provider refuses at the transport layer: no eclipse catalogue, no launch schedule.
+    withStub(() => Promise.reject(new Error("network unreachable")));
+    const from = Date.UTC(2026, 0, 1);
+    const to = Date.UTC(2027, 0, 1);
+    const calendar = await buildCalendar(from, to);
+
+    check(
+      "a total provider outage still yields the computed calendar",
+      calendar.events.length > 100,
+      `only ${calendar.events.length} events survived an outage — the computed half needs no network at all`,
+    );
+    check(
+      "an outage never fabricates a source-backed event",
+      calendar.events.every((e) => e.basis === "computed" || e.basis === "forecast"),
+      "an event claiming a published or planned source appeared while every provider was down",
+    );
+    check(
+      "an outage is REPORTED as a gap, not left as an empty category",
+      calendar.gaps.some((g) => g.category === "eclipse") && calendar.gaps.some((g) => g.category === "launch"),
+      `gaps were ${JSON.stringify(calendar.gaps.map((g) => g.category))} — a reader seeing no eclipses must be able to tell why`,
+    );
+    check(
+      "a reported gap carries the provider's own reason",
+      calendar.gaps.every((g) => g.reason.length > 0),
+      "a gap was reported with no explanation",
+    );
+    check(
+      "an outage never yields a zero count dressed as a result",
+      !calendar.events.some((e) => e.category === "launch" || e.category === "eclipse"),
+      "an eclipse or launch event was produced while its provider was unreachable",
+    );
+
+    // The iCalendar export degrades the same way: smaller, never wrong.
+    const { toIcs } = await import("../../src/platform/events/ics");
+    const ics = toIcs(calendar.events, { pageUrl: "https://example.test/events", calendarName: "t", nowMs: from });
+    check(
+      "the calendar export survives an outage and stays well formed",
+      ics.startsWith("BEGIN:VCALENDAR\r\n") && ics.trimEnd().endsWith("END:VCALENDAR"),
+      "the export was malformed after a provider outage",
+    );
+    check(
+      "nothing unconfirmed leaves the export without being marked tentative",
+      (ics.match(/STATUS:TENTATIVE/g) ?? []).length === calendar.events.filter((e) => !e.confirmed).length,
+      "an unconfirmed event was exported as CONFIRMED",
+    );
+    restore();
+    clearCache();
+    clearEventCache();
+  }
+
+  /* ------------------------------------------------ an eclipse catalogue that changed shape */
+  {
+    const { parseSolarCatalogue } = await import("../../src/platform/events/eclipses");
+    const rows = Array.from({ length: 200 }, (_, i) => `0${9600 + i}  2030 Jan 01  00:00:00     80    400  100   P   --   0.0000  0.5000   0N   0E   0    0  00m00s`);
+    const healthy = parseSolarCatalogue(rows.join("\n"));
+    check("a well-formed catalogue parses", healthy.ok === true, "the fixture no longer parses");
+
+    // One row in the shape of an entry that the parser cannot read. The whole response must be
+    // refused: skipping it would delete an eclipse from the calendar without any other symptom.
+    const damaged = parseSolarCatalogue([...rows, "09999  2031 Feb 03  QQ:QQ:QQ  nonsense"].join("\n"));
+    check(
+      "a catalogue row that cannot be read fails the whole response",
+      damaged.ok === false,
+      "an unreadable eclipse row was silently skipped, which would delete an eclipse invisibly",
+    );
+  }
+
+  /* ------------------------------------------------ a launch feed carrying hostile strings */
+  {
+    const { parseLaunches, launchEvents } = await import("../../src/platform/events/launches");
+    const { toIcs } = await import("../../src/platform/events/ics");
+    const toIcsForTest = (events: Parameters<typeof toIcs>[0]) => toIcs(events, { pageUrl: "https://example.test/events", calendarName: "t", nowMs: Date.UTC(2027, 0, 1) });
+    const hostile = {
+      results: [
+        {
+          id: "x".repeat(400),
+          name: "<img src=x onerror=alert(1)>",
+          net: "2027-05-05T00:00:00Z",
+          net_precision: { name: "Fortnight" },
+          last_updated: "2027-01-01T00:00:00Z",
+          pad: "A".repeat(5000),
+          url: "javascript:alert(1)",
+        },
+      ],
+    };
+    const parsed = parseLaunches(hostile);
+    check(
+      "a launch row whose identifier had to be truncated is dropped, not given a colliding key",
+      parsed.ok === false,
+      "an overlong identifier survived as a truncated one, which two rows could share",
+    );
+
+    // The same feed with a real identifier: everything else must still be bounded and defanged.
+    const bounded = parseLaunches({ results: [{ ...hostile.results[0], id: "8f14e45f-ceea-467a-9f5a-9b1c0a7f3a11" }] });
+    check("a hostile launch feed still parses into bounded values", bounded.ok === true, "the parser refused a feed it should have normalised");
+    if (bounded.ok) {
+      const launch = bounded.value.launches[0];
+      // `line` marks a shortened string with a single ellipsis character, so the ceiling is the
+      // declared limit plus that marker — the point is that an unbounded provider string cannot
+      // reach a page or an API response.
+      check("an oversized field is bounded", (launch.pad ?? "").length <= 161, `pad was ${(launch.pad ?? "").length} characters`);
+      check("a javascript: URL never reaches the page", launch.detailUrl === undefined, `detailUrl was ${launch.detailUrl}`);
+      check(
+        "an unknown precision vocabulary degrades rather than throwing",
+        launch.precision === "day" && launch.netPrecision === "Fortnight",
+        `precision was ${launch.precision} from provider word ${launch.netPrecision}`,
+      );
+      const [event] = launchEvents(bounded.value, Date.UTC(2027, 0, 1), Date.UTC(2028, 0, 1), Date.UTC(2027, 3, 1));
+      check("a launch from a hostile feed is still never confirmed", event.confirmed === false, "a hostile feed produced a confirmed event");
+      check(
+        "provider markup is carried as inert text, never stripped into something that looks safe",
+        event.title === "<img src=x onerror=alert(1)>",
+        `the title became ${event.title} — the value must be preserved verbatim and escaped by the renderer, not silently rewritten`,
+      );
+      // And it must be escaped on the way out of the calendar file, where there is no React to do it.
+      const ics = toIcsForTest([event]);
+      check(
+        "provider text is escaped in the calendar export",
+        ics.includes("SUMMARY:<img src=x onerror=alert(1)> [Planned]") && !ics.includes("\n<img"),
+        "a provider string reached the iCalendar body unescaped",
+      );
+    }
+  }
+
   /* ---------------------------------------------------------------------------------- report */
   restore();
   if (failures.length > 0) {
@@ -429,7 +558,7 @@ async function main(): Promise<void> {
     for (const f of failures) console.error(`  • ${f}`);
     process.exit(1);
   }
-  console.log(`✓ Failure modes handled — ${passed.length} cases: provider down, HTTP error, HTML answer, malformed JSON, schema change, a parser that throws, oversized response, future timestamp, a body that dies mid-stream, the stale-cache fallback surviving re-ageing, a forecast never badged as an observation, a single-request provider never asked twice at once, a failing provider backed off rather than stormed, a render budget bounding a serialised provider, an outage never becoming a zero, no substitution, and seven unsafe URLs refused.`);
+  console.log(`✓ Failure modes handled — ${passed.length} cases: provider down, HTTP error, HTML answer, malformed JSON, schema change, a parser that throws, oversized response, future timestamp, a body that dies mid-stream, the stale-cache fallback surviving re-ageing, a forecast never badged as an observation, a single-request provider never asked twice at once, a failing provider backed off rather than stormed, a render budget bounding a serialised provider, an outage never becoming a zero, no substitution, and seven unsafe URLs refused. The observing calendar keeps its computed half through a total provider outage, reports the missing categories rather than emptying them, refuses an eclipse catalogue whose columns moved, and bounds every string a launch feed sends.`);
 }
 
 void main();

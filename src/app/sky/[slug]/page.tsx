@@ -196,7 +196,11 @@ function ReferenceBlock({ content }: { content: string }) {
     const byMonth = Array.from({ length: 12 }, (_, i) => ({ m: i + 1, events: s.observingCalendar.forMonth(i + 1) })).filter((x) => x.events.length);
     return (
       <SkySection id="calendar" title="A month-by-month guide">
-        <p className="mb-4 text-sm text-muted">Recurring sky events by month. These repeat annually; exact dates and times for your year and location are prepared for a connected almanac provider.</p>
+        <p className="mb-4 text-sm text-muted">
+          Recurring sky events by month, written without years because they repeat. Dated instants for a
+          given year — computed here and checked against NASA and US Naval Observatory tables — are in
+          the <Link href={ROUTES.events} className="text-nasa underline-offset-4 hover:underline">observing calendar</Link>.
+        </p>
         <div className="space-y-4">
           {byMonth.map(({ m, events }) => (
             <div key={m} className="scientific-card p-4">

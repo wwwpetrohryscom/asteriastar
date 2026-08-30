@@ -69,7 +69,8 @@ export type ProviderKey =
   | "minor-planet-center"
   | "imo"
   | "usno"
-  | "eclipse-catalogue";
+  | "eclipse-catalogue"
+  | "launch-library";
 
 /** A value together with its provenance envelope. `data` is null when nothing has been generated. */
 export interface Enveloped<T> {

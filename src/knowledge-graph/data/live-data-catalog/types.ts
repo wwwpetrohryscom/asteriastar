@@ -24,9 +24,11 @@ export type LiveCategory =
   | "solar-activity" // flares, CMEs, SEP events
   | "near-earth-object" // NEO close approaches
   | "orbital" // satellite / ISS orbital elements
-  | "atmospheric"; // weather, seeing, transparency, sky brightness
+  | "atmospheric" // weather, seeing, transparency, sky brightness
+  | "events"; // dated astronomical events: eclipse catalogues, launch schedules
 
 export const CATEGORY_LABEL: Record<LiveCategory, string> = {
+  events: "Astronomical events",
   "space-weather": "Space weather",
   "solar-activity": "Solar activity",
   "near-earth-object": "Near-Earth objects",

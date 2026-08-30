@@ -22,6 +22,7 @@ export type SourceKey =
   | "mpc"
   | "usno"
   | "imo"
+  | "thespacedevs"
   | "noirlab"
   | "eso"
   | "simbad"
@@ -62,6 +63,8 @@ export type SourceKey =
 /** The kind of authority a source carries — used for evidence weighting. */
 export type AuthorityType =
   | "space-agency"
+  /** Maintained by volunteers rather than an institution. Useful, and never presented as official. */
+  | "community"
   | "observatory"
   | "database"
   | "union"
@@ -196,6 +199,17 @@ export const SOURCES: Record<SourceKey, Source> = {
     country: "United States",
     authorityType: "observatory",
     reliability: "Authoritative for precise time and almanac computations.",
+  },
+  thespacedevs: {
+    key: "thespacedevs",
+    name: "Launch Library",
+    organization: "The Space Devs",
+    url: "https://thespacedevs.com/llapi",
+    scope: "Aggregated schedule of upcoming and past orbital launches, compiled from operator and agency announcements.",
+    country: "International",
+    authorityType: "community",
+    reliability:
+      "A community-maintained aggregator, not a space agency and not an operator. It is the most complete open launch schedule available, and it records how precisely each date is known and when each entry was last confirmed \u2014 which is what makes it usable honestly. Launch dates are intentions and move constantly.",
   },
   imo: {
     key: "imo",
@@ -562,6 +576,7 @@ export const AUTHORITY_TYPE_LABELS: Record<AuthorityType, string> = {
   literature: "Peer-reviewed literature",
   reference: "Reference work",
   media: "Media repository",
+  community: "Community-maintained project",
 };
 
 export function getSource(key: SourceKey): Source {

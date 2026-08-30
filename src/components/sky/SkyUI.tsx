@@ -53,7 +53,19 @@ export function SourceLabel({ sources }: { sources: readonly SourceKey[] }) {
  * provider not being connected are two different facts, so the panel now states the first and, when
  * a listed provider is connected, says where its values actually are.
  */
-export function PreparedForIntegration({ providers, envelope }: { providers: ProviderInfo[]; envelope?: SkyEnvelope }) {
+export function PreparedForIntegration({
+  providers,
+  envelope,
+  counterpart = { href: "/space-weather", label: "space-weather section" },
+}: {
+  providers: ProviderInfo[];
+  envelope?: SkyEnvelope;
+  /**
+   * Where the working counterpart of this reference page lives. Not every one is space weather, and
+   * pass `undefined` when there genuinely is none.
+   */
+  counterpart?: { href: string; label: string };
+}) {
   const connected = providers.filter((p) => p.status === "connected");
   return (
     <aside role="note" className="rounded-2xl border border-nasa/40 bg-nasa/10 p-5">
@@ -61,12 +73,25 @@ export function PreparedForIntegration({ providers, envelope }: { providers: Pro
         <DataStatusBadge status="prepared" />
         <span className="text-sm font-semibold text-nasa">This page shows no live values</span>
       </div>
-      {connected.length > 0 && (
+      {/*
+        The pointer to the working counterpart is NOT conditional on a provider being connected.
+        It used to be, and the result was that `/sky/this-month` — whose only listed provider is an
+        almanac that is still planned — told a reader nothing was available while `/events/this-month`
+        served fifteen dated events one click away. What makes the counterpart real is that the page
+        exists, not that this particular page's provider list happens to contain a connected entry.
+      */}
+      {counterpart && (
         <p className="mt-2 text-sm leading-relaxed text-muted">
-          {connected.length === 1 ? `${connected[0].name} is` : `${connected.map((p) => p.name).join(" and ")} are`} connected, and{" "}
-          {connected.length === 1 ? "its" : "their"} current values are served — with the provider&apos;s own timestamps — in the{" "}
-          <Link href="/space-weather" className="text-nasa underline-offset-4 hover:underline">space-weather section</Link>. This page is
-          the reference material behind them.
+          Dated, current values for this subject are served in the{" "}
+          <Link href={counterpart.href} className="text-nasa underline-offset-4 hover:underline">{counterpart.label}</Link>. This
+          page is the reference material behind them.
+          {connected.length > 0 && (
+            <>
+              {" "}
+              {connected.length === 1 ? `${connected[0].name} is` : `${connected.map((p) => p.name).join(" and ")} are`} connected
+              there, with the provider&apos;s own timestamps.
+            </>
+          )}
         </p>
       )}
       <p className="mt-2 text-sm leading-relaxed text-muted">

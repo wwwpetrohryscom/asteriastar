@@ -1,0 +1,917 @@
+{
+  "fetchedAt": "2026-08-30T00:46:23Z",
+  "moonPhases": {
+    "sourceUrl": "https://eclipse.gsfc.nasa.gov/phase/phases2001.html",
+    "publisher": "NASA/GSFC Eclipse Web Site (Fred Espenak) \u2014 Phases of the Moon, Universal Time",
+    "entries": [
+      {
+        "type": "full-moon",
+        "utc": "2026-01-03T10:03Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2026-01-10T15:48Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2026-01-18T19:52Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2026-01-26T04:47Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2026-02-01T22:09Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2026-02-09T12:43Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2026-02-17T12:01Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2026-02-24T12:28Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2026-03-03T11:38Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2026-03-11T09:39Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2026-03-19T01:23Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2026-03-25T19:18Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2026-04-02T02:12Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2026-04-10T04:52Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2026-04-17T11:52Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2026-04-24T02:32Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2026-05-01T17:23Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2026-05-09T21:10Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2026-05-16T20:01Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2026-05-23T11:11Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2026-05-31T08:45Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2026-06-08T10:00Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2026-06-15T02:54Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2026-06-21T21:55Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2026-06-29T23:57Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2026-07-07T19:29Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2026-07-14T09:43Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2026-07-21T11:06Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2026-07-29T14:36Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2026-08-06T02:21Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2026-08-12T17:37Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2026-08-20T02:46Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2026-08-28T04:18Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2026-09-04T07:51Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2026-09-11T03:27Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2026-09-18T20:44Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2026-09-26T16:49Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2026-10-03T13:25Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2026-10-10T15:50Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2026-10-18T16:13Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2026-10-26T04:12Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2026-11-01T20:28Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2026-11-09T07:02Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2026-11-17T11:48Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2026-11-24T14:53Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2026-12-01T06:09Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2026-12-09T00:52Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2026-12-17T05:43Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2026-12-24T01:28Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2026-12-30T18:59Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2027-01-07T20:24Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2027-01-15T20:34Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2027-01-22T12:17Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2027-01-29T10:55Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2027-02-06T15:56Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2027-02-14T07:58Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2027-02-20T23:23Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2027-02-28T05:16Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2027-03-08T09:29Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2027-03-15T16:25Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2027-03-22T10:44Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2027-03-30T00:54Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2027-04-06T23:51Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2027-04-13T22:57Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2027-04-20T22:27Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2027-04-28T20:18Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2027-05-06T10:58Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2027-05-13T04:44Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2027-05-20T10:59Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2027-05-28T13:58Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2027-06-04T19:40Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2027-06-11T10:56Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2027-06-19T00:44Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2027-06-27T04:54Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2027-07-04T03:02Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2027-07-10T18:39Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2027-07-18T15:45Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2027-07-26T16:55Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2027-08-02T10:05Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2027-08-09T04:54Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2027-08-17T07:29Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2027-08-25T02:27Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2027-08-31T17:41Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2027-09-07T18:31Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2027-09-15T23:04Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2027-09-23T10:20Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2027-09-30T02:36Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2027-10-07T11:47Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2027-10-15T13:47Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2027-10-22T17:29Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2027-10-29T13:36Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2027-11-06T08:00Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2027-11-14T03:26Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2027-11-21T00:48Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2027-11-28T03:24Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2027-12-06T05:22Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2027-12-13T16:09Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2027-12-20T09:11Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2027-12-27T20:12Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2028-01-05T01:40Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2028-01-12T04:03Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2028-01-18T19:26Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2028-01-26T15:12Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2028-02-03T19:10Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2028-02-10T15:04Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2028-02-17T08:08Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2028-02-25T10:37Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2028-03-04T09:02Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2028-03-11T01:06Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2028-03-17T23:23Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2028-03-26T04:31Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2028-04-02T19:15Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2028-04-09T10:27Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2028-04-16T16:37Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2028-04-24T19:47Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2028-05-02T02:26Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2028-05-08T19:49Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2028-05-16T10:43Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2028-05-24T08:16Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2028-05-31T07:37Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2028-06-07T06:09Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2028-06-15T04:27Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2028-06-22T18:27Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2028-06-29T12:10Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2028-07-06T18:11Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2028-07-14T20:57Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2028-07-22T03:02Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2028-07-28T17:40Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2028-08-05T08:10Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2028-08-13T11:45Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2028-08-20T10:44Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2028-08-27T01:36Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2028-09-03T23:48Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2028-09-12T00:46Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2028-09-18T18:24Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2028-09-25T13:10Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2028-10-03T16:25Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2028-10-11T11:57Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2028-10-18T02:57Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2028-10-25T04:53Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2028-11-02T09:17Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2028-11-09T21:26Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2028-11-16T13:18Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2028-11-24T00:15Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2028-12-02T01:40Z"
+      },
+      {
+        "type": "last-quarter-moon",
+        "utc": "2028-12-09T05:39Z"
+      },
+      {
+        "type": "new-moon",
+        "utc": "2028-12-16T02:06Z"
+      },
+      {
+        "type": "first-quarter-moon",
+        "utc": "2028-12-23T21:45Z"
+      },
+      {
+        "type": "full-moon",
+        "utc": "2028-12-31T16:48Z"
+      }
+    ],
+    "note": "Universal Time, to the minute, as NASA publishes them."
+  },
+  "seasons": {
+    "sourceUrl": "https://aa.usno.navy.mil/api/seasons",
+    "publisher": "US Naval Observatory, Astronomical Applications Department \u2014 Earth's Seasons API (UT1)",
+    "entries": [
+      {
+        "phenom": "Perihelion",
+        "utc": "2026-01-03T17:15Z"
+      },
+      {
+        "phenom": "Equinox",
+        "utc": "2026-03-20T14:46Z"
+      },
+      {
+        "phenom": "Solstice",
+        "utc": "2026-06-21T08:24Z"
+      },
+      {
+        "phenom": "Aphelion",
+        "utc": "2026-07-06T17:30Z"
+      },
+      {
+        "phenom": "Equinox",
+        "utc": "2026-09-23T00:05Z"
+      },
+      {
+        "phenom": "Solstice",
+        "utc": "2026-12-21T20:50Z"
+      },
+      {
+        "phenom": "Perihelion",
+        "utc": "2027-01-03T02:33Z"
+      },
+      {
+        "phenom": "Equinox",
+        "utc": "2027-03-20T20:25Z"
+      },
+      {
+        "phenom": "Solstice",
+        "utc": "2027-06-21T14:11Z"
+      },
+      {
+        "phenom": "Aphelion",
+        "utc": "2027-07-05T05:06Z"
+      },
+      {
+        "phenom": "Equinox",
+        "utc": "2027-09-23T06:02Z"
+      },
+      {
+        "phenom": "Solstice",
+        "utc": "2027-12-22T02:42Z"
+      },
+      {
+        "phenom": "Perihelion",
+        "utc": "2028-01-05T12:28Z"
+      },
+      {
+        "phenom": "Equinox",
+        "utc": "2028-03-20T02:17Z"
+      },
+      {
+        "phenom": "Solstice",
+        "utc": "2028-06-20T20:02Z"
+      },
+      {
+        "phenom": "Aphelion",
+        "utc": "2028-07-03T22:18Z"
+      },
+      {
+        "phenom": "Equinox",
+        "utc": "2028-09-22T11:45Z"
+      },
+      {
+        "phenom": "Solstice",
+        "utc": "2028-12-21T08:19Z"
+      }
+    ],
+    "note": "UT1, to the minute. The USNO API reports Equinox and Solstice without saying which one; the gate matches them by month, which is unambiguous for a single year."
+  },
+  "note": "Independent published instants used to measure the accuracy of AsteriaStar's computed events. Fetched once from the publishers named below and pinned here so the gate is offline and deterministic: a validator that reached the network would fail when a government site was briefly down, and would train everyone to ignore it. Regenerate with scripts/events/fetch-reference.ts when extending the range.",
+  "positions": {
+    "sourceUrl": "https://ssd.jpl.nasa.gov/api/horizons.api",
+    "publisher": "NASA/JPL Solar System Dynamics \u2014 Horizons system, geometric geocentric vectors (VEC_CORR='NONE') in the J2000 ecliptic",
+    "note": "Geometric positions, uncorrected for light-time and aberration, which is what the platform's series produces and therefore what it may honestly be compared against. Horizons epochs are TDB and the gate treats them as UTC; the ~70 s difference moves the fastest body here by about three arcseconds, two orders of magnitude below the tolerance.",
+    "entries": [
+      {
+        "body": "mercury",
+        "epochTdb": "2026-03-15T00:00:00Z",
+        "longitudeJ2000Deg": 339.867752,
+        "latitudeJ2000Deg": 2.414054,
+        "distanceAu": 0.634425388
+      },
+      {
+        "body": "mercury",
+        "epochTdb": "2026-09-01T12:00:00Z",
+        "longitudeJ2000Deg": 163.278937,
+        "latitudeJ2000Deg": 1.544175,
+        "distanceAu": 1.377420398
+      },
+      {
+        "body": "mercury",
+        "epochTdb": "2027-05-20T06:00:00Z",
+        "longitudeJ2000Deg": 79.346611,
+        "latitudeJ2000Deg": 2.338521,
+        "distanceAu": 0.994790281
+      },
+      {
+        "body": "mercury",
+        "epochTdb": "2028-01-10T18:00:00Z",
+        "longitudeJ2000Deg": 306.52522,
+        "latitudeJ2000Deg": -1.596961,
+        "distanceAu": 1.148387646
+      },
+      {
+        "body": "venus",
+        "epochTdb": "2026-03-15T00:00:00Z",
+        "longitudeJ2000Deg": 10.26818,
+        "latitudeJ2000Deg": -1.047739,
+        "distanceAu": 1.623029831
+      },
+      {
+        "body": "venus",
+        "epochTdb": "2026-09-01T12:00:00Z",
+        "longitudeJ2000Deg": 203.196218,
+        "latitudeJ2000Deg": -3.450796,
+        "distanceAu": 0.550483104
+      },
+      {
+        "body": "venus",
+        "epochTdb": "2027-05-20T06:00:00Z",
+        "longitudeJ2000Deg": 36.157463,
+        "latitudeJ2000Deg": -1.521693,
+        "distanceAu": 1.548605831
+      },
+      {
+        "body": "venus",
+        "epochTdb": "2028-01-10T18:00:00Z",
+        "longitudeJ2000Deg": 326.510315,
+        "latitudeJ2000Deg": -1.678198,
+        "distanceAu": 1.206503834
+      },
+      {
+        "body": "mars",
+        "epochTdb": "2026-03-15T00:00:00Z",
+        "longitudeJ2000Deg": 339.413878,
+        "latitudeJ2000Deg": -1.085173,
+        "distanceAu": 2.320978332
+      },
+      {
+        "body": "mars",
+        "epochTdb": "2026-09-01T12:00:00Z",
+        "longitudeJ2000Deg": 103.341774,
+        "latitudeJ2000Deg": 0.538756,
+        "distanceAu": 1.847409207
+      },
+      {
+        "body": "mars",
+        "epochTdb": "2027-05-20T06:00:00Z",
+        "longitudeJ2000Deg": 151.784965,
+        "latitudeJ2000Deg": 1.560701,
+        "distanceAu": 1.233693079
+      },
+      {
+        "body": "mars",
+        "epochTdb": "2028-01-10T18:00:00Z",
+        "longitudeJ2000Deg": 305.17386,
+        "latitudeJ2000Deg": -1.106821,
+        "distanceAu": 2.310214655
+      },
+      {
+        "body": "jupiter",
+        "epochTdb": "2026-03-15T00:00:00Z",
+        "longitudeJ2000Deg": 104.743903,
+        "latitudeJ2000Deg": 0.354884,
+        "distanceAu": 4.803565691
+      },
+      {
+        "body": "jupiter",
+        "epochTdb": "2026-09-01T12:00:00Z",
+        "longitudeJ2000Deg": 133.436888,
+        "latitudeJ2000Deg": 0.527841,
+        "distanceAu": 6.19229373
+      },
+      {
+        "body": "jupiter",
+        "epochTdb": "2027-05-20T06:00:00Z",
+        "longitudeJ2000Deg": 138.647668,
+        "latitudeJ2000Deg": 0.965693,
+        "distanceAu": 5.457162709
+      },
+      {
+        "body": "jupiter",
+        "epochTdb": "2028-01-10T18:00:00Z",
+        "longitudeJ2000Deg": 177.112294,
+        "latitudeJ2000Deg": 1.309592,
+        "distanceAu": 4.971565094
+      },
+      {
+        "body": "saturn",
+        "epochTdb": "2026-03-15T00:00:00Z",
+        "longitudeJ2000Deg": 3.068769,
+        "latitudeJ2000Deg": -2.124256,
+        "distanceAu": 10.476052945
+      },
+      {
+        "body": "saturn",
+        "epochTdb": "2026-09-01T12:00:00Z",
+        "longitudeJ2000Deg": 13.274402,
+        "latitudeJ2000Deg": -2.654247,
+        "distanceAu": 8.596070671
+      },
+      {
+        "body": "saturn",
+        "epochTdb": "2027-05-20T06:00:00Z",
+        "longitudeJ2000Deg": 22.427457,
+        "latitudeJ2000Deg": -2.284884,
+        "distanceAu": 10.161699421
+      },
+      {
+        "body": "saturn",
+        "epochTdb": "2028-01-10T18:00:00Z",
+        "longitudeJ2000Deg": 20.914355,
+        "latitudeJ2000Deg": -2.503262,
+        "distanceAu": 9.223257582
+      },
+      {
+        "body": "uranus",
+        "epochTdb": "2026-03-15T00:00:00Z",
+        "longitudeJ2000Deg": 57.747656,
+        "latitudeJ2000Deg": -0.178473,
+        "distanceAu": 19.897337265
+      },
+      {
+        "body": "uranus",
+        "epochTdb": "2026-09-01T12:00:00Z",
+        "longitudeJ2000Deg": 65.285706,
+        "latitudeJ2000Deg": -0.157456,
+        "distanceAu": 19.360275996
+      },
+      {
+        "body": "uranus",
+        "epochTdb": "2027-05-20T06:00:00Z",
+        "longitudeJ2000Deg": 64.972664,
+        "latitudeJ2000Deg": -0.111474,
+        "distanceAu": 20.404314501
+      },
+      {
+        "body": "uranus",
+        "epochTdb": "2028-01-10T18:00:00Z",
+        "longitudeJ2000Deg": 66.001054,
+        "latitudeJ2000Deg": -0.083806,
+        "distanceAu": 18.631646069
+      },
+      {
+        "body": "neptune",
+        "epochTdb": "2026-03-15T00:00:00Z",
+        "longitudeJ2000Deg": 1.199867,
+        "latitudeJ2000Deg": -1.306166,
+        "distanceAu": 30.869061352
+      },
+      {
+        "body": "neptune",
+        "epochTdb": "2026-09-01T12:00:00Z",
+        "longitudeJ2000Deg": 3.274605,
+        "latitudeJ2000Deg": -1.413292,
+        "distanceAu": 28.958266088
+      },
+      {
+        "body": "neptune",
+        "epochTdb": "2027-05-20T06:00:00Z",
+        "longitudeJ2000Deg": 5.599755,
+        "latitudeJ2000Deg": -1.372792,
+        "distanceAu": 30.469856096
+      },
+      {
+        "body": "neptune",
+        "epochTdb": "2028-01-10T18:00:00Z",
+        "longitudeJ2000Deg": 3.659468,
+        "latitudeJ2000Deg": -1.414467,
+        "distanceAu": 30.123147956
+      },
+      {
+        "body": "sun",
+        "epochTdb": "2026-03-15T00:00:00Z",
+        "longitudeJ2000Deg": 354.046839,
+        "latitudeJ2000Deg": -5.5e-05,
+        "distanceAu": 0.994363507
+      },
+      {
+        "body": "sun",
+        "epochTdb": "2026-09-01T12:00:00Z",
+        "longitudeJ2000Deg": 158.706718,
+        "latitudeJ2000Deg": -0.000789,
+        "distanceAu": 1.009181367
+      },
+      {
+        "body": "sun",
+        "epochTdb": "2027-05-20T06:00:00Z",
+        "longitudeJ2000Deg": 58.645097,
+        "latitudeJ2000Deg": -0.003414,
+        "distanceAu": 1.011773676
+      },
+      {
+        "body": "sun",
+        "epochTdb": "2028-01-10T18:00:00Z",
+        "longitudeJ2000Deg": 289.622815,
+        "latitudeJ2000Deg": 0.003427,
+        "distanceAu": 0.983385016
+      }
+    ]
+  }
+}
