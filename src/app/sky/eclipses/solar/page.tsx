@@ -14,7 +14,7 @@ import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, type Crumb } from "@/lib/seo/jsonld";
 import { absoluteUrl, ROUTES, skyPath } from "@/lib/routes";
 
-const DESCRIPTION = "Solar eclipses — total, annular, partial, and hybrid — with the geometry behind each and essential eye-safety guidance. Specific dates and paths of totality are prepared for published NASA predictions; none are fabricated.";
+const DESCRIPTION = "Solar eclipses — total, annular, partial, and hybrid — with the geometry behind each and essential eye-safety guidance. Dated solar eclipses are in the observing calendar, from NASA's Five Millennium Catalog; paths of totality remain on NASA's own maps.";
 export const metadata: Metadata = buildMetadata({ title: "Solar Eclipses — Types & Safety", description: DESCRIPTION, path: skyPath("eclipses/solar") });
 
 export default function SolarEclipsesPage() {

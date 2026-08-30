@@ -234,7 +234,7 @@ export interface LiveProviderReport {
     label: string;
     url: string;
     cacheSeconds: number;
-    refreshCadenceSeconds: number;
+    refreshCadenceSeconds?: number;
     staleAfterSeconds: number;
     health?: ProviderHealth;
   }[];

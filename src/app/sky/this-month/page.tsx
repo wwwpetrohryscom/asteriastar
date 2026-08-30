@@ -28,7 +28,7 @@ export default function ThisMonthPage() {
         <div className="mt-4 flex flex-wrap items-center gap-2"><Badge tone="accent">Night Sky</Badge><DataStatusBadge status="prepared" /></div>
       </HeroSection>
       <Container className="mt-8 mb-14 max-w-3xl space-y-8">
-        <PreparedForIntegration providers={provider ? [provider] : []} envelope={undefined} />
+        <PreparedForIntegration providers={provider ? [provider] : []} envelope={undefined} counterpart={{ href: "/events/this-month", label: "observing calendar" }} />
         <SkySection id="planning" title="Planning an observing month">
           <p className="leading-relaxed text-muted">To plan a month of observing: check the Moon&apos;s phase (a bright Moon washes out faint objects and meteors), note any meteor-shower peaks, and find a dark site with a clear horizon in the right direction. The highlights of the year fall in these months:</p>
           <div className="mt-4 space-y-4">

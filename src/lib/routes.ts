@@ -110,6 +110,8 @@ export const ROUTES = {
   spaceWeather: "/space-weather",
   /** Program CK — operational near-Earth-object intelligence, backed by live JPL/CNEOS and MPC data. */
   neo: "/neo",
+  /** Program CM — the dated observing calendar: computed instants, NASA eclipse predictions, launches. */
+  events: "/events",
 } as const;
 
 /** Rockets & Launch Vehicles encyclopedia (Program V). */
@@ -747,6 +749,30 @@ export function satelliteLivePath(slug: SatelliteLiveSlug): string {
 }
 export const SATELLITE_LIVE_SLUGS = ["live", "iss", "passes", "bright", "constellations/live"] as const;
 export type SatelliteLiveSlug = (typeof SATELLITE_LIVE_SLUGS)[number];
+
+/**
+ * The observing calendar (Program CM).
+ *
+ * These are evergreen hubs, not query results: `/events/this-week` names a window rather than
+ * carrying one, so the address bar never accumulates a date, a latitude or a filter. Everything a
+ * reader narrows down happens in the browser, and the calendar file is a route of its own rather
+ * than a parameterised download.
+ */
+export function eventsPath(slug: EventsSlug): string {
+  return `/events/${slug}`;
+}
+export const EVENTS_SLUGS = [
+  "today",
+  "this-week",
+  "this-month",
+  "eclipses",
+  "meteor-showers",
+  "conjunctions",
+  "oppositions",
+  "moon",
+  "launches",
+] as const;
+export type EventsSlug = (typeof EVENTS_SLUGS)[number];
 export function universeScenePath(slug: string): string {
   return `/universe-3d/${slug}`;
 }

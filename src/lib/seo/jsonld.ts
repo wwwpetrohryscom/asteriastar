@@ -275,3 +275,65 @@ export function datasetSchema(input: {
     includedInDataCatalog: { "@type": "DataCatalog", "@id": ORG_ID },
   };
 }
+
+/**
+ * An `Event` node for a single astronomical event.
+ *
+ * Emitted under two conditions, and both are about being able to fill the field honestly.
+ *
+ * The date must be settled and known to the minute — a computed instant or a published prediction.
+ * A planned launch and an annual shower forecast are deliberately absent, because `Event.startDate`
+ * has no way to say "the provider thinks the second quarter" and a consumer reading a fixed
+ * timestamp would be entitled to treat an intention as an appointment.
+ *
+ * And there must be a real `location`. Consumers of this vocabulary — Google's among them — treat
+ * `location` as required, so a node without one is markup that can only fail validation while
+ * producing nothing. The honest way to satisfy that is not to invent a venue: it is to emit the node
+ * ONLY where an authority publishes a point on Earth. NASA's eclipse catalogue does, for every
+ * eclipse; nothing else here does, so nothing else is emitted. A full Moon happens to the whole
+ * planet at once, and naming a place for it would be a fabricated fact in machine-readable form —
+ * which is worse than silence, because nobody reads it.
+ */
+export function astronomicalEventSchema(input: {
+  name: string;
+  description: string;
+  startDate: string;
+  endDate?: string;
+  url: string;
+  /** The published point associated with the event. Required: see above. */
+  geo: { latitudeDeg: number; longitudeDeg: number; name: string };
+  /** The authority behind the published prediction. */
+  sourceName?: string;
+  sourceUrl?: string;
+}): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    name: input.name,
+    description: input.description,
+    startDate: input.startDate,
+    ...(input.endDate ? { endDate: input.endDate } : {}),
+    eventStatus: "https://schema.org/EventScheduled",
+    location: {
+      "@type": "Place",
+      name: input.geo.name,
+      geo: { "@type": "GeoCoordinates", latitude: input.geo.latitudeDeg, longitude: input.geo.longitudeDeg },
+    },
+    url: absoluteUrl(input.url),
+    ...(input.sourceName
+      ? { subjectOf: { "@type": "CreativeWork", name: input.sourceName, ...(input.sourceUrl ? { url: input.sourceUrl } : {}) } }
+      : {}),
+  };
+}
+
+/** An `ItemList` of events, in the order the page presents them. */
+export function eventListSchema(input: { name: string; url: string; events: JsonLd[] }): JsonLd {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: input.name,
+    url: absoluteUrl(input.url),
+    numberOfItems: input.events.length,
+    itemListElement: input.events.map((event, index) => ({ "@type": "ListItem", position: index + 1, item: event })),
+  };
+}

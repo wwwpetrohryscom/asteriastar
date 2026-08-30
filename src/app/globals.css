@@ -307,3 +307,50 @@
     will-change: auto;
   }
 }
+
+/*
+ * Printing the observing calendar.
+ *
+ * A calendar is a thing people take outside on paper, and the dark theme this site is designed
+ * around is unreadable on a printer and wasteful of ink. Printing therefore inverts to black on
+ * white, drops the chrome that carries no information on paper, and keeps an event from being split
+ * across a page break.
+ *
+ * What it deliberately does NOT do is try to force open every `<details>` block. There is no
+ * reliable cross-browser way to do that in CSS alone, and a rule that works in one engine and
+ * silently fails in another would produce printouts missing the provenance without anyone noticing.
+ * The fix is in the markup instead: an event's basis, its date, and its UNCERTAINTY are always
+ * visible, on screen and on paper. Only the fuller method-and-source panel is behind a disclosure,
+ * and its link is printed with its URL expanded so a reader on paper can still reach it.
+ *
+ * Scoped to `.printable-calendar` so no other page's layout is affected.
+ */
+@media print {
+  .printable-calendar,
+  .printable-calendar * {
+    background: #fff !important;
+    color: #000 !important;
+    border-color: #999 !important;
+    box-shadow: none !important;
+  }
+
+  .printable-calendar [data-print="hide"] {
+    display: none !important;
+  }
+
+  .printable-calendar details > summary {
+    list-style: none;
+    font-weight: 600;
+  }
+
+  .printable-calendar li {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+
+  .printable-calendar a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75em;
+    word-break: break-all;
+  }
+}

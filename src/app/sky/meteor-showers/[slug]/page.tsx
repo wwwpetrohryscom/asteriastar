@@ -58,7 +58,7 @@ export default async function MeteorShowerPage({ params }: PageProps<"/sky/meteo
           <div className="min-w-0 space-y-10">
             <SkySection id="about" title="About the shower"><p className="leading-relaxed text-muted">{m.description}</p></SkySection>
             <SkySection id="observing" title="Observing notes">
-              <p className="leading-relaxed text-muted">The {m.name} radiate from {r.radiant?.name ?? m.radiantConstellationId.replace("constellation:", "")}. For the best view, find a dark site away from city lights, let your eyes adapt for 20 minutes, and look up broadly rather than at the radiant itself. The listed rate is an ideal maximum under a dark sky; moonlight and light pollution reduce it. Exact peak dates and Moon interference for a given year require a connected almanac.</p>
+              <p className="leading-relaxed text-muted">The {m.name} radiate from {r.radiant?.name ?? m.radiantConstellationId.replace("constellation:", "")}. For the best view, find a dark site away from city lights, let your eyes adapt for 20 minutes, and look up broadly rather than at the radiant itself. The listed rate is an ideal maximum under a dark sky; moonlight and light pollution reduce it. The dated peak night for each coming year, with the Moon&apos;s illumination on that night worked out, is on the observing calendar.</p>
             </SkySection>
             {r.related.length > 0 && <SkySection id="graph" title="In the Knowledge Graph"><RefCards refs={r.related} /></SkySection>}
             <SourceList keys={["imo"]} title="Sources & references" />

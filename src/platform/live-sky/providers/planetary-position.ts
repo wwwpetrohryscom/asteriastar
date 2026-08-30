@@ -32,8 +32,14 @@ const norm360 = (x: number): number => ((x % 360) + 360) % 360;
 const norm180 = (x: number): number => norm360(x + 180) - 180;
 const clamp1 = (x: number): number => Math.max(-1, Math.min(1, x));
 
-/** Obliquity of the ecliptic at J2000.0 (degrees). */
-const OBLIQUITY = 23.43928;
+/**
+ * Obliquity of the ecliptic at J2000.0 (degrees).
+ *
+ * Exported because the events engine rotates this module's own output into ecliptic coordinates and
+ * must use the same value. Two private copies of a constant like this drift apart silently.
+ */
+export const OBLIQUITY_J2000_DEG = 23.43928;
+const OBLIQUITY = OBLIQUITY_J2000_DEG;
 
 export type PlanetKey = "mercury" | "venus" | "mars" | "jupiter" | "saturn" | "uranus" | "neptune";
 

@@ -28,18 +28,23 @@ export const eclipses = {
   linkedEntityIds: [SUN, MOON, EARTH],
   typesEnvelope: referenceEnvelope({
     source: ["nasa"], provider: "eclipse-catalogue", confidence: "established",
-    provenance: "Eclipse geometry and viewing-safety guidance are timeless. Specific eclipse dates and paths are NOT listed here; they will be drawn from published NASA eclipse predictions when the eclipse module is connected.",
+    provenance: "Eclipse geometry and viewing-safety guidance are timeless, and this page carries only those. Dated eclipses now exist on the platform: the observing calendar at /events/eclipses reproduces NASA/GSFC's Five Millennium Catalog, converting its dynamical time to UTC with the catalogue's own delta-T. Paths of totality remain NASA's \u2014 local circumstances need the Besselian elements, which are published separately and are not read here.",
   }),
   /**
-   * Upcoming eclipses (dates, paths, magnitudes). Prepared for integration —
-   * dates will come from published NASA eclipse predictions, never fabricated.
+   * Upcoming eclipses.
+   *
+   * This shape stays empty on purpose. Dated eclipses are served by the observing calendar
+   * (Program CM), which fetches NASA/GSFC's catalogue at request time and carries the live-provider
+   * honesty envelope — a status, a fetch time, and a real failure mode. Duplicating them into this
+   * static reference structure would create a second copy that could not fail honestly and would
+   * drift out of step with the first. The envelope says where the dates actually are.
    */
   upcoming: (): Enveloped<Eclipse>[] => [
     {
       data: null,
       envelope: preparedEnvelope({
         source: ["nasa"], provider: "eclipse-catalogue",
-        provenance: "Upcoming eclipse dates and paths of totality will be sourced from published predictions. No dates are shown until then — none are invented.",
+        provenance: "No dates are held in this reference structure. Dated eclipses are at /events/eclipses, taken from NASA/GSFC's Five Millennium Catalog of Eclipses at request time; paths of totality are on NASA's own maps, linked from each eclipse.",
       }),
     },
   ],

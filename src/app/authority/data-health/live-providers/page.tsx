@@ -104,7 +104,8 @@ export default async function LiveProviderHealthPage() {
               head={["Product", "Cadence", "Cached", "Stale after", "Last attempt", "Last success", "Latency", "Fails", "Schema"]}
               rows={r.products.map((p) => [
                 p.label,
-                humanDuration(p.refreshCadenceSeconds),
+                // A product with no cadence is not republished; an em dash says so rather than a number.
+                p.refreshCadenceSeconds === undefined ? "not republished" : humanDuration(p.refreshCadenceSeconds),
                 humanDuration(p.cacheSeconds),
                 humanDuration(p.staleAfterSeconds),
                 p.health?.lastAttemptAt?.slice(11, 19) ?? "—",

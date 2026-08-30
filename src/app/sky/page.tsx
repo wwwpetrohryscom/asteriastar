@@ -12,7 +12,7 @@ import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/js
 import { ROUTES, skyPath, meteorShowerPath } from "@/lib/routes";
 
 const s = engine.liveSky;
-const DESCRIPTION = "The Night Sky Platform — architecture for a daily-use observing dashboard. Meteor-shower guides and reference data are source-backed; the Moon phase and position, sunrise/sunset/twilight, and naked-eye planet visibility are computed, location-aware, and timestamped; other live sky data (ISS, aurora, space weather) is prepared for integration. Nothing here fabricates current conditions.";
+const DESCRIPTION = "The Night Sky Platform — the explanatory half of a daily-use observing dashboard. Meteor-shower guides and reference data are source-backed; the Moon phase and position, sunrise/sunset/twilight, and naked-eye planet visibility are computed, location-aware, and timestamped. The operational half now exists alongside it: live space weather and aurora from NOAA and NASA, live close approaches from JPL and the Minor Planet Center, the ISS from NASA's own trajectory, and a dated observing calendar. Nothing here fabricates current conditions.";
 
 export const metadata: Metadata = buildMetadata({ title: "Night Sky Platform", description: DESCRIPTION, path: ROUTES.sky });
 
@@ -22,15 +22,15 @@ const SECTIONS: { title: string; href: string; blurb: string }[] = [
   { title: "Sun & Twilight", href: skyPath("sun"), blurb: "Sunrise, sunset & twilight for any location — computed." },
   { title: "Twilight Times", href: skyPath("twilight"), blurb: "Civil, nautical & astronomical twilight explained." },
   { title: "Planet Visibility", href: skyPath("planet-visibility"), blurb: "Which naked-eye planets are up tonight — rise, set & visibility, computed." },
-  { title: "Meteor Showers", href: skyPath("meteor-showers"), blurb: "Guides to the eight major annual showers." },
-  { title: "Eclipses", href: skyPath("eclipses"), blurb: "Solar and lunar eclipse types and safety." },
+  { title: "Meteor Showers", href: skyPath("meteor-showers"), blurb: "Guides to the eight major annual showers. Dated peak nights are on the observing calendar." },
+  { title: "Eclipses", href: skyPath("eclipses"), blurb: "Solar and lunar eclipse types and safety. Dated eclipses come from NASA's catalogue on the observing calendar." },
   { title: "Comets", href: skyPath("comets"), blurb: "What makes comets visible, and notable comets." },
-  { title: "Asteroid Close Approaches", href: skyPath("asteroid-close-approaches"), blurb: "What a close approach means — prepared." },
-  { title: "ISS Tracker", href: skyPath("iss-tracker"), blurb: "How ISS passes work; live tracking prepared." },
-  { title: "Aurora", href: skyPath("aurora"), blurb: "What causes aurora and the Kp index." },
-  { title: "Space Weather", href: skyPath("space-weather"), blurb: "Solar flares and geomagnetic storms." },
-  { title: "Observing Calendar", href: skyPath("observing-calendar"), blurb: "A month-by-month guide to recurring events." },
-  { title: "Sky Events", href: skyPath("events"), blurb: "Recurring annual sky events at a glance." },
+  { title: "Asteroid Close Approaches", href: skyPath("asteroid-close-approaches"), blurb: "What a close approach means. Live approaches are in the near-Earth-object section." },
+  { title: "ISS Tracker", href: skyPath("iss-tracker"), blurb: "How ISS passes work. The station is tracked live from NASA's own trajectory in the satellite section." },
+  { title: "Aurora", href: skyPath("aurora"), blurb: "What causes aurora and the Kp index. NOAA's live OVATION forecast is in the space-weather section." },
+  { title: "Space Weather", href: skyPath("space-weather"), blurb: "Solar flares and geomagnetic storms explained. Live conditions are in the space-weather section." },
+  { title: "Observing Calendar", href: skyPath("observing-calendar"), blurb: "A month-by-month guide to recurring events, without years. The dated calendar is at /events." },
+  { title: "Sky Events", href: skyPath("events"), blurb: "Recurring annual sky events at a glance; the dated ones are at /events." },
 ];
 
 export default function SkyHub() {
@@ -45,7 +45,7 @@ export default function SkyHub() {
         accent="aurora"
         eyebrow={<span>Night Sky Platform</span>}
         title="A serious observatory dashboard"
-        lead="The foundation of a daily-use observing platform, built on the Knowledge Graph and Scientific Data Engine. Meteor-shower parameters and reference data are source-backed and timeless; live, location-aware data is prepared for integration."
+        lead="The explanatory foundation of a daily-use observing platform, built on the Knowledge Graph and Scientific Data Engine: what these things are, why they happen, and how to observe them. The dated and live counterparts — the observing calendar, space weather, near-Earth objects and the ISS — are linked from each section."
       >
         <div className="mt-5 flex flex-wrap items-center gap-2">
           <Badge tone="accent">Night Sky</Badge>

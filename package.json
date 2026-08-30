@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "tsx scripts/generate-indexnow-key.ts && tsx scripts/build-search-index.ts",
+    "prebuild": "tsx scripts/generate-indexnow-key.ts && tsx scripts/build-search-index.ts && tsx scripts/events/validate-events.ts",
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
@@ -30,7 +30,7 @@
     "refresh": "tsx scripts/refresh/refresh.ts",
     "refresh:test": "tsx scripts/refresh/refresh.test.ts",
     "refresh:validate": "tsx scripts/refresh/validate-config.ts",
-    "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts && tsx scripts/validate-content-completion.ts && tsx scripts/refresh/validate-config.ts && tsx scripts/data-health/validate-health.ts && tsx scripts/live/validate-live-providers.ts && tsx scripts/live/test-failure-modes.ts && tsx scripts/validate-search-index.ts && tsx scripts/validate-ecosystem.ts && tsx scripts/netlify/validate-migration.ts",
+    "validate": "tsx scripts/check-architecture.ts && tsx scripts/validate-entries.ts && tsx scripts/validate-content-completion.ts && tsx scripts/refresh/validate-config.ts && tsx scripts/data-health/validate-health.ts && tsx scripts/live/validate-live-providers.ts && tsx scripts/live/test-failure-modes.ts && tsx scripts/events/validate-events.ts && tsx scripts/validate-search-index.ts && tsx scripts/validate-ecosystem.ts && tsx scripts/netlify/validate-migration.ts",
     "validate:migration": "tsx scripts/netlify/validate-migration.ts",
     "ecosystem:validate": "tsx scripts/validate-ecosystem.ts",
     "ecosystem:links": "tsx scripts/validate-ecosystem.ts --check-network",
@@ -47,7 +47,9 @@
     "netlify:perf": "tsx scripts/netlify/perf.ts",
     "live:validate": "tsx scripts/live/validate-live-providers.ts",
     "live:probe": "tsx scripts/live/probe-providers.ts",
-    "live:test": "tsx scripts/live/test-failure-modes.ts"
+    "live:test": "tsx scripts/live/test-failure-modes.ts",
+    "events:validate": "tsx scripts/events/validate-events.ts",
+    "events:reference": "tsx scripts/events/fetch-reference.ts"
   },
   "dependencies": {
     "next": "16.2.9",

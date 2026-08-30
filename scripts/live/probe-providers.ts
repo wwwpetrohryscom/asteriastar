@@ -1,6 +1,7 @@
 import { spaceWeatherSnapshot, solarEventsSnapshot, currentSolarWind, latestObservedKp, currentScales, liveProviderReports } from "../../src/platform/space-weather/service";
 import { neoSnapshot } from "../../src/platform/neo/service";
 import { issEphemeris, issNow, issPasses, verifyFrames } from "../../src/platform/satellites/service";
+import { buildCalendar, lunarEclipseCatalogue, solarEclipseCatalogue, upcomingLaunches } from "../../src/platform/events/service";
 import { clearCache } from "../../src/platform/live-providers/cache";
 import { getLiveProduct, LIVE_PRODUCTS } from "../../src/platform/live-providers/registry";
 import { NO_VALUE_STATUSES, type LiveDatum, type LiveEnvelope } from "../../src/platform/live-providers/envelope";
@@ -104,6 +105,9 @@ async function main(): Promise<void> {
   const events = await solarEventsSnapshot();
   const neo = await neoSnapshot();
   const iss = await issEphemeris();
+  const solarEclipses = await solarEclipseCatalogue();
+  const lunarEclipses = await lunarEclipseCatalogue();
+  const launches = await upcomingLaunches();
 
   // Taken AFTER the requests, so an age is never negative merely because a fetch completed after
   // the clock was read. Ages here are real: the gap between the provider's own timestamp and now.
@@ -129,6 +133,9 @@ async function main(): Promise<void> {
   record("jpl:recent-neos", neo.recent, nowIso);
   record("mpc:neocp", neo.candidates, nowIso);
   record("nasa:iss-ephemeris", iss, nowIso);
+  record("gsfc:solar-eclipses", solarEclipses, nowIso);
+  record("gsfc:lunar-eclipses", lunarEclipses, nowIso);
+  record("ll2:upcoming-launches", launches, nowIso);
 
   /* --- the composed values a page actually renders, checked as values and not just as responses */
   const wind = currentSolarWind(weather);
@@ -233,6 +240,30 @@ async function main(): Promise<void> {
       console.log(`ISS passes over Greenwich in 48 h: ${passes.length} above 10°, ${passes.filter((p) => p.visibility === "visible").length} visible`);
       if (passes.length === 0) warnings.push("ISS passes: none above 10° over Greenwich in 48 hours — possible, but unusual");
     }
+  }
+
+  /* ------------------------------------------------------- the events calendar, end to end */
+  if (solarEclipses.data && lunarEclipses.data) {
+    // The published totals for 2001-2100. If either changes, the column layout has moved and the
+    // strict row accounting in the parser will already have refused the response.
+    if (solarEclipses.data.eclipses.length !== 224) failures.push(`solar eclipse century catalogue: ${solarEclipses.data.eclipses.length} eclipses, expected 224`);
+    if (lunarEclipses.data.eclipses.length !== 228) failures.push(`lunar eclipse century catalogue: ${lunarEclipses.data.eclipses.length} eclipses, expected 228`);
+    console.log(`Eclipse catalogues: ${solarEclipses.data.eclipses.length} solar and ${lunarEclipses.data.eclipses.length} lunar in 2001-2100`);
+  }
+
+  const calendar = await buildCalendar(Date.now(), Date.now() + 180 * 86_400_000);
+  const byCategory = new Map<string, number>();
+  for (const e of calendar.events) byCategory.set(e.category, (byCategory.get(e.category) ?? 0) + 1);
+  console.log(`Calendar, next 180 days: ${calendar.events.length} events — ${[...byCategory].map(([k, v]) => `${v} ${k}`).join(", ")}`);
+  for (const gap of calendar.gaps) warnings.push(`calendar gap in ${gap.category}: ${gap.reason}`);
+  for (const e of calendar.events) {
+    if (e.basis === "planned" && e.confirmed) failures.push(`${e.eventId}: a planned event is marked confirmed`);
+    if (e.basis === "planned" && !e.source?.lastVerifiedAt) failures.push(`${e.eventId}: a planned event carries no confirmation time`);
+  }
+  if (launches.data) {
+    const stalest = launches.data.launches.filter((l) => l.lastUpdated).sort((a, b) => Date.parse(a.lastUpdated!) - Date.parse(b.lastUpdated!))[0];
+    console.log(`Launches: ${launches.data.launches.length} upcoming; oldest confirmation ${stalest?.lastUpdated ?? "unknown"}`);
+    if (launches.data.launches.some((l) => !l.netPrecision)) warnings.push("launch feed: at least one entry does not state how precisely its date is known");
   }
 
   /* ------------------------------------------------------------------------------- report */

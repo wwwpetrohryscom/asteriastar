@@ -193,6 +193,17 @@ export function EnvelopeDetails({ envelope, title = "Provenance" }: { envelope: 
       )}
       <p className="mt-2 text-xs leading-relaxed text-faint">{envelope.provenance}</p>
       {envelope.limitations && <p className="mt-2 text-xs leading-relaxed text-faint">{envelope.limitations}</p>}
+      {/*
+        The REASON, when there is one. This panel used to render a status of "Unavailable" and stop
+        there — every field describing what the value would have been, and nothing at all about why
+        it is absent. The runtime has always carried a normalised reason (never upstream markup, and
+        never a stack trace); it simply was not shown, which made an outage look like a design.
+      */}
+      {envelope.error && (
+        <p className="mt-2 rounded-lg border border-nasa-red/30 bg-nasa-red/[0.06] px-3 py-2 text-xs leading-relaxed text-muted">
+          <strong className="text-fg">Why there is no value:</strong> {envelope.error}
+        </p>
+      )}
     </section>
   );
 }
