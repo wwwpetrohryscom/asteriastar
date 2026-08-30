@@ -23,6 +23,7 @@ export type SourceKey =
   | "usno"
   | "imo"
   | "thespacedevs"
+  | "met-norway"
   | "noirlab"
   | "eso"
   | "simbad"
@@ -199,6 +200,17 @@ export const SOURCES: Record<SourceKey, Source> = {
     country: "United States",
     authorityType: "observatory",
     reliability: "Authoritative for precise time and almanac computations.",
+  },
+  "met-norway": {
+    key: "met-norway",
+    name: "MET Norway",
+    organization: "Norwegian Meteorological Institute",
+    url: "https://api.met.no",
+    scope: "Global weather forecasts, including total cloud cover, from a national meteorological service.",
+    country: "Norway",
+    authorityType: "database",
+    reliability:
+      "A national meteorological institute, authoritative for weather. Its forecasts are general-purpose meteorology: total cloud cover is not astronomical seeing or transparency, and is never presented here as though it were.",
   },
   thespacedevs: {
     key: "thespacedevs",

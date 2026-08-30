@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { sun } from "@/platform/live-sky/sun";
 
 /**
  * Sun & Twilight calculator panel (Program Q). Takes an EXPLICIT latitude,
@@ -92,16 +93,17 @@ export function SunCalculatorPanel() {
     if (timezone) qs.set("timezone", timezone);
     setState({ kind: "loading" });
     try {
-      const res = await fetch(`/api/v0/live-sky/sun?${qs.toString()}`, { cache: "no-store" });
-      const json = await res.json();
-      if (!res.ok) {
-        const msg = json?.error?.message ?? json?.error ?? `The request was rejected (${res.status}). No value is shown rather than a fabricated one.`;
-        setState({ kind: "error", msg: typeof msg === "string" ? msg : "Invalid request." });
+      const result = sun.forLocationDate(
+        { latitude: Number(latitude), longitude: Number(longitude), date: date || new Date().toISOString().slice(0, 10), ...(timezone ? { timezone } : {}) },
+        new Date(),
+      );
+      if (!result.ok) {
+        setState({ kind: "error", msg: `${result.field}: ${result.message}` });
         return;
       }
-      setState({ kind: "ok", d: json.data as SunPayload });
+      setState({ kind: "ok", d: { ...result.value.data, envelope: result.value.envelope } as SunPayload });
     } catch {
-      setState({ kind: "error", msg: "The Sun service is unreachable. No value is shown rather than a fabricated one." });
+      setState({ kind: "error", msg: "The Sun calculation failed in this browser. No value is shown rather than a fabricated one." });
     }
   }
 
@@ -224,7 +226,9 @@ function SunResult({ d }: { d: SunPayload }) {
         <p className="mt-1">{d.calculationNotes}</p>
         <p className="mt-1">
           Programmatic access:{" "}
-          <a href={`/api/v0/live-sky/sun?latitude=${d.input.latitude}&longitude=${d.input.longitude}&date=${d.input.date}${tz !== "UTC" ? `&timezone=${tz}` : ""}`} className="text-nasa underline-offset-4 hover:underline">/api/v0/live-sky/sun</a>.
+          <code className="break-all text-xs text-faint">/api/v0/live-sky/sun?latitude=&lt;lat&gt;&amp;longitude=&lt;lon&gt;&amp;date=&lt;YYYY-MM-DD&gt;</code>. The endpoint is shown as a TEMPLATE rather than a live link filled in with what you typed: a
+          clickable link would put your coordinates in a URL and therefore in a request log, which is
+          exactly what computing in your browser avoids.
         </p>
       </div>
     </div>

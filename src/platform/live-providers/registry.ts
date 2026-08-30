@@ -58,6 +58,18 @@ export interface LiveProviderDescriptor {
 
   /* operational policy */
   integration: IntegrationLevel;
+  /**
+   * WHERE the client runs.
+   *
+   * Almost everything here runs on the server, through the guarded loader: allowlisted host, byte
+   * ceiling, timeout, concurrency gate, back-off, shared cache. One provider does not, and it is a
+   * deliberate choice rather than an omission — a weather forecast needs the reader's coordinates,
+   * and fetching it from their own browser means those coordinates go to the meteorological
+   * institute and to nobody else, this platform included. A browser provider has no entry in
+   * `LIVE_PRODUCTS` because there is no server product to load; its guards are rebuilt in its own
+   * client, and the gates check that it declares this rather than silently having no products.
+   */
+  runtime?: "server" | "browser";
   timeoutMs: number;
   /**
    * How many requests this provider permits AsteriaStar to have open at once.
@@ -335,6 +347,37 @@ export const LIVE_PROVIDERS: LiveProviderDescriptor[] = [
     backoffSeconds: 900,
     schemaVersion: "ll2-upcoming-2026-08",
     verifiedAt: "2026-08-29",
+  },
+
+  {
+    providerKey: "met-norway",
+    name: "MET Norway Weather API",
+    organization: "Norwegian Meteorological Institute (Meteorologisk institutt)",
+    documentation: "https://api.met.no/doc/TermsOfService",
+    baseUrl: "https://api.met.no",
+    category: "atmospheric",
+    sources: ["met-norway"],
+    liveSkyKey: "met-norway",
+    entityId: "live_data_source:atmospheric-conditions",
+    authentication: "none",
+    rateLimits:
+      "The provider requires an identifying User-Agent for server requests and asks browsers to identify themselves by the Origin header they send automatically, and states that anything over 20 requests a second per application needs a prior agreement. AsteriaStar makes ONE request per reader who explicitly asks for a forecast, from their own browser, and none at all otherwise \u2014 so the platform generates no baseline traffic at all.",
+    redistribution:
+      "Licensed under the Norwegian Licence for Open Government Data (NLOD) 2.0 and Creative Commons Attribution 4.0, with no non-commercial restriction. Credit to MET Norway is given wherever a value is shown.",
+    license: "NLOD 2.0 and CC BY 4.0. Attribution required; commercial use permitted.",
+    attribution: "Weather forecast from MET Norway (Norwegian Meteorological Institute), licensed CC BY 4.0 / NLOD 2.0",
+    providerCaveat:
+      "A general meteorological forecast. `cloud_area_fraction` is total cloud cover and is NOT astronomical seeing, sky transparency, or sky brightness \u2014 those are different quantities produced by different models, and a clear forecast with terrible seeing is an ordinary night. Only cloud cover is read, and it is never renamed.",
+    integration: "IMPLEMENTED",
+    runtime: "browser",
+    timeoutMs: 6000,
+    maxConcurrentRequests: 1,
+    backoffAfterFailures: 1,
+    backoffSeconds: 60,
+    schemaVersion: "met-locationforecast-2.0-2026-08",
+    verifiedAt: "2026-08-30",
+    note:
+      "The only provider fetched from the reader's browser rather than the server, and the reason is privacy: the request needs an observing location, so it is made by the reader's own device, directly to the institute, only when they press a button, with the coordinates rounded to about a kilometre and the exact URL printed on the page. AsteriaStar never receives them. (Open-Meteo was evaluated first and refused: its free tier is licensed for non-commercial use only.)",
   },
 ];
 

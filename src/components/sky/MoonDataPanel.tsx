@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { moon } from "@/platform/live-sky/moon";
 
 /**
- * Real Moon data panel (Program P). Fetches the computed Moon phase from
- * /api/v0/live-sky/moon and shows it with its full honesty envelope — the real
+ * Real Moon data panel (Program P). COMPUTES the Moon phase in this browser and
+ * shows it with its full honesty envelope — the real
  * computation time, validity window, source, method, and stale flag. It never
  * fabricates a value: on failure it shows a structured error, and it clearly
  * labels the data as computed (deterministic), not a live provider feed. No
@@ -50,15 +51,20 @@ function fmt(iso: string | null): string {
 
 type PanelState = { kind: "loading" } | { kind: "ok"; d: MoonPayload } | { kind: "error"; msg: string };
 
-/** Pure fetch — returns the next state; never calls setState itself. */
-async function fetchMoonState(): Promise<PanelState> {
+/**
+ * Computed here, in this browser, with no request at all.
+ *
+ * This used to call an API route for a value that is a pure function of the clock. The round trip
+ * bought nothing — the same code runs on both sides — and it meant a page could show nothing at all
+ * because a network hiccup interrupted arithmetic. Returns the next state; never calls setState.
+ */
+function computeMoonState(): PanelState {
   try {
-    const res = await fetch("/api/v0/live-sky/moon", { cache: "no-store" });
-    if (!res.ok) return { kind: "error", msg: `The moon service returned ${res.status}. No value is shown rather than a fabricated one.` };
-    const json = await res.json();
-    return { kind: "ok", d: json.data as MoonPayload };
+    const now = new Date();
+    const { data, envelope } = moon.current(now);
+    return { kind: "ok", d: { ...data, envelope } as MoonPayload };
   } catch {
-    return { kind: "error", msg: "The moon service is unreachable. No value is shown rather than a fabricated one." };
+    return { kind: "error", msg: "The Moon calculation failed in this browser. No value is shown rather than a fabricated one." };
   }
 }
 
@@ -67,18 +73,18 @@ export function MoonDataPanel() {
 
   /** Button handler (setState in an event handler is allowed). */
   function reload() {
-    setState({ kind: "loading" });
-    void fetchMoonState().then(setState);
+    setState(computeMoonState());
   }
 
+  // Computed after mount rather than during render, so the server-rendered markup and the first
+  // client render agree: the value depends on the clock, and the clock differs between them. The
+  // update happens inside `evaluate` rather than in the effect body, matching the pattern the rest
+  // of the platform's clock-dependent components use.
   useEffect(() => {
-    let active = true;
-    void fetchMoonState().then((s) => {
-      if (active) setState(s);
-    });
-    return () => {
-      active = false;
+    const evaluate = (): void => {
+      setState(computeMoonState());
     };
+    evaluate();
   }, []);
 
   return (

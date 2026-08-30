@@ -145,7 +145,18 @@ ok(`${LIVE_PRODUCTS.length} products declare sources, limitations and a cache ra
   clearHealth();
   for (const provider of LIVE_PROVIDERS) {
     const keys = LIVE_PRODUCTS.filter((p) => p.providerKey === provider.providerKey).map((p) => p.productKey);
-    if (keys.length === 0) issues.push(`${provider.providerKey}: is registered but serves no products`);
+    /*
+     * A server provider without products is a registry entry that does nothing. A BROWSER provider
+     * legitimately has none — there is no server product to load, because the request is made by the
+     * reader's own device — but it must say so, so that "no products" can never be the silent
+     * result of forgetting to register one.
+     */
+    if (keys.length === 0 && provider.runtime !== "browser") {
+      issues.push(`${provider.providerKey}: is registered but serves no products, and does not declare itself a browser-runtime provider`);
+    }
+    if (provider.runtime === "browser" && keys.length > 0) {
+      issues.push(`${provider.providerKey}: declares a browser runtime but registers server products, which would be fetched by the server after all`);
+    }
 
     const state = providerState(provider, keys);
     if (provider.integration === "PLANNED" && state !== "PLANNED") {

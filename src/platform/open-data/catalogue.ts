@@ -139,7 +139,7 @@ const META: CatalogueEntry[] = [
   {
     id: "live-sky-providers",
     title: "Live Sky — Provider Registry",
-    description: "Registry of the external data providers behind the live layer. The registry is real and reports each integration honestly: " + "seven providers are connected end-to-end — NOAA SWPC, NASA DONKI, JPL/CNEOS, the IAU Minor Planet Center, NASA's ISS ephemeris, NASA/GSFC's eclipse catalogues and the Launch Library schedule — and the two that are not (CelesTrak and a provider of atmospheric conditions) record why" + ".",
+    description: "Registry of the external data providers behind the live layer. The registry is real and reports each integration honestly: " + "eight providers are connected end-to-end — NOAA SWPC, NASA DONKI, JPL/CNEOS, the IAU Minor Planet Center, NASA's ISS ephemeris, NASA/GSFC's eclipse catalogues, the Launch Library schedule, and MET Norway for cloud cover (fetched by the reader's own browser, never by the server) — and the one that is not, CelesTrak, records why" + ".",
     status: "prepared",
     version: GRAPH_VERSION_INFO.datasetVersion,
     schemaVersion: GRAPH_VERSION_INFO.schemaVersion,

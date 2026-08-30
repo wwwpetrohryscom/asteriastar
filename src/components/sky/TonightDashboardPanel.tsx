@@ -1,13 +1,18 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { tonight } from "@/platform/live-sky/tonight";
 
 /**
  * Tonight Observing Dashboard (Program T). Takes an EXPLICIT latitude, longitude,
- * optional date, and optional IANA timezone, and fetches the computed composite
- * from /api/v0/live-sky/tonight — twilight/darkness, the Moon, and ranked planet
- * visibility. It never uses browser geolocation or IP lookup and never stores
- * anything. It shows only what the engines compute: no weather, cloud, seeing,
+ * optional date, and optional IANA timezone, and COMPUTES the composite in this
+ * browser — twilight/darkness, the Moon, and ranked planet visibility.
+ *
+ * It used to post those coordinates to an API route, which put them in a URL and
+ * therefore in every access log between here and the server. It no longer sends
+ * them anywhere: the engine is pure and runs on the reader's own machine, which
+ * is the same guarantee the ISS pass calculator makes. It never uses browser
+ * geolocation or IP lookup and never stores anything. It shows only what the engines compute: no weather, cloud, seeing,
  * ISS, aurora, meteor, or comet data is invented, and every limitation is stated.
  */
 
@@ -98,21 +103,19 @@ export function TonightDashboardPanel() {
       setState({ kind: "error", msg: "Enter a latitude and a longitude. No location is ever guessed or looked up." });
       return;
     }
-    const qs = new URLSearchParams({ latitude, longitude });
-    if (date) qs.set("date", date);
-    if (timezone) qs.set("timezone", timezone);
     setState({ kind: "loading" });
     try {
-      const res = await fetch(`/api/v0/live-sky/tonight?${qs.toString()}`, { cache: "no-store" });
-      const json = await res.json();
-      if (!res.ok) {
-        const msg = json?.error?.message ?? `The request was rejected (${res.status}). No value is shown rather than a fabricated one.`;
-        setState({ kind: "error", msg: typeof msg === "string" ? msg : "Invalid request." });
+      const result = tonight.forLocationDate(
+        { latitude: Number(latitude), longitude: Number(longitude), ...(date ? { date } : {}), ...(timezone ? { timezone } : {}) },
+        new Date(),
+      );
+      if (!result.ok) {
+        setState({ kind: "error", msg: `${result.field}: ${result.message}` });
         return;
       }
-      setState({ kind: "ok", d: json.data as Tonight });
+      setState({ kind: "ok", d: { ...result.value.data, envelope: result.value.envelope } as unknown as Tonight });
     } catch {
-      setState({ kind: "error", msg: "The service is unreachable. No value is shown rather than a fabricated one." });
+      setState({ kind: "error", msg: "The calculation failed in this browser. No value is shown rather than a fabricated one." });
     }
   }
 
@@ -265,7 +268,9 @@ function Dashboard({ d }: { d: Tonight }) {
         <p className="mt-1"><strong className="text-muted">Computed at:</strong> {fmtUTC(d.envelope.generatedAt)} · for {d.input.latitude}°, {d.input.longitude}° · Moon &amp; planet positions as of {fmtUTC(d.referenceTimeIso)}.</p>
         <p className="mt-1">
           Programmatic access:{" "}
-          <a href={`/api/v0/live-sky/tonight?latitude=${d.input.latitude}&longitude=${d.input.longitude}&date=${d.input.date}${tz !== "UTC" ? `&timezone=${encodeURIComponent(tz)}` : ""}`} className="text-nasa underline-offset-4 hover:underline">/api/v0/live-sky/tonight</a>.
+          <code className="break-all text-xs text-faint">/api/v0/live-sky/tonight?latitude=&lt;lat&gt;&amp;longitude=&lt;lon&gt;&amp;date=&lt;YYYY-MM-DD&gt;</code>. The endpoint is shown as a TEMPLATE rather than a live link filled in with what you typed: a
+          clickable link would put your coordinates in a URL and therefore in a request log, which is
+          exactly what computing in your browser avoids.
         </p>
       </div>
     </div>

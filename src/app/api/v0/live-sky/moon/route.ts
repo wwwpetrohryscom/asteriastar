@@ -1,4 +1,5 @@
 import { apiResponse, apiError } from "@/platform/open-data";
+import { locationCacheControl } from "@/platform/space-weather/api";
 import { engine } from "@/platform/data-engine";
 
 /**
@@ -47,8 +48,8 @@ export async function GET(req: Request): Promise<Response> {
         generatedAt: envelope.generatedAt ?? now.toISOString(),
         stale: envelope.stale,
         count: 1,
-        // A specific date is immutable; a current-position response drifts, so a shorter horizon.
-        cacheControl: date ? "public, max-age=86400, stale-while-revalidate=86400" : "public, max-age=3600, stale-while-revalidate=3600",
+        // The LOCATION-AWARE branch. See `locationCacheControl`.
+        cacheControl: locationCacheControl(true, 3600),
       },
     );
   }
@@ -81,7 +82,9 @@ export async function GET(req: Request): Promise<Response> {
       stale: envelope.stale,
       count: 1,
       // Conservative: cache for an hour even though the value is valid for three.
-      cacheControl: "public, max-age=3600, stale-while-revalidate=3600",
+      // The phase-only branch, reached only when NO coordinates were supplied, so there is
+      // nothing here that belongs to anybody. See `locationCacheControl`.
+      cacheControl: locationCacheControl(false, 3600),
     },
   );
 }

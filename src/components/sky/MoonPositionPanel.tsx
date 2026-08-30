@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { moon } from "@/platform/live-sky/moon";
 
 /**
  * Location-aware Moon panel (Program R). Takes an EXPLICIT latitude, longitude,
@@ -71,16 +72,17 @@ export function MoonPositionPanel() {
     if (timezone) qs.set("timezone", timezone);
     setState({ kind: "loading" });
     try {
-      const res = await fetch(`/api/v0/live-sky/moon?${qs.toString()}`, { cache: "no-store" });
-      const json = await res.json();
-      if (!res.ok) {
-        const msg = json?.error?.message ?? `The request was rejected (${res.status}). No value is shown rather than a fabricated one.`;
-        setState({ kind: "error", msg: typeof msg === "string" ? msg : "Invalid request." });
+      const result = moon.forLocationDate(
+        { latitude: Number(latitude), longitude: Number(longitude), ...(date ? { date } : {}), ...(timezone ? { timezone } : {}) },
+        new Date(),
+      );
+      if (!result.ok) {
+        setState({ kind: "error", msg: `${result.field}: ${result.message}` });
         return;
       }
-      setState({ kind: "ok", d: json.data as MoonPos });
+      setState({ kind: "ok", d: { ...result.value.data, envelope: result.value.envelope } as MoonPos });
     } catch {
-      setState({ kind: "error", msg: "The Moon service is unreachable. No value is shown rather than a fabricated one." });
+      setState({ kind: "error", msg: "The Moon calculation failed in this browser. No value is shown rather than a fabricated one." });
     }
   }
 
@@ -189,7 +191,9 @@ function MoonPosResult({ d }: { d: MoonPos }) {
         <p className="mt-1"><strong className="text-muted">Computed at:</strong> {fmtUTC(d.envelope.generatedAt)} · for {d.input.latitude}°, {d.input.longitude}° · position as of {fmtUTC(d.referenceTimeIso)}.</p>
         <p className="mt-1">
           Programmatic access:{" "}
-          <a href={`/api/v0/live-sky/moon?latitude=${d.input.latitude}&longitude=${d.input.longitude}${d.input.timezone !== "UTC" ? `&timezone=${d.input.timezone}` : ""}`} className="text-nasa underline-offset-4 hover:underline">/api/v0/live-sky/moon</a>.
+          <code className="break-all text-xs text-faint">/api/v0/live-sky/moon?latitude=&lt;lat&gt;&amp;longitude=&lt;lon&gt;</code>. The endpoint is shown as a TEMPLATE rather than a live link filled in with what you typed: a
+          clickable link would put your coordinates in a URL and therefore in a request log, which is
+          exactly what computing in your browser avoids.
         </p>
       </div>
     </div>

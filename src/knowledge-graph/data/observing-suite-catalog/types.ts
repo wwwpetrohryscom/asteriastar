@@ -26,8 +26,11 @@ export const KIND_LABEL: Record<ObservingKind, string> = {
   integration: "Data integration",
 };
 
-/** Whether a planner's data is computed today (via engine.liveSky) or awaits a connected provider. */
-export type ComputeStatus = "computed" | "architecture";
+/** Whether the data is computed here, fed by a connected provider, or awaits one. */
+export type ComputeStatus =
+  | "computed" // derived by the platform itself, deterministically
+  | "connected" // fed by a real external provider that has been verified end-to-end
+  | "architecture"; // the interface exists and no provider does
 
 export interface ObservingRecord {
   id: string;

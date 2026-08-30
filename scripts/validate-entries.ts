@@ -1306,7 +1306,7 @@ async function main() {
     process.exit(1);
   }
   console.log(
-    `✓ Observing suite valid — ${bqCat.BQ_STATS.planners} planners, ${bqCat.BQ_STATS.integrations} architecture-ready integrations · ${bqCat.BQ_STATS.newEntities} new entities, ${bqCat.BQ_STATS.relations} relations (reused live-sky/equipment/sites/techniques/Moon/planets/showers; no ephemeris re-implemented, no conditions fabricated)`,
+    `✓ Observing suite valid — ${bqCat.BQ_STATS.planners} planners, ${bqCat.BQ_STATS.integrations} condition integrations (${bqCat.BQ_STATS.connectedIntegrations} connected, ${bqCat.BQ_STATS.integrations - bqCat.BQ_STATS.connectedIntegrations} awaiting a provider) · ${bqCat.BQ_STATS.newEntities} new entities, ${bqCat.BQ_STATS.relations} relations (reused live-sky/equipment/sites/techniques/Moon/planets/showers; no ephemeris re-implemented, no conditions fabricated)`,
   );
 
   const brCat = await import("../src/knowledge-graph/data/graph-explorer-catalog");

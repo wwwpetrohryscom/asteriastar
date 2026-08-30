@@ -76,7 +76,19 @@ export default async function SkyPageRoute({ params }: PageProps<"/sky/[slug]">)
             {isMoon && <MoonPositionPanel />}
             {isSunOrTwilight && <SunCalculatorPanel />}
             {isPlanets && <PlanetVisibilityPanel />}
-            {isTonight && <TonightDashboardPanel />}
+            {isTonight && (
+              <>
+                <p className="mb-4 rounded-lg border border-white/10 bg-white/[0.02] px-4 py-3 text-sm leading-relaxed text-muted">
+                  This panel computes twilight, the Moon and the planets for a location you type, in
+                  your own browser. For the fuller picture — visible ISS passes, the week&apos;s
+                  events, the current geomagnetic index, and an optional cloud-cover forecast you have
+                  to ask for — see{" "}
+                  <Link href="/live/tonight" className="text-nasa underline-offset-4 hover:underline">the Tonight planner</Link>{" "}
+                  on the live dashboard.
+                </p>
+                <TonightDashboardPanel />
+              </>
+            )}
             <ReferenceBlock content={def.content} />
             {def.content !== "observing-calendar" && !isComputed && <PreparedForIntegration providers={providers} envelope={skyEnvelope} />}
             {related.length > 0 && <SkySection id="related" title="Related in the Knowledge Graph"><RefCards refs={related} /></SkySection>}

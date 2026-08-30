@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { Container } from "@/components/ui/Container";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
@@ -105,13 +106,17 @@ export default async function AuroraPage() {
             <p className="text-sm leading-relaxed text-muted">
               It will not tell you whether you will see the aurora tonight from where you live. That question needs four things
               this dataset does not contain: whether the sky above you is clear, how dark it is where you are, how much light
-              pollution sits on your northern horizon, and whether the Moon is up. AsteriaStar has no connected weather provider,
-              so it will not guess at any of them.
+              pollution sits on your northern horizon, and whether the Moon is up. Two of those are answerable elsewhere on this
+              platform — the{" "}
+              <Link href="/live/tonight" className="text-nasa underline-offset-4 hover:underline">Tonight planner</Link>{" "}
+              works out the darkness and the Moon for coordinates you type, and will fetch a cloud-cover forecast if you ask it
+              to. Light pollution is not connected to anything here, and none of it is guessed at.
             </p>
             <p className="mt-3 text-sm leading-relaxed text-muted">
               What it does tell you is real and useful: how far the oval currently reaches, how strong the model thinks it is, and
               what the geomagnetic index is doing. If the oval is nowhere near your latitude, the weather does not matter. If it
-              is, the weather is the next thing to check — somewhere else.
+              is, cloud cover is the next thing to check, and the Tonight planner will fetch it from MET Norway on request —
+              from your own browser, so your location never reaches this site.
             </p>
           </div>
         </section>

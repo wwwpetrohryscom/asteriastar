@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { planets } from "@/platform/live-sky/planets";
 
 /**
  * Planet Visibility panel (Program S). Takes an EXPLICIT latitude, longitude,
@@ -72,16 +73,17 @@ export function PlanetVisibilityPanel() {
     if (timezone) qs.set("timezone", timezone);
     setState({ kind: "loading" });
     try {
-      const res = await fetch(`/api/v0/live-sky/planets?${qs.toString()}`, { cache: "no-store" });
-      const json = await res.json();
-      if (!res.ok) {
-        const msg = json?.error?.message ?? `The request was rejected (${res.status}). No value is shown rather than a fabricated one.`;
-        setState({ kind: "error", msg: typeof msg === "string" ? msg : "Invalid request." });
+      const result = planets.forLocationDate(
+        { latitude: Number(latitude), longitude: Number(longitude), ...(date ? { date } : {}), ...(timezone ? { timezone } : {}) },
+        new Date(),
+      );
+      if (!result.ok) {
+        setState({ kind: "error", msg: `${result.field}: ${result.message}` });
         return;
       }
-      setState({ kind: "ok", d: json.data as PlanetsPayload });
+      setState({ kind: "ok", d: { ...result.value.data, envelope: result.value.envelope } as PlanetsPayload });
     } catch {
-      setState({ kind: "error", msg: "The planet service is unreachable. No value is shown rather than a fabricated one." });
+      setState({ kind: "error", msg: "The planet calculation failed in this browser. No value is shown rather than a fabricated one." });
     }
   }
 
@@ -173,7 +175,9 @@ function PlanetsResult({ d }: { d: PlanetsPayload }) {
         <p className="mt-1"><strong className="text-muted">Computed at:</strong> {fmtUTC(d.envelope.generatedAt)} · for {d.input.latitude}°, {d.input.longitude}° · positions as of {fmtUTC(d.referenceTimeIso)}.</p>
         <p className="mt-1">
           Programmatic access:{" "}
-          <a href={`/api/v0/live-sky/planets?latitude=${d.input.latitude}&longitude=${d.input.longitude}${tz !== "UTC" ? `&timezone=${encodeURIComponent(tz)}` : ""}`} className="text-nasa underline-offset-4 hover:underline">/api/v0/live-sky/planets</a>.
+          <code className="break-all text-xs text-faint">/api/v0/live-sky/planets?latitude=&lt;lat&gt;&amp;longitude=&lt;lon&gt;</code>. The endpoint is shown as a TEMPLATE rather than a live link filled in with what you typed: a
+          clickable link would put your coordinates in a URL and therefore in a request log, which is
+          exactly what computing in your browser avoids.
         </p>
       </div>
     </div>
