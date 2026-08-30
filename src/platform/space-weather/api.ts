@@ -78,6 +78,24 @@ export function serialiseSnapshot<T extends object>(snapshot: T): Record<string,
  * products it serves — so the HTTP cache can never outlive the data policy behind it.
  */
 /**
+ * The cache policy for a response that may carry the CALLER'S OWN COORDINATES.
+ *
+ * One function, called by all four location APIs, rather than a decision written out four times.
+ * That is not tidiness: when it was written out four times, one of them put the strict policy in a
+ * branch that could never execute, and the location-aware Moon response went on being cached
+ * publicly for a day while every review of the diff saw the right words in the file. A property that
+ * matters this much should be structural, so there is one place to get it right and one place to
+ * test.
+ *
+ * A response containing somebody's observing location is never stored in a shared cache. A response
+ * that carries no location — the global Moon phase — is the same answer for everybody and is cached
+ * as such.
+ */
+export function locationCacheControl(hasLocation: boolean, sharedSeconds: number): string {
+  return hasLocation ? "private, no-store" : `public, max-age=${sharedSeconds}, stale-while-revalidate=${sharedSeconds}`;
+}
+
+/**
  * How long a shared cache may hold this response.
  *
  * `failed` is the parameter that matters most and is easiest to forget. The window is derived from

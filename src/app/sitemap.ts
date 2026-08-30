@@ -272,6 +272,8 @@ import {
   satelliteLivePath,
   EVENTS_SLUGS,
   eventsPath,
+  LIVE_DASHBOARD_SLUGS,
+  liveDashboardPath,
 } from "@/lib/routes";
 import { ACTIVE_GALLERIES } from "@/app/images/galleries";
 import { galleryCategories } from "@/lib/gallery";
@@ -791,9 +793,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...BS_DISCOVERIES.map((d) => ({ url: absoluteUrl(assistantDiscoveryPath(d.slug)), changeFrequency: "monthly" as const, priority: 0.6 })),
   ];
 
+  /**
+   * The live dashboard and the provider catalogue share `/live`. Five static dashboard segments
+   * resolve before the `[slug]` provider pages, and no provider slug collides with one — the CN gate
+   * checks that on every build. `tonight` is a plain hub URL like the rest: it takes a location from
+   * a form and computes in the browser, so there is no coordinate, date or filter to appear here.
+   */
   const liveRoutes: MetadataRoute.Sitemap = [
-    { url: absoluteUrl(ROUTES.live), changeFrequency: "daily", priority: 0.8 },
+    { url: absoluteUrl(ROUTES.live), changeFrequency: "daily", priority: 0.9 },
     { url: absoluteUrl(`${ROUTES.live}/data-status`), changeFrequency: "daily", priority: 0.6 },
+    ...LIVE_DASHBOARD_SLUGS.map((slug) => ({
+      url: absoluteUrl(liveDashboardPath(slug)),
+      changeFrequency: "daily" as const,
+      priority: slug === "tonight" ? 0.9 : 0.8,
+    })),
     ...engine.liveScientificData.all().map((r) => ({ url: absoluteUrl(livePath(r.slug)), changeFrequency: "weekly" as const, priority: 0.6 })),
     ...BT_DISCOVERIES.map((d) => ({ url: absoluteUrl(liveDiscoveryPath(d.slug)), changeFrequency: "weekly" as const, priority: 0.6 })),
   ];

@@ -57,7 +57,7 @@ export interface SkyPageDef {
 export const SKY_PAGES: SkyPageDef[] = [
   {
     slug: "night-sky-tonight", title: "Tonight Observing Dashboard", eyebrow: "Night Sky Platform",
-    lead: "What can you observe tonight? A computed composite of the Sun & Twilight, Moon, and Planet tools for any location and date — the twilight and darkness windows, the Moon and its moonlight impact, and which naked-eye planets are best placed, ranked. It adds no new astronomy and invents no weather, cloud, ISS, aurora, meteor, or comet data. Your location is used only for the calculation and is never stored.",
+    lead: "What can you observe tonight? A computed composite of the Sun & Twilight, Moon, and Planet tools for any location and date — the twilight and darkness windows, the Moon and its moonlight impact, and which naked-eye planets are best placed, ranked. It adds no new astronomy. The calculation now runs entirely in your own browser: what you type is never sent to this site at all. The live dashboard adds ISS passes, the week's events, the current geomagnetic index and an optional cloud-cover forecast, and is linked from the panel below.",
     content: "tonight", providerKeys: ["jpl-horizons", "usno"], sourceKeys: ["noaa", "usno", "jpl"],
     relatedEntityIds: ["moon:the-moon", "star:sun", "planet:jupiter", "planet:saturn"],
     learnHref: "/learn/observing-the-night-sky",

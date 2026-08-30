@@ -94,7 +94,7 @@ function checkDatum(name: string, datum: LiveDatum | undefined, expectUnit: bool
 async function main(): Promise<void> {
   const started = Date.now();
 
-  console.log(`Probing ${LIVE_PRODUCTS.length} products across ${new Set(LIVE_PRODUCTS.map((p) => p.providerKey)).size} providers…\n`);
+  console.log(`Probing ${LIVE_PRODUCTS.length} server products across ${new Set(LIVE_PRODUCTS.map((p) => p.providerKey)).size} providers, plus the one browser-runtime provider…\n`);
 
   // Clear first, so every request below is a REAL one. Without this a warm process would report
   // cached values as though the providers had just answered — the exact fabrication this script
@@ -264,6 +264,37 @@ async function main(): Promise<void> {
     const stalest = launches.data.launches.filter((l) => l.lastUpdated).sort((a, b) => Date.parse(a.lastUpdated!) - Date.parse(b.lastUpdated!))[0];
     console.log(`Launches: ${launches.data.launches.length} upcoming; oldest confirmation ${stalest?.lastUpdated ?? "unknown"}`);
     if (launches.data.launches.some((l) => !l.netPrecision)) warnings.push("launch feed: at least one entry does not state how precisely its date is known");
+  }
+
+  /* ---------------------------------------- MET Norway, the one browser-runtime provider */
+  {
+    /*
+     * Probed here even though the site never fetches it from a server: `verifiedAt` on a provider
+     * means somebody made a real request and the parser understood the answer, and a browser-only
+     * integration must earn that the same way as any other. The identifying User-Agent below is
+     * what MET requires of a server request; a browser identifies itself by its Origin header
+     * instead, which is the form the site actually uses.
+     */
+    const { parseMetForecast, metForecastUrl, cloudDuring } = await import("../../src/platform/observing/weather");
+    const url = metForecastUrl(51.48, -0.0);
+    try {
+      const response = await fetch(url, { headers: { "user-agent": "asteriastar.com provider probe (https://asteriastar.com)" } });
+      if (!response.ok) failures.push(`met-norway: the provider answered ${response.status}  [TRANSPORT — the provider could not be reached]`);
+      else {
+        const parsed = parseMetForecast(await response.json(), new Date().toISOString(), 51.48, -0);
+        if (!parsed.ok) failures.push(`met-norway: ${parsed.problem}  [SCHEMA — the integration no longer matches the provider]`);
+        else {
+          const summary = cloudDuring(parsed.value, Date.now(), Date.now() + 6 * 3_600_000);
+          console.log(`MET Norway: ${parsed.value.points.length} forecast points, issued ${parsed.value.updatedAt ?? "at an unstated time"}; next six hours ${summary ? `${summary.meanPercent.toFixed(0)}% mean cloud` : "not covered"}`);
+          if (parsed.value.points.some((p) => p.cloudCoverPercent < 0 || p.cloudCoverPercent > 100)) {
+            failures.push("met-norway: a cloud-cover value outside 0-100%");
+          }
+          if (!summary) warnings.push("met-norway: the forecast did not cover the next six hours");
+        }
+      }
+    } catch (error) {
+      failures.push(`met-norway: ${error instanceof Error ? error.message : "request failed"}  [TRANSPORT — the provider could not be reached]`);
+    }
   }
 
   /* ------------------------------------------------------------------------------- report */

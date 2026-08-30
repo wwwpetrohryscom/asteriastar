@@ -140,6 +140,13 @@ export const PROVIDERS: ProviderInfo[] = [
     license: "Free public access within the provider's stated request rate; attribution given.", status: "connected", access: "public-api",
     notes: "Connected (Program CM). NOT an agency schedule: a community aggregation of operator and agency announcements. Launches are shown as PLANNED events \u2014 never confirmed \u2014 with the provider's own statement of how precisely each date is known and when it was last confirmed.",
   },
+  {
+    key: "met-norway", name: "MET Norway Weather API", organization: "Norwegian Meteorological Institute",
+    url: "https://api.met.no", sources: ["met-norway"],
+    dataKinds: ["Total cloud cover", "Air temperature, humidity and wind"],
+    license: "NLOD 2.0 and CC BY 4.0 \u2014 attribution required, commercial use permitted.", status: "connected", access: "public-api",
+    notes: "Connected (Program CN), and the only provider fetched from the reader's browser rather than the server \u2014 because the request needs an observing location, and this way the coordinates go to the institute and to nobody else. Requested only when a reader presses the button, with the coordinates rounded to about a kilometre. CLOUD COVER ONLY: not astronomical seeing, not transparency, not sky brightness, and never renamed as any of them.",
+  },
 ];
 
 const PROVIDER_BY_KEY = new Map(PROVIDERS.map((p) => [p.key, p]));

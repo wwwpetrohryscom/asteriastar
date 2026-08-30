@@ -54,6 +54,7 @@ export const BQ_STATS = {
   relations: relations.length,
   planners: planners.length,
   integrations: integrations.length,
+  connectedIntegrations: integrations.filter((r) => r.computeStatus === "connected").length,
 } as const;
 
 export function validateObservingSuite(): string[] {
@@ -76,7 +77,19 @@ export function validateObservingSuite(): string[] {
     if (r.id !== `${KIND_ENTITY_TYPE[r.kind]}:${r.slug}`) issues.push(`${r.id}: id does not match kind ${r.kind} / slug ${r.slug}`);
     if (!r.sources?.length) issues.push(`${r.id}: missing sources`);
     if (!r.description) issues.push(`${r.id}: missing description`);
-    if (r.kind === "integration" && r.computeStatus !== "architecture") issues.push(`${r.id}: integration must be architecture-status`);
+    /*
+     * An integration is either an interface with nothing behind it, or a real connection — and the
+     * rule used to permit only the first, which was true when it was written and became false the
+     * moment Program CN connected cloud cover. A gate whose premise can expire either blocks honest
+     * work or gets deleted; what it should check is that a CONNECTED integration names the provider
+     * that makes it connected, which is the thing that could otherwise be typed into a data file.
+     */
+    if (r.kind === "integration" && r.computeStatus !== "architecture" && r.computeStatus !== "connected") {
+      issues.push(`${r.id}: an integration is either "architecture" or "connected", not "${r.computeStatus}"`);
+    }
+    if (r.kind === "integration" && r.computeStatus === "connected" && !r.sources?.some((k) => k !== "nasa")) {
+      issues.push(`${r.id}: claims to be connected but names no source beyond the default`);
+    }
     for (const k of r.relatedKeys ?? []) if (!ID.test(k)) issues.push(`${r.id}: malformed reference id "${k}"`);
   }
   const connected = new Set<string>();

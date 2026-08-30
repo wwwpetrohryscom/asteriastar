@@ -761,6 +761,23 @@ export type SatelliteLiveSlug = (typeof SATELLITE_LIVE_SLUGS)[number];
 export function eventsPath(slug: EventsSlug): string {
   return `/events/${slug}`;
 }
+/**
+ * The live astronomy dashboard (Program CN).
+ *
+ * These sit alongside `/live/[slug]`, the provider-catalogue pages, and Next resolves a static
+ * segment before a dynamic one — so `/live/tonight` is the dashboard and `/live/noaa-swpc` is still
+ * the provider. No provider slug collides with any of these, and the events gate checks that.
+ *
+ * `tonight` takes a location, and takes it the same way the ISS pass calculator does: typed into a
+ * form, used in the browser, never placed in the URL. There is nothing here for a crawler to
+ * enumerate and nothing for a server to log.
+ */
+export function liveDashboardPath(slug: LiveDashboardSlug): string {
+  return `/live/${slug}`;
+}
+export const LIVE_DASHBOARD_SLUGS = ["tonight", "events", "space-weather", "neo", "satellites"] as const;
+export type LiveDashboardSlug = (typeof LIVE_DASHBOARD_SLUGS)[number];
+
 export const EVENTS_SLUGS = [
   "today",
   "this-week",

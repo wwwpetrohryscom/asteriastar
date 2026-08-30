@@ -70,7 +70,8 @@ export type ProviderKey =
   | "imo"
   | "usno"
   | "eclipse-catalogue"
-  | "launch-library";
+  | "launch-library"
+  | "met-norway";
 
 /** A value together with its provenance envelope. `data` is null when nothing has been generated. */
 export interface Enveloped<T> {

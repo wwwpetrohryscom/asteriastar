@@ -1,4 +1,5 @@
 import { apiResponse, apiError } from "@/platform/open-data";
+import { locationCacheControl } from "@/platform/space-weather/api";
 import { engine } from "@/platform/data-engine";
 
 /**
@@ -47,7 +48,9 @@ export async function GET(req: Request): Promise<Response> {
       stale: envelope.stale,
       count: 1,
       // Deterministic and immutable for a given date + location, so cacheable for a day.
-      cacheControl: "public, max-age=86400, stale-while-revalidate=86400",
+      // Carries the caller's coordinates: never held in a shared cache. See
+      // `locationCacheControl` for why this is one shared function rather than four decisions.
+      cacheControl: locationCacheControl(true, 3600),
     },
   );
 }
