@@ -182,18 +182,19 @@
 # ROLLBACK: delete these two blocks and redeploy. /blog returns to 404 and this site is unchanged.
 # Full procedure in docs/blog-routing-rollback.md.
 
-# `/blog/` — the trailing-slash form — is normalised to `/blog` before it reaches the publication.
+# There is deliberately NO trailing-slash normalisation rule for `/blog/`.
 #
-# Netlify's matcher folds `/blog/` onto `from = "/blog"`, so the origin's own 308 never runs and the
-# apex would otherwise serve the homepage at two live URLs. Every child path behaves correctly
-# (`/blog/guides/` → 308), which makes the homepage the one inconsistent case — and the one form an
-# external linker is most likely to write. This rule comes FIRST, so it matches before the proxy.
-[[redirects]]
-  from = "/blog/"
-  to = "/blog"
-  status = 308
-  force = true
-
+# One was tried and reverted, and the reason is worth keeping. Netlify's matcher folds the two slash
+# forms onto each other — which is why `from = "/blog"` below also serves `/blog/`. The folding is
+# symmetric: a rule written `from = "/blog/"` matches the bare `/blog` too. So `/blog/ → /blog` with
+# status 308 redirected `/blog` to itself, and the publication's homepage answered an infinite
+# redirect loop while every child path kept working. It reached production before the routing gate
+# next ran.
+#
+# The consequence of not normalising is that the homepage answers 200 at both `/blog` and `/blog/`.
+# That is a duplicate URL, not a broken one, and it is already resolved the way duplicate URLs are
+# meant to be: every page of the publication carries `<link rel="canonical">` pointing at the
+# no-slash form, and only that form appears in the sitemap. Search engines are told which is real.
 [[redirects]]
   from = "/blog"
   to = "https://asteriastar-blog.netlify.app/blog"
