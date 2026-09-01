@@ -55,7 +55,7 @@ permissions:
 jobs:
   integration:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -63,18 +63,38 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      # A push to main triggers a deploy; give it time to publish before asserting against it.
-      - name: Wait for the deployment to publish
+      # A push to main triggers a deploy, and the presence gate asserts against what that deploy
+      # publishes. A fixed sleep was wrong for this: the first run of this workflow waited two
+      # minutes, tested the PREVIOUS production, and reported the very defect the merge had just
+      # fixed. This site builds ~8,850 pages, which takes several minutes and will take longer as it
+      # grows, so the wait is now a floor rather than the whole budget — the gate below retries.
+      - name: Wait for the deployment to start publishing
         if: github.event_name == 'push'
-        run: sleep 120
+        run: sleep 180
       - name: Verify same-host routing
         run: npm run blog:routing ${{ github.event.inputs.origin || 'https://asteriastar.com' }}
 
       # Each of the three below is independent of the others, so `if: always()` lets one failure
       # report all of them rather than hiding the rest behind the first.
+      # Retried, because this is the one gate whose subject is what the deploy just published. On a
+      # schedule or a manual run production is already settled and the first attempt passes; after a
+      # push it may take several more minutes. A real regression still fails — it just fails after
+      # the budget rather than before the deploy has landed.
       - name: Verify the Journal is findable
         if: always()
-        run: npm run journal:presence ${{ github.event.inputs.origin || 'https://asteriastar.com' }}
+        env:
+          ORIGIN: ${{ github.event.inputs.origin || 'https://asteriastar.com' }}
+        run: |
+          attempts=12
+          for i in $(seq 1 $attempts); do
+            if npm run journal:presence "$ORIGIN"; then exit 0; fi
+            if [ "$i" -lt "$attempts" ]; then
+              echo "::notice::attempt $i/$attempts did not pass; the deploy may still be publishing — retrying in 60s"
+              sleep 60
+            fi
+          done
+          echo "::error::the Journal is not reachable from the global navigation on $ORIGIN"
+          exit 1
 
       - name: Verify the Journal feed contract
         if: always()
