@@ -13,6 +13,7 @@ import {
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES, transparencyPath } from "@/lib/routes";
+import { JournalRelated } from "@/components/journal/JournalRelated";
 
 export const dynamicParams = false;
 
@@ -78,6 +79,7 @@ export default async function TransparencyDetailPage({ params }: PageProps<"/tra
             ))}
           </ul>
         </nav>
+        <JournalRelated path={`/transparency/${slug}`} />
       </Container>
     </>
   );

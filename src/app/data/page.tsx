@@ -9,6 +9,7 @@ import { CATALOGUE_STATS, DATA_SECTIONS } from "@/platform/open-data";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES, dataPath, absoluteUrl } from "@/lib/routes";
+import { JournalRelated } from "@/components/journal/JournalRelated";
 
 const DESCRIPTION =
   "The Asteria Star public data portal: open datasets, checksummed exports, a read-only scientific API, schemas, identifiers, licensing, provenance, and data-quality — all derived from the canonical knowledge graph, never fabricated.";
@@ -121,6 +122,7 @@ export default function DataPortalPage() {
             ))}
           </ul>
         </section>
+        <JournalRelated path="/data" />
       </Container>
     </>
   );

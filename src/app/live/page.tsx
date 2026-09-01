@@ -17,6 +17,7 @@ import { explainKp } from "@/platform/space-weather/explain";
 import { neoSnapshot, neoTotals, reage as reageNeo } from "@/platform/neo/service";
 import { issEphemeris, issNow, reage as reageSat } from "@/platform/satellites/service";
 import { offlineEvents } from "@/platform/events/service";
+import { JournalRelated } from "@/components/journal/JournalRelated";
 
 /**
  * Live now — the dashboard, and the platform behind it.
@@ -174,6 +175,7 @@ export default async function LiveHubPage() {
             <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link>.
           </p>
         </section>
+        <JournalRelated path="/live" />
       </Container>
     </>
   );

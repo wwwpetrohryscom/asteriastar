@@ -9,6 +9,7 @@ import { HeroSearch } from "@/components/site/HeroSearch";
 import { KnowledgeGraphPreview } from "@/components/graph/KnowledgeGraphPreview";
 import { HeroCarousel, type HeroSlide } from "@/components/home/HeroCarousel";
 import { PhotoOfDay } from "@/components/home/PhotoOfDay";
+import { JournalLatest } from "@/components/home/JournalLatest";
 import { getAllSections, REGISTRY_STATS } from "@/lib/content/registry";
 import { getHeroImageForEntity } from "@/lib/media/registry";
 import { IMAGE_LICENSE_LABELS } from "@/lib/media/types";
@@ -16,7 +17,15 @@ import { ENTRY_STATS } from "@/content/entries";
 import { GRAPH_STATS } from "@/knowledge-graph";
 import { sectionPath, topicPath, ROUTES } from "@/lib/routes";
 
-// Regenerate daily so the Astronomy Photo of the Day advances automatically.
+/*
+ * Regenerate daily so the Astronomy Photo of the Day advances automatically.
+ *
+ * The effective period is shorter than this. The Journal feed fetched by <JournalLatest /> sets its
+ * own, lower revalidate, and Next takes the LOWEST across the route — so the homepage actually
+ * regenerates on the feed's schedule (see JOURNAL_FEED_REVALIDATE_SECONDS). That is intended: it is
+ * how a newly published article appears here without this project rebuilding. This number stays as
+ * the ceiling, and as the answer to "how stale can the rest of the page get".
+ */
 export const revalidate = 86400;
 
 const POPULAR_TOPICS = [
@@ -211,6 +220,9 @@ export default function HomePage() {
         </div>
         <KnowledgeGraphPreview ids={["star:sirius", "constellation:orion", "space_telescope:james-webb-space-telescope"]} />
       </Container>
+
+      {/* ── Journal ── */}
+      <JournalLatest />
 
       {/* ── Tools ── */}
       <Container className="mt-20">

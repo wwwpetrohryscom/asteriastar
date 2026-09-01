@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { NavItem } from "@/components/site/NavItem";
 import { usePathname } from "next/navigation";
-import type { NavGroup } from "@/lib/navigation";
+import type { NavGroup, NavLink } from "@/lib/navigation";
 
 /** Hamburger menu for small screens. Groups mirror the desktop mega-menu. */
 export function MobileNav({ groups }: { groups: NavGroup[] }) {
@@ -47,10 +47,37 @@ export function MobileNav({ groups }: { groups: NavGroup[] }) {
           className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto border-t border-white/10 bg-bg/95 px-5 py-6 backdrop-blur-xl"
         >
           <nav aria-label="Primary" className="flex flex-col gap-6">
+            {/*
+              Direct destinations first.
+
+              The mobile menu renders every group in order, and the first of them — Explore — is
+              roughly eighty links long. A Journal entry left in source order landed 74th of 118: in
+              the menu, technically, and past the point anyone scrolls. Groups that ARE a destination
+              are pulled to the top instead, where a single tap reaches them.
+            */}
+            {groups.some((g) => g.href) && (
+              <ul className="flex flex-col border-b border-white/10 pb-4">
+                {groups
+                  .filter((group) => group.href)
+                  .map((group) => (
+                    <li key={group.id}>
+                      <NavItem
+                        href={group.href!}
+                        external={group.external}
+                        className="block rounded-lg px-3 py-2.5 text-base font-semibold text-fg transition hover:bg-white/5"
+                      >
+                        {group.label}
+                      </NavItem>
+                    </li>
+                  ))}
+              </ul>
+            )}
+
             {groups.map((group) => {
-              const links = group.href
-                ? [{ name: group.label, href: group.href }]
-                : group.columns?.flatMap((c) => c.links) ?? [];
+              // Already rendered in the block above, and not as a heading with one link of its own
+              // name beneath it — that read like a category containing itself.
+              if (group.href) return null;
+              const links: NavLink[] = group.columns?.flatMap((c) => c.links) ?? [];
               return (
                 <div key={group.id}>
                   <p className="px-3 pb-1.5 text-xs font-medium uppercase tracking-[0.14em] text-faint">{group.label}</p>

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Logo } from "@/components/site/Logo";
+import { NavItem } from "@/components/site/NavItem";
 import { Container } from "@/components/ui/Container";
 import { getImageAsset } from "@/lib/media/registry";
 import { getAllSections } from "@/lib/content/registry";
@@ -11,7 +12,26 @@ import { SITE } from "@/lib/site";
  * Premium editorial footer: a cinematic mission band over a real deep-field
  * image, then the knowledge-hub navigation and policy links. Links are derived
  * from the registry, so the footer can never drift out of sync.
+ *
+ * The Journal column is the one exception to that derivation, and it has to be: the publication is
+ * a separate application with its own repository and deploy history, so this project has no registry
+ * to read it from. The links are therefore written out — and, because a written-out cross-project
+ * link is exactly the kind that rots silently, `scripts/blog/validate-journal-presence.ts` fetches
+ * every one of them on a schedule and fails if any stops resolving.
  */
+
+/**
+ * The Journal's stable top-level routes.
+ *
+ * Sections only — not individual articles, which come and go without this project knowing, and not
+ * the Journal's own search page, which is deliberately noindex.
+ */
+const JOURNAL_LINKS = [
+  { name: "Guides", href: "/blog/guides" },
+  { name: "Data", href: "/blog/data" },
+  { name: "AsteriaStar", href: "/blog/asteriastar" },
+  { name: "Corrections", href: "/blog/corrections" },
+] as const;
 export function SiteFooter() {
   const sections = getAllSections();
   const bg = getImageAsset("webb-first-deep-field");
@@ -66,6 +86,28 @@ export function SiteFooter() {
               </ul>
             </div>
           ))}
+
+          {/*
+            The Journal sits in the same grid as the knowledge hubs because that is what it is: a
+            top-level area of this site, not an afterthought in the legal row. NavItem rather than
+            Link, because every one of these belongs to the other application.
+          */}
+          <div>
+            <h3 className="text-sm font-semibold text-fg">
+              <NavItem href="/blog" external className="transition hover:text-nasa">
+                Journal
+              </NavItem>
+            </h3>
+            <ul className="mt-3 space-y-2.5">
+              {JOURNAL_LINKS.map((link) => (
+                <li key={link.href}>
+                  <NavItem href={link.href} external className="text-sm text-muted transition hover:text-fg">
+                    {link.name}
+                  </NavItem>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
         <div className="mt-14 flex flex-col gap-4 border-t border-white/10 pt-8 text-sm text-faint sm:flex-row sm:items-center sm:justify-between">

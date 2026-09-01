@@ -12,7 +12,14 @@
  * bundle. `scripts/validate-search-index.ts` enforces this.
  */
 
-/** Result groups shown in the UI, in display order. */
+/**
+ * Result groups shown in the UI, in display order.
+ *
+ * `journal` holds rows from AsteriaStar Journal. They are not in the generated shards — the Journal
+ * is a separate deployment and its index is fetched at runtime — so this group is empty until that
+ * request lands, and stays empty if it fails. Both the panel and the results page filter to groups
+ * that actually have rows, so an empty group renders nothing rather than an empty heading.
+ */
 export const SEARCH_GROUPS = [
   "solar-system",
   "stars-exoplanets",
@@ -21,6 +28,7 @@ export const SEARCH_GROUPS = [
   "observatories",
   "science",
   "guides",
+  "journal",
   "tools",
   "data",
   "history",
@@ -37,6 +45,7 @@ export const SEARCH_GROUP_LABELS: Record<SearchGroupId, string> = {
   observatories: "Telescopes & Observatories",
   science: "Science & Methods",
   guides: "Guides & Learning",
+  journal: "AsteriaStar Journal",
   tools: "Tools & Calculators",
   data: "Data & API",
   history: "History & Culture",

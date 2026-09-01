@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { fetchJournalSearchDocs } from "@/lib/journal/search";
 import {
   SEARCH_INDEX_VERSION,
   shardPath,
@@ -22,6 +23,13 @@ import {
  * immediately, while `catalogue` (the deep long tail) streams in behind it and
  * widens the same query in place.
  *
+ * A third source joins them: AsteriaStar Journal. Its index is NOT built into the shards, because
+ * the Journal is a separate deployment — baking it in would mean rebuilding this application every
+ * time an article is published, which is the one thing the split exists to prevent. It is fetched at
+ * runtime alongside the shards and merged into the same ranking. If it fails, search simply has no
+ * Journal rows; the platform's own index is complete without it, so this is not the same kind of
+ * incompleteness as a missing catalogue shard and is not reported as one.
+ *
  * Module-level caches rather than component state, so opening search a second
  * time — or mounting the header trigger and the /search page together — never
  * refetches.
@@ -31,6 +39,7 @@ type Stage = "idle" | "loading" | "partial" | "ready" | "error";
 
 let coreCache: SearchDoc[] | null = null;
 let tailCache: SearchDoc[] | null = null;
+let journalCache: SearchDoc[] | null = null;
 let tailFailed = false;
 let started = false;
 
@@ -68,6 +77,12 @@ function begin() {
       errored = true;
       notify();
     });
+  // The Journal's own index, from the other deployment. It resolves to [] rather than rejecting on
+  // every failure path, so there is no error branch to handle here — only rows or no rows.
+  fetchJournalSearchDocs().then((docs) => {
+    journalCache = docs;
+    notify();
+  });
   fetchShard("catalogue")
     .then((docs) => {
       tailCache = docs;
@@ -93,12 +108,16 @@ export interface SearchIndexState {
 }
 
 function snapshot(): { docs: SearchDoc[]; stage: Stage; degraded: boolean } {
+  // Journal rows join whatever the platform index has resolved so far. They are additive: they never
+  // change the stage, because the platform's own completeness is not affected by whether the
+  // publication answered.
+  const journal = journalCache ?? [];
   if (errored && !coreCache) return { docs: [], stage: "error", degraded: false };
-  if (coreCache && tailCache) return { docs: [...coreCache, ...tailCache], stage: "ready", degraded: false };
+  if (coreCache && tailCache) return { docs: [...coreCache, ...tailCache, ...journal], stage: "ready", degraded: false };
   // Core present, catalogue permanently failed: usable, but incomplete, and
   // said so rather than passed off as settled.
-  if (coreCache && tailFailed) return { docs: coreCache, stage: "ready", degraded: true };
-  if (coreCache) return { docs: coreCache, stage: "partial", degraded: false };
+  if (coreCache && tailFailed) return { docs: [...coreCache, ...journal], stage: "ready", degraded: true };
+  if (coreCache) return { docs: [...coreCache, ...journal], stage: "partial", degraded: false };
   return { docs: [], stage: started ? "loading" : "idle", degraded: false };
 }
 
