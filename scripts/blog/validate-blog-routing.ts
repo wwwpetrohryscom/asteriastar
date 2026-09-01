@@ -81,16 +81,30 @@ function expect(path: string, response: Fetched | null, status: number): boolean
  * The URL-preservation rule, and the reason this file exists.
  *
  * A proxy that redirected instead of rewriting would still serve the right content — and would have
- * moved the publication onto a hostname it must never occupy. Following redirects and then checking
- * where we ended up is the only way to tell the two apart from outside.
+ * moved the publication onto a hostname it must never occupy. The test is therefore about the HOST
+ * the browser ends on, and about whether a redirect happened at all.
+ *
+ * It is deliberately NOT "the final URL contains no netlify.app". The gate has to run against a
+ * deploy preview of the platform, whose origin IS a netlify.app hostname — an earlier version failed
+ * every path for that reason and reported sixteen problems where there were none. What matters is
+ * that the host did not CHANGE: whatever origin the request went to is the origin the response came
+ * back on. Hostname leakage into the content is a separate rule, checked on the body.
  */
 function expectSameOrigin(path: string, response: Fetched | null): void {
   if (!response || direct) return;
-  if (!response.finalUrl.startsWith(`${baseOrigin}/`) && response.finalUrl !== `${baseOrigin}${path}`) {
-    fail(`${path}: the browser would end up at ${response.finalUrl} — the proxy redirected instead of rewriting`);
+  const requested = new URL(`${baseOrigin}${path}`).host;
+  let landed: string;
+  try {
+    landed = new URL(response.finalUrl).host;
+  } catch {
+    fail(`${path}: the final URL "${response.finalUrl}" is not parseable`);
+    return;
   }
-  if (response.finalUrl.includes("netlify.app")) {
-    fail(`${path}: ended on a netlify.app hostname (${response.finalUrl})`);
+  if (landed !== requested) {
+    fail(`${path}: the browser would end up on ${landed}, not ${requested} — the proxy redirected instead of rewriting`);
+  }
+  if (response.redirected) {
+    fail(`${path}: the response was reached by a redirect; a rewrite must not move the browser`);
   }
 }
 
@@ -210,8 +224,24 @@ async function main(): Promise<void> {
     for (const [path, expected] of [["/", 200], ["/sitemap.xml", 200], ["/robots.txt", 200]] as [string, number][]) {
       const response = await get(path);
       if (!expect(path, response, expected) || !response) continue;
-      if (/AsteriaStar Journal/i.test(response.body) && path === "/") {
-        fail("/: the main platform homepage is being served by the blog project");
+
+      /*
+       * That the homepage is still the PLATFORM's is checked on its identity, not on whether the
+       * publication's name appears anywhere in it. An earlier version searched the body for
+       * "AsteriaStar Journal" and failed the moment a navigation entry mentioned the publication —
+       * which is exactly what a correct integration looks like. A title and a canonical are what
+       * actually distinguish one application's page from another's.
+       */
+      if (path === "/") {
+        const title = /<title>([^<]*)<\/title>/.exec(response.body)?.[1] ?? "";
+        if (/Journal/i.test(title)) fail(`/: the homepage title is "${title}" — the blog project is serving the platform's root`);
+        const canonical = /rel="canonical" href="([^"]+)"/.exec(response.body)?.[1] ?? "";
+        if (canonical.includes("/blog")) fail(`/: the homepage canonical is "${canonical}"`);
+        if (response.body.length < 50_000) fail(`/: only ${response.body.length} bytes — this does not look like the platform homepage`);
+      }
+      if (path === "/sitemap.xml" && response.body.includes("/blog/")) {
+        // The platform's sitemap must not enumerate blog URLs; that coupling is what the split removes.
+        fail("/sitemap.xml: the platform sitemap contains blog URLs, which would tie its build to publication");
       }
     }
     const robots = await get("/robots.txt");
