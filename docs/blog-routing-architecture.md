@@ -1,6 +1,6 @@
 # ADR — serving `asteriastar.com/blog` from a second Netlify project
 
-**Status:** accepted, pending the empirical proof described under *Verification*.
+**Status:** accepted and **verified in production**. See *Verification* for what was actually proved.
 **Date:** 2026-08-30.
 **Context:** [`blog-platform-architecture-baseline.md`](./blog-platform-architecture-baseline.md).
 
@@ -178,19 +178,56 @@ returns to 404 and the main site is byte-identical to its state at `a2f5cd1`. Th
 running on its own hostname, losing nothing. Full procedure in
 [`blog-routing-rollback.md`](./blog-routing-rollback.md).
 
-## Verification — what must be proved before this ships
+## Verification — what was proved, and where
 
-The documentation supports every step above, and the repository already carries a warning that
-Netlify configuration can report success and do nothing. So the architecture is proved on a real
-deploy, not in a build log, before the main site's production is touched:
+The documentation supports every step above, and this repository already carried a warning that
+Netlify configuration can report success and do nothing. So the architecture was proved on real
+deploys, in this order, before production was touched.
 
-1. Deploy the blog project standalone; confirm it serves `/blog/*` on its own hostname with correct
-   assets, and that its canonicals already say `asteriastar.com`.
-2. Add the proxy rule on a **pull-request deploy preview** of the main site — previews evaluate
-   `netlify.toml` redirects exactly as production does — and run the integration gate against the
-   preview hostname.
-3. Only then merge and deploy the main site.
+**1. The publication standalone.** Deployed to its own project and checked on its own hostname: every
+route 200, `/blog/nonexistent` a real 404, feeds and sitemap correct, and canonicals already saying
+`asteriastar.com` on a host that is not it.
 
-The gate must confirm: the browser-visible URL never changes; the blog project served the response;
-CSS, JS and images load; a real 404 is a real 404; no `*.netlify.app` string appears in the HTML; and
-`/`, `/sitemap.xml` and the API are unaffected.
+**2. The proxy, on a pull-request deploy preview** of this platform — previews evaluate
+`netlify.toml` redirects exactly as production does. This is where the architecture was actually
+proved, and it is where a defect would have been cheap.
+
+**3. Production**, after merge.
+
+The gate passes at all three. What it establishes:
+
+- The browser-visible host never changes, and no response is reached by a redirect. A rewrite that
+  had silently become a redirect would be caught here and nowhere else.
+- CSS and JavaScript load through the proxy, with correct content types, and are not HTML — the
+  symptom of an asset falling through to the platform's catch-all.
+- The article's canonical, JSON-LD, headings, prose and references are all in the **first** HTTP
+  response. 121 KB of HTML, 16.8 KB over the wire.
+- `/blog/nonexistent` is a real 404 **from the publication**, not a soft 200 and not the platform's.
+- No `netlify.app` string appears in any page, feed, sitemap or structured-data URL.
+- `/`, `/sitemap.xml`, `/robots.txt`, `/events`, `/neo` and the API are untouched, and the platform's
+  sitemap contains no blog URLs.
+
+### Deployment isolation, measured
+
+The property the whole design exists for, with deploy IDs:
+
+| | Blog project | Platform project |
+| --- | --- | --- |
+| Article-only change pushed 20:30:13Z | **built** `6a9735da…` at 20:30:18Z, commit `5640063e` | **did not build** — newest production deploy still `6a9399f3…` from 2026-08-30T02:48Z |
+| Platform routing PR merged 20:32:36Z | **did not build** — deploy count unchanged at 7 | **built** `6a973666…` at 20:32:38Z, commit `27b126d5` |
+
+### Two things the verification changed
+
+**The header-rule finding.** Probing a real deploy with a throwaway header established that a
+`[[headers]]` rule reaches static files in the publish directory and does **not** reach pages, which
+the Next.js Runtime serves through its function even when prerendered — confirming this repository's
+own migration-era warning for the second project. It also established that Netlify forces its own
+HSTS on the blog project, overriding both config locations, so `/blog` carries a one-year max-age
+against the platform's two. Both are strong; there is no configuration that reconciles them, so the
+blog's `netlify.toml` records the finding rather than carrying a rule that looks effective and is not.
+
+**The gate's own rules were wrong twice.** It rejected any final URL containing `netlify.app` — which
+is every URL when running against a deploy preview, the only place the proxy can be proved before
+production — and it decided the platform homepage had been captured because a navigation entry
+mentioned the publication by name. Both now test the property rather than a string. A gate that fails
+on correct behaviour gets ignored, which is worse than not having one.
