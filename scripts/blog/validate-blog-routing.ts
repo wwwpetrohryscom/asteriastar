@@ -63,7 +63,29 @@ async function get(path: string): Promise<Fetched | null> {
       redirected: response.redirected,
     };
   } catch (error) {
-    fail(`${path}: request failed — ${error instanceof Error ? error.message : "unknown"}`);
+    /*
+     * `fetch` reports a redirect loop as a bare "fetch failed", which is the least useful thing it
+     * could say about the most likely way this routing can break: a rule whose `from` folds onto its
+     * own `to`. A loop already reached production once, and the gate named it "fetch failed". Probe
+     * once without following, so the message says what actually happened.
+     */
+    const message = error instanceof Error ? error.message : "unknown";
+    let detail = message;
+    try {
+      const hop = await fetch(`${baseOrigin}${path}`, { redirect: "manual" });
+      const location = hop.headers.get("location");
+      if (location) {
+        const target = new URL(location, `${baseOrigin}${path}`).toString();
+        const self = new URL(path, baseOrigin).toString();
+        detail =
+          target === self
+            ? `${hop.status} redirect to itself (${target}) — a redirect loop; a \`from\` rule is matching its own \`to\``
+            : `${message} (first hop: ${hop.status} → ${target})`;
+      }
+    } catch {
+      /* The follow-up probe is best-effort; the original message still gets reported. */
+    }
+    fail(`${path}: request failed — ${detail}`);
     return null;
   }
 }
