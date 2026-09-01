@@ -34,6 +34,9 @@ on:
       - "src/lib/journal/**"
       - "src/components/site/**"
       - "src/components/home/JournalLatest.tsx"
+      # This file. A change to a gate should re-run the gate — the commit that added the retry below
+      # did not trigger this workflow, because the workflow was not in its own filter.
+      - ".github/workflows/journal-integration.yml"
   schedule:
     # Twice a day. The blog deploys independently and often; a rule that silently stops matching, or a
     # blog project that moves, should not wait for someone to notice by hand.
