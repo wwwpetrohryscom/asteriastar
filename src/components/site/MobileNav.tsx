@@ -1,11 +1,25 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { NavItem } from "@/components/site/NavItem";
 import { usePathname } from "next/navigation";
 import type { NavGroup, NavLink } from "@/lib/navigation";
 
-/** Hamburger menu for small screens. Groups mirror the desktop mega-menu. */
+/**
+ * Hamburger menu for small screens. Groups mirror the desktop mega-menu.
+ *
+ * The panel is PORTALLED to document.body, and it has to be. It is `position: fixed`, but the header
+ * it lives in sets `backdrop-blur-xl` — and a `backdrop-filter` makes an element the containing block
+ * for its fixed-position descendants. The panel was therefore being positioned and sized against the
+ * header rather than the viewport: measured on production it opened 49px tall, showing one word
+ * before the page content resumed underneath it. Every link below that was in the DOM, scrollable in
+ * principle, and unreachable in practice.
+ *
+ * A portal moves it out of that containing block without touching the header's blur, which is a
+ * deliberate part of the design. This was a pre-existing defect, found while checking that the
+ * Journal was reachable on mobile.
+ */
 export function MobileNav({ groups }: { groups: NavGroup[] }) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -41,11 +55,12 @@ export function MobileNav({ groups }: { groups: NavGroup[] }) {
         </span>
       </button>
 
-      {open && (
-        <div
-          id="mobile-menu"
-          className="fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto border-t border-white/10 bg-bg/95 px-5 py-6 backdrop-blur-xl"
-        >
+      {open &&
+        createPortal(
+          <div
+            id="mobile-menu"
+            className="fixed inset-x-0 bottom-0 z-40 overflow-y-auto border-t border-white/10 bg-bg/95 px-5 py-6 backdrop-blur-xl [top:calc(var(--ecosystem-bar-height)+var(--site-header-height))]"
+          >
           <nav aria-label="Primary" className="flex flex-col gap-6">
             {/*
               Direct destinations first.
@@ -94,8 +109,9 @@ export function MobileNav({ groups }: { groups: NavGroup[] }) {
               );
             })}
           </nav>
-        </div>
-      )}
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }

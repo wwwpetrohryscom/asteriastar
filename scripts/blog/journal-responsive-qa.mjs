@@ -128,6 +128,36 @@ async function mobileJournalReachable(page) {
   if (!(await link.isVisible())) return { ok: false, reason: "the mobile menu's Journal link is not visible" };
 
   /*
+   * Is the panel itself actually usable?
+   *
+   * `isVisible()` is not enough and a real defect proved it: the panel is `position: fixed` inside a
+   * header that sets `backdrop-filter`, which makes the header the containing block for its fixed
+   * descendants — so the panel opened 49px tall, showing one word. Playwright still called the links
+   * visible, because they were laid out inside a scrollable box; a person could not use them.
+   *
+   * So measure the panel against the viewport, and require the link's own box to sit inside it.
+   */
+  const usable = await page.evaluate(() => {
+    const menu = document.querySelector("#mobile-menu");
+    if (!menu) return { ok: false, reason: "the menu vanished" };
+    const m = menu.getBoundingClientRect();
+    const share = m.height / window.innerHeight;
+    if (share < 0.5) {
+      return { ok: false, reason: `the menu panel is only ${Math.round(m.height)}px tall — ${Math.round(share * 100)}% of the viewport` };
+    }
+    const a = menu.querySelector('a[href="/blog"]');
+    const r = a.getBoundingClientRect();
+    if (r.bottom > m.bottom + 1 || r.top < m.top - 1) {
+      return { ok: false, reason: "the Journal link is laid out outside the visible panel" };
+    }
+    if (r.bottom > window.innerHeight) {
+      return { ok: false, reason: "the Journal link sits below the fold when the menu opens" };
+    }
+    return { ok: true };
+  });
+  if (!usable.ok) return usable;
+
+  /*
    * How far down the menu is it? The whole defect being fixed was a link a reader would never scroll
    * to, so "present in the menu" is not the bar — it has to be near the top.
    */
