@@ -134,7 +134,11 @@
 # the apex makes it self-referential for the first time, and needs no content,
 # sitemap, or metadata change to do it.
 #
-# 308 is kept, matching the status code the previous production redirect used.
+# NOTE, added after measuring production: these rules are INERT. Netlify's own primary-domain
+# redirect fires before them, and `https://www.asteriastar.com/x` answers 301, not the 308 declared
+# here. They are kept as an explicit statement of the policy and as a fallback if the primary-domain
+# setting ever changes — but the status code below is not the one served, and an earlier version of
+# this comment asserted that it was.
 
 # ---------------------------------------------------------------------------
 # /blog — proxied to the independent AsteriaStar Journal project
@@ -177,6 +181,18 @@
 #
 # ROLLBACK: delete these two blocks and redeploy. /blog returns to 404 and this site is unchanged.
 # Full procedure in docs/blog-routing-rollback.md.
+
+# `/blog/` — the trailing-slash form — is normalised to `/blog` before it reaches the publication.
+#
+# Netlify's matcher folds `/blog/` onto `from = "/blog"`, so the origin's own 308 never runs and the
+# apex would otherwise serve the homepage at two live URLs. Every child path behaves correctly
+# (`/blog/guides/` → 308), which makes the homepage the one inconsistent case — and the one form an
+# external linker is most likely to write. This rule comes FIRST, so it matches before the proxy.
+[[redirects]]
+  from = "/blog/"
+  to = "/blog"
+  status = 308
+  force = true
 
 [[redirects]]
   from = "/blog"

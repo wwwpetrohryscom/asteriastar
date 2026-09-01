@@ -1,0 +1,59 @@
+name: Blog routing
+
+# The cross-project routing gate, run against LIVE production.
+#
+# This is the only check in either repository that exercises the architecture rather than reasoning
+# about it — and until this workflow existed it ran nowhere. `npm run blog:routing` was defined and
+# nothing called it: not the `validate` chain, not CI. That meant the two `[[redirects]]` blocks in
+# netlify.toml — dropping `force`, retargeting the host, inserting a rule above them — could be
+# changed and shipped with everything green, on the one seam the split exists to protect.
+#
+# It runs against production rather than against a pull request, deliberately. A PR cannot test its
+# own proxy rule: the rule only exists once deployed, and the deploy-preview URL is not known to this
+# workflow. What CI can do is notice quickly when production breaks — after a merge, on a schedule,
+# and on demand. Verifying a CHANGE to the rules is a manual step against that PR's deploy preview,
+# and the pull-request template says so.
+
+on:
+  push:
+    branches: [main]
+    # Only the files that can actually affect routing.
+    paths:
+      - "netlify.toml"
+      - "scripts/blog/**"
+      - "src/app/robots.ts"
+  schedule:
+    # Twice a day. The blog deploys independently and often; a rule that silently stops matching, or a
+    # blog project that moves, should not wait for someone to notice by hand.
+    - cron: "17 6,18 * * *"
+  workflow_dispatch:
+    inputs:
+      origin:
+        description: "Origin to test (default: production). Use a deploy-preview URL to prove a change before merging."
+        required: false
+        default: "https://asteriastar.com"
+
+concurrency:
+  group: blog-routing
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  routing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # A push to main triggers a deploy; give it time to publish before asserting against it.
+      - name: Wait for the deployment to publish
+        if: github.event_name == 'push'
+        run: sleep 120
+      - name: Verify same-host routing
+        run: npm run blog:routing ${{ github.event.inputs.origin || 'https://asteriastar.com' }}
