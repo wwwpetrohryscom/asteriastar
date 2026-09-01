@@ -213,7 +213,30 @@ for (const { w, h } of WIDTHS) {
   let kind = "";
 
   for (const path of PAGES) {
-    await page.goto(`${origin}${path}`, { waitUntil: "domcontentloaded" });
+    /*
+     * Retry the navigation until the global header is actually there.
+     *
+     * Against a REMOTE origin this run makes two dozen navigations in quick succession, and a few of
+     * them come back without a rendered document — a throttled or dropped response, not a missing
+     * header. A first version reported eleven "no <header>" failures on a deploy preview whose HTML,
+     * fetched on its own, contained a header every time. Retrying distinguishes a site that lost its
+     * navigation from a request that lost its response; the failure below is only reported when the
+     * page genuinely arrives without one.
+     */
+    let loaded = false;
+    for (let attempt = 1; attempt <= 3 && !loaded; attempt++) {
+      try {
+        await page.goto(`${origin}${path}`, { waitUntil: "domcontentloaded", timeout: 30_000 });
+        loaded = await page.evaluate(() => Boolean(document.querySelector("header")));
+      } catch {
+        loaded = false;
+      }
+      if (!loaded && attempt < 3) await page.waitForTimeout(1500 * attempt);
+    }
+    if (!loaded) {
+      fail(`${w}px ${path}: no <header> after 3 attempts`);
+      continue;
+    }
 
     const overflow = await horizontalOverflow(page);
     if (overflow > 0) fail(`${w}px ${path}: ${overflow}px of horizontal overflow`);
