@@ -9,6 +9,7 @@ import { dataHealth } from "@/lib/data-health/metrics";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES } from "@/lib/routes";
+import { JournalRelated } from "@/components/journal/JournalRelated";
 
 // Real-time: freshness is computed against the current instant on each request.
 export const dynamic = "force-dynamic";
@@ -90,6 +91,7 @@ export default function DataHealthPage() {
         </section>
 
         <p className="text-xs text-faint">Every figure on this page is computed from the live provenance registry and committed snapshots — no hard-coded totals. JSON API: <code className="text-muted">/api/v0/authority/data-health</code>.</p>
+        <JournalRelated path="/authority/data-health" />
       </Container>
     </>
   );

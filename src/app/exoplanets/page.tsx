@@ -10,6 +10,7 @@ import { EXO_DISCOVERIES } from "@/app/exoplanets/discovery";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES, exoplanetPath, exoplanetDiscoveryPath } from "@/lib/routes";
+import { JournalRelated } from "@/components/journal/JournalRelated";
 
 const e = engine.exoplanets;
 const DESCRIPTION = `An encyclopedia of ${e.planetCount} confirmed exoplanets across ${e.systemCount} multi-planet systems — host stars, detection methods, classes, and discovery missions — as first-class knowledge-graph entities, built on the NASA Exoplanet Archive.`;
@@ -94,6 +95,7 @@ export default function ExoplanetsHub() {
             <Link href="/transparency/source-quality" className="text-nasa underline-offset-4 hover:underline">source quality</Link> page.
           </p>
         </section>
+        <JournalRelated path="/exoplanets" />
       </Container>
     </>
   );

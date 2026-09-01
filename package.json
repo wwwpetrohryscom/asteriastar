@@ -51,7 +51,10 @@
     "events:validate": "tsx scripts/events/validate-events.ts",
     "events:reference": "tsx scripts/events/fetch-reference.ts",
     "observing:validate": "tsx scripts/observing/validate-observing.ts",
-    "blog:routing": "tsx scripts/blog/validate-blog-routing.ts"
+    "blog:routing": "tsx scripts/blog/validate-blog-routing.ts",
+    "journal:presence": "tsx scripts/blog/validate-journal-presence.ts",
+    "journal:feed": "tsx scripts/blog/validate-journal-feed.ts",
+    "journal:search": "tsx scripts/blog/validate-journal-search.ts"
   },
   "dependencies": {
     "next": "16.2.9",

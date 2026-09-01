@@ -37,6 +37,8 @@ export interface NavGroup {
   label: string;
   /** A direct link (no panel) when set; otherwise a mega-menu with columns. */
   href?: string;
+  /** As `NavLink.external`: a same-origin destination owned by another application. */
+  external?: boolean;
   columns?: NavColumn[];
 }
 
@@ -134,7 +136,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Space Weather", href: ROUTES.spaceWeather, description: "Live from NOAA & NASA — solar wind, the Kp index, flares, storms and the aurora forecast, each with the time it was measured" },
             { name: "Near-Earth Objects", href: ROUTES.neo, description: "Live from NASA/JPL & the Minor Planet Center — close approaches with their real uncertainty, the Sentry risk table read as JPL publishes it, and new discoveries" },
             { name: "Where Is the ISS?", href: "/satellites/iss", description: "The station's position now, from NASA's own operational trajectory — with pass predictions computed in your browser, so your coordinates never leave your device" },
-            { name: "Blog", href: "/blog", external: true, description: "AsteriaStar Journal — astronomy and space-science reporting, mission and discovery coverage, observing guidance and platform updates, with every claim traceable to a primary source" },
+            { name: "Journal", href: "/blog", external: true, description: "AsteriaStar Journal — astronomy and space-science reporting, mission and discovery coverage, observing guidance and platform updates, with every claim traceable to a primary source" },
             { name: "Observing Calendar", href: ROUTES.events, description: "Dated events with their provenance — lunar phases and planetary events computed and checked against NASA and USNO tables, eclipses from NASA’s catalogue, shower peaks, and launches shown as the moving targets they are" },
             { name: "Image Archive", href: ROUTES.images, description: "Scientific imagery with verified provenance" },
             { name: "Gallery", href: ROUTES.gallery, description: "Webb, Hubble, the Solar System & the deep sky — curated, openly-licensed cosmic imagery" },
@@ -174,6 +176,27 @@ export function getNavGroups(): NavGroup[] {
         },
         { title: "Featured paths", links: featuredPaths },
       ],
+    },
+    {
+      /*
+       * The Journal is a top-level destination, not a row inside a panel.
+       *
+       * It was reachable only as one entry among ~80 in the Explore mega-menu's first column. That
+       * is enough for a crawler — the panel is in the HTML — and useless for a person, who would
+       * have to open a menu and read a long list to learn the publication exists at all. A reader
+       * should not have to go looking for it.
+       *
+       * `href` makes this a direct link rather than a panel, and `external` makes it a real
+       * navigation: /blog is served by a separate Netlify project, so `next/link` would ask this
+       * application's router for a route it does not own.
+       *
+       * It stays in Explore as well. That is a secondary discovery path, not a duplicate identity —
+       * both say "Journal", both go to /blog.
+       */
+      id: "journal",
+      label: "Journal",
+      href: "/blog",
+      external: true,
     },
     {
       id: "data",
@@ -244,5 +267,7 @@ export function getNavGroups(): NavGroup[] {
 
 /** A flat list of all nav links, for the mobile menu and link audits. */
 export function getNavLinks(): NavLink[] {
-  return getNavGroups().flatMap((g) => (g.href ? [{ name: g.label, href: g.href }] : g.columns?.flatMap((c) => c.links) ?? []));
+  return getNavGroups().flatMap((g) =>
+    g.href ? [{ name: g.label, href: g.href, external: g.external }] : (g.columns?.flatMap((c) => c.links) ?? []),
+  );
 }

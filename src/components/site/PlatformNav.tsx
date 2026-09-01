@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
 import { NavItem } from "@/components/site/NavItem";
 import type { NavGroup } from "@/lib/navigation";
 
@@ -25,12 +24,15 @@ export function PlatformNav({ groups }: { groups: NavGroup[] }) {
         {groups.map((group) =>
           group.href ? (
             <li key={group.id}>
-              <Link
+              {/* A direct-link group may point at another application on this hostname — the
+                  Journal does. NavItem picks the anchor over the router for those. */}
+              <NavItem
                 href={group.href}
+                external={group.external}
                 className="rounded-lg px-3 py-2 text-sm font-medium text-muted transition hover:bg-white/5 hover:text-fg"
               >
                 {group.label}
-              </Link>
+              </NavItem>
             </li>
           ) : (
             <li

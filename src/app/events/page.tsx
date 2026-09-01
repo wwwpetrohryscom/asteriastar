@@ -23,6 +23,7 @@ import {
 import { buildCalendar, rollingYear } from "@/platform/events/service";
 import { CATEGORY_LABEL, type EventCategory } from "@/platform/events/model";
 import { UNDATEABLE_SHOWERS } from "@/platform/events/showers";
+import { JournalRelated } from "@/components/journal/JournalRelated";
 
 /**
  * The observing calendar.
@@ -268,6 +269,7 @@ export default async function EventsPage() {
         <ProviderProvenance
           envelopes={[calendar.solar, calendar.lunar, calendar.launches]}
         />
+        <JournalRelated path="/events" />
       </Container>
     </>
   );

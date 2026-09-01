@@ -9,6 +9,7 @@ import { getAllSources, AUTHORITY_TYPE_LABELS } from "@/lib/sources";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES } from "@/lib/routes";
+import { JournalRelated } from "@/components/journal/JournalRelated";
 
 const DESCRIPTION =
   "The Asteria Star authority dashboard — a transparent, fully-derived view of scientific coverage: reviews, sources, relationships, datasets, and data-quality indicators. No fabricated statistics.";
@@ -190,6 +191,7 @@ export default function AuthorityPage() {
             </table>
           </div>
         </section>
+        <JournalRelated path="/authority" />
       </Container>
     </>
   );

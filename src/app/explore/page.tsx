@@ -10,6 +10,7 @@ import { GRAPH_STATS } from "@/knowledge-graph";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { breadcrumbSchema, collectionPageSchema, type Crumb } from "@/lib/seo/jsonld";
 import { ROUTES, topicPath, connectionPath } from "@/lib/routes";
+import { JournalRelated } from "@/components/journal/JournalRelated";
 
 const DESCRIPTION =
   "Explore everything above Earth through the Asteria Star knowledge graph — browse stars, planets, galaxies, missions, telescopes, constellations, mythology, and more.";
@@ -99,6 +100,7 @@ export default function ExplorePage() {
             </a>
           ))}
         </div>
+        <JournalRelated path="/explore" />
       </Container>
     </>
   );
