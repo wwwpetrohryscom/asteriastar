@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { NavItem } from "@/components/site/NavItem";
 import { usePathname } from "next/navigation";
 import type { NavGroup } from "@/lib/navigation";
 
@@ -57,9 +57,9 @@ export function MobileNav({ groups }: { groups: NavGroup[] }) {
                   <ul className="flex flex-col">
                     {links.map((link) => (
                       <li key={link.href}>
-                        <Link href={link.href} className="block rounded-lg px-3 py-2.5 text-base font-medium text-fg transition hover:bg-white/5">
+                        <NavItem href={link.href} external={link.external} className="block rounded-lg px-3 py-2.5 text-base font-medium text-fg transition hover:bg-white/5">
                           {link.name}
-                        </Link>
+                        </NavItem>
                       </li>
                     ))}
                   </ul>

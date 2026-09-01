@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { NavItem } from "@/components/site/NavItem";
 import type { NavGroup } from "@/lib/navigation";
 
 /**
@@ -78,10 +79,12 @@ export function PlatformNav({ groups }: { groups: NavGroup[] }) {
                       <ul className="space-y-0.5">
                         {col.links.map((link) => (
                           <li key={link.href}>
-                            <Link href={link.href} className="block rounded-lg px-2 py-1.5 transition hover:bg-white/5">
+                            {/* A same-origin destination served by another application needs a real
+                                navigation, not a client-side route transition. See NavLink.external. */}
+                            <NavItem href={link.href} external={link.external} className="block rounded-lg px-2 py-1.5 transition hover:bg-white/5">
                               <span className="block text-sm font-medium text-fg">{link.name}</span>
                               {link.description && <span className="block text-xs text-faint">{link.description}</span>}
-                            </Link>
+                            </NavItem>
                           </li>
                         ))}
                       </ul>
