@@ -1,6 +1,12 @@
-name: Blog routing
+name: Journal integration
 
-# The cross-project routing gate, run against LIVE production.
+# The cross-project gates, run against LIVE production.
+#
+# Four checks that exercise the architecture rather than reasoning about it: the proxy still serves
+# the publication under this hostname, the Journal is still findable from this site's navigation, the
+# feed the homepage reads still says what the homepage expects, and global search still finds
+# articles. All four depend on a SEPARATE deployment that this repository does not build and does not
+# control, so none of them can be settled at build time — only by asking production.
 #
 # This is the only check in either repository that exercises the architecture rather than reasoning
 # about it — and until this workflow existed it ran nowhere. `npm run blog:routing` was defined and
@@ -22,6 +28,12 @@ on:
       - "netlify.toml"
       - "scripts/blog/**"
       - "src/app/robots.ts"
+      # The navigation model and the components that render it: the Journal's visibility lives here,
+      # and a change that quietly drops it should be caught by the next run rather than by a reader.
+      - "src/lib/navigation.ts"
+      - "src/lib/journal/**"
+      - "src/components/site/**"
+      - "src/components/home/JournalLatest.tsx"
   schedule:
     # Twice a day. The blog deploys independently and often; a rule that silently stops matching, or a
     # blog project that moves, should not wait for someone to notice by hand.
@@ -34,14 +46,14 @@ on:
         default: "https://asteriastar.com"
 
 concurrency:
-  group: blog-routing
+  group: journal-integration
   cancel-in-progress: false
 
 permissions:
   contents: read
 
 jobs:
-  routing:
+  integration:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -57,3 +69,17 @@ jobs:
         run: sleep 120
       - name: Verify same-host routing
         run: npm run blog:routing ${{ github.event.inputs.origin || 'https://asteriastar.com' }}
+
+      # Each of the three below is independent of the others, so `if: always()` lets one failure
+      # report all of them rather than hiding the rest behind the first.
+      - name: Verify the Journal is findable
+        if: always()
+        run: npm run journal:presence ${{ github.event.inputs.origin || 'https://asteriastar.com' }}
+
+      - name: Verify the Journal feed contract
+        if: always()
+        run: npm run journal:feed
+
+      - name: Verify global search finds Journal articles
+        if: always()
+        run: npm run journal:search
