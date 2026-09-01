@@ -50,7 +50,8 @@
     "live:test": "tsx scripts/live/test-failure-modes.ts",
     "events:validate": "tsx scripts/events/validate-events.ts",
     "events:reference": "tsx scripts/events/fetch-reference.ts",
-    "observing:validate": "tsx scripts/observing/validate-observing.ts"
+    "observing:validate": "tsx scripts/observing/validate-observing.ts",
+    "blog:routing": "tsx scripts/blog/validate-blog-routing.ts"
   },
   "dependencies": {
     "next": "16.2.9",

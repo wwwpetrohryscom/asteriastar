@@ -15,6 +15,16 @@ export interface NavLink {
   name: string;
   href: string;
   description?: string;
+  /**
+   * True when the destination is on this hostname but NOT part of this application.
+   *
+   * `/blog` is served by a separate Netlify project through a proxy rewrite, so it is same-origin and
+   * links like any internal path — but it is not in this app's route manifest, and `next/link` would
+   * attempt a client-side navigation to a route that does not exist here. Marked entries are rendered
+   * as plain anchors, which is a full page load and exactly what crossing between two applications
+   * should be.
+   */
+  external?: boolean;
 }
 
 export interface NavColumn {
@@ -124,6 +134,7 @@ export function getNavGroups(): NavGroup[] {
             { name: "Space Weather", href: ROUTES.spaceWeather, description: "Live from NOAA & NASA — solar wind, the Kp index, flares, storms and the aurora forecast, each with the time it was measured" },
             { name: "Near-Earth Objects", href: ROUTES.neo, description: "Live from NASA/JPL & the Minor Planet Center — close approaches with their real uncertainty, the Sentry risk table read as JPL publishes it, and new discoveries" },
             { name: "Where Is the ISS?", href: "/satellites/iss", description: "The station's position now, from NASA's own operational trajectory — with pass predictions computed in your browser, so your coordinates never leave your device" },
+            { name: "Blog", href: "/blog", external: true, description: "AsteriaStar Journal — astronomy and space-science reporting, mission and discovery coverage, observing guidance and platform updates, with every claim traceable to a primary source" },
             { name: "Observing Calendar", href: ROUTES.events, description: "Dated events with their provenance — lunar phases and planetary events computed and checked against NASA and USNO tables, eclipses from NASA’s catalogue, shower peaks, and launches shown as the moving targets they are" },
             { name: "Image Archive", href: ROUTES.images, description: "Scientific imagery with verified provenance" },
             { name: "Gallery", href: ROUTES.gallery, description: "Webb, Hubble, the Solar System & the deep sky — curated, openly-licensed cosmic imagery" },

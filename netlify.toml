@@ -136,6 +136,60 @@
 #
 # 308 is kept, matching the status code the previous production redirect used.
 
+# ---------------------------------------------------------------------------
+# /blog — proxied to the independent AsteriaStar Journal project
+# ---------------------------------------------------------------------------
+# One public hostname, two deployment units. `asteriastar.com/blog/*` is served by a SEPARATE Netlify
+# project (`asteriastar-blog`, same team) with its own repository, its own build and its own deploy
+# history — so publishing an article does not rebuild this nine-thousand-page platform, and a change
+# to the scientific data layer does not rebuild the publication.
+#
+# `status = 200` makes this a REWRITE, not a redirect: Netlify fetches the response and returns it
+# under the original URL. The visitor's address bar keeps saying asteriastar.com/blog/… and the
+# blog project's *.netlify.app hostname — which appears here, and only here, in the whole
+# architecture — is never exposed to a browser or a crawler.
+#
+# WHY THIS IS SAFE, from Netlify's documented behaviour rather than from assumption:
+#
+#   · Order of evaluation is `_redirects`, then THIS FILE, then static files, then the Next.js
+#     server function. "Any Netlify redirects or rewrites that you create take precedence over those
+#     created by Next.js Runtime." The application never sees a /blog request.
+#   · It is not the forbidden case. The documentation warns specifically against rewriting from the
+#     site root, which "would take precedence over Next.js Runtime's generated rewrites and break
+#     routing on your site". This is a prefix, and `/blog` is otherwise unclaimed — no route, no
+#     sitemap entry, a 404 before this rule existed.
+#   · Cross-project rewrites are permitted within a team and forbidden across teams. Both projects
+#     are on the same team, and the documentation recommends exactly this form: target the
+#     `.netlify.app` subdomain rather than a custom domain.
+#   · Internal rewrites are limited to one hop. The blog serves its own responses and proxies
+#     nothing, so the budget is spent once.
+#
+# The blog application sets `basePath: "/blog"`, so its own asset URLs are already
+# `/blog/_next/static/…` and match the second rule below. Nothing of the publication's can fall
+# through to this platform and 404.
+#
+# `force = true` because `force` means "override any existing content in the path". Nothing occupies
+# /blog today; the rule should not silently stop working if something ever does.
+#
+# FAILURE MODE: if the blog project is down, /blog/* fails and NOTHING ELSE DOES. Entity pages, the
+# Open Data API, Live, Search and the sitemap are served by this platform's own function and never
+# touch the proxy. That containment is the point of the split.
+#
+# ROLLBACK: delete these two blocks and redeploy. /blog returns to 404 and this site is unchanged.
+# Full procedure in docs/blog-routing-rollback.md.
+
+[[redirects]]
+  from = "/blog"
+  to = "https://asteriastar-blog.netlify.app/blog"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/blog/*"
+  to = "https://asteriastar-blog.netlify.app/blog/:splat"
+  status = 200
+  force = true
+
 [[redirects]]
   from = "https://www.asteriastar.com/*"
   to = "https://asteriastar.com/:splat"
