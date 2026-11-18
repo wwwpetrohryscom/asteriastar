@@ -31,6 +31,14 @@ npm run cf:deploy    # uploads the prerendered pages to R2, then deploys the Wor
 
 The build writes about 16 GB: `.next` (5.6 GB), Next's standalone copy of the 5.1 GB prerender output, and OpenNext's cache files. Delete `.next`, `.open-next` and `.wrangler` afterwards.
 
+**Run Wrangler from the repository folder, never from the home folder.** Run there, Wrangler creates `~/.wrangler` as a local state folder. From then on it looks for its login in that folder and reports "not authenticated" for every project on the machine. The fix is to move `~/.wrangler` away.
+
+**Expire the previous build's cache after each deploy.** Every deploy uploads the prerendered pages (about 5.5 GB) under a new prefix, `incremental-cache/<BUILD_ID>/`, in the `asteriastar-isr-cache` R2 bucket. The previous prefix is then unused, so expire it:
+
+```sh
+npx wrangler r2 bucket lifecycle add asteriastar-isr-cache expire-<OLD_BUILD_ID> "incremental-cache/<OLD_BUILD_ID>/" --expire-days 1 --force
+```
+
 **Secret.** `INDEXNOW_KEY` is set once as a Worker secret (`npx wrangler secret put INDEXNOW_KEY`). It has the same value as the committed `public/<key>.txt`. No other environment is read at runtime. `NEXT_PUBLIC_SITE_URL` is fixed to `https://asteriastar.com` by `cf:build`.
 
 ## Behaviour that moved out of `netlify.toml`
