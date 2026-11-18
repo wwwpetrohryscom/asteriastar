@@ -54,24 +54,28 @@
     "blog:routing": "tsx scripts/blog/validate-blog-routing.ts",
     "journal:presence": "tsx scripts/blog/validate-journal-presence.ts",
     "journal:feed": "tsx scripts/blog/validate-journal-feed.ts",
-    "journal:search": "tsx scripts/blog/validate-journal-search.ts"
+    "journal:search": "tsx scripts/blog/validate-journal-search.ts",
+    "cf:build": "NEXT_PUBLIC_SITE_URL=https://asteriastar.com opennextjs-cloudflare build && node scripts/cloudflare/finalize-assets.mjs",
+    "cf:deploy": "opennextjs-cloudflare deploy"
   },
   "dependencies": {
-    "next": "16.2.9",
+    "next": "^16.4.6",
     "react": "19.2.4",
     "react-dom": "19.2.4"
   },
   "devDependencies": {
     "@netlify/plugin-nextjs": "^5.15.13",
+    "@opennextjs/cloudflare": "^1.20.17",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.2.9",
+    "eslint-config-next": "^16.4.6",
     "sharp": "^0.34.5",
     "tailwindcss": "^4",
     "tsx": "^4.22.4",
-    "typescript": "^5"
+    "typescript": "^5",
+    "wrangler": "^4.164.0"
   }
 }

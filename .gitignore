@@ -47,3 +47,7 @@ refresh-reports/
 # netlify
 .netlify
 design-previews/
+
+# Cloudflare / OpenNext build output
+.open-next
+.wrangler

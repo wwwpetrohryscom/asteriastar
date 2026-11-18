@@ -109,6 +109,26 @@ async function main(): Promise<void> {
     check("HTTP 503 names the status code", (env.error ?? "").includes("503"), `error was "${env.error}"`);
   }
 
+  /* ---------------------------------- 2b. provider answers a redirect to a host never approved */
+  // The allowlist approves a URL, not wherever that URL points next. The redirect must come back
+  // as a failure without being followed — asserted on the request (fetch was not told to follow)
+  // and on the result, because Workers rejects `redirect: "error"` and the code now refuses a 3xx
+  // itself.
+  clearCache();
+  clearHealth();
+  let redirectMode: RequestRedirect | undefined;
+  withStub((init) => {
+    redirectMode = init?.redirect;
+    return new Response(null, { status: 302, headers: { location: "https://elsewhere.example/solar-wind.json" } });
+  });
+  {
+    const env = await loadProduct<Reading>(PRODUCT, parse);
+    restore();
+    check("a redirect is never followed", redirectMode === "manual", `fetch was asked to "${redirectMode ?? "follow"}" redirects`);
+    check("a redirect returns no data", env.data === undefined, "returned data from a redirect");
+    check("a redirect is named as the reason", /redirect/i.test(env.error ?? ""), `error was "${env.error}"`);
+  }
+
   /* ------------------------------------------- 3. provider answers with an HTML error page */
   clearCache();
   clearHealth();

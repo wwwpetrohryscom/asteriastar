@@ -17,6 +17,9 @@ const eslintConfig = defineConfig([
     // reports thousands of problems in generated and third-party code, exactly
     // as linting .next would.
     ".netlify/**",
+    // Cloudflare (OpenNext) build output and Wrangler's local state.
+    ".open-next/**",
+    ".wrangler/**",
   ]),
 ]);
 
