@@ -155,9 +155,16 @@ export interface ProviderFetchOptions {
 }
 
 /**
- * Fetch a provider URL and return parsed JSON, or a typed failure. Redirects are refused
- * (`redirect: "error"`), which is what stops an upstream 302 from moving the request to a host
- * the allowlist never approved.
+ * Fetch a provider URL and return parsed JSON, or a typed failure. Redirects are refused, which is
+ * what stops an upstream 302 from moving the request to a host the allowlist never approved.
+ *
+ * Refused EXPLICITLY: the request is made with `redirect: "manual"` and any 3xx answer is returned
+ * as a `redirect` failure without being followed. `redirect: "error"` would say the same thing more
+ * briefly, but Cloudflare Workers (where this runs in production) rejects that mode outright —
+ * every provider request then failed before leaving the Worker. "manual" means the same on Node
+ * and on Workers. The browser-only `credentials` / `referrerPolicy` options are not passed: a
+ * server-side fetch has no cookie jar and sends no referrer, and Workers rejects options it does
+ * not implement.
  *
  * There are TWO places a request can fail, and both are caught: at the headers (DNS, connection,
  * timeout before a response line) and in the body (a timeout that fires mid-stream, a reset, a
@@ -180,10 +187,8 @@ export async function fetchProviderJson<T = unknown>(url: string, opts: Provider
   let res: Response;
   try {
     res = await fetch(checked.url, {
-      redirect: "error",
+      redirect: "manual",
       signal: AbortSignal.timeout(timeoutMs),
-      credentials: "omit",
-      referrerPolicy: "no-referrer",
       headers: {
         Accept: accept === "json" ? "application/json" : "text/plain",
         "User-Agent": "AsteriaStar/1.0 (+https://asteriastar.com; scientific data platform)",
@@ -204,6 +209,19 @@ export async function fetchProviderJson<T = unknown>(url: string, opts: Provider
 
   const latencyMs = Date.now() - started;
   const fetchedAt = stamp();
+
+  // A redirect is answered, never followed (see above). `opaqueredirect` is how a browser-style
+  // runtime reports the same thing.
+  if ((res.status >= 300 && res.status < 400) || res.type === "opaqueredirect") {
+    return {
+      ok: false,
+      reason: "redirect",
+      message: `provider answered a redirect (HTTP ${res.status}); redirects are refused`,
+      status: res.status,
+      latencyMs,
+      fetchedAt,
+    };
+  }
 
   if (!res.ok) {
     return { ok: false, reason: "http_status", message: `provider returned HTTP ${res.status}`, status: res.status, latencyMs, fetchedAt };

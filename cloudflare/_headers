@@ -1,0 +1,15 @@
+# Copied to .open-next/assets/_headers by scripts/cloudflare/finalize-assets.mjs.
+#
+# Static files (public/ and /_next/static) are answered by Workers static assets without reaching the
+# Next.js server, so next.config.ts headers() never sees them — exactly as Netlify's netlify.toml
+# [[headers]] rule was the only thing that reached its publish directory. These are the headers that
+# rule set, verified against production before the move: HSTS and `Access-Control-Allow-Origin: *` on
+# every static file (browser clients of the public API and data files depend on the latter), and the
+# year-long immutable cache on content-hashed build assets.
+
+/*
+  Strict-Transport-Security: max-age=63072000
+  Access-Control-Allow-Origin: *
+
+/_next/static/*
+  Cache-Control: public, max-age=31536000, immutable

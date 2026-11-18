@@ -1,0 +1,48 @@
+/**
+ * AsteriaStar platform on Cloudflare Workers (OpenNext). Requires Workers Paid: the server bundle, the
+ * CPU needed to render a page, and the ~80k prerender files are all beyond the free plan.
+ *
+ * Build and deploy (manual, from a clean checkout of main; see docs/cloudflare.md):
+ *   NEXT_PUBLIC_SITE_URL=https://asteriastar.com npx opennextjs-cloudflare build
+ *   node scripts/cloudflare/finalize-assets.mjs
+ *   npx opennextjs-cloudflare deploy
+ *
+ * /blog and /blog/* are NOT served here: the Journal's own Worker (repo asteriastar-blog) holds the
+ * more specific zone routes for them.
+ */
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "asteriastar",
+  /* cloudflare/worker.js wraps the generated .open-next/worker.js to keep the Netlify-era headers. */
+  "main": "cloudflare/worker.js",
+  "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "services": [
+    /* Self-reference used by OpenNext for background revalidation; must match "name". */
+    { "binding": "WORKER_SELF_REFERENCE", "service": "asteriastar" }
+  ],
+  "r2_buckets": [
+    /* The incremental cache: prerendered pages and ISR updates. */
+    { "binding": "NEXT_INC_CACHE_R2_BUCKET", "bucket_name": "asteriastar-isr-cache" }
+  ],
+  "durable_objects": {
+    "bindings": [{ "name": "NEXT_CACHE_DO_QUEUE", "class_name": "DOQueueHandler" }]
+  },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["DOQueueHandler"] }],
+  /*
+   * No "images" binding: /_next/image answers with the original file (same URLs, no resizing), which
+   * costs nothing. Binding Cloudflare Images would restore resizing at 5,000 free unique
+   * transformations a month, then $0.50 per 1,000.
+   */
+  "routes": [{ "pattern": "asteriastar.com/*", "zone_name": "asteriastar.com" }],
+  /* The public hostname is the only one: no duplicate copy of the site at *.workers.dev. */
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": { "enabled": true },
+  /* The server bundle's source maps (~64 MiB) exceed the 60 MiB Workers upload limit. */
+  "upload_source_maps": false
+}
